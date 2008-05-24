@@ -480,10 +480,10 @@
 <table-description></table-description>
 <table-figure-bounds height="-1" width="-1" x="307" y="412"/>
 <column-list>
-<column alias="" auto-increment="false" column-size="1" decimal-digits="0" default-value="" mandatory="true" name="office_id" remarks="" uid="1c5cdac:11a1b05b15e:-7e40">
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="office_id" remarks="" uid="1c5cdac:11a1b05b15e:-7e40">
 <column-description></column-description>
-<data-type jdbc-type="1" literal-prefix="'" literal-suffix="'" name="CHAR" selected-variant-pattern="CHAR(%n)">
-<variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="CHAR(%n)"/>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
 </data-type>
 </column>
 <column alias="" auto-increment="false" column-size="255" decimal-digits="0" default-value="" mandatory="false" name="name" remarks="" uid="1c5cdac:11a1b05b15e:-7e3f">
@@ -492,10 +492,10 @@
 <variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
 </data-type>
 </column>
-<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="type" remarks="" uid="1c5cdac:11a1b05b15e:-7de6">
+<column alias="" auto-increment="false" column-size="1" decimal-digits="0" default-value="" mandatory="false" name="type" remarks="" uid="1c5cdac:11a1b05b15e:-7de6">
 <column-description></column-description>
-<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
-<variant type-name-pattern="INT"/>
+<data-type jdbc-type="1" literal-prefix="'" literal-suffix="'" name="CHAR" selected-variant-pattern="CHAR(%n)">
+<variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="CHAR(%n)"/>
 </data-type>
 </column>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="parent_office_id" remarks="" uid="1c5cdac:11a1b05b15e:-7de3">
