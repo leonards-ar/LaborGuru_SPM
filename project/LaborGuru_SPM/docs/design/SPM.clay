@@ -78,12 +78,6 @@
 <variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
 </data-type>
 </column>
-<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="is_administrator" remarks="" uid="e94c62:11a07671122:-7fec">
-<column-description></column-description>
-<data-type jdbc-type="16" name="BOOLEAN" selected-variant-pattern="BOOLEAN">
-<variant type-name-pattern="BOOLEAN"/>
-</data-type>
-</column>
 </column-list>
 <primary-key alias="" name="PK_TBL_USERS" remarks="" uid="e94c62:11a07671122:-7ff6">
 <primary-key-description></primary-key-description>
