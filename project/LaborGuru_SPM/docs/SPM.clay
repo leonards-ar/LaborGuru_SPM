@@ -1,37 +1,31 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <clay-model clay-version="1.4.0">
 <database-model alias="" author="" begin-script="" end-script="" name="SPM" remarks="" sql-dialect-id="jp.azzurri.clay.dialect.Postgre_7_3_Dialect" uid="e94c62:11a07671122:-8000" version="1.0">
-<database-model-description/>
+<database-model-description></database-model-description>
 <schema-list>
 <schema alias="" name="DEFAULT_SCHEMA" remarks="" uid="e94c62:11a07671122:-7ffd">
-<schema-description/>
+<schema-description></schema-description>
 <domain-list/>
 <table-list>
 <table alias="" name="tbl_profiles" remarks="" uid="e94c62:11a07671122:-7fff">
-<table-description/>
+<table-description></table-description>
 <table-figure-bounds height="-1" width="-1" x="22" y="7"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="profile_id" remarks="" uid="e94c62:11a07671122:-7ffa">
-<column-description/>
+<column-description></column-description>
 <data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
 <variant type-name-pattern="INT"/>
 </data-type>
 </column>
 <column alias="" auto-increment="false" column-size="255" decimal-digits="0" default-value="" mandatory="true" name="description" remarks="" uid="e94c62:11a07671122:-7ff9">
-<column-description/>
+<column-description></column-description>
 <data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
 <variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
 </data-type>
 </column>
-<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="is_administrator" remarks="" uid="e94c62:11a07671122:-7ff8">
-<column-description/>
-<data-type jdbc-type="16" name="BOOL" selected-variant-pattern="BOOL">
-<variant type-name-pattern="BOOL"/>
-</data-type>
-</column>
 </column-list>
 <primary-key alias="" name="PK_TBL_PROFILES" remarks="" uid="e94c62:11a07671122:-7ffe">
-<primary-key-description/>
+<primary-key-description></primary-key-description>
 <primary-key-column name="profile_id"/>
 </primary-key>
 <unique-key-list/>
@@ -39,60 +33,60 @@
 <index-list/>
 </table>
 <table alias="" name="tbl_users" remarks="" uid="e94c62:11a07671122:-7ff7">
-<table-description/>
-<table-figure-bounds height="-1" width="-1" x="461" y="-8"/>
+<table-description></table-description>
+<table-figure-bounds height="-1" width="-1" x="616" y="5"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="user_id" remarks="" uid="e94c62:11a07671122:-7ff3">
-<column-description/>
+<column-description></column-description>
 <data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
 <variant type-name-pattern="INT"/>
 </data-type>
 </column>
 <column alias="" auto-increment="false" column-size="255" decimal-digits="0" default-value="" mandatory="false" name="username" remarks="" uid="e94c62:11a07671122:-7ff2">
-<column-description/>
+<column-description></column-description>
 <data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
 <variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
 </data-type>
 </column>
 <column alias="" auto-increment="false" column-size="255" decimal-digits="0" default-value="" mandatory="false" name="password" remarks="" uid="e94c62:11a07671122:-7ff1">
-<column-description/>
+<column-description></column-description>
 <data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
 <variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
 </data-type>
 </column>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="status" remarks="" uid="e94c62:11a07671122:-7ff0">
-<column-description/>
+<column-description></column-description>
 <data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
 <variant type-name-pattern="INT"/>
 </data-type>
 </column>
 <column alias="" auto-increment="false" column-size="255" decimal-digits="0" default-value="" mandatory="false" name="email" remarks="" uid="e94c62:11a07671122:-7fef">
-<column-description/>
+<column-description></column-description>
 <data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
 <variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
 </data-type>
 </column>
 <column alias="" auto-increment="false" column-size="255" decimal-digits="0" default-value="" mandatory="false" name="name" remarks="" uid="e94c62:11a07671122:-7fee">
-<column-description/>
+<column-description></column-description>
 <data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
 <variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
 </data-type>
 </column>
 <column alias="" auto-increment="false" column-size="255" decimal-digits="0" default-value="" mandatory="false" name="surname" remarks="" uid="e94c62:11a07671122:-7fed">
-<column-description/>
+<column-description></column-description>
 <data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
 <variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
 </data-type>
 </column>
-<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="login_enabled" remarks="" uid="e94c62:11a07671122:-7fec">
-<column-description/>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="is_administrator" remarks="" uid="e94c62:11a07671122:-7fec">
+<column-description></column-description>
 <data-type jdbc-type="16" name="BOOLEAN" selected-variant-pattern="BOOLEAN">
 <variant type-name-pattern="BOOLEAN"/>
 </data-type>
 </column>
 </column-list>
 <primary-key alias="" name="PK_TBL_USERS" remarks="" uid="e94c62:11a07671122:-7ff6">
-<primary-key-description/>
+<primary-key-description></primary-key-description>
 <primary-key-column name="user_id"/>
 </primary-key>
 <unique-key-list/>
@@ -100,38 +94,38 @@
 <index-list/>
 </table>
 <table alias="" name="tbl_user_profiles" remarks="" uid="e94c62:11a07671122:-7feb">
-<table-description/>
-<table-figure-bounds height="-1" width="-1" x="297" y="12"/>
+<table-description></table-description>
+<table-figure-bounds height="-1" width="-1" x="311" y="12"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="profile_id" remarks="" uid="e94c62:11a07671122:-7fe7">
-<column-description/>
+<column-description></column-description>
 <data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
 <variant type-name-pattern="INT"/>
 </data-type>
 </column>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="user_id" remarks="" uid="e94c62:11a07671122:-7fe6">
-<column-description/>
+<column-description></column-description>
 <data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
 <variant type-name-pattern="INT"/>
 </data-type>
 </column>
 </column-list>
 <primary-key alias="" name="PK_TBL_USER_PROFILES" remarks="" uid="e94c62:11a07671122:-7fea">
-<primary-key-description/>
+<primary-key-description></primary-key-description>
 <primary-key-column name="profile_id"/>
 <primary-key-column name="user_id"/>
 </primary-key>
 <unique-key-list/>
 <foreign-key-list>
 <foreign-key alias="" name="FK_tbl_user_profiles_1" on-delete="" on-update="" referenced-key="PK_TBL_PROFILES" referenced-table="tbl_profiles" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="e94c62:11a07671122:-7eae">
-<foreign-key-description/>
+<foreign-key-description></foreign-key-description>
 <foreign-key-figure>
 <fk-fig-bendpoint-list/>
 </foreign-key-figure>
 <foreign-key-column column-name="profile_id" referenced-key-column-name="profile_id"/>
 </foreign-key>
 <foreign-key alias="" name="FK_tbl_user_profiles_2" on-delete="" on-update="" referenced-key="PK_TBL_USERS" referenced-table="tbl_users" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="e94c62:11a07671122:-7e7f">
-<foreign-key-description/>
+<foreign-key-description></foreign-key-description>
 <foreign-key-figure>
 <fk-fig-bendpoint-list/>
 </foreign-key-figure>
@@ -140,88 +134,96 @@
 </foreign-key-list>
 <index-list/>
 </table>
-<table alias="" name="tbl_restaurant_ext_attributes" remarks="" uid="e94c62:11a07671122:-7f8a">
-<table-description/>
-<table-figure-bounds height="-1" width="-1" x="243" y="217"/>
+<table alias="" name="tbl_office_ext_attributes" remarks="" uid="e94c62:11a07671122:-7f8a">
+<table-description></table-description>
+<table-figure-bounds height="-1" width="-1" x="194" y="216"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="attribute_id" remarks="" uid="e94c62:11a07671122:-7f86">
-<column-description/>
+<column-description></column-description>
 <data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
 <variant type-name-pattern="INT"/>
 </data-type>
 </column>
-<column alias="" auto-increment="false" column-size="150" decimal-digits="0" default-value="" mandatory="false" name="attribute_label_key" remarks="" uid="e94c62:11a07671122:-7f85">
-<column-description/>
+<column alias="" auto-increment="false" column-size="150" decimal-digits="0" default-value="" mandatory="false" name="label_key" remarks="" uid="e94c62:11a07671122:-7f85">
+<column-description></column-description>
 <data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
 <variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
 </data-type>
 </column>
-<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="attribute_type_id" remarks="" uid="e94c62:11a07671122:-7f84">
-<column-description/>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="type_id" remarks="" uid="e94c62:11a07671122:-7f84">
+<column-description></column-description>
 <data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
 <variant type-name-pattern="INT"/>
 </data-type>
 </column>
-<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="attribute_help_key" remarks="" uid="e94c62:11a07671122:-7f83">
-<column-description/>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="help_key" remarks="" uid="e94c62:11a07671122:-7f83">
+<column-description></column-description>
 <data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
 <variant type-name-pattern="INT"/>
 </data-type>
 </column>
-<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="store_id" remarks="" uid="e94c62:11a07671122:-7f82">
-<column-description/>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="office_id" remarks="" uid="e94c62:11a07671122:-7f82">
+<column-description></column-description>
 <data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
 <variant type-name-pattern="INT"/>
 </data-type>
 </column>
 </column-list>
-<primary-key alias="" name="PK_TBL_RESTAURANT_EXT_ATTRIBUTES" remarks="" uid="e94c62:11a07671122:-7f89">
-<primary-key-description/>
+<primary-key alias="" name="PK_TBL_OFFICE_EXT_ATTRIBUTES" remarks="" uid="e94c62:11a07671122:-7f89">
+<primary-key-description></primary-key-description>
 <primary-key-column name="attribute_id"/>
 </primary-key>
 <unique-key-list/>
-<foreign-key-list/>
+<foreign-key-list>
+<foreign-key alias="" name="FK_tbl_office_ext_attributes_1" on-delete="" on-update="" referenced-key="PK_TBL_OFFICES" referenced-table="tbl_offices" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="1c5cdac:11a1b05b15e:-7df0">
+<foreign-key-description></foreign-key-description>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="office_id" referenced-key-column-name="office_id"/>
+</foreign-key>
+</foreign-key-list>
 <index-list/>
 </table>
 <table alias="" name="tbl_user_ext_attributes" remarks="" uid="e94c62:11a07671122:-7f81">
-<table-description/>
+<table-description></table-description>
 <table-figure-bounds height="-1" width="-1" x="263" y="86"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="user_id" remarks="" uid="e94c62:11a07671122:-7f7d">
-<column-description/>
+<column-description></column-description>
 <data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
 <variant type-name-pattern="INT"/>
 </data-type>
 </column>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="attribute_id" remarks="" uid="e94c62:11a07671122:-7f7c">
-<column-description/>
+<column-description></column-description>
 <data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
 <variant type-name-pattern="INT"/>
 </data-type>
 </column>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="attribute_value" remarks="" uid="e94c62:11a07671122:-7f79">
-<column-description/>
+<column-description></column-description>
 <data-type jdbc-type="-1" literal-prefix="'" literal-suffix="'" name="TEXT" selected-variant-pattern="TEXT">
 <variant type-name-pattern="TEXT"/>
 </data-type>
 </column>
 </column-list>
 <primary-key alias="" name="PK_TBL_USER_EXT_ATTRIBUTES" remarks="" uid="e94c62:11a07671122:-7f80">
-<primary-key-description/>
+<primary-key-description></primary-key-description>
 <primary-key-column name="user_id"/>
 <primary-key-column name="attribute_id"/>
 </primary-key>
 <unique-key-list/>
 <foreign-key-list>
 <foreign-key alias="" name="FK_tbl_user_ext_attributes_1" on-delete="" on-update="" referenced-key="PK_TBL_USERS" referenced-table="tbl_users" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="e94c62:11a07671122:-7e3f">
-<foreign-key-description/>
+<foreign-key-description></foreign-key-description>
 <foreign-key-figure>
 <fk-fig-bendpoint-list/>
 </foreign-key-figure>
 <foreign-key-column column-name="user_id" referenced-key-column-name="user_id"/>
 </foreign-key>
-<foreign-key alias="" name="FK_tbl_user_ext_attributes_2" on-delete="" on-update="" referenced-key="PK_TBL_RESTAURANT_EXT_ATTRIBUTES" referenced-table="tbl_restaurant_ext_attributes" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="e94c62:11a07671122:-7e15">
-<foreign-key-description/>
+<foreign-key alias="" name="FK_tbl_user_ext_attributes_2" on-delete="" on-update="" referenced-key="PK_TBL_OFFICE_EXT_ATTRIBUTES" referenced-table="tbl_office_ext_attributes" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="e94c62:11a07671122:-7e15">
+<foreign-key-description></foreign-key-description>
 <foreign-key-figure>
 <fk-fig-bendpoint-list/>
 </foreign-key-figure>
@@ -231,22 +233,372 @@
 <index-list/>
 </table>
 <table alias="" name="tbl_stores" remarks="" uid="e94c62:11a07671122:-7e0a">
-<table-description/>
-<table-figure-bounds height="-1" width="-1" x="537" y="227"/>
+<table-description></table-description>
+<table-figure-bounds height="-1" width="-1" x="678" y="265"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="store_id" remarks="" uid="e94c62:11a07671122:-7dff">
-<column-description/>
+<column-description></column-description>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="255" decimal-digits="0" default-value="" mandatory="true" name="name" remarks="" uid="1c5cdac:11a1b05b15e:-7ed2">
+<column-description></column-description>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="office_id" remarks="" uid="1c5cdac:11a1b05b15e:-7e3a">
+<column-description></column-description>
 <data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
 <variant type-name-pattern="INT"/>
 </data-type>
 </column>
 </column-list>
 <primary-key alias="" name="PK_TBL_STORES" remarks="" uid="e94c62:11a07671122:-7e09">
-<primary-key-description/>
+<primary-key-description></primary-key-description>
 <primary-key-column name="store_id"/>
 </primary-key>
 <unique-key-list/>
+<foreign-key-list>
+<foreign-key alias="" name="FK_tbl_stores_1" on-delete="" on-update="" referenced-key="PK_TBL_OFFICES" referenced-table="tbl_offices" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="1c5cdac:11a1b05b15e:-7e0e">
+<foreign-key-description></foreign-key-description>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="office_id" referenced-key-column-name="office_id"/>
+</foreign-key>
+</foreign-key-list>
+<index-list/>
+</table>
+<table alias="" name="tbl_permissions" remarks="" uid="1c5cdac:11a1b05b15e:-7ffa">
+<table-description></table-description>
+<table-figure-bounds height="-1" width="-1" x="14" y="192"/>
+<column-list>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="permission_id" remarks="" uid="1c5cdac:11a1b05b15e:-7ff0">
+<column-description></column-description>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="100" decimal-digits="0" default-value="" mandatory="true" name="key" remarks="" uid="1c5cdac:11a1b05b15e:-7fef">
+<column-description></column-description>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="255" decimal-digits="0" default-value="" mandatory="false" name="description" remarks="" uid="1c5cdac:11a1b05b15e:-7fee">
+<column-description></column-description>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+</column-list>
+<primary-key alias="" name="PK_TBL_PERMISSIONS" remarks="" uid="1c5cdac:11a1b05b15e:-7ff9">
+<primary-key-description></primary-key-description>
+<primary-key-column name="permission_id"/>
+</primary-key>
+<unique-key-list/>
 <foreign-key-list/>
+<index-list/>
+</table>
+<table alias="" name="tbl_profile_permissions" remarks="" uid="1c5cdac:11a1b05b15e:-7fed">
+<table-description></table-description>
+<table-figure-bounds height="-1" width="-1" x="20" y="95"/>
+<column-list>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="profile_id" remarks="" uid="1c5cdac:11a1b05b15e:-7fe7">
+<column-description></column-description>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="permission_id" remarks="" uid="1c5cdac:11a1b05b15e:-7fe6">
+<column-description></column-description>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+</column-list>
+<primary-key alias="" name="PK_TBL_PROFILE_PERMISSIONS" remarks="" uid="1c5cdac:11a1b05b15e:-7fec">
+<primary-key-description></primary-key-description>
+<primary-key-column name="profile_id"/>
+<primary-key-column name="permission_id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list>
+<foreign-key alias="" name="FK_tbl_profile_permissions_1" on-delete="" on-update="" referenced-key="PK_TBL_PROFILES" referenced-table="tbl_profiles" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="1c5cdac:11a1b05b15e:-7f8e">
+<foreign-key-description></foreign-key-description>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="profile_id" referenced-key-column-name="profile_id"/>
+</foreign-key>
+<foreign-key alias="" name="FK_tbl_profile_permissions_2" on-delete="" on-update="" referenced-key="PK_TBL_PERMISSIONS" referenced-table="tbl_permissions" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="1c5cdac:11a1b05b15e:-7f72">
+<foreign-key-description></foreign-key-description>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="permission_id" referenced-key-column-name="permission_id"/>
+</foreign-key>
+</foreign-key-list>
+<index-list/>
+</table>
+<table alias="" name="tbl_store_managers" remarks="" uid="1c5cdac:11a1b05b15e:-7f6c">
+<table-description></table-description>
+<table-figure-bounds height="-1" width="-1" x="757" y="162"/>
+<column-list>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="user_id" remarks="" uid="1c5cdac:11a1b05b15e:-7f68">
+<column-description></column-description>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="store_id" remarks="" uid="1c5cdac:11a1b05b15e:-7f67">
+<column-description></column-description>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+</column-list>
+<primary-key alias="" name="PK_TBL_STORE_MANAGERS" remarks="" uid="1c5cdac:11a1b05b15e:-7f6b">
+<primary-key-description></primary-key-description>
+<primary-key-column name="user_id"/>
+<primary-key-column name="store_id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list>
+<foreign-key alias="" name="FK_tbl_store_managers_1" on-delete="" on-update="" referenced-key="PK_TBL_USERS" referenced-table="tbl_users" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="1c5cdac:11a1b05b15e:-7f52">
+<foreign-key-description></foreign-key-description>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="user_id" referenced-key-column-name="user_id"/>
+</foreign-key>
+<foreign-key alias="" name="FK_tbl_store_managers_2" on-delete="" on-update="" referenced-key="PK_TBL_STORES" referenced-table="tbl_stores" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="1c5cdac:11a1b05b15e:-7f22">
+<foreign-key-description></foreign-key-description>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="store_id" referenced-key-column-name="store_id"/>
+</foreign-key>
+</foreign-key-list>
+<index-list/>
+</table>
+<table alias="" name="tbl_store_employees" remarks="" uid="1c5cdac:11a1b05b15e:-7f1f">
+<table-description></table-description>
+<table-figure-bounds height="-1" width="-1" x="562" y="165"/>
+<column-list>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="user_id" remarks="" uid="1c5cdac:11a1b05b15e:-7f1b">
+<column-description></column-description>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="store_id" remarks="" uid="1c5cdac:11a1b05b15e:-7f1a">
+<column-description></column-description>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+</column-list>
+<primary-key alias="" name="PK_TBL_STORE_EMPLOYEES" remarks="" uid="1c5cdac:11a1b05b15e:-7f1e">
+<primary-key-description></primary-key-description>
+<primary-key-column name="user_id"/>
+<primary-key-column name="store_id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list>
+<foreign-key alias="" name="FK_tbl_store_employees_1" on-delete="" on-update="" referenced-key="PK_TBL_STORES" referenced-table="tbl_stores" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="1c5cdac:11a1b05b15e:-7f00">
+<foreign-key-description></foreign-key-description>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="store_id" referenced-key-column-name="store_id"/>
+</foreign-key>
+<foreign-key alias="" name="FK_tbl_store_employees_2" on-delete="" on-update="" referenced-key="PK_TBL_USERS" referenced-table="tbl_users" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="1c5cdac:11a1b05b15e:-7ed8">
+<foreign-key-description></foreign-key-description>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="user_id" referenced-key-column-name="user_id"/>
+</foreign-key>
+</foreign-key-list>
+<index-list/>
+</table>
+<table alias="" name="tbl_menu_items" remarks="" uid="1c5cdac:11a1b05b15e:-7ed1">
+<table-description></table-description>
+<table-figure-bounds height="-1" width="-1" x="11" y="336"/>
+<column-list>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="menu_item_id" remarks="" uid="1c5cdac:11a1b05b15e:-7ecd">
+<column-description></column-description>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="150" decimal-digits="0" default-value="" mandatory="true" name="label_key" remarks="" uid="1c5cdac:11a1b05b15e:-7ecc">
+<column-description></column-description>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="150" decimal-digits="0" default-value="" mandatory="false" name="help_key" remarks="" uid="1c5cdac:11a1b05b15e:-7e61">
+<column-description></column-description>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="permission_id" remarks="" uid="1c5cdac:11a1b05b15e:-7e60">
+<column-description></column-description>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="order" remarks="" uid="1c5cdac:11a1b05b15e:-7e43">
+<column-description></column-description>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+</column-list>
+<primary-key alias="" name="PK_TBL_MENU_ITEMS" remarks="" uid="1c5cdac:11a1b05b15e:-7ed0">
+<primary-key-description></primary-key-description>
+<primary-key-column name="menu_item_id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list>
+<foreign-key alias="" name="FK_tbl_menu_items_1" on-delete="" on-update="" referenced-key="PK_TBL_PERMISSIONS" referenced-table="tbl_permissions" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="1c5cdac:11a1b05b15e:-7e53">
+<foreign-key-description></foreign-key-description>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="permission_id" referenced-key-column-name="permission_id"/>
+</foreign-key>
+</foreign-key-list>
+<index-list/>
+</table>
+<table alias="" name="tbl_offices" remarks="" uid="1c5cdac:11a1b05b15e:-7e49">
+<table-description></table-description>
+<table-figure-bounds height="-1" width="-1" x="307" y="412"/>
+<column-list>
+<column alias="" auto-increment="false" column-size="1" decimal-digits="0" default-value="" mandatory="true" name="office_id" remarks="" uid="1c5cdac:11a1b05b15e:-7e40">
+<column-description></column-description>
+<data-type jdbc-type="1" literal-prefix="'" literal-suffix="'" name="CHAR" selected-variant-pattern="CHAR(%n)">
+<variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="CHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="255" decimal-digits="0" default-value="" mandatory="false" name="name" remarks="" uid="1c5cdac:11a1b05b15e:-7e3f">
+<column-description></column-description>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="type" remarks="" uid="1c5cdac:11a1b05b15e:-7de6">
+<column-description></column-description>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="parent_office_id" remarks="" uid="1c5cdac:11a1b05b15e:-7de3">
+<column-description></column-description>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+</column-list>
+<primary-key alias="" name="PK_TBL_OFFICES" remarks="" uid="1c5cdac:11a1b05b15e:-7e48">
+<primary-key-description></primary-key-description>
+<primary-key-column name="office_id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list/>
+<index-list/>
+</table>
+<table alias="" name="tbl_office_users" remarks="" uid="1c5cdac:11a1b05b15e:-7d8a">
+<table-description></table-description>
+<table-figure-bounds height="-1" width="-1" x="406" y="166"/>
+<column-list>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="office_id" remarks="" uid="1c5cdac:11a1b05b15e:-7d86">
+<column-description></column-description>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="user_id" remarks="" uid="1c5cdac:11a1b05b15e:-7d83">
+<column-description></column-description>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+</column-list>
+<primary-key alias="" name="PK_TBL_OFFICE_USERS" remarks="" uid="1c5cdac:11a1b05b15e:-7d89">
+<primary-key-description></primary-key-description>
+<primary-key-column name="office_id"/>
+<primary-key-column name="user_id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list>
+<foreign-key alias="" name="FK_tbl_office_users_1" on-delete="" on-update="" referenced-key="PK_TBL_USERS" referenced-table="tbl_users" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="1c5cdac:11a1b05b15e:-7d6a">
+<foreign-key-description></foreign-key-description>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="user_id" referenced-key-column-name="user_id"/>
+</foreign-key>
+<foreign-key alias="" name="FK_tbl_office_users_2" on-delete="" on-update="" referenced-key="PK_TBL_OFFICES" referenced-table="tbl_offices" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="1c5cdac:11a1b05b15e:-7d2d">
+<foreign-key-description></foreign-key-description>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="office_id" referenced-key-column-name="office_id"/>
+</foreign-key>
+</foreign-key-list>
+<index-list/>
+</table>
+<table alias="" name="tbl_store_ext_attributes" remarks="" uid="1c5cdac:11a1b05b15e:-7d26">
+<table-description></table-description>
+<table-figure-bounds height="-1" width="-1" x="458" y="255"/>
+<column-list>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="store_id" remarks="" uid="1c5cdac:11a1b05b15e:-7d22">
+<column-description></column-description>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="attribute_id" remarks="" uid="1c5cdac:11a1b05b15e:-7d21">
+<column-description></column-description>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="attribute_value" remarks="" uid="1c5cdac:11a1b05b15e:-7d20">
+<column-description></column-description>
+<data-type jdbc-type="-1" literal-prefix="'" literal-suffix="'" name="TEXT" selected-variant-pattern="TEXT">
+<variant type-name-pattern="TEXT"/>
+</data-type>
+</column>
+</column-list>
+<primary-key alias="" name="PK_TBL_STORE_EXT_ATTRIBUTES" remarks="" uid="1c5cdac:11a1b05b15e:-7d25">
+<primary-key-description></primary-key-description>
+<primary-key-column name="store_id"/>
+<primary-key-column name="attribute_id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list>
+<foreign-key alias="" name="FK_tbl_store_ext_attributes_1" on-delete="" on-update="" referenced-key="PK_TBL_STORES" referenced-table="tbl_stores" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="1c5cdac:11a1b05b15e:-7d06">
+<foreign-key-description></foreign-key-description>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="store_id" referenced-key-column-name="store_id"/>
+</foreign-key>
+<foreign-key alias="" name="FK_tbl_store_ext_attributes_2" on-delete="" on-update="" referenced-key="PK_TBL_OFFICE_EXT_ATTRIBUTES" referenced-table="tbl_office_ext_attributes" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="1c5cdac:11a1b05b15e:-7ce7">
+<foreign-key-description></foreign-key-description>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="attribute_id" referenced-key-column-name="attribute_id"/>
+</foreign-key>
+</foreign-key-list>
 <index-list/>
 </table>
 </table-list>
