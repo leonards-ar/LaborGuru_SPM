@@ -453,6 +453,12 @@
 <variant type-name-pattern="INT"/>
 </data-type>
 </column>
+<column alias="" auto-increment="false" column-size="255" decimal-digits="0" default-value="" mandatory="false" name="target" remarks="" uid="7baddd:11a1ce0ec00:-7fee">
+<column-description></column-description>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
 </column-list>
 <primary-key alias="" name="PK_TBL_MENU_ITEMS" remarks="" uid="1c5cdac:11a1b05b15e:-7ed0">
 <primary-key-description></primary-key-description>
