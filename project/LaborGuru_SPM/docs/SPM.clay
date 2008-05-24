@@ -453,7 +453,7 @@
 <variant type-name-pattern="INT"/>
 </data-type>
 </column>
-<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="order" remarks="" uid="1c5cdac:11a1b05b15e:-7e43">
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="position" remarks="" uid="1c5cdac:11a1b05b15e:-7e43">
 <column-description></column-description>
 <data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
 <variant type-name-pattern="INT"/>
