@@ -1,5 +1,6 @@
-package com.mindpool.laborguru.service.login;
+package com.mindpool.laborguru.service.user;
 
+import com.mindpool.laborguru.dao.user.UserDao;
 import com.mindpool.laborguru.model.User;
 import com.mindpool.laborguru.service.Service;
 
@@ -13,7 +14,16 @@ public interface UserService extends Service {
 	 * Authenticates that a user logging in exists in the system and correct credentials have been given.
 	 * @param A User object containing a username and password (no ID).
 	 * @return A full populated User object.
-	 * TODO: See if we can change the User return for a BusinessResponse?
+	 * TODO: Change User return for a BusinessResponse?
 	 */
-	public User authenticateUser(User userLoggingOn);
+	User authenticateUser(User userLoggingOn);
+
+	/**
+	 * Retrieves  a user by userName
+	 * @param A User object containing a username.
+	 * @return A full populated User object.
+	 */
+	User getUserByUserName(User user);
+	 
+	void setUserDao(UserDao userDao);
 }
