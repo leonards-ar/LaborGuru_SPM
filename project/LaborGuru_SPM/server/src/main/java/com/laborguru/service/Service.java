@@ -1,4 +1,4 @@
-package com.mindpool.laborguru.service;
+package com.laborguru.service;
 
 /**
  * Command Interface

@@ -1,8 +1,8 @@
-package com.mindpool.laborguru.service.user;
+package com.laborguru.service.user;
 
-import com.mindpool.laborguru.dao.user.UserDao;
+import com.laborguru.service.Service;
+import com.laborguru.service.user.dao.UserDao;
 import com.mindpool.laborguru.model.User;
-import com.mindpool.laborguru.service.Service;
 
 /**
  * User Service Interface. Handles Authentication & Logon for SPM Users.  

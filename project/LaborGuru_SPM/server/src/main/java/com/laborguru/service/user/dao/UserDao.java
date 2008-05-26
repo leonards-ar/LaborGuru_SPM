@@ -1,4 +1,4 @@
-package com.mindpool.laborguru.dao.user;
+package com.laborguru.service.user.dao;
 
 import com.mindpool.laborguru.model.User;
 

@@ -1,17 +1,18 @@
-package com.mindpool.laborguru.service.login;
+package com.laborguru.service.user;
+import static org.easymock.EasyMock.createMock;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
 import static org.junit.Assert.assertEquals;
-import static org.easymock.EasyMock.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.mindpool.laborguru.dao.user.UserDao;
+import com.laborguru.service.user.dao.UserDao;
 import com.mindpool.laborguru.model.User;
-import com.mindpool.laborguru.service.user.UserService;
-import com.mindpool.laborguru.service.user.spring.UserServiceBean;
 
 
-public class UserServiceSpringTest {
+public class UserServiceBeanTest {
 
 	private UserService userService;
 	private UserDao mockUserDao;
