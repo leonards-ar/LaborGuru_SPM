@@ -1,4 +1,4 @@
-package com.mindpool.laborguru.model;
+package com.laborguru.model;
 
 import java.io.Serializable;
 
