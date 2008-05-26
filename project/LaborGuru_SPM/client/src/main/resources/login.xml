@@ -7,8 +7,9 @@
 		<action name="welcome">
 			<result>/login/welcome.jsp</result>
 		</action>
-		<action name="login" class="com.mindpool.laborguru.login.LoginAction">
-			<result name="SUCCESS">/login/home.jsp</result>
+		<action name="login" class="com.laborguru.action.login.LoginAction">
+			<result name="input">/login/welcome.jsp</result>
+			<result name="success">/login/home.jsp</result>
 		</action>		
 	</package>
 </struts>

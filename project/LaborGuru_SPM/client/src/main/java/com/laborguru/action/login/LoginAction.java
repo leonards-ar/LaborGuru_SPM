@@ -1,14 +1,21 @@
-package com.mindpool.laborguru.login;
+package com.laborguru.action.login;
 
-import com.mindpool.laborguru.model.User;
+import com.laborguru.action.SpmAction;
+import com.laborguru.model.User;
 import com.opensymphony.xwork2.Action;
 
-public class LoginAction implements Action {
+/**
+ * User Login Action. Handles Authentication for SPM Users.  
+ * @author cnunez
+ *
+ */
+public class LoginAction extends SpmAction {
 
 	private User user;
-		
+	
+
 	public String execute() throws Exception {
-		return "SUCCESS";
+		return Action.SUCCESS;
 	}
 
 	/**
@@ -23,7 +30,5 @@ public class LoginAction implements Action {
 	 */
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	
+	}	
 }
