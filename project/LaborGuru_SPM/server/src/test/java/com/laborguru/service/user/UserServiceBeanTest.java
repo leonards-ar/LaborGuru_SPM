@@ -8,8 +8,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.laborguru.model.User;
 import com.laborguru.service.user.dao.UserDao;
-import com.mindpool.laborguru.model.User;
 
 
 public class UserServiceBeanTest {

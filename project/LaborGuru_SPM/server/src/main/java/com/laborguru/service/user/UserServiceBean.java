@@ -1,7 +1,7 @@
 package com.laborguru.service.user;
 
+import com.laborguru.model.User;
 import com.laborguru.service.user.dao.UserDao;
-import com.mindpool.laborguru.model.User;
 
 /**
  * Spring Implementation for UserService

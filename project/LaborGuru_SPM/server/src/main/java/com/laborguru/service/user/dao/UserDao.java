@@ -1,6 +1,6 @@
 package com.laborguru.service.user.dao;
 
-import com.mindpool.laborguru.model.User;
+import com.laborguru.model.User;
 
 /**
  * Dao User interface
