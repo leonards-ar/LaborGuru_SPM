@@ -1,5 +1,10 @@
 package com.mindpool.laborguru.model;
 
+/**
+ * Defines a SPM User
+ * @author cnunez
+ *
+ */
 public class User extends SpmObject {
 
 	/**
