@@ -1,4 +1,4 @@
-package com.mindpool.laborguru.acegi;
+package com.laborguru.acegi;
 
 import java.security.Principal;
 import java.security.acl.Group;
