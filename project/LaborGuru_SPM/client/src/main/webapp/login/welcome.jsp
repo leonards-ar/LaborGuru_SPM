@@ -10,6 +10,7 @@
         <s:form action="login">                   
             <s:textfield name="user.userName" label="Username"/> 
             <s:password name="user.password" label="Password"/>
+            <s:actionerror/>
             <s:submit/> 
         </s:form> 
     </body> 

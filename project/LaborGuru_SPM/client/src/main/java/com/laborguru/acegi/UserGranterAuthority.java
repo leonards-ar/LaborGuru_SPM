@@ -1,4 +1,4 @@
-package com.laborguru.acegi;
+/*package com.laborguru.acegi;
 
 import java.security.Principal;
 import java.security.acl.Group;
@@ -32,15 +32,16 @@ public class UserGranterAuthority implements AuthorityGranter {
 	public String getRoleGroupName() {
 		return roleGroupName;
 	}
-
+*/
 	/**
 	 * Change the role group name from the default of Roles
 	 * 
 	 * @param roleGroupName
 	 *            new role group name
-	 */
+	 *
 	public void setRoleGroupName(String roleGroupName) {
 		this.roleGroupName = roleGroupName;
 	}
 
 }
+*/

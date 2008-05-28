@@ -52,8 +52,15 @@ public class UserServiceBean implements UserService {
 		return userDao.getUserByUsername(userLoggingOn);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.laborguru.service.user.UserService#setUserDao(com.laborguru.service.user.dao.UserDao)
+	 */
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
+	}
+
+	public UserDao getUserDao() {
+		return userDao;
 	}
 
 }

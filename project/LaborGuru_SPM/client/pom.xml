@@ -33,14 +33,25 @@
 			<version>1.0</version>
 		</dependency>
 		<dependency>
-			<groupId>com.mindpool</groupId>
-			<artifactId>security</artifactId>
-			<version>1.0.1</version>
-		</dependency>
-		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-core</artifactId>
 			<version>2.0.11.1</version>
+		</dependency>
+ 		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring</artifactId>
+			<version>2.5</version>
+		</dependency>
+		<dependency>		
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-spring-plugin</artifactId>
+			<version>2.0.11.1</version>
+		</dependency>		
+<!-- 	
+		<dependency>
+			<groupId>com.mindpool</groupId>
+			<artifactId>security</artifactId>
+			<version>1.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.acegisecurity</groupId>
@@ -62,5 +73,6 @@
 			<artifactId>standard</artifactId>
 			<version>1.0.6</version>
 		</dependency>
+ -->		
 	</dependencies>
 </project>

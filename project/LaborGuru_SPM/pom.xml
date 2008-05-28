@@ -27,6 +27,7 @@
 		</pluginManagement>
 	</build>
 	<dependencies>
+<!--  	
 		<dependency>
 			<groupId>org.acegisecurity</groupId>
 			<artifactId>acegi-security</artifactId>
@@ -37,6 +38,7 @@
 			<artifactId>security</artifactId>
 			<version>1.0.1</version>
 		</dependency>
+-->		
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

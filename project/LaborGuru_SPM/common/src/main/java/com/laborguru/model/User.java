@@ -1,10 +1,12 @@
 package com.laborguru.model;
 
+
 /**
  * Defines a SPM User
  * @author cnunez
  *
  */
+
 public class User extends SpmObject {
 
 	/**
@@ -13,6 +15,7 @@ public class User extends SpmObject {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
+	
 	private String userName;
 	private String password;
 	private String name;
