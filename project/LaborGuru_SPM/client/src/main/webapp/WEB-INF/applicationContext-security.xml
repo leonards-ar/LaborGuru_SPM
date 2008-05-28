@@ -35,7 +35,7 @@
 	<bean id="authenticationProcessingFilter" class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilter">
 		<property name="authenticationManager" ref="authenticationManager"/>
 		<property name="authenticationFailureUrl" value="/acegilogin.jsp?login_error=1"/>
-		<property name="defaultTargetUrl" value="/"/>
+		<property name="defaultTargetUrl" value="/acegilogin.jsp"/>
 		<property name="filterProcessesUrl" value="/j_acegi_security_check"/>
 	</bean>
 
@@ -97,7 +97,7 @@
       </property>
       <property name="authorityGranters">
         <list>
-          <bean class="com.mindpool.laborguru.acegi.UserGranterAuthority">
+          <bean class="com.laborguru.acegi.UserGranterAuthority">
             <property name="roleGroupName" value="Roles"/>
           </bean>
         </list>
