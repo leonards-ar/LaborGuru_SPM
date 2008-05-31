@@ -1,0 +1,18 @@
+<!DOCTYPE validators PUBLIC "-//OpenSymphony Group//XWork Validator 1.0.2//EN"
+       "http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
+<validators>
+  <field name="password">
+      <field-validator type="requiredstring">
+         <message>Password is required.</message>
+      </field-validator>
+  </field>
+  <field name="userName">
+      <field-validator type="requiredstring">
+         <message>Username is required.</message>
+      </field-validator>
+  </field>
+  <validator type="expression">
+      <param name="expression">username != password</param>
+      <message>Username and password can't be the same.</message>
+  </validator>
+</validators>
