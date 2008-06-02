@@ -20,21 +20,19 @@
 		</property>
 	</bean>
 	
-	<bean id="authenticateService" class="com.laborguru.service.AuthenticationService">
+	<bean id="authenticateService" class="com.laborguru.service.security.AuthenticationService">
 		<property name="service" ref="userService" />
 	</bean>
-</beans>
 
-	<bean id="hibernateTemplate"
-		class="org.springframework.orm.hibernate3.HibernateTemplate">
+
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
 		<property name="sessionFactory">
 			<ref bean="mySessionFactory" />
 		</property>
 	</bean>
 
 
-	<bean id="mySessionFactory"
-		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+	<bean id="mySessionFactory"	class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
 		<property name="dataSource">
 			<ref local="myDataSourcePool" />
 		</property>
@@ -64,10 +62,14 @@
 	<bean id="myDataSourcePool"
 		class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
-		<property name="driverClassName" value="org.postgresql.Driver" />
-		<property name="url" value="jdbc:postgresql://localhost:5432/spm?protocolVersion=2" />
-		<property name="username" value="spm" />
-		<property name="password" value="java1234" />
+		<property name="driverClassName" value="${db.driverClassName}" />
+		<property name="url" value="${db.url}" />
+		<property name="username" value="${db.username}" />
+		<property name="password" value="${db.password}" />
+	</bean>
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    	<property name="location" value="WEB-INF/spm.properties"/>
 	</bean>
 </beans>
 
