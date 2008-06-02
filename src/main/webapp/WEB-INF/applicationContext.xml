@@ -64,12 +64,10 @@
 	<bean id="myDataSourcePool"
 		class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
-		<!--  <property name="driverClassName" value="org.postgresql.Driver" />  -->
-		<property name="driverClassName" value="com.jdbc.Odbc.Driver" />
-		<property name="url" value="jdbc:odbc:laborGuru" />
-		<!--  <property name="url" value="jdbc:postgresql://localhost:5432/spm?protocolVersion=2" /> -->
-		<!--  <property name="username" value="spm" /> 
-		<property name="password" value="java1234" /> -->
+		<property name="driverClassName" value="org.postgresql.Driver" />
+		<property name="url" value="jdbc:postgresql://localhost:5432/spm?protocolVersion=2" />
+		<property name="username" value="spm" />
+		<property name="password" value="java1234" />
 	</bean>
 </beans>
 
