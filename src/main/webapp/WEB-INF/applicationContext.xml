@@ -4,6 +4,7 @@
     xsi:schemaLocation="
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
+<import resource="applicationContext-security.xml"/>
 <bean id="loginAction" class="com.laborguru.action.login.LoginAction" scope="prototype">
 <property name="userService" ref="userService"/>
 </bean>
