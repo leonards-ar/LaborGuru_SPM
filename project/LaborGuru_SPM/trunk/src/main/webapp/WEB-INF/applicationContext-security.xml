@@ -97,7 +97,7 @@
           <bean class="com.laborguru.acegi.UserGranterAuthority">
             <property name="roleGroupName" value="Roles"/>
           </bean>
-          <bean class="com.laborguru.acegi.UserGranterAuthority">
+          <bean class="com.laborguru.acegi.granter.UserGranterAuthority">
             <property name="roleGroupName" value="Permissions"/>
           </bean>
         </list>
