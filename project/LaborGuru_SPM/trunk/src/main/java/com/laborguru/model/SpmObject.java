@@ -7,9 +7,12 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
+
 /**
- * Defines a SpmObject Type.
- * @author cnunez
+ * Spm Object
+ * @author <a href="cnunezre@gmail.com">Cristian Nunez Rebolledo</a>
+ * @version 1.0
+ * @since SPM 1.0
  *
  */
 public class SpmObject implements Serializable{
