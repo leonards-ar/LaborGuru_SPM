@@ -1,12 +1,15 @@
 package com.laborguru.model;
 
+import java.util.Set;
+
 
 /**
- * Defines a SPM User
- * @author cnunez
+ * Spm User Type
+ * @author <a href="cnunezre@gmail.com">Cristian Nunez Rebolledo</a>
+ * @version 1.0
+ * @since SPM 1.0
  *
  */
-
 public class User extends SpmObject {
 
 	/**
@@ -20,6 +23,8 @@ public class User extends SpmObject {
 	private String password;
 	private String name;
 	private String surname;
+	private Set<Profile> profile;
+	
 	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
@@ -129,5 +134,11 @@ public class User extends SpmObject {
 	 */
 	public void setSurname(String surname) {
 		this.surname = surname;
+	}
+	public Set<Profile> getProfile() {
+		return profile;
+	}
+	public void setProfile(Set<Profile> profile) {
+		this.profile = profile;
 	}
 }
