@@ -1,4 +1,4 @@
-package com.laborguru.acegi;
+package com.laborguru.acegi.granter;
 
 import java.security.Principal;
 import java.security.acl.Group;
