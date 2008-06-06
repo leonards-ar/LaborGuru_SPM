@@ -2,6 +2,8 @@ package com.laborguru.model;
 
 import java.util.List;
 
+import com.laborguru.service.security.model.SecureObjectRole;
+
 /**
  * Permission Type
  * @author <a href="cnunezre@gmail.com">Cristian Nunez Rebolledo</a>
@@ -9,7 +11,7 @@ import java.util.List;
  * @since SPM 1.0
  *
  */
-public class Permission extends SpmObject {
+public class Permission extends SpmObject implements SecureObjectRole {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -80,4 +82,7 @@ public class Permission extends SpmObject {
 			return false;
 		return true;
 	}
+	
+	
+	
 }
