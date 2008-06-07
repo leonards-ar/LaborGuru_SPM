@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.laborguru.model">
+    <class name="Permission" table="tbl_permissions">
+
+        <id name="id" type="int" unsaved-value="null" column="id">
+            <generator class="native">
+            	<param name="sequence">tbl_permissions_id_seq</param>
+            	<param name="parameters">increment by 1 start with 1000</param>
+            </generator>
+        </id>
+
+        <property name="key" column="key" type="string" length="50" not-null="true"/>       
+        <property name="description" column="description" type="string" length="50" />        
+
+	    <set name="menuItems" inverse="true">
+	        <key column="permissionId"/>
+        	<one-to-many class="MenuItem"/>
+	    </set>
+    </class>
+</hibernate-mapping>
+
+

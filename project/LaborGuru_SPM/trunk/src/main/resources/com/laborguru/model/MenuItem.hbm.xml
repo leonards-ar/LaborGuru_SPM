@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.laborguru.model">
+    <class name="MenuItem" table="tbl_menu_items">
+
+        <id name="id" type="int" unsaved-value="null" column="menu_item_id">
+            <generator class="native">
+            	<param name="sequence">tbl_menu_items_id_seq</param>
+            	<param name="parameters">increment by 1 start with 1000</param>
+            </generator>
+        </id>
+
+        <property name="labelKey" column="label_key" type="string" length="50" not-null="true"/>       
+        <property name="helpKey" column="help_key" type="string" length="50" />        
+        <property name="target" column="target" type="string" length="200"/>       
+        <property name="position" column="position" type="int" length="50" />        
+
+		<!-- Parent can be null for root menu items -->
+		<many-to-one name="parentMenuItem" cascade="none" outer-join="false">
+			<column name="parent_id" not-null="false"/>
+		</many-to-one>
+
+		<set name="childMenuItems" cascade="all-delete-orphan" inverse="true" lazy="true">
+			<key column="parent_id"/>
+			<one-to-many class="MenuItem"/>
+		</set>
+		
+		<many-to-one name="permission" column="permissionId" not-null="true"/>
+    </class>
+</hibernate-mapping>
+
+
