@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<MenuConfig>
+  <Displayers>
+    <Displayer name="TabbedMenu" type="net.sf.navigator.displayer.TabbedMenuDisplayer"/>
+   </Displayers>
+
+  <Menus>
+    <Menu name="projectMenu" title="Project Menu">
+        <Item title="Home" toolTip="Return to List of Menus" page="/index.jsp"/>
+        <Item title="Documentation" toolTip="View Project Documentation"
+            location="http://struts-menu.sf.net"/>
+        <Item title="FAQs" toolTip="View Frequenty Asked Questions"
+            location="http://struts-menu.sf.net/faq.html"/>
+        <Item title="Mailing Lists" toolTip="Subscribe to Mailing Lists"
+            location="http://sourceforge.net/mail/?group_id=48726"/>
+        <Item title="Mailing List Archives"
+            toolTip="Search the Mailing List Archives"
+            location="http://www.mail-archive.com/index.php?hunt=struts-menu"/>
+    </Menu>
+  </Menus>
+</MenuConfig>
