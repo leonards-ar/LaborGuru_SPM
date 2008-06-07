@@ -109,6 +109,20 @@
 			<version>4.4</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-tiles-plugin</artifactId>
+			<version>2.0.11.1</version>
+		</dependency>
+		<dependency>
+			<groupId>struts-menu</groupId>
+			<artifactId>struts-menu</artifactId>
+			<version>2.4.3</version>
+		</dependency>
+	  <dependency>
+      <groupId>commons-collections</groupId>
+      <artifactId>commons-collections</artifactId>
+      <version>3.2.1</version>
+    </dependency>		
 	</dependencies>
-
 </project>

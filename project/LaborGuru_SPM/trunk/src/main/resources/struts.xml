@@ -6,7 +6,13 @@
 <struts>
 	<constant name="struts.devMode" value="true" />
 	<constant name="struts.custom.i18n.resources" value="defaultmessages, errormessages" />
-	<include file="login.xml"/>
-	<!-- Add packages here -->
+
+	<package name="spm-default" extends="tiles-default">
+		<result-types>
+			<result-type name="tiles" default="true" class="org.apache.struts2.views.tiles.TilesResult" />
+		</result-types>
+	</package>
+	
+	<include file="login.xml" />
 
 </struts>
