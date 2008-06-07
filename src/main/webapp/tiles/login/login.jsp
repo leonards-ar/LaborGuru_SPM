@@ -24,7 +24,7 @@
 			<tr>
 			<tr>
 				<td class="label"><s:text name="user.password" /></td>
-				<td><input type="text" name="j_password" /></td>
+				<td><input type="password" name="j_password" /></td>
 			</tr>
 			<%
 				if (request.getParameter("login_error") != null) {
