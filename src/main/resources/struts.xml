@@ -9,10 +9,11 @@
 
 	<package name="spm-default" extends="tiles-default">
 		<result-types>
-			<result-type name="tiles" default="true" class="org.apache.struts2.views.tiles.TilesResult" />
+			<result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult" />
 		</result-types>
 	</package>
 	
 	<include file="login.xml" />
+	<include file="home.xml" />
 
 </struts>

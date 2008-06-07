@@ -30,11 +30,9 @@
 
 	<bean id="httpSessionContextIntegrationFilter" class="org.acegisecurity.context.HttpSessionContextIntegrationFilter"/>
 
-	
-
 	<bean id="authenticationProcessingFilter" class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilter">
 		<property name="authenticationManager" ref="authenticationManager"/>
-		<property name="authenticationFailureUrl" value="/login.jsp?login_error=1"/>
+		<property name="authenticationFailureUrl" value="/login/login.action?login_error=1"/>
 		<property name="defaultTargetUrl" value="/"/>
 		<property name="filterProcessesUrl" value="/j_acegi_security_check"/>
 	</bean>
@@ -49,7 +47,7 @@
 	<bean id="exceptionTranslationFilter" class="org.acegisecurity.ui.ExceptionTranslationFilter">
 		<property name="authenticationEntryPoint">
 			<bean class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilterEntryPoint">
-				<property name="loginFormUrl" value="/login.jsp"/>
+				<property name="loginFormUrl" value="/login/login.action"/>
 				<property name="forceHttps" value="false"/>
 			</bean>
 		</property>
@@ -77,7 +75,8 @@
 			<value><![CDATA[
 				CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
 				PATTERN_TYPE_APACHE_ANT
-				/login/**=ROLE_USER
+				/login/home.jsp=ROLE_USER
+				**/login.action=ROLE_ANONYMOUS
 				/**=IS_AUTHENTICATED_ANONYMOUSLY
 			]]></value>
 		</property>
