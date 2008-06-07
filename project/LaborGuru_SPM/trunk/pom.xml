@@ -9,12 +9,32 @@
 	<packaging>war</packaging>
 	<name>SPM Project</name>
 	<url>http://www.mindpool.com.ar/spm</url>
+	<developers>
+		<developer>
+			<id>mariano</id>
+			<name>Mariano Capurro</name>
+			<email>mcapurro@gmail.com</email>
+		</developer>
+		<developer>
+			<id>federico</id>
+			<name>Federico Barrera Oro</name>
+			<email>fbarreraoro@gmail.com</email>
+		</developer>
+		<developer>
+			<id>cristian</id>
+			<name>Cristin Nunez Rebolledo</name>
+			<email>cnunezre@gmail.com</email>
+		</developer>
+	</developers>
 	<build>
 		<finalName>spmwebapp</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>maven-jetty-plugin</artifactId>
+				<configuration>
+					<webApp>${basedir}/target/spmwebapp.war</webApp>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -90,4 +110,5 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
 </project>
