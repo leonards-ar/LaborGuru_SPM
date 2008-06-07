@@ -3,9 +3,9 @@
         "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
         "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-	<package name="login" namespace="/login" extends="struts-default">
+	<package name="login" namespace="/login" extends="spm-default">
 		<action name="welcome">
-			<result>/login/welcome.jsp</result>
+			<result type="tiles">loginPage</result>
 		</action>
 		<action name="login" class="com.laborguru.action.login.LoginAction">
 			<result name="input">/login/welcome.jsp</result>
