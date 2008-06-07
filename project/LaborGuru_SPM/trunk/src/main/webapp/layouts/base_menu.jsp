@@ -29,7 +29,7 @@
 			</tr>
 			<!-- Footer -->
 			<tr>
-				<td id="footerRow"><tiles:insertAttribute name="header" /></td>
+				<td id="footerRow"><tiles:insertAttribute name="footer" /></td>
 			</tr>
 		</table>
 	</body>
