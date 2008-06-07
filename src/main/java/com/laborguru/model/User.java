@@ -23,7 +23,7 @@ public class User extends SpmObject {
 	private String password;
 	private String name;
 	private String surname;
-	private Set<Profile> profile;
+	private Set<Profile> profiles;
 	
 	
 	/* (non-Javadoc)
@@ -135,10 +135,33 @@ public class User extends SpmObject {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	public Set<Profile> getProfile() {
-		return profile;
+	
+	/**
+	 * @return
+	 */
+	public Set<Profile> getProfiles() {
+		return profiles;
 	}
-	public void setProfile(Set<Profile> profile) {
-		this.profile = profile;
+	
+	
+	/**
+	 * We leave it private to enforce the cardinality with the addProfile.
+	 * DO NOT MAKE IT PUBLIC
+	 * @param profile
+	 */
+	private void setProfiles(Set<Profile> profile) {
+		this.profiles = profile;
+	}
+	
+	/**
+	 * @param profile
+	 */
+	public void addProfile(Profile profile){
+		
+		if (profile == null){
+			throw new IllegalArgumentException("Null profile passed in as parameter");
+		}
+
+		this.profiles.add(profile);
 	}
 }

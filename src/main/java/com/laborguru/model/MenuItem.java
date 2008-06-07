@@ -1,5 +1,7 @@
 package com.laborguru.model;
 
+import java.util.Set;
+
 import com.laborguru.service.security.model.SecureResource;
 
 /**
@@ -19,9 +21,12 @@ public class MenuItem extends SpmObject implements SecureResource {
 	private String helpKey;
 	private String target;
 	private Integer position;
-	private MenuItem parent;
-	
+	private MenuItem parentMenuItem;
+
 	private Permission permission;
+	
+	private Set<MenuItem> childMenuItems;
+
 
 	public Integer getId() {
 		return id;
@@ -63,12 +68,12 @@ public class MenuItem extends SpmObject implements SecureResource {
 		this.position = position;
 	}
 
-	public MenuItem getParent() {
-		return parent;
+	public MenuItem getParentMenuItem() {
+		return parentMenuItem;
 	}
 
-	public void setParent(MenuItem parent) {
-		this.parent = parent;
+	public void setParentMenuItem(MenuItem parent) {
+		this.parentMenuItem = parent;
 	}
 
 	public Permission getPermission() {
@@ -78,7 +83,8 @@ public class MenuItem extends SpmObject implements SecureResource {
 	public void setPermission(Permission permission) {
 		this.permission = permission;
 	}
-
+	
+	
 	/* (non-Javadoc)
 	 * @see com.laborguru.model.SpmObject#hashCode()
 	 */
@@ -87,7 +93,7 @@ public class MenuItem extends SpmObject implements SecureResource {
 		int result = super.hashCode();
 		result = prime * result
 				+ ((labelKey == null) ? 0 : labelKey.hashCode());
-		result = prime * result + ((parent == null) ? 0 : parent.hashCode());
+		result = prime * result + ((parentMenuItem == null) ? 0 : parentMenuItem.hashCode());
 		result = prime * result
 				+ ((position == null) ? 0 : position.hashCode());
 		result = prime * result + ((target == null) ? 0 : target.hashCode());
@@ -110,10 +116,10 @@ public class MenuItem extends SpmObject implements SecureResource {
 				return false;
 		} else if (!labelKey.equals(other.labelKey))
 			return false;
-		if (parent == null) {
-			if (other.parent != null)
+		if (parentMenuItem == null) {
+			if (other.parentMenuItem != null)
 				return false;
-		} else if (!parent.equals(other.parent))
+		} else if (!parentMenuItem.equals(other.parentMenuItem))
 			return false;
 		if (position == null) {
 			if (other.position != null)
@@ -127,5 +133,32 @@ public class MenuItem extends SpmObject implements SecureResource {
 			return false;
 		return true;
 	}
+
+	public Set<MenuItem> getChildMenuItems() {
+		return childMenuItems;
+	}
+
 	
+	/**
+	 * We leave it private to enforce the cardinality with the addChildMenuItem.
+	 * DO NOT MAKE IT PUBLIC
+	 * @param childMenuItems
+	 */
+	private void setChildMenuItems(Set<MenuItem> childMenuItems) {
+		this.childMenuItems = childMenuItems;
+	}
+
+	public void addChildMenuItem(MenuItem childMenuItem){
+		
+		if (childMenuItem == null){
+			throw new IllegalArgumentException("Null child menu item passed in as parameter");
+		}
+		
+		if (childMenuItem.getParentMenuItem() != null){
+			childMenuItem.getParentMenuItem().getChildMenuItems().remove(childMenuItem);
+		}
+		
+		childMenuItem.setParentMenuItem(this);
+		this.childMenuItems.add(childMenuItem);
+	}
 }

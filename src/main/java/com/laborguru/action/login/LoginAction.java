@@ -20,7 +20,7 @@ public class LoginAction extends SpmAction {
 			return Action.SUCCESS;
 		}
 		
-		addActionError("invalid username or password");
+		addActionError(getText("error.username.password.invalid"));
 		
 		return Action.INPUT;	
 	}

@@ -50,7 +50,12 @@ public class Permission extends SpmObject implements SecureObjectRole {
 		return menuItems;
 	}
 
-	public void setMenuItems(List<MenuItem> menuItems) {
+	/**
+	 * We leave it private to enforce the cardinality with the addMenuItem.
+	 * DO NOT MAKE IT PUBLIC 
+	 * @param menuItems
+	 */
+	private void setMenuItems(List<MenuItem> menuItems) {
 		this.menuItems = menuItems;
 	}
 
@@ -84,5 +89,17 @@ public class Permission extends SpmObject implements SecureObjectRole {
 	}
 	
 	
-	
+	public void addMenuItem(MenuItem menuItem){
+		
+		if (menuItem == null){
+			throw new IllegalArgumentException("Null child menu item passed in as parameter");
+		}
+
+		if (menuItem.getPermission() != null){
+			menuItem.getPermission().menuItems.remove(menuItem);
+		}
+		
+		menuItem.setPermission(this);
+		this.menuItems.add(menuItem);
+	}
 }

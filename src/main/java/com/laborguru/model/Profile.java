@@ -40,10 +40,29 @@ public class Profile extends SpmObject {
 		return permissions;
 	}
 
-	public void setPermissions(Set<Permission> permissions) {
+	
+	/**
+	 * We leave it private to enforce the cardinality with the addPermission.
+	 * DO NOT MAKE IT PUBLIC
+	 * @param permissions
+	 */
+	private void setPermissions(Set<Permission> permissions) {
 		this.permissions = permissions;
 	}
 
+	/**
+	 * @param permission
+	 */
+	public void addPermission(Permission permission){
+		
+		if (permission == null){
+			throw new IllegalArgumentException("Null permission passed in as parameter");
+		}
+
+		this.permissions.add(permission);
+	}	
+	
+	
 	public String getName() {
 		return name;
 	}
