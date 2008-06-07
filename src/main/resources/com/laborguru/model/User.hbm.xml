@@ -8,7 +8,7 @@
 
         <id name="id" type="int" unsaved-value="null" column="id">
             <generator class="native">
-            	<param name="sequence">spmuser_id_seq</param>
+            	<param name="sequence">tbl_users_id_seq</param>
             	<param name="parameters">increment by 1 start with 1000</param>
             </generator>
         </id>
@@ -18,6 +18,10 @@
         <property name="name" column="name" type="string" length="50" />
         <property name="surname" column="surname" type="string" length="100" />
 
+	    <set name="profiles" table="tbl_users_profiles" lazy="true">
+	        <key column="userId"/>
+	        <many-to-many column="profileId" class="Profile"/>
+	    </set>
     </class>
 </hibernate-mapping>
 
