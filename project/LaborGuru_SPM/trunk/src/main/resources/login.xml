@@ -5,11 +5,18 @@
 <struts>
 	<package name="login" namespace="/login" extends="spm-default">
 		<action name="welcome">
+		<result>/login.jsp</result>
+			<!--  result type="tiles">loginPage</result-->
+		</action>
+
+		<action name="login">
 			<result type="tiles">loginPage</result>
 		</action>
-		<action name="login" class="com.laborguru.action.login.LoginAction">
-			<result name="input">/login/welcome.jsp</result>
+		
+		<!-- action name="login" class="com.laborguru.action.login.LoginAction">
+			<result name="input">/login/login.jsp</result>
 			<result name="success">/login/home.jsp</result>
-		</action>		
+			<result name="acegi">/j_acegi_security_check</result>
+		</action -->		
 	</package>
 </struts>

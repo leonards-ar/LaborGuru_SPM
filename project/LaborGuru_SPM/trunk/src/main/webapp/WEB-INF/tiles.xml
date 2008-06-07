@@ -5,21 +5,20 @@
 
 <tiles-definitions>
 	<definition name="baseLayout" template="/layouts/base.jsp">
-		<put-attribute name="title" value="SPM" />
 		<put-attribute name="header" value="/tiles/header.jsp" />
 		<put-attribute name="footer" value="/tiles/footer.jsp" />
 	</definition>
 
-	<!-- definition name="baseLayoutWithMenu" template="/layouts/base_menu.jsp" extends="baseLayout">
+	<definition name="baseLayoutWithMenu" template="/layouts/base_menu.jsp" extends="baseLayout">
 		<put-attribute name="menu" value="/tiles/menu.jsp" />
-	</definition-->
+	</definition>
 
 	<definition name="loginPage" extends="baseLayout">
 		<put-attribute name="body" value="/tiles/login/login.jsp" />
 	</definition>
 
-	<!-- definition name="homePage" extends="baseLayoutWithMenu">
+	<definition name="homePage" extends="baseLayoutWithMenu">
 		<put-attribute name="body" value="/tiles/home/home.jsp" />
-	</definition-->
+	</definition>
 
 </tiles-definitions>

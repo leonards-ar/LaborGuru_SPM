@@ -73,7 +73,7 @@
 	</bean>
 	
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-    	<property name="location" value="WEB-INF/spm.properties"/>
+    	<property name="location" value="WEB-INF/classes/spm.properties"/>
 	</bean>
 </beans>
 
