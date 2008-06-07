@@ -40,6 +40,9 @@
 		<property name="mappingResources">
 			<list>
 				<value>com/laborguru/model/User.hbm.xml</value>
+				<value>com/laborguru/model/Profile.hbm.xml</value>
+				<value>com/laborguru/model/Permission.hbm.xml</value>
+				<value>com/laborguru/model/MenuItem.hbm.xml</value>				
 			</list>
 		</property>
 		<property name="hibernateProperties">
