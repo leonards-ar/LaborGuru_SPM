@@ -3,7 +3,7 @@
     "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
     "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="com.laborguru.model">
+<hibernate-mapping package="com.laborguru.model" schema="spm">
     <class name="User" table="tbl_users">
 
         <id name="id" type="int" unsaved-value="null" column="id">
