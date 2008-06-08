@@ -3,7 +3,7 @@
     "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
     "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="com.laborguru.model">
+<hibernate-mapping package="com.laborguru.model" schema="spm">
     <class name="Permission" table="tbl_permissions">
 
         <id name="id" type="int" unsaved-value="null" column="id">
@@ -16,7 +16,7 @@
         <property name="key" column="key" type="string" length="50" not-null="true"/>       
         <property name="description" column="description" type="string" length="50" />        
 
-	    <set name="menuItems" inverse="true">
+	  <set name="menuItems" inverse="true" cascade="none">
 	        <key column="permissionId"/>
         	<one-to-many class="MenuItem"/>
 	    </set>
