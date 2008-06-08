@@ -4,11 +4,6 @@
         "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
 	<package name="login" namespace="/login" extends="spm-default">
-		<action name="welcome">
-		<result>/login.jsp</result>
-			<!--  result type="tiles">loginPage</result-->
-		</action>
-
 		<action name="login">
 			<result type="tiles">loginPage</result>
 		</action>		
