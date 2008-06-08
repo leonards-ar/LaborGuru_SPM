@@ -5,9 +5,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
 	<head>
-		<title><tiles:insertAttribute name="title" /></title>
+		<title><s:text name="application.title"/></title>
 		<link rel="stylesheet" href="<s:url value="/css/style.css"/>" type="text/css" charset="utf-8" />
-    <link rel="stylesheet" type="text/css" media="screen" href="<s:url value="/css/menu/global.css"/>" />
     <link rel="stylesheet" type="text/css" media="screen" href="<s:url value="/css/menu/tabs.css"/>" />    
     <script type="text/javascript" src="<s:url value="/js/menu/tabs.js"/>"></script>
 		
