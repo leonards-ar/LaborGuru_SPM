@@ -6,17 +6,20 @@
    </Displayers>
 
   <Menus>
-    <Menu name="projectMenu" title="Project Menu">
-        <Item title="Home" toolTip="Return to List of Menus" page="/index.jsp"/>
-        <Item title="Documentation" toolTip="View Project Documentation"
-            location="http://struts-menu.sf.net"/>
-        <Item title="FAQs" toolTip="View Frequenty Asked Questions"
-            location="http://struts-menu.sf.net/faq.html"/>
-        <Item title="Mailing Lists" toolTip="Subscribe to Mailing Lists"
-            location="http://sourceforge.net/mail/?group_id=48726"/>
-        <Item title="Mailing List Archives"
-            toolTip="Search the Mailing List Archives"
-            location="http://www.mail-archive.com/index.php?hunt=struts-menu"/>
+    <Menu name="TabbedHome" title="Home" location="?Home" target="_blank"/>
+    <Menu name="TabbedAbout" title="About"> <!-- No location, uses first item's location (People) -->
+        <Item name="People" title="People" location="?People"/>
+        <Item name="Careers" title="Careers" location="?Careers" target="_blank"/>
+        <Item name="Press" title="Press" location="?Press" 
+            onclick="alert('This item has an onclick handler in menu-config.xml.')"/>
+        <Item name="Locations" title="Locations" location="?Locations"/>
     </Menu>
+
+    <Menu name="TabbedContact" title="Contact" location="?Contact">
+        <Item name="EMail" title="E-Mail" location="?EMail"/>
+        <Item name="Phone" title="Phone" location="?Phone"/>
+        <Item name="CarrierPigeon" title="Carrier Pigeon" location="?Pigeon"/>
+    </Menu>
+    <Menu name="TabbedExit" title="Exit" page="/index.jsp"/>
   </Menus>
 </MenuConfig>
