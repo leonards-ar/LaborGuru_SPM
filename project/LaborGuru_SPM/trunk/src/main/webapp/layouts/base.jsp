@@ -3,7 +3,7 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
-<html:>
+<html>
 	<head>
 		<title><s:text name="application.title"/></title>
 		<link rel="stylesheet" href="<s:url value="/css/style.css"/>" type="text/css" charset="utf-8" />
