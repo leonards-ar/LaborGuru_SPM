@@ -42,6 +42,29 @@
 					<target>1.5</target>
 				</configuration>
 			</plugin>
+            <plugin>
+                <!-- hibernate ddl generation -->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>hibernate3-maven-plugin</artifactId>
+                <version>2.1</version>
+                <configuration>
+                    <components>
+                        <component>
+                            <name>hbm2ddl</name>
+                            <implementation>configuration</implementation>
+                        </component>
+                    </components>
+                    <componentProperties>
+                        <propertyfile>hibernate.properties</propertyfile>
+                        <outputfilename>spm-schema.sql</outputfilename>
+                        <drop>true</drop>
+                        <create>true</create>
+                        <export>false</export>
+                        <jdk5>true</jdk5>
+                        <format>true</format>
+                    </componentProperties>
+                </configuration>
+			</plugin>
 		</plugins>
 	</build>
 	<dependencies>
