@@ -93,12 +93,7 @@
       </property>
       <property name="authorityGranters">
         <list>
-          <bean class="com.laborguru.acegi.granter.UserGranterAuthority">
-            <property name="roleGroupName" value="Roles"/>
-          </bean>
-          <bean class="com.laborguru.acegi.granter.UserGranterAuthority">
-            <property name="roleGroupName" value="Permissions"/>
-          </bean>
+          <bean class="com.laborguru.acegi.granter.UserGranterAuthority"/>
         </list>
       </property>
     </bean>
