@@ -28,10 +28,18 @@
 			</tr>
 			<%
 				if (request.getParameter("login_error") != null) {
+					Throwable e = (Throwable) session.getAttribute(AbstractProcessingFilter.ACEGI_SECURITY_LAST_EXCEPTION_KEY);
+					String exceptionMessage = "Login failed for unknown reason.";
+				    
+				    if(e.getCause() != null) {
+				    	e = e.getCause();
+				    }
+				    
+				    exceptionMessage = e.getMessage();
 			%>
 			<tr>
 				<td colspan="2"><font color="red">
-				 <%=((AuthenticationException) session.getAttribute(AbstractProcessingFilter.ACEGI_SECURITY_LAST_EXCEPTION_KEY)).getMessage()%>
+				 <%= exceptionMessage %>
 				</font></td>
 			</tr>
 			<%
