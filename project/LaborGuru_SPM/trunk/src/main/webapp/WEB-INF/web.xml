@@ -3,11 +3,6 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 <web-app>
 	<display-name>SPM Web Application</display-name>
-
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/classes/applicationContext.xml</param-value>
-	</context-param>
 	<context-param>
 		<param-name>tilesDefinitions</param-name>
 		<param-value>/WEB-INF/tiles.xml</param-value>
@@ -16,7 +11,13 @@
 		<param-name>menuConfigLocation</param-name>
 		<param-value>/WEB-INF/menu-config.xml</param-value>
 	</context-param>	
-	
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+					/WEB-INF/classes/applicationContext.xml
+					/WEB-INF/classes/applicationContext-security.xml
+		</param-value>
+	</context-param>	
 	<filter>
 		<filter-name>Acegi Filter Chain Proxy</filter-name>
 		<filter-class>

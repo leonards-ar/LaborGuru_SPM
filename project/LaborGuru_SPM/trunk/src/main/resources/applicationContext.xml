@@ -4,8 +4,6 @@
     xsi:schemaLocation="
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
-<import resource="applicationContext-security.xml"/>
-
 	<bean id="userService"
 		class="com.laborguru.service.user.UserServiceBean">
 		<property name="userDao" ref="userDao" />
@@ -67,7 +65,7 @@
 		<property name="password" value="${db.password}" />
 	</bean>
 	
-	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
     	<property name="location" value="classpath:spm.properties"/>
 	</bean>
 </beans>
