@@ -72,7 +72,7 @@ public class UserServiceBeanTest {
 		verify(mockUserDao);
 	}
 	
-	@Test
+	/*@Test
 	public void authenticateUser_happyPath(){
 		User user = new User();		
 		user.setUserName("username_1");
@@ -92,8 +92,8 @@ public class UserServiceBeanTest {
 		assertEquals(userResult, testResult);
 		verify(mockUserDao);
 	}
-	
-	@Test
+	*/
+	/*@Test
 	public void authenticateUser_invalidUsername(){
 		
 		User user = new User();		
@@ -108,8 +108,8 @@ public class UserServiceBeanTest {
 		assertEquals(null, testResult);
 		verify(mockUserDao);
 	}
-	
-	@Test
+	*/
+	/*@Test
 	public void authenticateUser_invalidPassword(){
 		
 		User user = new User();		
@@ -130,5 +130,5 @@ public class UserServiceBeanTest {
 		assertEquals(null, testResult);
 		verify(mockUserDao);
 	}
-	
+	*/
 }
