@@ -65,6 +65,10 @@
 		<property name="password" value="${db.password}" />
 	</bean>
 	
+	<bean id="spmLogger" class="com.laborguru.logger.DefaultSpmLogger" factory-method="getInstance">
+		<property name="logMessagesConfigResource" value="/log-messages.properties"/>
+	</bean>
+	
 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
     	<property name="location" value="classpath:spm.properties"/>
 	</bean>
