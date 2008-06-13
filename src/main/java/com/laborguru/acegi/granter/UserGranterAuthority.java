@@ -1,46 +1,25 @@
 package com.laborguru.acegi.granter;
 
 import java.security.Principal;
-import java.security.acl.Group;
-import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.acegisecurity.GrantedAuthority;
 import org.acegisecurity.providers.jaas.AuthorityGranter;
+import org.acegisecurity.userdetails.UserDetails;
 
 public class UserGranterAuthority implements AuthorityGranter {
 
-	private String roleGroupName = "Roles";
-	
 	public Set<String> grant(Principal principal) {
-		if (principal instanceof Group) {
-			Group group = ((Group) principal);
-			if (roleGroupName.equals(group.getName())) {
-				Enumeration members = group.members();
-				Set<String> set = new HashSet<String>();
-				while (members.hasMoreElements()) {
-					Object role = members.nextElement();
-					String roleName = ((Principal) role).getName();
-					set.add(roleName);
-				}
-				return set.isEmpty() ? null : set;
-			}
+		UserDetails userDetails = (UserDetails)principal;
+		GrantedAuthority[] grants = userDetails.getAuthorities();
+		if(grants.length == 0) {
+			return null;
 		}
-		return null;
+		Set<String> set = new HashSet<String>();
+		for(int i = 0; i < grants.length; i++) {
+			set.add(grants[i].getAuthority());
+		}
+		return set;
 	}
-
-	public String getRoleGroupName() {
-		return roleGroupName;
-	}
-
-	/**
-	 * Change the role group name from the default of Roles
-	 * 
-	 * @param roleGroupName
-	 *            new role group name
-	 */
-	public void setRoleGroupName(String roleGroupName) {
-		this.roleGroupName = roleGroupName;
-	}
-
 }
