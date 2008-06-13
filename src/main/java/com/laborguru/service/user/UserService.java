@@ -10,13 +10,6 @@ import com.laborguru.service.user.dao.UserDao;
  *
  */
 public interface UserService extends Service {
-	/**
-	 * Authenticates that a user logging in exists in the system and correct credentials have been given.
-	 * @param A User object containing a username and password (no ID).
-	 * @return A full populated User object.
-	 * TODO: Change User return for a BusinessResponse?
-	 */
-	User authenticateUser(User userLoggingOn);
 
 	/**
 	 * Retrieves  a user by userName

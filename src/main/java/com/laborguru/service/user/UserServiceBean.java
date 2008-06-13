@@ -18,24 +18,6 @@ public class UserServiceBean implements UserService {
 	/* (non-Javadoc)
 	 * @see com.mindpool.laborguru.service.user.UserService#authenticateUser(com.mindpool.laborguru.model.User)
 	 */
-	public User authenticateUser(User userLoggingOn) {
-		
-		User user = getUserByUserName(userLoggingOn);
-		
-		if (user != null){
-
-			//Verifying the password
-			//TODO Setting the Business Response with the error
-			if (!user.getPassword().equals(userLoggingOn.getPassword())){
-				user = null;
-			}
-		} else {
-			//Invalid username
-			//TODO Doing nothing for now, in the near future setting the business response with the Invalid Username error
-		}
-		
-		return user;
-	}
 
 	/**
 	 * @param userLoggingOn
