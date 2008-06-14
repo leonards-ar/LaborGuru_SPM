@@ -2,8 +2,6 @@ package com.laborguru.model;
 
 import java.util.Set;
 
-import com.laborguru.service.security.model.SecureResource;
-
 /**
  * Menu Item Type
  * @author <a href="cnunezre@gmail.com">Cristian Nunez Rebolledo</a>
@@ -11,7 +9,7 @@ import com.laborguru.service.security.model.SecureResource;
  * @since SPM 1.0
  *
  */
-public class MenuItem extends SpmObject implements SecureResource {
+public class MenuItem extends SpmObject {
 	
 	private static final long serialVersionUID = 1L;
 
