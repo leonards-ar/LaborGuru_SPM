@@ -2,6 +2,11 @@ package com.laborguru.model;
 
 public class Position {
 
+	/**
+	 * Default serial version ID
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private int id;
 	Store store;
 	String name;

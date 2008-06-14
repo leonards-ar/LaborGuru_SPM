@@ -2,6 +2,11 @@ package com.laborguru.model;
 
 public class Store extends SpmObject {
 
+	/**
+	 * Default serial version ID
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	int id;
 	
 	String name;
