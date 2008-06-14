@@ -16,7 +16,7 @@
         <property name="name" column="name" type="string" length="50" not-null="true"/>       
         <property name="description" column="description" type="string" length="50" />        
 
-	    <set name="permissions" table="tbl_profiles_permissions" lazy="true">
+	    <set name="permissions" table="tbl_profiles_permissions" lazy="false">
 	        <key column="profileId"/>
 	        <many-to-many column="permissionId" class="Permission"/>
 	    </set>

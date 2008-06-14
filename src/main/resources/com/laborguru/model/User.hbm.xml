@@ -18,7 +18,7 @@
         <property name="name" column="name" type="string" length="50" />
         <property name="surname" column="surname" type="string" length="100" />
 
-	    <set name="profiles" table="tbl_users_profiles" lazy="true">
+	    <set name="profiles" table="tbl_users_profiles" lazy="false">
 	        <key column="userId"/>
 	        <many-to-many column="profileId" class="Profile"/>
 	    </set>
