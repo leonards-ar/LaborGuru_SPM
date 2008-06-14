@@ -5,8 +5,11 @@ import com.laborguru.service.Service;
 import com.laborguru.service.user.dao.UserDao;
 
 /**
- * User Service Interface. Handles Authentication & Logon for SPM Users.  
- * @author cnunez
+ * User Service Interface. Handles services for SPM Users.  
+ *
+ * @author <a href="cnunezre@gmail.com">Cristian Nunez Rebolledo</a>
+ * @version 1.0
+ * @since SPM 1.0
  *
  */
 public interface UserService extends Service {
@@ -18,5 +21,9 @@ public interface UserService extends Service {
 	 */
 	User getUserByUserName(User user);
 	 
+	/**
+	 * Setter for User Dao
+	 * @param userDao UserDao
+	 */
 	void setUserDao(UserDao userDao);
 }
