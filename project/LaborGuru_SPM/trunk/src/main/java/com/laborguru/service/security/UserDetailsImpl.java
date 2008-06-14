@@ -1,4 +1,4 @@
-package com.laborguru.utils;
+package com.laborguru.service.security;
 
 import java.security.Principal;
 

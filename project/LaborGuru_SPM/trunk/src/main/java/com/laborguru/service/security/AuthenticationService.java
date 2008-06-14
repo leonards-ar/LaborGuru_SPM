@@ -8,7 +8,6 @@ import org.springframework.dao.DataAccessException;
 import com.laborguru.logger.DefaultSpmLogger;
 import com.laborguru.model.User;
 import com.laborguru.service.user.UserService;
-import com.laborguru.utils.UserDetailsImpl;
 import com.mindpool.security.service.UserAuthenticationService;
 
 public class AuthenticationService implements UserAuthenticationService {
