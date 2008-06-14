@@ -16,10 +16,6 @@
         <property name="key" column="key" type="string" length="50" not-null="true"/>       
         <property name="description" column="description" type="string" length="50" />        
 
-	  <set name="menuItems" inverse="true" cascade="none">
-	        <key column="permissionId"/>
-        	<one-to-many class="MenuItem"/>
-	    </set>
     </class>
 </hibernate-mapping>
 
