@@ -46,19 +46,6 @@ public class Permission extends SpmObject implements SecureObjectRole {
 		this.description = description;
 	}
 
-	public List<MenuItem> getMenuItems() {
-		return menuItems;
-	}
-
-	/**
-	 * We leave it private to enforce the cardinality with the addMenuItem.
-	 * DO NOT MAKE IT PUBLIC 
-	 * @param menuItems
-	 */
-	private void setMenuItems(List<MenuItem> menuItems) {
-		this.menuItems = menuItems;
-	}
-
 	/* (non-Javadoc)
 	 * @see com.laborguru.model.SpmObject#hashCode()
 	 */
