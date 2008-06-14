@@ -7,9 +7,19 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import com.laborguru.model.User;
 
  
+/**
+ * Implementation for UserDao
+ * @author <a href="cnunezre@gmail.com">Cristian Nunez Rebolledo</a>
+ * @version 1.0
+ * @since SPM 1.0
+ *
+ */
 public class UserDaoHibernate extends HibernateDaoSupport implements UserDao {
 
 	
+	/* (non-Javadoc)
+	 * @see com.laborguru.service.user.dao.UserDao#getUserByUsername(com.laborguru.model.User)
+	 */
 	public User getUserByUsername(User user) {
 
 		List<User> result = (List<User>)getHibernateTemplate().findByNamedParam(
