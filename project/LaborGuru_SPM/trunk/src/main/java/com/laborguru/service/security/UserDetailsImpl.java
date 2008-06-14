@@ -1,11 +1,15 @@
 package com.laborguru.service.security;
 
 import java.security.Principal;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.acegisecurity.GrantedAuthority;
 import org.acegisecurity.GrantedAuthorityImpl;
 import org.acegisecurity.userdetails.UserDetails;
 
+import com.laborguru.model.Permission;
+import com.laborguru.model.Profile;
 import com.laborguru.model.User;
 
 public class UserDetailsImpl implements UserDetails, Principal {
@@ -21,18 +25,21 @@ public class UserDetailsImpl implements UserDetails, Principal {
 	}
 
 	public GrantedAuthority[] getAuthorities() {
-		/*Set<GrantedAuthority>granters = new HashSet<GrantedAuthority>();
+		Set<GrantedAuthority>granters = new HashSet<GrantedAuthority>();
 		Set<Profile> profileSet;
 		profileSet = user.getProfiles();
 		for(Profile profile: profileSet) {
+			granters.add(new GrantedAuthorityImpl(profile.getName()));
 			Set<Permission> permissionSet = profile.getPermissions();
 			for(Permission permission: permissionSet) {
 				granters.add(new GrantedAuthorityImpl(permission.getKey()));
 			}
 		}
-		return (granters.size() > 0)?(GrantedAuthority[])granters.toArray():null;
-		*/
-		return new GrantedAuthority[] {new GrantedAuthorityImpl("ROLE_USER")};
+		GrantedAuthority[] array = new GrantedAuthority[granters.size()];
+		for(int i=0; i < granters.size(); i++) {
+			array[i]=(GrantedAuthority)(granters.toArray())[i];
+		}
+		return (granters.size() > 0)?array:null;
 	}
 
 	public String getPassword() {
