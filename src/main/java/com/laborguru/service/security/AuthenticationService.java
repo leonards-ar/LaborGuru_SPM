@@ -37,14 +37,11 @@ public class AuthenticationService implements UserAuthenticationService {
 		if (user != null) {
 			if (password.equals(user.getPassword())) {
 				userDetails = new UserDetailsImpl(user);
-				log.auditLog("audit.logging.suceedLog", new Object[] {user});
 			} else {
-				log.auditLog("audit.logging.badPassword", new Object[]{username, password});
 				reason = UserAuthenticationService.BAD_PASSWORD;
 			}
 
 		} else {
-			log.auditLog("audit.logging.unkownUser", new Object[]{username});
 			reason = UserAuthenticationService.UNKNOWN_USER_ERROR;
 		}
 
