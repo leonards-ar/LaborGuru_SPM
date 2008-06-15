@@ -10,7 +10,7 @@ public class Employee extends User {
 	private static final long serialVersionUID = 1L;
 	
 	private Store store;
-	private Position position;
+	private Position defaultPosition;
 	private boolean manager;
 	private String mobilePhone;
 	private String homePhone;
@@ -23,6 +23,7 @@ public class Employee extends User {
 	private String city;
 	private String zip;
 	private String comments;
+	
 	public Store getStore() {
 		return store;
 	}
@@ -101,12 +102,19 @@ public class Employee extends User {
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
-	public Position getPosition() {
-		return position;
+	/**
+	 * @return the defaultPosition
+	 */
+	public Position getDefaultPosition() {
+		return defaultPosition;
 	}
-	public void setPosition(Position position) {
-		this.position = position;
+	/**
+	 * @param defaultPosition the defaultPosition to set
+	 */
+	public void setDefaultPosition(Position defaultPosition) {
+		this.defaultPosition = defaultPosition;
 	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -131,7 +139,7 @@ public class Employee extends User {
 		result = prime * result
 				+ ((mobilePhone == null) ? 0 : mobilePhone.hashCode());
 		result = prime * result
-				+ ((position == null) ? 0 : position.hashCode());
+				+ ((defaultPosition == null) ? 0 : defaultPosition.hashCode());
 		result = prime * result + ((store == null) ? 0 : store.hashCode());
 		result = prime * result + ((zip == null) ? 0 : zip.hashCode());
 		return result;
@@ -191,10 +199,10 @@ public class Employee extends User {
 				return false;
 		} else if (!mobilePhone.equals(other.mobilePhone))
 			return false;
-		if (position == null) {
-			if (other.position != null)
+		if (defaultPosition == null) {
+			if (other.defaultPosition != null)
 				return false;
-		} else if (!position.equals(other.position))
+		} else if (!defaultPosition.equals(other.defaultPosition))
 			return false;
 		if (store == null) {
 			if (other.store != null)
@@ -208,7 +216,5 @@ public class Employee extends User {
 			return false;
 		return true;
 	}
-	
-	
-	
+
 }
