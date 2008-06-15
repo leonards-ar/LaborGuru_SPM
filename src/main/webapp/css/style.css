@@ -75,6 +75,56 @@ input.button{
    color: #003300;
 }
 
+.value {
+	font-weight: bold;
+	font-family:tahoma, arial, sans-serif;
+	font-size:12px;
+	color: #184E01;
+}
+
+
+#searchFormTable {
+	background-color:#F7F7F7;
+}
+	 
+#resultsTable {
+}
+
+.resultsTableHeader {
+background-color:#A3D39C;
+color:#FFFFFF;
+font-size:13px;
+text-align: center;
+font-family:tahoma, arial, sans-serif;
+}
+
+.resultsTableOddRow {
+	background-color:#F7F7F7;
+font-size:12px;
+font-family:tahoma, arial, sans-serif;
+}
+
+.resultsTableEvenRow {
+	background-color:#DEEFDC;
+font-size:12px;
+font-family:tahoma, arial, sans-serif;
+}
+
+#editFormTable {
+}
+
+.editFormOddRow {
+	background-color:#F7F7F7;
+font-size:12px;
+font-family:tahoma, arial, sans-serif;
+}
+
+.editFormEvenRow {
+	background-color:#FFFFFF;
+font-size:12px;
+font-family:tahoma, arial, sans-serif;
+}
+
 /*
 html, body, ul, li {
 	margin: 0;
