@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.laborguru.model" schema="spm">
+	<class name="Position" table="tbl_positions">
+
+		<id name="id" type="int" unsaved-value="null" column="id">
+			<generator class="native">
+				<param name="sequence">tbl_positions_id_seq</param>
+				<param name="parameters">
+					increment by 1 start with 1000
+				</param>
+			</generator>
+		</id>
+		
+		<property name="name" column="name" length="100" />
+		<many-to-one name="store" class="Store">
+			<column name="store_id"/>
+		</many-to-one>
+	</class>		
+</hibernate-mapping>
