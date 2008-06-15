@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.laborguru.model" schema="spm">
+	<class name="Office" table="tbl_offices">
+		<id name="id" type="int" unsaved-value="null" column="id">
+			<generator class="native">
+				<param name="sequence">tbl_offices_id_seq</param>
+				<param name="parameters">
+					increment by 1 start with 1000
+				</param>
+			</generator>
+		</id>
+		<property name="name" column="name" type="string" length="150" />
+		<property name="type" column="type" type="char" length="1" />
+		<many-to-one name="parentOffice" class="MenuItem">
+			<column name="parent_office_id"/>
+		</many-to-one>
+	</class>
+</hibernate-mapping>
