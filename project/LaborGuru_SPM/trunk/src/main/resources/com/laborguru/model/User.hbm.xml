@@ -13,15 +13,43 @@
             </generator>
         </id>
 
-        <property name="userName" column="username" type="string" length="50" not-null="true"/>       
-        <property name="password" column="password" type="string" length="50" />        
+        <property name="userName" column="username" type="string" length="50" not-null="true" unique="true"/>       
+        <property name="password" column="password" type="string" length="50" />
+        <property name="status" column="status" type="int" />
+        <property name="email" column="email" type="string" length="100"/>
         <property name="name" column="name" type="string" length="50" />
         <property name="surname" column="surname" type="string" length="100" />
-
+		<property name="lastLogon" column="last_logon" type="date" />
+		<property name="loginCount" column="login_count" type="int"/>
+		<property name="creationDate" column="creation_date" type="date"/>
+		<property name="lastUpdateDate" column="last_update_date" type="date"/>
 	    <set name="profiles" table="tbl_users_profiles" lazy="false">
 	        <key column="userId"/>
 	        <many-to-many column="profileId" class="Profile"/>
 	    </set>
+	    
+	    <joined-subclass name="Employee" table="tbl_employees">
+	    	<key column="user_id"/>
+	    	<many-to-one name="store" class="Store">
+				<column name="store_id"/>
+			</many-to-one>
+			<many-to-one name="defaultPosition" class="Position" property-ref="id">
+				<column name="default_position" />
+			</many-to-one>
+	    	<property name="manager" column="manager" type="boolean"/>
+        	<property name="mobilePhone" column="mobile_phone" type="string" length="50"/>
+        	<property name="homePhone" column="home_phone" type="string" length="50" />
+        	<property name="hireDate" column="hire_date" type="date"/>
+        	<property name="maxHoursWeek" column="max_hours_week" type="int"/>
+        	<property name="maxDaysWeek" column="max_days_week" type="int" />
+        	<property name="maxHoursDay" column="max_hour_day" type="int" />
+        	<property name="address" column="address" type="string" length="100" />
+        	<property name="address2" column="address2" type="string" length="100" />
+        	<property name="city" column="city" type="string" length="100" />
+        	<property name="state" column="state" type="string" length="100" />
+        	<property name="zip" column="zip" type="string" length="50" />
+        	<property name="comments" column="comments" type="string" length="1024" />
+    	</joined-subclass>
     </class>
 </hibernate-mapping>
 
