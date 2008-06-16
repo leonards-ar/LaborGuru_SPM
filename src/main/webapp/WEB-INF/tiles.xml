@@ -10,7 +10,7 @@
 	</definition>
 
 	<definition name="baseLayoutWithMenu" template="/layouts/base_menu.jsp" extends="baseLayout">
-		<put-attribute name="header" value="/tiles/header-menu.jsp" />
+		<put-attribute name="header" value="/tiles/headermenu.jsp" />
 	</definition>
 
 	<definition name="loginPage" extends="baseLayout">
