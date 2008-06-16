@@ -12,77 +12,69 @@
         	  </tr>
               <tr>
               <td>
-              <form name="editEmployeeForm">
+              <s:form action="employee_edit">
               <table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0">
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="label" nowrap>* First Name</td>
-                    <td width="35%" align="left" class="value"><input type="text" size="30"/></td>
+                    <td width="35%" align="left" class="value"><s:textfield name="employee.name" size="30" theme="simple"/></td>
                     <td width="15%" align="right" class="label" nowrap>* Last Name</td>
-                    <td width="35%" align="left" class="value"><input type="text" size="30"/></td>
+                    <td width="35%" align="left" class="value"><s:textfield name="employee.surname" size="30" theme="simple"/></td>
                 </tr>
               	<tr class="editFormOddRow">
                     <td width="15%" align="right" class="label" nowrap>* User Name</td>
-                    <td width="35%" align="left" class="value"><input type="text"/></td>
+                    <td width="35%" align="left" class="value"><s:textfield name="employee.userName" size="30" theme="simple"/></td>
                     <td width="15%" align="right" class="label" nowrap>Email</td>
-                    <td width="35%" align="left" class="value"><input type="text"/></td>
+                    <td width="35%" align="left" class="value"><s:textfield name="employee.email" size="30" theme="simple"/></td>
                 </tr>
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="label" nowrap>Max Hours Day</td>
-                    <td width="35%" align="left" class="value"><input type="text" size="2"/></td>
+                    <td width="35%" align="left" class="value"><s:textfield name="employee.maxHoursDay" size="2" theme="simple"/></td>
                     <td width="15%" align="right" class="label" nowrap>Max Hours Week</td>
-                    <td width="35%" align="left" class="value"><input type="text" size="3"/></td>
+                    <td width="35%" align="left" class="value"><s:textfield name="employee.maxHoursWeek" size="3" theme="simple"/></td>
                 </tr>
               	<tr class="editFormOddRow">
                     <td width="15%" align="right" class="label" nowrap>Default Position</td>
                     <td width="35%" align="left" class="value">
-                    <select>
-                    <option value="1">Cook</option>
-                    <option value="2">Waiter</option>
-                    <option value="3">Position A</option>
-                    <option value="4">Position B</option>
-                    </select>
+                    <s:select name="employee.defaultPosition.id" list="positions" listKey="id" listValue="name" theme="simple"/>
                     </td>
                     <td width="15%" align="right" class="label" nowrap>Status</td>
                     <td width="35%" align="left" class="value">
-                    <select>
-                    <option value="e">Enabled</option>
-                    <option value="d">Disabled</option>
-                    </select>
+                    <s:select name="employee.status" list="statusList" listKey="key" listValue="value" theme="simple"/>
                     </td>
                 </tr>
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="label" nowrap>Manager</td>
-                    <td width="35%" align="left" class="value"><input type="checkbox"/></td>
+                    <td width="35%" align="left" class="value"><s:checkbox name="manager" theme="simple"/></td>
                     <td width="15%" align="right" class="label" nowrap>Hire Date</td>
-                    <td width="35%" align="left" class="value"><input type="text" size="10"/></td>
+                    <td width="35%" align="left" class="value"><s:textfield  name="employee.hireDate" size="30" theme="simple"/></td>
                 </tr>
               	<tr class="editFormOddRow">
                     <td width="15%" align="right" class="label" nowrap>State</td>
-                    <td width="35%" align="left" class="value"><input type="text"/></td>
+                    <td width="35%" align="left" class="value"><s:textfield name="employee.state" size="30" theme="simple"/></td>
                     <td width="15%" align="right" class="label" nowrap>City</td>
-                    <td width="35%" align="left" class="value"><input type="text"/></td>
+                    <td width="35%" align="left" class="value"><s:textfield name="employee.city" size="30" theme="simple"/></td>
                 </tr>
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="label" nowrap>Address</td>
-                    <td width="35%" align="left" class="value"><textarea cols="40" rows="2"></textarea></td>
+                    <td width="35%" align="left" class="value"><s:textarea name="employee.address" cols="40" rows="2" theme="simple"/></td>
                     <td width="15%" align="right" class="label" nowrap>&nbsp;</td>
                     <td width="35%" align="left" class="value">&nbsp;</td>
                 </tr>
               	<tr class="editFormOddRow">
                     <td width="15%" align="right" class="label" nowrap>Address 2</td>
-                    <td width="35%" align="left" class="value"><textarea cols="40" rows="2"></textarea></td>
+                    <td width="35%" align="left" class="value"><s:textarea name="employee.address2" cols="40" rows="2" theme="simple"/></td>
                     <td width="15%" align="right" class="label" nowrap>Zip</td>
-                    <td width="35%" align="left" class="value"><input type="text"/></td>
+                    <td width="35%" align="left" class="value"><s:textfield name="employee.zip" size="20" theme="simple"/></td>
                 </tr>
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="label" nowrap>Phone</td>
-                    <td width="35%" align="left" class="value"><input type="text"/></td>
+                    <td width="35%" align="left" class="value"><s:textfield name="employee.homePhone" size="30" theme="simple"/></td>
                     <td width="15%" align="right" class="label" nowrap>Mobile</td>
-                    <td width="35%" align="left" class="value"><input type="text"/></td>
+                    <td width="35%" align="left" class="value"><s:textfield name="employee.mobilePhone" size="30" theme="simple"/></td>
                 </tr>
               	<tr class="editFormOddRow">
                     <td width="15%" align="right" class="label" nowrap>Comments</td>
-                    <td width="35%" align="left" class="value"><textarea cols="40" rows="3"></textarea></td>
+                    <td width="35%" align="left" class="value"><s:textarea name="employee.comments" cols="40" rows="2" theme="simple"/></td>
                     <td width="15%" align="right" class="label" nowrap>&nbsp;</td>
                     <td width="35%" align="left" class="value">&nbsp;</td>
                 </tr>
@@ -96,7 +88,7 @@
                     </td>
                 </tr>
               </table>
-              </form>
+              </s:form>
               </td>
               </tr>
           </table>

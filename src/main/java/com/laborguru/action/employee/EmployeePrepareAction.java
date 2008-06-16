@@ -4,8 +4,12 @@ import java.util.List;
 
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
+import com.laborguru.action.utils.ConstantListFactory;
+import com.laborguru.action.utils.KeyValuePair;
 import com.laborguru.model.Employee;
+import com.laborguru.model.Position;
 import com.laborguru.model.helper.EmployeeTestHelper;
+import com.laborguru.model.helper.PositionTestHelper;
 import com.laborguru.service.employee.EmployeeService;
 
 /**
@@ -21,6 +25,8 @@ public class EmployeePrepareAction extends SpmAction {
 	private EmployeeService employeeService;
 	private List<Employee> storeEmployees;
 	private Employee employee;
+	private List<Position> positions;
+	private List<KeyValuePair> statusList;
 	
 	public EmployeeService getEmployeeService() {
 		return employeeService;
@@ -52,7 +58,9 @@ public class EmployeePrepareAction extends SpmAction {
 		
 		//Getting store & getting the employee list
 		//storeEmployees = employeeService.getEmployeesByStore(aStore);
-		
+		this.setEmployee(EmployeeTestHelper.getEmployee("spm"));		
+		this.setPositions(PositionTestHelper.getPositions("position", 4));
+		this.setStatusList(ConstantListFactory.createStatusList());
 		
 		return SpmActionResult.EDIT.getResult();
 	}
@@ -82,5 +90,21 @@ public class EmployeePrepareAction extends SpmAction {
 
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
+	}
+
+	public List<Position> getPositions() {
+		return positions;
+	}
+
+	public void setPositions(List<Position> positions) {
+		this.positions = positions;
+	}
+
+	public List<KeyValuePair> getStatusList() {
+		return statusList;
+	}
+
+	public void setStatusList(List<KeyValuePair> statusList) {
+		this.statusList = statusList;
 	}
 }
