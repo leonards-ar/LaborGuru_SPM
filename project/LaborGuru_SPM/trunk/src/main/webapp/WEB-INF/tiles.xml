@@ -21,12 +21,16 @@
 		<put-attribute name="body" value="/tiles/home/home.jsp" />
 	</definition>
 	
+	<!-- Employee tiles definition -->
 	<definition name="listEmployeesPage" extends="baseLayoutWithMenu">
 		<put-attribute name="body" value="/tiles/employee/list.jsp" />
 	</definition>
-	
+		
 	<definition name="editEmployeePage" extends="baseLayoutWithMenu">
 		<put-attribute name="body" value="/tiles/employee/edit.jsp" />
 	</definition>
 
+	<definition name="showEmployeePage" extends="baseLayoutWithMenu">
+		<put-attribute name="body" value="/tiles/employee/view.jsp" />
+	</definition>	
 </tiles-definitions>

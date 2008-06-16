@@ -15,5 +15,5 @@
 	
 	<include file="login.xml" />
 	<include file="home.xml" />
-
+	<include file="action/employee.xml" />
 </struts>
