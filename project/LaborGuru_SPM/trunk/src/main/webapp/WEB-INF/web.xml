@@ -56,10 +56,6 @@
 		<listener-class>org.apache.struts2.tiles.StrutsTilesListener</listener-class>
 	</listener>
 
-	<listener>
-	    <listener-class>net.sf.navigator.menu.MenuContextListener</listener-class>
-	</listener>	
-
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
