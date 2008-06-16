@@ -14,13 +14,9 @@
 	<body>
 		<table width="100%" border="0" cellpadding="0" cellspacing="0"
 			id="bodyTable" colspan="0" cellspan="0">
-			<!-- Header -->
+			<!-- Header and Menu -->
 			<tr>
 				<td id="headerRow"><tiles:insertAttribute name="header" /></td>
-			</tr>
-			<!--  Menu -->
-			<tr>
-				<td id="menuRow"><tiles:insertAttribute name="menu" /></td>
 			</tr>
 			<!-- Body -->
 			<tr>
