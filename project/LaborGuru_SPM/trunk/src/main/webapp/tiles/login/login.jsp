@@ -50,7 +50,7 @@
 					value="<s:text name="login.submit"/>" class="button" /></td>
 			</tr>
 			<tr>
-				<td align="left" colspan="2"><a href="#" class="link">Forgot your password? </a></td>
+				<td align="left" colspan="2"><a href="#" class="link">Forgot your password?</a></td>
 			</tr>
 		</table>
 		</form>
