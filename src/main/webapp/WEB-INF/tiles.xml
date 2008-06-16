@@ -20,5 +20,13 @@
 	<definition name="homePage" extends="baseLayoutWithMenu">
 		<put-attribute name="body" value="/tiles/home/home.jsp" />
 	</definition>
+	
+	<definition name="listEmployeesPage" extends="baseLayoutWithMenu">
+		<put-attribute name="body" value="/tiles/employee/list.jsp" />
+	</definition>
+	
+	<definition name="editEmployeePage" extends="baseLayoutWithMenu">
+		<put-attribute name="body" value="/tiles/employee/edit.jsp" />
+	</definition>
 
 </tiles-definitions>
