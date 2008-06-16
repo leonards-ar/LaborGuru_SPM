@@ -7,9 +7,6 @@
 	<head>
 		<title><s:text name="application.title"/></title>
 		<link rel="stylesheet" href="<s:url value="/css/style.css"/>" type="text/css" charset="utf-8" />
-    <link rel="stylesheet" type="text/css" media="screen" href="<s:url value="/css/menu/tabs.css"/>" />    
-    <script type="text/javascript" src="<s:url value="/js/menu/tabs.js"/>"></script>
-		
 	</head>
 	<body>
 		<table width="100%" border="0" cellpadding="0" cellspacing="0"
