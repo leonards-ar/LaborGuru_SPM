@@ -125,6 +125,12 @@ font-size:12px;
 font-family:tahoma, arial, sans-serif;
 }
 
+.infoMessage {
+font-style:italic;
+font-size:11px;
+font-family:tahoma, arial, sans-serif;
+}
+
 /*
 html, body, ul, li {
 	margin: 0;
