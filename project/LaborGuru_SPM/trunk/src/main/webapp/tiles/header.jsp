@@ -14,7 +14,7 @@
 		<td id="headerBottom">
 		<table width="100%" border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 			<tr>
-				<td><span id="headerBottom">Welcome, please login</span></td>
+				<td>&nbsp;</td>
 			</tr>
 		</table>
 		</td>
