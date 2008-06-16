@@ -1,4 +1,5 @@
-<%@ taglib uri="http://struts-menu.sf.net/tag" prefix="menu"%>
+<%@ page contentType="text/html; charset=UTF-8" %> 
+<%@ taglib prefix="s" uri="/struts-tags" %> 
 
 <table width="100%" border="0" cellpadding="0" cellspacing="0"
 	id="headerTable" colspan="0" cellspan="0">
@@ -7,7 +8,7 @@
 		<table width="100%" border="0" cellpadding="0" cellspacing="0"
 			colspan="0" cellspan="0">
 			<tr>
-				<td width="20%"><img src="images/logo.png" /></td>
+				<td width="20%"><img src="<s:url value="/images/logo.png"/>" /></td>
 				<td width="60%" valign="bottom" align="center">
 
 				<table border="0" cellpadding="0" cellspacing="0" id="menuTable"
