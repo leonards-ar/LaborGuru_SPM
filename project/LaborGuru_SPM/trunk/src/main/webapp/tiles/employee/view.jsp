@@ -63,9 +63,9 @@
                 </tr>
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="label" nowrap>Phone</td>
-                    <td width="35%" align="left" class="value"><s:property value="employee.homephone"/></td>
+                    <td width="35%" align="left" class="value"><s:property value="employee.homePhone"/></td>
                     <td width="15%" align="right" class="label" nowrap>Mobile</td>
-                    <td width="35%" align="left" class="value"><s:property value="employee.mobilephone"/></td>
+                    <td width="35%" align="left" class="value"><s:property value="employee.mobilePhone"/></td>
                 </tr>
               	<tr class="editFormOddRow">
                     <td width="15%" align="right" class="label" nowrap>Comments</td>
