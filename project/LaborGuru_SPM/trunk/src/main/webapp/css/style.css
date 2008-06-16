@@ -4,6 +4,17 @@
 	  height:100%;
 	  border:none;
    }
+
+a.link {
+   font-family:tahoma, arial, sans-serif;
+   font-size:11px;
+   color: #003300;
+	font-weight: bold;
+	text-decoration: none;
+}
+a.link:hover {
+	text-decoration: underline;
+}
    
    #bodyTable{height:100%;
 	  font: 11px tahoma, arial, sans-serif;
@@ -78,7 +89,7 @@ input.button{
 .value {
 	font-weight: bold;
 	font-family:tahoma, arial, sans-serif;
-	font-size:12px;
+	font-size:11px;
 	color: #184E01;
 }
 
@@ -131,6 +142,57 @@ font-size:11px;
 font-family:tahoma, arial, sans-serif;
 }
 
+
+#menuTable {
+}
+
+.availableMenuItem {
+background-color:#184E01;
+margin: 20px;
+text-align:center;
+font-weight:bold;
+}
+
+.availableMenuItemOver {
+background-color:#DEEFDC;
+text-align:center;
+color:#184E01;
+}
+
+.selectedMenuItem {
+background-color:#DEEFDC;
+padding-left: 12px;
+padding-right: 12px;
+padding-bottom: 8px;
+padding-top: 8px;
+text-align:center;
+font-size:11px;
+font-family:tahoma, arial, sans-serif;
+font-weight:bold;
+color:#184E01;
+}
+
+a.availableMenuItemAnchor {
+font-size:11px;
+font-family:tahoma, arial, sans-serif;
+text-decoration: none;
+display:block;
+padding-left: 12px;
+padding-right: 12px;
+padding-bottom: 8px;
+padding-top: 8px;
+color:#FFFFFF;
+}
+
+a.availableMenuItemAnchor:hover {
+text-decoration: none;
+padding-left: 12px;
+padding-right: 12px;
+padding-bottom: 8px;
+padding-top: 8px;
+color:#184E01;
+}
+
 /*
 html, body, ul, li {
 	margin: 0;
@@ -141,16 +203,7 @@ html, body, ul, li {
 img {
 	border: 0;
 }
-a {
-   font-family:tahoma, arial, sans-serif;
-   font-size:11px;
-   color: #003300;
-	font-weight: bold;
-	text-decoration: none;
-}
-a:hover {
-	text-decoration: underline;
-}
+
 
 body, h1, h2, h3, form {
 	font: 11px tahoma, arial, sans-serif;
