@@ -15,61 +15,61 @@
               <table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0">
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="label" nowrap>First Name</td>
-                    <td width="35%" align="left" class="value">Mariano</td>
+                    <td width="35%" align="left" class="value"><s:property value="employee.name"/></td>
                     <td width="15%" align="right" class="label" nowrap>Last Name</td>
-                    <td width="35%" align="left" class="value">Capurro</td>
+                    <td width="35%" align="left" class="value"><s:property value="employee.surname"/></td>
                 </tr>
               	<tr class="editFormOddRow">
-                    <td width="15%" align="right" class="label" nowrap>User Name</td>
-                    <td width="35%" align="left" class="value">mcapurro</td>
+                    <td width="15%" align="right" class="label" nowrap>Username</td>
+                    <td width="35%" align="left" class="value"><s:property value="employee.userName"/></td>
                     <td width="15%" align="right" class="label" nowrap>Email</td>
-                    <td width="35%" align="left" class="value">mcapurro@gmail.com</td>
+                    <td width="35%" align="left" class="value"><s:property value="employee.email"/></td>
                 </tr>
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="label" nowrap>Max Hours Day</td>
-                    <td width="35%" align="left" class="value">8</td>
+                    <td width="35%" align="left" class="value"><s:property value="employee.maxHoursDay"/></td>
                     <td width="15%" align="right" class="label" nowrap>Max Hours Week</td>
-                    <td width="35%" align="left" class="value">40</td>
+                    <td width="35%" align="left" class="value"><s:property value="employee.maxHoursWeek"/></td>
                 </tr>
               	<tr class="editFormOddRow">
                     <td width="15%" align="right" class="label" nowrap>Default Position</td>
-                    <td width="35%" align="left" class="value">Cook</td>
+                    <td width="35%" align="left" class="value"><s:property value="employee.defaultPosition.name"/></td>
                     <td width="15%" align="right" class="label" nowrap>Status</td>
-                    <td width="35%" align="left" class="value">Enabled</td>
+                    <td width="35%" align="left" class="value"><s:property value="employee.status"/></td>
                 </tr>
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="label" nowrap>Manager</td>
-                    <td width="35%" align="left" class="value">No</td>
+                    <td width="35%" align="left" class="value"><s:property value="employee.manager"/></td>
                     <td width="15%" align="right" class="label" nowrap>Hire Date</td>
-                    <td width="35%" align="left" class="value">10/01/2008</td>
+                    <td width="35%" align="left" class="value"><s:property value="employee.hireDate"/></td>
                 </tr>
               	<tr class="editFormOddRow">
                     <td width="15%" align="right" class="label" nowrap>State</td>
-                    <td width="35%" align="left" class="value">WA</td>
+                    <td width="35%" align="left" class="value"><s:property value="employee.state" default="######"/></td>
                     <td width="15%" align="right" class="label" nowrap>City</td>
-                    <td width="35%" align="left" class="value">Seattle</td>
+                    <td width="35%" align="left" class="value"><s:property value="employee.city"/></td>
                 </tr>
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="label" nowrap>Address</td>
-                    <td width="35%" align="left" class="value">200 Street South</td>
+                    <td width="35%" align="left" class="value"><s:property value="employee.address"/></td>
                     <td width="15%" align="right" class="label" nowrap>&nbsp;</td>
                     <td width="35%" align="left" class="value">&nbsp;</td>
                 </tr>
               	<tr class="editFormOddRow">
                     <td width="15%" align="right" class="label" nowrap>Address 2</td>
-                    <td width="35%" align="left" class="value">Ap 2</td>
+                    <td width="35%" align="left" class="value"><s:property value="employee.address2"/></td>
                     <td width="15%" align="right" class="label" nowrap>Zip</td>
-                    <td width="35%" align="left" class="value">1426AA</td>
+                    <td width="35%" align="left" class="value"><s:property value="employee.zip"/></td>
                 </tr>
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="label" nowrap>Phone</td>
-                    <td width="35%" align="left" class="value">1111-2222</td>
+                    <td width="35%" align="left" class="value"><s:property value="employee.homephone"/></td>
                     <td width="15%" align="right" class="label" nowrap>Mobile</td>
-                    <td width="35%" align="left" class="value">3333-4444</td>
+                    <td width="35%" align="left" class="value"><s:property value="employee.mobilephone"/></td>
                 </tr>
               	<tr class="editFormOddRow">
                     <td width="15%" align="right" class="label" nowrap>Comments</td>
-                    <td width="85%" align="left" class="value" colspan="3">He likes sleeping during work</td>
+                    <td width="85%" align="left" class="value" colspan="3"><s:property value="employee.comments"/></td>
                 </tr>
               	<tr class="editFormEvenRow">
                     <td width="100%" align="right" colspan="4">

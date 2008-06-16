@@ -5,6 +5,7 @@ import java.util.List;
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.model.Employee;
+import com.laborguru.model.helper.EmployeeTestHelper;
 import com.laborguru.service.employee.EmployeeService;
 
 /**
@@ -19,7 +20,8 @@ public class EmployeePrepareAction extends SpmAction {
 
 	private EmployeeService employeeService;
 	private List<Employee> storeEmployees;
-		
+	private Employee employee;
+	
 	public EmployeeService getEmployeeService() {
 		return employeeService;
 	}
@@ -60,8 +62,8 @@ public class EmployeePrepareAction extends SpmAction {
 		
 		//Getting store & getting the employee list
 		//storeEmployees = employeeService.getEmployeesByStore(aStore);
-		
-		
+		this.setEmployee(EmployeeTestHelper.getEmployee("spm"));
+
 		return SpmActionResult.SHOW.getResult();
 	}
 	
@@ -72,5 +74,13 @@ public class EmployeePrepareAction extends SpmAction {
 
 	public void setStoreEmployees(List<Employee> storeEmployees) {
 		this.storeEmployees = storeEmployees;
+	}
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 }
