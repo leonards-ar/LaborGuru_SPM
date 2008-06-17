@@ -307,8 +307,9 @@ public class User extends SpmObject {
 		if(getName() != null) {
 			fullName.append(getName());
 		}
+		fullName.append(" ");
 		if(getSurname() != null) {
-			
+			fullName.append(getSurname());
 		}
 		return fullName.toString().trim();
 	}
