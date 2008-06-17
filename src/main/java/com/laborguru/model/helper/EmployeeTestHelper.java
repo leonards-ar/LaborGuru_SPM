@@ -1,6 +1,8 @@
 package com.laborguru.model.helper;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.laborguru.model.Employee;
 
@@ -43,4 +45,13 @@ public class EmployeeTestHelper {
 		
 		return employee;
 	}
+	
+	public static List<Employee> getEmployees(String param, int size){
+		List<Employee> employees = new ArrayList<Employee>(size);
+		
+		for (int i=0; i < size; i++){
+			employees.add(getEmployee(param, i));
+		}
+		return employees;
+	}	
 }

@@ -9,12 +9,12 @@ package com.laborguru.action;
  *
  */
 public enum SpmActionResult {
-	ADD("add"),
 	LIST("list"),
 	REMOVE("remove"),
 	EDIT("edit"),
 	SHOW("show"),
-	HOME("home");
+	DELETE("delte"),
+	SAVE("save");
 	
 	private String result;
 	
