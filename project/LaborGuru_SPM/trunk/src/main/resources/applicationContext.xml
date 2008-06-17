@@ -4,6 +4,18 @@
     xsi:schemaLocation="
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
+	<bean id="menuService"
+		class="com.laborguru.service.menu.MenuServiceBean">
+		<property name="menuDao" ref="menuDao" />
+	</bean>
+
+	<bean id="menuDao"
+		class="com.laborguru.service.menu.dao.MenuDaoHibernate">
+		<property name="hibernateTemplate">
+			<ref bean="hibernateTemplate" />
+		</property>
+	</bean>
+
 	<bean id="userService"
 		class="com.laborguru.service.user.UserServiceBean">
 		<property name="userDao" ref="userDao" />
