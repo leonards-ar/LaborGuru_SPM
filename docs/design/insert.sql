@@ -16,8 +16,8 @@ insert into tbl_profiles_permissions (permissionid, profileid) values (1, 1);
 insert into tbl_profiles_permissions (permissionid, profileid) values (2, 1);
 insert into tbl_profiles_permissions (permissionid, profileid) values (3, 1);
 
-insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permissionid, position, target) values (1, 'EMPLOYEE_MENU_LABEL', 'EMPLOYEE_MENU_HELP', null, 1, 0, '/employee/employee_list.action');
-insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permissionid, position, target) values (2, 'EMPLOYEE_CREATE_LABEL', 'EMPLOYEE_ADD_HELP', 1, 3, 0, '/employee/employee_add.action');
-insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permissionid, position, target) values (3, 'EMPLOYEE_LIST_LABEL', 'EMPLOYEE_LIST_HELP', 1, 2, 0, '/employee/employee_list.action');
-
-commit
+delete from tbl_menu_items;
+insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permissionid, position, target) values (1, 'employee.menu.label', 'EMPLOYEE_MENU_HELP', null, 1, 0, '/employee/employee_list.action');
+insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permissionid, position, target) values (2, 'employee.submenu.create', 'EMPLOYEE_ADD_HELP', 1, 3, 1, '/employee/employee_add.action');
+insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permissionid, position, target) values (3, 'employee.submenu.list', 'EMPLOYEE_LIST_HELP', 1, 2, 0, '/employee/employee_list.action');
+commit;
