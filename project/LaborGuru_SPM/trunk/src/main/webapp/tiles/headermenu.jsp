@@ -14,15 +14,18 @@
 				<table border="0" cellpadding="0" cellspacing="0" id="menuTable"
 					colspan="0" cellspan="0">
 					<tr>
+					<s:iterator value="#request.spmMenu.items" status="itCtx">
+						<s:if test="#request.spmMenu.selectedItemIndex == #itCtx.index">
+						<td class="selectedMenuItem"><s:text name="#labelKey"/></td>
+						</s:if>
+						<s:else>
 						<td class="availableMenuItem"
 							onmouseover="className='availableMenuItemOver'"
-							onmouseout="className='availableMenuItem'"><a href="#"
-							class="availableMenuItemAnchor">Opcion 1</a></td>
-						<td class="selectedMenuItem">Opcion 2</td>
-						<td class="availableMenuItem"
-							onmouseover="className='availableMenuItemOver'"
-							onmouseout="className='availableMenuItem'"><a href="#"
-							class="availableMenuItemAnchor">Opcion 3</a></td>
+							onmouseout="className='availableMenuItem'"><a href="<s:url action="#target"/>"
+							class="availableMenuItemAnchor"><s:text name="#labelKey"/></a></td>						
+						</s:else>
+						
+					</s:iterator>
 					</tr>
 				</table>
 
@@ -38,18 +41,17 @@
 			colspan="0" cellspan="0">
 			<tr>
 				<td width="20%"><span id="headerBottom">Welcome <s:property value="#request.spmUser.name"/> <s:property value="#request.spmUser.surname"/></span></td>
-				<td width="60%" align="center"><!-- Submenu -->
+				<td width="60%" align="center">
+				<!-- Submenu -->
 				<table border="0" cellpadding="0" cellspacing="0" id="subMenuTable"
 					colspan="0" cellspan="0">
 					<tr>
-						<td class="subMenuItem"><a href="#" class="subMenuItemAnchor">Subopcion
-						1</a></td>
+					<s:iterator value="#request.spmMenu.selectedItem" status="itCtx">
+						<td class="subMenuItem"><a href="<s:url action="#target"/>" class="subMenuItemAnchor"><s:text name="#labelKey"/></a></td>
+						<s:if test="#itCtx.index - 1 < #itCtx.count">
 						<td>|</td>
-						<td class="subMenuItem"><a href="#" class="subMenuItemAnchor">Subopcion
-						2</a></td>
-						<td>|</td>
-						<td class="subMenuItem"><a href="#" class="subMenuItemAnchor">Subopcion
-						3</a></td>
+						</s:if>
+					</s:iterator>
 					</tr>
 				</table>
 				</td>
