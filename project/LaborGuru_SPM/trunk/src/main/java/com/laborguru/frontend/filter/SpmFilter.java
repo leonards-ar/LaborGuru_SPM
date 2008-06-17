@@ -90,6 +90,7 @@ public class SpmFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Menu menu = (Menu) httpRequest.getSession().getAttribute("spmMenu");
 		
 		if(principal != null && principal instanceof UserDetailsImpl) {
 			httpRequest.setAttribute("spmUser", ((UserDetailsImpl)principal).getUser());
@@ -107,7 +108,7 @@ public class SpmFilter implements Filter {
 			}
 			if(user != null) {
 				httpRequest.setAttribute("spmUser", user); 
-				Menu menu = (Menu) httpRequest.getSession().getAttribute("spmMenu");
+				
 				if(menu == null) {
 					menu = getMenuService().getMenuFor(user);
 					httpRequest.getSession().setAttribute("spmMenu", menu);
@@ -120,6 +121,13 @@ public class SpmFilter implements Filter {
 			 * What can we do here. It can be a String holding just the username
 			 * or a Principal object. This should never happen?
 			 */
+		}
+		if(httpRequest.getParameter("menuItemIndex") != null && menu != null) {
+			try {
+				menu.setSelectedItemIndex(Integer.parseInt(httpRequest.getParameter("menuItemIndex")));
+			} catch(Throwable ex) {
+				// Invalid index! Someone is trying to hack us?
+			}
 		}
 		chain.doFilter(request, response);
 	}
