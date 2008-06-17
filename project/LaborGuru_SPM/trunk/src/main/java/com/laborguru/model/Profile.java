@@ -71,6 +71,14 @@ public class Profile extends SpmObject {
 		this.name = name;
 	}
 
+	/**
+	 * 
+	 * @param permission
+	 * @return
+	 */
+	public boolean hasPermission(Permission permission) {
+		return getPermissions() != null && getPermissions().contains(permission);
+	}
 	/* (non-Javadoc)
 	 * @see com.laborguru.model.SpmObject#hashCode()
 	 */

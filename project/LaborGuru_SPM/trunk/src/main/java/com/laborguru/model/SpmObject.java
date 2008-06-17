@@ -15,7 +15,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
  * @since SPM 1.0
  *
  */
-public class SpmObject implements Serializable{
+public class SpmObject implements Serializable {
 
 	/**
 	 * Default serial version ID
