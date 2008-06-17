@@ -298,5 +298,18 @@ public class User extends SpmObject {
 		this.lastUpdateDate = lastUpdateDate;
 	}
 	
-	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getFullName() {
+		StringBuffer fullName = new StringBuffer();
+		if(getName() != null) {
+			fullName.append(getName());
+		}
+		if(getSurname() != null) {
+			
+		}
+		return fullName.toString().trim();
+	}
 }
