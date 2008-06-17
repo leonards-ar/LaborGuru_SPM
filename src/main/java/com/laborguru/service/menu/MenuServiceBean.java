@@ -6,6 +6,7 @@ package com.laborguru.service.menu;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.laborguru.model.Menu;
 import com.laborguru.model.MenuItem;
@@ -47,9 +48,13 @@ public class MenuServiceBean implements MenuService {
 	 * @see com.laborguru.service.menu.MenuService#getMenuFor(com.laborguru.model.User)
 	 */
 	public Menu getMenuFor(User user) {
-		Menu menu = MENU_CACHE.get(user.getProfiles());
+		/*
+		 * :TODO: Must support multiple profiles per user!
+		 */
+		Menu menu = MENU_CACHE.get(user.getProfiles().iterator().next());
 		if(menu == null) {
 			List<MenuItem> completeMenu = getMenuDao().getMenu();
+			//removeNotAllowedMenuItems(completeMenu, user.getProfiles());
 			menu = new Menu();
 			menu.setItems(completeMenu);
 		}
@@ -60,7 +65,7 @@ public class MenuServiceBean implements MenuService {
 	 * 
 	 * @param menuItems
 	 */
-	private void removeNotAllowedMenuItems(List<MenuItem> menuItems, List<Profile> userProfiles) {
+	private void removeNotAllowedMenuItems(List<MenuItem> menuItems, Set<Profile> userProfiles) {
 		if(menuItems != null) {
 			for(MenuItem item : menuItems) {
 				boolean hasPermission = false;
