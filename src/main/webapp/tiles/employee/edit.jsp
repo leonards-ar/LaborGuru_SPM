@@ -13,7 +13,7 @@
               <tr>
               <td>
               <s:form action="employee_save" theme="simple">
-              <s:hidden name="employee.id" />
+              <s:hidden name="employee.id" theme="simple"/>
               <table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0">
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="label" nowrap>* First Name</td>

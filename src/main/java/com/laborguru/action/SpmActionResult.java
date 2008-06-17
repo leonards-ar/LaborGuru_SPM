@@ -10,6 +10,7 @@ package com.laborguru.action;
  */
 public enum SpmActionResult {
 	LIST("list"),
+	LISTACTION("listAction"),
 	REMOVE("remove"),
 	EDIT("edit"),
 	SHOW("show"),
