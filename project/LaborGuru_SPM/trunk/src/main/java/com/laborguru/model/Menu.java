@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class Menu extends SpmObject {
 	private List<MenuItem> items;
-	private int selectedItemIndex;
+	private int selectedItemIndex = 0;
 	
 	/**
 	 * 

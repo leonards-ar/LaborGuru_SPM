@@ -16,13 +16,13 @@
 					<tr>
 					<s:iterator value="#request.spmMenu.items" status="itCtx">
 						<s:if test="#request.spmMenu.selectedItemIndex == #itCtx.index">
-						<td class="selectedMenuItem"><s:text name="#labelKey"/></td>
+						<td class="selectedMenuItem"><s:text name="%{labelKey}"/></td>
 						</s:if>
 						<s:else>
 						<td class="availableMenuItem"
 							onmouseover="className='availableMenuItemOver'"
-							onmouseout="className='availableMenuItem'"><a href="<s:url action="#target"/>"
-							class="availableMenuItemAnchor"><s:text name="#labelKey"/></a></td>						
+							onmouseout="className='availableMenuItem'"><a href="<s:url action="%{target}"/>"
+							class="availableMenuItemAnchor"><s:text name="%{labelKey}"/></a></td>						
 						</s:else>
 						
 					</s:iterator>
@@ -46,9 +46,9 @@
 				<table border="0" cellpadding="0" cellspacing="0" id="subMenuTable"
 					colspan="0" cellspan="0">
 					<tr>
-					<s:iterator value="#request.spmMenu.selectedItem" status="itCtx">
-						<td class="subMenuItem"><a href="<s:url action="#target"/>" class="subMenuItemAnchor"><s:text name="#labelKey"/></a></td>
-						<s:if test="#itCtx.index - 1 < #itCtx.count">
+					<s:iterator value="#request.spmMenu.selectedItem.childMenuItems" status="itCtx">
+						<td class="subMenuItem"><a href="<s:url action="%{target}"/>" class="subMenuItemAnchor"><s:text name="%{labelKey}"/></a></td>
+						<s:if test="!#itCtx.last">
 						<td>|</td>
 						</s:if>
 					</s:iterator>
