@@ -31,7 +31,6 @@ public class MenuItem extends SpmObject {
 	
 	private List<MenuItem> childMenuItems;
 
-
 	public Integer getId() {
 		return id;
 	}
