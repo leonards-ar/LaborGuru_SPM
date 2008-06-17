@@ -73,10 +73,19 @@
                 </tr>
               	<tr class="editFormEvenRow">
                     <td width="100%" align="right" colspan="4">
-                    <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0"><tr>
-                    <td><input type="submit" value="Back" class="button"/></td>
+                    <s:form theme="simple"> 
+                    <s:hidden name="employee.id"/>
+                    <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0"><tr>                  
+                    <td>
+                    	<s:if test="removePage">
+                  			<s:submit action="employee_delete" value="Remove" theme="simple" cssClass="button"/>
+                    	</s:if>
+                    	<s:else>
+                    		<s:submit action="employee_list" value="Back" theme="simple" cssClass="button"/>
+                    	</s:else>                    
+                    </td>
                     </tr></table>
-                    
+                   	</s:form>                    
                     </td>
                 </tr>
               </table>

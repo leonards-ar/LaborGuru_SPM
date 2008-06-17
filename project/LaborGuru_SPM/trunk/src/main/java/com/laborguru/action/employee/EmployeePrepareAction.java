@@ -23,20 +23,22 @@ import com.laborguru.service.employee.EmployeeService;
 public class EmployeePrepareAction extends SpmAction {
 
 	private EmployeeService employeeService;
-	private List<Employee> storeEmployees;
+	
 	private Employee employee;
+	private Employee searchEmployee;
+	
+	private List<Employee> storeEmployees;
 	private List<Position> positions;
 	private List<KeyValuePair> statusList;
 	
-	public EmployeeService getEmployeeService() {
-		return employeeService;
-	}
-
-	public void setEmployeeService(EmployeeService employeeService) {
-		this.employeeService = employeeService;
-	}
-
-
+	private Integer employeeId;
+	private boolean removePage;
+	
+	/**
+	 * Performs an Employee Search
+	 * @return
+	 * @throws Exception
+	 */
 	public String search() throws Exception {
 		
 		//Getting store & getting the employee list
@@ -46,6 +48,11 @@ public class EmployeePrepareAction extends SpmAction {
 		return SpmActionResult.LIST.getResult();
 	}
 	
+	/**
+	 * Retrieves all the employees that belong to the user's store.
+	 * @return
+	 * @throws Exception
+	 */
 	public String list() throws Exception {
 		
 		//Getting store & getting the employee list
@@ -55,6 +62,12 @@ public class EmployeePrepareAction extends SpmAction {
 		return SpmActionResult.LIST.getResult();
 	}	
 
+	
+	/**
+	 * Prepares the add page
+	 * @return
+	 * @throws Exception
+	 */
 	public String add() throws Exception {
 		
 		//Getting store & getting the employee list
@@ -66,36 +79,85 @@ public class EmployeePrepareAction extends SpmAction {
 	}
 
 	
+	/**
+	 * Prepares the edit page
+	 * @return
+	 * @throws Exception
+	 */
 	public String edit() throws Exception {
 		
 		//Getting store & getting the employee list
 		//storeEmployees = employeeService.getEmployeesByStore(aStore);
-		this.setEmployee(EmployeeTestHelper.getEmployee("spm"));		
+		this.setEmployee(EmployeeTestHelper.getEmployee("spm", this.employeeId));		
 		this.setPositions(PositionTestHelper.getPositions("position", 4));
 		this.setStatusList(ConstantListFactory.createStatusList());
 		
 		return SpmActionResult.EDIT.getResult();
 	}
 
-	public String save() throws Exception {
-		
+	/**
+	 * Prepare removes page
+	 * @return
+	 * @throws Exception
+	 */
+	public String remove() throws Exception {
 		//Getting store & getting the employee list
 		//storeEmployees = employeeService.getEmployeesByStore(aStore);
-		System.out.println(this.employee.toString());
+		this.setRemovePage(true);
+		this.setEmployee(EmployeeTestHelper.getEmployee("spm", this.employeeId));
 		
-		return SpmActionResult.LIST.getResult();
-	}
+		return SpmActionResult.SHOW.getResult();
+	}	
 	
-	public String show() throws Exception {
-		
+	/**
+	 * Prepares the view page
+	 * @return
+	 * @throws Exception
+	 */
+	public String show() throws Exception {		
 		//Getting store & getting the employee list
 		//storeEmployees = employeeService.getEmployeesByStore(aStore);
-		this.setEmployee(EmployeeTestHelper.getEmployee("spm"));
+		this.setEmployee(EmployeeTestHelper.getEmployee("spm", this.employeeId));
 
 		return SpmActionResult.SHOW.getResult();
 	}
+		
+	/**
+	 * Stores an employee on the DB
+	 * @return
+	 * @throws Exception
+	 */
+	public String save() throws Exception {		
+		//Getting store & getting the employee list
+		//storeEmployees = employeeService.getEmployeesByStore(aStore);
+		System.out.println("ADD: "+this.employee.toString());
+		
+		return SpmActionResult.LISTACTION.getResult();
+	}
+
 	
+	/**
+	 * Stores an employee on the DB
+	 * @return
+	 * @throws Exception
+	 */
+	public String delete() throws Exception {		
+		//Getting store & getting the employee list
+		//storeEmployees = employeeService.getEmployeesByStore(aStore);
+		System.out.println("DELETE:"+this.employee.toString());
+		
+		return SpmActionResult.LISTACTION.getResult();
+	}
 	
+
+	public EmployeeService getEmployeeService() {
+		return employeeService;
+	}
+
+	public void setEmployeeService(EmployeeService employeeService) {
+		this.employeeService = employeeService;
+	}
+
 	public List<Employee> getStoreEmployees() {
 		return storeEmployees;
 	}
@@ -126,5 +188,29 @@ public class EmployeePrepareAction extends SpmAction {
 
 	public void setStatusList(List<KeyValuePair> statusList) {
 		this.statusList = statusList;
+	}
+
+	public Integer getEmployeeId() {
+		return employeeId;
+	}
+
+	public void setEmployeeId(Integer employeeId) {
+		this.employeeId = employeeId;
+	}
+
+	public boolean isRemovePage() {
+		return removePage;
+	}
+
+	public void setRemovePage(boolean removePage) {
+		this.removePage = removePage;
+	}
+
+	public Employee getSearchEmployee() {
+		return searchEmployee;
+	}
+
+	public void setSearchEmployee(Employee searchEmployee) {
+		this.searchEmployee = searchEmployee;
 	}
 }

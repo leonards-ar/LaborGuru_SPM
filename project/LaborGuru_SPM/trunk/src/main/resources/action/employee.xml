@@ -6,9 +6,9 @@
 	<package name="employee" namespace="/employee" extends="spm-default">		
 		<action name="employee_*" method="{1}" class="com.laborguru.action.employee.EmployeePrepareAction">
 			<result name="edit" type="tiles">editEmployeePage</result>
-			<result name="remove" type="tiles">removeEmployeePage</result>
 			<result name="show" type="tiles">showEmployeePage</result>
 			<result name="list" type="tiles">listEmployeesPage</result>
+			<result name="listAction" type="redirectAction">employee_list</result>			
 		</action>			
 	</package>
 </struts>

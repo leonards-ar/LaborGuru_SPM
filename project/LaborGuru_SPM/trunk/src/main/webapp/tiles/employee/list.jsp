@@ -14,11 +14,11 @@
 			<table border="0" cellspacing="6" align="center" id="searchFormTable">
 				<tr>
 					<td class="label" nowrap>Employee Id</td>
-					<td><s:textfield name="employee.id" size="25" theme="simple" /></td>
+					<td><s:textfield name="searchEmployee.id" size="25" theme="simple" /></td>
 					<td class="label" nowrap>First Name</td>
-					<td><s:textfield name="employee.name" size="30" theme="simple" /></td>
+					<td><s:textfield name="searchEmployee.name" size="30" theme="simple" /></td>
 					<td class="label" nowrap>Last Name</td>
-					<td><s:textfield name="employee.surname" size="30" theme="simple" /></td>
+					<td><s:textfield name="searchEmployee.surname" size="30" theme="simple" /></td>
 				</tr>
 				<tr>
 					<td colspan="6" align="right"><s:submit value="Search" theme="simple" cssClass="button" /></td>
@@ -63,12 +63,12 @@
 						align="center">
 					<table border="0" cellpadding="1" cellspacing="0">
 						<tr>
-							<td><a href="<s:url action="employee_show"><s:param name="id" value="id" /></s:url>">
+							<td><a href="<s:url action="employee_show"><s:param name="employeeId" value="id" /></s:url>">
 								<img src="<s:url value="/images/view.png"/>" />
 							</a></td>
-							<td><a href="<s:url action="employee_edit"><s:param name="id" value="id" /></s:url>"> 
+							<td><a href="<s:url action="employee_edit"><s:param name="employeeId" value="id" /></s:url>"> 
 								<img src="<s:url value="/images/edit.png"/>" /> </a></td>
-							<td><a href="<s:url action="employee_remove"><s:param name="id" value="id" /></s:url>"> 
+							<td><a href="<s:url action="employee_remove"><s:param name="employeeId" value="id" /></s:url>"> 
 								<img src="<s:url value="/images/delete.png"/>" />
 							</a></td>
 						</tr>
