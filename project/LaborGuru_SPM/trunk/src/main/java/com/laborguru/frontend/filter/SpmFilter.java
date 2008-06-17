@@ -19,7 +19,9 @@ import org.acegisecurity.context.SecurityContextHolder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.laborguru.model.Menu;
 import com.laborguru.model.User;
+import com.laborguru.service.menu.MenuService;
 import com.laborguru.service.security.UserDetailsImpl;
 import com.laborguru.service.user.UserService;
 import com.laborguru.service.user.UserServiceBean;
@@ -34,7 +36,22 @@ import com.mindpool.security.service.UserAuthenticationService;
  */
 public class SpmFilter implements Filter {
 	private UserService userService;
+	private MenuService menuService;
 	
+	/**
+	 * @return the menuService
+	 */
+	public MenuService getMenuService() {
+		return menuService;
+	}
+
+	/**
+	 * @param menuService the menuService to set
+	 */
+	public void setMenuService(MenuService menuService) {
+		this.menuService = menuService;
+	}
+
 	/**
 	 * @return the userService
 	 */
@@ -86,11 +103,19 @@ public class SpmFilter implements Filter {
 				user = new User();
 				user.setUserName((String)principal);
 				user = getUserService().getUserByUserName(user);
+				httpRequest.getSession().setAttribute("spmUser", user);
 			}
 			if(user != null) {
 				httpRequest.setAttribute("spmUser", user); 
-				httpRequest.getSession().setAttribute("spmUser", user);
+				Menu menu = (Menu) httpRequest.getSession().getAttribute("spmMenu");
+				if(menu == null) {
+					menu = getMenuService().getMenuFor(user);
+					httpRequest.getSession().setAttribute("spmMenu", menu);
+				}
+				httpRequest.setAttribute("spmMenu", menu); 
 			}
+
+		} else {
 			/*
 			 * What can we do here. It can be a String holding just the username
 			 * or a Principal object. This should never happen?
@@ -107,5 +132,6 @@ public class SpmFilter implements Filter {
 	public void init(FilterConfig config) throws ServletException {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext(config.getInitParameter("appContextPath"));
 		setUserService((UserService)ctx.getBean("userService"));
+		setMenuService((MenuService)ctx.getBean("menuService"));
 	}
 }
