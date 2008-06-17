@@ -57,7 +57,7 @@
 						value="surname" /></td>
 					<td
 						class="resultsTable<s:if test="#itEmployee.even">Even</s:if><s:else>Odd</s:else>Row"><a
-						href="mailto:<s:property value="email" />" class="link"></a><s:property value="email" /></td>
+						href="mailto:<s:property value="email" />" class="link"><s:property value="email" /></a></td>
 					<td
 						class="resultsTable<s:if test="#itEmployee.even">Even</s:if><s:else>Odd</s:else>Row"
 						align="center">
