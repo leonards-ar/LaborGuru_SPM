@@ -1,6 +1,12 @@
 package com.laborguru.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
+import com.laborguru.model.comparator.MenuItemPositionComparator;
 
 /**
  * Menu Item Type
@@ -23,7 +29,7 @@ public class MenuItem extends SpmObject {
 
 	private Permission permission;
 	
-	private Set<MenuItem> childMenuItems;
+	private List<MenuItem> childMenuItems;
 
 
 	public Integer getId() {
@@ -133,9 +139,12 @@ public class MenuItem extends SpmObject {
 	}
 
 	public Set<MenuItem> getChildMenuItems() {
-		return childMenuItems;
+		return new HashSet<MenuItem>(childMenuItems);
 	}
 
+	public List<MenuItem> getOrderedChildMenuItems() {
+		return childMenuItems;
+	}
 	
 	/**
 	 * We leave it private to enforce the cardinality with the addChildMenuItem.
@@ -143,9 +152,14 @@ public class MenuItem extends SpmObject {
 	 * @param childMenuItems
 	 */
 	private void setChildMenuItems(Set<MenuItem> childMenuItems) {
-		this.childMenuItems = childMenuItems;
+		this.childMenuItems = new ArrayList<MenuItem>(childMenuItems);
+		Collections.sort(this.childMenuItems, new MenuItemPositionComparator());			
 	}
 
+	/**
+	 * 
+	 * @param childMenuItem
+	 */
 	public void addChildMenuItem(MenuItem childMenuItem){
 		
 		if (childMenuItem == null){

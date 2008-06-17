@@ -13,7 +13,7 @@ public class UserGranterAuthority implements AuthorityGranter {
 	public Set<String> grant(Principal principal) {
 		UserDetails userDetails = (UserDetails)principal;
 		GrantedAuthority[] grants = userDetails.getAuthorities();
-		if(grants.length == 0) {
+		if(grants == null || grants.length == 0) {
 			return null;
 		}
 		Set<String> set = new HashSet<String>();
