@@ -28,7 +28,7 @@ public class MenuDaoHibernate extends HibernateDaoSupport implements MenuDao {
 	 * @see com.laborguru.service.menu.dao.MenuDao#getMenuhItemsFor(com.laborguru.model.User)
 	 */
 	public List<MenuItem> getMenu() {
-		return (List<MenuItem>) getHibernateTemplate().find("from MenuItem item where item.parentMenuItem = null order by item.order");
+		return (List<MenuItem>) getHibernateTemplate().find("from MenuItem item where item.parentMenuItem = null order by item.position");
 	}
 
 }
