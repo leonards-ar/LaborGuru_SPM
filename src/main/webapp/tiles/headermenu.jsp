@@ -37,8 +37,7 @@
 		<table width="100%" border="0" cellpadding="0" cellspacing="0"
 			colspan="0" cellspan="0">
 			<tr>
-				<td width="20%"><span id="headerBottom">Welcome, please
-				login</span></td>
+				<td width="20%"><span id="headerBottom">Welcome <s:property value="#request.spmUser.name"/> <s:property value="#request.spmUser.surname"/></span></td>
 				<td width="60%" align="center"><!-- Submenu -->
 				<table border="0" cellpadding="0" cellspacing="0" id="subMenuTable"
 					colspan="0" cellspan="0">
