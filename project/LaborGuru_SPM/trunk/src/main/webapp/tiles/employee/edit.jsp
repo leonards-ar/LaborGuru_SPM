@@ -12,7 +12,8 @@
         	  </tr>
               <tr>
               <td>
-              <s:form action="employee_edit">
+              <s:form action="employee_save" theme="simple">
+              <s:hidden name="employee.id" />
               <table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0">
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="label" nowrap>* First Name</td>
@@ -44,7 +45,7 @@
                 </tr>
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="label" nowrap>Manager</td>
-                    <td width="35%" align="left" class="value"><s:checkbox name="manager" theme="simple"/></td>
+                    <td width="35%" align="left" class="value"><s:checkbox name="employee.manager" fieldValue="true" theme="simple"/></td>
                     <td width="15%" align="right" class="label" nowrap>Hire Date</td>
                     <td width="35%" align="left" class="value"><s:textfield  name="employee.hireDate" size="30" theme="simple"/></td>
                 </tr>
@@ -80,11 +81,13 @@
                 </tr>
               	<tr class="editFormEvenRow">
                     <td width="100%" align="right" colspan="4">
-                    <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0"><tr>
-                    <td><input type="submit" value="Cancel" class="button"/></td>
-                	<td><input type="submit" value="Save" class="button"/></td>
-                    </tr></table>
-                    
+	                    <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
+		                    <tr>
+		                    	<td><s:submit value="Cancel" action="employee_list" theme="simple" cssClass="button"/></td>		                    
+		                    	<td><s:reset value="Reset" theme="simple" cssClass="button"/></td>
+		                		<td><s:submit value="Save" theme="simple" cssClass="button"/></td>
+		                    </tr>
+	                    </table>                    
                     </td>
                 </tr>
               </table>

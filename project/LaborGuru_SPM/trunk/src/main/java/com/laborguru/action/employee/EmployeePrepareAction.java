@@ -36,24 +36,36 @@ public class EmployeePrepareAction extends SpmAction {
 		this.employeeService = employeeService;
 	}
 
-	public String home() throws Exception {
+
+	public String search() throws Exception {
 		
 		//Getting store & getting the employee list
 		//storeEmployees = employeeService.getEmployeesByStore(aStore);
-		
-		
-		return SpmActionResult.HOME.getResult();
+		this.setStoreEmployees(EmployeeTestHelper.getEmployees("employee", 4));
+				
+		return SpmActionResult.LIST.getResult();
 	}
-
+	
 	public String list() throws Exception {
 		
 		//Getting store & getting the employee list
 		//storeEmployees = employeeService.getEmployeesByStore(aStore);
-		
+		this.setStoreEmployees(EmployeeTestHelper.getEmployees("employee", 4));
 		
 		return SpmActionResult.LIST.getResult();
 	}	
 
+	public String add() throws Exception {
+		
+		//Getting store & getting the employee list
+		//storeEmployees = employeeService.getEmployeesByStore(aStore);
+		this.setPositions(PositionTestHelper.getPositions("position", 4));
+		this.setStatusList(ConstantListFactory.createStatusList());
+		
+		return SpmActionResult.EDIT.getResult();
+	}
+
+	
 	public String edit() throws Exception {
 		
 		//Getting store & getting the employee list
@@ -65,7 +77,15 @@ public class EmployeePrepareAction extends SpmAction {
 		return SpmActionResult.EDIT.getResult();
 	}
 
-
+	public String save() throws Exception {
+		
+		//Getting store & getting the employee list
+		//storeEmployees = employeeService.getEmployeesByStore(aStore);
+		System.out.println(this.employee.toString());
+		
+		return SpmActionResult.LIST.getResult();
+	}
+	
 	public String show() throws Exception {
 		
 		//Getting store & getting the employee list
