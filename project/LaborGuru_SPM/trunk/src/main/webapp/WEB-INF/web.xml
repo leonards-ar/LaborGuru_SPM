@@ -30,6 +30,10 @@
 	<filter>
 		<filter-name>spm</filter-name>
 		<filter-class>com.laborguru.frontend.filter.SpmFilter</filter-class>
+		<init-param>
+		<param-name>appContextPath</param-name>
+		<param-value>applicationContext.xml</param-value>
+		</init-param>
 	</filter>
 
 	<filter>

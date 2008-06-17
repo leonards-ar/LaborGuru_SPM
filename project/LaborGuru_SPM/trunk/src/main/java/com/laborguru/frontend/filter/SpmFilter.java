@@ -16,10 +16,14 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.acegisecurity.context.SecurityContextHolder;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.laborguru.model.User;
 import com.laborguru.service.security.UserDetailsImpl;
+import com.laborguru.service.user.UserService;
 import com.laborguru.service.user.UserServiceBean;
+import com.mindpool.security.service.UserAuthenticationService;
 
 /**
  *
@@ -29,6 +33,21 @@ import com.laborguru.service.user.UserServiceBean;
  *
  */
 public class SpmFilter implements Filter {
+	private UserService userService;
+	
+	/**
+	 * @return the userService
+	 */
+	public UserService getUserService() {
+		return userService;
+	}
+
+	/**
+	 * @param userService the userService to set
+	 */
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
 
 	/**
 	 * 
@@ -66,7 +85,7 @@ public class SpmFilter implements Filter {
 			if(user == null) {
 				user = new User();
 				user.setUserName((String)principal);
-				user = new UserServiceBean().getUserByUserName(user);
+				user = getUserService().getUserByUserName(user);
 			}
 			if(user != null) {
 				httpRequest.setAttribute("spmUser", user); 
@@ -86,6 +105,7 @@ public class SpmFilter implements Filter {
 	 * @see javax.servlet.Filter#init(javax.servlet.FilterConfig)
 	 */
 	public void init(FilterConfig config) throws ServletException {
+		ApplicationContext ctx = new ClassPathXmlApplicationContext(config.getInitParameter("appContextPath"));
+		setUserService((UserService)ctx.getBean("userService"));
 	}
-
 }
