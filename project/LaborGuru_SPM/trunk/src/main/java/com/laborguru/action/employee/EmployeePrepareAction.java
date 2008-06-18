@@ -11,6 +11,7 @@ import com.laborguru.model.Position;
 import com.laborguru.model.helper.EmployeeTestHelper;
 import com.laborguru.model.helper.PositionTestHelper;
 import com.laborguru.service.employee.EmployeeService;
+import com.opensymphony.xwork2.Preparable;
 
 /**
  * This action deals with Employee CRUD.
@@ -20,7 +21,7 @@ import com.laborguru.service.employee.EmployeeService;
  *
  */
 @SuppressWarnings("serial")
-public class EmployeePrepareAction extends SpmAction {
+public class EmployeePrepareAction extends SpmAction implements Preparable {
 
 	private EmployeeService employeeService;
 	
@@ -33,6 +34,53 @@ public class EmployeePrepareAction extends SpmAction {
 	
 	private Integer employeeId;
 	private boolean removePage;
+
+	
+	/**
+	 * Prepare the data to be used on the edit page
+	 * Loads position and status list
+	 * @throws Exception
+	 */
+	public void prepareEdit() throws Exception {
+		prepareData();
+	}
+
+	/**
+	 * Prepare the data to be used on the edit page
+	 * Loads position and status list
+	 * @throws Exception
+	 */
+	public void prepareAdd() throws Exception {
+		prepareData();
+	}
+	
+	/**
+	 * Prepare the data to be used on the edit page
+	 * Loads position and status list
+	 * @throws Exception
+	 */
+	public void prepareSave() throws Exception {
+		prepareData();
+	}
+
+	
+	/**
+	 * Loads position and status list
+	 */
+	private void prepareData() {
+		this.setPositions(PositionTestHelper.getPositions("position", 4));
+		this.setStatusList(ConstantListFactory.createStatusList());
+	}
+
+
+	/**
+	 * Prepare data to be used in the actions methods defined for this action
+	 * @throws Exception
+	 * @see com.opensymphony.xwork2.Preparable#prepare()
+	 */
+	public void prepare() throws Exception {
+		//It's needed by the Preparable interface, don't comment out or removed
+	}
 	
 	/**
 	 * Performs an Employee Search
@@ -72,8 +120,6 @@ public class EmployeePrepareAction extends SpmAction {
 		
 		//Getting store & getting the employee list
 		//storeEmployees = employeeService.getEmployeesByStore(aStore);
-		this.setPositions(PositionTestHelper.getPositions("position", 4));
-		this.setStatusList(ConstantListFactory.createStatusList());
 		
 		return SpmActionResult.EDIT.getResult();
 	}
@@ -89,8 +135,6 @@ public class EmployeePrepareAction extends SpmAction {
 		//Getting store & getting the employee list
 		//storeEmployees = employeeService.getEmployeesByStore(aStore);
 		this.setEmployee(EmployeeTestHelper.getEmployee("spm", this.employeeId));		
-		this.setPositions(PositionTestHelper.getPositions("position", 4));
-		this.setStatusList(ConstantListFactory.createStatusList());
 		
 		return SpmActionResult.EDIT.getResult();
 	}
@@ -135,7 +179,6 @@ public class EmployeePrepareAction extends SpmAction {
 		return SpmActionResult.LISTACTION.getResult();
 	}
 
-	
 	/**
 	 * Stores an employee on the DB
 	 * @return
