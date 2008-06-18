@@ -30,7 +30,7 @@
 			<column name="parent_id"/>
 		</many-to-one>
 
-		<many-to-one name="permission" class="Permission" column="permissionId" not-null="true"/>
+		<many-to-one name="permission" class="Permission" lazy="false" column="permissionId" not-null="true"/>
     </class>
 </hibernate-mapping>
 
