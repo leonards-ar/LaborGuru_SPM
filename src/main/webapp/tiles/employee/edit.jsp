@@ -11,7 +11,7 @@
         	  </tr>
               
               <tr>
-              	<td class="errorMessage"><s:fielderror theme="simple"/></td>
+              	<td class="errorMessage" align="center"><s:fielderror theme="simple"/></td>
               </tr>
               
               <tr>                            
