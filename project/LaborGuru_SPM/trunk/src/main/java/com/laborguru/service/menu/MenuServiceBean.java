@@ -54,7 +54,7 @@ public class MenuServiceBean implements MenuService {
 		Menu menu = MENU_CACHE.get(user.getProfiles().iterator().next());
 		if(menu == null) {
 			List<MenuItem> completeMenu = getMenuDao().getMenu();
-			//removeNotAllowedMenuItems(completeMenu, user.getProfiles());
+			removeNotAllowedMenuItems(completeMenu, user.getProfiles());
 			menu = new Menu();
 			menu.setItems(completeMenu);
 		}
