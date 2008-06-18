@@ -6,6 +6,7 @@
 	
 	<bean id="employeeAction" class="com.laborguru.action.employee.EmployeePrepareAction" scope="prototype">
 		<property name="positionService" ref="positionService"/>
+		<property name="employeeService" ref="employeeService"/>		
 	</bean>
 
 	<bean id="positionService"
