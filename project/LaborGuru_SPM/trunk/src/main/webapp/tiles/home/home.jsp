@@ -10,6 +10,6 @@
 		<td><h1>Home Page Under Construction</h1></td>	
 	</tr>
 	<tr align="center">
-		<td><h3>Use the menu to navigate the very few options!</h3></td>	
+		<td><h3>Use the menu to navigate the very few options we offer!</h3></td>	
 	</tr>
 </table>
