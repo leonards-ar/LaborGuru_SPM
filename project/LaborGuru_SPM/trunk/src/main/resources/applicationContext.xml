@@ -44,6 +44,16 @@
 		</property>
 	</bean>
 	
+	<bean id="employeeService"
+		class="com.laborguru.service.employee.EmployeeServiceBean">
+		<property name="employeeDao" ref="employeeDao"/>
+ 	</bean>
+ 	
+ 	<bean id="employeeDao"
+ 		class="com.laborguru.service.employee.dao.EmployeeDaoHibernate">
+ 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+ 	</bean>
+ 	
 	<bean id="authenticateService" class="com.laborguru.service.security.AuthenticationService">
 		<property name="service" ref="userService" />
 	</bean>
@@ -62,13 +72,13 @@
 		</property>
 		<property name="mappingResources">
 			<list>
-				<value>com/laborguru/model/User.hbm.xml</value>
-				<value>com/laborguru/model/Profile.hbm.xml</value>
+				<value>com/laborguru/model/MenuItem.hbm.xml</value>
+				<value>com/laborguru/model/Office.hbm.xml</value>
 				<value>com/laborguru/model/Permission.hbm.xml</value>
-				<value>com/laborguru/model/MenuItem.hbm.xml</value>	
-				<value>com/laborguru/model/Office.hbm.xml</value>				
-				<value>com/laborguru/model/Store.hbm.xml</value>				
-				<value>com/laborguru/model/Position.hbm.xml</value>											
+				<value>com/laborguru/model/Position.hbm.xml</value>
+				<value>com/laborguru/model/Profile.hbm.xml</value>
+				<value>com/laborguru/model/Store.hbm.xml</value>
+				<value>com/laborguru/model/User.hbm.xml</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
