@@ -44,11 +44,15 @@ public class EmployeeServiceBean implements EmployeeService {
 	 * @see com.laborguru.service.employee.EmployeeService#getEmployeesByStore(com.laborguru.model.Store)
 	 */
 	public List<Employee> getEmployeesByStore(Store store) {
+
 		if(store == null) {
 			spmLog.errorLog("error.null.param", new Object[]{"store"});
 			throw new IllegalArgumentException("param is null");
 		}
-		return employeeDao.getEmployeesByStore(store);
+		List<Employee> employees = employeeDao.getEmployeesByStore(store);
+
+System.out.println("*************************** size:"+ employees.size());		
+		return employees;
 	}
 
 	/* (non-Javadoc)

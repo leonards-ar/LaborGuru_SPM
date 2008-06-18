@@ -34,109 +34,42 @@ public class User extends SpmObject {
 	private Set<Profile> profiles;
 	
 	
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result
-				+ ((creationDate == null) ? 0 : creationDate.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result
-				+ ((lastLogon == null) ? 0 : lastLogon.hashCode());
-		result = prime * result
-				+ ((lastUpdateDate == null) ? 0 : lastUpdateDate.hashCode());
-		result = prime * result
-				+ ((loginCount == null) ? 0 : loginCount.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result
-				+ ((password == null) ? 0 : password.hashCode());
-		result = prime * result
-				+ ((profiles == null) ? 0 : profiles.hashCode());
-		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
-		result = prime * result
-				+ ((userName == null) ? 0 : userName.hashCode());
 		return result;
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (!super.equals(obj))
 			return false;
-		if (!(obj instanceof User))
+		if (getClass() != obj.getClass())
 			return false;
 		final User other = (User) obj;
-		if (creationDate == null) {
-			if (other.creationDate != null)
-				return false;
-		} else if (!creationDate.equals(other.creationDate))
-			return false;
 		if (email == null) {
 			if (other.email != null)
 				return false;
 		} else if (!email.equals(other.email))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (lastLogon == null) {
-			if (other.lastLogon != null)
-				return false;
-		} else if (!lastLogon.equals(other.lastLogon))
-			return false;
-		if (lastUpdateDate == null) {
-			if (other.lastUpdateDate != null)
-				return false;
-		} else if (!lastUpdateDate.equals(other.lastUpdateDate))
-			return false;
-		if (loginCount == null) {
-			if (other.loginCount != null)
-				return false;
-		} else if (!loginCount.equals(other.loginCount))
 			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (profiles == null) {
-			if (other.profiles != null)
-				return false;
-		} else if (!profiles.equals(other.profiles))
-			return false;
-		if (status == null) {
-			if (other.status != null)
-				return false;
-		} else if (!status.equals(other.status))
-			return false;
 		if (surname == null) {
 			if (other.surname != null)
 				return false;
 		} else if (!surname.equals(other.surname))
 			return false;
-		if (userName == null) {
-			if (other.userName != null)
-				return false;
-		} else if (!userName.equals(other.userName))
-			return false;
 		return true;
 	}
+	
 	/**
 	 * @return the id
 	 */
