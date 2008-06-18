@@ -1,6 +1,9 @@
 package com.laborguru.action.employee;
 
 import java.util.List;
+import java.util.Map;
+
+import org.apache.struts2.interceptor.SessionAware;
 
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
@@ -22,10 +25,11 @@ import com.opensymphony.xwork2.Preparable;
  *
  */
 @SuppressWarnings("serial")
-public class EmployeePrepareAction extends SpmAction implements Preparable {
+public class EmployeePrepareAction extends SpmAction implements Preparable, SessionAware {
 
 	private EmployeeService employeeService;
 	private PositionService positionService;
+	private Map session;
 	
 	private Employee employee;
 	private Employee searchEmployee;
@@ -88,15 +92,18 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	}
 	
 	/**
-	 * Performs an Employee Search
+	 * TODO Performs an Employee Search
 	 * @return
 	 * @throws Exception
 	 */
 	public String search() throws Exception {
 		
-		//Getting store & getting the employee list
-		//storeEmployees = employeeService.getEmployeesByStore(aStore);
-		this.setStoreEmployees(EmployeeTestHelper.getEmployees("employee", 4));
+		//Getting store &  employee list
+		/*		Employee sessionEmployee = (Employee)session.get("spmUSer");				
+				if (sessionEmployee != null && sessionEmployee.getStore() != null){
+					this.setStoreEmployees(this.employeeService.getEmployeesByStore(sessionEmployee.getStore()));
+				}
+		*/		this.setStoreEmployees(EmployeeTestHelper.getEmployees("employee", 4));
 				
 		return SpmActionResult.LIST.getResult();
 	}
@@ -108,8 +115,12 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	 */
 	public String list() throws Exception {
 		
-		//Getting store & getting the employee list
-		//storeEmployees = employeeService.getEmployeesByStore(aStore);
+		//Getting store &  employee list
+/*		Employee sessionEmployee = (Employee)session.get("spmUSer");				
+		if (sessionEmployee != null && sessionEmployee.getStore() != null){
+			this.setStoreEmployees(this.employeeService.getEmployeesByStore(sessionEmployee.getStore()));
+		}
+*/		
 		this.setStoreEmployees(EmployeeTestHelper.getEmployees("employee", 4));
 		
 		return SpmActionResult.LIST.getResult();
@@ -137,8 +148,11 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	 */
 	public String edit() throws Exception {
 		
-		//Getting store & getting the employee list
-		//storeEmployees = employeeService.getEmployeesByStore(aStore);
+		//Getting employee
+/*		Employee tmpEmployee = new Employee();
+		tmpEmployee.setId(this.employeeId);
+		this.setEmployee(employeeService.getEmployeeById(tmpEmployee));
+*/	
 		this.setEmployee(EmployeeTestHelper.getEmployee("spm", this.employeeId));		
 		
 		return SpmActionResult.EDIT.getResult();
@@ -150,8 +164,11 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	 * @throws Exception
 	 */
 	public String remove() throws Exception {
-		//Getting store & getting the employee list
-		//storeEmployees = employeeService.getEmployeesByStore(aStore);
+		//Getting employee
+/*		Employee tmpEmployee = new Employee();
+		tmpEmployee.setId(this.employeeId);
+		this.setEmployee(employeeService.getEmployeeById(tmpEmployee));
+*/	
 		this.setRemovePage(true);
 		this.setEmployee(EmployeeTestHelper.getEmployee("spm", this.employeeId));
 		
@@ -164,8 +181,11 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	 * @throws Exception
 	 */
 	public String show() throws Exception {		
-		//Getting store & getting the employee list
-		//storeEmployees = employeeService.getEmployeesByStore(aStore);
+		//Getting employee
+/*		Employee tmpEmployee = new Employee();
+		tmpEmployee.setId(this.employeeId);
+		this.setEmployee(employeeService.getEmployeeById(tmpEmployee));
+*/	
 		this.setEmployee(EmployeeTestHelper.getEmployee("spm", this.employeeId));
 
 		return SpmActionResult.SHOW.getResult();
@@ -177,9 +197,9 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	 * @throws Exception
 	 */
 	public String save() throws Exception {		
-		//Getting store & getting the employee list
-		//storeEmployees = employeeService.getEmployeesByStore(aStore);
+
 		System.out.println("ADD: "+this.employee.toString());
+		//employeeService.save(this.employee);
 		
 		return SpmActionResult.LISTACTION.getResult();
 	}
@@ -190,9 +210,9 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	 * @throws Exception
 	 */
 	public String delete() throws Exception {		
-		//Getting store & getting the employee list
-		//storeEmployees = employeeService.getEmployeesByStore(aStore);
+
 		System.out.println("DELETE:"+this.employee.toString());
+		//employeeService.delete(this.employee);
 		
 		return SpmActionResult.LISTACTION.getResult();
 	}
@@ -268,5 +288,9 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 
 	public void setPositionService(PositionService positionService) {
 		this.positionService = positionService;
+	}
+
+	public void setSession(Map session) {
+		this.session = session;
 	}
 }
