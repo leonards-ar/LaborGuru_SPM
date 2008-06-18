@@ -6,7 +6,7 @@
 <hibernate-mapping package="com.laborguru.model" schema="spm">
     <class name="Profile" table="tbl_profiles">
 
-        <id name="id" type="int" unsaved-value="null" column="id">
+        <id name="id" type="int" unsaved-value="null" column="profile_id">
             <generator class="native">
             	<param name="sequence">tbl_profiles_id_seq</param>
             	<param name="parameters">increment by 1 start with 1000</param>
@@ -17,8 +17,8 @@
         <property name="description" column="description" type="string" length="50" />        
 
 	    <set name="permissions" table="tbl_profiles_permissions" lazy="false">
-	        <key column="profileId"/>
-	        <many-to-many column="permissionId" class="Permission"/>
+	        <key column="profile_id"/>
+	        <many-to-many column="permission_id" class="Permission"/>
 	    </set>
     </class>
 </hibernate-mapping>

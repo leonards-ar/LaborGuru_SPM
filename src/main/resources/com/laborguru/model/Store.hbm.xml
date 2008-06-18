@@ -5,7 +5,7 @@
 
 <hibernate-mapping package="com.laborguru.model" schema="spm">
 	<class name="Store" table="tbl_stores">
-		<id name="id" type="int" unsaved-value="null" column="id">
+		<id name="id" type="int" unsaved-value="null" column="store_id">
 			<generator class="native">
 				<param name="sequence">tbl_stores_id_seq</param>
 				<param name="parameters">
@@ -14,7 +14,7 @@
 			</generator>
 		</id>
 		<property name="name" column="name" type="string" length="150" />
-		<many-to-one name="office" class="Office">
+		<many-to-one name="office" class="Office" lazy="false">
 			<column name="office_id"/>
 		</many-to-one>
 	</class>
