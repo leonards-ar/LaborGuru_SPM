@@ -8,6 +8,7 @@ import com.opensymphony.xwork2.ActionSupport;
  * @author cnunez
  *
  */
+@SuppressWarnings("serial")
 public class SpmAction extends ActionSupport {
 
 	

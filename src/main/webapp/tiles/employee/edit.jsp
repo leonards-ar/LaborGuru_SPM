@@ -5,13 +5,17 @@
 	      <table border="0" cellspacing="0" align="center">
 		      <tr>
 			      <td class="infoMessage">Mandatory fields are marked with *.</td>
-        	  </tr>
+        	  </tr>			     
 		      <tr>
 			      <td id="titleBar">Edit new employee</td>
 			      <!--td id="titleBar">Edit employee Mariano Capurro</td-->
         	  </tr>
+              
               <tr>
-              <td>
+              	<td class="infoMessage"><s:fielderror theme="simple"/></td>
+              </tr>
+              <tr>                            
+              <td>              
               <s:form action="employee_save" theme="simple">
               <s:hidden name="employee.id" theme="simple"/>
               <table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0">

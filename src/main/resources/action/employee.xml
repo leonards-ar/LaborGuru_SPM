@@ -8,7 +8,10 @@
 			<result name="edit" type="tiles">editEmployeePage</result>
 			<result name="show" type="tiles">showEmployeePage</result>
 			<result name="list" type="tiles">listEmployeesPage</result>
-			<result name="listAction" type="redirectAction">employee_list</result>			
-		</action>			
+			<result name="listAction" type="redirectAction">employee_list</result>
+			<result name="input" type="tiles">editEmployeePage</result>			
+		</action>
+		
+					
 	</package>
 </struts>
