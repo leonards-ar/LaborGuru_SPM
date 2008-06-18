@@ -5,6 +5,10 @@
 	import="org.acegisecurity.ui.webapp.AuthenticationProcessingFilter"%>
 <%@ page import="org.acegisecurity.AuthenticationException"%>
 
+<%@page import="com.mindpool.security.exceptions.UnknownUserException"%>
+<%@page import="com.mindpool.security.exceptions.BadPasswordException"%>
+<%@page import="com.mindpool.security.exceptions.UserDisabledException"%>
+<%@page import="com.mindpool.security.exceptions.PasswordExpiredException"%>
 <br />
 <br />
 <br />
@@ -29,18 +33,26 @@
 			<%
 				if (request.getParameter("login_error") != null) {
 					Throwable e = (Throwable) session.getAttribute(AbstractProcessingFilter.ACEGI_SECURITY_LAST_EXCEPTION_KEY);
-					String exceptionMessage = "Login failed for unknown reason.";
+					String exceptionMessage = "error.unknown";
 				    
 				    if(e.getCause() != null) {
-				    	e = e.getCause();
+				    	if(e.getCause() instanceof UnknownUserException) {
+				    		exceptionMessage = "error.username.invalid";
+				    	} else if(e.getCause() instanceof BadPasswordException) {
+				    		exceptionMessage = "error.password.invalid";
+				    	} else if(e.getCause() instanceof UserDisabledException) {
+				    		exceptionMessage = "error.user.disabled";
+				    	} else if(e.getCause() instanceof PasswordExpiredException) {
+				    		exceptionMessage = "error.password.expired";
+				    	}
 				    }
 				    
-				    exceptionMessage = e.getMessage();
+				    request.setAttribute("exceptionMessage", exceptionMessage);
 			%>
 			<tr>
-				<td colspan="2"><font color="red">
-				 <%= exceptionMessage %>
-				</font></td>
+				<td colspan="2" align="center">
+				 <span class="errorMessage"><s:text name="%{#request.exceptionMessage}"/></span>
+				</td>
 			</tr>
 			<%
 				}
