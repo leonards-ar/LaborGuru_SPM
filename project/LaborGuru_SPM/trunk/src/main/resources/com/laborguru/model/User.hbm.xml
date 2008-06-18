@@ -6,7 +6,7 @@
 <hibernate-mapping package="com.laborguru.model" schema="spm">
     <class name="User" table="tbl_users">
 
-        <id name="id" type="int" unsaved-value="null" column="id">
+        <id name="id" type="int" unsaved-value="null" column="user_id">
             <generator class="native">
             	<param name="sequence">tbl_users_id_seq</param>
             	<param name="parameters">increment by 1 start with 1000</param>
@@ -24,16 +24,17 @@
 		<property name="creationDate" column="creation_date" type="date"/>
 		<property name="lastUpdateDate" column="last_update_date" type="date"/>
 	    <set name="profiles" table="tbl_users_profiles" lazy="false">
-	        <key column="userId"/>
-	        <many-to-many column="profileId" class="Profile"/>
+	        <key column="user_id"/>
+	        <many-to-many column="profile_id" class="Profile"/>
 	    </set>
 	    
-	    <!-- joined-subclass name="Employee" table="tbl_employees">
+	    <joined-subclass name="Employee" table="tbl_employees">
 	    	<key column="user_id"/>
-	    	<many-to-one name="store" class="Store">
+	    	
+	    	<many-to-one name="store" class="Store" lazy="false">
 				<column name="store_id"/>
 			</many-to-one>
-			<many-to-one name="defaultPosition" class="Position" property-ref="id">
+  			<many-to-one name="defaultPosition" class="Position" lazy="false">
 				<column name="default_position" />
 			</many-to-one>
 	    	<property name="manager" column="manager" type="boolean"/>
@@ -49,7 +50,7 @@
         	<property name="state" column="state" type="string" length="100" />
         	<property name="zip" column="zip" type="string" length="50" />
         	<property name="comments" column="comments" type="string" length="1024" />
-    	</joined-subclass-->
+    	</joined-subclass>
     </class>
 </hibernate-mapping>
 
