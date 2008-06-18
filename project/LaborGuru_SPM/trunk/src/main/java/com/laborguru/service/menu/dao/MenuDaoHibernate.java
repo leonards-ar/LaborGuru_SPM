@@ -8,7 +8,6 @@ import java.util.List;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.laborguru.model.MenuItem;
-import com.laborguru.model.User;
 
 /**
  * @author Mariano

@@ -7,19 +7,19 @@ public class Office extends SpmObject {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	int id;
+	private Integer id;
 	
-	String name;
+	private String name;
 	
-	char type;
+	private char type;
 	
-	Office parentOffice;
+	private Office parentOffice;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

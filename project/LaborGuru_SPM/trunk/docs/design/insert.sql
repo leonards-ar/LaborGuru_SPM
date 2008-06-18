@@ -5,9 +5,19 @@ delete from tbl_profiles;
 delete from tbl_menu_items;
 delete from tbl_permissions;
 delete from tbl_users;
+delete from tbl_positions;
+delete from tbl_stores;
+delete from tbl_offices;
 
 -- Profiles
 insert into tbl_profiles (id, name, description) values (1, 'ROLE_USER', 'Profile Desc');
+
+commit;
+
+-- Office
+insert into tbl_offices (id, name, type, parent_office_id) values (0,'Mac Donalds', 'A', null);
+
+commit;
 
 -- Users
 insert into tbl_users (creation_date, email, id, last_update_date, login_count, name, password, status, surname, username) values (now(), 'mcapurro@gmail.com', 1, null, 0, 'Mariano', '1234', 0, 'Capurro', 'mcapurro');
@@ -19,6 +29,7 @@ insert into tbl_users_profiles (profileid, userid) values (1, 1);
 insert into tbl_users_profiles (profileid, userid) values (1, 2);
 insert into tbl_users_profiles (profileid, userid) values (1, 3);
 insert into tbl_users_profiles (profileid, userid) values (1, 4);
+
 
 -- Permissions
 insert into tbl_permissions (id, key, description) values (0, 'FREE_ACCESS', 'Dummy permission that all profiles should have');
@@ -48,3 +59,17 @@ insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permis
 insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permissionid, position, target) values (8, 'Otra subopcion sin permisos 3', 'EMPLOYEE_LIST_HELP', 4, 4, 0, '/employee/employee_list.action');
 
 commit;
+
+-- Store
+insert into tbl_stores (id, name, office_id) values (0,'microcentro', 0);
+
+commit;
+
+-- Positions
+insert into tbl_positions (id, name, store_id) values (0, 'chef',0);
+insert into tbl_positions (id, name, store_id) values (1, 'waiter',0);
+insert into tbl_positions (id, name, store_id) values (2, 'cook',0);
+insert into tbl_positions (id, name, store_id) values (4, 'porter',0);
+
+commit;
+

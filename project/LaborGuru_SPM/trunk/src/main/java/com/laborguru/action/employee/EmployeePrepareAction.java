@@ -8,9 +8,10 @@ import com.laborguru.action.utils.ConstantListFactory;
 import com.laborguru.action.utils.KeyValuePair;
 import com.laborguru.model.Employee;
 import com.laborguru.model.Position;
+import com.laborguru.model.Store;
 import com.laborguru.model.helper.EmployeeTestHelper;
-import com.laborguru.model.helper.PositionTestHelper;
 import com.laborguru.service.employee.EmployeeService;
+import com.laborguru.service.position.PositionService;
 import com.opensymphony.xwork2.Preparable;
 
 /**
@@ -24,6 +25,7 @@ import com.opensymphony.xwork2.Preparable;
 public class EmployeePrepareAction extends SpmAction implements Preparable {
 
 	private EmployeeService employeeService;
+	private PositionService positionService;
 	
 	private Employee employee;
 	private Employee searchEmployee;
@@ -68,7 +70,10 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	 * Loads position and status list
 	 */
 	private void prepareData() {
-		this.setPositions(PositionTestHelper.getPositions("position", 4));
+		Store store = new Store();
+		store.setId(0);
+		
+		this.setPositions(positionService.getPositionsByStore(store));
 		this.setStatusList(ConstantListFactory.createStatusList());
 	}
 
@@ -255,5 +260,13 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 
 	public void setSearchEmployee(Employee searchEmployee) {
 		this.searchEmployee = searchEmployee;
+	}
+
+	public PositionService getPositionService() {
+		return positionService;
+	}
+
+	public void setPositionService(PositionService positionService) {
+		this.positionService = positionService;
 	}
 }
