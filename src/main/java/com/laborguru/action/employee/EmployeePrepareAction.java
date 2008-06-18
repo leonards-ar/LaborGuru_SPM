@@ -12,7 +12,6 @@ import com.laborguru.action.utils.KeyValuePair;
 import com.laborguru.model.Employee;
 import com.laborguru.model.Position;
 import com.laborguru.model.Store;
-import com.laborguru.model.helper.EmployeeTestHelper;
 import com.laborguru.service.employee.EmployeeService;
 import com.laborguru.service.position.PositionService;
 import com.opensymphony.xwork2.Preparable;
@@ -99,11 +98,9 @@ public class EmployeePrepareAction extends SpmAction implements Preparable, Sess
 	public String search() throws Exception {
 		
 		//Getting store &  employee list
-		/*		Employee sessionEmployee = (Employee)session.get("spmUSer");				
-				if (sessionEmployee != null && sessionEmployee.getStore() != null){
-					this.setStoreEmployees(this.employeeService.getEmployeesByStore(sessionEmployee.getStore()));
-				}
-		*/		this.setStoreEmployees(EmployeeTestHelper.getEmployees("employee", 4));
+		Store aStore = new Store();
+		aStore.setId(0);
+		this.setStoreEmployees(this.employeeService.getEmployeesByStore(aStore));
 				
 		return SpmActionResult.LIST.getResult();
 	}
@@ -116,12 +113,15 @@ public class EmployeePrepareAction extends SpmAction implements Preparable, Sess
 	public String list() throws Exception {
 		
 		//Getting store &  employee list
-/*		Employee sessionEmployee = (Employee)session.get("spmUSer");				
-		if (sessionEmployee != null && sessionEmployee.getStore() != null){
-			this.setStoreEmployees(this.employeeService.getEmployeesByStore(sessionEmployee.getStore()));
-		}
-*/		
-		this.setStoreEmployees(EmployeeTestHelper.getEmployees("employee", 4));
+		//Employee sessionEmployee = (Employee)session.get("spmUSer");				
+		//if (sessionEmployee != null && sessionEmployee.getStore() != null){
+		
+			Store aStore = new Store();
+			aStore.setId(0);
+			this.setStoreEmployees(this.employeeService.getEmployeesByStore(aStore));
+		
+		
+		//this.setStoreEmployees(EmployeeTestHelper.getEmployees("employee", 4));
 		
 		return SpmActionResult.LIST.getResult();
 	}	
@@ -134,8 +134,6 @@ public class EmployeePrepareAction extends SpmAction implements Preparable, Sess
 	 */
 	public String add() throws Exception {
 		
-		//Getting store & getting the employee list
-		//storeEmployees = employeeService.getEmployeesByStore(aStore);
 		
 		return SpmActionResult.EDIT.getResult();
 	}
@@ -149,12 +147,10 @@ public class EmployeePrepareAction extends SpmAction implements Preparable, Sess
 	public String edit() throws Exception {
 		
 		//Getting employee
-/*		Employee tmpEmployee = new Employee();
+		Employee tmpEmployee = new Employee();
 		tmpEmployee.setId(this.employeeId);
 		this.setEmployee(employeeService.getEmployeeById(tmpEmployee));
-*/	
-		this.setEmployee(EmployeeTestHelper.getEmployee("spm", this.employeeId));		
-		
+			
 		return SpmActionResult.EDIT.getResult();
 	}
 
@@ -164,13 +160,13 @@ public class EmployeePrepareAction extends SpmAction implements Preparable, Sess
 	 * @throws Exception
 	 */
 	public String remove() throws Exception {
+
 		//Getting employee
-/*		Employee tmpEmployee = new Employee();
+		Employee tmpEmployee = new Employee();
 		tmpEmployee.setId(this.employeeId);
 		this.setEmployee(employeeService.getEmployeeById(tmpEmployee));
-*/	
+	
 		this.setRemovePage(true);
-		this.setEmployee(EmployeeTestHelper.getEmployee("spm", this.employeeId));
 		
 		return SpmActionResult.SHOW.getResult();
 	}	
@@ -182,12 +178,10 @@ public class EmployeePrepareAction extends SpmAction implements Preparable, Sess
 	 */
 	public String show() throws Exception {		
 		//Getting employee
-/*		Employee tmpEmployee = new Employee();
+		Employee tmpEmployee = new Employee();
 		tmpEmployee.setId(this.employeeId);
 		this.setEmployee(employeeService.getEmployeeById(tmpEmployee));
-*/	
-		this.setEmployee(EmployeeTestHelper.getEmployee("spm", this.employeeId));
-
+	
 		return SpmActionResult.SHOW.getResult();
 	}
 		
@@ -199,7 +193,14 @@ public class EmployeePrepareAction extends SpmAction implements Preparable, Sess
 	public String save() throws Exception {		
 
 		System.out.println("ADD: "+this.employee.toString());
-		//employeeService.save(this.employee);
+		
+		if (this.employee.getId() == null){
+			Store aStore = new Store();
+			aStore.setId(0);
+			this.employee.setStore(aStore);
+		}
+		
+		employeeService.save(this.employee);
 		
 		return SpmActionResult.LISTACTION.getResult();
 	}
@@ -212,7 +213,10 @@ public class EmployeePrepareAction extends SpmAction implements Preparable, Sess
 	public String delete() throws Exception {		
 
 		System.out.println("DELETE:"+this.employee.toString());
-		//employeeService.delete(this.employee);
+		
+		//Getting employee
+		Employee auxEmployee = employeeService.getEmployeeById(this.employee);		
+		employeeService.delete(auxEmployee);
 		
 		return SpmActionResult.LISTACTION.getResult();
 	}
