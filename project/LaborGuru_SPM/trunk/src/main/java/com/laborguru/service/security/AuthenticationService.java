@@ -2,7 +2,6 @@ package com.laborguru.service.security;
 
 import java.security.Principal;
 
-import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
 
 import com.laborguru.logger.DefaultSpmLogger;
