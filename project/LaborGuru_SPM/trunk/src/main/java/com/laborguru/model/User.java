@@ -1,6 +1,7 @@
 package com.laborguru.model;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -221,6 +222,10 @@ public class User extends SpmObject {
 		
 		if (profile == null){
 			throw new IllegalArgumentException("Null profile passed in as parameter");
+		}
+		
+		if(this.profiles == null) {
+			this.profiles = new HashSet<Profile>();
 		}
 
 		this.profiles.add(profile);
