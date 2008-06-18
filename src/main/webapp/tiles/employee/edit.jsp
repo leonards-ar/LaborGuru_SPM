@@ -51,7 +51,7 @@
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="label" nowrap>Manager</td>
                     <td width="35%" align="left" class="value"><s:checkbox name="employee.manager" fieldValue="true" theme="simple"/></td>
-                    <td width="15%" align="right" class="label" nowrap>Hire Date</td>
+                    <td width="15%" align="right" class="label" nowrap>Hire Date (mm/dd/yy)</td>
                     <td width="35%" align="left" class="value"><s:textfield  name="employee.hireDate" size="30" theme="simple"/></td>
                 </tr>
               	<tr class="editFormOddRow">
