@@ -3,6 +3,22 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	
+	<bean id="employeeAction" class="com.laborguru.action.employee.EmployeePrepareAction" scope="prototype">
+		<property name="positionService" ref="positionService"/>
+	</bean>
+
+	<bean id="positionService"
+		class="com.laborguru.service.position.PositionServiceBean">
+		<property name="positionDao" ref="positionDao" />
+	</bean>
+
+	<bean id="positionDao"
+		class="com.laborguru.service.position.dao.PositionDaoHibernate">
+		<property name="hibernateTemplate">
+			<ref bean="hibernateTemplate" />
+		</property>
+	</bean>
 
 	<bean id="menuService"
 		class="com.laborguru.service.menu.MenuServiceBean">
@@ -49,7 +65,10 @@
 				<value>com/laborguru/model/User.hbm.xml</value>
 				<value>com/laborguru/model/Profile.hbm.xml</value>
 				<value>com/laborguru/model/Permission.hbm.xml</value>
-				<value>com/laborguru/model/MenuItem.hbm.xml</value>				
+				<value>com/laborguru/model/MenuItem.hbm.xml</value>	
+				<value>com/laborguru/model/Office.hbm.xml</value>				
+				<value>com/laborguru/model/Store.hbm.xml</value>				
+				<value>com/laborguru/model/Position.hbm.xml</value>											
 			</list>
 		</property>
 		<property name="hibernateProperties">

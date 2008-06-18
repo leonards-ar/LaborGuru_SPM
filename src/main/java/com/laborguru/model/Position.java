@@ -7,15 +7,15 @@ public class Position {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private int id;
+	private Integer id;
 	Store store;
 	String name;
 	
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public Store getStore() {
