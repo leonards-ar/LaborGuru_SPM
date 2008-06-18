@@ -8,12 +8,12 @@
         	  </tr>			     
 		      <tr>
 			      <td id="titleBar">Edit new employee</td>
-			      <!--td id="titleBar">Edit employee Mariano Capurro</td-->
         	  </tr>
               
               <tr>
-              	<td class="infoMessage"><s:fielderror theme="simple"/></td>
+              	<td class="errorMessage"><s:fielderror theme="simple"/></td>
               </tr>
+              
               <tr>                            
               <td>              
               <s:form action="employee_save" theme="simple">
