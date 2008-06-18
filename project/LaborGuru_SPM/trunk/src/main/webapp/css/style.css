@@ -5,6 +5,11 @@
 	  border:none;
    }
 
+a {
+	font-weight: bold;
+	color: #5C5C5C;
+}
+
 a.link {
    font-family:tahoma, arial, sans-serif;
    font-size:11px;
@@ -187,6 +192,7 @@ padding-right: 12px;
 padding-bottom: 8px;
 padding-top: 8px;
 color:#FFFFFF;
+font-weight:bold;
 }
 
 a.availableMenuItemAnchor:hover {
@@ -196,6 +202,7 @@ padding-right: 12px;
 padding-bottom: 8px;
 padding-top: 8px;
 color:#184E01;
+font-weight:bold;
 }
 
 #subMenuTable {
