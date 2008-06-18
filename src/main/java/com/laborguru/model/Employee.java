@@ -21,6 +21,7 @@ public class Employee extends User {
 	private String address;
 	private String address2;
 	private String city;
+	private String state;
 	private String zip;
 	private String comments;
 	
@@ -93,6 +94,12 @@ public class Employee extends User {
 	public String getZip() {
 		return zip;
 	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
 	public void setZip(String zip) {
 		this.zip = zip;
 	}
@@ -129,6 +136,8 @@ public class Employee extends User {
 		result = prime * result
 				+ ((comments == null) ? 0 : comments.hashCode());
 		result = prime * result
+				+ ((defaultPosition == null) ? 0 : defaultPosition.hashCode());
+		result = prime * result
 				+ ((hireDate == null) ? 0 : hireDate.hashCode());
 		result = prime * result
 				+ ((homePhone == null) ? 0 : homePhone.hashCode());
@@ -138,8 +147,7 @@ public class Employee extends User {
 		result = prime * result + maxHoursWeek;
 		result = prime * result
 				+ ((mobilePhone == null) ? 0 : mobilePhone.hashCode());
-		result = prime * result
-				+ ((defaultPosition == null) ? 0 : defaultPosition.hashCode());
+		result = prime * result + ((state == null) ? 0 : state.hashCode());
 		result = prime * result + ((store == null) ? 0 : store.hashCode());
 		result = prime * result + ((zip == null) ? 0 : zip.hashCode());
 		return result;
@@ -176,6 +184,11 @@ public class Employee extends User {
 				return false;
 		} else if (!comments.equals(other.comments))
 			return false;
+		if (defaultPosition == null) {
+			if (other.defaultPosition != null)
+				return false;
+		} else if (!defaultPosition.equals(other.defaultPosition))
+			return false;
 		if (hireDate == null) {
 			if (other.hireDate != null)
 				return false;
@@ -199,10 +212,10 @@ public class Employee extends User {
 				return false;
 		} else if (!mobilePhone.equals(other.mobilePhone))
 			return false;
-		if (defaultPosition == null) {
-			if (other.defaultPosition != null)
+		if (state == null) {
+			if (other.state != null)
 				return false;
-		} else if (!defaultPosition.equals(other.defaultPosition))
+		} else if (!state.equals(other.state))
 			return false;
 		if (store == null) {
 			if (other.store != null)
@@ -216,5 +229,7 @@ public class Employee extends User {
 			return false;
 		return true;
 	}
+	
+	
 
 }
