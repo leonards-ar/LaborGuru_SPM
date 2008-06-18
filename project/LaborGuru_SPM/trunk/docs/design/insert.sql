@@ -42,9 +42,9 @@ commit;
 
 
 -- Other data Test
-insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permissionid, position, target) values (4, 'Otra opcion', 'EMPLOYEE_MENU_HELP', null, 1, 0, '/employee/employee_list.action');
-insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permissionid, position, target) values (5, 'Otra subopcion 1', 'EMPLOYEE_ADD_HELP', 4, 3, 1, '/employee/employee_add.action');
-insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permissionid, position, target) values (6, 'Otra subopcion 2', 'EMPLOYEE_LIST_HELP', 4, 2, 0, '/employee/employee_list.action');
-insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permissionid, position, target) values (7, 'Otra subopcion sin permisos 3', 'EMPLOYEE_LIST_HELP', 4, 4, 0, '/employee/employee_list.action');
+insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permissionid, position, target) values (5, 'Otra opcion', 'EMPLOYEE_MENU_HELP', null, 1, 0, '/employee/employee_list.action');
+insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permissionid, position, target) values (6, 'Otra subopcion 1', 'EMPLOYEE_ADD_HELP', 4, 3, 1, '/employee/employee_add.action');
+insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permissionid, position, target) values (7, 'Otra subopcion 2', 'EMPLOYEE_LIST_HELP', 4, 2, 0, '/employee/employee_list.action');
+insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permissionid, position, target) values (8, 'Otra subopcion sin permisos 3', 'EMPLOYEE_LIST_HELP', 4, 4, 0, '/employee/employee_list.action');
 
 commit;
