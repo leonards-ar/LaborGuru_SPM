@@ -112,10 +112,14 @@ input.button{
 
 .resultsTableHeader {
 background-color:#A3D39C;
-color:#FFFFFF;
+   background-image: url(../images/table-header-bg.png);
+   background-position: center;
+   background-repeat: repeat-x;
+color:#019820;
 font-size:13px;
 text-align: center;
 font-family:tahoma, arial, sans-serif;
+font-weight: bold;
 }
 
 .resultsTableOddRow {
