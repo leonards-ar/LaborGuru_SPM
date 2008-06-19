@@ -109,7 +109,7 @@
                     <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0"><tr>                  
                     <td>
                     	<s:if test="removePage">
-                    		<s:submit action="employee_list" key="cancel.button" theme="simple" cssClass="button"/>                    		
+                    		<s:submit action="employee_list" key="cancel.button" theme="simple" cssClass="button"/>      
                   			<s:submit action="employee_delete" key="remove.button" theme="simple" cssClass="button"/>
                     	</s:if>
                     	<s:else>
