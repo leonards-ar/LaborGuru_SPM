@@ -41,7 +41,7 @@
 		<table width="100%" border="0" cellpadding="0" cellspacing="0"
 			colspan="0" cellspan="0">
 			<tr>
-				<td width="20%"><span id="headerBottom">
+				<td width="20%" nowrap><span id="headerBottom">
 				<s:text name="home.greeting">
 				<s:param value="#request.spmUser.fullName"/>
 				</s:text>
