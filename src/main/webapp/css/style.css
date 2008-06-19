@@ -38,7 +38,12 @@ a.link:hover {
 	 }
 
    #headerTable{height:100%;}
-   #headerTop{height:75px;background-color:#A3D39C;
+   #headerTop{
+   height:75px;
+   background-color: #A3D39C;
+   background-image: url(../images/header-top-bg.png);
+   background-position: bottom;
+   background-repeat: repeat-x;
    }
    #headerBottom{
 	height:15px;
@@ -159,13 +164,11 @@ color:red;
 background-color:#184E01;
 text-align:center;
 font-weight:bold;
-border-right: 2px solid #A3D39C;
 }
 
 .availableMenuItemOver {
 background-color:#DEEFDC;
 text-align:center;
-border-right: 2px solid #A3D39C;
 }
 
 .selectedMenuItem {
@@ -179,7 +182,6 @@ font-size:12px;
 font-family:tahoma, arial, sans-serif;
 font-weight:bold;
 color:#184E01;
-border-right: 2px solid #A3D39C;
 }
 
 a.availableMenuItemAnchor {

@@ -25,7 +25,9 @@
 							<a href="<s:url value="%{target}"><s:param name="menuItemIndex" value="#itCtx.index" /></s:url>"
 							class="availableMenuItemAnchor"><s:text name="%{labelKey}"/></a></td>						
 						</s:else>
-						
+						<s:if test="!#itCtx.last">
+						<td><img src="<s:url value="/images/transp2x1.gif"/>"/></td>
+						</s:if>						
 					</s:iterator>
 					</tr>
 				</table>

@@ -52,7 +52,7 @@
         	<property name="zip" column="zip" type="string" length="50" />
         	<property name="comments" column="comments" type="string" length="1024" />
         	<property name="employeeId" column="employee_id" type="string" length="50" />
-        	<property name="wage" column="wage" type="float" />
+        	<property name="wage" column="wage" type="double" />
     	</joined-subclass>
     </class>
 </hibernate-mapping>
