@@ -28,10 +28,10 @@ insert into tbl_users_profiles (profile_id, user_id) values (1, 4);
 
 
 -- Permissions
-insert into tbl_permissions (permission_id, key, description) values (null, 'FREE_ACCESS', 'Dummy permission that all profiles should have');
-insert into tbl_permissions (permission_id, key, description) values (null, 'VIEW_EMPLOYEE', 'View and query employees of the own store');
-insert into tbl_permissions (permission_id, key, description) values (null, 'EDIT_EMPLOYEE', 'Edit existing employees of the own store');
-insert into tbl_permissions (permission_id, key, description) values (null, 'CREATE_EMPLOYEE', 'Create new employees in the own store');
+insert into tbl_permissions (permission_id, name, description) values (null, 'FREE_ACCESS', 'Dummy permission that all profiles should have');
+insert into tbl_permissions (permission_id, name, description) values (null, 'VIEW_EMPLOYEE', 'View and query employees of the own store');
+insert into tbl_permissions (permission_id, name, description) values (null, 'EDIT_EMPLOYEE', 'Edit existing employees of the own store');
+insert into tbl_permissions (permission_id, name, description) values (null, 'CREATE_EMPLOYEE', 'Create new employees in the own store');
 
 insert into tbl_profiles_permissions (permission_id, profile_id) values (4, 1);
 insert into tbl_profiles_permissions (permission_id, profile_id) values (1, 1);
