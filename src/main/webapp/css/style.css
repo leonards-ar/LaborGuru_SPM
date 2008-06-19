@@ -58,6 +58,9 @@ a.link:hover {
 height:19px;
 width: 100%;
 background-color:#A3D39C;
+   background-image: url(../images/title-bar-bg.png);
+   background-position: top;
+   background-repeat: repeat-x;
 color:#FFFFFF;
 padding-left:7px;
 font-size:13px;
@@ -121,7 +124,7 @@ text-align: center;
 font-family:tahoma, arial, sans-serif;
 font-weight: bold;
 }
-
+	
 .resultsTableOddRow {
 	background-color:#F7F7F7;
 font-size:12px;
@@ -166,17 +169,26 @@ color:red;
 
 .availableMenuItem {
 background-color:#184E01;
+  background-image: url(../images/avail-menu-item-bg.png);
+   background-position: top;
+   background-repeat: repeat-x;
 text-align:center;
 font-weight:bold;
 }
 
 .availableMenuItemOver {
 background-color:#DEEFDC;
+  background-image: url(../images/sel-menu-item-bg.png);
+   background-position: top;
+   background-repeat: repeat-x;
 text-align:center;
 }
 
 .selectedMenuItem {
 background-color:#DEEFDC;
+  background-image: url(../images/sel-menu-item-bg.png);
+   background-position: top;
+   background-repeat: repeat-x;
 padding-left: 12px;
 padding-right: 12px;
 padding-bottom: 8px;
