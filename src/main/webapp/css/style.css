@@ -5,6 +5,12 @@
 	  border:none;
    }
 
+form {
+	  margin:0;
+	  padding:0;
+	  border:none;
+}
+	
 a {
 	font-weight: bold;
 	color: #5C5C5C;

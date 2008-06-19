@@ -1,3 +1,9 @@
+-- Creation
+--create database spm;
+--GRANT ALL ON spm.* TO 'spm'@'localhost' IDENTIFIED BY 'java1234';
+--GRANT ALL ON spm.* TO 'spm'@'%' IDENTIFIED BY 'java1234';
+--FLUSH PRIVILEGES;
+
 -- Delete
 delete from tbl_profiles_permissions;
 delete from tbl_users_profiles;
