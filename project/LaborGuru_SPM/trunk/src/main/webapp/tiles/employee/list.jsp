@@ -13,15 +13,11 @@
 		<td align="center">
 			<table border="0" cellspacing="6" align="center" id="searchFormTable">
 				<tr>
-					<td class="label" nowrap>Employee Id</td>
-					<td><s:textfield name="searchEmployee.id" size="25" theme="simple" /></td>
-					<td class="label" nowrap>First Name</td>
+					<td class="label" nowrap><s:text name="employee.employeeid.label" /></td>
+					<td><s:textfield name="searchEmployee.employeeId" size="10" theme="simple" /></td>
+					<td class="label" nowrap><s:text name="employee.fullname.label" /></td>
 					<td><s:textfield name="searchEmployee.name" size="30" theme="simple" /></td>
-					<td class="label" nowrap>Last Name</td>
-					<td><s:textfield name="searchEmployee.surname" size="30" theme="simple" /></td>
-				</tr>
-				<tr>
-					<td colspan="6" align="right"><s:submit value="Search" theme="simple" cssClass="button" /></td>
+					<td><s:submit key="search.button" theme="simple" cssClass="button" /></td>
 				</tr>
 			</table>
 		</td>
@@ -38,10 +34,10 @@
 		<!-- Search Results -->
 		<table border="0" cellspacing="1" width="100%" align="center" id="resultsTable">
 			<tr>
-				<th class="resultsTableHeader">Employee Id</th>
-				<th class="resultsTableHeader">First Name</th>
-				<th class="resultsTableHeader">Last Name</th>
-				<th class="resultsTableHeader">Email</th>
+				<th class="resultsTableHeader"><s:text name="employee.employeeid.label" /></th>
+				<th class="resultsTableHeader"><s:text name="employee.firstname.label" /></th>
+				<th class="resultsTableHeader"><s:text name="employee.surname.label" /></th>
+				<th class="resultsTableHeader"><s:text name="employee.email.label" /></th>
 				<th class="resultsTableHeader">&nbsp;</th>
 			</tr>
 			<s:iterator value="storeEmployees" status="itEmployee">		

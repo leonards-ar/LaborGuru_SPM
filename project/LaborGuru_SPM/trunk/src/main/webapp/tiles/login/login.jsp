@@ -22,7 +22,7 @@
 		<form action="<s:url value="/j_acegi_security_check"/>" method="post" name="login">
 		<table border="0" cellspacing="6" align="center" id="loginFormTable">
 			<tr>
-				<td class="label"><s:text name="user.userName" /></td>
+				<td class="label"><s:text name="user.username" /></td>
 				<td><input type="text" name="j_username" /></td>
 			</tr>
 			<tr>
