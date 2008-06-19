@@ -14,6 +14,11 @@ import com.laborguru.model.User;
 
 public class UserDetailsImpl implements UserDetails, Principal {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private User user;
 	
 	public UserDetailsImpl(User user){
@@ -32,7 +37,7 @@ public class UserDetailsImpl implements UserDetails, Principal {
 			granters.add(new GrantedAuthorityImpl(profile.getName()));
 			Set<Permission> permissionSet = profile.getPermissions();
 			for(Permission permission: permissionSet) {
-				granters.add(new GrantedAuthorityImpl(permission.getKey()));
+				granters.add(new GrantedAuthorityImpl(permission.getName()));
 			}
 		}
 		GrantedAuthority[] array = new GrantedAuthority[granters.size()];

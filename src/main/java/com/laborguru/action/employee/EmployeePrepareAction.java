@@ -99,7 +99,7 @@ public class EmployeePrepareAction extends SpmAction implements Preparable, Sess
 		
 		//Getting store &  employee list
 		Store aStore = new Store();
-		aStore.setId(0);
+		aStore.setId(1);
 		this.setStoreEmployees(this.employeeService.getEmployeesByStore(aStore));
 				
 		return SpmActionResult.LIST.getResult();
