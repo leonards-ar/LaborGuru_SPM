@@ -74,7 +74,7 @@ public class EmployeePrepareAction extends SpmAction implements Preparable, Sess
 	 */
 	private void prepareData() {
 		Store store = new Store();
-		store.setId(0);
+		store.setId(1);
 		
 		this.setPositions(positionService.getPositionsByStore(store));
 		this.setStatusList(ConstantListFactory.createStatusList());
@@ -117,7 +117,7 @@ public class EmployeePrepareAction extends SpmAction implements Preparable, Sess
 		//if (sessionEmployee != null && sessionEmployee.getStore() != null){
 		
 			Store aStore = new Store();
-			aStore.setId(0);
+			aStore.setId(1);
 			this.setStoreEmployees(this.employeeService.getEmployeesByStore(aStore));
 		
 		
@@ -196,7 +196,7 @@ public class EmployeePrepareAction extends SpmAction implements Preparable, Sess
 		
 		if (this.employee.getId() == null){
 			Store aStore = new Store();
-			aStore.setId(0);
+			aStore.setId(1);
 			this.employee.setStore(aStore);
 		}
 		
