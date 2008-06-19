@@ -99,11 +99,11 @@
 			<artifactId>hibernate</artifactId>
 			<version>3.2.6.ga</version>
 		</dependency>
-		<dependency>
+		<!-- dependency>
 			<groupId>postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>8.3-603.jdbc3</version>
-		</dependency>
+			</dependency-->
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
@@ -156,6 +156,11 @@
 			<artifactId>servlet-api</artifactId>
 			<version>2.4</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.6</version>
 		</dependency>
 	</dependencies>
 </project>

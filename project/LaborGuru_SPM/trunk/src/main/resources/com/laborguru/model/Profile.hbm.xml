@@ -7,10 +7,11 @@
     <class name="Profile" table="tbl_profiles">
 
         <id name="id" type="int" unsaved-value="null" column="profile_id">
-            <generator class="native">
+	        <generator class="identity" />
+            <!-- generator class="native">
             	<param name="sequence">tbl_profiles_id_seq</param>
             	<param name="parameters">increment by 1 start with 1000</param>
-            </generator>
+            </generator-->
         </id>
 
         <property name="name" column="name" type="string" length="50" not-null="true"/>       

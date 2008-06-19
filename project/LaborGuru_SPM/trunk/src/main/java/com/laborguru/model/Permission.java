@@ -15,7 +15,7 @@ public class Permission extends SpmObject {
 
 	
 	private Integer id;
-	private String key;
+	private String name;
 	private String description;
 	
 	private List<MenuItem> menuItems;
@@ -28,12 +28,12 @@ public class Permission extends SpmObject {
 		this.id = id;
 	}
 
-	public String getKey() {
-		return key;
+	public String getName() {
+		return name;
 	}
 
-	public void setKey(String key) {
-		this.key = key;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getDescription() {
@@ -50,7 +50,7 @@ public class Permission extends SpmObject {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((key == null) ? 0 : key.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
 
@@ -65,10 +65,10 @@ public class Permission extends SpmObject {
 		if (getClass() != obj.getClass())
 			return false;
 		final Permission other = (Permission) obj;
-		if (key == null) {
-			if (other.key != null)
+		if (name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!key.equals(other.key))
+		} else if (!name.equals(other.name))
 			return false;
 		return true;
 	}

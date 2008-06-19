@@ -7,10 +7,11 @@
     <class name="MenuItem" table="tbl_menu_items">
 
         <id name="id" type="int" unsaved-value="null" column="menu_item_id">
-            <generator class="native">
+        	<generator class="identity"/>
+            <!-- generator class="native">
             	<param name="sequence">tbl_menu_items_id_seq</param>
             	<param name="parameters">increment by 1 start with 1000</param>
-            </generator>
+            </generator-->
         </id>
 
         <property name="labelKey" column="label_key" type="string" length="50" not-null="true"/>       
@@ -30,7 +31,7 @@
 			<column name="parent_id"/>
 		</many-to-one>
 
-		<many-to-one name="permission" class="Permission" lazy="false" column="permissionId" not-null="true"/>
+		<many-to-one name="permission" class="Permission" lazy="false" column="permission_id" not-null="true"/>
     </class>
 </hibernate-mapping>
 

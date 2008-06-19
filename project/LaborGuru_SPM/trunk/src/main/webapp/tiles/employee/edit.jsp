@@ -33,10 +33,30 @@
                     <td width="35%" align="left" class="value"><s:textfield name="employee.email" size="30" theme="simple"/></td>
                 </tr>
               	<tr class="editFormEvenRow">
+                    <td width="15%" align="right" class="label" nowrap>Phone</td>
+                    <td width="35%" align="left" class="value"><s:textfield name="employee.homePhone" size="30" theme="simple"/></td>
+                    <td width="15%" align="right" class="label" nowrap>Mobile</td>
+                    <td width="35%" align="left" class="value"><s:textfield name="employee.mobilePhone" size="30" theme="simple"/></td>
+                </tr>
+
+              	<tr class="editFormEvenRow">
+                    <td width="15%" align="right" class="label" nowrap>Employee ID</td>
+                    <td width="35%" align="left" class="value"><s:textfield name="employee.employeeId" size="2" theme="simple"/></td>
+                    <td width="15%" align="right" class="label" nowrap>$ Wage</td>
+                    <td width="35%" align="left" class="value"><s:textfield name="employee.wage" size="3" theme="simple"/></td>
+                </tr>
+                
+              	<tr class="editFormEvenRow">
+              	<td colspan="4" align="center">
+					<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0"><tr>
+                    <td width="15%" align="right" class="label" nowrap>Max Days Week</td>
+                    <td width="15%" align="left" class="value"><s:textfield name="employee.maxDaysWeek" size="2" theme="simple"/></td>
                     <td width="15%" align="right" class="label" nowrap>Max Hours Day</td>
-                    <td width="35%" align="left" class="value"><s:textfield name="employee.maxHoursDay" size="2" theme="simple"/></td>
+                    <td width="15%" align="left" class="value"><s:textfield name="employee.maxHoursDay" size="2" theme="simple"/></td>
                     <td width="15%" align="right" class="label" nowrap>Max Hours Week</td>
-                    <td width="35%" align="left" class="value"><s:textfield name="employee.maxHoursWeek" size="3" theme="simple"/></td>
+                    <td width="15%" align="left" class="value"><s:textfield name="employee.maxHoursWeek" size="3" theme="simple"/></td>
+					</tr></table>
+              	</td>
                 </tr>
               	<tr class="editFormOddRow">
                     <td width="15%" align="right" class="label" nowrap>Default Position</td>
@@ -54,12 +74,7 @@
                     <td width="15%" align="right" class="label" nowrap>Hire Date (mm/dd/yy)</td>
                     <td width="35%" align="left" class="value"><s:textfield  name="employee.hireDate" size="30" theme="simple"/></td>
                 </tr>
-              	<tr class="editFormOddRow">
-                    <td width="15%" align="right" class="label" nowrap>State</td>
-                    <td width="35%" align="left" class="value"><s:textfield name="employee.state" size="30" theme="simple"/></td>
-                    <td width="15%" align="right" class="label" nowrap>City</td>
-                    <td width="35%" align="left" class="value"><s:textfield name="employee.city" size="30" theme="simple"/></td>
-                </tr>
+
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="label" nowrap>Address</td>
                     <td width="35%" align="left" class="value"><s:textarea name="employee.address" cols="40" rows="2" theme="simple"/></td>
@@ -69,15 +84,22 @@
               	<tr class="editFormOddRow">
                     <td width="15%" align="right" class="label" nowrap>Address 2</td>
                     <td width="35%" align="left" class="value"><s:textarea name="employee.address2" cols="40" rows="2" theme="simple"/></td>
+                    <td width="15%" align="right" class="label" nowrap>&nbsp;</td>
+                    <td width="35%" align="left" class="value">&nbsp;</td>
+                </tr>
+              	<tr class="editFormOddRow">
+              	<td colspan="4" align="center">
+					<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0"><tr>
+                    <td width="15%" align="right" class="label" nowrap>City</td>
+                    <td width="20%" align="left" class="value"><s:textfield name="employee.city" size="30" theme="simple"/></td>
+                    <td width="15%" align="right" class="label" nowrap>State</td>
+                    <td width="20%" align="left" class="value"><s:textfield name="employee.state" size="20" theme="simple"/></td>
                     <td width="15%" align="right" class="label" nowrap>Zip</td>
-                    <td width="35%" align="left" class="value"><s:textfield name="employee.zip" size="20" theme="simple"/></td>
-                </tr>
-              	<tr class="editFormEvenRow">
-                    <td width="15%" align="right" class="label" nowrap>Phone</td>
-                    <td width="35%" align="left" class="value"><s:textfield name="employee.homePhone" size="30" theme="simple"/></td>
-                    <td width="15%" align="right" class="label" nowrap>Mobile</td>
-                    <td width="35%" align="left" class="value"><s:textfield name="employee.mobilePhone" size="30" theme="simple"/></td>
-                </tr>
+                    <td width="15%" align="left" class="value"><s:textfield name="employee.zip" size="5" theme="simple"/></td>
+					</tr></table>
+              	</td>
+              	
+                </tr>                
               	<tr class="editFormOddRow">
                     <td width="15%" align="right" class="label" nowrap>Comments</td>
                     <td width="35%" align="left" class="value"><s:textarea name="employee.comments" cols="40" rows="2" theme="simple"/></td>
