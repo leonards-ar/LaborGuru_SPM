@@ -18,6 +18,10 @@
         <property name="description" column="description" type="string" length="50" />        
 
     </class>
+	<database-object>
+		<create>ALTER TABLE tbl_permissions AUTO_INCREMENT=1000</create>
+		<drop></drop>
+	</database-object>     
 </hibernate-mapping>
 
 

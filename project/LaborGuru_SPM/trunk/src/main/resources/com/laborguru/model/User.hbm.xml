@@ -55,6 +55,10 @@
         	<property name="wage" column="wage" type="double" />
     	</joined-subclass>
     </class>
+	<database-object>
+		<create>ALTER TABLE tbl_users AUTO_INCREMENT=1000</create>
+		<drop></drop>
+	</database-object>    
 </hibernate-mapping>
 
 
