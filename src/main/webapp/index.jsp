@@ -8,6 +8,6 @@ uri="/struts-tags" %>
 	</head>
 
 	<frameset rows="100%" cols="100%">
-		<frame src="<s:url value="/home/home.action" />"/>
+		<frame src="<s:url value="/home/home.action"  includeParams="none"/>"/>
 	</frameset>
 </html>
