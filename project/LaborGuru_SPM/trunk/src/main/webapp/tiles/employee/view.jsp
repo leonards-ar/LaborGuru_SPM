@@ -49,15 +49,15 @@
               	<td colspan="4" align="center">
 					<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0" width="100%"><tr>
                     <td align="right" class="label" nowrap><s:text name="employee.maxdaysweek.label" /></td>
-                    <td><img src="<s:url value="/images/transp6x1.gif"/>"/></td>
+                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
                     <td align="left" class="value"><s:property value="employee.maxDaysWeek"/></td>
-                    <td><img src="<s:url value="/images/transp6x1.gif"/>"/></td>
+                    <td><img src="<s:url value="/images/transp6x1.gif"/>" includeParams="none"/></td>
                     <td align="right" class="label" nowrap><s:text name="employee.maxhoursday.label" /></td>
-                    <td><img src="<s:url value="/images/transp6x1.gif"/>"/></td>
+                    <td><img src="<s:url value="/images/transp6x1.gif"/>" includeParams="none"/></td>
                     <td align="left" class="value"><s:property value="employee.maxHoursDay"/></td>
-                    <td><img src="<s:url value="/images/transp6x1.gif"/>"/></td>
+                    <td><img src="<s:url value="/images/transp6x1.gif"/>" includeParams="none"/></td>
                     <td align="right" class="label" nowrap><s:text name="employee.maxhoursweek.label" /></td>
-                    <td><img src="<s:url value="/images/transp6x1.gif"/>"/></td>
+                    <td><img src="<s:url value="/images/transp6x1.gif"/>" includeParams="none"/></td>
                     <td align="left" class="value"><s:property value="employee.maxHoursWeek"/></td>
 					</tr></table>
               	</td>
@@ -96,11 +96,11 @@
               	<td width="35%" align="left">
 					<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0"><tr>
                     <td align="left" class="value"><s:property value="employee.state" default="######"/></td>
-                    <td><img src="<s:url value="/images/transp6x1.gif"/>"/></td>
-                    <td><img src="<s:url value="/images/transp6x1.gif"/>"/></td>
+                    <td><img src="<s:url value="/images/transp6x1.gif"/>" includeParams="none"/></td>
+                    <td><img src="<s:url value="/images/transp6x1.gif"/>" includeParams="none"/></td>
                     <td align="right" class="label" nowrap><s:text name="employee.zip.label" /></td>
-                    <td><img src="<s:url value="/images/transp6x1.gif"/>"/></td>
-                    <td><img src="<s:url value="/images/transp6x1.gif"/>"/></td>
+                    <td><img src="<s:url value="/images/transp6x1.gif"/>" includeParams="none"/></td>
+                    <td><img src="<s:url value="/images/transp6x1.gif"/>" includeParams="none"/></td>
                     <td align="left" class="value"><s:property value="employee.zip"/></td>
 					</tr></table>
               	</td>

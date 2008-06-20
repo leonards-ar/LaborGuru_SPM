@@ -5,7 +5,7 @@
 		<td id="headerTop">
 		<table width="100%" border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 			<tr>
-				<td><img src="<s:url value="/images/logo.png"/>" /></td>
+				<td><img src="<s:url value="/images/logo.png"/>" includeParams="none"/></td>
 			</tr>
 		</table>
 		</td>
