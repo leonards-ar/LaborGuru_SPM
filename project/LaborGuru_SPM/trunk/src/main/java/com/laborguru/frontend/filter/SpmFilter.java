@@ -19,6 +19,7 @@ import org.acegisecurity.context.SecurityContextHolder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.laborguru.frontend.HttpRequestConstants;
 import com.laborguru.model.Menu;
 import com.laborguru.model.User;
 import com.laborguru.service.menu.MenuService;
@@ -90,30 +91,30 @@ public class SpmFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Menu menu = (Menu) httpRequest.getSession().getAttribute("spmMenu");
+		Menu menu = (Menu) httpRequest.getSession().getAttribute(HttpRequestConstants.MENU);
 		
 		if(principal != null && principal instanceof UserDetailsImpl) {
-			httpRequest.setAttribute("spmUser", ((UserDetailsImpl)principal).getUser());
+			httpRequest.setAttribute(HttpRequestConstants.USER, ((UserDetailsImpl)principal).getUser());
 		} else if(principal != null && principal instanceof String && !"anonymousUser".equalsIgnoreCase((String) principal)) {
 			/*
 			 * All this must be changed for some better solution!!!!!!!!!
 			 * Temporary
 			 */
-			User user = (User) httpRequest.getSession().getAttribute("spmUser");
+			User user = (User) httpRequest.getSession().getAttribute(HttpRequestConstants.USER);
 			if(user == null) {
 				user = new User();
 				user.setUserName((String)principal);
 				user = getUserService().getUserByUserName(user);
-				httpRequest.getSession().setAttribute("spmUser", user);
+				httpRequest.getSession().setAttribute(HttpRequestConstants.USER, user);
 			}
 			if(user != null) {
-				httpRequest.setAttribute("spmUser", user); 
+				httpRequest.setAttribute(HttpRequestConstants.USER, user); 
 				
 				if(menu == null) {
 					menu = getMenuService().getMenuFor(user);
-					httpRequest.getSession().setAttribute("spmMenu", menu);
+					httpRequest.getSession().setAttribute(HttpRequestConstants.MENU, menu);
 				}
-				httpRequest.setAttribute("spmMenu", menu); 
+				httpRequest.setAttribute(HttpRequestConstants.MENU, menu); 
 			}
 
 		} else {
@@ -122,9 +123,9 @@ public class SpmFilter implements Filter {
 			 * or a Principal object. This should never happen?
 			 */
 		}
-		if(httpRequest.getParameter("menuItemIndex") != null && menu != null) {
+		if(httpRequest.getParameter(HttpRequestConstants.MENU_ITEM_INDEX) != null && menu != null) {
 			try {
-				menu.setSelectedItemIndex(Integer.parseInt(httpRequest.getParameter("menuItemIndex")));
+				menu.setSelectedItemIndex(Integer.parseInt(httpRequest.getParameter(HttpRequestConstants.MENU_ITEM_INDEX)));
 			} catch(Throwable ex) {
 				// Invalid index! Someone is trying to hack us?
 			}

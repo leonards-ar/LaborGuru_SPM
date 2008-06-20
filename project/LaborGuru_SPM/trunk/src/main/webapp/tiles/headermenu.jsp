@@ -14,8 +14,8 @@
 				<table border="0" cellpadding="0" cellspacing="0" id="menuTable"
 					colspan="0" cellspan="0">
 					<tr>
-					<s:iterator value="#request.spmMenu.items" status="itCtx">
-						<s:if test="#request.spmMenu.selectedItemIndex == #itCtx.index">
+					<s:iterator value="#session.spmMenu.items" status="itCtx">
+						<s:if test="#session.spmMenu.selectedItemIndex == #itCtx.index">
 						<td class="selectedMenuItem"><s:text name="%{labelKey}"/></td>
 						</s:if>
 						<s:else>
@@ -45,7 +45,7 @@
 			<tr>
 				<td width="20%" nowrap><span id="headerBottom">
 				<s:text name="home.greeting">
-				<s:param value="#request.spmUser.fullName"/>
+				<s:param value="#session.spmUser.fullName"/>
 				</s:text>
 				</span>
 				</td>
@@ -54,7 +54,7 @@
 				<table border="0" cellpadding="0" cellspacing="0" id="subMenuTable"
 					colspan="0" cellspan="0">
 					<tr>
-					<s:iterator value="#request.spmMenu.selectedItem.childMenuItems" status="itCtx">
+					<s:iterator value="#session.spmMenu.selectedItem.childMenuItems" status="itCtx">
 						<td class="subMenuItem"><a href="<s:url value="%{target}"/>" class="subMenuItemAnchor"><s:text name="%{labelKey}"/></a></td>
 						<s:if test="!#itCtx.last">
 						<td>|</td>

@@ -3,8 +3,6 @@ package com.laborguru.action.employee;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.struts2.interceptor.SessionAware;
-
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.action.utils.ConstantListFactory;
@@ -24,11 +22,10 @@ import com.opensymphony.xwork2.Preparable;
  *
  */
 @SuppressWarnings("serial")
-public class EmployeePrepareAction extends SpmAction implements Preparable, SessionAware {
+public class EmployeePrepareAction extends SpmAction implements Preparable {
 
 	private EmployeeService employeeService;
 	private PositionService positionService;
-	private Map session;
 	
 	private Employee employee;
 	private Employee searchEmployee;
@@ -68,15 +65,31 @@ public class EmployeePrepareAction extends SpmAction implements Preparable, Sess
 		prepareData();
 	}
 
+	/**
+	 * Returns the store from the logged user if he is an employee or
+	 * the store must be received as a parameter when an Administrator
+	 * is creating store employees
+	 * @return The store the employee belongs to
+	 */
+	private Store getEmployeeStore() {
+		Employee employee = getLoggedEmployeeOrNull();
+		Store store;
+		if(employee != null) {
+			return employee.getStore();
+		} else {
+			// The logged user is not an employee. An administrator creating stores and users?
+			store = new Store();
+			store.setId(1); // TODO: From where???
+		}
+		return store;
+		
+	}
 	
 	/**
 	 * Loads position and status list
 	 */
 	private void prepareData() {
-		Store store = new Store();
-		store.setId(1);
-		
-		this.setPositions(positionService.getPositionsByStore(store));
+		this.setPositions(positionService.getPositionsByStore(getEmployeeStore()));
 		this.setStatusList(ConstantListFactory.createStatusList());
 	}
 
@@ -97,10 +110,7 @@ public class EmployeePrepareAction extends SpmAction implements Preparable, Sess
 	 */
 	public String search() throws Exception {
 		
-		//Getting store &  employee list
-		Store aStore = new Store();
-		aStore.setId(1);
-		this.setStoreEmployees(this.employeeService.getEmployeesByStore(aStore));
+		this.setStoreEmployees(this.employeeService.getEmployeesByStore(getEmployeeStore()));
 				
 		return SpmActionResult.LIST.getResult();
 	}
@@ -112,13 +122,9 @@ public class EmployeePrepareAction extends SpmAction implements Preparable, Sess
 	 */
 	public String list() throws Exception {
 		
-		//Getting store &  employee list
-		//Employee sessionEmployee = (Employee)session.get("spmUSer");				
 		//if (sessionEmployee != null && sessionEmployee.getStore() != null){
 		
-			Store aStore = new Store();
-			aStore.setId(1);
-			this.setStoreEmployees(this.employeeService.getEmployeesByStore(aStore));
+			this.setStoreEmployees(this.employeeService.getEmployeesByStore(getEmployeeStore()));
 		
 		
 		//this.setStoreEmployees(EmployeeTestHelper.getEmployees("employee", 4));
@@ -133,8 +139,6 @@ public class EmployeePrepareAction extends SpmAction implements Preparable, Sess
 	 * @throws Exception
 	 */
 	public String add() throws Exception {
-		
-		
 		return SpmActionResult.EDIT.getResult();
 	}
 
@@ -195,9 +199,7 @@ public class EmployeePrepareAction extends SpmAction implements Preparable, Sess
 		System.out.println("ADD: "+this.employee.toString());
 		
 		if (this.employee.getId() == null){
-			Store aStore = new Store();
-			aStore.setId(1);
-			this.employee.setStore(aStore);
+			this.employee.setStore(getEmployeeStore());
 		}
 		
 		employeeService.save(this.employee);
@@ -294,7 +296,4 @@ public class EmployeePrepareAction extends SpmAction implements Preparable, Sess
 		this.positionService = positionService;
 	}
 
-	public void setSession(Map session) {
-		this.session = session;
-	}
 }
