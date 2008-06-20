@@ -1,6 +1,6 @@
 package com.laborguru.model;
 
-public class Position {
+public class Position extends SpmObject{
 
 	/**
 	 * Default serial version ID
@@ -8,8 +8,8 @@ public class Position {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	Store store;
-	String name;
+	private Store store;
+	private String name;
 	
 	
 	public Integer getId() {
@@ -30,19 +30,23 @@ public class Position {
 	public void setName(String name) {
 		this.name = name;
 	}
-	/* (non-Javadoc)
+	
+	/**
+	 * @return
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((store == null) ? 0 : store.hashCode());
 		return result;
 	}
-	/* (non-Javadoc)
+	
+	/**
+	 * @param obj
+	 * @return
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -51,11 +55,9 @@ public class Position {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof Position))
+		if (getClass() != obj.getClass())
 			return false;
 		final Position other = (Position) obj;
-		if (id != other.id)
-			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -68,6 +70,8 @@ public class Position {
 			return false;
 		return true;
 	}
+
+	
 	
 	
 }

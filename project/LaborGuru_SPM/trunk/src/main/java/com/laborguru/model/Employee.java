@@ -292,4 +292,21 @@ public class Employee extends User {
 	public void setEmployeeId(String employeeId) {
 		this.employeeId = employeeId;
 	}
+
+	/**
+	 * @return
+	 * @see java.lang.Object#hashCode()
+	 */
+	public int hashCode() {
+		return super.hashCode();
+	}
+
+	/**
+	 * @param obj
+	 * @return
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
 }

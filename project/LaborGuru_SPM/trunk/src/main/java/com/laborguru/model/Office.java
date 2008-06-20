@@ -11,7 +11,7 @@ public class Office extends SpmObject {
 	
 	private String name;
 	
-	private char type;
+	private Character type;
 	
 	private Office parentOffice;
 
@@ -31,11 +31,11 @@ public class Office extends SpmObject {
 		this.name = name;
 	}
 
-	public char getType() {
+	public Character getType() {
 		return type;
 	}
 
-	public void setType(char type) {
+	public void setType(Character type) {
 		this.type = type;
 	}
 
@@ -47,22 +47,23 @@ public class Office extends SpmObject {
 		this.parentOffice = parentOffice;
 	}
 
-	/* (non-Javadoc)
+	/**
+	 * @return
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + id;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result
 				+ ((parentOffice == null) ? 0 : parentOffice.hashCode());
-		result = prime * result + type;
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/**
+	 * @param obj
+	 * @return
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -71,11 +72,9 @@ public class Office extends SpmObject {
 			return true;
 		if (!super.equals(obj))
 			return false;
-		if (!(obj instanceof Office))
+		if (getClass() != obj.getClass())
 			return false;
 		final Office other = (Office) obj;
-		if (id != other.id)
-			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -86,10 +85,10 @@ public class Office extends SpmObject {
 				return false;
 		} else if (!parentOffice.equals(other.parentOffice))
 			return false;
-		if (type != other.type)
-			return false;
 		return true;
 	}
+
+
 	
 	
 }

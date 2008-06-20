@@ -37,7 +37,10 @@ public class Store extends SpmObject {
 		this.office = office;
 	}
 
-	@Override
+	/**
+	 * @return
+	 * @see com.laborguru.model.SpmObject#hashCode()
+	 */
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
@@ -46,6 +49,11 @@ public class Store extends SpmObject {
 		return result;
 	}
 
+	/**
+	 * @param obj
+	 * @return
+	 * @see com.laborguru.model.SpmObject#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

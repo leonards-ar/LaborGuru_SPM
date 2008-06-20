@@ -87,25 +87,27 @@ public class MenuItem extends SpmObject {
 		this.permission = permission;
 	}
 	
-	
-	/* (non-Javadoc)
-	 * @see com.laborguru.model.SpmObject#hashCode()
+	/**
+	 * @return
+	 * @see java.lang.Object#hashCode()
 	 */
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result
 				+ ((labelKey == null) ? 0 : labelKey.hashCode());
-		result = prime * result + ((parentMenuItem == null) ? 0 : parentMenuItem.hashCode());
 		result = prime * result
-				+ ((position == null) ? 0 : position.hashCode());
-		result = prime * result + ((target == null) ? 0 : target.hashCode());
+				+ ((parentMenuItem == null) ? 0 : parentMenuItem.hashCode());
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.laborguru.model.SpmObject#equals(java.lang.Object)
+	/**
+	 * @param obj
+	 * @return
+	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -123,16 +125,6 @@ public class MenuItem extends SpmObject {
 			if (other.parentMenuItem != null)
 				return false;
 		} else if (!parentMenuItem.equals(other.parentMenuItem))
-			return false;
-		if (position == null) {
-			if (other.position != null)
-				return false;
-		} else if (!position.equals(other.position))
-			return false;
-		if (target == null) {
-			if (other.target != null)
-				return false;
-		} else if (!target.equals(other.target))
 			return false;
 		return true;
 	}
