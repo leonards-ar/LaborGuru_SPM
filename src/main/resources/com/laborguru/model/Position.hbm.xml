@@ -20,5 +20,9 @@
 		<many-to-one name="store" class="Store">
 			<column name="store_id"/>
 		</many-to-one>
-	</class>		
+	</class>	
+	<database-object>
+		<create>ALTER TABLE tbl_positions AUTO_INCREMENT=1000</create>
+		<drop></drop>
+	</database-object> 	    		
 </hibernate-mapping>

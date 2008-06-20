@@ -19,4 +19,8 @@
 			<column name="office_id"/>
 		</many-to-one>
 	</class>
+	<database-object>
+		<create>ALTER TABLE tbl_stores AUTO_INCREMENT=1000</create>
+		<drop></drop>
+	</database-object> 	
 </hibernate-mapping>

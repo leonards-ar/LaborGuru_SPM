@@ -20,4 +20,8 @@
 			<column name="parent_office_id"/>
 		</many-to-one>
 	</class>
+	<database-object>
+		<create>ALTER TABLE tbl_offices AUTO_INCREMENT=1000</create>
+		<drop></drop>
+	</database-object>   	
 </hibernate-mapping>
