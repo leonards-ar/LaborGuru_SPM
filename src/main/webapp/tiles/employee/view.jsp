@@ -7,7 +7,14 @@
 			      <td>&nbsp;</td>
         	  </tr>
 		      <tr>
-			      <td id="titleBar"><s:text name="employee.view.title" /></td>
+			      <td id="titleBar">
+                    	<s:if test="removePage">
+                    		<s:text name="employee.remove.title" />
+                    	</s:if>
+                    	<s:else>
+                    		<s:text name="employee.view.title" />
+                    	</s:else>                    
+			      </td>
         	  </tr>
               <tr>
               <td>

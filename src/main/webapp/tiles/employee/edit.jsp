@@ -7,7 +7,14 @@
 			      <td class="infoMessage"><s:text name="info.mandatory.fields" /></td>
         	  </tr>			     
 		      <tr>
-			      <td id="titleBar"><s:text name="employee.create.title" /></td>
+			      <td id="titleBar">
+			      <s:if test="employee.id == null">
+			      	<s:text name="employee.create.title" />
+			      </s:if>
+			      <s:else>
+			      	<s:text name="employee.update.title" />
+			      </s:else>
+			      </td>
         	  </tr>
               
               <tr>
