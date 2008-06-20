@@ -12,7 +12,6 @@ import java.util.Set;
 public class Profile extends SpmObject {
 	
 	private static final long serialVersionUID = 1L;
-
 	
 	private Integer id;
 	private String name;
@@ -79,6 +78,8 @@ public class Profile extends SpmObject {
 	public boolean hasPermission(Permission permission) {
 		return getPermissions() != null && getPermissions().contains(permission);
 	}
+	
+	
 	/* (non-Javadoc)
 	 * @see com.laborguru.model.SpmObject#hashCode()
 	 */
