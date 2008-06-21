@@ -43,25 +43,32 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	 * @throws Exception
 	 */
 	public void prepareEdit() throws Exception {
-		prepareData();
+		loadListsForAddEditPage();
 	}
 
 	/**
-	 * Prepare the data to be used on the edit page
+	 * Prepare the data to be used on the add page
 	 * Loads position and status list
 	 * @throws Exception
 	 */
 	public void prepareAdd() throws Exception {
-		prepareData();
+		loadListsForAddEditPage();
+		
+		if (this.employee == null){
+			this.employee = new Employee();
+		}
+		this.employee.setMaxDaysWeek(5);
 	}
 	
 	/**
-	 * Prepare the data to be used on the edit page
+	 * Prepare the data to be used on the add page
+	 * We should preload the list needed to render the add page.
+	 * When a validation fails the application goes back to the add page and this data is needed.
 	 * Loads position and status list
 	 * @throws Exception
 	 */
 	public void prepareSave() throws Exception {
-		prepareData();
+		loadListsForAddEditPage();
 	}
 
 	/**
@@ -87,12 +94,11 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	/**
 	 * Loads position and status list
 	 */
-	private void prepareData() {
+	private void loadListsForAddEditPage() {
 		this.setPositions(positionService.getPositionsByStore(getEmployeeStore()));
 		this.setStatusList(ConstantListFactory.createStatusList());
 	}
-
-
+	
 	/**
 	 * Prepare data to be used in the actions methods defined for this action
 	 * @throws Exception
@@ -121,13 +127,8 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	 */
 	public String list() throws Exception {
 		
-		//if (sessionEmployee != null && sessionEmployee.getStore() != null){
-		
-			this.setStoreEmployees(this.employeeService.getEmployeesByStore(getEmployeeStore()));
-		
-		
-		//this.setStoreEmployees(EmployeeTestHelper.getEmployees("employee", 4));
-		
+		this.setStoreEmployees(this.employeeService.getEmployeesByStore(getEmployeeStore()));
+				
 		return SpmActionResult.LIST.getResult();
 	}	
 
@@ -149,10 +150,7 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	 */
 	public String edit() throws Exception {
 		
-		//Getting employee
-		Employee tmpEmployee = new Employee();
-		tmpEmployee.setId(this.employeeId);
-		this.setEmployee(employeeService.getEmployeeById(tmpEmployee));
+		loadEmployeeFromId();
 			
 		return SpmActionResult.EDIT.getResult();
 	}
@@ -165,25 +163,21 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	public String remove() throws Exception {
 
 		//Getting employee
-		Employee tmpEmployee = new Employee();
-		tmpEmployee.setId(this.employeeId);
-		this.setEmployee(employeeService.getEmployeeById(tmpEmployee));
+		loadEmployeeFromId();
 	
 		this.setRemovePage(true);
 		
 		return SpmActionResult.SHOW.getResult();
-	}	
+	}
 	
 	/**
 	 * Prepares the view page
 	 * @return
 	 * @throws Exception
 	 */
-	public String show() throws Exception {		
-		//Getting employee
-		Employee tmpEmployee = new Employee();
-		tmpEmployee.setId(this.employeeId);
-		this.setEmployee(employeeService.getEmployeeById(tmpEmployee));
+	public String show() throws Exception {	
+		
+		loadEmployeeFromId();
 	
 		return SpmActionResult.SHOW.getResult();
 	}
@@ -194,8 +188,6 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	 * @throws Exception
 	 */
 	public String save() throws Exception {		
-
-		System.out.println("ADD: "+this.employee.toString());
 		
 		if (this.employee.getId() == null){
 			this.employee.setStore(getEmployeeStore());
@@ -212,8 +204,6 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	 * @throws Exception
 	 */
 	public String delete() throws Exception {		
-
-		System.out.println("DELETE:"+this.employee.toString());
 		
 		//Getting employee
 		Employee auxEmployee = employeeService.getEmployeeById(this.employee);		
@@ -223,6 +213,15 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	}
 	
 
+	/**
+	 *  Load full employee from the property employeeId
+	 */
+	private void loadEmployeeFromId() {
+		Employee tmpEmployee = new Employee();
+		tmpEmployee.setId(this.employeeId);
+		this.setEmployee(employeeService.getEmployeeById(tmpEmployee));
+	}	
+	
 	public EmployeeService getEmployeeService() {
 		return employeeService;
 	}
