@@ -22,7 +22,7 @@
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="label" nowrap><s:text name="employee.firstname.label" /></td>
                     <td width="35%" align="left" class="value"><s:property value="employee.name"/></td>
-                    <td width="15%" align="right" class="label" nowrap><s:text name="employee.lastname.label" /></td>
+                    <td width="15%" align="right" class="label" nowrap><s:text name="employee.surname.label" /></td>
                     <td width="35%" align="left" class="value"><s:property value="employee.surname"/></td>
                 </tr>
               	<tr class="editFormOddRow">
