@@ -1,6 +1,7 @@
 package com.laborguru.service.security;
 
 import java.security.Principal;
+import java.util.Date;
 
 import org.springframework.dao.DataAccessException;
 
@@ -12,6 +13,10 @@ import com.mindpool.security.service.UserAuthenticationService;
 public class AuthenticationService implements UserAuthenticationService {
 
 	private static final DefaultSpmLogger log = DefaultSpmLogger.getInstance();
+
+	private static final int MAX_LOGIN_TRIES = 3;
+
+	private int loginTries = MAX_LOGIN_TRIES;
 	
 	UserService service;
 
@@ -22,34 +27,48 @@ public class AuthenticationService implements UserAuthenticationService {
 	}
 
 	public Principal authenticate(String username, String password) {
-		
+
 		UserDetailsImpl userDetails = null;
 		User user = new User();
 		user.setUserName(username);
-		try{
-		user = service.getUserByUserName(user);
-		} catch(DataAccessException e) {
+		try {
+			user = service.getUserByUserName(user);
+		} catch (DataAccessException e) {
 			log.errorLog("Error trying to get user...", e);
 			return null;
 		}
 
 		if (user != null) {
-			if (password.equals(user.getPassword())) {
+			if (user.getStatus() == 1) {
+				reason = UserAuthenticationService.USER_DISABLED_ERROR;
+			} else if (password.equals(user.getPassword())) {
+				user.setLastLogon(new Date());
 				userDetails = new UserDetailsImpl(user);
 			} else {
-				reason = UserAuthenticationService.BAD_PASSWORD;
+				int loginCount = user.getLoginCount();
+				user.setLoginCount(++loginCount);
+				if (loginCount == loginTries) {
+					user.setStatus(1);
+					reason = UserAuthenticationService.USER_DISABLED_ERROR;
+				} else {
+					reason = UserAuthenticationService.BAD_PASSWORD;
+				}
 			}
-
+			service.save(user);
 		} else {
 			reason = UserAuthenticationService.UNKNOWN_USER_ERROR;
 		}
 
 		return userDetails;
-		
+
 	}
 
 	public String getReason() {
 		return reason;
+	}
+	
+	public void setLoginTries(int loginTries){
+		this.loginTries = loginTries;
 	}
 
 }

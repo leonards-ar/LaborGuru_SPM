@@ -12,6 +12,13 @@ import com.laborguru.model.User;
  *
  */
 public interface UserDao {
+
+	/**
+	 * Save or Update a user
+	 * @param user object that will be save.
+	 * @return user Saved.
+	 */
+	User save(User user);
 	/**
 	 * Retrieves  a user by userName
 	 * @param user with username populated
