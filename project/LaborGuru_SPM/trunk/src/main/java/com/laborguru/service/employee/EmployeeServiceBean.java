@@ -51,7 +51,6 @@ public class EmployeeServiceBean implements EmployeeService {
 		}
 		List<Employee> employees = employeeDao.getEmployeesByStore(store);
 
-System.out.println("*************************** size:"+ employees.size());		
 		return employees;
 	}
 

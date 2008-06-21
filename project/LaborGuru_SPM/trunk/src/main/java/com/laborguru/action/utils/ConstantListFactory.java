@@ -13,6 +13,13 @@ import java.util.List;
  *
  */
 public class ConstantListFactory {
+	
+	
+	/**
+	 * Creates a status list used at the Employee add/edit pages.
+	 * TODO: Instead of send strings send internationalized key messages.
+	 * @return the status list.
+	 */
 	public static List<KeyValuePair> createStatusList(){
 		ArrayList<KeyValuePair> statusList = new ArrayList<KeyValuePair>();
 		statusList.add(new KeyValuePair("0","Enabled"));
