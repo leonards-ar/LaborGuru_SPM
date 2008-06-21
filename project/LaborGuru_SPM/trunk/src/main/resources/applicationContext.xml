@@ -57,6 +57,7 @@
  	
 	<bean id="authenticateService" class="com.laborguru.service.security.AuthenticationService">
 		<property name="service" ref="userService" />
+		<property name="loginTries" value="${conn.max_login_times}"/>
 	</bean>
 
 

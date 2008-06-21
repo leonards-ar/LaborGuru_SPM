@@ -15,6 +15,12 @@ import com.laborguru.service.user.dao.UserDao;
 public interface UserService extends Service {
 
 	/**
+	 * Save or Update a user
+	 * @param user object that will be save.
+	 * @return user Saved.
+	 */
+	User save(User user);
+	/**
 	 * Retrieves  a user by userName
 	 * @param A User object containing a username.
 	 * @return A full populated User object.

@@ -16,8 +16,11 @@ public class UserServiceBean implements UserService {
 	private UserDao userDao;
 	
 	/* (non-Javadoc)
-	 * @see com.mindpool.laborguru.service.user.UserService#authenticateUser(com.mindpool.laborguru.model.User)
+	 * @see com.laborguru.service.user.UserService#save(com.laborguru.model.User)
 	 */
+	public User save(User user) {
+		return userDao.save(user);
+	}
 
 	/**
 	 * @param userLoggingOn

@@ -17,6 +17,15 @@ import com.laborguru.model.User;
 public class UserDaoHibernate extends HibernateDaoSupport implements UserDao {
 
 	
+	
+	/* (non-Javadoc)
+	 * @see com.laborguru.service.user.dao.UserDao#save(com.laborguru.model.User)
+	 */
+	public User save(User user) {
+		getHibernateTemplate().saveOrUpdate(user);
+		return user;
+	}
+
 	/* (non-Javadoc)
 	 * @see com.laborguru.service.user.dao.UserDao#getUserByUsername(com.laborguru.model.User)
 	 */
