@@ -16,15 +16,12 @@ delete from tbl_stores;
 delete from tbl_offices;
 
 -- Profiles
-ALTER TABLE tbl_profiles AUTO_INCREMENT=1000;
 insert into tbl_profiles (profile_id, name, description) values (1, 'ROLE_USER', 'Profile Desc');
 
 -- Office
-ALTER TABLE tbl_offices AUTO_INCREMENT=1000;
 insert into tbl_offices (office_id, name, type, parent_office_id) values (1,'Mac Donalds', 'A', null);
 
 -- Users
-ALTER TABLE tbl_users AUTO_INCREMENT=1000;
 insert into tbl_users (creation_date, email, user_id, last_update_date, login_count, name, password, status, surname, username) values (now(), 'mcapurro@gmail.com', 1, null, 0, 'Mariano', '1234', 0, 'Capurro', 'mcapurro');
 insert into tbl_users (creation_date, email, user_id, last_update_date, login_count, name, password, status, surname, username) values (now(), 'cnunezre@gmail.com', 2, null, 0, 'Cristian', '1234', 0, 'Nuñez Rebolledo', 'cnunezre');
 insert into tbl_users (creation_date, email, user_id, last_update_date, login_count, name, password, status, surname, username) values (now(), 'fbarrera@gmail.com', 3, null, 0, 'Federico', '1234', 0, 'Barrera Oro', 'fbarrera');
@@ -36,7 +33,6 @@ insert into tbl_users_profiles (profile_id, user_id) values (1, 3);
 insert into tbl_users_profiles (profile_id, user_id) values (1, 4);
 
 -- Permissions
-ALTER TABLE tbl_permissions AUTO_INCREMENT=1000;
 insert into tbl_permissions (permission_id, name, description) values (1, 'FREE_ACCESS', 'Dummy permission that all profiles should have');
 insert into tbl_permissions (permission_id, name, description) values (2, 'VIEW_EMPLOYEE', 'View and query employees of the own store');
 insert into tbl_permissions (permission_id, name, description) values (3, 'EDIT_EMPLOYEE', 'Edit existing employees of the own store');
@@ -48,7 +44,6 @@ insert into tbl_profiles_permissions (permission_id, profile_id) values (2, 1);
 insert into tbl_profiles_permissions (permission_id, profile_id) values (3, 1);
 
 -- Menu Items
-ALTER TABLE tbl_menu_items AUTO_INCREMENT=1000;
 insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permission_id, position, target) values (1, 'home.menu.label', 'HOME_MENU_HELP', null, 1, 0, '/home/home.action');
 
 insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permission_id, position, target) values (2, 'employee.menu.label', 'EMPLOYEE_MENU_HELP', null, 2, 0, '/employee/employee_list.action');
@@ -56,11 +51,9 @@ insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permis
 insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permission_id, position, target) values (4, 'employee.submenu.create', 'EMPLOYEE_ADD_HELP', 2, 4, 0, '/employee/employee_add.action');
 
 -- Store
-ALTER TABLE tbl_stores AUTO_INCREMENT=1000;
 insert into tbl_stores (store_id, name, office_id) values (1,'microcentro', 1);
 
 -- Positions
-ALTER TABLE tbl_positions AUTO_INCREMENT=1000;
 insert into tbl_positions (position_id, name, store_id) values (1, 'chef',1);
 insert into tbl_positions (position_id, name, store_id) values (2, 'waiter',1);
 insert into tbl_positions (position_id, name, store_id) values (3, 'cook',1);
