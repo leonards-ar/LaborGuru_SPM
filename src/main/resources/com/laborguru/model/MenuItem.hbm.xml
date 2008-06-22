@@ -8,10 +8,6 @@
 
         <id name="id" type="int" unsaved-value="null" column="menu_item_id">
         	<generator class="identity"/>
-            <!-- generator class="native">
-            	<param name="sequence">tbl_menu_items_id_seq</param>
-            	<param name="parameters">increment by 1 start with 1000</param>
-            </generator-->
         </id>
 
         <property name="labelKey" column="label_key" type="string" length="50" not-null="true"/>       
@@ -22,16 +18,16 @@
 
 		<!-- Parent can be null for root menu items -->
 		<!-- set name="childMenuItems" cascade="all-delete-orphan" inverse="true" lazy="false"-->
-		<set name="childMenuItems" inverse="true" lazy="false">
+		<set name="childMenuItems" inverse="true" lazy="false" >
 			<key column="parent_id"/>
 			<one-to-many class="MenuItem"/>
 		</set>
 		
- 		<many-to-one name="parentMenuItem" class="MenuItem">
+ 		<many-to-one name="parentMenuItem" class="MenuItem" foreign-key="fk_menuitems_menuitems">
 			<column name="parent_id"/>
 		</many-to-one>
 
-		<many-to-one name="permission" class="Permission" lazy="false" column="permission_id" not-null="true"/>
+		<many-to-one name="permission" class="Permission" lazy="false" column="permission_id" not-null="true" foreign-key="fk_menuitems_permissions"/>
     </class>
 	<database-object>
 		<create>ALTER TABLE tbl_menu_items AUTO_INCREMENT=1000</create>
