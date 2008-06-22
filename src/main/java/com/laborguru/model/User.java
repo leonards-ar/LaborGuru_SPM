@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 
 /**
  * Spm User Type
@@ -33,9 +36,7 @@ public class User extends SpmObject {
 	private Date lastUpdateDate;
 	private Set<Profile> profiles;
 	
-	
-
-	
+		
 	/**
 	 * @return
 	 * @see java.lang.Object#hashCode()
@@ -50,6 +51,7 @@ public class User extends SpmObject {
 				+ ((userName == null) ? 0 : userName.hashCode());
 		return result;
 	}
+
 	/**
 	 * @param obj
 	 * @return
@@ -81,6 +83,23 @@ public class User extends SpmObject {
 			return false;
 		return true;
 	}
+
+
+	/**
+	 * User toString
+	 * @return string version of the object 
+	 * @see com.laborguru.model.SpmObject#toString()
+	 */
+	public String toString()
+	{
+		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+	   	.append("id" , id)
+	   	.append("userName",userName)
+	   	.append("name",name)
+	   	.append("surname", surname)
+	   	.append("email", email)
+	   	.toString();		
+	}	
 	
 	/**
 	 * @return the id

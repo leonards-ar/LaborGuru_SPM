@@ -6,6 +6,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 import com.laborguru.model.comparator.MenuItemPositionComparator;
 
 /**
@@ -30,7 +33,22 @@ public class MenuItem extends SpmObject {
 	private Permission permission;
 	
 	private List<MenuItem> childMenuItems;
-
+	
+	/**
+	 * MenuItem toString
+	 * @return string version of the object 
+	 * @see com.laborguru.model.SpmObject#toString()
+	 */
+	public String toString()
+	{
+		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+	   	.append("id" , id)
+	   	.append("labelKey",labelKey)
+	   	.append("target",target)
+	   	.append("position",position)
+	   	.toString();		
+	}		
+	
 	public Integer getId() {
 		return id;
 	}
