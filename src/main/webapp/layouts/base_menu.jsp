@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<title><s:text name="application.title"/></title>
-		<s:head/>
+		<s:head theme="ajax"/>
 		<link rel="stylesheet" href="<s:url value="/css/style.css" includeParams="none" />" type="text/css" charset="utf-8" />
 	</head>
 	<body>
