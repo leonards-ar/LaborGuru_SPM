@@ -1,9 +1,10 @@
 package com.laborguru.exception;
 
+
 /**
  * Placeholder for Error messages. 
  * MessageKey contains the i18n error message we want to display
- * Objec[] parameters passed to the message
+ * arrayParameters[] parameters passed to the message
  * 
  * @author <a href="cnunezre@gmail.com">Cristian Nunez Rebolledo</a>
  * @version 1.0
@@ -11,8 +12,9 @@ package com.laborguru.exception;
  *
  */
 public class ErrorMessage {
+	
 	String messageKey;
-	Object[] arrayObject;
+	String[] parameters;
 	
 	/**
 	 * Constructor
@@ -20,10 +22,10 @@ public class ErrorMessage {
 	 * @param message The message key
 	 * @param arrayObject The parameters to pass.
 	 */
-	public ErrorMessage(String message, Object[] arrayObject) {
+	public ErrorMessage(String message, String[] arrayParameters) {
 		super();
 		this.messageKey = message;
-		this.arrayObject = arrayObject;
+		this.parameters = arrayParameters;
 	}
 	
 	/**
@@ -41,10 +43,10 @@ public class ErrorMessage {
 	public void setMessageKey(String message) {
 		this.messageKey = message;
 	}
-	public Object[] getArrayObject() {
-		return arrayObject;
+	public String[] getParameters() {
+		return parameters;
 	}
-	public void setArrayObject(Object[] arrayObject) {
-		this.arrayObject = arrayObject;
+	public void setParameters(String[] arrayParameters) {
+		this.parameters = arrayParameters;
 	}	
 }

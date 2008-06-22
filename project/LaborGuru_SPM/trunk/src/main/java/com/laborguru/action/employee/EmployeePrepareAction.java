@@ -6,6 +6,7 @@ import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.action.utils.ConstantListFactory;
 import com.laborguru.action.utils.KeyValuePair;
+import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.Employee;
 import com.laborguru.model.Position;
 import com.laborguru.model.Store;
@@ -42,7 +43,7 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	 * Loads position and status list
 	 * @throws Exception
 	 */
-	public void prepareEdit() throws Exception {
+	public void prepareEdit(){
 		loadListsForAddEditPage();
 	}
 
@@ -51,7 +52,7 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	 * Loads position and status list
 	 * @throws Exception
 	 */
-	public void prepareAdd() throws Exception {
+	public void prepareAdd(){
 		loadListsForAddEditPage();
 		
 		if (this.employee == null){
@@ -67,7 +68,7 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	 * Loads position and status list
 	 * @throws Exception
 	 */
-	public void prepareSave() throws Exception {
+	public void prepareSave(){
 		loadListsForAddEditPage();
 	}
 
@@ -193,10 +194,18 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 			this.employee.setStore(getEmployeeStore());
 		}
 		
-		employeeService.save(this.employee);
+		try {
+			employeeService.save(this.employee);
+
+			return SpmActionResult.LISTACTION.getResult();
+
+		} catch (SpmCheckedException e) {
+			addActionError(e.getErrorMessage());
+		}
 		
-		return SpmActionResult.LISTACTION.getResult();
+		return SpmActionResult.INPUT.getResult();
 	}
+		
 
 	/**
 	 * Stores an employee on the DB
