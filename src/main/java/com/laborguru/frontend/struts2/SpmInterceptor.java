@@ -99,7 +99,6 @@ public class SpmInterceptor implements Interceptor {
 			 * or a Principal object. This should never happen? Acegi should
 			 * have redirected to login page.
 			 */
-			return Action.LOGIN;
 		}
 		
 		if(menu == null && user != null) {
