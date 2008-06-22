@@ -13,9 +13,9 @@
 		<td align="center">
 			<table border="0" cellspacing="6" align="center" id="searchFormTable">
 				<tr>
-					<td class="label" nowrap><s:text name="employee.employeeid.label" /></td>
+					<td class="form_label" nowrap><s:text name="employee.employeeid.label" /></td>
 					<td><s:textfield name="searchEmployee.employeeId" size="10" theme="simple" /></td>
-					<td class="label" nowrap><s:text name="employee.fullname.label" /></td>
+					<td class="form_label" nowrap><s:text name="employee.fullname.label" /></td>
 					<td><s:textfield name="searchEmployee.name" size="30" theme="simple" /></td>
 					<td><s:submit key="search.button" theme="simple" cssClass="button" /></td>
 				</tr>
