@@ -16,7 +16,7 @@
               
               <tr>
               	<td class="errorMessage" align="center">
-              	<table><tr><td>
+              	<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0"><tr><td>
               	<s:fielderror theme="simple"/>
               	<s:actionerror theme="simple"/>
               	</td></tr></table>
