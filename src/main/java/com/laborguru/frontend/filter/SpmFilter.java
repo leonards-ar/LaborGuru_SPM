@@ -20,6 +20,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.laborguru.frontend.HttpRequestConstants;
+import com.laborguru.model.Employee;
 import com.laborguru.model.Menu;
 import com.laborguru.model.User;
 import com.laborguru.service.menu.MenuService;
@@ -106,6 +107,9 @@ public class SpmFilter implements Filter {
 				user.setUserName((String)principal);
 				user = getUserService().getUserByUserName(user);
 				httpRequest.getSession().setAttribute(HttpRequestConstants.USER, user);
+				if(user instanceof Employee) {
+					httpRequest.getSession().setAttribute(HttpRequestConstants.STORE, ((Employee)user).getStore());
+				}
 			}
 			if(user != null) {
 				httpRequest.setAttribute(HttpRequestConstants.USER, user); 
