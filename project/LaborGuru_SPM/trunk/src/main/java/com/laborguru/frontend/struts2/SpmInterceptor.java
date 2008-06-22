@@ -18,7 +18,6 @@ import com.laborguru.model.User;
 import com.laborguru.service.menu.MenuService;
 import com.laborguru.service.security.UserDetailsImpl;
 import com.laborguru.service.user.UserService;
-import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.Interceptor;
 
