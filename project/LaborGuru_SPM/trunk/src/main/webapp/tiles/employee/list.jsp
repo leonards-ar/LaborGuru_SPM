@@ -34,26 +34,22 @@
 		<!-- Search Results -->
 		<table border="0" cellspacing="1" width="100%" align="center" cellpadding="2" id="resultsTable">
 			<tr>
-				<th class="resultsTableHeader"><s:text name="employee.employeeid.label" /></th>
-				<th class="resultsTableHeader"><s:text name="employee.firstname.label" /></th>
-				<th class="resultsTableHeader"><s:text name="employee.surname.label" /></th>
+				<th class="resultsTableHeader"><s:text name="employee.fullname.label" /></th>
 				<th class="resultsTableHeader"><s:text name="employee.email.label" /></th>
+				<th class="resultsTableHeader"><s:text name="employee.phone.label" /></th>
 				<th class="resultsTableHeader">&nbsp;</th>
 			</tr>
 			<s:iterator value="storeEmployees" status="itEmployee">		
 				<tr>
 					<td
 						class="resultsTable<s:if test="#itEmployee.even">Even</s:if><s:else>Odd</s:else>Row"><s:property
-						value="employeeId" /></td>
-					<td
-						class="resultsTable<s:if test="#itEmployee.even">Even</s:if><s:else>Odd</s:else>Row"><s:property
-						value="name" /></td>
-					<td
-						class="resultsTable<s:if test="#itEmployee.even">Even</s:if><s:else>Odd</s:else>Row"><s:property
-						value="surname" /></td>
+						value="fullName" /></td>
 					<td
 						class="resultsTable<s:if test="#itEmployee.even">Even</s:if><s:else>Odd</s:else>Row"><a
 						href="mailto:<s:property value="email" />" class="resultsTableLink"><s:property value="email" /></a></td>
+					<td
+						class="resultsTable<s:if test="#itEmployee.even">Even</s:if><s:else>Odd</s:else>Row"><s:property
+						value="phone" /></td>
 					<td
 						class="resultsTable<s:if test="#itEmployee.even">Even</s:if><s:else>Odd</s:else>Row"
 						align="center">

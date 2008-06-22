@@ -33,9 +33,9 @@
                 </tr>
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="label" nowrap><s:text name="employee.phone.label" /></td>
-                    <td width="35%" align="left" class="value"><s:property value="employee.homePhone"/></td>
-                    <td width="15%" align="right" class="label" nowrap><s:text name="employee.mobile.label" /></td>
-                    <td width="35%" align="left" class="value"><s:property value="employee.mobilePhone"/></td>
+                    <td width="35%" align="left" class="value"><s:property value="employee.phone"/></td>
+                    <td width="15%" align="right" class="label" nowrap><s:text name="employee.phone2.label" /></td>
+                    <td width="35%" align="left" class="value"><s:property value="employee.phone2"/></td>
                 </tr>
                 
               	<tr class="editFormOddRow">
@@ -47,7 +47,7 @@
                                 
               	<tr class="editFormEvenRow">
               	<td colspan="4" align="center">
-					<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0" width="100%"><tr>
+					<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0"><tr>
                     <td align="right" class="label" nowrap><s:text name="employee.maxdaysweek.label" /></td>
                     <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
                     <td align="left" class="value"><s:property value="employee.maxDaysWeek"/></td>

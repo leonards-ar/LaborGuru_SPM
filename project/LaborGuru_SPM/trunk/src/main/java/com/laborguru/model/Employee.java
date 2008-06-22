@@ -12,8 +12,8 @@ public class Employee extends User {
 	private Store store;
 	private Position defaultPosition;
 	private boolean manager;
-	private String mobilePhone;
-	private String homePhone;
+	private String phone;
+	private String phone2;
 	private Date hireDate;
 	private int maxHoursWeek;
 	private int maxDaysWeek;
@@ -58,39 +58,35 @@ public class Employee extends User {
 	public void setManager(boolean manager) {
 		this.manager = manager;
 	}
-	
+
 	/**
-	 * 
-	 * @return
+	 * @return the phone
 	 */
-	public String getMobilePhone() {
-		return mobilePhone;
+	public String getPhone() {
+		return phone;
 	}
 
 	/**
-	 * 
-	 * @param mobilePhone
+	 * @param phone the phone to set
 	 */
-	public void setMobilePhone(String mobilePhone) {
-		this.mobilePhone = mobilePhone;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
-	
+
 	/**
-	 * 
-	 * @return
+	 * @return the phone2
 	 */
-	public String getHomePhone() {
-		return homePhone;
+	public String getPhone2() {
+		return phone2;
 	}
-	
+
 	/**
-	 * 
-	 * @param homePhone
+	 * @param phone2 the phone2 to set
 	 */
-	public void setHomePhone(String homePhone) {
-		this.homePhone = homePhone;
+	public void setPhone2(String phone2) {
+		this.phone2 = phone2;
 	}
-	
+
 	/**
 	 * 
 	 * @return
