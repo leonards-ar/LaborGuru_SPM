@@ -18,6 +18,7 @@ import com.laborguru.model.User;
 import com.laborguru.service.menu.MenuService;
 import com.laborguru.service.security.UserDetailsImpl;
 import com.laborguru.service.user.UserService;
+import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.Interceptor;
 
@@ -54,10 +55,11 @@ public class SpmInterceptor implements Interceptor {
 	}
 
 	/**
-	 * 
+	 * Initialize the interceptor
 	 * @see com.opensymphony.xwork2.interceptor.Interceptor#init()
 	 */
 	public void init() {
+		//:TODO: Retrieve factory name and service names from configuration
 		BeanFactory bf = ContextSingletonBeanFactoryLocator.getInstance().useBeanFactory("spm").getFactory();
 		
 		setUserService((UserService)bf.getBean("userService"));
@@ -66,6 +68,8 @@ public class SpmInterceptor implements Interceptor {
 	}
 
 	/**
+	 * Prepares the session as needed by SPM application. This is, set the logged
+	 * user in the session, the menu and the current store, among others.
 	 * @param invocation
 	 * @return
 	 * @throws Exception
@@ -95,6 +99,7 @@ public class SpmInterceptor implements Interceptor {
 			 * or a Principal object. This should never happen? Acegi should
 			 * have redirected to login page.
 			 */
+			return Action.LOGIN;
 		}
 		
 		if(menu == null && user != null) {
