@@ -33,8 +33,8 @@ public class EmployeeTestHelper {
 		employee.setAddress2("address2_"+param+"_"+index);
 		employee.setComments("comments_"+param+"_"+index);
 		employee.setDefaultPosition(PositionTestHelper.getPosition("position_"+param));
-		employee.setHomePhone("homePhone_"+param+"_"+index);
-		employee.setMobilePhone("mobilePhone_"+param+"_"+index);
+		employee.setPhone("phone_"+param+"_"+index);
+		employee.setPhone2("phone2_"+param+"_"+index);
 		employee.setZip("zip_"+param+"_"+index);
 		
 		employee.setMaxHoursDay(8);

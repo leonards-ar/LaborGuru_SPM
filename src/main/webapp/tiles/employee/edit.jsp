@@ -4,9 +4,6 @@
 			<br/>
 	      <table border="0" cellspacing="0" align="center">
 		      <tr>
-			      <td class="infoMessage"><s:text name="info.mandatory.fields" /></td>
-        	  </tr>			     
-		      <tr>
 			      <td id="titleBar">
 			      <s:if test="employee.id == null">
 			      	<s:text name="employee.create.title" />
@@ -18,7 +15,12 @@
         	  </tr>
               
               <tr>
-              	<td class="errorMessage" align="center"><s:fielderror theme="simple"/><s:actionerror theme="simple"/></td>
+              	<td class="errorMessage" align="center">
+              	<table><tr><td>
+              	<s:fielderror theme="simple"/>
+              	<s:actionerror theme="simple"/>
+              	</td></tr></table>
+              	</td>
               </tr>
               
               <tr>                            
@@ -41,9 +43,9 @@
                 </tr>
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="label" nowrap><s:text name="employee.phone.label" /></td>
-                    <td width="35%" align="left" class="value"><s:textfield name="employee.homePhone" size="30" theme="simple"/></td>
-                    <td width="15%" align="right" class="label" nowrap><s:text name="employee.mobile.label" /></td>
-                    <td width="35%" align="left" class="value"><s:textfield name="employee.mobilePhone" size="30" theme="simple"/></td>
+                    <td width="35%" align="left" class="value"><s:textfield name="employee.phone" size="30" theme="simple"/></td>
+                    <td width="15%" align="right" class="label" nowrap><s:text name="employee.phone2.label" /></td>
+                    <td width="35%" align="left" class="value"><s:textfield name="employee.phone2" size="30" theme="simple"/></td>
                 </tr>
 
               	<tr class="editFormOddRow">
@@ -57,15 +59,15 @@
               	<td colspan="4" align="center">
 					<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0"><tr>
                     <td align="right" class="label" nowrap><s:text name="employee.maxdaysweek.label" /></td>
-                    <td><img src="<s:url value="/images/transp6x1.gif"/>" includeParams="none"/></td>
+                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
                     <td align="left" class="value"><s:textfield name="employee.maxDaysWeek" size="2" theme="simple"/></td>
-                    <td><img src="<s:url value="/images/transp6x1.gif"/>" includeParams="none"/></td>
+                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
                     <td align="right" class="label" nowrap><s:text name="employee.maxhoursday.label" /></td>
-                    <td><img src="<s:url value="/images/transp6x1.gif"/>" includeParams="none"/></td>
+                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
                     <td align="left" class="value"><s:textfield name="employee.maxHoursDay" size="2" theme="simple"/></td>
-                    <td><img src="<s:url value="/images/transp6x1.gif"/>" includeParams="none"/></td>
+                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
                     <td align="right" class="label" nowrap><s:text name="employee.maxhoursweek.label" /></td>
-                    <td><img src="<s:url value="/images/transp6x1.gif"/>" includeParams="none"/></td>
+                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
                     <td align="left" class="value"><s:textfield name="employee.maxHoursWeek" size="3" theme="simple"/></td>
 					</tr></table>
               	</td>
@@ -89,15 +91,11 @@
 
               	<tr class="editFormOddRow">
                     <td width="15%" align="right" class="label" nowrap><s:text name="employee.address.label" /></td>
-                    <td width="35%" align="left" class="value"><s:textarea name="employee.address" cols="40" rows="2" theme="simple"/></td>
-                    <td width="15%" align="right" class="label" nowrap>&nbsp;</td>
-                    <td width="35%" align="left" class="value">&nbsp;</td>
+                    <td width="85%" align="left" class="value" colspan="3"><s:textfield name="employee.address" size="50" theme="simple"/></td>
                 </tr>
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="label" nowrap><s:text name="employee.address2.label" /></td>
-                    <td width="35%" align="left" class="value"><s:textarea name="employee.address2" cols="40" rows="2" theme="simple"/></td>
-                    <td width="15%" align="right" class="label" nowrap>&nbsp;</td>
-                    <td width="35%" align="left" class="value">&nbsp;</td>
+                    <td width="85%" align="left" class="value" colspan="3"><s:textfield name="employee.address2" size="50" theme="simple"/></td>
                 </tr>
               	<tr class="editFormOddRow">
                     <td width="15%" align="right" class="label" nowrap><s:text name="employee.city.label" /></td>
@@ -106,11 +104,11 @@
               	<td width="35%" align="left">
 					<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0"><tr>
                     <td align="left" class="value"><s:textfield name="employee.state" size="20" theme="simple"/></td>
-                    <td><img src="<s:url value="/images/transp6x1.gif"/>" includeParams="none"/></td>
-                    <td><img src="<s:url value="/images/transp6x1.gif"/>" includeParams="none"/></td>
+                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
+                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
                     <td align="right" class="label" nowrap><s:text name="employee.zip.label" /></td>
-                    <td><img src="<s:url value="/images/transp6x1.gif"/>" includeParams="none"/></td>
-                    <td><img src="<s:url value="/images/transp6x1.gif"/>" includeParams="none"/></td>
+                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
+                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
                     <td align="left" class="value"><s:textfield name="employee.zip" size="5" theme="simple"/></td>
 					</tr></table>
               	</td>
@@ -126,9 +124,9 @@
                     <td width="100%" align="right" colspan="4">
 	                    <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
 		                    <tr>
-		                    	<td><s:submit key="cancel.button" action="employee_list" theme="simple" cssClass="button"/></td>		                    
-		                    	<td><s:reset key="reset.button" theme="simple" cssClass="button"/></td>
-		                		<td><s:submit key="save.button" theme="simple" cssClass="button"/></td>
+		                    	<td><s:submit id="cancelButton" key="cancel.button" action="employee_list" theme="simple" cssClass="button"/></td>		                    
+		                    	<td><s:reset id="resetButton" key="reset.button" theme="simple" cssClass="button"/></td>
+		                		<td><s:submit id="saveButton" key="save.button" theme="simple" cssClass="button"/></td>
 		                    </tr>
 	                    </table>                    
                     </td>
@@ -137,4 +135,7 @@
               </s:form>
               </td>
               </tr>
+		      <tr>
+			      <td class="infoMessage"><s:text name="info.mandatory.fields" /></td>
+        	  </tr>	              
           </table>

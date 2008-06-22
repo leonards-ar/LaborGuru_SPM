@@ -39,8 +39,8 @@
 				<column name="default_position" />
 			</many-to-one>
 	    	<property name="manager" column="manager" type="boolean"/>
-        	<property name="mobilePhone" column="mobile_phone" type="string" length="50"/>
-        	<property name="homePhone" column="home_phone" type="string" length="50" />
+        	<property name="phone" column="phone" type="string" length="50"/>
+        	<property name="phone2" column="phone2" type="string" length="50" />
         	<property name="hireDate" column="hire_date" type="date"/>
         	<property name="maxHoursWeek" column="max_hours_week" type="int"/>
         	<property name="maxDaysWeek" column="max_days_week" type="int" />
