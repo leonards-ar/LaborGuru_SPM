@@ -2,14 +2,12 @@ package com.laborguru.service.employee;
 
 import java.util.List;
 
-import org.springframework.dao.DataAccessException;
-
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.SpmCheckedException;
-import com.laborguru.exception.SpmUncheckedException;
 import com.laborguru.logger.DefaultSpmLogger;
 import com.laborguru.model.Employee;
 import com.laborguru.model.Store;
+import com.laborguru.model.User;
 import com.laborguru.service.employee.dao.EmployeeDao;
 import com.laborguru.service.user.dao.UserDao;
 
@@ -61,34 +59,57 @@ public class EmployeeServiceBean implements EmployeeService {
 	 * @see com.laborguru.service.employee.EmployeeService#save(com.laborguru.model.Employee)
 	 */
 	public Employee save(Employee employee) throws SpmCheckedException {
-		spmLog.debugLog("Entering to save with employee:"+ employee);
+
+		Employee retEmployee = null;
 		
 		if(employee == null) 
 		{
-			spmLog.errorLog("error.null.param", new Object[]{"employee"});
+			spmLog.errorLog("Employee passed in as parameter is null");
 			throw new IllegalArgumentException("Employee passed in as parameter is null");				
 		}
 		
-		if(employee.getUserName() == null) 
-		{
-			spmLog.errorLog("Employee's username passed in as parameter is null");
-			throw new IllegalArgumentException("Employee's username passed in as parameter is null");				
-		}
+		spmLog.debugLog("before save employee:"+ employee);
 
-		try{			
-			if (userDao.existUser(employee.getUserName()))
-			{
-				String exMgs = "username: "+ employee.getUserName()+" already exist in the database";
-				spmLog.errorLog(exMgs);
-				throw new SpmCheckedException(exMgs, ErrorEnum.USERNAME_ALREADY_EXIST_ERROR, new String[]{employee.getUserName()});
-			}
-			
-			return employeeDao.save(employee);
-			
-		} catch(DataAccessException e) {
-			spmLog.errorLog("Error saving employee...", e);
-			throw new SpmUncheckedException(e, e.getMessage(), ErrorEnum.GENERIC_DATABASE_ERROR);
+		retEmployee = employee.getId()!= null? update(employee):create(employee);
+
+		spmLog.debugLog("after save employee:"+ retEmployee);
+		
+		return retEmployee;
+	}
+	
+	/**
+	 * Creates employee
+	 */
+	private Employee create(Employee employee) throws SpmCheckedException {		
+							
+		//Checking if user name already exist
+		if (userDao.existUser(employee.getUserName()))
+		{
+			String exMgs = "username: "+ employee.getUserName()+" already exist in the database";
+			spmLog.errorLog(exMgs);
+			throw new SpmCheckedException(exMgs, ErrorEnum.USERNAME_ALREADY_EXIST_ERROR, new String[]{employee.getUserName()});
 		}
+		
+		return  employeeDao.save(employee);
+	}
+
+	/**
+	 * Updates employee
+	 */
+	private Employee update(Employee employee) throws SpmCheckedException {
+							
+		//Checking if user name already exist
+		User auxUser = userDao.getUserByUsername(employee);
+		
+		if ((auxUser != null) && !auxUser.getId().equals(employee.getId()))
+		{
+			String exMgs = "username: "+ employee.getUserName()+" already exist in the database";
+			spmLog.errorLog(exMgs);
+			throw new SpmCheckedException(exMgs, ErrorEnum.USERNAME_ALREADY_EXIST_ERROR, new String[]{employee.getUserName()});
+			
+		}
+		
+		return   employeeDao.save(employee);
 	}
 
 	/**
@@ -118,5 +139,4 @@ public class EmployeeServiceBean implements EmployeeService {
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
-
 }
