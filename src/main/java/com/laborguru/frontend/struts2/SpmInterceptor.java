@@ -102,9 +102,11 @@ public class SpmInterceptor implements Interceptor {
 			session.put(HttpRequestConstants.MENU, menu);
 		}
 
-		if(	params.get(HttpRequestConstants.MENU_ITEM_INDEX) != null && menu != null) {
+		Object idxObj = params.get(HttpRequestConstants.MENU_ITEM_INDEX);
+		if(	idxObj != null && menu != null) {
 			try {
-				menu.setSelectedItemIndex(Integer.parseInt(String.valueOf(params.get(HttpRequestConstants.MENU_ITEM_INDEX))));
+				String idx = (idxObj instanceof String[]) ? ((String[])idxObj)[0] : idxObj.toString();
+				menu.setSelectedItemIndex(Integer.parseInt(idx));
 			} catch(Throwable ex) {
 				// Invalid index! Someone is trying to hack us?
 			}
