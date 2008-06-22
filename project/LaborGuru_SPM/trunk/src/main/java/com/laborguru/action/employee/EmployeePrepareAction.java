@@ -7,6 +7,7 @@ import com.laborguru.action.SpmActionResult;
 import com.laborguru.action.utils.ConstantListFactory;
 import com.laborguru.action.utils.KeyValuePair;
 import com.laborguru.exception.SpmCheckedException;
+import com.laborguru.frontend.HttpRequestConstants;
 import com.laborguru.model.Employee;
 import com.laborguru.model.Position;
 import com.laborguru.model.Store;
@@ -79,17 +80,18 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	 * @return The store the employee belongs to
 	 */
 	private Store getEmployeeStore() {
-		Employee employee = getLoggedEmployeeOrNull();
-		Store store;
-		if(employee != null) {
-			return employee.getStore();
-		} else {
-			// The logged user is not an employee. An administrator creating stores and users?
-			store = new Store();
-			store.setId(1); // TODO: From where???
+		Store store = (Store) getSession().get(HttpRequestConstants.STORE);
+		if(store == null) {
+			Employee employee = getLoggedEmployeeOrNull();
+			if(employee != null) {
+				store = employee.getStore();
+			} else {
+				//:TODO: Remove this, as it only works for now
+				store = new Store();
+				store.setId(new Integer(1));
+			}
 		}
 		return store;
-		
 	}
 	
 	/**
