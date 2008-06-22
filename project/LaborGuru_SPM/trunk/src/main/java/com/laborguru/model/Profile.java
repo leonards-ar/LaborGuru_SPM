@@ -2,6 +2,9 @@ package com.laborguru.model;
 
 import java.util.Set;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 /**
  * Profile Type
  * @author <a href="cnunezre@gmail.com">Cristian Nunez Rebolledo</a>
@@ -16,6 +19,19 @@ public class Profile extends SpmObject {
 	private Integer id;
 	private String name;
 	private String description;
+
+	/**
+	 * Profile toString
+	 * @return string version of the object 
+	 * @see com.laborguru.model.SpmObject#toString()
+	 */
+	public String toString()
+	{
+		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+	   	.append("id" , id)
+	   	.append("name",name)
+	   	.toString();		
+	}
 	
 	private Set<Permission> permissions;
 

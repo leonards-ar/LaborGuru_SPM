@@ -1,5 +1,8 @@
 package com.laborguru.model;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 public class Position extends SpmObject{
 
 	/**
@@ -11,6 +14,18 @@ public class Position extends SpmObject{
 	private Store store;
 	private String name;
 	
+	/**
+	 * Position toString
+	 * @return string version of the object 
+	 * @see com.laborguru.model.SpmObject#toString()
+	 */
+	public String toString()
+	{
+		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+	   	.append("id" , id)
+	   	.append("name",name)
+	   	.toString();		
+	}
 	
 	public Integer getId() {
 		return id;

@@ -2,6 +2,9 @@ package com.laborguru.model;
 
 import java.util.List;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 /**
  * Permission Type
  * @author <a href="cnunezre@gmail.com">Cristian Nunez Rebolledo</a>
@@ -17,9 +20,23 @@ public class Permission extends SpmObject {
 	private Integer id;
 	private String name;
 	private String description;
-	
+		
 	private List<MenuItem> menuItems;
 
+	
+	/**
+	 * Permission toString
+	 * @return string version of the object 
+	 * @see com.laborguru.model.SpmObject#toString()
+	 */
+	public String toString()
+	{
+		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+	   	.append("id" , id)
+	   	.append("name",name)
+	   	.toString();		
+	}
+	
 	public Integer getId() {
 		return id;
 	}

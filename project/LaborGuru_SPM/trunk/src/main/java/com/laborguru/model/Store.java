@@ -1,5 +1,8 @@
 package com.laborguru.model;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 public class Store extends SpmObject {
 
 	/**
@@ -7,12 +10,24 @@ public class Store extends SpmObject {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private Integer id;
-	
-	private String name;
-	
+	private Integer id;	
+	private String name;	
 	private Office office;
 
+	
+	/**
+	 * Store toString
+	 * @return string version of the object 
+	 * @see com.laborguru.model.SpmObject#toString()
+	 */
+	public String toString()
+	{
+		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+	   	.append("id" , id)
+	   	.append("name",name)
+	   	.toString();		
+	}
+	
 	public Integer getId() {
 		return id;
 	}

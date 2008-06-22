@@ -5,6 +5,9 @@ package com.laborguru.model;
 
 import java.util.List;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 /**
  * Menu Type
  * @author <a href="mcapurro@gmail.com">Mariano Capurro</a>
@@ -27,6 +30,19 @@ public class Menu extends SpmObject {
 	public Menu() {
 	}
 
+	/**
+	 * Menu toString
+	 * @return string version of the object 
+	 * @see com.laborguru.model.SpmObject#toString()
+	 */
+	public String toString()
+	{
+		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+	   	.append("selectedItemIndex" , selectedItemIndex)
+	   	.append("items",items)
+	   	.toString();		
+	}	
+	
 	/**
 	 * @return the items
 	 */
