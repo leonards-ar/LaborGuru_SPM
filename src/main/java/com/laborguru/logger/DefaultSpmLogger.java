@@ -51,6 +51,10 @@ public class DefaultSpmLogger implements SpmLogger {
 		messageLogger.debug(msg);
 	}
 
+	public void debugLog(String msg) {
+		messageLogger.debug(msg);
+	}
+		
 	public void errorLog(String msgKey, Object[] params) {
 		String msg = getStringMessage(msgKey, params);
 		errorLogger.error(msg);
@@ -61,6 +65,10 @@ public class DefaultSpmLogger implements SpmLogger {
 		errorLogger.error(msg, t);
 	}
 
+	public void errorLog(String msg) {
+		errorLogger.error(msg);
+	}	
+	
 	public void infoLog(String msgKey, Object[] params) {
 		String msg = getStringMessage(msgKey, params);
 		messageLogger.info(msg);

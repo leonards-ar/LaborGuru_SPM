@@ -25,4 +25,13 @@ public interface UserDao {
 	 * @return a full populated user
 	 */
 	User getUserByUsername(User user);
+	
+	
+	/**
+	 * True when the user with userName passed as parameter already exists in the Database 
+	 * @param userName The userName 
+	 * @return true if the user exist
+	 */
+	Boolean existUser(String userName);
+	
 }

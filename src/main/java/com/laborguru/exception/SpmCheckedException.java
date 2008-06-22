@@ -2,14 +2,14 @@ package com.laborguru.exception;
 
 
 /**
- * SpmUncheckedException
- * This is the base runtime exception, should be extended in order to throw specific error.
+ * SpmCheckedException
+ * This is the base checked exception, should be extended in order to throw specific error.
  * @author <a href="cnunezre@gmail.com">Cristian Nunez Rebolledo</a>
  * @version 1.0
  * @since SPM 1.0
  *
  */
-public class SpmUncheckedException extends RuntimeException {
+public class SpmCheckedException extends Exception {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -22,7 +22,7 @@ public class SpmUncheckedException extends RuntimeException {
 	 * @param reason Internal description for the exception
 	 * @param errorCode Error code
 	 */
-	public SpmUncheckedException(Throwable t, String reason, ErrorEnum errorCode){
+	public SpmCheckedException(Throwable t, String reason, ErrorEnum errorCode){
 		super(reason, t);
 		this.errorMessage = new ErrorMessage(errorCode.name());
 	}
@@ -32,7 +32,7 @@ public class SpmUncheckedException extends RuntimeException {
 	 * @param reason Internal description for the exception
 	 * @param errorCode Error code
 	 */
-	public SpmUncheckedException(String reason, ErrorEnum errorCode){
+	public SpmCheckedException(String reason, ErrorEnum errorCode){
 		super(reason);
 		this.errorMessage = new ErrorMessage(errorCode.name());
 	}
@@ -44,7 +44,7 @@ public class SpmUncheckedException extends RuntimeException {
 	 * @param errorCode Error code
 	 * @param arrayObjects array of additional parameter objects
 	 */
-	public SpmUncheckedException(Throwable t, String reason, ErrorEnum errorCode, String[] arrayObjects){
+	public SpmCheckedException(Throwable t, String reason, ErrorEnum errorCode, String[] arrayObjects){
 		super(reason, t);
 		this.errorMessage = new ErrorMessage(errorCode.name(), arrayObjects);
 	}
@@ -54,7 +54,7 @@ public class SpmUncheckedException extends RuntimeException {
 	 * @param errorCode ErrorCode
 	 * @param arrayObjects array of additional parameter objects
 	 */
-	public SpmUncheckedException(String reason, ErrorEnum errorCode, String[] arrayObjects){
+	public SpmCheckedException(String reason, ErrorEnum errorCode, String[] arrayObjects){
 		super(reason);
 		this.errorMessage = new ErrorMessage(errorCode.name(), arrayObjects);
 	}	

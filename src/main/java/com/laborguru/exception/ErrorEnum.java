@@ -10,6 +10,7 @@ package com.laborguru.exception;
  */
 public enum ErrorEnum {
 	GENERIC_ERROR,
-	GENERIC_DATABASE_ERROR;
+	GENERIC_DATABASE_ERROR,
+	USERNAME_ALREADY_EXIST_ERROR;
 			
 }

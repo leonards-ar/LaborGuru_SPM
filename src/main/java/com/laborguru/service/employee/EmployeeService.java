@@ -2,6 +2,7 @@ package com.laborguru.service.employee;
 
 import java.util.List;
 
+import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.Employee;
 import com.laborguru.model.Store;
 import com.laborguru.service.Service;
@@ -20,8 +21,9 @@ public interface EmployeeService extends Service {
 	 * Saves or updates employee
 	 * @param employee Employee to save or update
 	 * @return
+	 * @throws SpmCheckedException 
 	 */
-	Employee save(Employee employee);
+	Employee save(Employee employee) throws SpmCheckedException;
 	
 	/**
 	 * Deletes employee

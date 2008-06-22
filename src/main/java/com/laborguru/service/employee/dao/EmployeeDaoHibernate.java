@@ -26,11 +26,9 @@ public class EmployeeDaoHibernate extends HibernateDaoSupport implements
 		
 		return retEmployee;
 	}
-
+	
 	public List<Employee> getEmployeesByStore(Store store) {
 		return (List<Employee>)getHibernateTemplate().findByNamedParam("from Employee employee where employee.store.id = :searchString", "searchString", store.getId());
-		
-
 	}
 
 	public Employee save(Employee employee) {

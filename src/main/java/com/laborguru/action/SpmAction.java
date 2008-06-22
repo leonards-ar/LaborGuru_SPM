@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.apache.struts2.interceptor.SessionAware;
 
+import com.laborguru.exception.ErrorMessage;
 import com.laborguru.frontend.HttpRequestConstants;
 import com.laborguru.model.Employee;
 import com.laborguru.model.User;
@@ -53,5 +54,13 @@ public class SpmAction extends ActionSupport implements SessionAware {
 	 */
 	public void setSession(Map session) {
 		this.session = session;
+	}
+	
+	/**
+	 * Add error message to action errors from an ErrorMessage object
+	 * @param errorMessage
+	 */
+	protected void addActionError(ErrorMessage errorMessage){
+		addActionError(getText(errorMessage.getMessageKey(), errorMessage.getParameters()));
 	}
 }

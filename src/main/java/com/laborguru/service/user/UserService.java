@@ -26,7 +26,7 @@ public interface UserService extends Service {
 	 * @return A full populated User object.
 	 */
 	User getUserByUserName(User user);
-	 
+
 	/**
 	 * Setter for User Dao
 	 * @param userDao UserDao

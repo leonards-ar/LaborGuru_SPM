@@ -15,7 +15,8 @@ public enum SpmActionResult {
 	EDIT("edit"),
 	SHOW("show"),
 	DELETE("delte"),
-	SAVE("save");
+	SAVE("save"), 
+	INPUT("input");
 	
 	private String result;
 	

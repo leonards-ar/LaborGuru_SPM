@@ -48,6 +48,7 @@
 	<bean id="employeeService"
 		class="com.laborguru.service.employee.EmployeeServiceBean">
 		<property name="employeeDao" ref="employeeDao"/>
+		<property name="userDao" ref="userDao"/>
  	</bean>
  	
  	<bean id="employeeDao"

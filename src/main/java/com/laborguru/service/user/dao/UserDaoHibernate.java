@@ -42,4 +42,16 @@ public class UserDaoHibernate extends HibernateDaoSupport implements UserDao {
 		return retUser;
 	}
 
+	/**
+	 * True when the user with userName passed as parameter already exists in the Database 
+	 * @param userName The userName 
+	 * @return true if the user exist
+	 * @see com.laborguru.service.user.dao.UserDao#existUser(java.lang.String)
+	 */
+	public Boolean existUser(String username){
+		List<String> result = (List<String>)getHibernateTemplate().findByNamedParam(
+				"select user.userName from User user where user.userName = :searchString", "searchString",username);
+				
+		return result.size() != 0;
+	}
 }
