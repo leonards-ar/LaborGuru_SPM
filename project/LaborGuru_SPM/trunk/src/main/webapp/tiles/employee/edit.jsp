@@ -16,10 +16,14 @@
               
               <tr>
               	<td class="errorMessage" align="center">
-              	<table border="0" align="center" cellpadding="0" cellspacing="0" colspan="0" cellspan="0"><tr><td>
-              	<s:fielderror theme="simple"/>
-              	<s:actionerror theme="simple"/>
-              	</td></tr></table>
+	              	<table border="0" align="center" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
+              			<tr>
+              				<td>
+				              	<s:fielderror theme="simple"/>
+				              	<s:actionerror theme="simple"/>
+			              	</td>
+            		  	</tr>
+              		</table>
               	</td>
               </tr>
               
@@ -51,7 +55,7 @@
               	<tr class="editFormOddRow">
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.employeeid.label" /></td>
                     <td width="35%" align="left" class="value"><s:textfield name="employee.employeeId" size="10" theme="simple"/></td>
-                    <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.wage.label" /></td>
+                    <td width="15%" align="right" class="form_label" nowrap>* <s:text name="employee.wage.label" /></td>
                     <td width="35%" align="left" class="value"><s:textfield name="employee.wage" size="3" theme="simple"/></td>
                 </tr>
                 
