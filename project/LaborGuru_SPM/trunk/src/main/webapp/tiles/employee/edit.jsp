@@ -35,28 +35,28 @@
               <table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0">
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="form_label" nowrap>* <s:text name="employee.firstname.label" /></td>
-                    <td width="35%" align="left" class="value"><s:textfield name="employee.name" size="30" theme="simple"/></td>
+                    <td width="35%" align="left" class="value"><s:textfield name="employee.name" size="20" theme="simple"/></td>
                     <td width="15%" align="right" class="form_label" nowrap>* <s:text name="employee.surname.label" /></td>
-                    <td width="35%" align="left" class="value"><s:textfield name="employee.surname" size="30" theme="simple"/></td>
+                    <td width="35%" align="left" class="value"><s:textfield name="employee.surname" size="20" theme="simple"/></td>
                 </tr>
               	<tr class="editFormOddRow">
                     <td width="15%" align="right" class="form_label" nowrap>* <s:text name="employee.username.label" /></td>
-                    <td width="35%" align="left" class="value"><s:textfield name="employee.userName" size="30" theme="simple"/></td>
+                    <td width="35%" align="left" class="value"><s:textfield name="employee.userName" size="15" theme="simple"/></td>
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.email.label" /></td>
-                    <td width="35%" align="left" class="value"><s:textfield name="employee.email" size="30" theme="simple"/></td>
+                    <td width="35%" align="left" class="value"><s:textfield name="employee.email" size="20" theme="simple"/></td>
                 </tr>
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.phone.label" /></td>
-                    <td width="35%" align="left" class="value"><s:textfield name="employee.phone" size="30" theme="simple"/></td>
+                    <td width="35%" align="left" class="value"><s:textfield name="employee.phone" size="15" theme="simple"/></td>
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.phone2.label" /></td>
-                    <td width="35%" align="left" class="value"><s:textfield name="employee.phone2" size="30" theme="simple"/></td>
+                    <td width="35%" align="left" class="value"><s:textfield name="employee.phone2" size="15" theme="simple"/></td>
                 </tr>
 
               	<tr class="editFormOddRow">
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.employeeid.label" /></td>
                     <td width="35%" align="left" class="value"><s:textfield name="employee.employeeId" size="10" theme="simple"/></td>
                     <td width="15%" align="right" class="form_label" nowrap>* <s:text name="employee.wage.label" /></td>
-                    <td width="35%" align="left" class="value"><s:textfield name="employee.wage" size="3" theme="simple"/></td>
+                    <td width="35%" align="left" class="value"><s:textfield name="employee.wage" size="4" theme="simple"/></td>
                 </tr>
                 
               	<tr class="editFormEvenRow">
@@ -83,7 +83,7 @@
                     </td>
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.status.label" /></td>
                     <td width="35%" align="left" class="value">
-                    <s:select name="employee.status" list="statusList" listKey="key" listValue="value" theme="simple"/>
+                    <s:select name="employee.status" list="statusMap" listKey="key" listValue="%{getText(value)}" theme="simple"/>
                     </td>
                 </tr>
               	<tr class="editFormEvenRow">
@@ -103,11 +103,11 @@
                 </tr>
               	<tr class="editFormOddRow">
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.city.label" /></td>
-              	<td width="35%" align="left" class="value"><s:textfield name="employee.city" size="30" theme="simple"/></td>
+              	<td width="35%" align="left" class="value"><s:textfield name="employee.city" size="20" theme="simple"/></td>
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.state.label" /></td>
               	<td width="35%" align="left">
 					<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0"><tr>
-                    <td align="left" class="value"><s:textfield name="employee.state" size="20" theme="simple"/></td>
+                    <td align="left" class="value"><s:select name="employee.state" list="statesMap" listKey="key" listValue="value" theme="simple"/></td>
                     <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
                     <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
                     <td align="right" class="form_label" nowrap><s:text name="employee.zip.label" /></td>
