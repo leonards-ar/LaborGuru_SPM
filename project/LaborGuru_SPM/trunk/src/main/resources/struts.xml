@@ -5,9 +5,9 @@
 
 <struts>
 	<constant name="struts.devMode" value="true" />
-	<constant name="struts.custom.i18n.resources"
-		value="defaultmessages, errormessages" />
-
+	<constant name="struts.custom.i18n.resources" value="defaultmessages, errormessages" />	
+  	<constant name="struts.objectFactory" value="org.apache.struts2.spring.StrutsSpringObjectFactory" />
+	
 	<package name="spm-default" extends="tiles-default">
 		<result-types>
 			<result-type name="tiles"
