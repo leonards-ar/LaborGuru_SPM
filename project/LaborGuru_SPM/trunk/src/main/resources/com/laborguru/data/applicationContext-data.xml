@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="states-us" class="java.util.HashMap" singleton="true">
+		<description>United States - 51 States Map for Combos</description>
+		<constructor-arg>
+			<map>
+				<entry key="AL">
+					<value>Alabama</value>
+				</entry>
+				<entry key="AK">
+					<value>Alaska</value>
+				</entry>
+				<entry key="AZ">
+					<value>Arizona</value>
+				</entry>
+				<entry key="AR">
+					<value>Arkansas</value>
+				</entry>
+				<entry key="CA">
+					<value>California</value>
+				</entry>
+				<entry key="CO">
+					<value>Colorado</value>
+				</entry>
+				<entry key="CT">
+					<value>Connecticut</value>
+				</entry>
+				<entry key="DC">
+					<value>D.C.</value>
+				</entry>
+				<entry key="DE">
+					<value>Delaware</value>
+				</entry>
+				<entry key="FL">
+					<value>Florida</value>
+				</entry>
+				<entry key="GA">
+					<value>Georgia</value>
+				</entry>
+				<entry key="HI">
+					<value>Hawaii</value>
+				</entry>
+				<entry key="ID">
+					<value>Idaho</value>
+				</entry>
+				<entry key="IL">
+					<value>Illinois</value>
+				</entry>
+				<entry key="IN">
+					<value>Indiana</value>
+				</entry>
+				<entry key="IA">
+					<value>Iowa</value>
+				</entry>
+				<entry key="KS">
+					<value>Kansas</value>
+				</entry>
+				<entry key="KY">
+					<value>Kentucky</value>
+				</entry>
+				<entry key="LA">
+					<value>Louisiana</value>
+				</entry>
+				<entry key="ME">
+					<value>Maine</value>
+				</entry>
+				<entry key="MD">
+					<value>Maryland</value>
+				</entry>
+				<entry key="MA">
+					<value>Massachusetts</value>
+				</entry>
+				<entry key="MI">
+					<value>Michigan</value>
+				</entry>
+				<entry key="MN">
+					<value>Minnesota</value>
+				</entry>
+				<entry key="MS">
+					<value>Mississippi</value>
+				</entry>
+				<entry key="MO">
+					<value>Missouri</value>
+				</entry>
+				<entry key="MT">
+					<value>Montana</value>
+				</entry>
+				<entry key="NE">
+					<value>Nebraska</value>
+				</entry>
+				<entry key="NV">
+					<value>Nevada</value>
+				</entry>
+				<entry key="NH">
+					<value>New Hampshire</value>
+				</entry>
+				<entry key="NJ">
+					<value>New Jersey</value>
+				</entry>
+				<entry key="NM">
+					<value>New Mexico</value>
+				</entry>
+				<entry key="NY">
+					<value>New York</value>
+				</entry>
+				<entry key="NC">
+					<value>North Carolina</value>
+				</entry>
+				<entry key="ND">
+					<value>North Dakota</value>
+				</entry>
+				<entry key="OH">
+					<value>Ohio</value>
+				</entry>
+				<entry key="OK">
+					<value>Oklahoma</value>
+				</entry>
+				<entry key="OR">
+					<value>Oregon</value>
+				</entry>
+				<entry key="PA">
+					<value>Pennsylvania</value>
+				</entry>
+				<entry key="RI">
+					<value>Rhode Island</value>
+				</entry>
+				<entry key="SC">
+					<value>South Carolina</value>
+				</entry>
+				<entry key="SD">
+					<value>South Dakota</value>
+				</entry>
+				<entry key="TN">
+					<value>Tennessee</value>
+				</entry>
+				<entry key="TX">
+					<value>Texas</value>
+				</entry>
+				<entry key="UT">
+					<value>Utah</value>
+				</entry>
+				<entry key="VT">
+					<value>Vermont</value>
+				</entry>
+				<entry key="VA">
+					<value>Virginia</value>
+				</entry>
+				<entry key="WA">
+					<value>Washington</value>
+				</entry>
+				<entry key="WV">
+					<value>West Virginia</value>
+				</entry>
+				<entry key="WI">
+					<value>Wisconsin</value>
+				</entry>
+				<entry key="WY">
+					<value>Wyoming</value>
+				</entry>
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<bean id="status" class="java.util.HashMap" singleton="true">
+		<description>Different user states</description>
+		<constructor-arg>
+			<map>
+				<entry key="0">
+					<value>user.status.enabled</value>
+				</entry>
+				<entry key="1">
+					<value>user.status.disabled</value>
+				</entry>
+			</map>
+		</constructor-arg>
+	</bean>
+	
+</beans>
