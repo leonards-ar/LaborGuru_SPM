@@ -6,9 +6,20 @@
 
 	<bean id="employeeAction" class="com.laborguru.action.employee.EmployeePrepareAction" scope="prototype">
 		<property name="positionService" ref="positionService"/>
-		<property name="employeeService" ref="employeeService"/>		
+		<property name="employeeService" ref="employeeService"/>
+		<property name="employee" ref="employee"/>
 		<property name="referenceDataService" ref="referenceDataService"/>		
 	</bean>
+
+	<bean id="employee" class="com.laborguru.model.Employee" scope="prototype">
+		<property name="maxHoursWeek" value="40"/>
+		<property name="maxDaysWeek" value="5"/>
+		<property name="maxHoursDay" value="8"/>
+		<property name="wage" value="7.0"/>
+		<property name="hireDate" ref="dateTemplateToday"/>
+	</bean>
+			
+	<bean id="dateTemplateToday" class="java.util.Date"/>
 
 	<bean id="referenceDataService"
 		class="com.laborguru.service.data.ReferenceDataServiceBean">
