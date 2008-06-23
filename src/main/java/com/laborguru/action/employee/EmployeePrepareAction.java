@@ -1,16 +1,16 @@
 package com.laborguru.action.employee;
 
 import java.util.List;
+import java.util.Map;
 
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
-import com.laborguru.action.utils.ConstantListFactory;
-import com.laborguru.action.utils.KeyValuePair;
 import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.frontend.HttpRequestConstants;
 import com.laborguru.model.Employee;
 import com.laborguru.model.Position;
 import com.laborguru.model.Store;
+import com.laborguru.service.data.ReferenceDataService;
 import com.laborguru.service.employee.EmployeeService;
 import com.laborguru.service.position.PositionService;
 import com.opensymphony.xwork2.Preparable;
@@ -26,6 +26,8 @@ import com.opensymphony.xwork2.Preparable;
 public class EmployeePrepareAction extends SpmAction implements Preparable {
 
 	private EmployeeService employeeService;
+	private ReferenceDataService referenceDataService;
+	
 	private PositionService positionService;
 	
 	private Employee employee;
@@ -33,7 +35,8 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	
 	private List<Employee> storeEmployees;
 	private List<Position> positions;
-	private List<KeyValuePair> statusList;
+	private Map<String, String> statusMap;
+	private Map<String, String> statesMap;
 	
 	private Integer employeeId;
 	private boolean removePage;
@@ -99,7 +102,9 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	 */
 	private void loadListsForAddEditPage() {
 		this.setPositions(positionService.getPositionsByStore(getEmployeeStore()));
-		this.setStatusList(ConstantListFactory.createStatusList());
+		this.setStatusMap(getReferenceDataService().getStatus());
+		//:TODO: Add country support
+		this.setStatesMap(getReferenceDataService().getStates("us"));
 	}
 	
 	/**
@@ -265,14 +270,6 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 		this.positions = positions;
 	}
 
-	public List<KeyValuePair> getStatusList() {
-		return statusList;
-	}
-
-	public void setStatusList(List<KeyValuePair> statusList) {
-		this.statusList = statusList;
-	}
-
 	public Integer getEmployeeId() {
 		return employeeId;
 	}
@@ -303,6 +300,48 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 
 	public void setPositionService(PositionService positionService) {
 		this.positionService = positionService;
+	}
+
+	/**
+	 * @return the statusMap
+	 */
+	public Map<String, String> getStatusMap() {
+		return statusMap;
+	}
+
+	/**
+	 * @param statusMap the statusMap to set
+	 */
+	public void setStatusMap(Map<String, String> statusMap) {
+		this.statusMap = statusMap;
+	}
+
+	/**
+	 * @return the statesMap
+	 */
+	public Map<String, String> getStatesMap() {
+		return statesMap;
+	}
+
+	/**
+	 * @param statesMap the statesMap to set
+	 */
+	public void setStatesMap(Map<String, String> statesMap) {
+		this.statesMap = statesMap;
+	}
+
+	/**
+	 * @return the referenceDataService
+	 */
+	public ReferenceDataService getReferenceDataService() {
+		return referenceDataService;
+	}
+
+	/**
+	 * @param referenceDataService the referenceDataService to set
+	 */
+	public void setReferenceDataService(ReferenceDataService referenceDataService) {
+		this.referenceDataService = referenceDataService;
 	}
 
 }
