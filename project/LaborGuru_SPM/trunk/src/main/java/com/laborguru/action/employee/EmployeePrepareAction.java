@@ -52,6 +52,13 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	}
 
 	/**
+	 * Prepare data to be used to display employee data
+	 */
+	public void prepareShow() {
+		loadListsForAddEditPage();
+	}
+	
+	/**
 	 * Prepare the data to be used on the add page
 	 * Loads position and status list
 	 * @throws Exception
