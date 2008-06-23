@@ -4,13 +4,14 @@
     xsi:schemaLocation="
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
-	<bean id="referenceDataService"
-		class="com.laborguru.service.data.ReferenceDataServiceBean">
-	</bean>
-	
 	<bean id="employeeAction" class="com.laborguru.action.employee.EmployeePrepareAction" scope="prototype">
 		<property name="positionService" ref="positionService"/>
 		<property name="employeeService" ref="employeeService"/>		
+		<property name="referenceDataService" ref="referenceDataService"/>		
+	</bean>
+
+	<bean id="referenceDataService"
+		class="com.laborguru.service.data.ReferenceDataServiceBean">
 	</bean>
 
 	<bean id="positionService"
