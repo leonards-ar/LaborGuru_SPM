@@ -58,11 +58,6 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	 */
 	public void prepareAdd(){
 		loadListsForAddEditPage();
-		
-		if (this.employee == null){
-			this.employee = new Employee();
-		}
-		this.employee.setMaxDaysWeek(5);
 	}
 	
 	/**
