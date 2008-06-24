@@ -71,11 +71,18 @@
 					    <td width="33%">
 					    	<!-- Labor Allowances -->
 					    		<table id="actionsTable">
-					    			<tr class="actionsTableHeader"><td><s:text name="store.laborAllowance.title" /></td></tr>
+					    			<tr class="actionsTableHeader"><td><s:text name="store.laborallowance.title" /></td></tr>
 					    			<tr class="actionsTableValue">
 						    			<td>
 						    				<ul>
-						    					<li><a href="<s:url action="" includeParams="none">"><s:text name="store.laborAllowance.title" /></a></li>
+						    					<li><a class="actionsLink" href="<s:url href="#" includeParams="none">"><s:text name="store.laborallowance.weekdayguestservice.title" /></a></li>
+						    					<li><a class="actionsLink" href="<s:url href="#" includeParams="none">"><s:text name="store.laborallowance.weekendguestservice.title" /></a></li>
+						    					<li><a class="actionsLink" href="<s:url href="#" includeParams="none">"><s:text name="store.laborallowance.variableflexible.title" /></a></li>
+						    					<li><a class="actionsLink" href="<s:url href="#" includeParams="none">"><s:text name="store.laborallowance.variableopening.title" /></a></li>
+						    					<li><a class="actionsLink" href="<s:url href="#" includeParams="none">"><s:text name="store.laborallowance.fixedflexible.title" /></a></li>
+						    					<li><a class="actionsLink" href="<s:url href="#" includeParams="none">"><s:text name="store.laborallowance.fixedopening.title" /></a></li>
+						    					<li><a class="actionsLink" href="<s:url href="#" includeParams="none">"><s:text name="store.laborallowance.fixedpostrush.title" /></a></li>
+						    					<li><a class="actionsLink" href="<s:url href="#" includeParams="none">"><s:text name="store.laborallowance.fixedclosing.title" /></a></li>
 						    				</ul>
 						    			</td>
 					    			</tr>
@@ -84,15 +91,43 @@
 					    </td>
 					    <td width="34%">
 					    	<!-- Labor Assumptions -->
+					    		<table id="actionsTable">
+					    			<tr class="actionsTableHeader"><td><s:text name="store.laborassumptions.title" /></td></tr>
+					    			<tr class="actionsTableValue">
+						    			<td>
+						    				<ul>
+						    					<li><a class="actionsLink" href="<s:url href="#" includeParams="none">"><s:text name="store.laborassumptions.maxgsutilization.title" /></a></li>
+						    					<li><a class="actionsLink" href="<s:url href="#" includeParams="none">"><s:text name="store.laborassumptions.mingsutilization.title" /></a></li>
+						    					<li><a class="actionsLink" href="<s:url href="#" includeParams="none">"><s:text name="store.laborassumptions.nongsutilization.title" /></a></li>
+						    					<li><a class="actionsLink" href="<s:url href="#" includeParams="none">"><s:text name="store.laborassumptions.utilizationbottom.title" /></a></li>
+						    					<li><a class="actionsLink" href="<s:url href="#" includeParams="none">"><s:text name="store.laborassumptions.utilizationtop.title" /></a></li>
+						    					<li><a class="actionsLink" href="<s:url href="#" includeParams="none">"><s:text name="store.laborassumptions.minimumstaffing.title" /></a></li>
+						    					<li><a class="actionsLink" href="<s:url href="#" includeParams="none">"><s:text name="store.laborassumptions.activitysharing.title" /></a></li>
+						    				</ul>
+						    			</td>
+					    			</tr>
+					    		</table>
 					    	<!-- End Labor Assumptions -->
 					    </td>
 					    <td width="33%">
 					    	<!-- Store Operations -->
+					    		<table id="actionsTable">
+					    			<tr class="actionsTableHeader"><td><s:text name="store.storeoperations.title" /></td></tr>
+					    			<tr class="actionsTableValue">
+						    			<td>
+						    				<ul>
+						    					<li><a class="actionsLink" href="<s:url href="#" includeParams="none">"><s:text name="store.storeoperations.hoursofoperation.title" /></a></li>
+						    					<li><a class="actionsLink" href="<s:url href="#" includeParams="none">"><s:text name="store.storeoperations.daypartdefinition.title" /></a></li>
+						    					<li><a class="actionsLink" href="<s:url href="#" includeParams="none">"><s:text name="store.storeoperations.firstdayofweek.title" /></a></li>
+						    					<li><a class="actionsLink" href="<s:url href="#" includeParams="none">"><s:text name="store.storeoperations.positionnames.title" /></a></li>
+						    				</ul>
+						    			</td>
+					    			</tr>
+					    		</table>
 					    	<!-- End Store Operations -->
 					    </td>
 					  </tr>
 					</table>
-
         	  	</td>
         	  </tr>         
           </table>
