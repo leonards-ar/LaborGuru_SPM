@@ -19,7 +19,12 @@
 					<td><s:textfield name="searchStore.name" size="30" theme="simple" /></td>
 					<td><s:submit key="search.button" theme="simple" cssClass="button" /></td>
 					<td class="form_label" nowrap><s:text name="store.office.label" /></td>
-					<td><select><option>Cliente 1</option><option>Cliente 2</option></select></td>
+					<td>
+						<select>
+							<option>Client 1</option>
+							<option>Client 2</option>
+						</select>					
+					</td>
 				</tr>
 			</table>
 		</td>
@@ -52,6 +57,9 @@
 					<td
 						class="resultsTable<s:if test="#itStore.even">Even</s:if><s:else>Odd</s:else>Row"><s:property
 						value="office.name" /></td>
+					<td
+						class="resultsTable<s:if test="#itEmployee.even">Even</s:if><s:else>Odd</s:else>Row"
+						align="center">
 					<table border="0" cellpadding="1" cellspacing="0">
 						<tr>
 							<td><a href="<s:url action="store_show" includeParams="none"><s:param name="storeId" value="id"/></s:url>">
@@ -60,7 +68,7 @@
 							<td><a href="<s:url action="store_edit" includeParams="none"><s:param name="storeId" value="id" /></s:url>"> 
 								<img src="<s:url value="/images/edit.png" includeParams="none"/>"/> </a></td>
 							<td><a href="<s:url action="store_remove" includeParams="none"><s:param name="storeId" value="id" /></s:url>"> 
-								<img src="<s:url value="/images/delete.png"/>" includeParams="none"/>
+								<img src="<s:url value="/images/delete.png" includeParams="none"/>"/>
 							</a></td>
 						</tr>
 					</table>
