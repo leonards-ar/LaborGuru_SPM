@@ -56,12 +56,12 @@
 					<table border="0" cellpadding="1" cellspacing="0">
 						<tr>
 							<td><a href="<s:url action="employee_show" includeParams="none"><s:param name="employeeId" value="id"/></s:url>">
-								<img src="<s:url value="/images/view.png"/>" includeParams="none"/>
+								<img src="<s:url value="/images/view.png" includeParams="none"/>"/>
 							</a></td>
 							<td><a href="<s:url action="employee_edit" includeParams="none"><s:param name="employeeId" value="id" /></s:url>"> 
-								<img src="<s:url value="/images/edit.png"/>" includeParams="none"/> </a></td>
+								<img src="<s:url value="/images/edit.png" includeParams="none"/>"/> </a></td>
 							<td><a href="<s:url action="employee_remove" includeParams="none"><s:param name="employeeId" value="id" /></s:url>"> 
-								<img src="<s:url value="/images/delete.png"/>" includeParams="none"/>
+								<img src="<s:url value="/images/delete.png" includeParams="none"/>"/>
 							</a></td>
 						</tr>
 					</table>
