@@ -11,7 +11,8 @@ public class Store extends SpmObject {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;	
-	private String name;	
+	private String name;
+	private String code;
 	private Office office;
 
 	
@@ -89,6 +90,20 @@ public class Store extends SpmObject {
 		} else if (!office.equals(other.office))
 			return false;
 		return true;
+	}
+
+	/**
+	 * @return the code
+	 */
+	public String getCode() {
+		return code;
+	}
+
+	/**
+	 * @param code the code to set
+	 */
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	
