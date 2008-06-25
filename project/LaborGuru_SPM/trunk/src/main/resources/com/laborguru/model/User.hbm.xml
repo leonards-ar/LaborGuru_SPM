@@ -22,7 +22,7 @@
 		<property name="lastUpdateDate" column="last_update_date" type="date"/>
 	    <set name="profiles" table="tbl_users_profiles" lazy="false">
 	        <key column="user_id" foreign-key="fk_users_profiles"/>
-	        <many-to-many column="profile_id" class="Profile" foreign-key="fk_users_profiles"/>
+	        <many-to-many column="profile_id" class="Profile" foreign-key="fk_profiles_users"/>
 	    </set>
 	    
 	    <joined-subclass name="Employee" table="tbl_employees">
