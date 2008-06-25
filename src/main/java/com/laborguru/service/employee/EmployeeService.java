@@ -5,6 +5,7 @@ import java.util.List;
 import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.Employee;
 import com.laborguru.model.Store;
+import com.laborguru.model.filter.SearchEmployeeFilter;
 import com.laborguru.service.Service;
 
 /**
@@ -45,4 +46,10 @@ public interface EmployeeService extends Service {
 	 */
 	List<Employee> getEmployeesByStore(Store store);
 	
+	/**
+	 * Retrieves a list of employees filtered by the SearchEmployeeFilter
+	 * @param searchEmployee The filter for the employee search
+	 * @return The employee list
+	 */
+	List<Employee> filterEmployee(SearchEmployeeFilter searchEmployee);
 }
