@@ -8,6 +8,9 @@ import com.laborguru.action.SpmActionResult;
 @SuppressWarnings("serial")
 public class LogoutAction extends SpmAction {
 
+	/**
+	 * 
+	 */
 	public String execute() {
 		((SessionMap)super.getSession()).invalidate();
 		return SpmActionResult.LOGOUT.getResult();
