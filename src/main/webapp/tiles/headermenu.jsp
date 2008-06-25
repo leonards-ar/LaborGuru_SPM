@@ -63,7 +63,7 @@
 					</tr>
 				</table>
 				</td>
-				<td width="20%" align="right"><a class="link" href="<s:url action="/login/logout" includeParams="none"/>"><s:text name="logout.label"/></a></td>
+				<td width="20%" align="right"><a class="link" href="<s:url namespace="/login" action="logout"  includeParams="none"/>"><s:text name="logout.label"/></a></td>
 			</tr>
 		</table>
 		</td>
