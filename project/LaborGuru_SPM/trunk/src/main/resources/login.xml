@@ -8,6 +8,10 @@
     	
 		<action name="login">
 			<result type="tiles">loginPage</result>
-		</action>		
+		</action>
+			
+		<action name="logout" class="com.laborguru.action.login.LogoutAction">
+			<result name="logout" type="redirect">/index.jsp</result>			
+		</action>	
 	</package>
 </struts>
