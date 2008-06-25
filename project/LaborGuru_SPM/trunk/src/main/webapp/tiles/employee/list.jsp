@@ -32,6 +32,10 @@
 	<tr>
 		<td align="center">
 		<!-- Search Results -->
+		<s:if test="storeEmployeesSize < 1">
+			<s:text name="employee.list.empty" />
+		</s:if>
+		<s:else>		
 		<table border="0" cellspacing="1" width="100%" align="center" cellpadding="2" id="resultsTable">
 			<tr>
 				<th class="resultsTableHeader"><s:text name="employee.fullname.label" /></th>
@@ -69,6 +73,7 @@
 				</tr>
 			</s:iterator>
 		</table>	
+		</s:else>
 		<!-- Search Results -->
 		</td>
 	</tr>

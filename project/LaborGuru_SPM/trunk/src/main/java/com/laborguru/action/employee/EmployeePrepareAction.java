@@ -131,7 +131,7 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 		
 		
 		this.setStoreEmployees(this.employeeService.filterEmployee(this.searchEmployee));
-				
+		
 		return SpmActionResult.LIST.getResult();
 	}
 	
@@ -349,5 +349,12 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	 */
 	public void setReferenceDataService(ReferenceDataService referenceDataService) {
 		this.referenceDataService = referenceDataService;
+	}
+
+	/**
+	 * @return the storeEmployeesSize
+	 */
+	public int getStoreEmployeesSize() {
+		return getStoreEmployees()!=null? getStoreEmployees().size():0;
 	}
 }
