@@ -77,7 +77,9 @@
 				PATTERN_TYPE_APACHE_ANT
 				/home/home.action=ROLE_USER
 				**/logout.action=ROLE_ANONYMOUS,ROLE_USER
-				**/login.action=ROLE_ANONYMOUS
+				**/login.action=ROLE_ANONYMOUS,ROLE_USER
+				/employee/employee_list.action=VIEW_EMPLOYEE,EDIT_EMPLOYEE
+				/employee/employee_add.action=CREATE_EMPLOYEE
 				/**=IS_AUTHENTICATED_ANONYMOUSLY
 			]]></value>
 		</property>
