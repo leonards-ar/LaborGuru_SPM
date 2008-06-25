@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.laborguru.model.Employee;
 import com.laborguru.model.Store;
+import com.laborguru.model.filter.SearchEmployeeFilter;
 
 public interface EmployeeDao {
 
@@ -33,5 +34,14 @@ public interface EmployeeDao {
 	 * @return List<Employee> the list of employee
 	 */
 	List<Employee> getEmployeesByStore(Store store);
+
+	/**
+	 * Retrieves a list of employees based on the filter passed in as parameter.
+	 * If there is no employees that match the criteria return an empty list.
+	 * 
+	 * @param searchEmployee The filter
+	 * @return The employee list
+	 */
+	List<Employee> applyFilter(SearchEmployeeFilter searchEmployee);
 	
 }

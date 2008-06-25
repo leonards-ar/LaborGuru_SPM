@@ -10,6 +10,7 @@ import com.laborguru.frontend.HttpRequestConstants;
 import com.laborguru.model.Employee;
 import com.laborguru.model.Position;
 import com.laborguru.model.Store;
+import com.laborguru.model.filter.SearchEmployeeFilter;
 import com.laborguru.service.data.ReferenceDataService;
 import com.laborguru.service.employee.EmployeeService;
 import com.laborguru.service.position.PositionService;
@@ -31,7 +32,7 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	private PositionService positionService;
 	
 	private Employee employee;
-	private Employee searchEmployee;
+	private SearchEmployeeFilter searchEmployee;
 	
 	private List<Employee> storeEmployees;
 	private List<Position> positions;
@@ -125,7 +126,11 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	 */
 	public String search() throws Exception {
 		
-		this.setStoreEmployees(this.employeeService.getEmployeesByStore(getEmployeeStore()));
+		//Setting the store on the filter
+		this.searchEmployee.setStore(getEmployeeStore());
+		
+		
+		this.setStoreEmployees(this.employeeService.filterEmployee(this.searchEmployee));
 				
 		return SpmActionResult.LIST.getResult();
 	}
@@ -288,11 +293,11 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 		this.removePage = removePage;
 	}
 
-	public Employee getSearchEmployee() {
+	public SearchEmployeeFilter getSearchEmployee() {
 		return searchEmployee;
 	}
 
-	public void setSearchEmployee(Employee searchEmployee) {
+	public void setSearchEmployee(SearchEmployeeFilter searchEmployee) {
 		this.searchEmployee = searchEmployee;
 	}
 
@@ -345,5 +350,4 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	public void setReferenceDataService(ReferenceDataService referenceDataService) {
 		this.referenceDataService = referenceDataService;
 	}
-
 }

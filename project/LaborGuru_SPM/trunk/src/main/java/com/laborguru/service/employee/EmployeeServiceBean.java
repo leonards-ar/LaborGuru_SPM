@@ -8,6 +8,7 @@ import com.laborguru.logger.DefaultSpmLogger;
 import com.laborguru.model.Employee;
 import com.laborguru.model.Store;
 import com.laborguru.model.User;
+import com.laborguru.model.filter.SearchEmployeeFilter;
 import com.laborguru.service.employee.dao.EmployeeDao;
 import com.laborguru.service.user.dao.UserDao;
 
@@ -139,4 +140,22 @@ public class EmployeeServiceBean implements EmployeeService {
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
+
+	/**
+	 * Retrieves a list of employees filtered by the SearchEmployeeFilter
+	 * @param searchEmployee The filter for the employee search
+	 * @return The employee list
+	 * @see com.laborguru.service.employee.EmployeeService#filterEmployee(com.laborguru.model.filter.SearchEmployeeFilter)
+	 */
+	public List<Employee> filterEmployee(SearchEmployeeFilter searchEmployee) {
+		
+		if(searchEmployee == null) {
+			spmLog.errorLog("The filter passed as parameter is null");
+			throw new IllegalArgumentException("The filter passed as parameter is null");
+		}
+		
+		
+		List<Employee> employees = employeeDao.applyFilter(searchEmployee);
+
+		return employees;	}
 }
