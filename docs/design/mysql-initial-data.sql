@@ -45,7 +45,6 @@ insert into tbl_profiles_permissions (permission_id, profile_id) values (3, 1);
 
 -- Menu Items
 insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permission_id, position, target) values (1, 'home.menu.label', 'HOME_MENU_HELP', null, 1, 0, '/home/home.action');
-insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permission_id, position, target) values (5, 'loguot.menu.label', 'LOGOUT_MENU_HELP', null, 1, 0, '/login/logout.action');
 
 insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permission_id, position, target) values (2, 'employee.menu.label', 'EMPLOYEE_MENU_HELP', null, 2, 0, '/employee/employee_list.action');
 insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permission_id, position, target) values (3, 'employee.submenu.list', 'EMPLOYEE_LIST_HELP', 2, 3, 1, '/employee/employee_list.action');
