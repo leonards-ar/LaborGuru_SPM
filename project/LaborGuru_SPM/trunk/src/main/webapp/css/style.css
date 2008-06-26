@@ -23,6 +23,7 @@
 		font-weight: bold;
 		text-decoration: none;
 	}
+	
 	a.link:hover {
 		text-decoration: underline;
 	}
@@ -176,6 +177,7 @@
 	font-size:11px;
 	font-family:tahoma, arial, sans-serif;
 	}
+	
 	.infoEmptyList {
 	font-style:italic;
 	font-size:12px;
@@ -184,6 +186,21 @@
 	color: #184E01;	
 	}
 	
+	.errorSecurityTitle {
+	font-size:15px;
+	font-weight: bold;
+	font-style: italic;
+	font-family:tahoma, arial, sans-serif;
+	color:red;	
+	}
+
+	.errorSecurityMessage {
+	font-size:11px;
+	font-family:tahoma, arial, sans-serif;
+	color:red;	
+	}
+
+
 	.errorMessage {
 	font-size:11px;
 	font-family:tahoma, arial, sans-serif;
