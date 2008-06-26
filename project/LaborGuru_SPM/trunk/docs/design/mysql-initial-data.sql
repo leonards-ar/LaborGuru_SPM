@@ -54,6 +54,8 @@ insert into tbl_profiles_permissions (permission_id, profile_id) values (5, 1);
 insert into tbl_profiles_permissions (permission_id, profile_id) values (6, 1);
 insert into tbl_profiles_permissions (permission_id, profile_id) values (7, 1);
 
+insert into tbl_profiles_permissions (permission_id, profile_id) values (1, 2);
+
 -- Menu Items
 insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permission_id, position, target) values (1, 'home.menu.label', 'HOME_MENU_HELP', null, 1, 0, '/home/home.action');
 
