@@ -16,6 +16,7 @@
 		<property name="maxDaysWeek" value="5"/>
 		<property name="maxHoursDay" value="8"/>
 		<property name="wage" value="7.0"/>
+		<property name="status" value="0"/>
 		<property name="hireDate" ref="dateTemplateToday"/>
 	</bean>
 			
@@ -23,6 +24,7 @@
 
 	<bean id="referenceDataService"
 		class="com.laborguru.service.data.ReferenceDataServiceBean">
+		<property name="referenceData" ref="referenceData"/>
 	</bean>
 
 	<bean id="positionService"

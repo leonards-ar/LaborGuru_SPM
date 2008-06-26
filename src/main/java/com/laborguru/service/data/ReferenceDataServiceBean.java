@@ -5,10 +5,8 @@
  */
 package com.laborguru.service.data;
 
+import java.util.List;
 import java.util.Map;
-
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.context.access.ContextSingletonBeanFactoryLocator;
 
 /**
  *
@@ -18,8 +16,8 @@ import org.springframework.context.access.ContextSingletonBeanFactoryLocator;
  *
  */
 public class ReferenceDataServiceBean implements ReferenceDataService {
-	private final BeanFactory beanFactory = ContextSingletonBeanFactoryLocator.getInstance().useBeanFactory("reference-data").getFactory();
-
+	private Map<String, Object> referenceData;
+	
 	/**
 	 * 
 	 */
@@ -31,8 +29,8 @@ public class ReferenceDataServiceBean implements ReferenceDataService {
 	 * @return
 	 * @see com.laborguru.service.data.ReferenceDataService#getStates(java.lang.String)
 	 */
-	public Map<String, String> getStates(String country) {
-		return (Map<String, String>) beanFactory.getBean("states-" + country.toLowerCase());
+	public List<String> getStates(String country) {
+		return (List<String>) getReferenceData().get("states-" + country.toLowerCase());
 	}
 
 	/**
@@ -40,7 +38,21 @@ public class ReferenceDataServiceBean implements ReferenceDataService {
 	 * @see com.laborguru.service.data.ReferenceDataService#getStatus()
 	 */
 	public Map<String, String> getStatus() {
-		return (Map<String, String>) beanFactory.getBean("status");
+		return (Map<String, String>) getReferenceData().get("status");
+	}
+
+	/**
+	 * @return the referenceData
+	 */
+	public Map<String, Object> getReferenceData() {
+		return referenceData;
+	}
+
+	/**
+	 * @param referenceData the referenceData to set
+	 */
+	public void setReferenceData(Map<String, Object> referenceData) {
+		this.referenceData = referenceData;
 	}
 
 }
