@@ -3,6 +3,7 @@
  */
 package com.laborguru.service.menu;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +68,8 @@ public class MenuServiceBean implements MenuService {
 	 */
 	private void removeNotAllowedMenuItems(List<MenuItem> menuItems, Set<Profile> userProfiles) {
 		if(menuItems != null) {
+			List<MenuItem> itemsToRemove = new ArrayList<MenuItem>();
+			
 			for(MenuItem item : menuItems) {
 				boolean hasPermission = false;
 				for(Profile profile : userProfiles) {
@@ -76,10 +79,11 @@ public class MenuServiceBean implements MenuService {
 					}
 				}
 				if(!hasPermission) {
-					menuItems.remove(item);
+					itemsToRemove.add(item);
 				}
 				removeNotAllowedMenuItems(item.getOrderedChildMenuItems(), userProfiles);
 			}
+			menuItems.removeAll(itemsToRemove);
 		}
 	}
 }
