@@ -38,10 +38,17 @@ insert into tbl_permissions (permission_id, name, description) values (2, 'VIEW_
 insert into tbl_permissions (permission_id, name, description) values (3, 'EDIT_EMPLOYEE', 'Edit existing employees of the own store');
 insert into tbl_permissions (permission_id, name, description) values (4, 'CREATE_EMPLOYEE', 'Create new employees in the own store');
 
-insert into tbl_profiles_permissions (permission_id, profile_id) values (4, 1);
+insert into tbl_permissions (permission_id, name, description) values (5, 'VIEW_STORE', 'View and query stores');
+insert into tbl_permissions (permission_id, name, description) values (6, 'EDIT_STORE', 'Edit existing stores');
+insert into tbl_permissions (permission_id, name, description) values (7, 'CREATE_STORE', 'Create new stores');
+
 insert into tbl_profiles_permissions (permission_id, profile_id) values (1, 1);
 insert into tbl_profiles_permissions (permission_id, profile_id) values (2, 1);
 insert into tbl_profiles_permissions (permission_id, profile_id) values (3, 1);
+insert into tbl_profiles_permissions (permission_id, profile_id) values (4, 1);
+insert into tbl_profiles_permissions (permission_id, profile_id) values (5, 1);
+insert into tbl_profiles_permissions (permission_id, profile_id) values (6, 1);
+insert into tbl_profiles_permissions (permission_id, profile_id) values (7, 1);
 
 -- Menu Items
 insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permission_id, position, target) values (1, 'home.menu.label', 'HOME_MENU_HELP', null, 1, 0, '/home/home.action');
@@ -49,6 +56,10 @@ insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permis
 insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permission_id, position, target) values (2, 'employee.menu.label', 'EMPLOYEE_MENU_HELP', null, 2, 0, '/employee/employee_list.action');
 insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permission_id, position, target) values (3, 'employee.submenu.list', 'EMPLOYEE_LIST_HELP', 2, 3, 1, '/employee/employee_list.action');
 insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permission_id, position, target) values (4, 'employee.submenu.create', 'EMPLOYEE_ADD_HELP', 2, 4, 0, '/employee/employee_add.action');
+
+insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permission_id, position, target) values (5, 'store.menu.label', 'STORE_MENU_HELP', null, 5, 0, '/store/store_list.action');
+insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permission_id, position, target) values (6, 'store.submenu.list', 'STORE_LIST_HELP', 5, 6, 1, '/store/store_list.action');
+insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permission_id, position, target) values (7, 'store.submenu.create', 'STORE_ADD_HELP', 5, 7, 0, '/store/store_add.action');
 
 -- Store
 insert into tbl_stores (store_id, name, office_id) values (1,'microcentro', 1);
