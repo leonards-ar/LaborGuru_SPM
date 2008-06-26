@@ -26,7 +26,8 @@
 		<default-interceptor-ref name="spmStack" />
 	</package>
 
-	<include file="login.xml" />
-	<include file="home.xml" />
+	<include file="action/login.xml" />
+	<include file="action/home.xml" />
 	<include file="action/employee.xml" />
+	<include file="action/store.xml" />
 </struts>
