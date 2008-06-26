@@ -1,12 +1,9 @@
 package com.laborguru.action;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.interceptor.SessionAware;
 
-import com.laborguru.action.utils.KeyValuePair;
 import com.laborguru.exception.ErrorMessage;
 import com.laborguru.frontend.HttpRequestConstants;
 import com.laborguru.model.Employee;
