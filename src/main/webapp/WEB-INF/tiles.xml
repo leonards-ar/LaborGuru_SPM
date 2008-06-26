@@ -13,12 +13,17 @@
 		<put-attribute name="header" value="/tiles/headermenu.jsp" />
 	</definition>
 
+	<!--  Login and Security -->
 	<definition name="loginPage" extends="baseLayout">
 		<put-attribute name="body" value="/tiles/login/login.jsp" />
 	</definition>
 
 	<definition name="homePage" extends="baseLayoutWithMenu">
 		<put-attribute name="body" value="/tiles/home/home.jsp" />
+	</definition>
+	
+	<definition name="accessdeniedPage" extends="baseLayout">
+		<put-attribute name="body" value="/tiles/login/accessdenied.jsp" />
 	</definition>
 	
 	<!-- Employee tiles definition -->

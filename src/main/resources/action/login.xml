@@ -13,5 +13,9 @@
 		<action name="logout" class="com.laborguru.action.login.LogoutAction">
 			<result name="logout" type="redirect">/index.jsp</result>			
 		</action>	
+		
+		<action name="accessdenied">
+			<result type="tiles">accessdeniedPage</result>
+		</action>		
 	</package>
 </struts>

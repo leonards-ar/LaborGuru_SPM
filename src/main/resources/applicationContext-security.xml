@@ -53,7 +53,7 @@
 		</property>
 		<property name="accessDeniedHandler">
 			<bean class="org.acegisecurity.ui.AccessDeniedHandlerImpl">
-				<property name="errorPage" value="/accessDenied.jsp"/>
+				<property name="errorPage" value="/login/accessdenied.action"/>
 			</bean>
 		</property>
 	</bean>
@@ -81,7 +81,7 @@
 				**/logout.action=ROLE_ANONYMOUS,ROLE_USER, ROLE_FAKE
 				**/login.action=ROLE_ANONYMOUS,ROLE_USER, ROLE_FAKE
 				/employee/employee_list.action=VIEW_EMPLOYEE,EDIT_EMPLOYEE
-				/employee/employee_add.action=CREATE_EMPLOYEE
+				/employee/employee_add.action=CREATE_EMPLOYEE				
 				/**=IS_AUTHENTICATED_ANONYMOUSLY
 			]]></value>
 		</property>
