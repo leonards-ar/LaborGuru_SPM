@@ -33,4 +33,18 @@
 	<definition name="showEmployeePage" extends="baseLayoutWithMenu">
 		<put-attribute name="body" value="/tiles/employee/view.jsp" />
 	</definition>	
+	
+	<!--  Store tiles definition -->
+	<definition name="listStoresPage" extends="baseLayoutWithMenu">
+		<put-attribute name="body" value="/tiles/store/list.jsp" />
+	</definition>
+		
+	<definition name="editStorePage" extends="baseLayoutWithMenu">
+		<put-attribute name="body" value="/tiles/store/edit.jsp" />
+	</definition>
+
+	<definition name="showStorePage" extends="baseLayoutWithMenu">
+		<put-attribute name="body" value="/tiles/store/view.jsp" />
+	</definition>	
+	
 </tiles-definitions>
