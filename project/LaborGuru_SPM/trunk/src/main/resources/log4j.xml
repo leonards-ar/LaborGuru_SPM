@@ -6,7 +6,7 @@
 
 	<appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
 		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="[%C{2} - %d{ISO8601}] - %m%n" />
+			<param name="ConversionPattern" value="[%d{ISO8601}] %C{1} - %m%n" />
 		</layout>
 	</appender>
 
@@ -30,7 +30,7 @@
 		<param name="maxFileSize" value="500MB" />
 		<param name="maxBackupIndex" value="5" />
 		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="[%C{2} - %d{ISO8601}] - %m%n" />
+			<param name="ConversionPattern" value="[%d{ISO8601}] %C{1} - %m%n" />
 		</layout>
 	</appender>
 
@@ -42,7 +42,7 @@
 		<param name="maxBackupIndex" value="5" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern"
-				value="[%C{2} - %d{ISO8601}] - %m%n" />
+				value="[%d{ISO8601}] %C{1} - %m%n" />
 		</layout>
 	</appender>
 
