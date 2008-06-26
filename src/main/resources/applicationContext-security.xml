@@ -65,7 +65,9 @@
 				<property name="allowIfAllAbstainDecisions" value="false"/>
 				<property name="decisionVoters">
 					<list>
-						<bean class="org.acegisecurity.vote.RoleVoter"/>
+						<bean class="org.acegisecurity.vote.RoleVoter">
+							<property name="rolePrefix" value=""/>
+						</bean>
 						<bean class="org.acegisecurity.vote.AuthenticatedVoter"/>
 					</list>
 				</property>
@@ -75,9 +77,9 @@
 			<value><![CDATA[
 				CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
 				PATTERN_TYPE_APACHE_ANT
-				/home/home.action=ROLE_USER
-				**/logout.action=ROLE_ANONYMOUS,ROLE_USER
-				**/login.action=ROLE_ANONYMOUS,ROLE_USER
+				/home/home.action=ROLE_USER, ROLE_FAKE
+				**/logout.action=ROLE_ANONYMOUS,ROLE_USER, ROLE_FAKE
+				**/login.action=ROLE_ANONYMOUS,ROLE_USER, ROLE_FAKE
 				/employee/employee_list.action=VIEW_EMPLOYEE,EDIT_EMPLOYEE
 				/employee/employee_add.action=CREATE_EMPLOYEE
 				/**=IS_AUTHENTICATED_ANONYMOUSLY
