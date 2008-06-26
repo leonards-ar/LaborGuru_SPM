@@ -17,6 +17,7 @@ delete from tbl_offices;
 
 -- Profiles
 insert into tbl_profiles (profile_id, name, description) values (1, 'ROLE_USER', 'Profile Desc');
+insert into tbl_profiles (profile_id, name, description) values (2, 'ROLE_FAKE', 'Profile Desc');
 
 -- Office
 insert into tbl_offices (office_id, name, type, parent_office_id) values (1,'Mac Donalds', 'A', null);
@@ -26,11 +27,14 @@ insert into tbl_users (creation_date, email, user_id, last_update_date, login_co
 insert into tbl_users (creation_date, email, user_id, last_update_date, login_count, name, password, status, surname, username) values (now(), 'cnunezre@gmail.com', 2, null, 0, 'Cristian', '1234', 0, 'Nuñez Rebolledo', 'cnunezre');
 insert into tbl_users (creation_date, email, user_id, last_update_date, login_count, name, password, status, surname, username) values (now(), 'fbarrera@gmail.com', 3, null, 0, 'Federico', '1234', 0, 'Barrera Oro', 'fbarrera');
 insert into tbl_users (creation_date, email, user_id, last_update_date, login_count, name, password, status, surname, username) values (now(), 'ignacio@laborguru.com', 4, null, 0, 'Ignacio', '1234', 0, 'Goris', 'igoris');
+insert into tbl_users (creation_date, email, user_id, last_update_date, login_count, name, password, status, surname, username) values (now(), 'fake@fake.com', 5, null, 0, 'Fake', '1234', 0, 'User', 'fake');
 
 insert into tbl_users_profiles (profile_id, user_id) values (1, 1);
 insert into tbl_users_profiles (profile_id, user_id) values (1, 2);
 insert into tbl_users_profiles (profile_id, user_id) values (1, 3);
 insert into tbl_users_profiles (profile_id, user_id) values (1, 4);
+
+insert into tbl_users_profiles (profile_id, user_id) values (2, 5);
 
 -- Permissions
 insert into tbl_permissions (permission_id, name, description) values (1, 'FREE_ACCESS', 'Dummy permission that all profiles should have');
