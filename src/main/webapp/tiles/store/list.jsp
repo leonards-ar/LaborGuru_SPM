@@ -17,7 +17,6 @@
 					<td><s:textfield name="searchStore.code" size="10" theme="simple" /></td>
 					<td class="form_label" nowrap><s:text name="store.name.label" /></td>
 					<td><s:textfield name="searchStore.name" size="30" theme="simple" /></td>
-					<td><s:submit key="search.button" theme="simple" cssClass="button" /></td>
 					<td class="form_label" nowrap><s:text name="store.office.label" /></td>
 					<td>
 						<select>
@@ -25,10 +24,12 @@
 							<option>Client 2</option>
 						</select>					
 					</td>
+					<td><s:submit key="search.button" theme="simple" cssClass="button" /></td>
 				</tr>
 			</table>
 		</td>
-		</s:form> <!-- End Search Form -->
+		</s:form>
+		<!-- End Search Form -->
 	</tr>
 
 	<!-- Search and results separator -->
