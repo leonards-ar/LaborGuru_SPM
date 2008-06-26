@@ -31,7 +31,7 @@
 		<td align="center">
 		<!-- Search Results -->
 		<s:if test="storeEmployeesSize < 1">
-			<s:text name="employee.list.empty" />
+			<span class="infoEmptyList"><s:text name="employee.list.empty" /></span>
 		</s:if>
 		<s:else>		
 		<table border="0" cellspacing="1" width="100%" align="center" cellpadding="2" id="resultsTable">
