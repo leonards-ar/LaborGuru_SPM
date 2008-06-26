@@ -95,7 +95,7 @@
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.state.label" /></td>
               	<td width="35%" align="left">
 					<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0"><tr>
-                    <td align="left" class="value"><s:property value="statesMap[employee.state]" default="%{employee.state}"/></td>
+                    <td align="left" class="value"><s:property value="employee.state"/></td>
                     <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>" /></td>
                     <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
                     <td align="right" class="form_label" nowrap><s:text name="employee.zip.label" /></td>

@@ -107,7 +107,7 @@
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.state.label" /></td>
               	<td width="35%" align="left">
 					<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0"><tr>
-                    <td align="left" class="value"><s:select name="employee.state" list="statesMap" listKey="key" listValue="value" theme="simple"/></td>
+                    <td align="left" class="value"><s:select name="employee.state" list="statesList" theme="simple"/></td>
                     <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
                     <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
                     <td align="right" class="form_label" nowrap><s:text name="employee.zip.label" /></td>
@@ -128,9 +128,9 @@
                     <td width="100%" align="right" colspan="4">
 	                    <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
 		                    <tr>
-		                    	<td><s:submit id="cancelButton" key="cancel.button" action="employee_list" theme="simple" cssClass="button"/></td>		                    
-		                    	<td><s:reset id="resetButton" key="reset.button" theme="simple" cssClass="button"/></td>
 		                		<td><s:submit id="saveButton" key="save.button" theme="simple" cssClass="button"/></td>
+		                    	<td><s:reset id="resetButton" key="reset.button" theme="simple" cssClass="button"/></td>
+		                    	<td><s:submit id="cancelButton" key="cancel.button" action="employee_list" theme="simple" cssClass="button"/></td>		                    
 		                    </tr>
 	                    </table>                    
                     </td>

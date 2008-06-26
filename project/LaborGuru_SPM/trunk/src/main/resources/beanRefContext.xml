@@ -8,17 +8,8 @@
 		<constructor-arg>
 			<list>
 				<value>/applicationContext.xml</value>
-			</list>
-		</constructor-arg>
-	</bean>
-
-	<bean id="reference-data"
-		class="org.springframework.context.support.ClassPathXmlApplicationContext">
-		<constructor-arg>
-			<list>
 				<value>/com/laborguru/data/applicationContext-data.xml</value>
 			</list>
 		</constructor-arg>
 	</bean>
-
 </beans>

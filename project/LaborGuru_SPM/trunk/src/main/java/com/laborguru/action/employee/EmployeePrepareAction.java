@@ -37,7 +37,7 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	private List<Employee> storeEmployees;
 	private List<Position> positions;
 	private Map<String, String> statusMap;
-	private Map<String, String> statesMap;
+	private List<String> statesList;
 	
 	private Integer employeeId;
 	private boolean removePage;
@@ -56,6 +56,14 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	 * Prepare data to be used to display employee data
 	 */
 	public void prepareShow() {
+		loadListsForAddEditPage();
+	}
+	
+	/**
+	 * Prepare data to be used to display employee data
+	 * before removal.
+	 */
+	public void prepareRemove() {
 		loadListsForAddEditPage();
 	}
 	
@@ -107,7 +115,7 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 		this.setPositions(positionService.getPositionsByStore(getEmployeeStore()));
 		this.setStatusMap(getReferenceDataService().getStatus());
 		//:TODO: Add country support
-		this.setStatesMap(getReferenceDataService().getStates("us"));
+		this.setStatesList(getReferenceDataService().getStates("us"));
 	}
 	
 	/**
@@ -324,20 +332,6 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	}
 
 	/**
-	 * @return the statesMap
-	 */
-	public Map<String, String> getStatesMap() {
-		return statesMap;
-	}
-
-	/**
-	 * @param statesMap the statesMap to set
-	 */
-	public void setStatesMap(Map<String, String> statesMap) {
-		this.statesMap = statesMap;
-	}
-
-	/**
 	 * @return the referenceDataService
 	 */
 	public ReferenceDataService getReferenceDataService() {
@@ -356,5 +350,19 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	 */
 	public int getStoreEmployeesSize() {
 		return getStoreEmployees()!=null? getStoreEmployees().size():0;
+	}
+
+	/**
+	 * @return the statesList
+	 */
+	public List<String> getStatesList() {
+		return statesList;
+	}
+
+	/**
+	 * @param statesList the statesList to set
+	 */
+	public void setStatesList(List<String> statesList) {
+		this.statesList = statesList;
 	}
 }

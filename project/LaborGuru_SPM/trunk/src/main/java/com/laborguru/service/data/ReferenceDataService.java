@@ -5,6 +5,7 @@
  */
 package com.laborguru.service.data;
 
+import java.util.List;
 import java.util.Map;
 
 import com.laborguru.service.Service;
@@ -26,7 +27,7 @@ public interface ReferenceDataService extends Service {
 	 * @param country Country ISO code (AR, US, CL, etc.)
 	 * @return States map.
 	 */
-	Map<String, String> getStates(String country);
+	List<String> getStates(String country);
 	
 	/**
 	 * Retrieves the different status codes. The map key is the
