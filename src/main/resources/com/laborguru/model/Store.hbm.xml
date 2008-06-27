@@ -9,7 +9,7 @@
 			<generator class="identity" />
 		</id>
 		<property name="name" column="name" type="string" length="150" />
-		<many-to-one name="office" class="Office" lazy="false" foreign-key="fk_stores_offices">
+		<many-to-one name="office" class="Office" foreign-key="fk_stores_offices">
 			<column name="office_id"/>
 		</many-to-one>
 	</class>

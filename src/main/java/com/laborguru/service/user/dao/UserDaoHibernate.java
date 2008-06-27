@@ -54,4 +54,13 @@ public class UserDaoHibernate extends HibernateDaoSupport implements UserDao {
 				
 		return result.size() != 0;
 	}
+
+	/**
+	 * Evicts the persistence instance passed in as parameter.
+	 * @param auxUser
+	 * @see com.laborguru.service.user.dao.UserDao#evict(com.laborguru.model.User)
+	 */
+	public void evict(User auxUser) {
+		getHibernateTemplate().evict(auxUser);
+	}
 }

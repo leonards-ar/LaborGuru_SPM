@@ -20,7 +20,7 @@
 		<property name="loginCount" column="login_count" type="int"/>
 		<property name="creationDate" column="creation_date" type="date"/>
 		<property name="lastUpdateDate" column="last_update_date" type="date"/>
-	    <set name="profiles" table="tbl_users_profiles" lazy="false">
+	    <set name="profiles" table="tbl_users_profiles" lazy="true">
 	        <key column="user_id" foreign-key="fk_users_profiles"/>
 	        <many-to-many column="profile_id" class="Profile" foreign-key="fk_profiles_users"/>
 	    </set>
@@ -28,10 +28,10 @@
 	    <joined-subclass name="Employee" table="tbl_employees">
 	    	<key column="user_id" foreign-key="fk_users_employees"/>
 	    	
-	    	<many-to-one name="store" class="Store" lazy="false" foreign-key="fk_employees_stores">
+	    	<many-to-one name="store" class="Store" foreign-key="fk_employees_stores">
 				<column name="store_id"/>
 			</many-to-one>
-  			<many-to-one name="defaultPosition" class="Position" lazy="false" foreign-key="fk_employees_positions">
+  			<many-to-one name="defaultPosition" class="Position" foreign-key="fk_employees_positions">
 				<column name="default_position" not-null="false"/>
 			</many-to-one>
 	    	<property name="manager" column="manager" type="boolean"/>

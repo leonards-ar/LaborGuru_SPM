@@ -34,4 +34,11 @@ public interface UserDao {
 	 */
 	Boolean existUser(String userName);
 	
+	
+	/**
+	 * Deattaches a persistence instance of User from the hibernate session  
+	 * @param auxUser
+	 */
+	void evict(User auxUser);
+	
 }
