@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-
+<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
 <br />
 <br />
 <table border="0" cellspacing="0" align="center">
@@ -29,49 +29,22 @@
 
 	<tr>
 		<td align="center">
-		<!-- Search Results -->
-		<s:if test="storeEmployeesSize < 1">
-			<span class="infoEmptyList"><s:text name="employee.list.empty" /></span>
-		</s:if>
-		<s:else>		
-		<table border="0" cellspacing="1" width="100%" align="center" cellpadding="2" id="resultsTable">
-			<tr>
-				<th class="resultsTableHeader"><s:text name="employee.fullname.label" /></th>
-				<th class="resultsTableHeader"><s:text name="employee.email.label" /></th>
-				<th class="resultsTableHeader"><s:text name="employee.phone.label" /></th>
-				<th class="resultsTableHeader">&nbsp;</th>
-			</tr>
-			<s:iterator value="storeEmployees" status="itEmployee">		
-				<tr>
-					<td
-						class="resultsTable<s:if test="#itEmployee.even">Even</s:if><s:else>Odd</s:else>Row"><s:property
-						value="fullName" /></td>
-					<td
-						class="resultsTable<s:if test="#itEmployee.even">Even</s:if><s:else>Odd</s:else>Row"><a
-						href="mailto:<s:property value="email" />" class="resultsTableLink"><s:property value="email" /></a></td>
-					<td
-						class="resultsTable<s:if test="#itEmployee.even">Even</s:if><s:else>Odd</s:else>Row"><s:property
-						value="phone" /></td>
-					<td
-						class="resultsTable<s:if test="#itEmployee.even">Even</s:if><s:else>Odd</s:else>Row"
-						align="center">
-					<table border="0" cellpadding="1" cellspacing="0">
-						<tr>
-							<td><a href="<s:url action="employee_show" includeParams="none"><s:param name="employeeId" value="id"/></s:url>">
-								<img src="<s:url value="/images/view.png" includeParams="none"/>"/>
-							</a></td>
-							<td><a href="<s:url action="employee_edit" includeParams="none"><s:param name="employeeId" value="id" /></s:url>"> 
-								<img src="<s:url value="/images/edit.png" includeParams="none"/>"/> </a></td>
-							<td><a href="<s:url action="employee_remove" includeParams="none"><s:param name="employeeId" value="id" /></s:url>"> 
-								<img src="<s:url value="/images/delete.png" includeParams="none"/>"/>
-							</a></td>
-						</tr>
-					</table>
-					</td>
-				</tr>
-			</s:iterator>
-		</table>	
-		</s:else>
+		<!-- Search Results -->	
+ 		<s:set name="employeesList" value="storeEmployees" scope="request"/>
+		<display:table name="employeesList" class="results" pagesize="5" requestURI="employee_list.action" sort="list" defaultsort="1">		    
+		    <display:column property="fullName" titleKey="employee.fullname.label" sortable="true" />
+		    <display:column property="email" titleKey="employee.email.label" />
+		    <display:column property="phone" titleKey="employee.phone.label" />
+		    <display:column href="employee_show.action" paramId="employeeId" paramProperty="id" class="resultsColumnCentered">
+		    	<img src="<s:url value="/images/view.png" includeParams="none"/>"/>
+		    </display:column>
+		    <display:column href="employee_edit.action" paramId="employeeId" paramProperty="id" class="resultsColumnCentered">
+		    	<img src="<s:url value="/images/edit.png" includeParams="none"/>"/>
+		    </display:column>		    
+		    <display:column href="employee_remove.action" paramId="employeeId" paramProperty="id" class="resultsColumnCentered"> 
+		    	<img src="<s:url value="/images/delete.png" includeParams="none"/>"/>
+		    </display:column>
+		</display:table>			
 		<!-- Search Results -->
 		</td>
 	</tr>
