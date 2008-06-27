@@ -110,7 +110,10 @@ public class EmployeeServiceBean implements EmployeeService {
 			
 		}
 		
-		return   employeeDao.save(employee);
+		//Evicting the user
+		userDao.evict(auxUser);
+		
+		return employeeDao.save(employee);
 	}
 
 	/**

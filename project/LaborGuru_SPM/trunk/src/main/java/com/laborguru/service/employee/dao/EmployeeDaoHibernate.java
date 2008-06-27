@@ -20,15 +20,7 @@ public class EmployeeDaoHibernate extends HibernateDaoSupport implements
 
 	public Employee getEmployeeById(Employee employee) {
 		
-		List<Employee> employees = (List<Employee>)getHibernateTemplate().findByNamedParam("from Employee employee where employee.id = :searchString", "searchString", employee.getId());
-		
-		Employee retEmployee = null;
-		
-		if(employees.size() > 0) {
-			retEmployee = employees.get(0);
-		}
-		
-		return retEmployee;
+		return (Employee)getHibernateTemplate().get(Employee.class, employee.getId());		
 	}
 	
 	public List<Employee> getEmployeesByStore(Store store) {
@@ -38,7 +30,6 @@ public class EmployeeDaoHibernate extends HibernateDaoSupport implements
 	public Employee save(Employee employee) {
 		getHibernateTemplate().saveOrUpdate(employee);
 		return employee;
-		
 	}
 
 	/**
