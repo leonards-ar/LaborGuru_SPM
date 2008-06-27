@@ -52,4 +52,17 @@
 		<put-attribute name="body" value="/tiles/store/view.jsp" />
 	</definition>	
 	
+	<definition name="storeExtendedCRUD" template="/layouts/store/store_ext_crud.jsp" extends="baseLayoutWithMenu">
+	  <put-attribute name="storeData" value="/tiles/store/storedata.jsp" />
+	</definition>
+	
+	<definition name="weekdayGuestServEditor" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/weekdayguestserv_edit.jsp" />
+	</definition>
+
+	<definition name="weekdayGuestServView" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/weekdayguestserv_view.jsp" />
+	</definition>
+
+	
 </tiles-definitions>
