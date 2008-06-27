@@ -87,6 +87,14 @@ a.link:hover {
 	text-align: center;
 }
 
+#subtitleBar {
+	width: 100%;
+	color: #184E01;
+	padding-left: 7px;
+	font-size: 13px;
+	text-align: left;	
+}
+
 #loginFormTable {
 	background-color: #DEEFDC;
 }
@@ -155,11 +163,12 @@ table.results th a {
 	text-decoration: underline;
 }
 
-.resultsColumnCentered{
+.resultsColumnCentered {
 	text-align: center;
 	padding:0;
 }
 
+/*
 .resultsTableHeader {
 	background-color: #A3D39C;
 	background-image: url(../images/table-header-bg.png);
@@ -172,6 +181,7 @@ table.results th a {
 	font-weight: bold;
 	padding: 0px;
 }
+*/
 
 .resultsTableOddRow {
 	background-color: #F7F7F7;
@@ -245,14 +255,6 @@ table.results th a {
 	font-style: italic;
 	font-size: 11px;
 	font-family: tahoma, arial, sans-serif;
-}
-
-.infoEmptyList {
-	font-style: italic;
-	font-size: 12px;
-	font-weight: bold;
-	font-family: tahoma, arial, sans-serif;
-	color: #184E01;
 }
 
 .errorSecurityTitle {
@@ -396,4 +398,41 @@ select {
 
 .actionsLink:hover {
 	text-decoration: underline;
+}
+
+.editorTableHeader {
+	background-color: #A3D39C;
+	background-image: url(../images/table-header-bg.png);
+	background-position: center;
+	background-repeat: repeat-x;
+	color: #184E01;
+	font-size: 12px;
+	text-align: center;
+	font-family: tahoma, arial, sans-serif;
+	font-weight: bold;
+}
+
+.editorTableFirstColumn {
+	background-color: #DEEFDC;
+	color: #184E01;
+	font-size: 12px;
+	text-align: center;
+	font-family: tahoma, arial, sans-serif;
+	font-weight: bold;
+}
+
+.editorTableOddRow {
+	background-color: #F7F7F7;
+	font-size: 12px;
+	font-family: tahoma, arial, sans-serif;
+	color: #184E01;
+	text-align: right;
+}
+
+.editorTableEvenRow {
+	background-color: #DEEFDC;
+	font-size: 12px;
+	font-family: tahoma, arial, sans-serif;
+	color: #184E01;
+	text-align: right;
 }

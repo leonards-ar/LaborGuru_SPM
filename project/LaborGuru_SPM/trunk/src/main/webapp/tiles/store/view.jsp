@@ -5,57 +5,33 @@
 	      <table border="0" cellspacing="0" align="center">
 		      <tr>
 			      <td id="titleBar">
-			      <s:if test="store.id == null">
-			      	<s:text name="store.create.title" />
-			      </s:if>
-			      <s:else>
-			      	<s:text name="store.update.title" />
-			      </s:else>
+                    	<s:if test="removePage">
+                    		<s:text name="store.remove.title" />
+                    	</s:if>
+                    	<s:else>
+                    		<s:text name="store.view.title" />
+                    	</s:else>   
 			      </td>
         	  </tr>
               
-              <tr>
-              	<td class="errorMessage" align="center">
-	              	<table border="0" align="center" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
-              			<tr>
-              				<td>
-				              	<s:fielderror theme="simple"/>
-				              	<s:actionerror theme="simple"/>
-			              	</td>
-            		  	</tr>
-              		</table>
-              	</td>
-              </tr>
-              
               <tr>                            
               <td align="center">              
-              <s:form action="store_save" theme="simple">
-              <s:hidden name="store.id" theme="simple"/>
               <table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0" align="center">
               	<tr class="editFormEvenRow">
-                    <td align="right" class="form_label" nowrap>* <s:text name="store.office.label" /></td>
+                    <td align="right" class="form_label" nowrap><s:text name="store.office.label" /></td>
                     <td align="left" class="value">
                     	<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 							<tr>
 								<td>
-									<select>
-										<option>Client 1</option>
-										<option>Client 2</option>
-									</select> 								
+									<s:property value="store.office"/>
 								</td>
 								<td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
 								<td>
-									<select>
-										<option>Region 1</option>
-										<option>Region 2</option>
-									</select> 								
+									<s:property value="store.office"/>
 								</td>
 								<td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
 								<td>
-									<select>
-										<option>Area 1</option>
-										<option>Area 2</option>
-									</select> 								
+									<s:property value="store.office"/>
 								</td>
 							</tr>
                     	</table>
@@ -63,30 +39,33 @@
                   </tr>
                                   	
               	<tr class="editFormOddRow">
-                    <td align="right" class="form_label" nowrap>* <s:text name="store.code.label" /></td>
-                    <td align="left" class="value"><s:textfield name="store.code" size="10" theme="simple"/></td>
+                    <td align="right" class="form_label" nowrap><s:text name="store.code.label" /></td>
+                    <td align="left" class="value"><s:property value="store.code"/></td>
                 </tr>
                 
                 <tr class="editFormEvenRow">
-                    <td align="right" class="form_label" nowrap>* <s:text name="store.name.label" /></td>
-                    <td  align="left" class="value"><s:textfield name="store.name" size="20" theme="simple"/></td>
+                    <td align="right" class="form_label" nowrap><s:text name="store.name.label" /></td>
+                    <td  align="left" class="value"><s:property value="store.name"/></td>
                 </tr>
               	<tr class="editFormOddRow">
                     <td width="100%" align="right" colspan="2">
+	                    <s:form theme="simple"> 
+	                    <s:hidden name="store.id"/>
 	                    <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
 		                    <tr>
-		                		<td><s:submit id="saveButton" key="save.button" theme="simple" cssClass="button"/></td>
-		                    	<td><s:submit id="cancelButton" key="cancel.button" action="store_list" theme="simple" cssClass="button"/></td>		                    
-		                    	<td><s:reset id="resetButton" key="reset.button" theme="simple" cssClass="button"/></td>
+		                    	<s:if test="removePage">
+		                    		<td><s:submit action="store_list" key="cancel.button" theme="simple" cssClass="button"/></td>    
+		                  			<td><s:submit action="store_delete" key="remove.button" theme="simple" cssClass="button"/></td>
+		                    	</s:if>
+		                    	<s:else>
+		                    		<td><s:submit action="store_list" key="back.button" theme="simple" cssClass="button"/></td>
+		                    	</s:else> 
 		                    </tr>
-	                    </table>                    
+	                    </table>
+	                    </s:form>                       
                     </td>
                 </tr>
-		      <tr>
-			      <td colspan="2" class="infoMessage"><s:text name="info.mandatory.fields" /></td>
-        	  </tr>	  
               </table>
-              </s:form>
 
               </td>
               </tr>
@@ -106,7 +85,7 @@
 					    			<tr class="actionsTableValue">
 					    			<td>
 					    				<table border="0" cellpadding="3" cellspacing="0" colspan="0" cellspan="0">
-												<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url namespace="/store" action="store_edit_weekdayGuestServ" includeParams="none"/>"><s:text name="store.laborallowance.weekdayguestservice.title" /></a></td></tr>
+												<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url namespace="/store" action="store_view_weekdayGuestServ" includeParams="none"/>"><s:text name="store.laborallowance.weekdayguestservice.title" /></a></td></tr>
 						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.laborallowance.weekendguestservice.title" /></a></td></tr>
 						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.laborallowance.variableflexible.title" /></a></td></tr>
 						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.laborallowance.variableopening.title" /></a></td></tr>
