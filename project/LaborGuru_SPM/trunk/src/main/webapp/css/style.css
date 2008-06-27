@@ -133,6 +133,33 @@ input.button {
 	
 }
 
+table.results {
+	width: 100%;
+	border-collapse: separate;
+}
+
+table.results th {
+	background-color: #A3D39C;
+	background-image: url(../images/table-header-bg.png);
+	background-position: center;
+	background-repeat: repeat-x;
+	color: #184E01;
+	font-size: 13px;
+	text-align: center;
+	font-family: tahoma, arial, sans-serif;
+	font-weight: bold;
+}
+
+table.results th a {
+	color: black;
+	text-decoration: underline;
+}
+
+.resultsColumnCentered{
+	text-align: center;
+	padding:0;
+}
+
 .resultsTableHeader {
 	background-color: #A3D39C;
 	background-image: url(../images/table-header-bg.png);
@@ -143,6 +170,7 @@ input.button {
 	text-align: center;
 	font-family: tahoma, arial, sans-serif;
 	font-weight: bold;
+	padding: 0px;
 }
 
 .resultsTableOddRow {
@@ -170,6 +198,32 @@ input.button {
 .resultsTableLink:hover {
 	text-decoration: underline;
 }
+
+
+/* css for display tags */ 
+.pagebanner {
+	font-size: 12px;
+	font-family: tahoma, arial, sans-serif;
+	margin-top:5px;
+	padding-left:4px
+}
+
+.pagelinks {
+	float:right;
+	margin-top:5px;
+	padding-right:4px;
+	font-size: 12px;
+	font-family: tahoma, arial, sans-serif;
+}
+
+.pagelinks a {
+	text-decoration:underline
+}
+
+.pagelinks a:hover {
+	text-decoration:none
+}
+/* end css for display tags */ 
 
 #editFormTable {
 	
