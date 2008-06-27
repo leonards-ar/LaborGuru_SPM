@@ -11,5 +11,13 @@
 			<result name="listAction" type="redirectAction">store_list</result>
 			<result name="input" type="tiles">editStorePage</result>			
 		</action>
+		
+		<action name="store_edit_weekdayGuestServ">
+			<result type="tiles">weekdayGuestServEditor</result>
+		</action>
+
+		<action name="store_view_weekdayGuestServ">
+			<result type="tiles">weekdayGuestServView</result>
+		</action>
 	</package>
 </struts>
