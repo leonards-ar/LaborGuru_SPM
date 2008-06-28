@@ -164,7 +164,7 @@
 </foreign-key-list>
 <index-list/>
 </table>
-<table alias="" name="tbl_office_ext_attributes" remarks="" uid="e94c62:11a07671122:-7f8a">
+<table alias="" name="tbl_customer_ext_attributes" remarks="" uid="e94c62:11a07671122:-7f8a">
 <table-description/>
 <table-figure-bounds height="-1" width="-1" x="194" y="216"/>
 <column-list>
@@ -192,25 +192,25 @@
 <variant type-name-pattern="INT"/>
 </data-type>
 </column>
-<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="office_id" remarks="" uid="e94c62:11a07671122:-7f82">
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="customer_id" remarks="" uid="e94c62:11a07671122:-7f82">
 <column-description/>
 <data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
 <variant type-name-pattern="INT"/>
 </data-type>
 </column>
 </column-list>
-<primary-key alias="" name="PK_TBL_OFFICE_EXT_ATTRIBUTES" remarks="" uid="e94c62:11a07671122:-7f89">
+<primary-key alias="" name="PK_TBL_CUSTOMER_EXT_ATTRIBUTES" remarks="" uid="e94c62:11a07671122:-7f89">
 <primary-key-description/>
 <primary-key-column name="attribute_id"/>
 </primary-key>
 <unique-key-list/>
 <foreign-key-list>
-<foreign-key alias="" name="FK_tbl_office_ext_attributes_1" on-delete="" on-update="" referenced-key="PK_TBL_OFFICES" referenced-table="tbl_offices" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="1c5cdac:11a1b05b15e:-7df0">
+<foreign-key alias="" name="FK_tbl_customer_ext_attributes_1" on-delete="" on-update="" referenced-key="PK_TBL_CUSTOMERS" referenced-table="tbl_customers" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="d276c:11ad0fa8fd2:-7fc3">
 <foreign-key-description/>
 <foreign-key-figure>
 <fk-fig-bendpoint-list/>
 </foreign-key-figure>
-<foreign-key-column column-name="office_id" referenced-key-column-name="office_id"/>
+<foreign-key-column column-name="customer_id" referenced-key-column-name="customer_id"/>
 </foreign-key>
 </foreign-key-list>
 <index-list/>
@@ -252,7 +252,7 @@
 </foreign-key-figure>
 <foreign-key-column column-name="user_id" referenced-key-column-name="user_id"/>
 </foreign-key>
-<foreign-key alias="" name="FK_tbl_user_ext_attributes_2" on-delete="" on-update="" referenced-key="PK_TBL_OFFICE_EXT_ATTRIBUTES" referenced-table="tbl_office_ext_attributes" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="e94c62:11a07671122:-7e15">
+<foreign-key alias="" name="FK_tbl_user_ext_attributes_2" on-delete="" on-update="" referenced-key="PK_TBL_CUSTOMER_EXT_ATTRIBUTES" referenced-table="tbl_customer_ext_attributes" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="e94c62:11a07671122:-7e15">
 <foreign-key-description/>
 <foreign-key-figure>
 <fk-fig-bendpoint-list/>
@@ -264,7 +264,7 @@
 </table>
 <table alias="" name="tbl_stores" remarks="" uid="e94c62:11a07671122:-7e0a">
 <table-description/>
-<table-figure-bounds height="86" width="167" x="599" y="463"/>
+<table-figure-bounds height="119" width="167" x="615" y="443"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="store_id" remarks="" uid="e94c62:11a07671122:-7dff">
 <column-description/>
@@ -278,10 +278,10 @@
 <variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
 </data-type>
 </column>
-<column alias="" auto-increment="false" column-size="10" decimal-digits="0" default-value="" mandatory="false" name="start_week_day" remarks="" uid="16d864e:11abbfde91b:-7feb">
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="start_week_day" remarks="" uid="16d864e:11abbfde91b:-7feb">
 <column-description/>
-<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
-<variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
 </data-type>
 </column>
 <column alias="" auto-increment="false" column-size="30" decimal-digits="0" default-value="" mandatory="false" name="store_number" remarks="" uid="16d864e:11abbfde91b:-7fea">
@@ -290,16 +290,22 @@
 <variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
 </data-type>
 </column>
-<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="office_id" remarks="" uid="1c5cdac:11a1b05b15e:-7e3a">
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="customer_id" remarks="" uid="1c5cdac:11a1b05b15e:-7e3a">
 <column-description/>
 <data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
 <variant type-name-pattern="INT"/>
 </data-type>
 </column>
-<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="open_close_hour_id" remarks="" uid="16d864e:11abbfde91b:-7fcc">
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="region_id" remarks="" uid="16d864e:11abbfde91b:-7fcc">
 <column-description/>
 <data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
 <variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="10" decimal-digits="0" default-value="" mandatory="false" name="area_id" remarks="" uid="d276c:11ad0fa8fd2:-7faf">
+<column-description/>
+<data-type jdbc-type="1" literal-prefix="'" literal-suffix="'" name="CHAR" selected-variant-pattern="CHAR(%n)">
+<variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="CHAR(%n)"/>
 </data-type>
 </column>
 </column-list>
@@ -309,12 +315,26 @@
 </primary-key>
 <unique-key-list/>
 <foreign-key-list>
-<foreign-key alias="" name="FK_tbl_stores_1" on-delete="" on-update="" referenced-key="PK_TBL_OFFICES" referenced-table="tbl_offices" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="1c5cdac:11a1b05b15e:-7e0e">
+<foreign-key alias="" name="FK_tbl_stores_1" on-delete="" on-update="" referenced-key="PK_TBL_CUSTOMERS" referenced-table="tbl_customers" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="d276c:11ad0fa8fd2:-7ef2">
 <foreign-key-description/>
 <foreign-key-figure>
 <fk-fig-bendpoint-list/>
 </foreign-key-figure>
-<foreign-key-column column-name="office_id" referenced-key-column-name="office_id"/>
+<foreign-key-column column-name="customer_id" referenced-key-column-name="customer_id"/>
+</foreign-key>
+<foreign-key alias="" name="FK_tbl_stores_2" on-delete="" on-update="" referenced-key="PK_TBL_REGIONS" referenced-table="tbl_regions" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="d276c:11ad0fa8fd2:-7ede">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="region_id" referenced-key-column-name="region_id"/>
+</foreign-key>
+<foreign-key alias="" name="FK_tbl_stores_3" on-delete="" on-update="" referenced-key="PK_TBL_AREAS" referenced-table="tbl_areas" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="d276c:11ad0fa8fd2:-7ec9">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="area_id" referenced-key-column-name="area_id"/>
 </foreign-key>
 </foreign-key-list>
 <index-list/>
@@ -461,11 +481,11 @@
 </foreign-key-list>
 <index-list/>
 </table>
-<table alias="" name="tbl_offices" remarks="" uid="1c5cdac:11a1b05b15e:-7e49">
+<table alias="" name="tbl_customers" remarks="" uid="1c5cdac:11a1b05b15e:-7e49">
 <table-description/>
-<table-figure-bounds height="79" width="178" x="298" y="436"/>
+<table-figure-bounds height="57" width="178" x="279" y="394"/>
 <column-list>
-<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="office_id" remarks="" uid="1c5cdac:11a1b05b15e:-7e40">
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="customer_id" remarks="" uid="1c5cdac:11a1b05b15e:-7e40">
 <column-description/>
 <data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
 <variant type-name-pattern="INT"/>
@@ -477,40 +497,20 @@
 <variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
 </data-type>
 </column>
-<column alias="" auto-increment="false" column-size="1" decimal-digits="0" default-value="" mandatory="false" name="type" remarks="" uid="1c5cdac:11a1b05b15e:-7de6">
-<column-description/>
-<data-type jdbc-type="1" literal-prefix="'" literal-suffix="'" name="CHAR" selected-variant-pattern="CHAR(%n)">
-<variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="CHAR(%n)"/>
-</data-type>
-</column>
-<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="parent_office_id" remarks="" uid="1c5cdac:11a1b05b15e:-7de3">
-<column-description/>
-<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
-<variant type-name-pattern="INT"/>
-</data-type>
-</column>
 </column-list>
-<primary-key alias="" name="PK_TBL_OFFICES" remarks="" uid="1c5cdac:11a1b05b15e:-7e48">
+<primary-key alias="" name="PK_TBL_CUSTOMERS" remarks="" uid="1c5cdac:11a1b05b15e:-7e48">
 <primary-key-description/>
-<primary-key-column name="office_id"/>
+<primary-key-column name="customer_id"/>
 </primary-key>
 <unique-key-list/>
-<foreign-key-list>
-<foreign-key alias="" name="FK_tbl_offices_1" on-delete="" on-update="" referenced-key="PK_TBL_OFFICES" referenced-table="tbl_offices" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="1b81deb:11a3f2d8c74:-7f81">
-<foreign-key-description/>
-<foreign-key-figure>
-<fk-fig-bendpoint-list/>
-</foreign-key-figure>
-<foreign-key-column column-name="parent_office_id" referenced-key-column-name="office_id"/>
-</foreign-key>
-</foreign-key-list>
+<foreign-key-list/>
 <index-list/>
 </table>
-<table alias="" name="tbl_office_users" remarks="" uid="1c5cdac:11a1b05b15e:-7d8a">
+<table alias="" name="tbl_customer_users" remarks="" uid="1c5cdac:11a1b05b15e:-7d8a">
 <table-description/>
-<table-figure-bounds height="-1" width="-1" x="406" y="166"/>
+<table-figure-bounds height="-1" width="-1" x="401" y="168"/>
 <column-list>
-<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="office_id" remarks="" uid="1c5cdac:11a1b05b15e:-7d86">
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="customer_id" remarks="" uid="1c5cdac:11a1b05b15e:-7d86">
 <column-description/>
 <data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
 <variant type-name-pattern="INT"/>
@@ -523,9 +523,9 @@
 </data-type>
 </column>
 </column-list>
-<primary-key alias="" name="PK_TBL_OFFICE_USERS" remarks="" uid="1c5cdac:11a1b05b15e:-7d89">
+<primary-key alias="" name="PK_TBL_CUSTOMER_USERS" remarks="" uid="1c5cdac:11a1b05b15e:-7d89">
 <primary-key-description/>
-<primary-key-column name="office_id"/>
+<primary-key-column name="customer_id"/>
 <primary-key-column name="user_id"/>
 </primary-key>
 <unique-key-list/>
@@ -537,12 +537,12 @@
 </foreign-key-figure>
 <foreign-key-column column-name="user_id" referenced-key-column-name="user_id"/>
 </foreign-key>
-<foreign-key alias="" name="FK_tbl_office_users_2" on-delete="" on-update="" referenced-key="PK_TBL_OFFICES" referenced-table="tbl_offices" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="1c5cdac:11a1b05b15e:-7d2d">
+<foreign-key alias="" name="FK_tbl_customer_users_2" on-delete="" on-update="" referenced-key="PK_TBL_CUSTOMERS" referenced-table="tbl_customers" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="d276c:11ad0fa8fd2:-7fd2">
 <foreign-key-description/>
 <foreign-key-figure>
 <fk-fig-bendpoint-list/>
 </foreign-key-figure>
-<foreign-key-column column-name="office_id" referenced-key-column-name="office_id"/>
+<foreign-key-column column-name="customer_id" referenced-key-column-name="customer_id"/>
 </foreign-key>
 </foreign-key-list>
 <index-list/>
@@ -584,7 +584,7 @@
 </foreign-key-figure>
 <foreign-key-column column-name="store_id" referenced-key-column-name="store_id"/>
 </foreign-key>
-<foreign-key alias="" name="FK_tbl_store_ext_attributes_2" on-delete="" on-update="" referenced-key="PK_TBL_OFFICE_EXT_ATTRIBUTES" referenced-table="tbl_office_ext_attributes" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="1c5cdac:11a1b05b15e:-7ce7">
+<foreign-key alias="" name="FK_tbl_store_ext_attributes_2" on-delete="" on-update="" referenced-key="PK_TBL_CUSTOMER_EXT_ATTRIBUTES" referenced-table="tbl_customer_ext_attributes" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="1c5cdac:11a1b05b15e:-7ce7">
 <foreign-key-description/>
 <foreign-key-figure>
 <fk-fig-bendpoint-list/>
@@ -759,7 +759,7 @@
 </table>
 <table alias="" name="tbl_operation_hours" remarks="" uid="16d864e:11abbfde91b:-7ff2">
 <table-description/>
-<table-figure-bounds height="93" width="179" x="890" y="470"/>
+<table-figure-bounds height="93" width="179" x="939" y="424"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="open_close_hour_id" remarks="" uid="16d864e:11abbfde91b:-7fe7">
 <column-description/>
@@ -816,7 +816,7 @@
 </table>
 <table alias="" name="tbl_stores_day_part" remarks="" uid="16d864e:11abbfde91b:-7f78">
 <table-description/>
-<table-figure-bounds height="91" width="146" x="610" y="583"/>
+<table-figure-bounds height="91" width="146" x="944" y="544"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="store_id" remarks="" uid="16d864e:11abbfde91b:-7f74">
 <column-description/>
@@ -868,6 +868,165 @@
 <fk-fig-bendpoint-list/>
 </foreign-key-figure>
 <foreign-key-column column-name="store_id" referenced-key-column-name="store_id"/>
+</foreign-key>
+</foreign-key-list>
+<index-list/>
+</table>
+<table alias="" name="tbl_regions" remarks="" uid="d276c:11ad0fa8fd2:-7fac">
+<table-description/>
+<table-figure-bounds height="-1" width="-1" x="299" y="497"/>
+<column-list>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="region_id" remarks="" uid="d276c:11ad0fa8fd2:-7fa8">
+<column-description/>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="255" decimal-digits="0" default-value="" mandatory="false" name="name" remarks="" uid="d276c:11ad0fa8fd2:-7fa7">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="customer_id" remarks="" uid="d276c:11ad0fa8fd2:-7f9f">
+<column-description/>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+</column-list>
+<primary-key alias="" name="PK_TBL_REGIONS" remarks="" uid="d276c:11ad0fa8fd2:-7fab">
+<primary-key-description/>
+<primary-key-column name="region_id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list>
+<foreign-key alias="" name="FK_tbl_regions_1" on-delete="" on-update="" referenced-key="PK_TBL_CUSTOMERS" referenced-table="tbl_customers" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="d276c:11ad0fa8fd2:-7f3d">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="customer_id" referenced-key-column-name="customer_id"/>
+</foreign-key>
+</foreign-key-list>
+<index-list/>
+</table>
+<table alias="" name="tbl_areas" remarks="" uid="d276c:11ad0fa8fd2:-7fa6">
+<table-description/>
+<table-figure-bounds height="-1" width="-1" x="296" y="596"/>
+<column-list>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="area_id" remarks="" uid="d276c:11ad0fa8fd2:-7fa2">
+<column-description/>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="255" decimal-digits="0" default-value="" mandatory="false" name="name" remarks="" uid="d276c:11ad0fa8fd2:-7f9c">
+<column-description/>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="region_id" remarks="" uid="d276c:11ad0fa8fd2:-7f9b">
+<column-description/>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+</column-list>
+<primary-key alias="" name="PK_TBL_AREAS" remarks="" uid="d276c:11ad0fa8fd2:-7fa5">
+<primary-key-description/>
+<primary-key-column name="area_id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list>
+<foreign-key alias="" name="FK_tbl_areas_1" on-delete="" on-update="" referenced-key="PK_TBL_REGIONS" referenced-table="tbl_regions" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="d276c:11ad0fa8fd2:-7f18">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="region_id" referenced-key-column-name="region_id"/>
+</foreign-key>
+</foreign-key-list>
+<index-list/>
+</table>
+<table alias="" name="tbl_region_users" remarks="" uid="d276c:11ad0fa8fd2:-7f98">
+<table-description/>
+<table-figure-bounds height="-1" width="-1" x="613" y="234"/>
+<column-list>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="region_id" remarks="" uid="d276c:11ad0fa8fd2:-7f94">
+<column-description/>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="user_id" remarks="" uid="d276c:11ad0fa8fd2:-7f93">
+<column-description/>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+</column-list>
+<primary-key alias="" name="PK_TBL_REGION_USERS" remarks="" uid="d276c:11ad0fa8fd2:-7f97">
+<primary-key-description/>
+<primary-key-column name="region_id"/>
+<primary-key-column name="user_id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list>
+<foreign-key alias="" name="FK_tbl_region_users_1" on-delete="" on-update="" referenced-key="PK_TBL_USERS" referenced-table="tbl_users" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="d276c:11ad0fa8fd2:-7e7c">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="user_id" referenced-key-column-name="user_id"/>
+</foreign-key>
+<foreign-key alias="" name="FK_tbl_region_users_2" on-delete="" on-update="" referenced-key="PK_TBL_REGIONS" referenced-table="tbl_regions" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="d276c:11ad0fa8fd2:-7e57">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="region_id" referenced-key-column-name="region_id"/>
+</foreign-key>
+</foreign-key-list>
+<index-list/>
+</table>
+<table alias="" name="tbl_area_users" remarks="" uid="d276c:11ad0fa8fd2:-7f92">
+<table-description/>
+<table-figure-bounds height="-1" width="-1" x="752" y="241"/>
+<column-list>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="area_id" remarks="" uid="d276c:11ad0fa8fd2:-7f8e">
+<column-description/>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="user_id" remarks="" uid="d276c:11ad0fa8fd2:-7f8d">
+<column-description/>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+</column-list>
+<primary-key alias="" name="PK_TBL_AREA_USERS" remarks="" uid="d276c:11ad0fa8fd2:-7f91">
+<primary-key-description/>
+<primary-key-column name="area_id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list>
+<foreign-key alias="" name="FK_tbl_area_users_1" on-delete="" on-update="" referenced-key="PK_TBL_USERS" referenced-table="tbl_users" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="d276c:11ad0fa8fd2:-7e98">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="user_id" referenced-key-column-name="user_id"/>
+</foreign-key>
+<foreign-key alias="" name="FK_tbl_area_users_2" on-delete="" on-update="" referenced-key="PK_TBL_AREAS" referenced-table="tbl_areas" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="d276c:11ad0fa8fd2:-7e2d">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="area_id" referenced-key-column-name="area_id"/>
 </foreign-key>
 </foreign-key-list>
 <index-list/>
