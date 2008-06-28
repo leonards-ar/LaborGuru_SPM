@@ -26,8 +26,40 @@
 			<email>cnunezre@gmail.com</email>
 		</developer>
 	</developers>
+	<properties>
+		<skip.database.creation>true</skip.database.creation>	
+		<db.driver>com.mysql.jdbc.Driver</db.driver>
+		<db.username>spm</db.username>
+		<db.password>java1234</db.password>	
+	</properties>
+	<profiles>
+		<profile>
+			<id>cristian</id>
+			<properties>
+		        <db.url>jdbc:mysql://localhost:3306/spm</db.url>
+			</properties>	
+		</profile>
+		<profile>
+			<id>mariano</id>
+			<properties>
+		        <db.url>jdbc:mysql://xxxx:3306/spm</db.url>
+			</properties>	
+		</profile>
+		<profile>
+			<id>federico</id>
+			<properties>
+		        <db.url>jdbc:mysql://yyyyy:3306/spm</db.url>
+			</properties>	
+		</profile>	
+	</profiles>	
 	<build>
-		<finalName>spmwebapp</finalName>
+		<finalName>spmwebapp</finalName>		
+		<resources>
+		  	<resource>
+			    <directory>src/main/resources</directory>
+			    <filtering>true</filtering>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
@@ -53,24 +85,70 @@
 					<components>
 						<component>
 							<name>hbm2ddl</name>
-							<implementation>
-								configuration
-							</implementation>
+							<implementation>configuration</implementation>
 						</component>
 					</components>
 					<componentProperties>
-						<propertyfile>
-							hibernate.properties
-						</propertyfile>
+						<propertyfile>hibernate.properties</propertyfile>
 						<outputfilename>spm-schema.sql</outputfilename>
 						<drop>true</drop>
 						<create>true</create>
-						<export>false</export>
+						<export>true</export>
 						<jdk5>true</jdk5>
 						<format>true</format>
+						<skip>${skip.database.creation}</skip>
 					</componentProperties>
 				</configuration>
+				<executions>
+                    <execution>
+                        <id>export-db</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>hbm2ddl</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>5.1.6</version>
+                    </dependency>
+                </dependencies>                				
 			</plugin>
+			<plugin>
+			    <groupId>org.codehaus.mojo</groupId>
+			    <artifactId>sql-maven-plugin</artifactId>
+			    <dependencies>
+			        <dependency>
+			            <groupId>mysql</groupId>
+			            <artifactId>mysql-connector-java</artifactId>
+			            <version>5.1.6</version>
+			        </dependency>
+			    </dependencies>
+			    <configuration>
+			        <driver>${db.driver}</driver>
+			        <url>${db.url}</url>
+			        <username>${db.username}</username>
+			        <password>${db.password}</password>
+			        <skip>${skip.database.creation}</skip>
+			    </configuration>
+			    <executions>
+					<execution>
+			            <id>create-data</id>
+			            <phase>process-test-resources</phase>
+			            <goals>
+			              <goal>execute</goal>
+			            </goals>
+			            <configuration>
+			              <srcFiles>
+			                <srcFile>src/main/data/sql/initialdata.sql</srcFile>
+			              </srcFiles>			            
+			            </configuration>
+		          	</execution>
+			    </executions>
+			</plugin>			
+			
 		</plugins>
 	</build>
 	<dependencies>
@@ -99,11 +177,6 @@
 			<artifactId>hibernate</artifactId>
 			<version>3.2.6.ga</version>
 		</dependency>
-		<!-- dependency>
-			<groupId>postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>8.3-603.jdbc3</version>
-			</dependency-->
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
