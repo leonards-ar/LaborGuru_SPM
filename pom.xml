@@ -42,7 +42,7 @@
 		<profile>
 			<id>mariano</id>
 			<properties>
-		        <db.url>jdbc:mysql://xxxx:3306/spm</db.url>
+		        <db.url>jdbc:mysql://spmdb:3306/spm</db.url>
 			</properties>	
 		</profile>
 		<profile>
