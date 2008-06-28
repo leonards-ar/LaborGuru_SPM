@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.mindpool.laborguru</groupId>
 	<version>1.0-SNAPSHOT</version>
@@ -25,37 +27,37 @@
 		</developer>
 	</developers>
 	<properties>
-		<skip.database.creation>true</skip.database.creation>	
+		<skip.database.creation>true</skip.database.creation>
 		<db.driver>com.mysql.jdbc.Driver</db.driver>
 		<db.username>spm</db.username>
-		<db.password>java1234</db.password>	
+		<db.password>java1234</db.password>
 	</properties>
 	<profiles>
 		<profile>
 			<id>cristian</id>
 			<properties>
-		        <db.url>jdbc:mysql://localhost:3306/spm</db.url>
-			</properties>	
+				<db.url>jdbc:mysql://localhost:3306/spm</db.url>
+			</properties>
 		</profile>
 		<profile>
 			<id>mariano</id>
 			<properties>
-		        <db.url>jdbc:mysql://spmdb:3306/spm</db.url>
-			</properties>	
+				<db.url>jdbc:mysql://spmdb:3306/spm</db.url>
+			</properties>
 		</profile>
 		<profile>
 			<id>federico</id>
 			<properties>
-		        <db.url>jdbc:mysql://192.168.1.103:3306/spm</db.url>
-			</properties>	
-		</profile>	
-	</profiles>	
+				<db.url>jdbc:mysql://192.168.1.103:3306/spm</db.url>
+			</properties>
+		</profile>
+	</profiles>
 	<build>
-		<finalName>spmwebapp</finalName>		
+		<finalName>spmwebapp</finalName>
 		<resources>
-		  	<resource>
-			    <directory>src/main/resources</directory>
-			    <filtering>true</filtering>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
 			</resource>
 		</resources>
 		<plugins>
@@ -83,11 +85,15 @@
 					<components>
 						<component>
 							<name>hbm2ddl</name>
-							<implementation>configuration</implementation>
+							<implementation>
+								configuration
+							</implementation>
 						</component>
 					</components>
 					<componentProperties>
-						<propertyfile>hibernate.properties</propertyfile>
+						<propertyfile>
+							hibernate.properties
+						</propertyfile>
 						<outputfilename>spm-schema.sql</outputfilename>
 						<drop>true</drop>
 						<create>true</create>
@@ -98,55 +104,57 @@
 					</componentProperties>
 				</configuration>
 				<executions>
-                    <execution>
-                        <id>export-db</id>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>hbm2ddl</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
+					<execution>
+						<id>export-db</id>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>hbm2ddl</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
 						<groupId>mysql</groupId>
 						<artifactId>mysql-connector-java</artifactId>
 						<version>5.1.6</version>
-                    </dependency>
-                </dependencies>                				
+					</dependency>
+				</dependencies>
 			</plugin>
 			<plugin>
-			    <groupId>org.codehaus.mojo</groupId>
-			    <artifactId>sql-maven-plugin</artifactId>
-			    <dependencies>
-			        <dependency>
-			            <groupId>mysql</groupId>
-			            <artifactId>mysql-connector-java</artifactId>
-			            <version>5.1.6</version>
-			        </dependency>
-			    </dependencies>
-			    <configuration>
-			        <driver>${db.driver}</driver>
-			        <url>${db.url}</url>
-			        <username>${db.username}</username>
-			        <password>${db.password}</password>
-			        <skip>${skip.database.creation}</skip>
-			    </configuration>
-			    <executions>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sql-maven-plugin</artifactId>
+				<dependencies>
+					<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>5.1.6</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<driver>${db.driver}</driver>
+					<url>${db.url}</url>
+					<username>${db.username}</username>
+					<password>${db.password}</password>
+					<skip>${skip.database.creation}</skip>
+				</configuration>
+				<executions>
 					<execution>
-			            <id>create-data</id>
-			            <phase>process-test-resources</phase>
-			            <goals>
-			              <goal>execute</goal>
-			            </goals>
-			            <configuration>
-			              <srcFiles>
-			                <srcFile>src/main/data/sql/initialdata.sql</srcFile>
-			              </srcFiles>			            
-			            </configuration>
-		          	</execution>
-			    </executions>
-			</plugin>			
-			
+						<id>create-data</id>
+						<phase>process-test-resources</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<srcFiles>
+								<srcFile>
+									src/main/data/sql/initialdata.sql
+								</srcFile>
+							</srcFiles>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 	<dependencies>
@@ -234,14 +242,15 @@
 			<version>5.1.6</version>
 		</dependency>
 		<dependency>
-		    <groupId>displaytag</groupId>
-		    <artifactId>displaytag</artifactId>
-		    <version>1.1</version>
-		</dependency>				
-	  <dependency>
-      <groupId>javax.servlet.jsp</groupId>
-      <artifactId>jsp-api</artifactId>
-      <version>2.1</version>
-    </dependency>
-  </dependencies>
+			<groupId>displaytag</groupId>
+			<artifactId>displaytag</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.1</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
 </project>
