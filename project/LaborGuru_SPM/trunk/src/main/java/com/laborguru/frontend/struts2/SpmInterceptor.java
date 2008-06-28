@@ -5,12 +5,17 @@
  */
 package com.laborguru.frontend.struts2;
 
+import java.security.Principal;
 import java.util.Map;
+import java.util.Set;
 
+import org.acegisecurity.Authentication;
 import org.acegisecurity.context.SecurityContextHolder;
+import org.acegisecurity.providers.jaas.JaasAuthenticationToken;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.access.ContextSingletonBeanFactoryLocator;
 
+import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.HttpRequestConstants;
 import com.laborguru.model.Employee;
 import com.laborguru.model.Menu;
@@ -78,9 +83,8 @@ public class SpmInterceptor implements Interceptor {
 		Map session = invocation.getInvocationContext().getSession();
 		Map params = invocation.getInvocationContext().getParameters();
 
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Menu menu = (Menu) session.get(HttpRequestConstants.MENU);
 		User user = (User) session.get(HttpRequestConstants.USER);
+		Object principal = retrievePrincipal();
 		
 		if(user == null && principal != null && principal instanceof UserDetailsImpl) {
 			session.put(HttpRequestConstants.USER, ((UserDetailsImpl)principal).getUser());
@@ -92,14 +96,15 @@ public class SpmInterceptor implements Interceptor {
 			if(user instanceof Employee) {
 				session.put(HttpRequestConstants.STORE, ((Employee)user).getStore());
 			}
-		} else {
+		} else if(user == null && principal == null) {
 			/*
-			 * What can we do here. It can be a String holding just the username
-			 * or a Principal object. This should never happen? Acegi should
-			 * have redirected to login page.
+			 * No logged in user. Just see why ACEGI is not taking this
+			 * into account. Redirect to login
 			 */
+			return SpmActionResult.LOGIN.getResult();
 		}
-		
+
+		Menu menu = (Menu) session.get(HttpRequestConstants.MENU);
 		if(menu == null && user != null) {
 			menu = getMenuService().getMenuFor(user);
 			session.put(HttpRequestConstants.MENU, menu);
@@ -118,6 +123,27 @@ public class SpmInterceptor implements Interceptor {
 		return invocation.invoke();
 	}
 
+	/**
+	 * Retrieves the principal from the ACEGI context
+	 * @return
+	 */
+	private Object retrievePrincipal() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Object principal = null;
+		
+		if(auth instanceof JaasAuthenticationToken) {
+			JaasAuthenticationToken jaasAuth = (JaasAuthenticationToken) auth;
+			Set<Principal> principals = jaasAuth.getLoginContext().getSubject().getPrincipals();
+			principal = principals != null && !principals.isEmpty() ? principals.iterator().next() : null;
+		}
+		
+		if(principal == null) {
+			principal = auth.getPrincipal();
+		}
+		
+		return principal;
+	}
+	
 	/**
 	 * @return the userService
 	 */

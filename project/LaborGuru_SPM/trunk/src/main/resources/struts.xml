@@ -24,6 +24,10 @@
 		</interceptors>
 
 		<default-interceptor-ref name="spmStack" />
+		
+        <global-results>
+            <result name="login" type="tiles">loginPage</result>
+        </global-results>		
 	</package>
 
 	<include file="action/login.xml" />
