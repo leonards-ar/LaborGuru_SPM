@@ -21,4 +21,25 @@ public interface PositionService extends Service {
 	 * @return List of positions
 	 */
 	List<Position> getPositionsByStore(Store store);
+	
+	/**
+	 * Saves or updates a position
+	 * @param position The position to save
+	 * @return The updated position 
+	 */
+	Position save(Position position);
+
+	
+	/**
+	 * Deletes a position 
+	 * @param position
+	 */
+	void delete(Position position);
+	
+	/**
+	 * Retrieves a position by position id
+	 * @param position Position with id populated
+	 * @return the Position
+	 */
+	Position getPositionById(Position position);
 }
