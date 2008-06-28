@@ -43,4 +43,15 @@ public class PositionServiceBean implements PositionService {
 		return positionDao.getPositionsByStore(store);
 	}
 
+	public void delete(Position position) {
+	}
+
+	public Position getPositionById(Position position) {
+		return null;
+	}
+
+	public Position save(Position position) {
+		return null;
+	}
+
 }
