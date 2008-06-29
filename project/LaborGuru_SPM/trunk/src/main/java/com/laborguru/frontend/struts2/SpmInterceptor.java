@@ -87,7 +87,8 @@ public class SpmInterceptor implements Interceptor {
 		Object principal = retrievePrincipal();
 		
 		if(user == null && principal != null && principal instanceof UserDetailsImpl) {
-			session.put(HttpRequestConstants.USER, ((UserDetailsImpl)principal).getUser());
+			user = ((UserDetailsImpl)principal).getUser();
+			session.put(HttpRequestConstants.USER, user);
 		} else if(user == null && principal != null && principal instanceof String && !"anonymousUser".equalsIgnoreCase((String) principal)) {
 			user = new User();
 			user.setUserName((String)principal);
