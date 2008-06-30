@@ -17,7 +17,7 @@
 					<td><s:textfield name="searchStore.code" size="10" theme="simple" /></td>
 					<td class="form_label" nowrap><s:text name="store.name.label" /></td>
 					<td><s:textfield name="searchStore.name" size="30" theme="simple" /></td>
-					<td class="form_label" nowrap><s:text name="store.office.label" /></td>
+					<td class="form_label" nowrap><s:text name="store.customer.label" /></td>
 					<td>
 						<select>
 							<option>Client 1</option>
@@ -44,7 +44,7 @@
 			<tr>
 				<th class="resultsTableHeader"><s:text name="store.code.label" /></th>
 				<th class="resultsTableHeader"><s:text name="store.code.label" /></th>
-				<th class="resultsTableHeader"><s:text name="store.office.label" /></th>
+				<th class="resultsTableHeader"><s:text name="store.customer.label" /></th>
 				<th class="resultsTableHeader">&nbsp;</th>
 			</tr>
 			<s:iterator value="stores" status="itStore">		

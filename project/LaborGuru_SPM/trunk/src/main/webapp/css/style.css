@@ -426,7 +426,7 @@ select {
 	font-size: 12px;
 	font-family: tahoma, arial, sans-serif;
 	color: #184E01;
-	text-align: right;
+	text-align: center;
 }
 
 .editorTableEvenRow {
@@ -434,5 +434,5 @@ select {
 	font-size: 12px;
 	font-family: tahoma, arial, sans-serif;
 	color: #184E01;
-	text-align: right;
+	text-align: center;
 }

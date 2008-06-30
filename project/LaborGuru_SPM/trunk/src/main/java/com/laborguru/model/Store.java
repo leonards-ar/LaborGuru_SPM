@@ -13,6 +13,7 @@ public class Store extends SpmObject {
 	private Integer id;	
 	private String name;
 	private String code;
+	private Integer firstDayOfWeek;
 	private Office office;
 
 	
@@ -104,6 +105,31 @@ public class Store extends SpmObject {
 	 */
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	/**
+	 * Returns the day this store uses as the first day of
+	 * the week. The possible values are:
+	 * <ul>
+	 * 	<li>0: Sunday</li>
+	 * 	<li>1: Monday</li>
+	 * 	<li>2: Tuesday</li>
+	 * 	<li>3: Wednesday</li>
+	 * 	<li>4: Thursday</li>
+	 * 	<li>5: Friday</li>
+	 * 	<li>6: Saturday</li>
+	 * </ul>
+	 * @return the firstDayOfWeek
+	 */
+	public Integer getFirstDayOfWeek() {
+		return firstDayOfWeek;
+	}
+
+	/**
+	 * @param firstDayOfWeek the firstDayOfWeek to set
+	 */
+	public void setFirstDayOfWeek(Integer firstDayOfWeek) {
+		this.firstDayOfWeek = firstDayOfWeek;
 	}
 
 	
