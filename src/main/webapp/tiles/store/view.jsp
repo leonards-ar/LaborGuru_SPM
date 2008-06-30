@@ -18,7 +18,7 @@
               <td align="center">              
               <table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0" align="center">
               	<tr class="editFormEvenRow">
-                    <td align="right" class="form_label" nowrap><s:text name="store.office.label" /></td>
+                    <td align="right" class="form_label" nowrap><s:text name="store.customer.label" /></td>
                     <td align="left" class="value">
                     	<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 							<tr>
