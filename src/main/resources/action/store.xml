@@ -12,12 +12,36 @@
 			<result name="input" type="tiles">editStorePage</result>			
 		</action>
 		
-		<action name="store_edit_weekdayGuestServ">
+		<action name="store_weekdayGuestServ_edit">
 			<result type="tiles">weekdayGuestServEditor</result>
 		</action>
 
-		<action name="store_view_weekdayGuestServ">
+		<action name="store_weekdayGuestServ_view">
 			<result type="tiles">weekdayGuestServView</result>
 		</action>
+
+		<action name="store_hoursOfOperation_edit">
+			<result type="tiles">hoursOfOperationEditor</result>
+		</action>
+
+		<action name="store_hoursOfOperation_view">
+			<result type="tiles">hoursOfOperationView</result>
+		</action>
+		
+		<action name="store_positionNames_edit">
+			<result type="tiles">positionNamesEditor</result>
+		</action>
+
+		<action name="store_positionNames_view">
+			<result type="tiles">positionNamesView</result>
+		</action>		
+		
+		<action name="store_daypartDefinition_edit">
+			<result type="tiles">daypartDefinitionEditor</result>
+		</action>
+
+		<action name="store_daypartDefinition_view">
+			<result type="tiles">daypartDefinitionView</result>
+		</action>			
 	</package>
 </struts>

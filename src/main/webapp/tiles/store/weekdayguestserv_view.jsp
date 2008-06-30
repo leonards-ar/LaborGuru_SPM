@@ -9,8 +9,6 @@
 
 	<tr>
 		<td align="center">
-              <s:form action="store_save" theme="simple">
-              <s:hidden name="store.id" theme="simple"/>
 		
 			<table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0" align="center">
 				<tr class="editFormEvenRow">
@@ -97,16 +95,19 @@
 	
               	<tr class="editFormOddRow">
                     <td width="100%" align="right" colspan="2">
+						<s:form action="store_save" theme="simple">
+              			<s:hidden name="store.id" theme="simple"/>                    
 	                    <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
 		                    <tr>
-								<s:submit action="store_view" key="back.button" theme="simple" cssClass="button"/>
+								<td><s:submit action="store_view" key="back.button" theme="simple" cssClass="button"/></td>
 		                    </tr>
-	                    </table>                    
+	                    </table>   
+	                    </s:form>                 
                     </td>
                 </tr>
 
 			</table>
-			</s:form>
+			
 		</td>
 	</tr>
 </table>

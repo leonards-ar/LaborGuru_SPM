@@ -81,11 +81,11 @@
 					    <td width="33%" valign="top" align="left">
 					    	<!-- Labor Allowances -->
 					    		<table id="actionsTable" align="left">
-					    			<tr class="actionsTableHeader"><td><s:text name="store.laborallowance.title" /></td></tr>
+					    			<tr class="actionsTableHeader"><td nowrap><s:text name="store.laborallowance.title" /></td></tr>
 					    			<tr class="actionsTableValue">
 					    			<td>
 					    				<table border="0" cellpadding="3" cellspacing="0" colspan="0" cellspan="0">
-												<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url namespace="/store" action="store_view_weekdayGuestServ" includeParams="none"/>"><s:text name="store.laborallowance.weekdayguestservice.title" /></a></td></tr>
+												<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url namespace="/store" action="store_weekdayGuestServ_view" includeParams="none"/>"><s:text name="store.laborallowance.weekdayguestservice.title" /></a></td></tr>
 						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.laborallowance.weekendguestservice.title" /></a></td></tr>
 						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.laborallowance.variableflexible.title" /></a></td></tr>
 						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.laborallowance.variableopening.title" /></a></td></tr>
@@ -102,17 +102,17 @@
 					    <td width="34%" valign="top" align="center">
 					    	<!-- Labor Assumptions -->
 					    		<table id="actionsTable" align="center">
-					    			<tr class="actionsTableHeader"><td><s:text name="store.laborassumptions.title" /></td></tr>
+					    			<tr class="actionsTableHeader"><td nowrap><s:text name="store.laborassumptions.title" /></td></tr>
 					    			<tr class="actionsTableValue">
 						    			<td>
 						    				<table border="0" cellpadding="3" cellspacing="0" colspan="0" cellspan="0">
-						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap>	<a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.laborassumptions.maxgsutilization.title" /></a></td></tr>
-						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap>	<a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.laborassumptions.mingsutilization.title" /></a></td></tr>
-						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap>	<a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.laborassumptions.nongsutilization.title" /></a></td></tr>
-						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap>	<a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.laborassumptions.utilizationbottom.title" /></a></td></tr>
-						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap>	<a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.laborassumptions.utilizationtop.title" /></a></td></tr>
-						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap>	<a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.laborassumptions.minimumstaffing.title" /></a></td></tr>
-						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap>	<a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.laborassumptions.activitysharing.title" /></a></td></tr>
+						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.laborassumptions.maxgsutilization.title" /></a></td></tr>
+						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.laborassumptions.mingsutilization.title" /></a></td></tr>
+						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.laborassumptions.nongsutilization.title" /></a></td></tr>
+						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.laborassumptions.utilizationbottom.title" /></a></td></tr>
+						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.laborassumptions.utilizationtop.title" /></a></td></tr>
+						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.laborassumptions.minimumstaffing.title" /></a></td></tr>
+						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.laborassumptions.activitysharing.title" /></a></td></tr>
 				    						</table>
 						    			</td>
 					    			</tr>
@@ -122,14 +122,13 @@
 					    <td width="33%" valign="top" align="right">
 					    	<!-- Store Operations -->
 					    		<table id="actionsTable" align="right">
-					    			<tr class="actionsTableHeader"><td><s:text name="store.storeoperations.title" /></td></tr>
+					    			<tr class="actionsTableHeader"><td nowrap><s:text name="store.storeoperations.title" /></td></tr>
 					    			<tr class="actionsTableValue">
 						    			<td>
 						    				<table border="0" cellpadding="3" cellspacing="0" colspan="0" cellspan="0">
-						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap>	<a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.storeoperations.hoursofoperation.title" /></a></td></tr>
-						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap>	<a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.storeoperations.daypartdefinition.title" /></a></td></tr>
-						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap>	<a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.storeoperations.firstdayofweek.title" /></a></td></tr>
-						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap>	<a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.storeoperations.positionnames.title" /></a></td></tr>
+						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url namespace="/store" action="store_hoursOfOperation_view" includeParams="none"/>"><s:text name="store.storeoperations.hoursofoperation.title" /></a></td></tr>
+						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url namespace="/store" action="store_daypartDefinition_view"" includeParams="none"/>"><s:text name="store.storeoperations.daypartdefinition.title" /></a></td></tr>
+						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url namespace="/store" action="store_positionNames_view" includeParams="none"/>"><s:text name="store.storeoperations.positionnames.title" /></a></td></tr>
 						    				</table>
 						    			</td>
 					    			</tr>

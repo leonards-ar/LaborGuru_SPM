@@ -97,7 +97,7 @@ public class SpmInterceptor implements Interceptor {
 			if(user instanceof Employee) {
 				session.put(HttpRequestConstants.STORE, ((Employee)user).getStore());
 			}
-		} else if(user == null && principal == null) {
+		} else if(user == null && (principal == null || "anonymousUser".equalsIgnoreCase(principal.toString()))) {
 			/*
 			 * No logged in user. Just see why ACEGI is not taking this
 			 * into account. Redirect to login
