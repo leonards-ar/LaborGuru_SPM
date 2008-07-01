@@ -160,5 +160,6 @@ public class EmployeeServiceBean implements EmployeeService {
 		
 		List<Employee> employees = employeeDao.applyFilter(searchEmployee);
 
-		return employees;	}
+		return employees;	
+	}
 }

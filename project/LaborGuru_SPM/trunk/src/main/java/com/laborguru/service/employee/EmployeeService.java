@@ -19,8 +19,8 @@ import com.laborguru.service.Service;
 public interface EmployeeService extends Service {
 	
 	/**
-	 * Saves or updates employee
-	 * @param employee Employee to save or update
+	 * Saves employee
+	 * @param employee Employee to save
 	 * @return
 	 * @throws SpmCheckedException 
 	 */

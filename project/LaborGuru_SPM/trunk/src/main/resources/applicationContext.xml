@@ -4,6 +4,7 @@
     xsi:schemaLocation="
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
+	<!--  Action's declarations  -->
 	<bean id="employeeAction" class="com.laborguru.action.employee.EmployeePrepareAction" scope="prototype">
 		<property name="positionService" ref="positionService"/>
 		<property name="employeeService" ref="employeeService"/>
@@ -21,6 +22,8 @@
 	</bean>
 			
 	<bean id="dateTemplateToday" class="java.util.Date"/>
+
+	<!--  Services's declarations -->
 
 	<bean id="referenceDataService"
 		class="com.laborguru.service.data.ReferenceDataServiceBean">
@@ -86,6 +89,29 @@
 		<property name="loginTries" value="${conn.max_login_times}"/>
 	</bean>
 
+	<bean id="storeService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.laborguru.service.store.StoreService</value>
+			</list>
+		</property>	
+	
+		<property name="target">
+			<ref bean="storeServiceTarget"/>
+		</property>		
+		
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>	
+		
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributeSourceDefault"/>
+		</property>	
+ 	</bean>
+
+ 	<bean id="storeServiceTarget" class="com.laborguru.service.store.StoreServiceBean" autowire="byType"/>
+
+	<!--  Dao's declarations -->
 	<bean id="menuDao" class="com.laborguru.service.menu.dao.MenuDaoHibernate" autowire="byType"/>
 
 	<bean id="userDao" class="com.laborguru.service.user.dao.UserDaoHibernate" autowire="byType"/>
@@ -93,6 +119,9 @@
 	<bean id="employeeDao" class="com.laborguru.service.employee.dao.EmployeeDaoHibernate" autowire="byType"/>
 
 	<bean id="positionDao" class="com.laborguru.service.position.dao.PositionDaoHibernate" autowire="byType"/>
+
+	<bean id="storeDao" class="com.laborguru.service.store.dao.StoreDaoHibernate" autowire="byType"/>
+
 				
 	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory">

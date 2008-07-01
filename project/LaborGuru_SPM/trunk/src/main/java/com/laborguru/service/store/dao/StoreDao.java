@@ -1,23 +1,22 @@
-package com.laborguru.service.store;
+package com.laborguru.service.store.dao;
 
 import java.util.List;
 
 import com.laborguru.model.Store;
 import com.laborguru.model.filter.SearchStoreFilter;
-import com.laborguru.service.Service;
 
 /**
- * Store Service. Handles store services for SPM
+ * Store Dao. Handles store database interaction for SPM
  * @author <a href="cnunezre@gmail.com">Cristian Nunez Rebolledo</a>
  * @version 1.0
  * @since SPM 1.0
  *
  */
-public interface StoreService extends Service {
+public interface StoreDao {
 
 	/**
 	 * Saves or updates a store
-	 * @param store store to save or update
+	 * @param store store to save
 	 * @return the Store updated.
 	 */
 	Store save(Store store);
