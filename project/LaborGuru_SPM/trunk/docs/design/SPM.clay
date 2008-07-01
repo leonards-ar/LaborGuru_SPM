@@ -740,19 +740,19 @@
 </primary-key>
 <unique-key-list/>
 <foreign-key-list>
-<foreign-key alias="" name="FK_tbl_employees_1" on-delete="" on-update="" referenced-key="PK_TBL_USERS" referenced-table="tbl_users" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="107610f:11a88a6d470:-7efc">
-<foreign-key-description></foreign-key-description>
-<foreign-key-figure>
-<fk-fig-bendpoint-list/>
-</foreign-key-figure>
-<foreign-key-column column-name="user_id" referenced-key-column-name="user_id"/>
-</foreign-key>
 <foreign-key alias="" name="FK_tbl_employees_2" on-delete="" on-update="" referenced-key="PK_TBL_POSITIONS" referenced-table="tbl_positions" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="1" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="107610f:11a88a6d470:-7dac">
 <foreign-key-description></foreign-key-description>
 <foreign-key-figure>
 <fk-fig-bendpoint-list/>
 </foreign-key-figure>
 <foreign-key-column column-name="default_positon_id" referenced-key-column-name="position_id"/>
+</foreign-key>
+<foreign-key alias="" name="FK_tbl_employees_1" on-delete="" on-update="" referenced-key="PK_TBL_USERS" referenced-table="tbl_users" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="1" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="107610f:11a88a6d470:-7efc">
+<foreign-key-description></foreign-key-description>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="user_id" referenced-key-column-name="user_id"/>
 </foreign-key>
 </foreign-key-list>
 <index-list/>
