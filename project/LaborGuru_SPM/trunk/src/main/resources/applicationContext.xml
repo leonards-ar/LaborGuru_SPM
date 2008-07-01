@@ -117,12 +117,14 @@
 		<property name="mappingResources">
 			<list>
 				<value>com/laborguru/model/MenuItem.hbm.xml</value>
-				<value>com/laborguru/model/Office.hbm.xml</value>
 				<value>com/laborguru/model/Permission.hbm.xml</value>
 				<value>com/laborguru/model/Position.hbm.xml</value>
 				<value>com/laborguru/model/Profile.hbm.xml</value>
 				<value>com/laborguru/model/Store.hbm.xml</value>
 				<value>com/laborguru/model/User.hbm.xml</value>
+				<value>com/laborguru/model/Area.hbm.xml</value>
+				<value>com/laborguru/model/Region.hbm.xml</value>
+				<value>com/laborguru/model/Customer.hbm.xml</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
