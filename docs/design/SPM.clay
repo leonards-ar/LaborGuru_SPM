@@ -264,7 +264,7 @@
 </table>
 <table alias="" name="tbl_stores" remarks="" uid="e94c62:11a07671122:-7e0a">
 <table-description></table-description>
-<table-figure-bounds height="119" width="167" x="616" y="487"/>
+<table-figure-bounds height="165" width="167" x="616" y="487"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="store_id" remarks="" uid="e94c62:11a07671122:-7dff">
 <column-description></column-description>
@@ -302,10 +302,10 @@
 <variant type-name-pattern="INT"/>
 </data-type>
 </column>
-<column alias="" auto-increment="false" column-size="10" decimal-digits="0" default-value="" mandatory="false" name="area_id" remarks="" uid="d276c:11ad0fa8fd2:-7faf">
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="area_id" remarks="" uid="d276c:11ad0fa8fd2:-7faf">
 <column-description></column-description>
-<data-type jdbc-type="1" literal-prefix="'" literal-suffix="'" name="CHAR" selected-variant-pattern="CHAR(%n)">
-<variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="CHAR(%n)"/>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
 </data-type>
 </column>
 </column-list>
@@ -508,7 +508,7 @@
 </table>
 <table alias="" name="tbl_customer_users" remarks="" uid="1c5cdac:11a1b05b15e:-7d8a">
 <table-description></table-description>
-<table-figure-bounds height="-1" width="-1" x="463" y="161"/>
+<table-figure-bounds height="-1" width="-1" x="447" y="195"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="customer_id" remarks="" uid="1c5cdac:11a1b05b15e:-7d86">
 <column-description></column-description>
@@ -549,7 +549,7 @@
 </table>
 <table alias="" name="tbl_store_ext_attributes" remarks="" uid="1c5cdac:11a1b05b15e:-7d26">
 <table-description></table-description>
-<table-figure-bounds height="-1" width="-1" x="441" y="282"/>
+<table-figure-bounds height="-1" width="-1" x="629" y="362"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="store_id" remarks="" uid="1c5cdac:11a1b05b15e:-7d22">
 <column-description></column-description>
@@ -952,7 +952,7 @@
 </table>
 <table alias="" name="tbl_region_users" remarks="" uid="d276c:11ad0fa8fd2:-7f98">
 <table-description></table-description>
-<table-figure-bounds height="-1" width="-1" x="618" y="292"/>
+<table-figure-bounds height="-1" width="-1" x="604" y="267"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="region_id" remarks="" uid="d276c:11ad0fa8fd2:-7f94">
 <column-description></column-description>
@@ -993,7 +993,7 @@
 </table>
 <table alias="" name="tbl_area_users" remarks="" uid="d276c:11ad0fa8fd2:-7f92">
 <table-description></table-description>
-<table-figure-bounds height="-1" width="-1" x="761" y="273"/>
+<table-figure-bounds height="-1" width="-1" x="780" y="261"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="area_id" remarks="" uid="d276c:11ad0fa8fd2:-7f8e">
 <column-description></column-description>
