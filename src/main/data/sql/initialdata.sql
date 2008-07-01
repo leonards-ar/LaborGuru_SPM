@@ -13,18 +13,27 @@ delete from tbl_permissions;
 delete from tbl_users;
 delete from tbl_positions;
 delete from tbl_stores;
-delete from tbl_offices;
+delete from tbl_areas;
+delete from tbl_regions;
+delete from tbl_customers;
+
+-- Customer
+insert into tbl_customers (customer_id, name) values (1,'Mac Donalds');
+
+-- Region
+insert into tbl_regions (region_id, name, customer_id) values (1,'Capital federal', 1);
+
+-- Area
+insert into tbl_areas (area_id, name, region_id) values (1,'Monserrat', 1);
 
 -- Profiles
 insert into tbl_profiles (profile_id, name, description) values (1, 'ROLE_USER', 'Profile Desc');
 insert into tbl_profiles (profile_id, name, description) values (2, 'ROLE_FAKE', 'Profile Desc');
 
--- Office
-insert into tbl_offices (office_id, name, type, parent_office_id) values (1,'Mac Donalds', 'A', null);
 
 -- Users
 insert into tbl_users (creation_date, email, user_id, last_update_date, login_count, name, password, status, surname, username) values (now(), 'mcapurro@gmail.com', 1, null, 0, 'Mariano', '1234', 0, 'Capurro', 'mcapurro');
-insert into tbl_users (creation_date, email, user_id, last_update_date, login_count, name, password, status, surname, username) values (now(), 'cnunezre@gmail.com', 2, null, 0, 'Cristian', '1234', 0, 'Nuñez Rebolledo', 'cnunezre');
+insert into tbl_users (creation_date, email, user_id, last_update_date, login_count, name, password, status, surname, username) values (now(), 'cnunezre@gmail.com', 2, null, 0, 'Cristian', '1234', 0, 'Nunez Rebolledo', 'cnunezre');
 insert into tbl_users (creation_date, email, user_id, last_update_date, login_count, name, password, status, surname, username) values (now(), 'fbarrera@gmail.com', 3, null, 0, 'Federico', '1234', 0, 'Barrera Oro', 'fbarrera');
 insert into tbl_users (creation_date, email, user_id, last_update_date, login_count, name, password, status, surname, username) values (now(), 'ignacio@laborguru.com', 4, null, 0, 'Ignacio', '1234', 0, 'Goris', 'igoris');
 insert into tbl_users (creation_date, email, user_id, last_update_date, login_count, name, password, status, surname, username) values (now(), 'fake@fake.com', 5, null, 0, 'Fake', '1234', 0, 'User', 'fake');
@@ -68,7 +77,7 @@ insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permis
 insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permission_id, position, target) values (7, 'store.submenu.create', 'STORE_ADD_HELP', 5, 7, 0, '/store/store_add.action');
 
 -- Store
-insert into tbl_stores (store_id, name, office_id) values (1,'microcentro', 1);
+insert into tbl_stores (store_id, name, area_id) values (1,'microcentro', 1);
 
 -- Positions
 insert into tbl_positions (position_id, name, store_id) values (1, 'chef',1);

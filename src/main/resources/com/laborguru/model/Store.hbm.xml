@@ -9,8 +9,10 @@
 			<generator class="identity" />
 		</id>
 		<property name="name" column="name" type="string" length="150" />
-		<many-to-one name="office" class="Office" foreign-key="fk_stores_offices">
-			<column name="office_id"/>
+		<property name="code" column="code" type="string" length="150" />
+		<property name="firstDayOfWeek" column="first_day_of_week" type="int"/>
+		<many-to-one name="area" class="Area" foreign-key="fk_stores_area">
+			<column name="area_id"/>
 		</many-to-one>
 	</class>
 	<database-object>
