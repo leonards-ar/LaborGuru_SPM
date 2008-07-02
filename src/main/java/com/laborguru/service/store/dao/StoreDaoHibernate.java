@@ -2,6 +2,7 @@ package com.laborguru.service.store.dao;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.laborguru.model.Store;
@@ -16,9 +17,11 @@ import com.laborguru.model.filter.SearchStoreFilter;
  */
 public class StoreDaoHibernate extends HibernateDaoSupport implements StoreDao {
 
+	private static final Logger log = Logger.getLogger(StoreDaoHibernate.class);	
+	
 	private static final String STORE_ID_NULL = "the store id passed in as parameter is null";
 	private static final String STORE_NULL = "the store passed in as parameter is null";
-		
+	
 	/**
 	 * @param store
 	 * @see com.laborguru.service.store.dao.StoreDao#delete(com.laborguru.model.Store)
@@ -42,7 +45,14 @@ public class StoreDaoHibernate extends HibernateDaoSupport implements StoreDao {
 	 * @see com.laborguru.service.store.dao.StoreDao#filterStore(com.laborguru.model.filter.SearchStoreFilter)
 	 */
 	public List<Store> filterStore(SearchStoreFilter storeFilter) {
-		return null;
+		
+		if (storeFilter == null){
+			throw new IllegalArgumentException("The storeFilter passed in as paremeter is null.");
+		}
+		
+		log.debug("In applyFilter with sql:"+ storeFilter.getHql());
+		
+		return (List<Store>)getHibernateTemplate().find(storeFilter.getHql());	
 	}
 
 	/**
