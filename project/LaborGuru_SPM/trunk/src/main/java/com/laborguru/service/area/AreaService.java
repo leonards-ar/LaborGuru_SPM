@@ -13,4 +13,6 @@ import com.laborguru.service.Service;
 public interface AreaService extends Service {
 
 	List<Area> findAll();
+	
+	Area getAreaById(Area area);
 }

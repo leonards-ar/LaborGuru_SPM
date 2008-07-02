@@ -18,4 +18,8 @@ public class AreaDaoHibernate extends HibernateDaoSupport implements AreaDao {
 	public List<Area> findAll(){
 		return getHibernateTemplate().loadAll(Area.class);
 	}
+	
+	public Area getAreaById(Area area) {
+		return (Area)getHibernateTemplate().get(Area.class, area.getId());
+	}
 }
