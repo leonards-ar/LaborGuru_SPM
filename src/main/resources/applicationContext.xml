@@ -21,10 +21,29 @@
 		<property name="hireDate" ref="dateTemplateToday"/>
 	</bean>
 			
+	<bean id="storeAction" class="com.laborguru.action.store.StorePrepareAction">
+		<property name="storeService" ref="storeService"/>
+		<property name="customerService" ref="customerService"/>
+		<property name="regionService" ref="regionService"/>
+		<property name="areaService" ref="areaService"/>
+	</bean>
+		
 	<bean id="dateTemplateToday" class="java.util.Date"/>
 
 	<!--  Services's declarations -->
-
+	
+	<bean id="customerService" class="com.laborguru.service.customer.CustomerServiceBean">
+		<property name="customerDao" ref="customerDao" />
+	</bean>
+	
+	<bean id="regionService" class="com.laborguru.service.region.RegionServiceBean">
+		<property name="regionDao" ref="regionDao" />
+	</bean>
+	
+	<bean id="areaService" class="com.laborguru.service.area.AreaServiceBean">
+		<property name="areaDao" ref="areaDao" />
+	</bean>
+	
 	<bean id="referenceDataService"
 		class="com.laborguru.service.data.ReferenceDataServiceBean">
 		<property name="referenceData" ref="referenceData"/>
@@ -122,6 +141,11 @@
 
 	<bean id="storeDao" class="com.laborguru.service.store.dao.StoreDaoHibernate" autowire="byType"/>
 
+	<bean id="areaDao" class="com.laborguru.service.area.dao.AreaDaoHibernate" autowire="byType"/>
+	
+	<bean id="regionDao" class="com.laborguru.service.region.dao.RegionDaoHibernate" autowire="byType"/>
+	
+	<bean id="customerDao" class="com.laborguru.service.customer.dao.CustomerDaoHibernate" autowire="byType"/>
 				
 	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory">
