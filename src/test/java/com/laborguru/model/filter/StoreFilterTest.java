@@ -26,7 +26,6 @@ public class StoreFilterTest {
 		filter.setCode("code_1");
 		filter.setName("name_2");
 		
-		System.out.println(filter.getHql());
 		assertEquals("from Store store where store.area.region.customer.id=1 and store.code like '%code_1%' and store.name like '%name_2%'", filter.getHql());
 	}
 
@@ -38,7 +37,6 @@ public class StoreFilterTest {
 		
 		filter.setCustomer(customer);
 		
-		System.out.println(filter.getHql());
 		assertEquals("from Store store where store.area.region.customer.id=1", filter.getHql());
 	}
 
@@ -49,7 +47,6 @@ public class StoreFilterTest {
 		filter.setCode("code_1");
 		filter.setName("name_2");
 		
-		System.out.println(filter.getHql());
 		assertEquals("from Store store where store.code like '%code_1%' and store.name like '%name_2%'", filter.getHql());
 	}
 
@@ -57,8 +54,6 @@ public class StoreFilterTest {
 	public void testGetHql_happyPath_NoSearch(){
 		SearchStoreFilter filter = new SearchStoreFilter();
 	
-		
-		System.out.println(filter.getHql());
 		assertEquals("from Store store", filter.getHql());
 	}
 }
