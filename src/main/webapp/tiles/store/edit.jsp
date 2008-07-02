@@ -38,24 +38,15 @@
                     	<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 							<tr>
 								<td>
-									<select>
-										<option>Client 1</option>
-										<option>Client 2</option>
-									</select> 								
+									<s:select name="customerId" list="customers" listKey="id" listValue="name" theme="simple"/>
 								</td>
 								<td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
 								<td>
-									<select>
-										<option>Region 1</option>
-										<option>Region 2</option>
-									</select> 								
+									<s:select name="regionId" list="regions" listKey="id" listValue="name" theme="simple"/>
 								</td>
 								<td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
 								<td>
-									<select>
-										<option>Area 1</option>
-										<option>Area 2</option>
-									</select> 								
+									<s:select name="areaId" list="areas" listKey="id" listValue="name" theme="simple"/>
 								</td>
 							</tr>
                     	</table>
