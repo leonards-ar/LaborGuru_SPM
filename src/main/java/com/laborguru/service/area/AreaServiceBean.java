@@ -20,6 +20,10 @@ public class AreaServiceBean implements AreaService {
 	public List<Area> findAll() {
 		return areaDao.findAll();
 	}
+	
+	public Area getAreaById(Area area) {
+		return areaDao.getAreaById(area);
+	}
 
 	/**
 	 * @return the areaDao

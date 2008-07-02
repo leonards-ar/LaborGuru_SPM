@@ -7,4 +7,6 @@ import com.laborguru.model.Area;
 public interface AreaDao {
 
 	List<Area> findAll();
+	
+	Area getAreaById(Area area);
 }
