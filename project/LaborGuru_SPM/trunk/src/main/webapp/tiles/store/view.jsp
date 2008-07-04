@@ -19,25 +19,17 @@
               <table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0" align="center">
               	<tr class="editFormEvenRow">
                     <td align="right" class="form_label" nowrap><s:text name="store.customer.label" /></td>
-                    <td align="left" class="value">
-                    	<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
-							<tr>
-								<td>
-									<s:property value="customer.name"/>
-								</td>
-								<td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
-								<td>
-									<s:property value="region.name"/>
-								</td>
-								<td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
-								<td>
-									<s:property value="area.name"/>
-								</td>
-							</tr>
-                    	</table>
-                    </td>
-                  </tr>
-                                  	
+                    <td align="left" class="value"><s:property value="customer.name"/></td>
+				</tr>
+              	<tr class="editFormOddRow">
+                    <td align="right" class="form_label" nowrap><s:text name="store.region.label" /></td>
+                    <td align="left" class="value"><s:property value="region.name"/></td>
+                </tr>
+              	<tr class="editFormEvenRow">
+                    <td align="right" class="form_label" nowrap><s:text name="store.area.label" /></td>
+                    <td align="left" class="value"><s:property value="area.name"/></td>
+				</tr>				
+
               	<tr class="editFormOddRow">
                     <td align="right" class="form_label" nowrap><s:text name="store.code.label" /></td>
                     <td align="left" class="value"><s:property value="store.code"/></td>
@@ -70,10 +62,6 @@
               </td>
               </tr>
         	   
-        	  <tr>
-        	  	  <td><br/></td>
-        	  </tr>  
-        	  
         	  <tr>
         	  	<td width="100%">
         	  		<table border="0" cellpadding="6" cellspacing="6" colspan="0" cellspan="0" width="100%">
