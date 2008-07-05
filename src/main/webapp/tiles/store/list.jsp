@@ -20,7 +20,7 @@
 					<td><s:textfield name="searchStore.name" size="30" theme="simple" /></td>
 					<td class="form_label" nowrap><s:text name="store.customer.label" /></td>
 					<td>
-						<s:select name="searchStore.customer" list="customers" listKey="id" listValue="name" theme="simple"/>
+						<s:select name="searchStore.customerId" list="customers" listKey="id" listValue="name" theme="simple"/>
 					</td>
 					<td><s:submit key="search.button" theme="simple" cssClass="button" /></td>
 				</tr>

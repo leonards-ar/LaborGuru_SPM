@@ -83,7 +83,7 @@ public class StorePrepareAction extends SpmAction implements Preparable {
 	}
 
 	/**
-	 * Prepare the data to be used on the add page We should preload the list
+	 * Prepare the data to be used on the add page. We should preload the list
 	 * needed to render the add page. When a validation fails the application
 	 * goes back to the add page and this data is needed.
 	 * 
@@ -94,7 +94,32 @@ public class StorePrepareAction extends SpmAction implements Preparable {
 	}
 
 	/**
-	 * Loads company, region and area lists
+	 * Prepare the data to be used on the list page.
+	 * Loads the lists that will be used in the store
+	 * search form's combo boxes.
+	 */
+	public void prepareSearch() {
+		loadListsForListPage();
+	}
+
+	/**
+	 * Prepare the data to be used on the list page.
+	 * Loads the lists that will be used in the store
+	 * list search form's combo boxes.
+	 */
+	public void prepareList() {
+		loadListsForListPage();
+	}
+	
+	/**
+	 * Loads customers.
+	 */
+	private void loadListsForListPage() {
+		setCustomers(getCustomerService().findAll());
+	}
+	
+	/**
+	 * Loads customers, regions and areas lists
 	 */
 	private void loadListsForAddEditPage() {
 		customers = customerService.findAll();
@@ -114,17 +139,14 @@ public class StorePrepareAction extends SpmAction implements Preparable {
 	}
 
 	/**
-	 * TODO Performs an Store Search
+	 * Performs a Store Search
 	 * 
 	 * @return
 	 * @throws Exception
 	 */
 	public String search() throws Exception {
-		System.out.println("searchEmployeeSearch: " + searchStore);
 
-		this.setStores(storeService.filterStore(searchStore));
-
-		loadListsForAddEditPage();
+		this.setStores(getStoreService().filterStore(getSearchStore()));
 
 		return SpmActionResult.LIST.getResult();
 	}
@@ -136,7 +158,6 @@ public class StorePrepareAction extends SpmAction implements Preparable {
 	 * @throws Exception
 	 */
 	public String list() throws Exception {
-		loadListsForAddEditPage();
 		
 		setStores(storeService.findAll());
 		

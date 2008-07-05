@@ -19,10 +19,8 @@ public class StoreFilterTest {
 	@Test
 	public void testGetHql_happyPath(){
 		SearchStoreFilter filter = new SearchStoreFilter();
-		Customer customer = new Customer();
-		customer.setId(1);
 		
-		filter.setCustomer(customer);
+		filter.setCustomerId(new Integer(1));
 		filter.setCode("code_1");
 		filter.setName("name_2");
 		
@@ -32,10 +30,8 @@ public class StoreFilterTest {
 	@Test
 	public void testGetHql_happyPath_Customer(){
 		SearchStoreFilter filter = new SearchStoreFilter();
-		Customer customer = new Customer();
-		customer.setId(1);
 		
-		filter.setCustomer(customer);
+		filter.setCustomerId(new Integer(1));
 		
 		assertEquals("from Store store where store.area.region.customer.id=1", filter.getHql());
 	}
