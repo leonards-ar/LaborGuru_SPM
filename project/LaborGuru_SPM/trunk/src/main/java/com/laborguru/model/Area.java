@@ -17,7 +17,7 @@ public class Area extends SpmObject {
 	private Integer id;
 	private String name;
 	private Region region;
-	
+
 	/**
 	 * Area toString
 	 * @return string version of the object 

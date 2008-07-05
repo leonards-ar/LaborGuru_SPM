@@ -3,12 +3,11 @@ package com.laborguru.model.filter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.laborguru.model.Customer;
 import com.laborguru.model.SpmObject;
 
 
 /**
- * Search Sotre Filter
+ * Search Store Filter
  * @author <a href="fbarrera@gmail.com">Federico Barrera Oro</a>
  * @version 1.0
  * @since SPM 1.0
@@ -21,7 +20,7 @@ public class SearchStoreFilter extends SpmObject {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private Customer customer;
+	private Integer customerId;
 	private String name;
 	private String code;
 		
@@ -31,8 +30,8 @@ public class SearchStoreFilter extends SpmObject {
 		
 		StringBuilder sb = new StringBuilder("from Store store");
 		
-		if (customer != null){
-			hqlParams.add("store.area.region.customer.id=" + customer.getId().toString());
+		if (customerId != null){
+			hqlParams.add("store.area.region.customer.id=" + customerId);
 		}
 
 		if (code != null){
@@ -57,21 +56,6 @@ public class SearchStoreFilter extends SpmObject {
 		return sb.toString();
 	}
 	
-	/**
-	 * @return the customer
-	 */
-	public Customer getCustomer() {
-		return customer;
-	}
-
-
-	/**
-	 * @param customer the customer to set
-	 */
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
 	/**
 	 * @return the name
 	 */
@@ -109,7 +93,21 @@ public class SearchStoreFilter extends SpmObject {
 	 * @return True when there is at least one attribute set on the filter, otherwise false.
 	 */
 	public boolean isFilled() {		
-		return (this.customer != null) || (this.name != null) || (this.code != null);
+		return (this.customerId != null) || (this.name != null) || (this.code != null);
+	}
+
+	/**
+	 * @return the customerId
+	 */
+	public Integer getCustomerId() {
+		return customerId;
+	}
+
+	/**
+	 * @param customerId the customerId to set
+	 */
+	public void setCustomerId(Integer customerId) {
+		this.customerId = customerId;
 	}
 	
 }

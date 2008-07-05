@@ -1,5 +1,7 @@
 package com.laborguru.model;
 
+import java.util.Set;
+
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
@@ -17,7 +19,7 @@ public class Region extends SpmObject {
 	private Integer id;
 	private String name;
 	private Customer customer;
-
+	private Set<Area> areas;
 	
 	/**
 	 * Region toString
@@ -108,4 +110,17 @@ public class Region extends SpmObject {
 		this.customer = customer;
 	}
 
+	/**
+	 * @return the areas
+	 */
+	public Set<Area> getAreas() {
+		return areas;
+	}
+
+	/**
+	 * @param areas the areas to set
+	 */
+	public void setAreas(Set<Area> areas) {
+		this.areas = areas;
+	}	
 }
