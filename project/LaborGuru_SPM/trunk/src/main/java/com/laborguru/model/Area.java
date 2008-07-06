@@ -1,5 +1,7 @@
 package com.laborguru.model;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
@@ -37,12 +39,12 @@ public class Area extends SpmObject {
 	 */
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((region == null) ? 0 : region.hashCode());
-		return result;
+		return new HashCodeBuilder(17, 37)
+		.append(this.name)
+		.append(this.region)
+		.toHashCode();
 	}
+	
 	/**
 	 * @param obj
 	 * @return
@@ -50,24 +52,22 @@ public class Area extends SpmObject {
 	 */
 	@Override
 	public boolean equals(Object obj) {
+
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
+		
+		if (obj == null)
 			return false;
+		
 		if (getClass() != obj.getClass())
 			return false;
+		
 		final Area other = (Area) obj;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (region == null) {
-			if (other.region != null)
-				return false;
-		} else if (!region.equals(other.region))
-			return false;
-		return true;
+		
+		return new EqualsBuilder()
+		.append(this.name, other.name)
+		.append(this.region, other.region)
+		.isEquals();
 	}
 	
 	/**

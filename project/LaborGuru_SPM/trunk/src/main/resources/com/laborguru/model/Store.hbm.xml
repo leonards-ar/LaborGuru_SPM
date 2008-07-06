@@ -11,6 +11,10 @@
 		<property name="name" column="name" type="string" length="150" />
 		<property name="code" column="code" type="string" length="150" />
 		<property name="firstDayOfWeek" column="first_day_of_week" type="int"/>
+	    <set name="positions" table="tbl_positions" lazy="true">
+	        <key column="store_id" foreign-key="fk_positions_store"/>
+	        <one-to-many class="Position"/>
+	    </set>		
 		<many-to-one name="area" class="Area" foreign-key="fk_stores_areas">
 			<column name="area_id"/>
 		</many-to-one>
