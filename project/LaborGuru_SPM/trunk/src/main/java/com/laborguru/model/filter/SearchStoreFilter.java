@@ -1,8 +1,5 @@
 package com.laborguru.model.filter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.laborguru.model.SpmObject;
 
 /**
