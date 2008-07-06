@@ -178,6 +178,7 @@
 				<value>com/laborguru/model/Area.hbm.xml</value>
 				<value>com/laborguru/model/Region.hbm.xml</value>
 				<value>com/laborguru/model/Customer.hbm.xml</value>
+				<value>com/laborguru/model/OperationTime.hbm.xml</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
