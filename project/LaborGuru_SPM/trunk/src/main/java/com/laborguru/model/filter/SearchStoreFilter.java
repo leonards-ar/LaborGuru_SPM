@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.laborguru.model.SpmObject;
 
-
 /**
  * Search Store Filter
  * @author <a href="fbarrera@gmail.com">Federico Barrera Oro</a>
@@ -24,38 +23,6 @@ public class SearchStoreFilter extends SpmObject {
 	private String name;
 	private String code;
 		
-	public String getHql(){
-		
-		List<String> hqlParams = new ArrayList<String>();
-		
-		StringBuilder sb = new StringBuilder("from Store store");
-		
-		if (customerId != null){
-			hqlParams.add("store.area.region.customer.id=" + customerId);
-		}
-
-		if (code != null){
-			hqlParams.add("store.code like '%"+code+"%'");
-		}
-		
-		if (name != null){
-			hqlParams.add("store.name like '%"+name+"%'");
-		}
-		
-		int i=0;
-		for (String param: hqlParams){
-			if (i==0){
-				sb.append(" where " + param);
-			}else {
-				sb.append(" and " + param);
-			}
-			
-			i++;
-		}
-		
-		return sb.toString();
-	}
-	
 	/**
 	 * @return the name
 	 */
@@ -87,14 +54,6 @@ public class SearchStoreFilter extends SpmObject {
 		this.code = code;
 	}
 
-
-	/**
-	 * Checks if there is any attributes defined for the filter
-	 * @return True when there is at least one attribute set on the filter, otherwise false.
-	 */
-	public boolean isFilled() {		
-		return (this.customerId != null) || (this.name != null) || (this.code != null);
-	}
 
 	/**
 	 * @return the customerId

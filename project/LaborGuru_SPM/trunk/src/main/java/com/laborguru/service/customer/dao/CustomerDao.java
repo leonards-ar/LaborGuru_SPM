@@ -14,4 +14,6 @@ import com.laborguru.model.Customer;
  */
 public interface CustomerDao {
 	List<Customer> findAll();
+	
+	Customer getCustomerById(Customer customer);
 }

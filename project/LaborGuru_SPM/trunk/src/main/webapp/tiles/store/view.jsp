@@ -19,15 +19,15 @@
               <table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0" align="center">
               	<tr class="editFormEvenRow">
                     <td align="right" class="form_label" nowrap><s:text name="store.customer.label" /></td>
-                    <td align="left" class="value"><s:property value="customer.name"/></td>
+                    <td align="left" class="value"><s:property value="store.area.region.customer.name"/></td>
 				</tr>
               	<tr class="editFormOddRow">
                     <td align="right" class="form_label" nowrap><s:text name="store.region.label" /></td>
-                    <td align="left" class="value"><s:property value="region.name"/></td>
+                    <td align="left" class="value"><s:property value="store.area.region.name"/></td>
                 </tr>
               	<tr class="editFormEvenRow">
                     <td align="right" class="form_label" nowrap><s:text name="store.area.label" /></td>
-                    <td align="left" class="value"><s:property value="area.name"/></td>
+                    <td align="left" class="value"><s:property value="store.area.name"/></td>
 				</tr>				
 
               	<tr class="editFormOddRow">

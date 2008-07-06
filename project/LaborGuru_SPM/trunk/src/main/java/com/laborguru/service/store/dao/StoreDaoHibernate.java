@@ -1,12 +1,13 @@
 package com.laborguru.service.store.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.laborguru.model.Store;
 import com.laborguru.model.filter.SearchStoreFilter;
+import com.laborguru.service.dao.hibernate.SpmHibernateDao;
 
 /**
  * Hibernate implementation for Store Dao 
@@ -15,7 +16,7 @@ import com.laborguru.model.filter.SearchStoreFilter;
  * @since SPM 1.0
  *
  */
-public class StoreDaoHibernate extends HibernateDaoSupport implements StoreDao {
+public class StoreDaoHibernate extends SpmHibernateDao implements StoreDao {
 
 	private static final Logger log = Logger.getLogger(StoreDaoHibernate.class);	
 	
@@ -44,17 +45,51 @@ public class StoreDaoHibernate extends HibernateDaoSupport implements StoreDao {
 	 * @return
 	 * @see com.laborguru.service.store.dao.StoreDao#filterStore(com.laborguru.model.filter.SearchStoreFilter)
 	 */
-	public List<Store> filterStore(SearchStoreFilter storeFilter) {
+	public List<Store> applyFilter(SearchStoreFilter storeFilter) {
 		
 		if (storeFilter == null){
 			throw new IllegalArgumentException("The storeFilter passed in as paremeter is null.");
 		}
 		
-		log.debug("In applyFilter with sql:"+ storeFilter.getHql());
+		String hql = getHql(storeFilter);
 		
-		return (List<Store>)getHibernateTemplate().find(storeFilter.getHql());	
+		log.debug("In applyFilter with sql:"+ hql);
+		
+		return (List<Store>)getHibernateTemplate().find(hql);	
 	}
 
+	private String getHql(SearchStoreFilter storeFilter) {
+		
+		List<String> hqlParams = new ArrayList<String>();
+		
+		StringBuilder sb = new StringBuilder("from Store store");
+		
+		if (includeInFilter(storeFilter.getCustomerId())) {
+			hqlParams.add("store.area.region.customer.id=" + storeFilter.getCustomerId());
+		}
+
+		if (includeInFilter(storeFilter.getCode())){
+			hqlParams.add("store.code like '%"+storeFilter.getCode()+"%'");
+		}
+		
+		if (includeInFilter(storeFilter.getName())) {
+			hqlParams.add("store.name like '%"+storeFilter.getName()+"%'");
+		}
+		
+		int i=0;
+		for (String param: hqlParams){
+			if (i==0){
+				sb.append(" where " + param);
+			}else {
+				sb.append(" and " + param);
+			}
+			
+			i++;
+		}
+		
+		return sb.toString();
+	}
+	
 	/**
 	 * @param store
 	 * @return

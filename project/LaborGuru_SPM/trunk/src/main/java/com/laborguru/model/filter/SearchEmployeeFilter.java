@@ -58,12 +58,4 @@ public class SearchEmployeeFilter extends SpmObject {
 	public void setStore(Store store) {
 		this.store = store;
 	}
-	
-	/**
-	 * Checks if there is any attributes defined for the filter
-	 * @return True when there is at least one attribute set on the filter, otherwise false.
-	 */
-	public boolean isFilled() {		
-		return (this.employeeId != null) || (this.fullName != null) || (this.store != null);
-	}
 }

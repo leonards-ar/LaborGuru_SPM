@@ -29,20 +29,20 @@
               
               <tr>                            
               <td align="center">              
-              <s:form action="store_save" theme="simple">
+              <s:form name="store_form" id="store_form" action="store_save" theme="simple">
               <s:hidden name="store.id" theme="simple"/>
               <table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0" align="center">
               	<tr class="editFormEvenRow">
                     <td align="right" class="form_label" nowrap>* <s:text name="store.customer.label" /></td>
-                    <td align="left" class="value"><s:select name="customerId" list="customers" listKey="id" listValue="name" theme="simple"/></td>
+                    <td align="left" class="value"><s:select onchange="store_form.action='store_selectCustomer.action';store_form.submit();" name="storeCustomer.id" list="customers" listKey="id" listValue="name" headerKey="" headerValue="%{getText('store.customer.header.label')}" theme="simple"/></td>
 				</tr>
               	<tr class="editFormOddRow">
                     <td align="right" class="form_label" nowrap>* <s:text name="store.region.label" /></td>
-                    <td align="left" class="value"><s:select name="regionId" list="regions" listKey="id" listValue="name" theme="simple"/></td>
+                    <td align="left" class="value"><s:select onchange="store_form.action='store_selectRegion.action';store_form.submit();" name="storeRegion.id" list="regions" listKey="id" listValue="name" headerKey="" headerValue="%{getText('store.region.header.label')}" theme="simple"/></td>
                 </tr>
               	<tr class="editFormEvenRow">
                     <td align="right" class="form_label" nowrap>* <s:text name="store.area.label" /></td>
-                    <td align="left" class="value"><s:select name="areaId" list="areas" listKey="id" listValue="name" theme="simple"/></td>
+                    <td align="left" class="value"><s:select name="storeArea.id" list="areas" listKey="id" listValue="name" headerKey="" headerValue="%{getText('store.area.header.label')}" theme="simple"/></td>
 				</tr>		              	
                                   	
               	<tr class="editFormOddRow">

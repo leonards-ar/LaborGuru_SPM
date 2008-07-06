@@ -20,4 +20,8 @@ public class RegionDaoHibernate extends HibernateDaoSupport implements RegionDao
 		return getHibernateTemplate().loadAll(Region.class);
 	}
 
+	public Region getRegionById(Region region) {
+		return (Region)getHibernateTemplate().get(Region.class, region.getId());
+	}
+
 }
