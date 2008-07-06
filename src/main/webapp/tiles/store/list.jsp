@@ -17,10 +17,10 @@
 					<td class="form_label" nowrap><s:text name="store.code.label" /></td>
 					<td><s:textfield name="searchStore.code" size="10" theme="simple" /></td>
 					<td class="form_label" nowrap><s:text name="store.name.label" /></td>
-					<td><s:textfield name="searchStore.name" size="30" theme="simple" /></td>
+					<td><s:textfield name="searchStore.name" size="20" theme="simple" /></td>
 					<td class="form_label" nowrap><s:text name="store.customer.label" /></td>
 					<td>
-						<s:select name="searchStore.customerId" list="customers" listKey="id" listValue="name" theme="simple"/>
+						<s:select name="searchStore.customerId" list="customers" headerKey="" headerValue="%{getText('store.search.customer.header.label')}" listKey="id" listValue="name" theme="simple"/>
 					</td>
 					<td><s:submit key="search.button" theme="simple" cssClass="button" /></td>
 				</tr>
@@ -39,7 +39,7 @@
 		<td align="center">
 		<!-- Search Results -->
 		<s:set name="storesList" value="stores" scope="request"/>
-		<display:table name="storesList" class="results" pagesize="5" requestURI="store_search.action" sort="list" defaultsort="1">
+		<display:table name="storesList" class="results" pagesize="20" requestURI="store_search.action" sort="list" defaultsort="1">
 			<display:column property="code" titleKey="store.code.label" sortable="true" />
 		    <display:column property="name" titleKey="store.name.label" />
 		    <display:column property="area.name" titleKey="store.customer.label" />

@@ -19,12 +19,37 @@ delete from tbl_customers;
 
 -- Customer
 insert into tbl_customers (customer_id, name) values (1,'Mac Donalds');
+insert into tbl_customers (customer_id, name) values (2,'Burger King');
+insert into tbl_customers (customer_id, name) values (3,'Pizza Hut');
 
 -- Region
-insert into tbl_regions (region_id, name, customer_id) values (1,'Capital federal', 1);
+insert into tbl_regions (region_id, name, customer_id) values (1,'Capital Federal', 1);
+insert into tbl_regions (region_id, name, customer_id) values (2,'Gran Buenos Aires', 1);
+
+insert into tbl_regions (region_id, name, customer_id) values (3,'Cuyo', 2);
+insert into tbl_regions (region_id, name, customer_id) values (4,'Mesopotamia', 2);
+
+insert into tbl_regions (region_id, name, customer_id) values (5,'Patagonia', 3);
+insert into tbl_regions (region_id, name, customer_id) values (6,'Buenos Aires', 3);
 
 -- Area
 insert into tbl_areas (area_id, name, region_id) values (1,'Monserrat', 1);
+insert into tbl_areas (area_id, name, region_id) values (2,'Caballito', 1);
+
+insert into tbl_areas (area_id, name, region_id) values (3,'Tigre', 2);
+insert into tbl_areas (area_id, name, region_id) values (4,'Bahia Blanca', 2);
+
+insert into tbl_areas (area_id, name, region_id) values (5,'San Juan', 3);
+insert into tbl_areas (area_id, name, region_id) values (6,'Mendoza', 3);
+
+insert into tbl_areas (area_id, name, region_id) values (7,'Entre Rios', 4);
+insert into tbl_areas (area_id, name, region_id) values (8,'Misiones', 4);
+
+insert into tbl_areas (area_id, name, region_id) values (9,'Chubut', 5);
+insert into tbl_areas (area_id, name, region_id) values (10,'Santa Cruz', 5);
+
+insert into tbl_areas (area_id, name, region_id) values (11,'Capital Federal', 6);
+insert into tbl_areas (area_id, name, region_id) values (12,'Gran Buenos Aires', 6);
 
 -- Profiles
 insert into tbl_profiles (profile_id, name, description) values (1, 'ROLE_USER', 'Profile Desc');

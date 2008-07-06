@@ -50,7 +50,7 @@ public class StoreServiceBean implements StoreService {
 			throw new IllegalArgumentException(STORE_FILTER_NULL);
 		}
 		
-		List<Store> retList = storeDao.filterStore(storeFilter);
+		List<Store> retList = storeDao.applyFilter(storeFilter);
 		
 		return retList;
 	}

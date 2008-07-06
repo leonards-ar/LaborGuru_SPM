@@ -41,7 +41,8 @@ public class Region extends SpmObject {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = super.hashCode();
+		//int result = super.hashCode();
+		int result = 31;
 		result = prime * result
 				+ ((customer == null) ? 0 : customer.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
@@ -120,7 +121,26 @@ public class Region extends SpmObject {
 	/**
 	 * @param areas the areas to set
 	 */
-	public void setAreas(Set<Area> areas) {
+	private void setAreas(Set<Area> areas) {
 		this.areas = areas;
 	}	
+	
+	/**
+	 * Adds an area to this region. Handles the bi-directional
+	 * relation.
+	 * @param area The area to add
+	 */
+	public void addArea(Area area){
+		
+		if (area == null){
+			throw new IllegalArgumentException("Null area passed in as parameter");
+		}
+		
+		if (area.getRegion() != null){
+			area.getRegion().getAreas().remove(area);
+		}
+		
+		area.setRegion(this);
+		this.areas.add(area);
+	}		
 }

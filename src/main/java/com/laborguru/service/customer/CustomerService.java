@@ -3,6 +3,7 @@ package com.laborguru.service.customer;
 import java.util.List;
 
 import com.laborguru.model.Customer;
+import com.laborguru.model.Employee;
 import com.laborguru.service.Service;
 
 
@@ -20,4 +21,11 @@ public interface CustomerService extends Service {
 	 * @return List with all the customers.
 	 */
 	List<Customer> findAll();
+	
+	/**
+	 * Retrieve a customer by its ID
+	 * @param customer
+	 * @return The complete customer object
+	 */
+	Customer getCustomerById(Customer customer);
 }

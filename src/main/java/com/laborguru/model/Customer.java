@@ -66,7 +66,9 @@ public class Customer extends SpmObject{
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = super.hashCode();
+		//:TODO: This is calling hibernate!!!
+		//int result = super.hashCode();
+		int result = 37;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -102,7 +104,26 @@ public class Customer extends SpmObject{
 	/**
 	 * @param regions the regions to set
 	 */
-	public void setRegions(Set<Region> regions) {
+	private void setRegions(Set<Region> regions) {
 		this.regions = regions;
+	}	
+	
+	/**
+	 * Adds a region to this customer. Handles the bi-directional
+	 * relation.
+	 * @param region The region to add
+	 */
+	public void addRegion(Region region){
+		
+		if (region == null){
+			throw new IllegalArgumentException("Null region passed in as parameter");
+		}
+		
+		if (region.getCustomer() != null){
+			region.getCustomer().getRegions().remove(region);
+		}
+		
+		region.setCustomer(this);
+		this.regions.add(region);
 	}	
 }

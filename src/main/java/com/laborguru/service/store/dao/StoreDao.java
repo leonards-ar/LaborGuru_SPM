@@ -33,7 +33,7 @@ public interface StoreDao {
 	 * @param storeFilter the store filter
 	 * @return the store list
 	 */
-	List<Store> filterStore(SearchStoreFilter storeFilter);
+	List<Store> applyFilter(SearchStoreFilter storeFilter);
 	
 	/**
 	 * Retrieves a store by id

@@ -11,7 +11,7 @@
 		<property name="name" column="name" type="string" length="150" />
 		<property name="code" column="code" type="string" length="150" />
 		<property name="firstDayOfWeek" column="first_day_of_week" type="int"/>
-		<many-to-one name="area" class="Area" foreign-key="fk_stores_area">
+		<many-to-one name="area" class="Area" foreign-key="fk_stores_areas">
 			<column name="area_id"/>
 		</many-to-one>
 	</class>

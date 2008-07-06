@@ -19,7 +19,7 @@
 		<!-- Parent can be null for root menu items -->
 		<!-- set name="childMenuItems" cascade="all-delete-orphan" inverse="true" lazy="false"-->
 		<set name="childMenuItems" inverse="true" lazy="false" >
-			<key column="parent_id"/>
+			<key column="parent_id" foreign-key="fk_menuitems_menuitems"/>
 			<one-to-many class="MenuItem"/>
 		</set>
 		

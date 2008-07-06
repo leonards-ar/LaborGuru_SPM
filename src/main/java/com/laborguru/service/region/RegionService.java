@@ -20,4 +20,11 @@ public interface RegionService extends Service {
 	 * @return
 	 */
 	List<Region> findAll();
+	
+	/**
+	 * Retrieves a given region
+	 * @param region The region to retrieve (holds the region id)
+	 * @return
+	 */
+	Region getRegionById(Region region);
 }

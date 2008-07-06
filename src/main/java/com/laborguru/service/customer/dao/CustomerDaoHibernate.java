@@ -5,11 +5,20 @@ import java.util.List;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.laborguru.model.Customer;
+import com.laborguru.model.Employee;
 
 public class CustomerDaoHibernate extends HibernateDaoSupport implements CustomerDao {
 
 	public List<Customer> findAll() {
 		return getHibernateTemplate().loadAll(Customer.class);
 	}
+	
+	/**
+	 * 
+	 */
+	public Customer getCustomerById(Customer customer) {
+		
+		return (Customer)getHibernateTemplate().get(Customer.class, customer.getId());		
+	}	
 
 }

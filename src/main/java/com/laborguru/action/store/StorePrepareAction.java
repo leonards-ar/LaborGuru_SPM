@@ -1,5 +1,6 @@
 package com.laborguru.action.store;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -37,23 +38,18 @@ public class StorePrepareAction extends SpmAction implements Preparable {
 
 	private Store store;
 
-	private Area area;
-	private Region region;
-	private Customer customer;
-	
 	private List<Store> stores;
 
 	private List<Customer> customers;
 	private List<Region> regions;
 	private List<Area> areas;
 
+	private Customer storeCustomer;
+	private Region storeRegion;
+	private Area storeArea;
+	
 	private SearchStoreFilter searchStore;
 	private Integer storeId;
-	
-	private Integer customerId;
-	private Integer regionId;
-	private Integer areaId;
-	
 
 	private boolean removePage;
 
@@ -110,7 +106,7 @@ public class StorePrepareAction extends SpmAction implements Preparable {
 	public void prepareList() {
 		loadListsForListPage();
 	}
-	
+
 	/**
 	 * Loads customers.
 	 */
@@ -123,9 +119,18 @@ public class StorePrepareAction extends SpmAction implements Preparable {
 	 */
 	private void loadListsForAddEditPage() {
 		customers = customerService.findAll();
-		regions = regionService.findAll();
-		areas = areaService.findAll();
+		if(getStoreCustomer() != null && getStoreCustomer().getRegions() != null) {
+			regions = new ArrayList<Region>(getStoreCustomer().getRegions());
+		} else {
+			regions = new ArrayList<Region>();
+		}
 		
+		if(getStoreRegion() != null && getStoreRegion().getAreas() != null) {
+			areas = new ArrayList<Area>(getStoreRegion().getAreas());
+		} else {
+			areas = new ArrayList<Area>();
+		}
+
 	}
 
 	/**
@@ -165,6 +170,58 @@ public class StorePrepareAction extends SpmAction implements Preparable {
 	}
 
 	/**
+	 * Selects a Customer, filling the regions combo box
+	 * with the corresponding regions.
+	 * @return
+	 * @throws Exception
+	 */
+	public String selectCustomer() throws Exception {
+		/*
+		 * We need the hibernate object so all the regions are loaded
+		 * to fill the regions combo box (prepareSelectCustomer method)
+		 */
+		if(getStoreCustomer() != null && getStoreCustomer().getId() != null) {
+			setStoreCustomer(getCustomerService().getCustomerById(getStoreCustomer()));
+			// Force the load of the internal sets
+			getStoreCustomer().getRegions();
+		}
+		// Refresh lists
+		loadListsForAddEditPage();
+		
+		return SpmActionResult.EDIT.getResult();
+	}
+
+	/**
+	 * Selects a Region, filling the areas combo box
+	 * with the corresponding areas.
+	 * @return
+	 * @throws Exception
+	 */
+	public String selectRegion() throws Exception {
+		/*
+		 * We need the hibernate object so all the regions are loaded
+		 * to fill the regions combo box (prepareSelectCustomer method)
+		 */
+		if(getStoreCustomer() != null && getStoreCustomer().getId() != null) {
+			setStoreCustomer(getCustomerService().getCustomerById(getStoreCustomer()));
+			// Force the load of the internal sets
+			getStoreCustomer().getRegions();
+		}
+		
+		/*
+		 * We need the hibernate object so all the areas are loaded
+		 * to fill the areas combo box (prepareSelectRegion method)
+		 */		
+		setStoreRegion(getRegionService().getRegionById(getStoreRegion()));
+		// Force the load of the internal sets
+		getStoreRegion().getAreas();
+		// Refresh lists
+		loadListsForAddEditPage();
+		
+		return SpmActionResult.EDIT.getResult();
+	}
+	
+	/**
 	 * Prepares the add page
 	 * 
 	 * @return
@@ -183,11 +240,16 @@ public class StorePrepareAction extends SpmAction implements Preparable {
 	public String edit() throws Exception {
 		// Getting store
 		loadStoreFromId();
-
-		setArea(this.store.getArea());
-		setRegion(this.area.getRegion());
-		setCustomer(this.region.getCustomer());
-
+		
+		setStoreArea(getStore().getArea());
+		setStoreRegion(getStoreArea().getRegion());
+		setStoreCustomer(getStoreRegion().getCustomer());
+		
+		// Force the load of the internal sets
+		getStoreCustomer().getRegions();
+		getStoreRegion().getAreas();
+		
+		loadListsForAddEditPage();
 		
 		return SpmActionResult.EDIT.getResult();
 	}
@@ -201,10 +263,6 @@ public class StorePrepareAction extends SpmAction implements Preparable {
 	public String remove() throws Exception {
 		// Getting store
 		loadStoreFromId();
-
-		setArea(this.store.getArea());
-		setRegion(this.area.getRegion());
-		setCustomer(this.region.getCustomer());
 
 		this.setRemovePage(true);
 
@@ -221,10 +279,6 @@ public class StorePrepareAction extends SpmAction implements Preparable {
 		// Getting store
 		loadStoreFromId();
 		
-		setArea(this.store.getArea());
-		setRegion(this.area.getRegion());
-		setCustomer(this.region.getCustomer());
-		
 		return SpmActionResult.SHOW.getResult();
 	}
 
@@ -237,9 +291,8 @@ public class StorePrepareAction extends SpmAction implements Preparable {
 	public String save() throws Exception {
 		
 		log.debug(this.store);
-		Area tmpArea = new Area();
-		tmpArea.setId(areaId);
-		store.setArea(areaService.getAreaById(tmpArea));
+
+		store.setArea(getStoreArea());
 		storeService.save(this.store);
 
 		return SpmActionResult.LISTACTION.getResult();
@@ -269,10 +322,18 @@ public class StorePrepareAction extends SpmAction implements Preparable {
 		this.setStore(storeService.getStoreById(tmpStore));
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isRemovePage() {
 		return removePage;
 	}
 
+	/**
+	 * 
+	 * @param removePage
+	 */
 	public void setRemovePage(boolean removePage) {
 		this.removePage = removePage;
 	}
@@ -450,87 +511,45 @@ public class StorePrepareAction extends SpmAction implements Preparable {
 	}
 
 	/**
-	 * @return the customerId
+	 * @return the storeCustomer
 	 */
-	public Integer getCustomerId() {
-		return customerId;
+	public Customer getStoreCustomer() {
+		return storeCustomer;
 	}
 
 	/**
-	 * @param customerId the customerId to set
+	 * @param storeCustomer the storeCustomer to set
 	 */
-	public void setCustomerId(Integer customerId) {
-		this.customerId = customerId;
+	public void setStoreCustomer(Customer storeCustomer) {
+		this.storeCustomer = storeCustomer;
 	}
 
 	/**
-	 * @return the regionId
+	 * @return the storeRegion
 	 */
-	public Integer getRegionId() {
-		return regionId;
+	public Region getStoreRegion() {
+		return storeRegion;
 	}
 
 	/**
-	 * @param regionId the regionId to set
+	 * @param storeRegion the storeRegion to set
 	 */
-	public void setRegionId(Integer regionId) {
-		this.regionId = regionId;
+	public void setStoreRegion(Region storeRegion) {
+		this.storeRegion = storeRegion;
 	}
 
 	/**
-	 * @return the areaId
+	 * @return the storeArea
 	 */
-	public Integer getAreaId() {
-		return areaId;
+	public Area getStoreArea() {
+		return storeArea;
 	}
 
 	/**
-	 * @param areaId the areaId to set
+	 * @param storeArea the storeArea to set
 	 */
-	public void setAreaId(Integer areaId) {
-		this.areaId = areaId;
-	}
-
-	/**
-	 * @return the area
-	 */
-	public Area getArea() {
-		return area;
-	}
-
-	/**
-	 * @param area the area to set
-	 */
-	public void setArea(Area area) {
-		this.area = area;
-	}
-
-	/**
-	 * @return the region
-	 */
-	public Region getRegion() {
-		return region;
-	}
-
-	/**
-	 * @param region the region to set
-	 */
-	public void setRegion(Region region) {
-		this.region = region;
-	}
-
-	/**
-	 * @return the customer
-	 */
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	/**
-	 * @param customer the customer to set
-	 */
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setStoreArea(Area storeArea) {
+		this.storeArea = storeArea;
 	}
 	
 }

@@ -34,6 +34,10 @@ public class RegionServiceBean implements RegionService {
 	public void setRegionDao(RegionDao regionDao) {
 		this.regionDao = regionDao;
 	}
+
+	public Region getRegionById(Region region) {
+		return getRegionDao().getRegionById(region);
+	}
 	
 	
 
