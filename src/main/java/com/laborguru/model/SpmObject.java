@@ -2,8 +2,6 @@ package com.laborguru.model;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
@@ -15,7 +13,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
  * @since SPM 1.0
  *
  */
-public class SpmObject implements Serializable {
+public abstract class SpmObject implements Serializable {
 
 	/**
 	 * Default serial version ID
@@ -34,22 +32,15 @@ public class SpmObject implements Serializable {
 	
 	
 	/**
-	 * Implementation of Equals for SpmObject
+	 * Abstract Equals for SpmObject
 	 * This method compares everything in SpmObject
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
-	public boolean equals(Object other)
-	{
-		return EqualsBuilder.reflectionEquals(this,other);
-	}
-	
+	public abstract boolean equals(Object other);	
 	/**
-	 * Implementation of HashCode for SpmObject.
+	 * Abstract of HashCode for SpmObject.
 	 * follows equals in using reflection.
 	 * @see java.lang.Object#hashCode()
 	 */
-	public int hashCode()
-	{
-		return HashCodeBuilder.reflectionHashCode(this);
-	}
+	public abstract int hashCode();
 }

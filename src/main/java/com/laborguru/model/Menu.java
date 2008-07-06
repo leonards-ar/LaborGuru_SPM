@@ -15,7 +15,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
  * @since SPM 1.0
  *
  */
-public class Menu extends SpmObject {
+public class Menu {
 	private List<MenuItem> items;
 	private int selectedItemIndex = 0;
 	
