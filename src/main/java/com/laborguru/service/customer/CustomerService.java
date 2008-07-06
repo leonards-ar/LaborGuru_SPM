@@ -3,7 +3,6 @@ package com.laborguru.service.customer;
 import java.util.List;
 
 import com.laborguru.model.Customer;
-import com.laborguru.model.Employee;
 import com.laborguru.service.Service;
 
 
