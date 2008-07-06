@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.laborguru.model.Customer;
-import com.laborguru.model.Employee;
 
 public class CustomerDaoHibernate extends HibernateDaoSupport implements CustomerDao {
 
