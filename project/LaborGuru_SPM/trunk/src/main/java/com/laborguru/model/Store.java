@@ -2,6 +2,8 @@ package com.laborguru.model;
 
 import java.util.Set;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
@@ -141,11 +143,10 @@ public class Store extends SpmObject {
 	 */
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((area == null) ? 0 : area.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
+		return new HashCodeBuilder(17, 37)
+		.append(this.name)
+		.append(this.area)
+		.toHashCode();
 	}
 
 	/**
@@ -157,22 +158,19 @@ public class Store extends SpmObject {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
+		
+		if (obj == null)
 			return false;
+		
 		if (getClass() != obj.getClass())
-			return false;
+			return false;		
+		
 		final Store other = (Store) obj;
-		if (area == null) {
-			if (other.area != null)
-				return false;
-		} else if (!area.equals(other.area))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		return true;
+		
+		return new EqualsBuilder()
+		.append(this.area, other.area)
+		.append(this.name, other.name)
+		.isEquals();
 	}
 
 	

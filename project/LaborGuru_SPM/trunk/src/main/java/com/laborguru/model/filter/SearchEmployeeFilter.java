@@ -1,6 +1,5 @@
 package com.laborguru.model.filter;
 
-import com.laborguru.model.SpmObject;
 import com.laborguru.model.Store;
 
 /**
@@ -11,7 +10,7 @@ import com.laborguru.model.Store;
  * @since SPM 1.0
  *
  */
-public class SearchEmployeeFilter extends SpmObject {
+public class SearchEmployeeFilter {
 
 	/**
 	 * Default serial version
