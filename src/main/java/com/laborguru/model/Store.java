@@ -1,5 +1,7 @@
 package com.laborguru.model;
 
+import java.util.Set;
+
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
@@ -15,7 +17,7 @@ public class Store extends SpmObject {
 	private String code;
 	private Integer firstDayOfWeek;
 	private Area area;
-
+	private Set<Position> positions;
 	
 	/**
 	 * Store toString
@@ -99,6 +101,40 @@ public class Store extends SpmObject {
 		this.area = area;
 	}
 
+	/**
+	 * @return the positions
+	 */
+	public Set<Position> getPositions() {
+		return positions;
+	}
+
+	/**
+	 * @param positions the positions to set
+	 */
+	private void setPositions(Set<Position> positions) {
+		this.positions = positions;
+	}	
+	
+	/**
+	 * Adds a position to the store. Handles the bi-directional
+	 * relation.
+	 * @param area The position to add
+	 */
+	public void addPositions(Position position){
+		
+		if (position == null){
+			throw new IllegalArgumentException("Null position passed in as parameter");
+		}
+		
+		if (position.getStore() != null){
+			position.getStore().getPositions().remove(position);
+		}
+		
+		position.setStore(this);
+		this.positions.add(position);
+	}	
+	
+	
 	/**
 	 * @return
 	 * @see java.lang.Object#hashCode()

@@ -2,6 +2,8 @@ package com.laborguru.model;
 
 import java.util.Set;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
@@ -100,28 +102,25 @@ public class Profile extends SpmObject {
 	 * @see com.laborguru.model.SpmObject#hashCode()
 	 */
 	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
+		return new HashCodeBuilder(17, 37).append(this.name).toHashCode();
 	}
 
 	/* (non-Javadoc)
 	 * @see com.laborguru.model.SpmObject#equals(java.lang.Object)
 	 */
 	public boolean equals(Object obj) {
+		
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
+		
+		if (obj == null)
 			return false;
+		
 		if (getClass() != obj.getClass())
-			return false;
+			return false;		
+
 		final Profile other = (Profile) obj;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		return true;
+		
+		return new EqualsBuilder().append(this.name, other.name).isEquals();
 	}
 }

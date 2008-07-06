@@ -2,6 +2,8 @@ package com.laborguru.model;
 
 import java.util.Set;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
@@ -40,14 +42,11 @@ public class Region extends SpmObject {
 	 */
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		//int result = super.hashCode();
-		int result = 31;
-		result = prime * result
-				+ ((customer == null) ? 0 : customer.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
+		return new HashCodeBuilder(17, 37).append(this.name)
+		.append(this.customer)
+		.toHashCode();
 	}
+	
 	/**
 	 * @param obj
 	 * @return
@@ -55,25 +54,23 @@ public class Region extends SpmObject {
 	 */
 	@Override
 	public boolean equals(Object obj) {
+		
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
+		
+		if (obj == null)
 			return false;
+		
 		if (getClass() != obj.getClass())
-			return false;
+			return false;		
+
 		final Region other = (Region) obj;
-		if (customer == null) {
-			if (other.customer != null)
-				return false;
-		} else if (!customer.equals(other.customer))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		return true;
+		
+		return new EqualsBuilder().append(this.name, other.name)
+		.append(this.customer, other.customer)
+		.isEquals();		
 	}
+	
 	/**
 	 * @return the id
 	 */

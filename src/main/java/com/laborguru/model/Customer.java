@@ -2,6 +2,8 @@ package com.laborguru.model;
 
 import java.util.Set;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
@@ -65,13 +67,9 @@ public class Customer extends SpmObject{
 	 */
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		//:TODO: This is calling hibernate!!!
-		//int result = super.hashCode();
-		int result = 37;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
+		return new HashCodeBuilder(17, 37).append(this.name).toHashCode();
 	}
+	
 	/**
 	 * @param obj
 	 * @return
@@ -79,19 +77,19 @@ public class Customer extends SpmObject{
 	 */
 	@Override
 	public boolean equals(Object obj) {
+
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
+		
+		if (obj == null)
 			return false;
+		
 		if (getClass() != obj.getClass())
-			return false;
+			return false;		
+
 		final Customer other = (Customer) obj;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		return true;
+		
+		return new EqualsBuilder().append(this.name, other.name).isEquals();
 	}
 	
 	/**

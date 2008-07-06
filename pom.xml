@@ -51,6 +51,12 @@
 				<db.url>jdbc:mysql://192.168.1.103:3306/spm</db.url>
 			</properties>
 		</profile>
+		<profile>
+			<id>development</id>
+			<properties>
+				<db.url>jdbc:mysql://localhost:3306/spm</db.url>
+			</properties>
+		</profile>
 	</profiles>
 	<build>
 		<finalName>spmwebapp</finalName>

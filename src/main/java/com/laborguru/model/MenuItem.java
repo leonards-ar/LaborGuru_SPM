@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
@@ -111,13 +113,10 @@ public class MenuItem extends SpmObject {
 	 */
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result
-				+ ((labelKey == null) ? 0 : labelKey.hashCode());
-		result = prime * result
-				+ ((parentMenuItem == null) ? 0 : parentMenuItem.hashCode());
-		return result;
+		return new HashCodeBuilder(17, 37)
+		.append(this.parentMenuItem)
+		.append(this.labelKey)
+		.toHashCode();
 	}
 
 	/**
@@ -127,24 +126,22 @@ public class MenuItem extends SpmObject {
 	 */
 	@Override
 	public boolean equals(Object obj) {
+		
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
+		
+		if (obj == null)
 			return false;
+		
 		if (getClass() != obj.getClass())
 			return false;
+		
 		final MenuItem other = (MenuItem) obj;
-		if (labelKey == null) {
-			if (other.labelKey != null)
-				return false;
-		} else if (!labelKey.equals(other.labelKey))
-			return false;
-		if (parentMenuItem == null) {
-			if (other.parentMenuItem != null)
-				return false;
-		} else if (!parentMenuItem.equals(other.parentMenuItem))
-			return false;
-		return true;
+		
+		return new EqualsBuilder()
+		.append(this.parentMenuItem, other.parentMenuItem)
+		.append(this.labelKey, other.labelKey)		
+		.isEquals();
 	}
 
 	public Set<MenuItem> getChildMenuItems() {
