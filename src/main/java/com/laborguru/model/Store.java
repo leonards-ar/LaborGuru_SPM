@@ -1,5 +1,6 @@
 package com.laborguru.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -17,9 +18,10 @@ public class Store extends SpmObject {
 	private Integer id;	
 	private String name;
 	private String code;
-	private Integer firstDayOfWeek;
+	private DayOfWeek firstDayOfWeek;
 	private Area area;
 	private Set<Position> positions;
+	private Set<OperationTime> operationTimes;
 	
 	/**
 	 * Store toString
@@ -34,6 +36,10 @@ public class Store extends SpmObject {
 	   	.toString();		
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public Integer getId() {
 		return id;
 	}
@@ -68,25 +74,29 @@ public class Store extends SpmObject {
 	 * Returns the day this store uses as the first day of
 	 * the week. The possible values are:
 	 * <ul>
-	 * 	<li>0: Sunday</li>
-	 * 	<li>1: Monday</li>
-	 * 	<li>2: Tuesday</li>
-	 * 	<li>3: Wednesday</li>
-	 * 	<li>4: Thursday</li>
-	 * 	<li>5: Friday</li>
-	 * 	<li>6: Saturday</li>
+	 * 	<li>1: Sunday</li>
+	 * 	<li>2: Monday</li>
+	 * 	<li>3: Tuesday</li>
+	 * 	<li>4: Wednesday</li>
+	 * 	<li>5: Thursday</li>
+	 * 	<li>6: Friday</li>
+	 * 	<li>7: Saturday</li>
 	 * </ul>
 	 * @return the firstDayOfWeek
 	 */
-	public Integer getFirstDayOfWeek() {
-		return firstDayOfWeek;
+	public Integer getFirstDayOfWeekAsInteger() {
+		return getFirstDayOfWeek() != null ? getFirstDayOfWeek().getDayOfWeek() : null;
 	}
 
 	/**
 	 * @param firstDayOfWeek the firstDayOfWeek to set
 	 */
-	public void setFirstDayOfWeek(Integer firstDayOfWeek) {
-		this.firstDayOfWeek = firstDayOfWeek;
+	public void setFirstDayOfWeekAsInteger(Integer firstDayOfWeek) {
+		if(firstDayOfWeek != null) {
+			setFirstDayOfWeek(DayOfWeek.valueOf(String.valueOf(firstDayOfWeek)));
+		} else {
+			setFirstDayOfWeek(null);
+		}
 	}
 
 	/**
@@ -120,9 +130,9 @@ public class Store extends SpmObject {
 	/**
 	 * Adds a position to the store. Handles the bi-directional
 	 * relation.
-	 * @param area The position to add
+	 * @param position The position to add
 	 */
-	public void addPositions(Position position){
+	public void addPosition(Position position){
 		
 		if (position == null){
 			throw new IllegalArgumentException("Null position passed in as parameter");
@@ -173,5 +183,54 @@ public class Store extends SpmObject {
 		.isEquals();
 	}
 
-	
+	/**
+	 * @return the operationTime
+	 */
+	public Set<OperationTime> getOperationTimes() {
+		if(operationTimes == null) {
+			setOperationTimes(new HashSet<OperationTime>());
+		}		
+		return operationTimes;
+	}
+
+	/**
+	 * @param operationTime the operationTime to set
+	 */
+	private void setOperationTimes(Set<OperationTime> operationTimes) {
+		this.operationTimes = operationTimes;
+	}
+
+	/**
+	 * Adds an operation time (open and close hours) to the store.
+	 * Handles the bi-directional relation.
+	 * @param operationTime The operationTime to add
+	 */
+	public void addOperationTime(OperationTime operationTime){
+		
+		if (operationTime == null){
+			throw new IllegalArgumentException("Null operationTime passed in as parameter");
+		}
+		
+		if (operationTime.getStore() != null){
+			operationTime.getStore().getOperationTimes().remove(operationTime);
+		}
+		
+		operationTime.setStore(this);
+
+		getOperationTimes().add(operationTime);
+	}
+
+	/**
+	 * @return the firstDayOfWeek
+	 */
+	public DayOfWeek getFirstDayOfWeek() {
+		return firstDayOfWeek;
+	}
+
+	/**
+	 * @param firstDayOfWeek the firstDayOfWeek to set
+	 */
+	public void setFirstDayOfWeek(DayOfWeek firstDayOfWeek) {
+		this.firstDayOfWeek = firstDayOfWeek;
+	}
 }

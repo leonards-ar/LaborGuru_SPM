@@ -66,12 +66,12 @@
 		<put-attribute name="storeExtDataBody" value="/tiles/store/weekdayguestserv_view.jsp" />
 	</definition>
 
-	<definition name="hoursOfOperationEditor" extends="storeExtendedCRUD">
-		<put-attribute name="storeExtDataBody" value="/tiles/store/hoursofoperation_edit.jsp" />
+	<definition name="editOperationTimePage" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/operationtimes_edit.jsp" />
 	</definition>
 
-	<definition name="hoursOfOperationView" extends="storeExtendedCRUD">
-		<put-attribute name="storeExtDataBody" value="/tiles/store/hoursofoperation_view.jsp" />
+	<definition name="showOperationTimePage" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/operationtimes_view.jsp" />
 	</definition>
 	
 	<definition name="positionNamesEditor" extends="storeExtendedCRUD">
