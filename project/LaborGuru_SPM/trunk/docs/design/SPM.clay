@@ -731,11 +731,11 @@
 </foreign-key-list>
 <index-list/>
 </table>
-<table alias="" name="tbl_operation_hours" remarks="" uid="16d864e:11abbfde91b:-7ff2">
+<table alias="" name="tbl_operation_time" remarks="" uid="16d864e:11abbfde91b:-7ff2">
 <table-description></table-description>
-<table-figure-bounds height="93" width="179" x="939" y="424"/>
+<table-figure-bounds height="115" width="179" x="949" y="440"/>
 <column-list>
-<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="open_close_hour_id" remarks="" uid="16d864e:11abbfde91b:-7fe7">
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="operation_time_id" remarks="" uid="16d864e:11abbfde91b:-7fe7">
 <column-description></column-description>
 <data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
 <variant type-name-pattern="INT"/>
@@ -772,9 +772,9 @@
 </data-type>
 </column>
 </column-list>
-<primary-key alias="" name="PK_TBL_OPERATION_HOURS" remarks="" uid="16d864e:11abbfde91b:-7ff1">
+<primary-key alias="" name="PK_TBL_OPERATION_TIME" remarks="" uid="16d864e:11abbfde91b:-7ff1">
 <primary-key-description></primary-key-description>
-<primary-key-column name="open_close_hour_id"/>
+<primary-key-column name="operation_time_id"/>
 </primary-key>
 <unique-key-list/>
 <foreign-key-list>
@@ -790,7 +790,7 @@
 </table>
 <table alias="" name="tbl_stores_day_part" remarks="" uid="16d864e:11abbfde91b:-7f78">
 <table-description></table-description>
-<table-figure-bounds height="91" width="146" x="944" y="544"/>
+<table-figure-bounds height="91" width="146" x="944" y="581"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="store_id" remarks="" uid="16d864e:11abbfde91b:-7f74">
 <column-description></column-description>

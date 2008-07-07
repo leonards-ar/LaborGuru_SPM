@@ -12,20 +12,20 @@
 			<result name="input" type="tiles">editStorePage</result>			
 		</action>
 		
+		<action name="storeOperationTimes_*" method="{1}" class="com.laborguru.action.store.OperationTimePrepareAction">
+			<result name="edit" type="tiles">editOperationTimePage</result>
+			<result name="show" type="tiles">showOperationTimePage</result>
+			<result name="cancelEdit" type="tiles">listStoresPage</result>
+			<result name="cancelShow" type="redirectAction">store_list</result>
+			<result name="input" type="tiles">editOperationTimePage</result>			
+		</action>
+				
 		<action name="store_weekdayGuestServ_edit">
 			<result type="tiles">weekdayGuestServEditor</result>
 		</action>
 
 		<action name="store_weekdayGuestServ_view">
 			<result type="tiles">weekdayGuestServView</result>
-		</action>
-
-		<action name="store_hoursOfOperation_edit">
-			<result type="tiles">hoursOfOperationEditor</result>
-		</action>
-
-		<action name="store_hoursOfOperation_view">
-			<result type="tiles">hoursOfOperationView</result>
 		</action>
 		
 		<action name="store_positionNames_edit">
