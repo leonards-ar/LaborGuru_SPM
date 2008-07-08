@@ -15,10 +15,11 @@
 	        <key column="store_id" foreign-key="fk_positions_store"/>
 	        <one-to-many class="Position"/>
 	    </set>		
-	    <set name="operationTimes" cascade="all" table="tbl_operation_times" lazy="true">
+	    <list name="operationTimes" cascade="all" table="tbl_operation_times" lazy="true" inverse="true">
 	        <key column="store_id" foreign-key="fk_operation_times_store"/>
+	        <list-index column="day_of_week"/>
 	        <one-to-many class="OperationTime"/>
-	    </set>		    
+	    </list>		    
 		<many-to-one name="area" class="Area" foreign-key="fk_stores_areas">
 			<column name="area_id"/>
 		</many-to-one>

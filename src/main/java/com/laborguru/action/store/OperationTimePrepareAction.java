@@ -79,9 +79,9 @@ public class OperationTimePrepareAction extends SpmAction implements Preparable 
 	private void loadOperationTimes() {
 		if(getStore() != null) {
 			for(OperationTime time : getStore().getOperationTimes()) {
-				if(time.getDayOfWeekAsInteger() != null) {
-					weekOperationTimeOpen[time.getDayOfWeek().ordinal()] = dateToDisplayTime(time.getOpenHour());
-					weekOperationTimeClose[time.getDayOfWeek().ordinal()] = dateToDisplayTime(time.getCloseHour());
+				if(time != null && time.getDayOfWeekIndex() != null) {
+					weekOperationTimeOpen[time.getDayOfWeekIndex().intValue()] = dateToDisplayTime(time.getOpenHour());
+					weekOperationTimeClose[time.getDayOfWeekIndex().intValue()] = dateToDisplayTime(time.getCloseHour());
 				}
 			}
 		}
@@ -92,35 +92,23 @@ public class OperationTimePrepareAction extends SpmAction implements Preparable 
 	 * so it can be updated.
 	 */
 	private void setOperationTimes() {
-		boolean exists[] = new boolean[DayOfWeek.values().length];
-		
 		if(getStore().getOperationTimes() != null) {
-			/*
-			 * Update open and close hours of existing operation times 
-			 */
-			for(OperationTime operationTime : getStore().getOperationTimes()) {
-				if(operationTime.getDayOfWeek() != null) {
-					operationTime.setOpenHour(displayTimeToDate(weekOperationTimeOpen[operationTime.getDayOfWeek().ordinal()]));
-					operationTime.setCloseHour(displayTimeToDate(weekOperationTimeClose[operationTime.getDayOfWeek().ordinal()]));
-					exists[operationTime.getDayOfWeek().ordinal()] = true;
+			OperationTime anOperationTime;
+
+			for(int i=0; i < getWeekOperationTimeOpen().length; i++) {
+				if(getStore().getOperationTimes().size() > i && getStore().getOperationTimes().get(i) != null) {
+					// Already exists
+					anOperationTime = getStore().getOperationTimes().get(i);
+				} else {
+					// New Operation time for the current day of week
+					anOperationTime = new OperationTime();
+					anOperationTime.setStore(getStore());
+					anOperationTime.setDayOfWeek(DayOfWeek.values()[i]);
 				}
-			}
-		}
-		
-		/*
-		 * Handle new operation times
-		 */
-		OperationTime anOperationTime;
-		for(int i=0; i < DayOfWeek.values().length; i++) {
-			if(!exists[i]) {
-				anOperationTime = new OperationTime();
-				anOperationTime.setStore(getStore());
-				anOperationTime.setDayOfWeek(DayOfWeek.values()[i]);
 				anOperationTime.setOpenHour(displayTimeToDate(weekOperationTimeOpen[i]));
 				anOperationTime.setCloseHour(displayTimeToDate(weekOperationTimeClose[i]));
-				getStore().addOperationTime(anOperationTime);
+				getStore().getOperationTimes().set(i, anOperationTime);
 			}
-
 		}
 	}
 	
@@ -130,7 +118,11 @@ public class OperationTimePrepareAction extends SpmAction implements Preparable 
 	 * @return
 	 */
 	private String dateToDisplayTime(Date d) {
-		return TIME_FORMAT.format(d);
+		if(d != null) {
+			return TIME_FORMAT.format(d);
+		} else {
+			return null;
+		}
 	}
 	
 	/**
@@ -184,6 +176,7 @@ public class OperationTimePrepareAction extends SpmAction implements Preparable 
 	 * @throws Exception
 	 */
 	public String save() throws Exception {
+		loadStoreFromId();
 		
 		log.debug(this.store);
 

@@ -10,9 +10,9 @@
 	        <generator class="identity" />
         </id>
 
-        <property name="openHour" column="open_hour" type="timestamp" not-null="true"/>       
-        <property name="closeHour" column="close_hour" type="timestamp" not-null="true"/>        
-        <property name="dayOfWeekAsInteger" column="day_of_week" type="int" not-null="true"/>        
+        <property name="openHour" column="open_hour" type="timestamp" not-null="false"/>       
+        <property name="closeHour" column="close_hour" type="timestamp" not-null="false"/>        
+        <property name="dayOfWeekIndex" column="day_of_week" type="int" not-null="true"/>        
 
 		<many-to-one name="store" class="Store" foreign-key="fk_operation_times_store">
 			<column name="store_id"/>
