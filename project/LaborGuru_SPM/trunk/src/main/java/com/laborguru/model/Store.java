@@ -156,7 +156,7 @@ public class Store extends SpmObject {
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37)
 		.append(this.name)
-		.append(this.area)
+		.append(this.area != null? this.area.getId():null)
 		.toHashCode();
 	}
 
@@ -179,7 +179,7 @@ public class Store extends SpmObject {
 		final Store other = (Store) obj;
 		
 		return new EqualsBuilder()
-		.append(this.area, other.area)
+		.append(this.area != null? this.area.getId():null, other.area != null? other.area.getId():null)
 		.append(this.name, other.name)
 		.isEquals();
 	}
