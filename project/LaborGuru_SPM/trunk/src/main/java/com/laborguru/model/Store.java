@@ -1,6 +1,7 @@
 package com.laborguru.model;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -21,7 +22,7 @@ public class Store extends SpmObject {
 	private DayOfWeek firstDayOfWeek;
 	private Area area;
 	private Set<Position> positions;
-	private Set<OperationTime> operationTimes;
+	private List<OperationTime> operationTimes;
 	
 	/**
 	 * Store toString
@@ -186,9 +187,9 @@ public class Store extends SpmObject {
 	/**
 	 * @return the operationTime
 	 */
-	public Set<OperationTime> getOperationTimes() {
+	public List<OperationTime> getOperationTimes() {
 		if(operationTimes == null) {
-			setOperationTimes(new HashSet<OperationTime>());
+			setOperationTimes(new ArrayList<OperationTime>());
 		}		
 		return operationTimes;
 	}
@@ -196,7 +197,7 @@ public class Store extends SpmObject {
 	/**
 	 * @param operationTime the operationTime to set
 	 */
-	private void setOperationTimes(Set<OperationTime> operationTimes) {
+	private void setOperationTimes(List<OperationTime> operationTimes) {
 		this.operationTimes = operationTimes;
 	}
 

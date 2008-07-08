@@ -148,16 +148,20 @@ public class OperationTime extends SpmObject {
 	 * 
 	 * @return
 	 */
-	public Integer getDayOfWeekAsInteger() {
-		return getDayOfWeek().getDayOfWeek();
+	public Integer getDayOfWeekIndex() {
+		return getDayOfWeek() != null ? new Integer(getDayOfWeek().ordinal()) : null;
 	}
 	
 	/**
 	 * 
 	 * @param dayofWeek
 	 */
-	public void setDayOfWeekAsInteger(Integer dayOfWeek) {
-		setDayOfWeek(DayOfWeek.valueOf(String.valueOf(dayOfWeek)));
+	public void setDayOfWeekIndex(Integer dayOfWeek) {
+		if(dayOfWeek != null) {
+			setDayOfWeek(DayOfWeek.values()[dayOfWeek.intValue()]);
+		} else {
+			setDayOfWeek(null);
+		}
 	}
 	
 	/**
