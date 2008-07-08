@@ -16,10 +16,10 @@
         <property name="email" column="email" type="string" length="100"/>
         <property name="name" column="name" type="string" length="50" />
         <property name="surname" column="surname" type="string" length="100" />
-		<property name="lastLogon" column="last_logon" type="date" />
+		<property name="lastLogon" column="last_logon" type="timestamp" />
 		<property name="loginCount" column="login_count" type="int"/>
 		<property name="creationDate" column="creation_date" type="date"/>
-		<property name="lastUpdateDate" column="last_update_date" type="date"/>
+		<property name="lastUpdateDate" column="last_update_date" type="timestamp"/>
 	    <set name="profiles" table="tbl_users_profiles" lazy="true">
 	        <key column="user_id" foreign-key="fk_users_profiles"/>
 	        <many-to-many column="profile_id" class="Profile" foreign-key="fk_profiles_users"/>
