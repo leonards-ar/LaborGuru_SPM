@@ -28,6 +28,8 @@
 	</developers>
 	<properties>
 		<skip.database.creation>true</skip.database.creation>
+		<skip.database.data.export>true</skip.database.data.export>
+		<skip.seedata.creation>true</skip.seedata.creation>
 		<db.driver>com.mysql.jdbc.Driver</db.driver>
 		<db.username>spm</db.username>
 		<db.password>java1234</db.password>
@@ -83,7 +85,6 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<!-- hibernate ddl generation -->
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>hibernate3-maven-plugin</artifactId>
 				<version>2.1</version>
@@ -112,7 +113,7 @@
 				<executions>
 					<execution>
 						<id>export-db</id>
-						<phase>process-classes</phase>
+						<phase>generate-test-resources</phase>
 						<goals>
 							<goal>hbm2ddl</goal>
 						</goals>
@@ -126,70 +127,54 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>sql-maven-plugin</artifactId>
-				<dependencies>
-					<dependency>
-						<groupId>mysql</groupId>
-						<artifactId>mysql-connector-java</artifactId>
-						<version>5.1.6</version>
-					</dependency>
-				</dependencies>
-				<configuration>
-					<driver>${db.driver}</driver>
-					<url>${db.url}</url>
-					<username>${db.username}</username>
-					<password>${db.password}</password>
-					<skip>${skip.database.creation}</skip>
-				</configuration>
-				<executions>
-					<execution>
-						<id>create-data</id>
-						<phase>process-test-resources</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<srcFiles>
-								<srcFile>
-									src/main/data/sql/initialdata.sql
-								</srcFile>
-							</srcFiles>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>dbunit-maven-plugin</artifactId>
-        <dependencies>
-			<dependency>
-				<groupId>mysql</groupId>
-				<artifactId>mysql-connector-java</artifactId>
-				<version>5.1.6</version>
-			</dependency>
-        </dependencies>
-        <!-- common configurations -->
-		<configuration>
-			<driver>${db.driver}</driver>
-			<url>${db.url}</url>
-			<username>${db.username}</username>
-			<password>${db.password}</password>
-		</configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>export</goal>
-            </goals>
-            <!-- specific configurations -->
-            <configuration>
-              <format>xml</format>
-              <dest>target/dbunit/export.xml</dest>
-            </configuration>
-          </execution>
-        </executions>        
-      </plugin>
+	      <plugin>
+	        <groupId>org.codehaus.mojo</groupId>
+	        <artifactId>dbunit-maven-plugin</artifactId>
+	        <dependencies>
+				<dependency>
+					<groupId>mysql</groupId>
+					<artifactId>mysql-connector-java</artifactId>
+					<version>5.1.6</version>
+				</dependency>
+	        </dependencies>
+			<configuration>
+				<driver>${db.driver}</driver>
+				<url>${db.url}</url>
+				<username>${db.username}</username>
+				<password>${db.password}</password>
+			</configuration>  
+	        <executions>
+	  		<execution>
+	          	<id>create-data</id>
+	            <!-- 
+	            Phase is set to package so jetty:run-war can execute the data creation
+	            <phase>pre-integration-test</phase>  -->
+	            <phase>package</phase>
+	            <goals>
+	              <goal>operation</goal>
+	            </goals>
+	            <configuration>
+	              <datatypeWarning>true</datatypeWarning>
+	              <format>flat</format>
+	              <type>REFRESH</type>
+	              <src>src/main/data/sql/seed_data_flat.xml</src>
+				  <skip>${skip.seedata.creation}</skip>
+	            </configuration>
+	         </execution>
+	         <execution>
+	          	<id>export-data</id>	          	
+	            <phase>post-integration-test</phase>
+	            <goals>
+	              <goal>export</goal>
+	            </goals>
+	            <configuration>
+	              <format>flat</format>
+	              <dest>target/dbunit/exportFlat.xml</dest>
+				  <skip>${skip.database.data.export}</skip>
+	            </configuration>
+	         </execution>	          
+	        </executions>		      
+	      </plugin>
 	</plugins>
 	</build>
 	<dependencies>
