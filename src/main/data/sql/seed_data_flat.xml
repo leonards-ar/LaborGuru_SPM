@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE dataset SYSTEM "spm_dataset.dtd">
+<dataset>
+  <tbl_customers customer_id="1" name="Mac Donalds"/>
+  <tbl_customers customer_id="2" name="Burger King"/>
+  <tbl_customers customer_id="3" name="Pizza Hut"/>
+  <tbl_regions region_id="1" name="Capital Federal" customer_id="1"/>
+  <tbl_regions region_id="2" name="Gran Buenos Aires" customer_id="1"/>
+  <tbl_regions region_id="3" name="Cuyo" customer_id="2"/>
+  <tbl_regions region_id="4" name="Mesopotamia" customer_id="2"/>
+  <tbl_regions region_id="5" name="Patagonia" customer_id="3"/>
+  <tbl_regions region_id="6" name="Buenos Aires" customer_id="3"/>
+  <tbl_areas area_id="1" name="Monserrat" region_id="1"/>
+  <tbl_areas area_id="2" name="Caballito" region_id="1"/>
+  <tbl_areas area_id="3" name="Tigre" region_id="2"/>
+  <tbl_areas area_id="4" name="Bahia Blanca" region_id="2"/>
+  <tbl_areas area_id="5" name="San Juan" region_id="3"/>
+  <tbl_areas area_id="6" name="Mendoza" region_id="3"/>
+  <tbl_areas area_id="7" name="Entre Rios" region_id="4"/>
+  <tbl_areas area_id="8" name="Misiones" region_id="4"/>
+  <tbl_areas area_id="9" name="Chubut" region_id="5"/>
+  <tbl_areas area_id="10" name="Santa Cruz" region_id="5"/>
+  <tbl_areas area_id="11" name="Capital Federal" region_id="6"/>
+  <tbl_areas area_id="12" name="Gran Buenos Aires" region_id="6"/>
+  <tbl_permissions permission_id="1" name="FREE_ACCESS" description="Dummy permission that all profiles should have"/>
+  <tbl_permissions permission_id="2" name="VIEW_EMPLOYEE" description="View and query employees of the own store"/>
+  <tbl_permissions permission_id="3" name="EDIT_EMPLOYEE" description="Edit existing employees of the own store"/>
+  <tbl_permissions permission_id="4" name="CREATE_EMPLOYEE" description="Create new employees in the own store"/>
+  <tbl_permissions permission_id="5" name="VIEW_STORE" description="View and query stores"/>
+  <tbl_permissions permission_id="6" name="EDIT_STORE" description="Edit existing stores"/>
+  <tbl_permissions permission_id="7" name="CREATE_STORE" description="Create new stores"/>
+  <tbl_menu_items menu_item_id="1" label_key="home.menu.label" help_key="HOME_MENU_HELP" target="/home/home.action" position="0" permission_id="1"/>
+  <tbl_menu_items menu_item_id="2" label_key="employee.menu.label" help_key="EMPLOYEE_MENU_HELP" target="/employee/employee_list.action" position="0" permission_id="2"/>
+  <tbl_menu_items menu_item_id="3" label_key="employee.submenu.list" help_key="EMPLOYEE_LIST_HELP" target="/employee/employee_list.action" position="1" parent_id="2" permission_id="3"/>
+  <tbl_menu_items menu_item_id="4" label_key="employee.submenu.create" help_key="EMPLOYEE_ADD_HELP" target="/employee/employee_add.action" position="0" parent_id="2" permission_id="4"/>
+  <tbl_menu_items menu_item_id="5" label_key="store.menu.label" help_key="STORE_MENU_HELP" target="/store/store_list.action" position="0" permission_id="5"/>
+  <tbl_menu_items menu_item_id="6" label_key="store.submenu.list" help_key="STORE_LIST_HELP" target="/store/store_list.action" position="1" parent_id="5" permission_id="6"/>
+  <tbl_menu_items menu_item_id="7" label_key="store.submenu.create" help_key="STORE_ADD_HELP" target="/store/store_add.action" position="0" parent_id="5" permission_id="7"/>
+  <tbl_stores store_id="1" name="microcentro" area_id="1"/>
+  <tbl_positions position_id="1" name="chef" store_id="1"/>
+  <tbl_positions position_id="2" name="waiter" store_id="1"/>
+  <tbl_positions position_id="3" name="cook" store_id="1"/>
+  <tbl_positions position_id="4" name="porter" store_id="1"/>
+  <tbl_profiles profile_id="1" name="ROLE_USER" description="Profile Desc"/>
+  <tbl_profiles profile_id="2" name="ROLE_FAKE" description="Profile Desc"/>
+  <tbl_profiles_permissions profile_id="1" permission_id="1"/>
+  <tbl_profiles_permissions profile_id="1" permission_id="2"/>
+  <tbl_profiles_permissions profile_id="1" permission_id="3"/>
+  <tbl_profiles_permissions profile_id="1" permission_id="4"/>
+  <tbl_profiles_permissions profile_id="1" permission_id="5"/>
+  <tbl_profiles_permissions profile_id="1" permission_id="6"/>
+  <tbl_profiles_permissions profile_id="1" permission_id="7"/>
+  <tbl_profiles_permissions profile_id="2" permission_id="1"/>
+  <tbl_users user_id="1" username="mcapurro" password="1234" status="0" email="mcapurro@gmail.com" name="Mariano" surname="Capurro" login_count="0" creation_date="2008-07-07"/>
+  <tbl_users user_id="2" username="cnunezre" password="1234" status="0" email="cnunezre@gmail.com" name="Cristian" surname="Nunez Rebolledo" login_count="0" creation_date="2008-07-07"/>
+  <tbl_users user_id="3" username="fbarrera" password="1234" status="0" email="fbarrera@gmail.com" name="Federico" surname="Barrera Oro" login_count="0" creation_date="2008-07-07"/>
+  <tbl_users user_id="4" username="igoris" password="1234" status="0" email="ignacio@laborguru.com" name="Ignacio" surname="Goris" login_count="0" creation_date="2008-07-07"/>
+  <tbl_users user_id="5" username="fake" password="1234" status="0" email="fake@fake.com" name="Fake" surname="User" login_count="0" creation_date="2008-07-07"/>
+  <tbl_users_profiles user_id="1" profile_id="1"/>
+  <tbl_users_profiles user_id="2" profile_id="1"/>
+  <tbl_users_profiles user_id="3" profile_id="1"/>
+  <tbl_users_profiles user_id="4" profile_id="1"/>
+  <tbl_users_profiles user_id="5" profile_id="2"/>
+</dataset>
