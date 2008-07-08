@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<!--  Services's declarations -->
+	
+	<bean id="customerService" class="com.laborguru.service.customer.CustomerServiceBean">
+		<property name="customerDao" ref="customerDao" />
+	</bean>
+	
+	<bean id="regionService" class="com.laborguru.service.region.RegionServiceBean">
+		<property name="regionDao" ref="regionDao" />
+	</bean>
+	
+	<bean id="areaService" class="com.laborguru.service.area.AreaServiceBean">
+		<property name="areaDao" ref="areaDao" />
+	</bean>
+	
+	<bean id="referenceDataService"
+		class="com.laborguru.service.data.ReferenceDataServiceBean">
+		<property name="referenceData" ref="referenceData"/>
+	</bean>
+
+	<bean id="positionService"
+		class="com.laborguru.service.position.PositionServiceBean">
+		<property name="positionDao" ref="positionDao" />
+	</bean>
+
+	<bean id="menuService"
+		class="com.laborguru.service.menu.MenuServiceBean">
+		<property name="menuDao" ref="menuDao" />
+	</bean>
+
+	<bean id="userService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.laborguru.service.user.UserService</value>
+			</list>
+		</property>	
+	
+		<property name="target">
+			<ref bean="userServiceTarget"/>
+		</property>		
+		
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>	
+		
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributeSourceDefault"/>
+		</property>			
+	</bean>
+
+	<bean id="userServiceTarget" class="com.laborguru.service.user.UserServiceBean" autowire="byType"/>
+
+	<bean id="employeeService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.laborguru.service.employee.EmployeeService</value>
+			</list>
+		</property>	
+	
+		<property name="target">
+			<ref bean="employeeServiceTarget"/>
+		</property>		
+		
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>	
+		
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributeSourceDefault"/>
+		</property>	
+ 	</bean>
+
+ 	<bean id="employeeServiceTarget" class="com.laborguru.service.employee.EmployeeServiceBean" autowire="byType"/>
+
+	<bean id="authenticateService" class="com.laborguru.service.security.AuthenticationService">
+		<property name="service" ref="userService" />
+		<property name="loginTries" value="${conn.max_login_times}"/>
+	</bean>
+
+	<bean id="storeService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.laborguru.service.store.StoreService</value>
+			</list>
+		</property>	
+	
+		<property name="target">
+			<ref bean="storeServiceTarget"/>
+		</property>		
+		
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>	
+		
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributeSourceDefault"/>
+		</property>	
+ 	</bean>
+
+ 	<bean id="storeServiceTarget" class="com.laborguru.service.store.StoreServiceBean" autowire="byType"/>
+				
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory"/>
+		</property>
+	</bean>	
+
+	<bean id="transactionAttributeSourceDefault" class="org.springframework.transaction.interceptor.MatchAlwaysTransactionAttributeSource"/>	
+	
+</beans>
+

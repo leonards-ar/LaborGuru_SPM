@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<!--  Action's declarations  -->
+	<bean id="employeeAction" class="com.laborguru.action.employee.EmployeePrepareAction" scope="prototype">
+		<property name="positionService" ref="positionService"/>
+		<property name="employeeService" ref="employeeService"/>
+		<property name="employee" ref="employee"/>
+		<property name="referenceDataService" ref="referenceDataService"/>		
+	</bean>
+
+	<bean id="employee" class="com.laborguru.model.Employee" scope="prototype">
+		<property name="maxHoursWeek" value="40"/>
+		<property name="maxDaysWeek" value="5"/>
+		<property name="maxHoursDay" value="8"/>
+		<property name="wage" value="7.0"/>
+		<property name="status" value="0"/>
+		<property name="hireDate" ref="dateTemplateToday"/>
+	</bean>
+			
+	<bean id="storeAction" class="com.laborguru.action.store.StorePrepareAction">
+		<property name="storeService" ref="storeService"/>
+		<property name="customerService" ref="customerService"/>
+		<property name="regionService" ref="regionService"/>
+		<property name="areaService" ref="areaService"/>
+	</bean>
+		
+	<bean id="dateTemplateToday" class="java.util.Date"/>
+</beans>
+
