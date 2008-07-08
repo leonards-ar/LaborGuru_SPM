@@ -1,31 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE dataset SYSTEM "src/main/data/sql/spm_dataset.dtd">
 <dataset>
-  <table name="tbl_stores">
-    <column>store_id</column>
-    <column>name</column>
-    <column>code</column>
-    <column>first_day_of_week</column>
-    <column>area_id</column>
-    <row>
-      <value>2</value>
-      <value>microcentro 2</value>
-      <null/>
-      <null/>
-      <value>1</value>
-    </row>
-    <row>
-      <value>3</value>
-      <value>caballito</value>
-      <null/>
-      <null/>
-      <value>1</value>
-    </row>
-    <row>
-      <value>4</value>
-      <value>palermo</value>
-      <null/>
-      <null/>
-      <value>1</value>
-    </row>
-  </table>
+  <tbl_customers customer_id="1" name="Mac Donalds"/>
+  <tbl_regions region_id="1" name="Capital Federal" customer_id="1"/>
+  <tbl_regions region_id="2" name="Gran Buenos Aires" customer_id="1"/>
+  <tbl_areas area_id="1" name="Monserrat" region_id="1"/>
+  <tbl_areas area_id="2" name="Caballito" region_id="1"/>
+  <tbl_stores store_id="1" name="name:microcentro" code="code:microcentro" area_id="1"/>
+  <tbl_stores store_id="2" name="caballito" area_id="1"/>
+  <tbl_stores store_id="3" name="palermo" area_id="1"/>
+  <tbl_stores store_id="4" name="microcentro" area_id="1"/>
 </dataset>
