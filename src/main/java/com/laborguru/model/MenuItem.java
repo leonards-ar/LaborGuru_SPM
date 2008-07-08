@@ -14,7 +14,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import com.laborguru.model.comparator.MenuItemPositionComparator;
 
 /**
- * Menu Item Type
+ * This class represents an element on the front end application menu
  * @author <a href="cnunezre@gmail.com">Cristian Nunez Rebolledo</a>
  * @version 1.0
  * @since SPM 1.0

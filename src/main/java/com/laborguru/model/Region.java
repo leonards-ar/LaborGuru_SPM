@@ -43,7 +43,7 @@ public class Region extends SpmObject {
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).append(this.name)
-		.append(this.customer)
+		.append(this.customer!=null?this.customer.getId():null)
 		.toHashCode();
 	}
 	
@@ -66,8 +66,9 @@ public class Region extends SpmObject {
 
 		final Region other = (Region) obj;
 		
-		return new EqualsBuilder().append(this.name, other.name)
-		.append(this.customer, other.customer)
+		return new EqualsBuilder()
+		.append(this.name, other.name)
+		.append(this.customer!=null?this.customer.getId():null, other.customer!=null?other.customer.getId():null)
 		.isEquals();		
 	}
 	

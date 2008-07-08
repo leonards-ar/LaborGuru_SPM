@@ -41,7 +41,7 @@ public class Area extends SpmObject {
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37)
 		.append(this.name)
-		.append(this.region)
+		.append(this.region!=null?this.region.getId():null)
 		.toHashCode();
 	}
 	
@@ -66,7 +66,7 @@ public class Area extends SpmObject {
 		
 		return new EqualsBuilder()
 		.append(this.name, other.name)
-		.append(this.region, other.region)
+		.append(this.region!=null?this.region.getId():null, other.region!=null?other.region.getId():null)
 		.isEquals();
 	}
 	

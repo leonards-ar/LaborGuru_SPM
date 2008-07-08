@@ -102,11 +102,10 @@ public class OperationTime extends SpmObject {
 	 */
 	@Override
 	public int hashCode() {
-		Object storeId = getStore() != null ? getStore().getId() : null;
 		
 		return new HashCodeBuilder(17, 37)
 		.append(getDayOfWeek())
-		.append(storeId)
+		.append(getStore() != null? getStore().getId() : null)
 		.toHashCode();
 	}
 
@@ -128,12 +127,9 @@ public class OperationTime extends SpmObject {
 		
 		final OperationTime other = (OperationTime) obj;
 
-		if(getStore() == null || other.getStore() == null)
-			return false;
-		
 		return new EqualsBuilder()
 		.append(getDayOfWeek(), other.getDayOfWeek())
-		.append(getStore().getId(), other.getStore().getId())
+		.append(getStore() != null ? getStore().getId() : null, other.getStore() != null ? other.getStore().getId() : null)
 		.isEquals();
 	}
 	

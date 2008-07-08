@@ -54,8 +54,9 @@ public class Position extends SpmObject{
 	 */
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).append(this.name)
-		.append(this.store)
+		return new HashCodeBuilder(17, 37)
+		.append(this.name)
+		.append(this.store != null? this.store.getId():null)
 		.toHashCode();
 	}
 	
@@ -79,7 +80,7 @@ public class Position extends SpmObject{
 		final Position other = (Position) obj;
 		
 		return new EqualsBuilder().append(this.name, other.name)
-		.append(this.store, other.store)
+		.append(this.store != null? this.store.getId():null, other.store != null? other.store.getId():null)
 		.isEquals();
 	}
 
