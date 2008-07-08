@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<!--  Dao's declarations -->
+	<bean id="menuDao" class="com.laborguru.service.menu.dao.MenuDaoHibernate" autowire="byType"/>
+
+	<bean id="userDao" class="com.laborguru.service.user.dao.UserDaoHibernate" autowire="byType"/>
+	
+	<bean id="employeeDao" class="com.laborguru.service.employee.dao.EmployeeDaoHibernate" autowire="byType"/>
+
+	<bean id="positionDao" class="com.laborguru.service.position.dao.PositionDaoHibernate" autowire="byType"/>
+
+	<bean id="storeDao" class="com.laborguru.service.store.dao.StoreDaoHibernate" autowire="byType"/>
+
+	<bean id="areaDao" class="com.laborguru.service.area.dao.AreaDaoHibernate" autowire="byType"/>
+	
+	<bean id="regionDao" class="com.laborguru.service.region.dao.RegionDaoHibernate" autowire="byType"/>
+	
+	<bean id="customerDao" class="com.laborguru.service.customer.dao.CustomerDaoHibernate" autowire="byType"/>
+						
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="mySessionFactory"	class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref local="myDataSourcePool" />
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>com/laborguru/model/MenuItem.hbm.xml</value>
+				<value>com/laborguru/model/Permission.hbm.xml</value>
+				<value>com/laborguru/model/Position.hbm.xml</value>
+				<value>com/laborguru/model/Profile.hbm.xml</value>
+				<value>com/laborguru/model/Store.hbm.xml</value>
+				<value>com/laborguru/model/User.hbm.xml</value>
+				<value>com/laborguru/model/Area.hbm.xml</value>
+				<value>com/laborguru/model/Region.hbm.xml</value>
+				<value>com/laborguru/model/Customer.hbm.xml</value>
+				<value>com/laborguru/model/OperationTime.hbm.xml</value>				
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<ref local="hibernateProperties" />
+		</property>
+
+	</bean>
+
+	<bean id="hibernateProperties"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="properties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="myDataSourcePool" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${db.driver}" />
+		<property name="url" value="${db.url}" />
+		<property name="username" value="${db.username}" />
+		<property name="password" value="${db.password}" />
+	</bean>	
+</beans>
+
