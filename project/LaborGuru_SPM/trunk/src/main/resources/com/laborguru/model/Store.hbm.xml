@@ -12,7 +12,7 @@
 		<property name="code" column="code" type="string" length="150" />
 		<property name="firstDayOfWeekAsInteger" column="first_day_of_week" type="int"/>
 	    <set name="positions" table="tbl_positions" lazy="true">
-	        <key column="store_id" foreign-key="fk_positions_store"/>
+	        <key column="store_id" foreign-key="fk_store_positions"/>
 	        <one-to-many class="Position"/>
 	    </set>		
 	    <list name="operationTimes" cascade="all" table="tbl_operation_times" lazy="true" inverse="true">
