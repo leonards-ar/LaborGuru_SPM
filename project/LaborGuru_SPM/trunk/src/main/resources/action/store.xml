@@ -19,7 +19,15 @@
 			<result name="cancelShow" type="redirectAction">store_list</result>
 			<result name="input" type="tiles">editOperationTimePage</result>			
 		</action>
-				
+		
+		<action name="storePosition_*" method="{1}" class="com.laborguru.action.store.StorePositionPrepareAction">
+			<result name="edit" type="tiles">positionNamesEditor</result>
+			<result name="show" type="tiles">positionNamesView</result>
+			<result name="cancelEdit" type="tiles">listStoresPage</result>
+			<result name="cancelShow" type="redirectAction">store_list</result>
+			<result name="input" type="tiles">editOperationTimePage</result>
+		</action>		
+		
 		<action name="store_weekdayGuestServ_edit">
 			<result type="tiles">weekdayGuestServEditor</result>
 		</action>
