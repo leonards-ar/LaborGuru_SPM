@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
+import com.laborguru.frontend.HttpRequestConstants;
 import com.laborguru.model.Area;
 import com.laborguru.model.Customer;
 import com.laborguru.model.Region;
@@ -317,10 +318,18 @@ public class StorePrepareAction extends SpmAction implements Preparable {
 	 * Load full store from the property storeId
 	 */
 	private void loadStoreFromId() {
+		Integer id = getStoreId();
+		//:TODO: Better way to communicate actions in Struts 2?
+		if(id == null) {
+			id = (Integer) getSession().get(HttpRequestConstants.STORE_TO_EDIT_ID);
+			setStoreId(id);
+			getSession().remove(HttpRequestConstants.STORE_TO_EDIT_ID);
+		}
 		Store tmpStore = new Store();
-		tmpStore.setId(this.storeId);
-		this.setStore(storeService.getStoreById(tmpStore));
-	}
+		tmpStore.setId(id);
+		this.setStore(getStoreService().getStoreById(tmpStore));
+	}	
+	
 
 	/**
 	 * 

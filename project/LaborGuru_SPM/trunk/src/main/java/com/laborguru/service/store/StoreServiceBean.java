@@ -2,6 +2,7 @@ package com.laborguru.service.store;
 
 import java.util.List;
 
+import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.Store;
 import com.laborguru.model.filter.SearchStoreFilter;
 import com.laborguru.service.store.dao.StoreDao;
@@ -75,9 +76,10 @@ public class StoreServiceBean implements StoreService {
 	/**
 	 * @param store
 	 * @return
+	 * @throws SpmCheckedException In case there is any error during save
 	 * @see com.laborguru.service.store.StoreService#save(com.laborguru.model.Store)
 	 */
-	public Store save(Store store) {
+	public Store save(Store store) throws SpmCheckedException {
 		
 		if (store == null){
 			throw new IllegalArgumentException(STORE_NULL);

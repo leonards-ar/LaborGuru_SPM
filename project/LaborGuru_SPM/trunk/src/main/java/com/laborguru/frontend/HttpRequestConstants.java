@@ -32,6 +32,13 @@ public interface HttpRequestConstants {
 	String STORE = "spmStore";
 	
 	/**
+	 * The store that is being edited. As the store CRUD has
+	 * many suboptions, it is a good idea to have it in 
+	 * session scope
+	 */
+	String STORE_TO_EDIT_ID = "spmStoreToEditId";
+	
+	/**
 	 * The request key holding the newly selected item index
 	 */
 	String MENU_ITEM_INDEX = "menuItemIndex";

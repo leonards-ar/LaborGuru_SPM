@@ -75,18 +75,18 @@ public class Store extends SpmObject {
 	 * Returns the day this store uses as the first day of
 	 * the week. The possible values are:
 	 * <ul>
-	 * 	<li>1: Sunday</li>
-	 * 	<li>2: Monday</li>
-	 * 	<li>3: Tuesday</li>
-	 * 	<li>4: Wednesday</li>
-	 * 	<li>5: Thursday</li>
-	 * 	<li>6: Friday</li>
-	 * 	<li>7: Saturday</li>
+	 * 	<li>0: Sunday</li>
+	 * 	<li>1: Monday</li>
+	 * 	<li>2: Tuesday</li>
+	 * 	<li>3: Wednesday</li>
+	 * 	<li>4: Thursday</li>
+	 * 	<li>5: Friday</li>
+	 * 	<li>6: Saturday</li>
 	 * </ul>
 	 * @return the firstDayOfWeek
 	 */
 	public Integer getFirstDayOfWeekAsInteger() {
-		return getFirstDayOfWeek() != null ? getFirstDayOfWeek().getDayOfWeek() : null;
+		return getFirstDayOfWeek() != null ? new Integer(getFirstDayOfWeek().ordinal()) : null;
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class Store extends SpmObject {
 	 */
 	public void setFirstDayOfWeekAsInteger(Integer firstDayOfWeek) {
 		if(firstDayOfWeek != null) {
-			setFirstDayOfWeek(DayOfWeek.valueOf(String.valueOf(firstDayOfWeek)));
+			setFirstDayOfWeek(DayOfWeek.values()[firstDayOfWeek.intValue()]);
 		} else {
 			setFirstDayOfWeek(null);
 		}

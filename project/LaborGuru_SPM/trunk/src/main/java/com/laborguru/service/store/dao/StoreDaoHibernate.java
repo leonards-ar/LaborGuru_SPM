@@ -132,5 +132,4 @@ public class StoreDaoHibernate extends SpmHibernateDao implements StoreDao {
 	public List<Store> findAll() {
 		return (List<Store>)getHibernateTemplate().find("from Store");
 	}
-
 }

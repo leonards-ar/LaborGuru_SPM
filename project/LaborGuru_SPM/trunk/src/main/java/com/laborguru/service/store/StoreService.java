@@ -2,6 +2,7 @@ package com.laborguru.service.store;
 
 import java.util.List;
 
+import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.Store;
 import com.laborguru.model.filter.SearchStoreFilter;
 import com.laborguru.service.Service;
@@ -19,8 +20,9 @@ public interface StoreService extends Service {
 	 * Saves or updates a store
 	 * @param store store to save or update
 	 * @return the Store updated.
+	 * @throws SpmCheckedException In case there is any error during save
 	 */
-	Store save(Store store);
+	Store save(Store store) throws SpmCheckedException;
 	
 	
 	/**
