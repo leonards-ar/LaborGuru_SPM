@@ -43,6 +43,7 @@ public class AuthenticationService implements UserAuthenticationService {
 				reason = UserAuthenticationService.USER_DISABLED_ERROR;
 			} else if (password.equals(user.getPassword())) {
 				user.setLastLogon(new Date());
+				user.setLoginCount(0);
 				userDetails = new UserDetailsImpl(user);
 			} else {
 				int loginCount = user.getLoginCount();
