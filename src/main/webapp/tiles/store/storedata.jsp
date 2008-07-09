@@ -13,17 +13,7 @@
 				colspan="0" cellspan="0" align="center">
 				<tr class="editFormEvenRow">
 					<td align="right" class="form_label" nowrap><s:text name="store.customer.label" /></td>
-					<td align="left" class="value">
-					<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
-						<tr>
-							<td><s:property value="store.office" /></td>
-							<td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>" /></td>
-							<td><s:property value="store.office" /></td>
-							<td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>" /></td>
-							<td><s:property value="store.office" /></td>
-						</tr>
-					</table>
-					</td>
+					<td align="left" class="value"><s:property value="store.area.region.customer.name" /></td>
 				</tr>
 	
 				<tr class="editFormOddRow">
