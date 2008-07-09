@@ -6,13 +6,10 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
-import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
+import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.DayOfWeek;
 import com.laborguru.model.OperationTime;
-import com.laborguru.model.Store;
-import com.laborguru.service.store.StoreService;
-import com.opensymphony.xwork2.Preparable;
 
 /**
  * This action deals with Store CRUD.
@@ -23,16 +20,14 @@ import com.opensymphony.xwork2.Preparable;
  * 
  */
 @SuppressWarnings("serial")
-public class OperationTimePrepareAction extends SpmAction implements Preparable {
+public class OperationTimePrepareAction extends StoreAdministrationBaseAction {
 	
 	private static Logger log = Logger.getLogger(OperationTimePrepareAction.class);
 	
-	private StoreService storeService;
+	
 
-	private Store store;
-
-	private Integer storeId;
-
+	private Integer firstDayOfWeek;
+	
 	private String weekOperationTimeOpen[] = new String[DayOfWeek.values().length];
 	private String weekOperationTimeClose[] = new String[DayOfWeek.values().length];
 	
@@ -60,16 +55,6 @@ public class OperationTimePrepareAction extends SpmAction implements Preparable 
 	 * @throws Exception
 	 */
 	public void prepareSave() {
-	}
-
-	/**
-	 * Prepare data to be used in the actions methods defined for this action
-	 * 
-	 * @throws Exception
-	 * @see com.opensymphony.xwork2.Preparable#prepare()
-	 */
-	public void prepare() throws Exception {
-		// It's needed by the Preparable interface, don't comment out or removed
 	}
 
 	/**
@@ -107,7 +92,7 @@ public class OperationTimePrepareAction extends SpmAction implements Preparable 
 				}
 				anOperationTime.setOpenHour(displayTimeToDate(weekOperationTimeOpen[i]));
 				anOperationTime.setCloseHour(displayTimeToDate(weekOperationTimeClose[i]));
-				getStore().getOperationTimes().set(i, anOperationTime);
+				getStore().getOperationTimes().add(anOperationTime);
 			}
 		}
 	}
@@ -146,10 +131,8 @@ public class OperationTimePrepareAction extends SpmAction implements Preparable 
 	 * @throws Exception
 	 */
 	public String edit() throws Exception {
-		// Getting store
-		loadStoreFromId();
-		
 		loadOperationTimes();
+		setFirstDayOfWeek(getStore().getFirstDayOfWeekAsInteger());
 		
 		return SpmActionResult.EDIT.getResult();
 	}
@@ -161,9 +144,7 @@ public class OperationTimePrepareAction extends SpmAction implements Preparable 
 	 * @throws Exception
 	 */
 	public String show() throws Exception {
-		// Getting store
-		loadStoreFromId();
-		
+	
 		loadOperationTimes();
 		
 		return SpmActionResult.SHOW.getResult();
@@ -176,71 +157,25 @@ public class OperationTimePrepareAction extends SpmAction implements Preparable 
 	 * @throws Exception
 	 */
 	public String save() throws Exception {
-		loadStoreFromId();
-		
-		log.debug(this.store);
+		try {
+			setOperationTimes();
+			getStore().setFirstDayOfWeekAsInteger(getFirstDayOfWeek());
+			
+			if(log.isDebugEnabled()) {
+				log.debug("About to save store: " + getStore());
+			}
+			
+			getStoreService().save(getStore());
 
-		setOperationTimes();
-		
-		storeService.save(this.store);
-
-		return SpmActionResult.LISTACTION.getResult();
-
-	}
-
-	/**
-	 * Load full store from the property storeId
-	 */
-	private void loadStoreFromId() {
-		Store tmpStore = new Store();
-		tmpStore.setId(this.storeId);
-		this.setStore(storeService.getStoreById(tmpStore));
-	}
-
-	/**
-	 * @return the store
-	 */
-	public Store getStore() {
-		return store;
-	}
-
-	/**
-	 * @param store
-	 *            the store to set
-	 */
-	public void setStore(Store store) {
-		this.store = store;
-	}
-
-
-	/**
-	 * @return the storeId
-	 */
-	public Integer getStoreId() {
-		return storeId;
-	}
-
-	/**
-	 * @param storeId
-	 *            the storeId to set
-	 */
-	public void setStoreId(Integer storeId) {
-		this.storeId = storeId;
-	}
-
-	/**
-	 * @return the storeService
-	 */
-	public StoreService getStoreService() {
-		return storeService;
-	}
-
-	/**
-	 * @param storeService
-	 *            the storeService to set
-	 */
-	public void setStoreService(StoreService storeService) {
-		this.storeService = storeService;
+			if(log.isInfoEnabled()) {
+				log.info("Store hours of operation successfully update for store with id [" + getStoreId() + "]");
+			}
+			
+			return SpmActionResult.SUCCESS.getResult();
+		} catch (SpmCheckedException e) {
+			addActionError(e.getErrorMessage());
+			return SpmActionResult.INPUT.getResult();
+		}
 	}
 
 	/**
@@ -270,4 +205,20 @@ public class OperationTimePrepareAction extends SpmAction implements Preparable 
 	public void setWeekOperationTimeClose(String[] weekOperationTimeClose) {
 		this.weekOperationTimeClose = weekOperationTimeClose;
 	}
+
+	/**
+	 * @return the firstDayOfWeek
+	 */
+	public Integer getFirstDayOfWeek() {
+		return firstDayOfWeek;
+	}
+
+	/**
+	 * @param firstDayOfWeek the firstDayOfWeek to set
+	 */
+	public void setFirstDayOfWeek(Integer firstDayOfWeek) {
+		this.firstDayOfWeek = firstDayOfWeek;
+	}
+
+
 }

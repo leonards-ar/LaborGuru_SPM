@@ -3,7 +3,7 @@
 
 <br />
               <s:form action="storeOperationTimes_save" theme="simple">
-              <s:hidden name="store.id" theme="simple"/>
+              <s:hidden name="storeId" theme="simple"/>
 <table border="0" cellspacing="0" align="center">
 	<tr>
 		<td id="subtitleBar" nowrap><s:text name="store.storeoperations.title" /> - <s:text name="store.storeoperations.firstdayofweek.title" /></td>
@@ -15,7 +15,7 @@
 				<tr class="editFormOddRow">
                     <td align="right" class="form_label" nowrap><s:text name="store.storeoperations.firstdayofweek.label" /></td>
                     <td align="left" class="value">
-                    	<s:select name="store.firstDayOfWeekAsInteger" list="{'1','2','3','4','5','6','7'}" listValue="%{getText('dayofweek.'+toString())}"/>
+                    	<s:select name="firstDayOfWeek" list="{'0','1','2','3','4','5','6'}" listValue="%{getText('dayofweek.'+toString())}"/>
                     </td>
 				</tr>
 			</table>
@@ -38,13 +38,13 @@
 						<table border="0" cellpadding="3" cellspacing="1" align="center">
 							<tr class="editorTableHeader">
 								<td>&nbsp;</td>
+								<td><s:text name="dayofweek.0" /></td>
 								<td><s:text name="dayofweek.1" /></td>
 								<td><s:text name="dayofweek.2" /></td>
 								<td><s:text name="dayofweek.3" /></td>
 								<td><s:text name="dayofweek.4" /></td>
 								<td><s:text name="dayofweek.5" /></td>
 								<td><s:text name="dayofweek.6" /></td>
-								<td><s:text name="dayofweek.7" /></td>
 							</tr>
 							<tr>
 								<td class="editorTableFirstColumn"><s:text name="store.storeoperations.hoursofoperation.open" /></td>

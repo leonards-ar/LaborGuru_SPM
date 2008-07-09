@@ -15,9 +15,10 @@
 		<action name="storeOperationTimes_*" method="{1}" class="com.laborguru.action.store.OperationTimePrepareAction">
 			<result name="edit" type="tiles">editOperationTimePage</result>
 			<result name="show" type="tiles">showOperationTimePage</result>
-			<result name="cancelEdit" type="tiles">listStoresPage</result>
-			<result name="cancelShow" type="redirectAction">store_list</result>
-			<result name="input" type="tiles">editOperationTimePage</result>			
+			<result name="cancelEdit" type="redirectAction">store_edit</result> 
+			<result name="cancelShow" type="redirectAction">store_show</result> 
+			<result name="input" type="tiles">editOperationTimePage</result>
+			<result name="success" type="redirectAction">store_edit</result> 			
 		</action>
 		
 		<action name="storePosition_*" method="{1}" class="com.laborguru.action.store.StorePositionPrepareAction">

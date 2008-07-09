@@ -18,7 +18,10 @@ public enum SpmActionResult {
 	SAVE("save"), 
 	INPUT("input"),
 	LOGOUT("logout"),
-	LOGIN("login");
+	LOGIN("login"),
+	SUCCESS("success"),
+	CANCEL_EDIT("cancelEdit"),
+	CANCEL_SHOW("cancelShow");
 	
 	private String result;
 	
