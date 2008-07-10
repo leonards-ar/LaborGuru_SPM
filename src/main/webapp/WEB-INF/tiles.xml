@@ -58,11 +58,11 @@
 	  <put-attribute name="storeData" value="/tiles/store/storedata.jsp" />
 	</definition>
 	
-	<definition name="weekdayGuestServEditor" extends="storeExtendedCRUD">
+	<definition name="editWeekdayGuestServ" extends="storeExtendedCRUD">
 		<put-attribute name="storeExtDataBody" value="/tiles/store/weekdayguestserv_edit.jsp" />
 	</definition>
 
-	<definition name="weekdayGuestServView" extends="storeExtendedCRUD">
+	<definition name="showWeekdayGuestServ" extends="storeExtendedCRUD">
 		<put-attribute name="storeExtDataBody" value="/tiles/store/weekdayguestserv_view.jsp" />
 	</definition>
 
@@ -74,19 +74,19 @@
 		<put-attribute name="storeExtDataBody" value="/tiles/store/operationtimes_view.jsp" />
 	</definition>
 	
-	<definition name="positionNamesEditor" extends="storeExtendedCRUD">
+	<definition name="editPositionNames" extends="storeExtendedCRUD">
 		<put-attribute name="storeExtDataBody" value="/tiles/store/positionnames_edit.jsp" />
 	</definition>
 
-	<definition name="positionNamesView" extends="storeExtendedCRUD">
+	<definition name="showPositionNames" extends="storeExtendedCRUD">
 		<put-attribute name="storeExtDataBody" value="/tiles/store/positionnames_view.jsp" />
 	</definition>	
 	
-	<definition name="daypartDefinitionEditor" extends="storeExtendedCRUD">
+	<definition name="editDaypartDefinition" extends="storeExtendedCRUD">
 		<put-attribute name="storeExtDataBody" value="/tiles/store/daypartdefinition_edit.jsp" />
 	</definition>
 
-	<definition name="daypartDefinitionView" extends="storeExtendedCRUD">
+	<definition name="showDaypartDefinition" extends="storeExtendedCRUD">
 		<put-attribute name="storeExtDataBody" value="/tiles/store/daypartdefinition_view.jsp" />
 	</definition>		
 </tiles-definitions>

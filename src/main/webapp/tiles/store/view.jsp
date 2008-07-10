@@ -73,7 +73,7 @@
 					    			<tr class="actionsTableValue">
 					    			<td>
 					    				<table border="0" cellpadding="3" cellspacing="0" colspan="0" cellspan="0">
-												<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url namespace="/store" action="store_weekdayGuestServ_view" includeParams="none"/>"><s:text name="store.laborallowance.weekdayguestservice.title" /></a></td></tr>
+												<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url namespace="/store" action="storeWeekdayGuestServ_show" includeParams="none"><s:param name="storeId" value="store.id"/></s:url>"><s:text name="store.laborallowance.weekdayguestservice.title" /></a></td></tr>
 						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.laborallowance.weekendguestservice.title" /></a></td></tr>
 						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.laborallowance.variableflexible.title" /></a></td></tr>
 						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.laborallowance.variableopening.title" /></a></td></tr>
@@ -114,9 +114,9 @@
 					    			<tr class="actionsTableValue">
 						    			<td>
 						    				<table border="0" cellpadding="3" cellspacing="0" colspan="0" cellspan="0">
-						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url namespace="/store" action="store_hoursOfOperation_view" includeParams="none"/>"><s:text name="store.storeoperations.hoursofoperation.title" /></a></td></tr>
-						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url namespace="/store" action="store_daypartDefinition_view" includeParams="none"/>"><s:text name="store.storeoperations.daypartdefinition.title" /></a></td></tr>
-						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url namespace="/store" action="store_positionNames_view" includeParams="none"/>"><s:text name="store.storeoperations.positionnames.title" /></a></td></tr>
+						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url namespace="/store" action="storeOperationTimes_show" includeParams="none"><s:param name="storeId" value="store.id"/></s:url>"><s:text name="store.storeoperations.hoursofoperation.title" /></a></td></tr>
+						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url namespace="/store" action="storeDaypartDefinition_show" includeParams="none"><s:param name="storeId" value="store.id"/></s:url>"><s:text name="store.storeoperations.daypartdefinition.title" /></a></td></tr>
+						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url namespace="/store" action="storePositionNames_show" includeParams="none"><s:param name="storeId" value="store.id"/></s:url>"><s:text name="store.storeoperations.positionnames.title" /></a></td></tr>
 						    				</table>
 						    			</td>
 					    			</tr>

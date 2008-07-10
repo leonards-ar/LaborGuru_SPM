@@ -13,7 +13,7 @@
 				<tr class="editFormOddRow">
                     <td align="right" class="form_label" nowrap><s:text name="store.storeoperations.firstdayofweek.label" /></td>
                     <td align="left" class="value">
-                    	<s:text name="%{'dayofweek.'+store.firstDayOfWeek.toString()}" />
+                    	<s:text name="%{'dayofweek.'+store.firstDayOfWeekAsInteger}" />
                     </td>
 				</tr>
 			</table>
@@ -46,27 +46,23 @@
 							</tr>
 							<tr>
 								<td class="editorTableFirstColumn"><s:text name="store.storeoperations.hoursofoperation.open" /></td>
-								<td class="editorTableOddRow">8:00</td>
-								<td class="editorTableOddRow">8:00</td>
-								<td class="editorTableOddRow">8:00</td>
-								<td class="editorTableOddRow">8:00</td>
-								<td class="editorTableOddRow">8:00</td>
-								<td class="editorTableOddRow">8:00</td>
-								<td class="editorTableOddRow">8:00</td>
+								<td class="editorTableOddRow"><s:property value="weekOperationTimeOpen[0]"/></td>
+								<td class="editorTableOddRow"><s:property value="weekOperationTimeOpen[1]"/></td>
+								<td class="editorTableOddRow"><s:property value="weekOperationTimeOpen[2]"/></td>
+								<td class="editorTableOddRow"><s:property value="weekOperationTimeOpen[3]"/></td>
+								<td class="editorTableOddRow"><s:property value="weekOperationTimeOpen[4]"/></td>
+								<td class="editorTableOddRow"><s:property value="weekOperationTimeOpen[5]"/></td>
+								<td class="editorTableOddRow"><s:property value="weekOperationTimeOpen[6]"/></td>
 							</tr>
 							<tr>
 								<td class="editorTableFirstColumn"><s:text name="store.storeoperations.hoursofoperation.close" /></td>
-								<td class="editorTableEvenRow">21:00</td>
-								<td class="editorTableEvenRow">21:00</td>
-								<td class="editorTableEvenRow">21:00</td>
-								<td class="editorTableEvenRow">21:00</td>
-								<td class="editorTableEvenRow">21:00</td>
-								<td class="editorTableEvenRow">21:00</td>
-								<td class="editorTableEvenRow">21:00</td>
-							</tr>						
-
-							<tr>
-								<td colspan="6" class="infoMessage"><s:text name="store.storeoperations.hoursofoperation.message" /></td>		
+								<td class="editorTableEvenRow"><s:property value="weekOperationTimeClose[0]"/></td>
+								<td class="editorTableEvenRow"><s:property value="weekOperationTimeClose[1]"/></td>
+								<td class="editorTableEvenRow"><s:property value="weekOperationTimeClose[2]"/></td>
+								<td class="editorTableEvenRow"><s:property value="weekOperationTimeClose[3]"/></td>
+								<td class="editorTableEvenRow"><s:property value="weekOperationTimeClose[4]"/></td>
+								<td class="editorTableEvenRow"><s:property value="weekOperationTimeClose[5]"/></td>
+								<td class="editorTableEvenRow"><s:property value="weekOperationTimeClose[6]"/></td>
 							</tr>						
 						</table>
 					</td>
@@ -74,11 +70,11 @@
 	
               	<tr class="editFormOddRow">
                     <td width="100%" align="right" colspan="2">
-		              <s:form action="store_save" theme="simple">
+		              <s:form action="store_show" theme="simple">
 		              <s:hidden name="store.id" theme="simple"/>
 	                    <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
 		                    <tr>
-								<td><s:submit action="store_view" key="back.button" theme="simple" cssClass="button"/></td>
+								<td><s:submit action="store_show" key="back.button" theme="simple" cssClass="button"/></td>
 		                    </tr>
 	                    </table> 
 	                    </s:form>                   
