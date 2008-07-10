@@ -61,7 +61,8 @@
 
               </td>
               </tr>
-        	   
+        	  
+        	  <s:if test="!removePage">
         	  <tr>
         	  	<td width="100%">
         	  		<table border="0" cellpadding="6" cellspacing="6" colspan="0" cellspan="0" width="100%">
@@ -126,5 +127,6 @@
 					  </tr>
 					</table>
         	  	</td>
-        	  </tr>         
+        	  </tr>
+        	  </s:if>         
           </table>
