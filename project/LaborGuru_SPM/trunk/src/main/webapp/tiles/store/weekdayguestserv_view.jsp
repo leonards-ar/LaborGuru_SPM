@@ -95,11 +95,11 @@
 	
               	<tr class="editFormOddRow">
                     <td width="100%" align="right" colspan="2">
-						<s:form action="store_save" theme="simple">
+						<s:form action="store_show" theme="simple">
               			<s:hidden name="store.id" theme="simple"/>                    
 	                    <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
 		                    <tr>
-								<td><s:submit action="store_view" key="back.button" theme="simple" cssClass="button"/></td>
+								<td><s:submit action="store_show" key="back.button" theme="simple" cssClass="button"/></td>
 		                    </tr>
 	                    </table>   
 	                    </s:form>                 

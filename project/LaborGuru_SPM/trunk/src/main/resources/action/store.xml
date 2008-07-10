@@ -21,36 +21,28 @@
 			<result name="success" type="redirectAction">store_edit</result> 			
 		</action>
 		
-		<action name="storePosition_*" method="{1}" class="com.laborguru.action.store.StorePositionPrepareAction">
-			<result name="edit" type="tiles">positionNamesEditor</result>
-			<result name="show" type="tiles">positionNamesView</result>
+		<action name="storePositionNames_*" method="{1}" class="com.laborguru.action.store.StorePositionPrepareAction">
+			<result name="edit" type="tiles">editPositionNames</result>
+			<result name="show" type="tiles">showPositionNames</result>
 			<result name="cancelEdit" type="tiles">listStoresPage</result>
 			<result name="cancelShow" type="redirectAction">store_list</result>
-			<result name="input" type="tiles">editOperationTimePage</result>
+			<result name="input" type="tiles">editPositionNames</result>
 		</action>		
-		
-		<action name="store_weekdayGuestServ_edit">
-			<result type="tiles">weekdayGuestServEditor</result>
-		</action>
 
-		<action name="store_weekdayGuestServ_view">
-			<result type="tiles">weekdayGuestServView</result>
-		</action>
-		
-		<action name="store_positionNames_edit">
-			<result type="tiles">positionNamesEditor</result>
-		</action>
-
-		<action name="store_positionNames_view">
-			<result type="tiles">positionNamesView</result>
+		<action name="storeDaypartDefinition_*" method="{1}" class="com.laborguru.action.store.StorePositionPrepareAction">
+			<result name="edit" type="tiles">editDaypartDefinition</result>
+			<result name="show" type="tiles">showDaypartDefinition</result>
+			<result name="cancelEdit" type="tiles">listStoresPage</result>
+			<result name="cancelShow" type="redirectAction">store_list</result>
+			<result name="input" type="tiles">editDaypartDefinition</result>
 		</action>		
-		
-		<action name="store_daypartDefinition_edit">
-			<result type="tiles">daypartDefinitionEditor</result>
-		</action>
 
-		<action name="store_daypartDefinition_view">
-			<result type="tiles">daypartDefinitionView</result>
-		</action>			
+		<action name="storeWeekdayGuestServ_*" method="{1}" class="com.laborguru.action.store.StorePositionPrepareAction">
+			<result name="edit" type="tiles">editWeekdayGuestServ</result>
+			<result name="show" type="tiles">showWeekdayGuestServ</result>
+			<result name="cancelEdit" type="tiles">listStoresPage</result>
+			<result name="cancelShow" type="redirectAction">store_list</result>
+			<result name="input" type="tiles">editWeekdayGuestServ</result>
+		</action>		
 	</package>
 </struts>

@@ -100,7 +100,7 @@
 	                    <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
 		                    <tr>
 		                    	<td><s:submit id="saveButton" key="save.button" theme="simple" cssClass="button"/></td>
-		                    	<td><s:submit id="cancelButton" key="cancel.button" action="store_list" theme="simple" cssClass="button"/></td>		                    
+		                    	<td><s:submit id="cancelButton" key="cancel.button" action="store_edit" theme="simple" cssClass="button"/></td>		                    
 		                    	<td><s:reset id="resetButton" key="reset.button" theme="simple" cssClass="button"/></td>
 		                    </tr>
 	                    </table>                    
