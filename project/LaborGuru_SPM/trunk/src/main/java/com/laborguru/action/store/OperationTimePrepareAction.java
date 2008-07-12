@@ -7,6 +7,7 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 
 import com.laborguru.action.SpmActionResult;
+import com.laborguru.action.utils.CustomValidators;
 import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.DayOfWeek;
 import com.laborguru.model.OperationTime;
@@ -218,6 +219,30 @@ public class OperationTimePrepareAction extends StoreAdministrationBaseAction {
 	 */
 	public void setFirstDayOfWeek(Integer firstDayOfWeek) {
 		this.firstDayOfWeek = firstDayOfWeek;
+	}
+
+	/**
+	 * Validates all the times.
+	 * @see com.opensymphony.xwork2.ActionSupport#validate()
+	 */
+	@Override
+	public void validate() {
+		
+		if(getWeekOperationTimeOpen() != null) {
+			for(int i=0; i < getWeekOperationTimeOpen().length; i++) {
+				if(!CustomValidators.isValidMilitaryTime(getWeekOperationTimeOpen()[i])) {
+					addFieldError( "weekOperationTimeOpen", getText("error.storeoperations.hoursofoperation.opentime.invalid", new String[] {getWeekOperationTimeOpen()[i], getText("dayofweek." + i)}) );
+				}
+			}
+		}
+
+		if(getWeekOperationTimeClose() != null) {
+			for(int i=0; i < getWeekOperationTimeClose().length; i++) {
+				if(!CustomValidators.isValidMilitaryTime(getWeekOperationTimeClose()[i])) {
+					addFieldError( "weekOperationTimeClose", getText("error.storeoperations.hoursofoperation.closetime.invalid", new String[] {getWeekOperationTimeClose()[i], getText("dayofweek." + i)}) );
+				}
+			}
+		}
 	}
 
 

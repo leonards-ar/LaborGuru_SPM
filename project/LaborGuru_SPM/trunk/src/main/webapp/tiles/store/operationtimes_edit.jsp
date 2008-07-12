@@ -21,11 +21,19 @@
 			</table>
 		</td>
 	</tr>
-	
-	<tr>
-		<td>&nbsp;</td>
-	</tr>
-	
+
+              <tr>
+              	<td class="errorMessage" align="center">
+	              	<table border="0" align="center" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
+              			<tr>
+              				<td>
+				              	<s:fielderror theme="simple"/>
+				              	<s:actionerror theme="simple"/>
+			              	</td>
+            		  	</tr>
+              		</table>
+              	</td>
+              </tr>	
 	<tr>
 		<td id="subtitleBar" nowrap><s:text name="store.storeoperations.title" /> - <s:text name="store.storeoperations.hoursofoperation.title" /></td>
 	</tr>
