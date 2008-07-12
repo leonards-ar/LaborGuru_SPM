@@ -1,6 +1,8 @@
 package com.laborguru.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -8,6 +10,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+
+import com.laborguru.model.comparator.SpmComparator;
 
 public class Store extends SpmObject {
 
@@ -21,7 +25,7 @@ public class Store extends SpmObject {
 	private String code;
 	private DayOfWeek firstDayOfWeek;
 	private Area area;
-	private Set<Position> positions;
+	private List<Position> positions;
 	private List<OperationTime> operationTimes;
 	
 	/**
@@ -118,16 +122,27 @@ public class Store extends SpmObject {
 	 * @return the positions
 	 */
 	public Set<Position> getPositions() {
-		return positions;
+		return new HashSet<Position>(positions);
 	}
 
 	/**
-	 * @param positions the positions to set
+	 * 
+	 * @return
+	 */
+	public List<Position> getOrderedPositions() {
+		return positions;
+	}
+	/**
+	 * it is private to enforce the cardinality with the addChildMenuItem.
+	 * DO NOT MAKE IT PUBLIC
+	 * @param childMenuItems
 	 */
 	private void setPositions(Set<Position> positions) {
-		this.positions = positions;
-	}	
+		this.positions = new ArrayList<Position>(positions);
+		Collections.sort(this.positions, new SpmComparator()); 
+	}
 	
+
 	/**
 	 * Adds a position to the store. Handles the bi-directional
 	 * relation.

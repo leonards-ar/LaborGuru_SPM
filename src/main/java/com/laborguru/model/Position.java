@@ -5,7 +5,9 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-public class Position extends SpmObject{
+import com.laborguru.model.comparator.ComparableObject;
+
+public class Position extends SpmObject implements ComparableObject{
 
 	/**
 	 * Default serial version ID
