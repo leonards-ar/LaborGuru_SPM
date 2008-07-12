@@ -2,6 +2,7 @@ package com.laborguru.action;
 
 import java.util.Map;
 
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.laborguru.exception.ErrorMessage;
@@ -63,5 +64,14 @@ public class SpmAction extends ActionSupport implements SessionAware {
 	protected void addActionError(ErrorMessage errorMessage){
 		addActionError(getText(errorMessage.getMessageKey(), errorMessage.getParameters()));
 	}
+
+	
+   /**
+    * @return the Client IP Address
+    */
+   public String getRemoteAddress() {
+           return ServletActionContext.getRequest().getRemoteAddr();
+   }
+
 	
 }
