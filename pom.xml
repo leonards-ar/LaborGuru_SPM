@@ -73,7 +73,7 @@
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>maven-jetty-plugin</artifactId>
 				<configuration>
-					<webApp>${basedir}/target/spmwebapp.war</webApp>
+					<webApp>${basedir}/target/spm.war</webApp>
 				</configuration>
 			</plugin>
 			<plugin>
