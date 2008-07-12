@@ -24,8 +24,8 @@
 		<action name="storePositionNames_*" method="{1}" class="com.laborguru.action.store.StorePositionPrepareAction">
 			<result name="edit" type="tiles">editPositionNames</result>
 			<result name="show" type="tiles">showPositionNames</result>
-			<result name="cancelEdit" type="tiles">listStoresPage</result>
-			<result name="cancelShow" type="redirectAction">store_list</result>
+			<result name="cancelEdit" type="redirectAction">store_edit</result>
+			<result name="cancelShow" type="redirectAction">store_show</result>
 			<result name="input" type="tiles">editPositionNames</result>
 		</action>		
 
