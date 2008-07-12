@@ -7,7 +7,7 @@ import java.util.Comparator;
  * @author fb21734
  *
  */
-public class SpmComparator implements Comparator<Object> {
+public class SpmComparator implements Comparator<ComparableObject> {
 	
 	public SpmComparator(){
 	}
@@ -19,8 +19,8 @@ public class SpmComparator implements Comparator<Object> {
 	 * @return
 	 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 	 */
-	public int compare(Object o1, Object o2) {
-		return ((ComparableObject)o1).getId().compareTo(((ComparableObject)o2).getId());
+	public int compare(ComparableObject o1, ComparableObject o2) {
+		return o1.getId().compareTo(o2.getId());
 	}
 
 }
