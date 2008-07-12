@@ -7,7 +7,7 @@ import java.util.Comparator;
  * @author fb21734
  *
  */
-public class SpmComparator implements Comparator {
+public class SpmComparator implements Comparator<Object> {
 	
 	public SpmComparator(){
 	}
