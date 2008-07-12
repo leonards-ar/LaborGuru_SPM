@@ -18,25 +18,11 @@
 							<tr class="editorTableHeader">
 								<td><s:text name="store.storeoperations.positionnames.label" /></td>
 							</tr>
-							<tr class="editorTableOddRow">
-								<td class="value">Position 1</td>
-							</tr>
-							<tr class="editorTableEvenRow">
-								<td class="value">Position 2</td>
-							</tr>					
-							<tr class="editorTableOddRow">
-								<td class="value">Position 3</td>
-							</tr>
-							<tr class="editorTableEvenRow">
-								<td class="value">Position 4</td>
-							</tr>					
-							<tr class="editorTableOddRow">
-								<td class="value">Position 5</td>
-							</tr>
-							<tr class="editorTableEvenRow">
-								<td class="value">Position 6</td>
-							</tr>					
-
+							<s:iterator id="position" value="positions" status="stat">
+								<tr class="editorTableOddRow">
+									<td class="value"><s:property  value="%{name}"/></td>
+								</tr>
+							</s:iterator>
 						</table>						
 					</td>
 				</tr>
