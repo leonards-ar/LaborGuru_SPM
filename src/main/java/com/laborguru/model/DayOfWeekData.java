@@ -68,7 +68,7 @@ public class DayOfWeekData extends SpmObject {
 		.append(this.position != null ? this.position.getId() : null, other.position != null ? other.position.getId() : null)
 		.append(this.dayOfWeek != null ? this.dayOfWeek.getDayOfWeek() : null, other.dayOfWeek != null ? other.dayOfWeek.getDayOfWeek() : null)
 		.isEquals();
-		}
+	}
 
 	/**
 	 * @return
