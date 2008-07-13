@@ -68,12 +68,17 @@
 	</logger>
 		
 	<logger name="org.acegisecurity" additivity="false">
-		<level value="DEBUG"/>
+		<level value="INFO"/>
 		<appender-ref ref="STDOUT" />
 	</logger>
 
 	<logger name="org.springframework" additivity="false">
 		<level value="WARN"/>
+		<appender-ref ref="STDOUT" />
+	</logger>
+
+	<logger name="org.hibernate" additivity="false">
+		<level value="DEBUG"/>
 		<appender-ref ref="STDOUT" />
 	</logger>
 		
