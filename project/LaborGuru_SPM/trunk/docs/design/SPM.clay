@@ -342,10 +342,11 @@
 <variant type-name-pattern="INT"/>
 </data-type>
 </column>
-<column alias="" auto-increment="false" column-size="100" decimal-digits="0" default-value="" mandatory="true" name="key" remarks="" uid="1c5cdac:11a1b05b15e:-7fef">
+<column alias="" auto-increment="false" column-size="100" decimal-digits="0" default-value="" mandatory="true" name="name" remarks="" uid="1c5cdac:11a1b05b15e:-7fef">
 <column-description/>
 <data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
-<variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+<variant precision-max="255" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+<variant precision-max="255" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n) BINARY"/>
 </data-type>
 </column>
 <column alias="" auto-increment="false" column-size="255" decimal-digits="0" default-value="" mandatory="false" name="description" remarks="" uid="1c5cdac:11a1b05b15e:-7fee">
@@ -929,7 +930,7 @@
 <variant precision-max="9" precision-min="1" precision-variable="%p" type-name-pattern="TIME(%p) WITHOUT TIME ZONE"/>
 </data-type>
 </column>
-<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="positionIndex" remarks="" uid="c5acfe:11b18d1c771:-7ec6">
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="position_index" remarks="" uid="c5acfe:11b18d1c771:-7ec6">
 <column-description/>
 <data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
 <variant type-name-pattern="INT"/>
