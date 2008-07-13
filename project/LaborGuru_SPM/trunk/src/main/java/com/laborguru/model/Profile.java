@@ -69,7 +69,7 @@ public class Profile extends SpmObject {
 	/**
 	 * @param permission
 	 */
-	public void addPermission(Permission permission){
+	public void addPermissions(Permission permission){
 		
 		if (permission == null){
 			throw new IllegalArgumentException("Null permission passed in as parameter");

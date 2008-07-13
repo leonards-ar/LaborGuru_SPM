@@ -133,7 +133,7 @@ public class Store extends SpmObject {
 		return positions;
 	}
 	/**
-	 * it is private to enforce the cardinality with the addChildMenuItem.
+	 * it is private to enforce the cardinality with the addPositions.
 	 * DO NOT MAKE IT PUBLIC
 	 * @param childMenuItems
 	 */
@@ -148,7 +148,7 @@ public class Store extends SpmObject {
 	 * relation.
 	 * @param position The position to add
 	 */
-	public void addPosition(Position position){
+	public void addPositions(Position position){
 		
 		if (position == null){
 			throw new IllegalArgumentException("Null position passed in as parameter");
@@ -221,7 +221,7 @@ public class Store extends SpmObject {
 	 * Handles the bi-directional relation.
 	 * @param operationTime The operationTime to add
 	 */
-	public void addOperationTime(OperationTime operationTime){
+	public void addOperationTimes(OperationTime operationTime){
 		
 		if (operationTime == null){
 			throw new IllegalArgumentException("Null operationTime passed in as parameter");
@@ -255,7 +255,7 @@ public class Store extends SpmObject {
 	 */
 	public List<DayPart> getDayParts() {
 		if(dayParts == null) {
-			dayParts = new ArrayList<DayPart>();
+			setDayParts(new ArrayList<DayPart>());
 		}
 		return dayParts;
 	}
@@ -263,7 +263,26 @@ public class Store extends SpmObject {
 	/**
 	 * @param dayParts the dayParts to set
 	 */
-	public void setDayParts(List<DayPart> dayParts) {
+	private void setDayParts(List<DayPart> dayParts) {
 		this.dayParts = dayParts;
 	}
+	
+	/**
+	 * Adds a day part to the store. Handles the bi-directional
+	 * relation.
+	 * @param dayPart The day part to add
+	 */
+	public void addDayParts(DayPart dayPart){
+		
+		if (dayPart == null){
+			throw new IllegalArgumentException("Null day part passed in as parameter");
+		}
+		
+		if (dayPart.getStore() != null){
+			dayPart.getStore().getDayParts().remove(dayPart);
+		}
+		
+		dayPart.setStore(this);
+		getDayParts().add(dayPart);
+	}	
 }
