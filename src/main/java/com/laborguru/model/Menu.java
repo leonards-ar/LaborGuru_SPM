@@ -3,6 +3,7 @@
  */
 package com.laborguru.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -15,7 +16,8 @@ import org.apache.commons.lang.builder.ToStringStyle;
  * @since SPM 1.0
  *
  */
-public class Menu {
+public class Menu implements Serializable {
+	
 	private List<MenuItem> items;
 	private int selectedItemIndex = 0;
 	
