@@ -14,7 +14,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
  *
  */
 public abstract class SpmObject implements Serializable {
-
+	protected static final ToStringStyle DEFAULT_TO_STRING_STYLE = ToStringStyle.MULTI_LINE_STYLE;
 	/**
 	 * Default serial version ID
 	 */
@@ -25,11 +25,7 @@ public abstract class SpmObject implements Serializable {
 	 * This method prints out the contents of SpmObject 
 	 * @see java.lang.Object#toString(java.lang.Object)
 	 */
-	public String toString()
-	{
-	   return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
-	}
-	
+	public abstract String toString();
 	
 	/**
 	 * Abstract Equals for SpmObject
@@ -37,6 +33,7 @@ public abstract class SpmObject implements Serializable {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	public abstract boolean equals(Object other);	
+	
 	/**
 	 * Abstract of HashCode for SpmObject.
 	 * follows equals in using reflection.

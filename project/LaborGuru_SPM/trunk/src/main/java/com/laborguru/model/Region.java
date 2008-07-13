@@ -30,7 +30,7 @@ public class Region extends SpmObject {
 	 */
 	public String toString()
 	{
-		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+		return new ToStringBuilder(this, DEFAULT_TO_STRING_STYLE)
 	   	.append("id" , id)
 	   	.append("name",name)
 	   	.toString();		

@@ -9,6 +9,7 @@ import java.util.Date;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
  * This class holds the start and close hours on a daily basis for Stores.
@@ -166,5 +167,20 @@ public class OperationTime extends SpmObject {
 	public void setDayOfWeek(DayOfWeek dayOfWeek) {
 		this.dayOfWeek = dayOfWeek;
 	}
+
+	/**
+	 * 
+	 * @return
+	 * @see com.laborguru.model.SpmObject#toString()
+	 */
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this, DEFAULT_TO_STRING_STYLE)
+	   	.append("id" , id)
+	   	.append("store" , store)
+	   	.append("day of week", dayOfWeek)
+	   	.append("open hour", openHour)
+	   	.append("close hour", closeHour)
+	   	.toString();	}
 
 }
