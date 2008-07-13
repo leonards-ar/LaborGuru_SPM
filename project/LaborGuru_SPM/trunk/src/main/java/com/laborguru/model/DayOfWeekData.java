@@ -18,7 +18,6 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * <li>Labor Allowances – Fixed Opening</li>
  * <li>Labor Allowances – Fixed Post Rush</li>
  * <li>Labor Allowances – Fixed Closing</li>
- * <li></li>
  * </ul>
  * 
  * @author <a href="mcapurro@gmail.com">Mariano Capurro</a>
@@ -47,7 +46,7 @@ public class DayOfWeekData extends SpmObject {
 	}
 
 	/**
-	 * @param other
+	 * @param obj
 	 * @return
 	 * @see com.laborguru.model.SpmObject#equals(java.lang.Object)
 	 */
@@ -198,4 +197,23 @@ public class DayOfWeekData extends SpmObject {
 		this.id = id;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public Integer getDayOfWeekIndex() {
+		return getDayOfWeek() != null ? new Integer(getDayOfWeek().ordinal()) : null;
+	}
+	
+	/**
+	 * 
+	 * @param dayofWeek
+	 */
+	public void setDayOfWeekIndex(Integer dayOfWeek) {
+		if(dayOfWeek != null) {
+			setDayOfWeek(DayOfWeek.values()[dayOfWeek.intValue()]);
+		} else {
+			setDayOfWeek(null);
+		}
+	}	
 }

@@ -181,6 +181,7 @@ public class OperationTime extends SpmObject {
 	   	.append("day of week", dayOfWeek)
 	   	.append("open hour", openHour)
 	   	.append("close hour", closeHour)
-	   	.toString();	}
+	   	.toString();
+	}
 
 }

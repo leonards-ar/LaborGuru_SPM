@@ -26,6 +26,7 @@ public class Store extends SpmObject {
 	private Area area;
 	private List<Position> positions;
 	private List<OperationTime> operationTimes;
+	private List<DayPart> dayParts;
 	
 	/**
 	 * Store toString
@@ -247,5 +248,22 @@ public class Store extends SpmObject {
 	 */
 	public void setFirstDayOfWeek(DayOfWeek firstDayOfWeek) {
 		this.firstDayOfWeek = firstDayOfWeek;
+	}
+
+	/**
+	 * @return the dayParts
+	 */
+	public List<DayPart> getDayParts() {
+		if(dayParts == null) {
+			dayParts = new ArrayList<DayPart>();
+		}
+		return dayParts;
+	}
+
+	/**
+	 * @param dayParts the dayParts to set
+	 */
+	public void setDayParts(List<DayPart> dayParts) {
+		this.dayParts = dayParts;
 	}
 }
