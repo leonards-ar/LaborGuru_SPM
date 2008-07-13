@@ -22,7 +22,7 @@
 		</many-to-one>
 		
 		<many-to-one name="dayPart" class="DayPart" foreign-key="fk_daypartvalues_dayparts">
-			<column name="position_id"/>
+			<column name="day_part_id"/>
 		</many-to-one>
     </class>
 	<database-object>
