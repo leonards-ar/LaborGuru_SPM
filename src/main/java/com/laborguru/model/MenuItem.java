@@ -149,6 +149,9 @@ public class MenuItem extends SpmObject {
 	}
 
 	public List<MenuItem> getOrderedChildMenuItems() {
+		if(childMenuItems == null) {
+			setChildMenuItems(new HashSet<MenuItem>());
+		}
 		return childMenuItems;
 	}
 	

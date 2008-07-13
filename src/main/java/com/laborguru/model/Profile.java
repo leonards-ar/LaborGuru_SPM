@@ -1,5 +1,6 @@
 package com.laborguru.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -52,13 +53,20 @@ public class Profile extends SpmObject {
 		this.description = description;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Set<Permission> getPermissions() {
+		if(permissions == null) {
+			setPermissions(new HashSet<Permission>());
+		}
 		return permissions;
 	}
 
 	
 	/**
-	 * We leave it private to enforce the cardinality with the addPermission.
+	 * We leave it private to enforce the cardinality with the addPermissions.
 	 * DO NOT MAKE IT PUBLIC
 	 * @param permissions
 	 */

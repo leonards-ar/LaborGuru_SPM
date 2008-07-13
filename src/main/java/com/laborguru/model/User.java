@@ -157,6 +157,9 @@ public class User extends SpmObject {
 	 * @return
 	 */
 	public Set<Profile> getProfiles() {
+		if(profiles == null) {
+			setProfiles(new HashSet<Profile>());
+		}
 		return profiles;
 	}
 	

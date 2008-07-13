@@ -1,5 +1,6 @@
 package com.laborguru.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -95,6 +96,9 @@ public class Customer extends SpmObject{
 	 * @return the regions
 	 */
 	public Set<Region> getRegions() {
+		if(regions == null) {
+			setRegions(new HashSet<Region>());
+		}
 		return regions;
 	}
 

@@ -130,6 +130,9 @@ public class Store extends SpmObject {
 	 * @return
 	 */
 	public List<Position> getOrderedPositions() {
+		if(positions == null) {
+			setPositions(new HashSet<Position>());
+		}
 		return positions;
 	}
 	/**
