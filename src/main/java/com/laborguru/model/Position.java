@@ -1,5 +1,7 @@
 package com.laborguru.model;
 
+import java.util.Set;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -16,6 +18,8 @@ public class Position extends SpmObject implements ComparableObject{
 	private Integer id;
 	private Store store;
 	private String name;
+	
+	private Set<DayOfWeekData> dayOfWeekData;
 	
 	/**
 	 * Position toString
@@ -85,7 +89,17 @@ public class Position extends SpmObject implements ComparableObject{
 		.isEquals();
 	}
 
-	
-	
-	
+	/**
+	 * @return the dayOfWeekData
+	 */
+	public Set<DayOfWeekData> getDayOfWeekData() {
+		return dayOfWeekData;
+	}
+
+	/**
+	 * @param dayOfWeekData the dayOfWeekData to set
+	 */
+	public void setDayOfWeekData(Set<DayOfWeekData> dayOfWeekData) {
+		this.dayOfWeekData = dayOfWeekData;
+	}
 }
