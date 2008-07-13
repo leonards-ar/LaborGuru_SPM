@@ -1151,15 +1151,15 @@
 </column>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="minimum_staffing" remarks="" uid="c5acfe:11b18d1c771:-7fe6">
 <column-description/>
-<data-type jdbc-type="8" name="DOUBLE" selected-variant-pattern="DOUBLE">
-<variant type-name-pattern="DOUBLE"/>
-<variant precision-max="255" precision-min="0" precision-variable="%p" scale-max="30" scale-min="0" scale-variable="%s" type-name-pattern="DOUBLE(%p, %s)"/>
-<variant precision-max="255" precision-min="0" precision-variable="%p" scale-max="30" scale-min="0" scale-variable="%s" type-name-pattern="DOUBLE(%p, %s) UNSIGNED"/>
-<variant precision-max="255" precision-min="0" precision-variable="%p" scale-max="30" scale-min="0" scale-variable="%s" type-name-pattern="DOUBLE(%p, %s) UNSIGNED ZEROFILL"/>
-<variant precision-max="255" precision-min="0" precision-variable="%p" scale-max="30" scale-min="0" scale-variable="%s" type-name-pattern="DOUBLE(%p, %s) ZEROFILL"/>
-<variant type-name-pattern="DOUBLE UNSIGNED"/>
-<variant type-name-pattern="DOUBLE UNSIGNED ZEROFILL"/>
-<variant type-name-pattern="DOUBLE ZEROFILL"/>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+<variant precision-max="10" precision-min="0" precision-variable="%n" type-name-pattern="INT(%n)"/>
+<variant precision-max="10" precision-min="0" precision-variable="%n" type-name-pattern="INT(%n) UNSIGNED"/>
+<variant precision-max="10" precision-min="0" precision-variable="%n" type-name-pattern="INT(%n) UNSIGNED ZEROFILL"/>
+<variant precision-max="10" precision-min="0" precision-variable="%n" type-name-pattern="INT(%n) ZEROFILL"/>
+<variant type-name-pattern="INT UNSIGNED"/>
+<variant type-name-pattern="INT UNSIGNED ZEROFILL"/>
+<variant type-name-pattern="INT ZEROFILL"/>
 </data-type>
 </column>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="variable_opening" remarks="" uid="c5acfe:11b18d1c771:-7d7a">
