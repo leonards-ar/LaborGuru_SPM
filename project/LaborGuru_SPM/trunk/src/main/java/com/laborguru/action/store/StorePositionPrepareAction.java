@@ -1,5 +1,6 @@
 package com.laborguru.action.store;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -102,7 +103,7 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction im
 	 */
 	public List<Position> getPositions() {
 		if(positions == null) {
-			log.error("***** Positions are null!!!!");
+			positions = new ArrayList<Position>();
 		}
 		return positions;
 	}

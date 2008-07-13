@@ -20,12 +20,12 @@
 				<s:iterator id="position" value="positions" status="stat">
 					<tr class="editorTableOddRow">
 						<td class="value">
-						<s:textfield name="positions(%{id})" value="%{name}" size="25" maxlength="150" theme="simple" /></td>
+						<s:textfield name="positions[%{#stat.index}].name" value="%{name}" size="25" maxlength="150" theme="simple" /></td>
 						<td>
 						<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 							<tr>
 								<td><a
-									href="<s:url value="#" includeParams="none"/>" onclick="storePositions_form.action='storePositionNames_removePosition.action?index=%{#stat.index}'; storePosition_form.submit();"><img
+									href="<s:url value="#" includeParams="none"/>" onclick="storePositions_form.action='storePositionNames_removePosition.action?index=<s:property value='#stat.index'/>'; storePosition_form.submit();"><img
 									src="<s:url value="/images/delete.png" includeParams="none"/>" /></a></td>
 							</tr>
 						</table>
