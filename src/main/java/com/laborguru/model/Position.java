@@ -1,7 +1,9 @@
 package com.laborguru.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -21,7 +23,7 @@ public class Position extends SpmObject implements ComparableObject{
 	private String name;
 	
 	private List<DayOfWeekData> dayOfWeekData;
-	private List<DayPartData> dayPartData;
+	private Set<DayPartData> dayPartData;
 	
 	/**
 	 * Position toString
@@ -111,9 +113,9 @@ public class Position extends SpmObject implements ComparableObject{
 	/**
 	 * @return the dayPartData
 	 */
-	public List<DayPartData> getDayPartData() {
+	public Set<DayPartData> getDayPartData() {
 		if(dayPartData == null) {
-			dayPartData = new ArrayList<DayPartData>();
+			dayPartData = new HashSet<DayPartData>();
 		}
 		return dayPartData;
 	}
@@ -121,7 +123,7 @@ public class Position extends SpmObject implements ComparableObject{
 	/**
 	 * @param dayPartData the dayPartData to set
 	 */
-	public void setDayPartData(List<DayPartData> dayPartData) {
+	public void setDayPartData(Set<DayPartData> dayPartData) {
 		this.dayPartData = dayPartData;
 	}
 }

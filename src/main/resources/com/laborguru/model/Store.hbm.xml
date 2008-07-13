@@ -11,15 +11,24 @@
 		<property name="name" column="name" type="string" length="150" />
 		<property name="code" column="code" type="string" length="150" />
 		<property name="firstDayOfWeekAsInteger" column="first_day_of_week" type="int"/>
+	    
 	    <set name="positions" table="tbl_positions" lazy="true">
-	        <key column="store_id" foreign-key="fk_store_positions"/>
+	        <key column="store_id" foreign-key="fk_stores_positions"/>
 	        <one-to-many class="Position"/>
-	    </set>		
-	    <list name="operationTimes" cascade="all" table="tbl_operation_times" lazy="true" inverse="true">
-	        <key column="store_id" foreign-key="fk_operation_times_store"/>
+	    </set>
+	    		
+	    <list name="operationTimes" cascade="all-delete-orphans" table="tbl_operation_times" lazy="true" inverse="true">
+	        <key column="store_id" foreign-key="fk_stores_operationtimes"/>
 	        <list-index column="day_of_week"/>
 	        <one-to-many class="OperationTime"/>
-	    </list>		    
+	    </list>
+	    	
+	    <list name="dayParts" cascade="all-delete-orphans" table="tbl_day_parts" lazy="true" inverse="true">
+	        <key column="store_id" foreign-key="fk_stores_dayparts"/>
+	        <list-index column="position_index"/>
+	        <one-to-many class="DayPart"/>
+	    </list>
+	    	    	    
 		<many-to-one name="area" class="Area" foreign-key="fk_stores_areas">
 			<column name="area_id"/>
 		</many-to-one>

@@ -264,7 +264,7 @@
 </table>
 <table alias="" name="tbl_stores" remarks="" uid="e94c62:11a07671122:-7e0a">
 <table-description/>
-<table-figure-bounds height="115" width="223" x="618" y="523"/>
+<table-figure-bounds height="109" width="223" x="618" y="523"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="store_id" remarks="" uid="e94c62:11a07671122:-7dff">
 <column-description/>
@@ -869,7 +869,7 @@
 </foreign-key-list>
 <index-list/>
 </table>
-<table alias="" name="tbl_stores_day_parts" remarks="" uid="16d864e:11abbfde91b:-7f78">
+<table alias="" name="tbl_day_parts" remarks="" uid="16d864e:11abbfde91b:-7f78">
 <table-description/>
 <table-figure-bounds height="92" width="172" x="1002" y="744"/>
 <column-list>
@@ -929,7 +929,7 @@
 </data-type>
 </column>
 </column-list>
-<primary-key alias="" name="PK_TBL_STORES_DAY_PARTS" remarks="" uid="16d864e:11abbfde91b:-7f77">
+<primary-key alias="" name="PK_TBL_DAY_PARTS" remarks="" uid="16d864e:11abbfde91b:-7f77">
 <primary-key-description/>
 <primary-key-column name="day_part_id"/>
 </primary-key>
@@ -1173,7 +1173,7 @@
 <variant type-name-pattern="DOUBLE ZEROFILL"/>
 </data-type>
 </column>
-<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="fixed_guest_services" remarks="" uid="c5acfe:11b18d1c771:-7d75">
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="fixed_guest_service" remarks="" uid="c5acfe:11b18d1c771:-7d75">
 <column-description/>
 <data-type jdbc-type="8" name="DOUBLE" selected-variant-pattern="DOUBLE">
 <variant type-name-pattern="DOUBLE"/>
@@ -1186,7 +1186,7 @@
 <variant type-name-pattern="DOUBLE ZEROFILL"/>
 </data-type>
 </column>
-<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="weekend_guest_services" remarks="" uid="c5acfe:11b18d1c771:-7d74">
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="weekend_guest_service" remarks="" uid="c5acfe:11b18d1c771:-7d74">
 <column-description/>
 <data-type jdbc-type="8" name="DOUBLE" selected-variant-pattern="DOUBLE">
 <variant type-name-pattern="DOUBLE"/>
@@ -1199,7 +1199,7 @@
 <variant type-name-pattern="DOUBLE ZEROFILL"/>
 </data-type>
 </column>
-<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="weekday_guest_services" remarks="" uid="c5acfe:11b18d1c771:-7d71">
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="weekday_guest_service" remarks="" uid="c5acfe:11b18d1c771:-7d71">
 <column-description/>
 <data-type jdbc-type="8" name="DOUBLE" selected-variant-pattern="DOUBLE">
 <variant type-name-pattern="DOUBLE"/>
@@ -1227,7 +1227,7 @@
 </foreign-key-figure>
 <foreign-key-column column-name="position_id" referenced-key-column-name="position_id"/>
 </foreign-key>
-<foreign-key alias="" name="FK_tbl_day_part_values_2" on-delete="" on-update="" referenced-key="PK_TBL_STORES_DAY_PARTS" referenced-table="tbl_stores_day_parts" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="c5acfe:11b18d1c771:-7efd">
+<foreign-key alias="" name="FK_tbl_day_part_values_2" on-delete="" on-update="" referenced-key="PK_TBL_DAY_PARTS" referenced-table="tbl_day_parts" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="c5acfe:11b18d1c771:-7efd">
 <foreign-key-description/>
 <foreign-key-figure>
 <fk-fig-bendpoint-list/>

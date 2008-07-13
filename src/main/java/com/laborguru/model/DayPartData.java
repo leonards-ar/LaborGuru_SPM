@@ -5,6 +5,10 @@
  */
 package com.laborguru.model;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 /**
  * This object stores data related to positions and day parts.<br/>
  * Among the values stored in this object you can find
@@ -28,6 +32,7 @@ public class DayPartData extends SpmObject {
 	 */
 	private static final long serialVersionUID = 6322463798852263411L;
 
+	private Integer id;
 	private Double weekdayGuestService;
 	private Double weekendGuestService;
 	private Double variableFlexible;
@@ -35,7 +40,8 @@ public class DayPartData extends SpmObject {
 	private Double fixedGuestService;
 	private Integer minimunStaffing;
 	private Position position;
-
+	private DayPart dayPart;
+	
 	/**
 	 * 
 	 */
@@ -43,22 +49,39 @@ public class DayPartData extends SpmObject {
 	}
 
 	/**
-	 * @param other
+	 * @param obj
 	 * @return
 	 * @see com.laborguru.model.SpmObject#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object other) {
-		return false;
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		
+		if (obj == null)
+			return false;
+		
+		if (getClass() != obj.getClass())
+			return false;		
+		
+		final DayPartData other = (DayPartData) obj;
+		
+		return new EqualsBuilder()
+		.append(this.position != null ? this.position.getId() : null, other.position != null ? other.position.getId() : null)
+		.append(this.dayPart != null ? this.dayPart.getId() : null, other.dayPart != null ? other.dayPart.getId() : null)
+		.isEquals();
 	}
-
+	
 	/**
 	 * @return
 	 * @see com.laborguru.model.SpmObject#hashCode()
 	 */
 	@Override
 	public int hashCode() {
-		return 0;
+		return new HashCodeBuilder(17, 37)
+		.append(this.position != null ? this.position.getId() : null)
+		.append(this.dayPart != null ? this.dayPart.getId() : null)
+		.toHashCode();
 	}
 
 	/**
@@ -67,7 +90,17 @@ public class DayPartData extends SpmObject {
 	 */
 	@Override
 	public String toString() {
-		return null;
+		return new ToStringBuilder(this, DEFAULT_TO_STRING_STYLE)
+	   	.append("id" , id)
+	   	.append("position" , position)
+	   	.append("day part", dayPart)
+	   	.append("weekday guest service", weekdayGuestService)
+	   	.append("weekend guest service", weekendGuestService)
+	   	.append("variable flexible", variableFlexible)
+	   	.append("variable opening", variableOpening)
+	   	.append("fixed guest service", fixedGuestService)
+	   	.append("minimun staffing", minimunStaffing)
+	   	.toString();
 	}
 
 	/**
@@ -166,6 +199,34 @@ public class DayPartData extends SpmObject {
 	 */
 	public void setMinimunStaffing(Integer minimunStaffing) {
 		this.minimunStaffing = minimunStaffing;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the dayPart
+	 */
+	public DayPart getDayPart() {
+		return dayPart;
+	}
+
+	/**
+	 * @param dayPart the dayPart to set
+	 */
+	public void setDayPart(DayPart dayPart) {
+		this.dayPart = dayPart;
 	}
 
 }

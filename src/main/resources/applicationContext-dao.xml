@@ -43,6 +43,9 @@
 				<value>com/laborguru/model/Region.hbm.xml</value>
 				<value>com/laborguru/model/Customer.hbm.xml</value>
 				<value>com/laborguru/model/OperationTime.hbm.xml</value>				
+				<value>com/laborguru/model/DayPart.hbm.xml</value>				
+				<value>com/laborguru/model/DayOfWeekData.hbm.xml</value>				
+				<value>com/laborguru/model/DayPartData.hbm.xml</value>				
 			</list>
 		</property>
 		<property name="hibernateProperties">
