@@ -296,12 +296,6 @@
 <variant type-name-pattern="INT"/>
 </data-type>
 </column>
-<column alias="" auto-increment="false" column-size="10" decimal-digits="0" default-value="" mandatory="false" name="COLUMN_1" remarks="" uid="c5acfe:11b18d1c771:-7d8c">
-<column-description/>
-<data-type jdbc-type="1" literal-prefix="'" literal-suffix="'" name="CHAR" selected-variant-pattern="CHAR(%n)">
-<variant precision-max="254" precision-min="1" precision-variable="%n" type-name-pattern="CHAR(%n)"/>
-</data-type>
-</column>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="non_guest_utilization" remarks="" uid="c5acfe:11b18d1c771:-7d8b">
 <column-description/>
 <data-type jdbc-type="8" name="DOUBLE" selected-variant-pattern="DOUBLE">
@@ -818,7 +812,7 @@
 </foreign-key-list>
 <index-list/>
 </table>
-<table alias="" name="tbl_operation_time" remarks="" uid="16d864e:11abbfde91b:-7ff2">
+<table alias="" name="tbl_operation_times" remarks="" uid="16d864e:11abbfde91b:-7ff2">
 <table-description/>
 <table-figure-bounds height="115" width="179" x="633" y="721"/>
 <column-list>
@@ -859,7 +853,7 @@
 </data-type>
 </column>
 </column-list>
-<primary-key alias="" name="PK_TBL_OPERATION_TIME" remarks="" uid="16d864e:11abbfde91b:-7ff1">
+<primary-key alias="" name="PK_TBL_OPERATION_TIMES" remarks="" uid="16d864e:11abbfde91b:-7ff1">
 <primary-key-description/>
 <primary-key-column name="operation_time_id"/>
 </primary-key>
@@ -877,7 +871,7 @@
 </table>
 <table alias="" name="tbl_stores_day_parts" remarks="" uid="16d864e:11abbfde91b:-7f78">
 <table-description/>
-<table-figure-bounds height="107" width="172" x="1002" y="744"/>
+<table-figure-bounds height="92" width="172" x="1002" y="744"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="day_part_id" remarks="" uid="c5acfe:11b18d1c771:-7f25">
 <column-description/>
@@ -913,15 +907,6 @@
 </data-type>
 </column>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="start_hour" remarks="" uid="16d864e:11abbfde91b:-7f72">
-<column-description/>
-<data-type jdbc-type="92" literal-prefix="'" literal-suffix="'" name="TIME" selected-variant-pattern="TIME">
-<variant type-name-pattern="TIME"/>
-<variant precision-max="9" precision-min="1" precision-variable="%p" type-name-pattern="TIME(%p)"/>
-<variant precision-max="9" precision-min="1" precision-variable="%p" type-name-pattern="TIME(%p) WITH TIME ZONE"/>
-<variant precision-max="9" precision-min="1" precision-variable="%p" type-name-pattern="TIME(%p) WITHOUT TIME ZONE"/>
-</data-type>
-</column>
-<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="end_hour" remarks="" uid="16d864e:11abbfde91b:-7f71">
 <column-description/>
 <data-type jdbc-type="92" literal-prefix="'" literal-suffix="'" name="TIME" selected-variant-pattern="TIME">
 <variant type-name-pattern="TIME"/>
@@ -1121,7 +1106,7 @@
 </table>
 <table alias="" name="tbl_day_part_values" remarks="" uid="c5acfe:11b18d1c771:-7fec">
 <table-description/>
-<table-figure-bounds height="141" width="217" x="975" y="515"/>
+<table-figure-bounds height="135" width="217" x="975" y="515"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="position_id" remarks="" uid="c5acfe:11b18d1c771:-7fe8">
 <column-description/>
@@ -1256,7 +1241,7 @@
 <table-description/>
 <table-figure-bounds height="-1" width="-1" x="1299" y="513"/>
 <column-list>
-<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="week_day_value_id" remarks="" uid="c5acfe:11b18d1c771:-7f5f">
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="day_of_week_value_id" remarks="" uid="c5acfe:11b18d1c771:-7f5f">
 <column-description/>
 <data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
 <variant type-name-pattern="INT"/>
@@ -1280,27 +1265,6 @@
 <variant type-name-pattern="INT UNSIGNED"/>
 <variant type-name-pattern="INT UNSIGNED ZEROFILL"/>
 <variant type-name-pattern="INT ZEROFILL"/>
-</data-type>
-</column>
-<column alias="" auto-increment="false" column-size="50" decimal-digits="0" default-value="" mandatory="false" name="name" remarks="" uid="c5acfe:11b18d1c771:-7f66">
-<column-description/>
-<data-type jdbc-type="1" literal-prefix="'" literal-suffix="'" name="CHAR" selected-variant-pattern="CHAR(%n)">
-<variant precision-max="255" precision-min="0" precision-variable="%n" type-name-pattern="CHAR(%n)"/>
-<variant type-name-pattern="CHAR"/>
-<variant precision-max="255" precision-min="0" precision-variable="%n" type-name-pattern="CHAR(%n) BINARY"/>
-</data-type>
-</column>
-<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="value" remarks="" uid="c5acfe:11b18d1c771:-7f65">
-<column-description/>
-<data-type jdbc-type="8" name="DOUBLE" selected-variant-pattern="DOUBLE">
-<variant type-name-pattern="DOUBLE"/>
-<variant precision-max="255" precision-min="0" precision-variable="%p" scale-max="30" scale-min="0" scale-variable="%s" type-name-pattern="DOUBLE(%p, %s)"/>
-<variant precision-max="255" precision-min="0" precision-variable="%p" scale-max="30" scale-min="0" scale-variable="%s" type-name-pattern="DOUBLE(%p, %s) UNSIGNED"/>
-<variant precision-max="255" precision-min="0" precision-variable="%p" scale-max="30" scale-min="0" scale-variable="%s" type-name-pattern="DOUBLE(%p, %s) UNSIGNED ZEROFILL"/>
-<variant precision-max="255" precision-min="0" precision-variable="%p" scale-max="30" scale-min="0" scale-variable="%s" type-name-pattern="DOUBLE(%p, %s) ZEROFILL"/>
-<variant type-name-pattern="DOUBLE UNSIGNED"/>
-<variant type-name-pattern="DOUBLE UNSIGNED ZEROFILL"/>
-<variant type-name-pattern="DOUBLE ZEROFILL"/>
 </data-type>
 </column>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="day_of_week" remarks="" uid="c5acfe:11b18d1c771:-7f62">
@@ -1371,7 +1335,7 @@
 </column-list>
 <primary-key alias="" name="PK_TBL_DAY_OF_WEEK_VALUES" remarks="" uid="c5acfe:11b18d1c771:-7f6c">
 <primary-key-description/>
-<primary-key-column name="week_day_value_id"/>
+<primary-key-column name="day_of_week_value_id"/>
 </primary-key>
 <unique-key-list/>
 <foreign-key-list>
