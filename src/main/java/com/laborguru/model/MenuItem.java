@@ -166,7 +166,7 @@ public class MenuItem extends SpmObject {
 	 * 
 	 * @param childMenuItem
 	 */
-	public void addChildMenuItem(MenuItem childMenuItem){
+	public void addChildMenuItems(MenuItem childMenuItem){
 		
 		if (childMenuItem == null){
 			throw new IllegalArgumentException("Null child menu item passed in as parameter");

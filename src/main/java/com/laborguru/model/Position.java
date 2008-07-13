@@ -38,21 +38,51 @@ public class Position extends SpmObject implements ComparableObject{
 	   	.toString();		
 	}
 	
+	/**
+	 * 
+	 * @return
+	 * @see com.laborguru.model.comparator.ComparableObject#getId()
+	 */
 	public Integer getId() {
 		return id;
 	}
+	
+	/**
+	 * 
+	 * @param id
+	 */
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public Store getStore() {
 		return store;
 	}
+	
+	/**
+	 * 
+	 * @param store
+	 */
 	public void setStore(Store store) {
 		this.store = store;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
+	
+	/**
+	 * 
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -125,5 +155,32 @@ public class Position extends SpmObject implements ComparableObject{
 	 */
 	public void setDayPartData(Set<DayPartData> dayPartData) {
 		this.dayPartData = dayPartData;
+	}
+	
+	/**
+	 * Returns the list of day of week related values, starting
+	 * in the first day of the week configured for the containing
+	 * store.
+	 * @return the list of day week data sorted by the first day of the week
+	 */
+	public List<DayOfWeekData> getDayOfWeekDataStartingInFirstDayOfWeek() {
+		if(getStore() != null && getStore().getFirstDayOfWeek() != null) {
+			List<DayOfWeekData> l = getDayOfWeekData();
+			List<DayOfWeekData> sortedDayOfWeekData = new ArrayList<DayOfWeekData>(l.size());
+			int firstDayOfWeek = getStore().getFirstDayOfWeek().ordinal();
+			
+			for(int i = firstDayOfWeek; i < l.size(); i++) {
+				sortedDayOfWeekData.add(l.get(i));
+			}
+			
+			for(int i = 0; i < firstDayOfWeek; i++) {
+				sortedDayOfWeekData.add(l.get(i));
+			}
+			
+			return sortedDayOfWeekData;
+		} else {
+			// Missing store or first day of week
+			return getDayOfWeekData();
+		}
 	}
 }

@@ -110,7 +110,7 @@ public class Customer extends SpmObject{
 	 * relation.
 	 * @param region The region to add
 	 */
-	public void addRegion(Region region){
+	public void addRegions(Region region){
 		
 		if (region == null){
 			throw new IllegalArgumentException("Null region passed in as parameter");

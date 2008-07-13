@@ -173,7 +173,7 @@ public class User extends SpmObject {
 	/**
 	 * @param profile
 	 */
-	public void addProfile(Profile profile){
+	public void addProfiles(Profile profile){
 		
 		if (profile == null){
 			throw new IllegalArgumentException("Null profile passed in as parameter");
