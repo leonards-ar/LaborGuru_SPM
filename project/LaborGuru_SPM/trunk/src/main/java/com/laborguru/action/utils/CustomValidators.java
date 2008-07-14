@@ -115,4 +115,32 @@ public class CustomValidators {
 		return isValidDouble(number, false);
 	}
 	
-}
+	/**
+	 * This method checks that the value passed as a parameter is
+	 * a valid integer number.
+	 * @param number the number to check
+	 * @param required if the value is required
+	 * @return if the value is correct or not
+	 */
+	public static boolean isValidInteger(String number, boolean required) {
+		try {
+			if(number != null && number.trim().length() > 0) {
+				Integer.parseInt(number);
+				return true;
+			} else {
+				return !required;
+			}
+		} catch(Exception ex) {
+			return false;
+		}
+	}
+	
+	/**
+	 * This method checks that the value passed as a parameter is
+	 * a valid integer number.
+	 * @param number the number to check
+	 * @return if the value is correct or not
+	 */
+	public static boolean isValidInteger(String number) {
+		return isValidInteger(number, false);
+	}}
