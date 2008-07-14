@@ -11,6 +11,7 @@
     tbl_profiles*,
     tbl_profiles_permissions*,
     tbl_users*,
+    tbl_day_parts*,
     tbl_users_profiles*)>
 
 <!ELEMENT tbl_areas EMPTY>
@@ -124,6 +125,15 @@
     login_count CDATA #IMPLIED
     creation_date CDATA #IMPLIED
     last_update_date CDATA #IMPLIED
+>
+
+<!ELEMENT tbl_day_parts EMPTY>
+<!ATTLIST tbl_day_parts
+    day_part_id CDATA #REQUIRED
+    name CDATA #REQUIRED
+    start_hour CDATA #IMPLIED
+    store_id CDATA #REQUIRED
+    position_index CDATA #REQUIRED
 >
 
 <!ELEMENT tbl_users_profiles EMPTY>

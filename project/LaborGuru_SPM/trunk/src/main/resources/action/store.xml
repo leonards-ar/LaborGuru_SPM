@@ -37,12 +37,13 @@
 			<result name="input" type="tiles">editDaypartDefinition</result>
 		</action>		
 
-		<action name="storeWeekdayGuestServ_*" method="{1}" class="com.laborguru.action.store.StorePositionPrepareAction">
+		<action name="storeWeekdayGuestServ_*" method="{1}" class="com.laborguru.action.store.WeekdayGuestServicesPrepareAction">
 			<result name="edit" type="tiles">editWeekdayGuestServ</result>
 			<result name="show" type="tiles">showWeekdayGuestServ</result>
-			<result name="cancelEdit" type="tiles">listStoresPage</result>
-			<result name="cancelShow" type="redirectAction">store_list</result>
+			<result name="cancelEdit" type="tiles">store_edit</result>
+			<result name="cancelShow" type="redirectAction">store_show</result>
 			<result name="input" type="tiles">editWeekdayGuestServ</result>
+			<result name="success" type="redirectAction">store_edit</result>
 		</action>		
 	</package>
 </struts>

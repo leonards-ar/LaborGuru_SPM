@@ -1,9 +1,5 @@
 package com.laborguru.action.store;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.apache.log4j.Logger;
 
 import com.laborguru.action.SpmActionResult;
@@ -24,15 +20,11 @@ import com.laborguru.model.OperationTime;
 public class OperationTimePrepareAction extends StoreAdministrationBaseAction {
 	
 	private static Logger log = Logger.getLogger(OperationTimePrepareAction.class);
-	
-	
 
 	private Integer firstDayOfWeek;
 	
 	private String weekOperationTimeOpen[] = new String[DayOfWeek.values().length];
 	private String weekOperationTimeClose[] = new String[DayOfWeek.values().length];
-	
-	private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
 	
 	/**
 	 * Prepare the data to be used on the edit page
@@ -99,33 +91,6 @@ public class OperationTimePrepareAction extends StoreAdministrationBaseAction {
 	}
 	
 	/**
-	 * 
-	 * @param d
-	 * @return
-	 */
-	private String dateToDisplayTime(Date d) {
-		if(d != null) {
-			return TIME_FORMAT.format(d);
-		} else {
-			return null;
-		}
-	}
-	
-	/**
-	 * 
-	 * @param time
-	 * @return
-	 */
-	private Date displayTimeToDate(String time) {
-		try {
-			return TIME_FORMAT.parse(time);
-		} catch (ParseException ex) {
-			log.error("Cannot parse time [" + time + "]", ex);
-			return null;
-		}
-	}
-	
-	/**
 	 * Prepares the edit page
 	 * 
 	 * @return
@@ -169,7 +134,7 @@ public class OperationTimePrepareAction extends StoreAdministrationBaseAction {
 			getStoreService().save(getStore());
 
 			if(log.isInfoEnabled()) {
-				log.info("Store hours of operation successfully update for store with id [" + getStoreId() + "]");
+				log.info("Store hours of operation successfully updated for store with id [" + getStoreId() + "]");
 			}
 			
 			return SpmActionResult.SUCCESS.getResult();
@@ -244,6 +209,4 @@ public class OperationTimePrepareAction extends StoreAdministrationBaseAction {
 			}
 		}
 	}
-
-
 }

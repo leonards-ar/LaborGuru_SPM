@@ -61,4 +61,9 @@
   <tbl_users_profiles user_id="3" profile_id="1"/>
   <tbl_users_profiles user_id="4" profile_id="1"/>
   <tbl_users_profiles user_id="5" profile_id="2"/>
+  <tbl_day_parts day_part_id="1" store_id="1" name="Breakfast" position_index="0"/>
+  <tbl_day_parts day_part_id="2" store_id="1" name="Lunch" position_index="1"/>
+  <tbl_day_parts day_part_id="3" store_id="1" name="Post Lunch" position_index="2"/>
+  <tbl_day_parts day_part_id="4" store_id="1" name="Pre Dinner" position_index="3"/>
+  <tbl_day_parts day_part_id="5" store_id="1" name="Dinner" position_index="4"/>
 </dataset>
