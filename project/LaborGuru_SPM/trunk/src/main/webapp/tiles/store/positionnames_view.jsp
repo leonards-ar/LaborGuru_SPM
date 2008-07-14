@@ -19,8 +19,8 @@
 								<td><s:text name="store.storeoperations.positionnames.label" /></td>
 							</tr>
 							<s:iterator id="position" value="positions" status="stat">
-								<tr class="editorTableOddRow">
-									<td class="value"><s:property  value="%{name}"/></td>
+								<tr class="editorTable<s:if test="#itPosition.even">Even</s:if><s:else>Odd</s:else>Row">
+									<td class="value"><s:property value="%{name}"/></td>
 								</tr>
 							</s:iterator>
 						</table>						
