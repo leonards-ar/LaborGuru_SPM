@@ -122,4 +122,11 @@
 		<put-attribute name="storeExtDataBody" value="/tiles/store/fixedguestserv_view.jsp" />
 	</definition>		
 
+	<definition name="editFixedFlexible" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/fixedflexible_edit.jsp" />
+	</definition>
+
+	<definition name="showFixedFlexible" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/fixedflexible_view.jsp" />
+	</definition>	
 </tiles-definitions>

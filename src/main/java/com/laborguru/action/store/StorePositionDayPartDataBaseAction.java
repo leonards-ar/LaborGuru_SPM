@@ -52,7 +52,7 @@ public abstract class StorePositionDayPartDataBaseAction extends StoreAdministra
 	}
 
 	/**
-	 * @param dayPartValues the weekdayGuestServices to set
+	 * @param dayPartValues the dayPartValues to set
 	 */
 	public void setDayPartValues(String[][] dayPartValues) {
 		this.dayPartValues = dayPartValues;
@@ -154,7 +154,7 @@ public abstract class StorePositionDayPartDataBaseAction extends StoreAdministra
 			getStoreService().save(getStore());
 
 			if(log.isInfoEnabled()) {
-				log.info("Store weekday guest services successfully updated for store with id [" + getStoreId() + "]");
+				log.info("Store position/day part data successfully updated for store with id [" + getStoreId() + "]");
 			}
 			
 			return SpmActionResult.SUCCESS.getResult();
