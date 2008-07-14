@@ -36,14 +36,6 @@
                     <td align="right" class="form_label" nowrap>* <s:text name="store.customer.label" /></td>
                     <td align="left" class="value"><s:select onchange="store_form.action='store_selectCustomer.action';store_form.submit();" name="storeCustomer.id" list="customers" listKey="id" listValue="name" headerKey="" headerValue="%{getText('store.customer.header.label')}" theme="simple"/></td>
 				</tr>
-              	<tr class="editFormOddRow">
-                    <td align="right" class="form_label" nowrap>* <s:text name="store.region.label" /></td>
-                    <td align="left" class="value"><s:select onchange="store_form.action='store_selectRegion.action';store_form.submit();" name="storeRegion.id" list="regions" listKey="id" listValue="name" headerKey="" headerValue="%{getText('store.region.header.label')}" theme="simple"/></td>
-                </tr>
-              	<tr class="editFormEvenRow">
-                    <td align="right" class="form_label" nowrap>* <s:text name="store.area.label" /></td>
-                    <td align="left" class="value"><s:select name="storeArea.id" list="areas" listKey="id" listValue="name" headerKey="" headerValue="%{getText('store.area.header.label')}" theme="simple"/></td>
-				</tr>		              	
                                   	
               	<tr class="editFormOddRow">
                     <td align="right" class="form_label" nowrap><s:text name="store.code.label" /></td>
@@ -54,7 +46,14 @@
                     <td align="right" class="form_label" nowrap>* <s:text name="store.name.label" /></td>
                     <td  align="left" class="value"><s:textfield name="store.name" size="20" theme="simple"/></td>
                 </tr>
-                
+              	<tr class="editFormOddRow">
+                    <td align="right" class="form_label" nowrap>* <s:text name="store.region.label" /></td>
+                    <td align="left" class="value"><s:select onchange="store_form.action='store_selectRegion.action';store_form.submit();" name="storeRegion.id" list="regions" listKey="id" listValue="name" headerKey="" headerValue="%{getText('store.region.header.label')}" theme="simple"/></td>
+                </tr>
+              	<tr class="editFormEvenRow">
+                    <td align="right" class="form_label" nowrap>* <s:text name="store.area.label" /></td>
+                    <td align="left" class="value"><s:select name="storeArea.id" list="areas" listKey="id" listValue="name" headerKey="" headerValue="%{getText('store.area.header.label')}" theme="simple"/></td>
+				</tr>		                       
               	<tr class="editFormOddRow">
                     <td width="100%" align="right" colspan="2">
 	                    <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">

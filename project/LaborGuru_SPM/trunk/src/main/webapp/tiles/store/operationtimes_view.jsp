@@ -13,7 +13,9 @@
 				<tr class="editFormOddRow">
                     <td align="right" class="form_label" nowrap><s:text name="store.storeoperations.firstdayofweek.label" /></td>
                     <td align="left" class="value">
-                    	<s:text name="%{'dayofweek.'+store.firstDayOfWeekAsInteger}" />
+                    	<s:if test="store.firstDayOfWeekAsInteger != null">
+                    		<s:text name="%{'dayofweek.'+store.firstDayOfWeekAsInteger}" />
+                    	</s:if>
                     </td>
 				</tr>
 			</table>
