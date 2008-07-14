@@ -112,6 +112,14 @@
 
 	<definition name="showVariableOpening" extends="storeExtendedCRUD">
 		<put-attribute name="storeExtDataBody" value="/tiles/store/variableopening_view.jsp" />
-	</definition>			
+	</definition>		
+	
+	<definition name="editFixedGuestServ" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/fixedguestserv_edit.jsp" />
+	</definition>
+
+	<definition name="showFixedGuestServ" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/fixedguestserv_view.jsp" />
+	</definition>		
 
 </tiles-definitions>
