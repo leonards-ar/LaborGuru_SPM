@@ -4,7 +4,10 @@ import java.util.Comparator;
 
 
 /**
- * @author fb21734
+ *
+ * @author <a href="fbarrera@gmail.com">Federico Barrera Oro</a>
+ * @version 1.0
+ * @since SPM 1.0
  *
  */
 public class SpmComparator implements Comparator<ComparableObject> {
