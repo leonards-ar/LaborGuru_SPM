@@ -89,4 +89,12 @@
 	<definition name="showDaypartDefinition" extends="storeExtendedCRUD">
 		<put-attribute name="storeExtDataBody" value="/tiles/store/daypartdefinition_view.jsp" />
 	</definition>		
+	
+	<definition name="editWeekendGuestServ" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/weekendguestserv_edit.jsp" />
+	</definition>
+
+	<definition name="showWeekendGuestServ" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/weekendguestserv_view.jsp" />
+	</definition>	
 </tiles-definitions>
