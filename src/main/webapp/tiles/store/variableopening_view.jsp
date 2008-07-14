@@ -25,7 +25,7 @@
 									<td class="editorTableFirstColumn"><s:property value="name"/></td>
 									<s:iterator id="dayPart" value="store.dayParts" status="dpStatus">
 										<td class="editorTable<s:if test="#pStatus.even">Even</s:if><s:else>Odd</s:else>Row">
-										<s:property value='%{dayOfWeekValues[#pStatus.index][#dpStatus.index]}'/>
+										<s:property value='%{dayPartValues[#pStatus.index][#dpStatus.index]}'/>
 										</td>
 									</s:iterator>
 								</tr>

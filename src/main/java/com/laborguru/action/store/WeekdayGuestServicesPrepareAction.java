@@ -15,7 +15,7 @@ import com.laborguru.model.DayPartData;
  * @since SPM 1.0
  *
  */
-public class WeekdayGuestServicesPrepareAction extends StorePositionDayOfWeekDataBaseAction {
+public class WeekdayGuestServicesPrepareAction extends StorePositionDayPartDataBaseAction {
 
 	/**
 	 * 
@@ -31,7 +31,7 @@ public class WeekdayGuestServicesPrepareAction extends StorePositionDayOfWeekDat
 	/**
 	 * 
 	 * @return
-	 * @see com.laborguru.action.store.StorePositionDayOfWeekDataBaseAction#getValidationErrorMessageKey()
+	 * @see com.laborguru.action.store.StorePositionDayPartDataBaseAction#getValidationErrorMessageKey()
 	 */
 	@Override
 	protected String getValidationErrorMessageKey() {
@@ -43,7 +43,7 @@ public class WeekdayGuestServicesPrepareAction extends StorePositionDayOfWeekDat
 	 * 
 	 * @param dayPartData
 	 * @return
-	 * @see com.laborguru.action.store.StorePositionDayOfWeekDataBaseAction#getValueToShow(com.laborguru.model.DayPartData)
+	 * @see com.laborguru.action.store.StorePositionDayPartDataBaseAction#getValueToShow(com.laborguru.model.DayPartData)
 	 */
 	@Override
 	protected String getValueToShow(DayPartData dayPartData) {
@@ -54,7 +54,7 @@ public class WeekdayGuestServicesPrepareAction extends StorePositionDayOfWeekDat
 	 * 
 	 * @param dayPartData
 	 * @param value
-	 * @see com.laborguru.action.store.StorePositionDayOfWeekDataBaseAction#setDayPartDataValue(com.laborguru.model.DayPartData, java.lang.String)
+	 * @see com.laborguru.action.store.StorePositionDayPartDataBaseAction#setDayPartDataValue(com.laborguru.model.DayPartData, java.lang.String)
 	 */
 	@Override
 	protected void setDayPartDataValue(DayPartData dayPartData, String value) {
@@ -65,7 +65,7 @@ public class WeekdayGuestServicesPrepareAction extends StorePositionDayOfWeekDat
 	 * 
 	 * @param value
 	 * @return
-	 * @see com.laborguru.action.store.StorePositionDayOfWeekDataBaseAction#validateValue(java.lang.String)
+	 * @see com.laborguru.action.store.StorePositionDayPartDataBaseAction#validateValue(java.lang.String)
 	 */
 	@Override
 	protected boolean validateValue(String value) {
