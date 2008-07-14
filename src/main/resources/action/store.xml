@@ -32,7 +32,7 @@
 		<action name="storeDaypartDefinition_*" method="{1}" class="com.laborguru.action.store.StorePositionPrepareAction">
 			<result name="edit" type="tiles">editDaypartDefinition</result>
 			<result name="show" type="tiles">showDaypartDefinition</result>
-			<result name="cancelEdit" type="tiles">listStoresPage</result>
+			<result name="cancelEdit" type="redirectAction">listStoresPage</result>
 			<result name="cancelShow" type="redirectAction">store_list</result>
 			<result name="input" type="tiles">editDaypartDefinition</result>
 		</action>		
@@ -40,7 +40,7 @@
 		<action name="storeWeekdayGuestServ_*" method="{1}" class="com.laborguru.action.store.WeekdayGuestServicesPrepareAction">
 			<result name="edit" type="tiles">editWeekdayGuestServ</result>
 			<result name="show" type="tiles">showWeekdayGuestServ</result>
-			<result name="cancelEdit" type="tiles">store_edit</result>
+			<result name="cancelEdit" type="redirectAction">store_edit</result>
 			<result name="cancelShow" type="redirectAction">store_show</result>
 			<result name="input" type="tiles">editWeekdayGuestServ</result>
 			<result name="success" type="redirectAction">store_edit</result>
@@ -49,10 +49,20 @@
 		<action name="storeWeekendGuestServ_*" method="{1}" class="com.laborguru.action.store.WeekendGuestServicesPrepareAction">
 			<result name="edit" type="tiles">editWeekendGuestServ</result>
 			<result name="show" type="tiles">showWeekendGuestServ</result>
-			<result name="cancelEdit" type="tiles">store_edit</result>
+			<result name="cancelEdit" type="redirectAction">store_edit</result>
 			<result name="cancelShow" type="redirectAction">store_show</result>
 			<result name="input" type="tiles">editWeekendGuestServ</result>
 			<result name="success" type="redirectAction">store_edit</result>
-		</action>				
+		</action>	
+
+		<action name="storeVariableFlexible_*" method="{1}" class="com.laborguru.action.store.VariableFlexiblePrepareAction">
+			<result name="edit" type="tiles">editVariableFlexible</result>
+			<result name="show" type="tiles">showVariableFlexible</result>
+			<result name="cancelEdit" type="redirectAction">store_edit</result>
+			<result name="cancelShow" type="redirectAction">store_show</result>
+			<result name="input" type="tiles">editVariableFlexible</result>
+			<result name="success" type="redirectAction">store_edit</result>
+		</action>			
+					
 	</package>
 </struts>
