@@ -3,13 +3,25 @@
 
 <br />
 <table border="0" cellspacing="0" align="center">
+              <tr>
+              	<td class="errorMessage" align="center">
+	              	<table border="0" align="center" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
+              			<tr>
+              				<td>
+				              	<s:fielderror theme="simple"/>
+				              	<s:actionerror theme="simple"/>
+			              	</td>
+            		  	</tr>
+              		</table>
+              	</td>
+              </tr>	
 	<tr>
 		<td id="subtitleBar" nowrap><s:text name="store.laborallowance.title" /> - <s:text name="store.laborallowance.weekdayguestservice.title" /></td>
 	</tr>
 
 	<tr>
 		<td align="center">
-              <s:form action="store_save" theme="simple">
+              <s:form action="storeWeekdayGuestServ_save" theme="simple">
               <s:hidden name="store.id" theme="simple"/>
 		
 			<table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0" align="center">
@@ -18,78 +30,22 @@
 						<table border="0" cellpadding="3" cellspacing="1" align="center">
 							<tr class="editorTableHeader">
 								<td>&nbsp;</td>
-								<td>Breakfast</td>
-								<td>Lunch</td>
-								<td>Afternoon</td>
-								<td>Evening</td>
-								<td>Dinner</td>
+								<s:iterator id="dayPart" value="store.dayParts" status="dpStatus">
+								<td><s:property value="name"/>
+								</s:iterator>
 							</tr>
+							<s:iterator id="position" value="store.orderedPositions" status="pStatus">
+								<tr>
+									<td class="editorTableFirstColumn"><s:property value="name"/></td>
+									<s:iterator id="dayPart" value="store.dayParts" status="dpStatus">
+										<td class="editorTable<s:if test="#pStatus.even">Even</s:if><s:else>Odd</s:else>Row">
+										<s:textfield name="dayOfWeekValues[%{#pStatus.index}][%{#dpStatus.index}]" size="8" maxlength="10"/>
+										</td>
+									</s:iterator>
+								</tr>
+							</s:iterator>
 							<tr>
-								<td class="editorTableFirstColumn">Position 1</td>
-								<td class="editorTableOddRow"><input type="text" size="8"/></td>
-								<td class="editorTableOddRow"><input type="text" size="8"/></td>
-								<td class="editorTableOddRow"><input type="text" size="8"/></td>
-								<td class="editorTableOddRow"><input type="text" size="8"/></td>
-								<td class="editorTableOddRow"><input type="text" size="8"/></td>
-							</tr>
-							<tr>
-								<td class="editorTableFirstColumn">Position 2</td>
-								<td class="editorTableEvenRow"><input type="text" size="8"/></td>
-								<td class="editorTableEvenRow"><input type="text" size="8"/></td>
-								<td class="editorTableEvenRow"><input type="text" size="8"/></td>
-								<td class="editorTableEvenRow"><input type="text" size="8"/></td>
-								<td class="editorTableEvenRow"><input type="text" size="8"/></td>
-							</tr>						
-							<tr>
-								<td class="editorTableFirstColumn">Position 3</td>
-								<td class="editorTableOddRow"><input type="text" size="8"/></td>
-								<td class="editorTableOddRow"><input type="text" size="8"/></td>
-								<td class="editorTableOddRow"><input type="text" size="8"/></td>
-								<td class="editorTableOddRow"><input type="text" size="8"/></td>
-								<td class="editorTableOddRow"><input type="text" size="8"/></td>
-							</tr>
-							<tr>
-								<td class="editorTableFirstColumn">Position 4</td>
-								<td class="editorTableEvenRow"><input type="text" size="8"/></td>
-								<td class="editorTableEvenRow"><input type="text" size="8"/></td>
-								<td class="editorTableEvenRow"><input type="text" size="8"/></td>
-								<td class="editorTableEvenRow"><input type="text" size="8"/></td>
-								<td class="editorTableEvenRow"><input type="text" size="8"/></td>
-							</tr>	
-							<tr>
-								<td class="editorTableFirstColumn">Position 5</td>
-								<td class="editorTableOddRow"><input type="text" size="8"/></td>
-								<td class="editorTableOddRow"><input type="text" size="8"/></td>
-								<td class="editorTableOddRow"><input type="text" size="8"/></td>
-								<td class="editorTableOddRow"><input type="text" size="8"/></td>
-								<td class="editorTableOddRow"><input type="text" size="8"/></td>
-							</tr>
-							<tr>
-								<td class="editorTableFirstColumn">Position 6</td>
-								<td class="editorTableEvenRow"><input type="text" size="8"/></td>
-								<td class="editorTableEvenRow"><input type="text" size="8"/></td>
-								<td class="editorTableEvenRow"><input type="text" size="8"/></td>
-								<td class="editorTableEvenRow"><input type="text" size="8"/></td>
-								<td class="editorTableEvenRow"><input type="text" size="8"/></td>
-							</tr>														
-							<tr>
-								<td class="editorTableFirstColumn">Position 7</td>
-								<td class="editorTableOddRow"><input type="text" size="8"/></td>
-								<td class="editorTableOddRow"><input type="text" size="8"/></td>
-								<td class="editorTableOddRow"><input type="text" size="8"/></td>
-								<td class="editorTableOddRow"><input type="text" size="8"/></td>
-								<td class="editorTableOddRow"><input type="text" size="8"/></td>
-							</tr>
-							<tr>
-								<td class="editorTableFirstColumn">Position 8</td>
-								<td class="editorTableEvenRow"><input type="text" size="8"/></td>
-								<td class="editorTableEvenRow"><input type="text" size="8"/></td>
-								<td class="editorTableEvenRow"><input type="text" size="8"/></td>
-								<td class="editorTableEvenRow"><input type="text" size="8"/></td>
-								<td class="editorTableEvenRow"><input type="text" size="8"/></td>
-							</tr>	
-							<tr>
-								<td colspan="6" class="infoMessage"><s:text name="store.laborallowance.message" /></td>		
+								<td colspan="<s:property value="%{store.dayParts.size + 1}"/>" class="infoMessage"><s:text name="store.laborallowance.message" /></td>		
 							</tr>						
 						</table>
 					</td>

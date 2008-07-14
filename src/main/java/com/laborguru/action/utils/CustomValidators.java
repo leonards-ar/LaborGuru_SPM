@@ -84,4 +84,35 @@ public class CustomValidators {
 	public static boolean isValidMilitaryTime(String time) {	
 		return isValidMilitaryTime(time, false);
 	}
+	
+	/**
+	 * This method checks that the value passed as a parameter is
+	 * a valid number.
+	 * @param number the number to check
+	 * @param required if the value is required
+	 * @return if the value is correct or not
+	 */
+	public static boolean isValidDouble(String number, boolean required) {
+		try {
+			if(number != null && number.trim().length() > 0) {
+				Double.parseDouble(number);
+				return true;
+			} else {
+				return !required;
+			}
+		} catch(Exception ex) {
+			return false;
+		}
+	}
+	
+	/**
+	 * This method checks that the value passed as a parameter is
+	 * a valid number.
+	 * @param number the number to check
+	 * @return if the value is correct or not
+	 */
+	public static boolean isValidDouble(String number) {
+		return isValidDouble(number, false);
+	}
+	
 }

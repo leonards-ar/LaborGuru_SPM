@@ -16,79 +16,20 @@
 						<table border="0" cellpadding="3" cellspacing="1" align="center">
 							<tr class="editorTableHeader">
 								<td>&nbsp;</td>
-								<td>Breakfast</td>
-								<td>Lunch</td>
-								<td>Afternoon</td>
-								<td>Evening</td>
-								<td>Dinner</td>
+								<s:iterator id="dayPart" value="store.dayParts" status="dpStatus">
+								<td><s:property value="name"/>
+								</s:iterator>
 							</tr>
-							<tr>
-								<td class="editorTableFirstColumn">Position 1</td>
-								<td class="editorTableOddRow">0.00456</td>
-								<td class="editorTableOddRow">0.00456</td>
-								<td class="editorTableOddRow">0.00456</td>
-								<td class="editorTableOddRow">0.00456</td>
-								<td class="editorTableOddRow">0.00456</td>
-							</tr>
-							<tr>
-								<td class="editorTableFirstColumn">Position 2</td>
-								<td class="editorTableEvenRow">0.00456</td>
-								<td class="editorTableEvenRow">0.00456</td>
-								<td class="editorTableEvenRow">0.00456</td>
-								<td class="editorTableEvenRow">0.00456</td>
-								<td class="editorTableEvenRow">0.00456</td>
-							</tr>						
-							<tr>
-								<td class="editorTableFirstColumn">Position 3</td>
-								<td class="editorTableOddRow">0.00456</td>
-								<td class="editorTableOddRow">0.00456</td>
-								<td class="editorTableOddRow">0.00456</td>
-								<td class="editorTableOddRow">0.00456</td>
-								<td class="editorTableOddRow">0.00456</td>
-							</tr>
-							<tr>
-								<td class="editorTableFirstColumn">Position 4</td>
-								<td class="editorTableEvenRow">0.00456</td>
-								<td class="editorTableEvenRow">0.00456</td>
-								<td class="editorTableEvenRow">0.00456</td>
-								<td class="editorTableEvenRow">0.00456</td>
-								<td class="editorTableEvenRow">0.00456</td>
-							</tr>	
-							<tr>
-								<td class="editorTableFirstColumn">Position 5</td>
-								<td class="editorTableOddRow">0.00456</td>
-								<td class="editorTableOddRow">0.00456</td>
-								<td class="editorTableOddRow">0.00456</td>
-								<td class="editorTableOddRow">0.00456</td>
-								<td class="editorTableOddRow">0.00456</td>
-							</tr>
-							<tr>
-								<td class="editorTableFirstColumn">Position 6</td>
-								<td class="editorTableEvenRow">0.00456</td>
-								<td class="editorTableEvenRow">0.00456</td>
-								<td class="editorTableEvenRow">0.00456</td>
-								<td class="editorTableEvenRow">0.00456</td>
-								<td class="editorTableEvenRow">0.00456</td>
-							</tr>														
-							<tr>
-								<td class="editorTableFirstColumn">Position 7</td>
-								<td class="editorTableOddRow">0.00456</td>
-								<td class="editorTableOddRow">0.00456</td>
-								<td class="editorTableOddRow">0.00456</td>
-								<td class="editorTableOddRow">0.00456</td>
-								<td class="editorTableOddRow">0.00456</td>
-							</tr>
-							<tr>
-								<td class="editorTableFirstColumn">Position 8</td>
-								<td class="editorTableEvenRow">0.00456</td>
-								<td class="editorTableEvenRow">0.00456</td>
-								<td class="editorTableEvenRow">0.00456</td>
-								<td class="editorTableEvenRow">0.00456</td>
-								<td class="editorTableEvenRow">0.00456</td>
-							</tr>	
-							<tr>
-								<td colspan="6" class="infoMessage"><s:text name="store.laborallowance.message" /></td>		
-							</tr>						
+							<s:iterator id="position" value="store.orderedPositions" status="pStatus">
+								<tr>
+									<td class="editorTableFirstColumn"><s:property value="name"/></td>
+									<s:iterator id="dayPart" value="store.dayParts" status="dpStatus">
+										<td class="editorTable<s:if test="#pStatus.even">Even</s:if><s:else>Odd</s:else>Row">
+										<s:property value='%{dayOfWeekValues[#pStatus.index][#dpStatus.index]}'/>
+										</td>
+									</s:iterator>
+								</tr>
+							</s:iterator>							
 						</table>
 					</td>
 				</tr>

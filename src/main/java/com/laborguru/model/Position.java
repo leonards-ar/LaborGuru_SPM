@@ -134,6 +134,23 @@ public class Position extends SpmObject implements ComparableObject{
 	}
 
 	/**
+	 * Returns the day part data for the given day part.
+	 * @param dayPart the day part
+	 * @return The day part data or null
+	 */
+	public DayPartData getDayPartDataFor(DayPart dayPart) {
+		if(dayPart == null) {
+			return null;
+		}
+		for(DayPartData dayPartData : getDayPartData()) {
+			if(dayPart.equals(dayPartData.getDayPart())) {
+				return dayPartData;
+			}
+		}
+		return null;
+	}
+	
+	/**
 	 * @param dayOfWeekData the dayOfWeekData to set
 	 */
 	public void setDayOfWeekData(List<DayOfWeekData> dayOfWeekData) {
