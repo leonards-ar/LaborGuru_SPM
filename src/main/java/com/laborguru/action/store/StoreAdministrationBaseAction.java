@@ -174,6 +174,19 @@ public abstract class StoreAdministrationBaseAction extends SpmAction implements
 			return null;
 		}
 	}
+
+	/**
+	 * 
+	 * @param i
+	 * @return
+	 */
+	protected String integerToDisplayInteger(Integer i) {
+		if(i != null) {
+			return i.toString();
+		} else {
+			return null;
+		}
+	}
 	
 	/**
 	 * 
@@ -191,5 +204,23 @@ public abstract class StoreAdministrationBaseAction extends SpmAction implements
 			log.error("Cannot parse number [" + d + "]", ex);
 			return null;
 		}
+	}
+	
+	/**
+	 * 
+	 * @param i
+	 * @return
+	 */
+	protected Integer displayIntegerToInteger(String i) {
+		try {
+			if(i != null) {
+				return new Integer(i);
+			} else {
+				return null;
+			}
+		} catch (Exception ex) {
+			log.error("Cannot parse number [" + i + "]", ex);
+			return null;
+		}		
 	}
 }
