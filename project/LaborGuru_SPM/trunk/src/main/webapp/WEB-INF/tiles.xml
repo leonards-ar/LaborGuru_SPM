@@ -96,5 +96,13 @@
 
 	<definition name="showWeekendGuestServ" extends="storeExtendedCRUD">
 		<put-attribute name="storeExtDataBody" value="/tiles/store/weekendguestserv_view.jsp" />
-	</definition>	
+	</definition>
+	
+	<definition name="editVariableFlexible" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/variableflexible_edit.jsp" />
+	</definition>
+
+	<definition name="showVariableFlexible" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/variableflexible_view.jsp" />
+	</definition>			
 </tiles-definitions>

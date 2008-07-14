@@ -40,7 +40,7 @@ public abstract class StoreAdministrationBaseAction extends SpmAction implements
 	private static final NumberFormat DOUBLE_FORMAT = DecimalFormat.getInstance(Locale.US);
 	static {
 		if(DOUBLE_FORMAT instanceof DecimalFormat) {
-			((DecimalFormat)DOUBLE_FORMAT).applyPattern("0.####");
+			((DecimalFormat)DOUBLE_FORMAT).applyPattern("0.#####");
 		}
 	}
 
