@@ -39,7 +39,7 @@
 									<td class="editorTableFirstColumn"><s:property value="name"/></td>
 									<s:iterator id="dayPart" value="store.dayParts" status="dpStatus">
 										<td class="editorTable<s:if test="#pStatus.even">Even</s:if><s:else>Odd</s:else>Row">
-										<s:textfield name="dayOfWeekValues[%{#pStatus.index}][%{#dpStatus.index}]" size="8" maxlength="10"/>
+										<s:textfield name="dayPartValues[%{#pStatus.index}][%{#dpStatus.index}]" size="8" maxlength="10"/>
 										</td>
 									</s:iterator>
 								</tr>

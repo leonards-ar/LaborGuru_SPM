@@ -1,5 +1,5 @@
 /*
- * File name: StorePositionDayOfWeekDataBaseAction.java
+ * File name: StorePositionDayPartDataBaseAction.java
  * Creation date: 13/07/2008 21:16:39
  * Copyright Mindpool
  */
@@ -22,47 +22,47 @@ import com.laborguru.model.Position;
  * @since SPM 1.0
  *
  */
-public abstract class StorePositionDayOfWeekDataBaseAction extends StoreAdministrationBaseAction {
+public abstract class StorePositionDayPartDataBaseAction extends StoreAdministrationBaseAction {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4208407749729718476L;
 
-	private static Logger log = Logger.getLogger(StorePositionDayOfWeekDataBaseAction.class);
+	private static Logger log = Logger.getLogger(StorePositionDayPartDataBaseAction.class);
 
-	private String dayOfWeekValues[][];
+	private String dayPartValues[][];
 	
 	/**
 	 * 
 	 */
-	public StorePositionDayOfWeekDataBaseAction() {
+	public StorePositionDayPartDataBaseAction() {
 	}
 
 	/**
-	 * @return the dayOfWeekValues
+	 * @return the dayPartValues
 	 */
-	public String[][] getDayOfWeekValues() {
-		if(dayOfWeekValues == null) {
+	public String[][] getDayPartValues() {
+		if(dayPartValues == null) {
 			List<Position> p = getStore().getOrderedPositions();
 			List<DayPart> d = getStore().getDayParts();
-			setDayOfWeekValues(new String[p.size()][d.size()]);
+			setDayPartValues(new String[p.size()][d.size()]);
 		}
-		return dayOfWeekValues;
+		return dayPartValues;
 	}
 
 	/**
-	 * @param dayOfWeekValues the weekdayGuestServices to set
+	 * @param dayPartValues the weekdayGuestServices to set
 	 */
-	public void setDayOfWeekValues(String[][] dayOfWeekValues) {
-		this.dayOfWeekValues = dayOfWeekValues;
+	public void setDayPartValues(String[][] dayPartValues) {
+		this.dayPartValues = dayPartValues;
 	}
 	
 	/**
 	 * Initializes the container object that will handle input of
 	 * weekday guest services.
 	 */
-	private void loadDayOfWeekData() {
+	private void loadDayPartData() {
 		if(getStore() != null) {
 			List<Position> p = getStore().getOrderedPositions();
 			List<DayPart> d = getStore().getDayParts();
@@ -73,10 +73,10 @@ public abstract class StorePositionDayOfWeekDataBaseAction extends StoreAdminist
 				for(int j = 0; j < d.size(); j++) {
 					aDayPartData = p.get(i).getDayPartDataFor(d.get(j));
 					if(aDayPartData != null) {
-						getDayOfWeekValues()[i][j] = getValueToShow(aDayPartData);
+						getDayPartValues()[i][j] = getValueToShow(aDayPartData);
 					} else {
 						// Leave it null. At the bigining there might be no values.
-						getDayOfWeekValues()[i][j] = null;
+						getDayPartValues()[i][j] = null;
 					}
 				}
 			}
@@ -87,7 +87,7 @@ public abstract class StorePositionDayOfWeekDataBaseAction extends StoreAdminist
 	 * Puts all the corresponding values in the Store object
 	 * so it can be updated.
 	 */
-	private void setDayOfWeekData() {
+	private void setDayPartData() {
 		if(getStore() != null) {
 			List<Position> p = getStore().getOrderedPositions();
 			List<DayPart> d = getStore().getDayParts();
@@ -99,13 +99,13 @@ public abstract class StorePositionDayOfWeekDataBaseAction extends StoreAdminist
 					aDayPartData = p.get(i).getDayPartDataFor(d.get(j));
 					if(aDayPartData != null) {
 						// Already exists. Update value
-						setDayPartDataValue(aDayPartData, getDayOfWeekValues()[i][j]);
+						setDayPartDataValue(aDayPartData, getDayPartValues()[i][j]);
 					} else {
 						// Add new day part data
 						aDayPartData = new DayPartData();
 						aDayPartData.setPosition(p.get(i));
 						aDayPartData.setDayPart(d.get(j));
-						setDayPartDataValue(aDayPartData, getDayOfWeekValues()[i][j]);
+						setDayPartDataValue(aDayPartData, getDayPartValues()[i][j]);
 						p.get(i).getDayPartData().add(aDayPartData);
 					}
 				}
@@ -120,7 +120,7 @@ public abstract class StorePositionDayOfWeekDataBaseAction extends StoreAdminist
 	 * @throws Exception
 	 */
 	public String edit() throws Exception {
-		loadDayOfWeekData();
+		loadDayPartData();
 		
 		return SpmActionResult.EDIT.getResult();
 	}
@@ -132,7 +132,7 @@ public abstract class StorePositionDayOfWeekDataBaseAction extends StoreAdminist
 	 * @throws Exception
 	 */
 	public String show() throws Exception {
-		loadDayOfWeekData();
+		loadDayPartData();
 		
 		return SpmActionResult.SHOW.getResult();
 	}
@@ -145,7 +145,7 @@ public abstract class StorePositionDayOfWeekDataBaseAction extends StoreAdminist
 	 */
 	public String save() throws Exception {
 		try {
-			setDayOfWeekData();
+			setDayPartData();
 			
 			if(log.isDebugEnabled()) {
 				log.debug("About to save store: " + getStore());
@@ -171,16 +171,16 @@ public abstract class StorePositionDayOfWeekDataBaseAction extends StoreAdminist
 	@Override
 	public void validate() {
 		
-		if(this.dayOfWeekValues != null) {
+		if(this.dayPartValues != null) {
 			List<Position> p = getStore().getOrderedPositions();
 			List<DayPart> d = getStore().getDayParts();
 			
-			for(int i=0; i < getDayOfWeekValues().length; i++) {
-				for(int j=0; j < getDayOfWeekValues()[0].length; j++) {
-					if(!validateValue(getDayOfWeekValues()[i][j])) {
+			for(int i=0; i < getDayPartValues().length; i++) {
+				for(int j=0; j < getDayPartValues()[0].length; j++) {
+					if(!validateValue(getDayPartValues()[i][j])) {
 						Position position = p.get(i);
 						DayPart dayPart = d.get(j);
-						addFieldError( "dayOfWeekData", getText(getValidationErrorMessageKey(), new String[] {getDayOfWeekValues()[i][j], position.getName(), dayPart.getName() }) );
+						addFieldError( "dayPartData", getText(getValidationErrorMessageKey(), new String[] {getDayPartValues()[i][j], position.getName(), dayPart.getName() }) );
 					}
 				}
 			}
