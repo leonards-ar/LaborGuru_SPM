@@ -88,11 +88,16 @@ a.link:hover {
 }
 
 #subtitleBar {
+	height: 19px;
 	width: 100%;
-	color: #184E01;
+	background-color: #A3D39C;
+	background-image: url(../images/title-bar-bg.png);
+	background-position: top;
+	background-repeat: repeat-x;
+	color: #FFFFFF;
 	padding-left: 7px;
 	font-size: 13px;
-	text-align: left;	
+	text-align: left;
 }
 
 #loginFormTable {

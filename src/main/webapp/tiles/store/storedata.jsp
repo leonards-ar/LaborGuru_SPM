@@ -4,28 +4,25 @@
 <br />
 <table border="0" cellspacing="0" align="center">
 	<tr>
-		<td id="titleBar"><s:text name="store.update.title" /></td>
-	</tr>
-
-	<tr>
 		<td align="center">
-			<table id="editFormTable" border="0" cellpadding="6" cellspacing="0"
-				colspan="0" cellspan="0" align="center">
-				<tr class="editFormEvenRow">
-					<td align="right" class="form_label" nowrap><s:text name="store.customer.label" /></td>
-					<td align="left" class="value"><s:property value="store.area.region.customer.name" /></td>
-				</tr>
-	
-				<tr class="editFormOddRow">
-					<td align="right" class="form_label" nowrap><s:text name="store.code.label" /></td>
-					<td align="left" class="value"><s:property value="store.code" /></td>
-				</tr>
-	
-				<tr class="editFormEvenRow">
-					<td align="right" class="form_label" nowrap><s:text name="store.name.label" /></td>
-					<td align="left" class="value"><s:property value="store.name" /></td>
-				</tr>
-			</table>
+		
+			<table class="results">
+				<thead>
+					<tr>
+						<th><s:text name="store.customer.label" /></th>
+						<th><s:text name="store.code.label" /></th>
+						<th><s:text name="store.name.label" /></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="resultsTableOddRow">
+						<td><s:property value="store.area.region.customer.name" /></td>
+						<td><s:property value="store.code" /></td>
+						<td><s:property value="store.name" /></td>
+					</tr>
+				</tbody>
+			</table>		
+
 		</td>
 	</tr>
 </table>

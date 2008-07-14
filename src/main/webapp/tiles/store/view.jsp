@@ -21,14 +21,6 @@
                     <td align="right" class="form_label" nowrap><s:text name="store.customer.label" /></td>
                     <td align="left" class="value"><s:property value="store.area.region.customer.name"/></td>
 				</tr>
-              	<tr class="editFormOddRow">
-                    <td align="right" class="form_label" nowrap><s:text name="store.region.label" /></td>
-                    <td align="left" class="value"><s:property value="store.area.region.name"/></td>
-                </tr>
-              	<tr class="editFormEvenRow">
-                    <td align="right" class="form_label" nowrap><s:text name="store.area.label" /></td>
-                    <td align="left" class="value"><s:property value="store.area.name"/></td>
-				</tr>				
 
               	<tr class="editFormOddRow">
                     <td align="right" class="form_label" nowrap><s:text name="store.code.label" /></td>
@@ -39,6 +31,16 @@
                     <td align="right" class="form_label" nowrap><s:text name="store.name.label" /></td>
                     <td  align="left" class="value"><s:property value="store.name"/></td>
                 </tr>
+
+              	<tr class="editFormOddRow">
+                    <td align="right" class="form_label" nowrap><s:text name="store.region.label" /></td>
+                    <td align="left" class="value"><s:property value="store.area.region.name"/></td>
+                </tr>
+              	<tr class="editFormEvenRow">
+                    <td align="right" class="form_label" nowrap><s:text name="store.area.label" /></td>
+                    <td align="left" class="value"><s:property value="store.area.name"/></td>
+				</tr>				
+
               	<tr class="editFormOddRow">
                     <td width="100%" align="right" colspan="2">
 	                    <s:form theme="simple"> 

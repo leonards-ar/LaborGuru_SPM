@@ -40,9 +40,10 @@
 		<!-- Search Results -->
 		<s:set name="storesList" value="stores" scope="request"/>
 		<display:table name="storesList" class="results" pagesize="20" requestURI="store_list.action" sort="list" defaultsort="1">
+			<display:column property="area.region.customer.name" titleKey="store.customer.label" sortable="true"/>
 			<display:column property="code" titleKey="store.code.label" sortable="true" />
 		    <display:column property="name" titleKey="store.name.label" sortable="true"/>
-		    <display:column property="area.region.customer.name" titleKey="store.customer.label" sortable="true"/>
+		    
 		    <display:column href="store_show.action" paramId="storeId" paramProperty="id" class="resultsColumnCentered">
 		    	<img src="<s:url value="/images/view.png" includeParams="none"/>"/>
 		    </display:column>
