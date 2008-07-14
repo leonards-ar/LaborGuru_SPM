@@ -45,7 +45,7 @@
 								</tr>
 							</s:iterator>
 							<tr>
-								<td colspan="<s:property value="%{store.dayParts.size + 1}"/>" class="infoMessage"><s:text name="store.laborallowance.message" /></td>		
+								<td colspan="<s:property value="%{store.dayParts.size + 1}"/>" class="infoMessage"><s:text name="store.laborallowance.weekdayguestservice.message" /></td>		
 							</tr>						
 						</table>
 					</td>
