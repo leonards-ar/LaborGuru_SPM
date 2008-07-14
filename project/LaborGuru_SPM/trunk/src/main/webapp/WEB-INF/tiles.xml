@@ -105,4 +105,13 @@
 	<definition name="showVariableFlexible" extends="storeExtendedCRUD">
 		<put-attribute name="storeExtDataBody" value="/tiles/store/variableflexible_view.jsp" />
 	</definition>			
+
+	<definition name="editVariableOpening" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/variableopening_edit.jsp" />
+	</definition>
+
+	<definition name="showVariableOpening" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/variableopening_view.jsp" />
+	</definition>			
+
 </tiles-definitions>

@@ -63,6 +63,14 @@
 			<result name="input" type="tiles">editVariableFlexible</result>
 			<result name="success" type="redirectAction">store_edit</result>
 		</action>			
-					
+
+		<action name="storeVariableOpening_*" method="{1}" class="com.laborguru.action.store.VariableOpeningPrepareAction">
+			<result name="edit" type="tiles">editVariableOpening</result>
+			<result name="show" type="tiles">showVariableOpening</result>
+			<result name="cancelEdit" type="redirectAction">store_edit</result>
+			<result name="cancelShow" type="redirectAction">store_show</result>
+			<result name="input" type="tiles">editVariableOpening</result>
+			<result name="success" type="redirectAction">store_edit</result>
+		</action>					
 	</package>
 </struts>
