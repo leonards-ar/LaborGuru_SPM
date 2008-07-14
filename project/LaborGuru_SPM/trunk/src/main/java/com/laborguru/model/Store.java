@@ -243,6 +243,9 @@ public class Store extends SpmObject {
 	 * @return the firstDayOfWeek
 	 */
 	public DayOfWeek getFirstDayOfWeek() {
+		if(firstDayOfWeek == null) {
+			firstDayOfWeek = DayOfWeek.SUNDAY;
+		}
 		return firstDayOfWeek;
 	}
 
