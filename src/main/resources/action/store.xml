@@ -89,6 +89,15 @@
 			<result name="cancelShow" type="redirectAction">store_show</result>
 			<result name="input" type="tiles">editFixedFlexible</result>
 			<result name="success" type="redirectAction">store_edit</result>
-		</action>								
+		</action>
+
+		<action name="storeMinimumStaffing_*" method="{1}" class="com.laborguru.action.store.MinimumStaffingPrepareAction">
+			<result name="edit" type="tiles">editMinimumStaffing</result>
+			<result name="show" type="tiles">showMinimumStaffing</result>
+			<result name="cancelEdit" type="redirectAction">store_edit</result>
+			<result name="cancelShow" type="redirectAction">store_show</result>
+			<result name="input" type="tiles">editMinimumStaffing</result>
+			<result name="success" type="redirectAction">store_edit</result>
+		</action>
 	</package>
 </struts>
