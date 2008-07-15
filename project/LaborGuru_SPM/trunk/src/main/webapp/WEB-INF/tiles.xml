@@ -138,4 +138,28 @@
 		<put-attribute name="storeExtDataBody" value="/tiles/store/minimumstaffing_view.jsp" />
 	</definition>	
 	
+	<definition name="editFixedOpening" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/fixedopening_edit.jsp" />
+	</definition>
+
+	<definition name="showFixedOpening" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/fixedopening_view.jsp" />
+	</definition>	
+	
+	<definition name="editFixedClosing" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/fixedclosing_edit.jsp" />
+	</definition>
+
+	<definition name="showFixedClosing" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/fixedclosing_view.jsp" />
+	</definition>	
+
+	<definition name="editFixedPostRush" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/fixedpostrush_edit.jsp" />
+	</definition>
+
+	<definition name="showFixedPostRush" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/fixedpostrush_view.jsp" />
+	</definition>	
+
 </tiles-definitions>

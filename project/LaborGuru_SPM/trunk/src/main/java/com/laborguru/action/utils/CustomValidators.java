@@ -125,7 +125,7 @@ public class CustomValidators {
 	public static boolean isValidInteger(String number, boolean required) {
 		try {
 			if(number != null && number.trim().length() > 0) {
-				Integer.parseInt(number);
+				Integer.parseInt(number, 10);
 				return true;
 			} else {
 				return !required;

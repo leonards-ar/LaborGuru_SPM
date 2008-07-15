@@ -37,13 +37,18 @@ public abstract class StoreAdministrationBaseAction extends SpmAction implements
 	private StoreService storeService;
 
 	private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
-	private static final NumberFormat DOUBLE_FORMAT = DecimalFormat.getInstance(Locale.US);
+	private static final NumberFormat DOUBLE_FORMAT_5 = DecimalFormat.getInstance(Locale.US);
+	private static final NumberFormat DOUBLE_FORMAT_2 = DecimalFormat.getInstance(Locale.US);
 	static {
-		if(DOUBLE_FORMAT instanceof DecimalFormat) {
-			((DecimalFormat)DOUBLE_FORMAT).applyPattern("0.#####");
+		if(DOUBLE_FORMAT_5 instanceof DecimalFormat) {
+			((DecimalFormat)DOUBLE_FORMAT_5).applyPattern("0.#####");
 		}
+		if(DOUBLE_FORMAT_2 instanceof DecimalFormat) {
+			((DecimalFormat)DOUBLE_FORMAT_2).applyPattern("0.##");
+		}		
 	}
-
+	private static final int DEFAULT_DECIMALS = 5;
+	
 	/**
 	 * 
 	 */
@@ -164,12 +169,48 @@ public abstract class StoreAdministrationBaseAction extends SpmAction implements
 
 	/**
 	 * 
+	 * @param decimals
+	 * @return
+	 */
+	private NumberFormat getDoubleFormat(int decimals) {
+		switch(decimals) {
+			case 2:
+				return DOUBLE_FORMAT_2;
+			case 5:
+				return DOUBLE_FORMAT_5;
+			default:
+				NumberFormat nf = DecimalFormat.getInstance(Locale.US);
+				String format = "0.";
+				while(decimals-- > 0) {
+					format += "#";
+				}
+				((DecimalFormat)nf).applyPattern(format);
+				
+				return nf;
+		}
+	}
+
+	/**
+	 * 
 	 * @param d
 	 * @return
 	 */
 	protected String doubleToDisplayDouble(Double d) {
 		if(d != null) {
-			return DOUBLE_FORMAT.format(d.doubleValue());
+			return getDoubleFormat(DEFAULT_DECIMALS).format(d.doubleValue());
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 * 
+	 * @param d
+	 * @return
+	 */
+	protected String doubleToDisplayDouble(Double d, int decimals) {
+		if(d != null) {
+			return getDoubleFormat(decimals).format(d.doubleValue());
 		} else {
 			return null;
 		}

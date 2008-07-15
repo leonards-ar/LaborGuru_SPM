@@ -99,5 +99,32 @@
 			<result name="input" type="tiles">editMinimumStaffing</result>
 			<result name="success" type="redirectAction">store_edit</result>
 		</action>
+
+		<action name="storeFixedOpening_*" method="{1}" class="com.laborguru.action.store.FixedOpeningPrepareAction">
+			<result name="edit" type="tiles">editFixedOpening</result>
+			<result name="show" type="tiles">showFixedOpening</result>
+			<result name="cancelEdit" type="redirectAction">store_edit</result>
+			<result name="cancelShow" type="redirectAction">store_show</result>
+			<result name="input" type="tiles">editFixedOpening</result>
+			<result name="success" type="redirectAction">store_edit</result>
+		</action>
+		
+		<action name="storeFixedClosing_*" method="{1}" class="com.laborguru.action.store.FixedClosingPrepareAction">
+			<result name="edit" type="tiles">editFixedClosing</result>
+			<result name="show" type="tiles">showFixedClosing</result>
+			<result name="cancelEdit" type="redirectAction">store_edit</result>
+			<result name="cancelShow" type="redirectAction">store_show</result>
+			<result name="input" type="tiles">editFixedClosing</result>
+			<result name="success" type="redirectAction">store_edit</result>
+		</action>
+		
+		<action name="storeFixedPostRush_*" method="{1}" class="com.laborguru.action.store.FixedPostRushPrepareAction">
+			<result name="edit" type="tiles">editFixedPostRush</result>
+			<result name="show" type="tiles">showFixedPostRush</result>
+			<result name="cancelEdit" type="redirectAction">store_edit</result>
+			<result name="cancelShow" type="redirectAction">store_show</result>
+			<result name="input" type="tiles">editFixedPostRush</result>
+			<result name="success" type="redirectAction">store_edit</result>
+		</action>					
 	</package>
 </struts>
