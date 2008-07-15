@@ -129,4 +129,13 @@
 	<definition name="showFixedFlexible" extends="storeExtendedCRUD">
 		<put-attribute name="storeExtDataBody" value="/tiles/store/fixedflexible_view.jsp" />
 	</definition>	
+
+	<definition name="editMinimumStaffing" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/minimumstaffing_edit.jsp" />
+	</definition>
+
+	<definition name="showMinimumStaffing" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/minimumstaffing_view.jsp" />
+	</definition>	
+	
 </tiles-definitions>
