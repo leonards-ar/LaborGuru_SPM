@@ -16,33 +16,48 @@
               
               <tr>                            
               <td align="center">              
-              <table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0" align="center">
-              	<tr class="editFormEvenRow">
-                    <td align="right" class="form_label" nowrap><s:text name="store.customer.label" /></td>
-                    <td align="left" class="value"><s:property value="store.area.region.customer.name"/></td>
-				</tr>
+              
+				<table class="results">
+					<thead>
+						<tr>
+							<th><s:text name="store.customer.label" /></th>
+							<th><s:text name="store.code.label" /></th>
+							<th><s:text name="store.name.label" /></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="resultsTableOddRow">
+							<td><s:property value="store.area.region.customer.name" /></td>
+							<td><s:property value="store.code" /></td>
+							<td><s:property value="store.name" /></td>
+						</tr>
+					</tbody>
+				</table>
+			
+			</td>
+			</tr>
+			
+			<tr>
+				<td align="center">
+			<table class="results">
+				<thead>
+					<tr>
+						<th><s:text name="store.region.label" /></th>
+						<th><s:text name="store.area.label" /></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="resultsTableOddRow">
+						<td><s:property value="store.area.region.name" /></td>
+						<td><s:property value="store.area.name" /></td>
+					</tr>
+				</tbody>
+			</table>				
+	            </td>
+            </tr>
 
               	<tr class="editFormOddRow">
-                    <td align="right" class="form_label" nowrap><s:text name="store.code.label" /></td>
-                    <td align="left" class="value"><s:property value="store.code"/></td>
-                </tr>
-                
-                <tr class="editFormEvenRow">
-                    <td align="right" class="form_label" nowrap><s:text name="store.name.label" /></td>
-                    <td  align="left" class="value"><s:property value="store.name"/></td>
-                </tr>
-
-              	<tr class="editFormOddRow">
-                    <td align="right" class="form_label" nowrap><s:text name="store.region.label" /></td>
-                    <td align="left" class="value"><s:property value="store.area.region.name"/></td>
-                </tr>
-              	<tr class="editFormEvenRow">
-                    <td align="right" class="form_label" nowrap><s:text name="store.area.label" /></td>
-                    <td align="left" class="value"><s:property value="store.area.name"/></td>
-				</tr>				
-
-              	<tr class="editFormOddRow">
-                    <td width="100%" align="right" colspan="2">
+                    <td width="100%" align="center">
 	                    <s:form theme="simple"> 
 	                    <s:hidden name="store.id"/>
 	                    <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
@@ -59,10 +74,6 @@
 	                    </s:form>                       
                     </td>
                 </tr>
-              </table>
-
-              </td>
-              </tr>
         	  
         	  <s:if test="!removePage">
         	  <tr>
@@ -81,9 +92,9 @@
 						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url namespace="/store" action="storeVariableFlexible_show" includeParams="none"><s:param name="storeId" value="store.id"/></s:url>"><s:text name="store.laborallowance.variableflexible.title" /></a></td></tr>
 						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url namespace="/store" action="storeVariableOpening_show" includeParams="none"><s:param name="storeId" value="store.id"/></s:url>"><s:text name="store.laborallowance.variableopening.title" /></a></td></tr>
 						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url namespace="/store" action="storeFixedFlexible_show" includeParams="none"><s:param name="storeId" value="store.id"/></s:url>"><s:text name="store.laborallowance.fixedflexible.title" /></a></td></tr>
-						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url namespace="/store" action="storeFixedOpening_show" includeParams="none"><s:param name="storeId" value="store.id"/></s:url>"><s:text name="store.laborallowance.fixedopening.title" /></a></td></tr>
-						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url namespace="/store" action="storeFixedPostRush_show" includeParams="none"><s:param name="storeId" value="store.id"/></s:url>"><s:text name="store.laborallowance.fixedpostrush.title" /></a></td></tr>
-						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url namespace="/store" action="storeFixedClosing_show" includeParams="none"><s:param name="storeId" value="store.id"/></s:url>"><s:text name="store.laborallowance.fixedclosing.title" /></a></td></tr>
+						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.laborallowance.fixedopening.title" /></a></td></tr>
+						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.laborallowance.fixedpostrush.title" /></a></td></tr>
+						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url value="#" includeParams="none"/>"><s:text name="store.laborallowance.fixedclosing.title" /></a></td></tr>
 						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url namespace="/store" action="storeFixedGuestServ_show" includeParams="none"><s:param name="storeId" value="store.id"/></s:url>"><s:text name="store.laborallowance.fixedguestservice.title" /></a></td></tr>
 					    				</table>
 					    			</td>
