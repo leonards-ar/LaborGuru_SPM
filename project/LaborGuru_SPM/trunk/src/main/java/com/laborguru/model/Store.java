@@ -122,6 +122,9 @@ public class Store extends SpmObject {
 	 * @return the positions
 	 */
 	public Set<Position> getPositions() {
+		if(positions == null) {
+			positions = new ArrayList<Position>();
+		}
 		return new HashSet<Position>(positions);
 	}
 
@@ -164,7 +167,6 @@ public class Store extends SpmObject {
 		position.setStore(this);
 		this.positions.add(position);
 	}	
-	
 	
 	/**
 	 * @return
