@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.Position;
-import com.laborguru.service.position.PositionService;
 import com.opensymphony.xwork2.Preparable;
 
 /**
@@ -94,7 +93,7 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 				aPosition = position;
 				aPosition.setStore(getStore());
 			}
-				getStore().addPositions(aPosition);
+				getStore().addPosition(aPosition);
 		}
 		
 		for(Position position: getRemovePositions()) {
