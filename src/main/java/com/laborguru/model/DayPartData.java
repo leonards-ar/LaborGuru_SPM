@@ -13,12 +13,12 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * This object stores data related to positions and day parts.<br/>
  * Among the values stored in this object you can find
  * <ul>
- * <li>Labor Allowances – Weekday Guest Services</li>
- * <li>Labor Allowances – Weekend Guest Services</li>
- * <li>Labor Allowances – Variable Flexible</li>
- * <li>Labor Allowances – Variable Opening</li>
- * <li>Labor Allowances – Fixed Guest Service</li>
- * <li>Labor Assumptions – Minimum Staffing</li>
+ * <li>Labor Allowances - Weekday Guest Services</li>
+ * <li>Labor Allowances - Weekend Guest Services</li>
+ * <li>Labor Allowances - Variable Flexible</li>
+ * <li>Labor Allowances - Variable Opening</li>
+ * <li>Labor Allowances - Fixed Guest Service</li>
+ * <li>Labor Assumptions - Minimum Staffing</li>
  * </ul>
  * 
  * @author <a href="mcapurro@gmail.com">Mariano Capurro</a>

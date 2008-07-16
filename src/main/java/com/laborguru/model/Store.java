@@ -154,7 +154,7 @@ public class Store extends SpmObject {
 	 * relation.
 	 * @param position The position to add
 	 */
-	public void addPositions(Position position){
+	public void addPosition(Position position){
 		
 		if (position == null){
 			throw new IllegalArgumentException("Null position passed in as parameter");
@@ -165,7 +165,7 @@ public class Store extends SpmObject {
 		}
 		
 		position.setStore(this);
-		this.positions.add(position);
+		getPositions().add(position);
 	}	
 	
 	/**
@@ -226,7 +226,7 @@ public class Store extends SpmObject {
 	 * Handles the bi-directional relation.
 	 * @param operationTime The operationTime to add
 	 */
-	public void addOperationTimes(OperationTime operationTime){
+	public void addOperationTime(OperationTime operationTime){
 		
 		if (operationTime == null){
 			throw new IllegalArgumentException("Null operationTime passed in as parameter");
@@ -280,7 +280,7 @@ public class Store extends SpmObject {
 	 * relation.
 	 * @param dayPart The day part to add
 	 */
-	public void addDayParts(DayPart dayPart){
+	public void addDayPart(DayPart dayPart){
 		
 		if (dayPart == null){
 			throw new IllegalArgumentException("Null day part passed in as parameter");

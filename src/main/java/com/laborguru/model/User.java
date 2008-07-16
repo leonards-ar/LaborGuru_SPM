@@ -176,7 +176,7 @@ public class User extends SpmObject {
 	/**
 	 * @param profile
 	 */
-	public void addProfiles(Profile profile){
+	public void addProfile(Profile profile){
 		
 		if (profile == null){
 			throw new IllegalArgumentException("Null profile passed in as parameter");
@@ -186,7 +186,7 @@ public class User extends SpmObject {
 			this.profiles = new HashSet<Profile>();
 		}
 
-		this.profiles.add(profile);
+		getProfiles().add(profile);
 	}
 	/**
 	 * @return the status

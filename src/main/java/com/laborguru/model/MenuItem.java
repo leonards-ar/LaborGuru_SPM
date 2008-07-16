@@ -169,7 +169,7 @@ public class MenuItem extends SpmObject {
 	 * 
 	 * @param childMenuItem
 	 */
-	public void addChildMenuItems(MenuItem childMenuItem){
+	public void addChildMenuItem(MenuItem childMenuItem){
 		
 		if (childMenuItem == null){
 			throw new IllegalArgumentException("Null child menu item passed in as parameter");
@@ -180,6 +180,6 @@ public class MenuItem extends SpmObject {
 		}
 		
 		childMenuItem.setParentMenuItem(this);
-		this.childMenuItems.add(childMenuItem);
+		getChildMenuItems().add(childMenuItem);
 	}
 }

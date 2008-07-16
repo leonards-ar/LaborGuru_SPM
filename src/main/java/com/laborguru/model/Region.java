@@ -131,7 +131,7 @@ public class Region extends SpmObject {
 	 * relation.
 	 * @param area The area to add
 	 */
-	public void addAreas(Area area){
+	public void addArea(Area area){
 		
 		if (area == null){
 			throw new IllegalArgumentException("Null area passed in as parameter");
@@ -142,6 +142,6 @@ public class Region extends SpmObject {
 		}
 		
 		area.setRegion(this);
-		this.areas.add(area);
+		getAreas().add(area);
 	}		
 }
