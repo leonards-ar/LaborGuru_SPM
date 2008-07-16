@@ -24,8 +24,6 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 
 	private static Logger log = Logger.getLogger(StorePositionPrepareAction.class);
 
-	private PositionService positionService;
-	
 	private List<Position> positions;
 	
 	private List<Position> removePositions;
@@ -96,7 +94,7 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 				aPosition = position;
 				aPosition.setStore(getStore());
 			}
-			getStore().addPositions(aPosition);
+				getStore().addPositions(aPosition);
 		}
 		
 		for(Position position: getRemovePositions()) {
@@ -161,21 +159,21 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 		return SpmActionResult.EDIT.getResult();
 	}
 
+	/**
+	 * validates that any name is not empty
+	 * 
+	 * @see com.opensymphony.xwork2.ActionSupport#validate()
+	 */
+	public void validate() {
+		if(getPositions() != null) {
+			for(int i = 0; i < getPositions().size() - 1; i++ ) {
+				if("".equals(getPositions().get(i).getName())) {
+					addFieldError("name", getText("error.storeoperations.positionnames.name.required"));
+				}
+			}
+		}
+	}
 	
-	/**
-	 * @return the positionService
-	 */
-	public PositionService getPositionService() {
-		return positionService;
-	}
-
-	/**
-	 * @param positionService the positionService to set
-	 */
-	public void setPositionService(PositionService positionService) {
-		this.positionService = positionService;
-	}
-
 	/**
 	 * @return the positions
 	 */
