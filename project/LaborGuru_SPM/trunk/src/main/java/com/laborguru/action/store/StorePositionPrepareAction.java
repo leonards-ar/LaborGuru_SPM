@@ -81,7 +81,7 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 		for (Position position: getPositions()) {
 			Position aPosition = position;
 			if(position.getId() != null) {
-				for(Position storePosition: getStore().getOrderedPositions()){
+				for(Position storePosition: getStore().getPositions()){
 					if (storePosition.getId().equals(aPosition.getId())) {
 						aPosition = storePosition;
 						aPosition.setName(position.getName());
@@ -98,7 +98,7 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 		
 		for(Position position: getRemovePositions()) {
 			position.setStore(getStore());
-			getStore().getOrderedPositions().remove(position);
+			getStore().getPositions().remove(position);
 		}
 	}
 	/**

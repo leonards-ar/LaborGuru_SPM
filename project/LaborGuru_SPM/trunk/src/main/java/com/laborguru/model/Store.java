@@ -24,7 +24,7 @@ public class Store extends SpmObject {
 	private String code;
 	private DayOfWeek firstDayOfWeek;
 	private Area area;
-	private List<Position> positions;
+	private Set<Position> positions;
 	private List<OperationTime> operationTimes;
 	private List<DayPart> dayParts;
 	
@@ -123,9 +123,9 @@ public class Store extends SpmObject {
 	 */
 	public Set<Position> getPositions() {
 		if(positions == null) {
-			positions = new ArrayList<Position>();
+			setPositions(new HashSet<Position>());
 		}
-		return new HashSet<Position>(positions);
+		return positions;
 	}
 
 	/**
@@ -133,10 +133,9 @@ public class Store extends SpmObject {
 	 * @return
 	 */
 	public List<Position> getOrderedPositions() {
-		if(positions == null) {
-			setPositions(new HashSet<Position>());
-		}
-		return positions;
+		List<Position> orderedPositions = new ArrayList<Position>(getPositions());
+		Collections.sort(orderedPositions, new SpmComparator()); 			
+		return orderedPositions;
 	}
 	/**
 	 * it is private to enforce the cardinality with the addPositions.
@@ -144,8 +143,7 @@ public class Store extends SpmObject {
 	 * @param childMenuItems
 	 */
 	private void setPositions(Set<Position> positions) {
-		this.positions = new ArrayList<Position>(positions);
-		Collections.sort(this.positions, new SpmComparator()); 
+		this.positions = positions;
 	}
 	
 
