@@ -169,6 +169,7 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 			for(int i = 0; i < getPositions().size() - 1; i++ ) {
 				if("".equals(getPositions().get(i).getName())) {
 					addFieldError("name", getText("error.storeoperations.positionnames.name.required"));
+					break;
 				}
 			}
 		}
