@@ -6,25 +6,32 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.laborguru.action.SpmActionResult;
+import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.Position;
+import com.laborguru.service.position.PositionService;
 import com.opensymphony.xwork2.Preparable;
 
-
 /**
- *
+ * 
  * @author <a href="fbarrera@gmail.com">Federico Barrera Oro</a>
  * @version 1.0
  * @since SPM 1.0
- *
+ * 
  */
 @SuppressWarnings("serial")
-public class StorePositionPrepareAction extends StoreAdministrationBaseAction implements Preparable {
+public class StorePositionPrepareAction extends StoreAdministrationBaseAction
+		implements Preparable {
 
 	private static Logger log = Logger.getLogger(StorePositionPrepareAction.class);
+
+	private PositionService positionService;
 	
 	private List<Position> positions;
 	
+	private List<Position> removePositions;
+
 	private Integer index;
+
 	/**
 	 * Prepare the data to be used on the page
 	 * 
@@ -35,6 +42,7 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction im
 
 	/**
 	 * Prepare the data to be used on the edit page
+	 * 
 	 * @throws Exception
 	 */
 	public void prepareEdit() throws Exception {
@@ -42,95 +50,181 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction im
 
 	/**
 	 * Prepare the data to be used on the show page
+	 * 
 	 * @throws Exception
 	 */
 	public void prepareShow() throws Exception {
 	}
+
 	/**
 	 * Shows the edit page
+	 * 
 	 * @return
 	 */
-	public String edit(){
+	public String edit() {
 		loadPositions();
+		getPositions().add(new Position());
 		return SpmActionResult.EDIT.getResult();
 	}
-	
+
 	/**
 	 * Shows the list page
+	 * 
 	 * @return
 	 */
-	public String show(){
+	public String show() {
 		loadPositions();
 		return SpmActionResult.SHOW.getResult();
+	}
+
+	public void setStorePositionsName() {
+		//remove the empty position used for add new ones
+		getPositions().remove(getPositions().size() - 1);
+		
+		for (Position position: getPositions()) {
+			Position aPosition = position;
+			if(position.getId() != null) {
+				for(Position storePosition: getStore().getOrderedPositions()){
+					if (storePosition.getId().equals(aPosition.getId())) {
+						aPosition = storePosition;
+						aPosition.setName(position.getName());
+						break;
+				}
+			} 
+		
+			} else {
+				aPosition = position;
+				aPosition.setStore(getStore());
+			}
+			getStore().addPositions(aPosition);
+		}
+		
+		for(Position position: getRemovePositions()) {
+			position.setStore(getStore());
+			getStore().getOrderedPositions().remove(position);
+		}
+	}
+	/**
+	 * Save the positions to the store.
+	 * @return
+	 */
+	public String save() {
+		try{
+			
+			setStorePositionsName();
+			
+			if(log.isDebugEnabled()) {
+				log.debug("About to save store: " + getStore());
+			}
+			
+			getStoreService().save(getStore());
+			
+			if(log.isInfoEnabled()) {
+				log.info("Store positions successfully updated for store with id [" + getStoreId() + "]");
+			}
+			
+			return SpmActionResult.SUCCESS.getResult();
+			
+		}catch(SpmCheckedException e) {
+			addActionError(e.getErrorMessage());
+			return SpmActionResult.INPUT.getResult();
+		}
 	}
 
 	/**
 	 * load the store's position
 	 */
 	public void loadPositions() {
-		if(getStore() != null) {
+		if (getStore() != null) {
 			setPositions(getStore().getOrderedPositions());
 		}
 	}
-	
+
 	/**
 	 * add a Blank Position
+	 * 
 	 * @return
 	 */
 	public String addPosition() {
-		List<Position> tmpPositions = getPositions();
-		tmpPositions.add(new Position());
-		setPositions(tmpPositions);
-		
+		positions.add(new Position());
 		return SpmActionResult.EDIT.getResult();
 	}
-	
+
 	/**
-	 * Removes an element from Positions 
+	 * Removes an element from Positions
+	 * 
 	 * @return
 	 */
 	public String removePosition() {
-		List<Position> tmpPositions = getPositions();
-		tmpPositions.remove(getIndex());
-		setPositions(tmpPositions);
-		
+		Position removePosition = getPositions().remove(getIndex().intValue());
+		getRemovePositions().add(removePosition);
 		return SpmActionResult.EDIT.getResult();
 	}
+
 	
+	/**
+	 * @return the positionService
+	 */
+	public PositionService getPositionService() {
+		return positionService;
+	}
+
+	/**
+	 * @param positionService the positionService to set
+	 */
+	public void setPositionService(PositionService positionService) {
+		this.positionService = positionService;
+	}
+
 	/**
 	 * @return the positions
 	 */
 	public List<Position> getPositions() {
-		if(positions == null) {
-			positions = new ArrayList<Position>();
-		}
 		return positions;
 	}
 
 	/**
-	 * @param positions the positions to set
+	 * @param positions
+	 *            the positions to set
 	 */
 	public void setPositions(List<Position> positions) {
 		this.positions = positions;
+	}
+
+	
+	/**
+	 * @return the removePositions
+	 */
+	public List<Position> getRemovePositions() {
+		if(this.removePositions == null) {
+			this.removePositions = new ArrayList<Position>();
+		}
+		return removePositions;
+	}
+
+	/**
+	 * @param removePositions the removePositions to set
+	 */
+	public void setRemovePositions(List<Position> removePositions) {
+		this.removePositions = removePositions;
 	}
 
 	/**
 	 * @return the index
 	 */
 	public Integer getIndex() {
-		if(index==null) {
+		if (index == null) {
 			index = new Integer(-1);
 		}
 		return index;
 	}
 
 	/**
-	 * @param index the index to set
+	 * @param index
+	 *            the index to set
 	 */
 	public void setIndex(Integer index) {
 		this.index = index;
 	}
 	
-	
-
 }

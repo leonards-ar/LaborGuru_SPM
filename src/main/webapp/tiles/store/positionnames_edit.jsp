@@ -4,6 +4,10 @@
 <br />
 <s:form name="storePositions_form" action="storePositionNames_save" theme="simple">
 	<s:hidden name="store.id" theme="simple" />
+	<s:iterator id="removePositon" value="removePositions" status="itRemovePosition">
+		<s:hidden name="removePositions[%{#itRemovePosition.index}].id" theme="simple"/>
+		<s:hidden name="removePositions[%{#itRemovePosition.index}].name" theme="simple"/>
+	</s:iterator>
 	<table border="0" cellspacing="0" align="center">
 
 		<tr>
@@ -12,43 +16,34 @@
 		<tr>
 			<td align="center">
 			<table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0" align="center">
-				<tr>
-					<td>
-						<table border="0" cellpadding="3" cellspacing="1" align="center">				
-							<tr class="editorTableHeader">
-								<td colspan="2"><s:text
-									name="store.storeoperations.positionnames.label" /></td>
-							</tr>
-			
-							<s:iterator id="position" value="positions" status="stat">
-								<tr class="editorTableOddRow">
-									<td class="value">
-									<s:textfield name="positions[%{#stat.index}].name" value="%{name}" size="25" maxlength="150" theme="simple" /></td>
-									<td>
-									<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
-										<tr>
-											<td><a
-												href="<s:url value="#" includeParams="none"/>" onclick="storePositions_form.action='storePositionNames_removePosition.action?index=<s:property value='#stat.index'/>'; storePosition_form.submit();"><img
-												src="<s:url value="/images/delete.png" includeParams="none"/>" /></a></td>
-										</tr>
-									</table>
-									</td>
-								</tr>
-							</s:iterator>
-							<tr class="editorTableEvenRow">
-								<td class="value"><s:textfield value="%{getText('store.storeoperations.positionnames.textvalue.label')}" size="25" maxlength="150" disabled="true"/></td>
+				<tr class="editorTableHeader">
+					<td colspan="2"><s:text
+						name="store.storeoperations.positionnames.label" /></td>
+				</tr>
+
+				<s:iterator id="position" value="positions" status="itPosition">
+					<tr class="editorTable<s:if test="#itPosition.even">Even</s:if><s:else>Odd</s:else>Row">
+						<td class="value">
+						<s:hidden name="positions[%{#itPosition.index}].id"/>
+						<s:textfield name="positions[%{#itPosition.index}].name" value="%{name}" size="25" maxlength="150" theme="simple" /></td>
+						<td>
+						<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
+							<tr>
 								<td>
-								<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
-									<tr>
-										<td><a href="<s:url value="#" includeParams="none"/>" onclick="storePositions_form.action='storePositionNames_addPosition.action'; storePositions_form.submit();"><img
-											src="<s:url value="/images/add.png" includeParams="none"/>" /></a></td>
-									</tr>
-								</table>
+								<s:if test="#itPosition.last">
+									<a href="<s:url value="#" includeParams="none"/>" onclick="storePositions_form.action='storePositionNames_addPosition.action'; storePositions_form.submit();"><img
+									src="<s:url value="/images/add.png" includeParams="none"/>" /></a>
+								</s:if>
+								<s:else>
+									<a href="<s:url value="#" includeParams="none"/>" onclick="storePositions_form.action='storePositionNames_removePosition.action?index=<s:property value='#itPosition.index'/>'; storePositions_form.submit();"><img
+									src="<s:url value="/images/delete.png" includeParams="none"/>" /></a>
+								</s:else>
 								</td>
 							</tr>
 						</table>
-					</td>
-				</tr>
+						</td>
+					</tr>
+				</s:iterator>
 			</table>
 			</td>
 		</tr>
