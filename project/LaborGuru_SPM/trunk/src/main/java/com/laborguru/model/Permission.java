@@ -1,5 +1,6 @@
 package com.laborguru.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -100,6 +101,23 @@ public class Permission extends SpmObject {
 		}
 		
 		menuItem.setPermission(this);
-		this.menuItems.add(menuItem);
+		getMenuItems().add(menuItem);
+	}
+
+	/**
+	 * @return the menuItems
+	 */
+	public List<MenuItem> getMenuItems() {
+		if(menuItems == null) {
+			menuItems = new ArrayList<MenuItem>();
+		}
+		return menuItems;
+	}
+
+	/**
+	 * @param menuItems the menuItems to set
+	 */
+	public void setMenuItems(List<MenuItem> menuItems) {
+		this.menuItems = menuItems;
 	}
 }

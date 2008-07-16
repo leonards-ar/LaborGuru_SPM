@@ -14,10 +14,10 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * the week.<br/>
  * Among the values stored in this object you can find
  * <ul>
- * <li>Labor Allowances – Fixed Flexible</li>
- * <li>Labor Allowances – Fixed Opening</li>
- * <li>Labor Allowances – Fixed Post Rush</li>
- * <li>Labor Allowances – Fixed Closing</li>
+ * <li>Labor Allowances - Fixed Flexible</li>
+ * <li>Labor Allowances - Fixed Opening</li>
+ * <li>Labor Allowances - Fixed Post Rush</li>
+ * <li>Labor Allowances - Fixed Closing</li>
  * </ul>
  * 
  * @author <a href="mcapurro@gmail.com">Mariano Capurro</a>
