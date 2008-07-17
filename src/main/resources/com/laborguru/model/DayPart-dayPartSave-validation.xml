@@ -4,7 +4,7 @@
 	<field name="startHour">
 	   <field-validator type="conversion" short-circuit="true">
 	   		<param name="repopulateField">true</param>
-	   		<message key="error.startHour.invalid"/>
+	   		<message key="error.save.newStartHour.invalid"/>
 	    </field-validator>
 	</field>	
 </validators>
