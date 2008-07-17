@@ -75,8 +75,10 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 	}
 
 	public void setStorePositionsName() {
-		//remove the empty position used for add new ones
-		getPositions().remove(getPositions().size() - 1);
+		if("".equals(getPositions().get(getPositions().size() - 1).getName().trim())) {
+			//remove the empty position used for add new ones
+			getPositions().remove(getPositions().size() - 1);
+		}
 		
 		for (Position position: getPositions()) {
 			Position aPosition = position;
@@ -143,7 +145,9 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 	 * @return
 	 */
 	public String addPosition() {
-		positions.add(new Position());
+		if(!"".equals(getPositions().get(getPositions().size() - 1).getName().trim())){
+			positions.add(new Position());
+		}
 		return SpmActionResult.EDIT.getResult();
 	}
 
@@ -154,7 +158,9 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 	 */
 	public String removePosition() {
 		Position removePosition = getPositions().remove(getIndex().intValue());
-		getRemovePositions().add(removePosition);
+		if(removePosition.getId() != null) {
+			getRemovePositions().add(removePosition);
+		}
 		return SpmActionResult.EDIT.getResult();
 	}
 
@@ -163,6 +169,7 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 	 * 
 	 * @see com.opensymphony.xwork2.ActionSupport#validate()
 	 */
+	 //TODO do validation by xml.
 	public void validate() {
 		if(getPositions() != null) {
 			for(int i = 0; i < getPositions().size() - 1; i++ ) {
