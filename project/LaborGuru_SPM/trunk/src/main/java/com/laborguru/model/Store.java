@@ -290,5 +290,23 @@ public class Store extends SpmObject {
 		
 		dayPart.setStore(this);
 		getDayParts().add(dayPart);
+	}
+	
+	/**
+	 * Removes a day part from the store. Handles the bi-directional
+	 * relation.
+	 * @param dayPart The day part to add
+	 */
+	public void removeDayPart(DayPart dayPart){
+		
+		if (dayPart == null){
+			throw new IllegalArgumentException("Null day part passed in as parameter");
+		}
+				
+		getDayParts().remove(dayPart);
+		
+		if (dayPart.getStore() != null){
+			dayPart.setStore(null);
+		}
 	}	
 }
