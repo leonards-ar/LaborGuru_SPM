@@ -76,7 +76,7 @@ public class DayPartAction extends StoreAdministrationBaseAction {
 	}
 
 	/**
-	 * Load the daypart list into the action
+	 * Load the dayparts list into the action
 	 */
 	private void loadDayPartList() {
 
@@ -95,7 +95,7 @@ public class DayPartAction extends StoreAdministrationBaseAction {
 	}
 
 	/**
-	 * This method prepares the s day part page
+	 * This method prepares the show dayPart page
 	 * 
 	 * @return
 	 */
@@ -116,6 +116,7 @@ public class DayPartAction extends StoreAdministrationBaseAction {
 
 	/**
 	 * Adds the newDayPart to dayParts List
+	 * 
 	 */
 	private void addNewDayPartToList() {
 		
@@ -144,7 +145,7 @@ public class DayPartAction extends StoreAdministrationBaseAction {
 	
 
 	/**
-	 * This method removes a daypart from the list
+	 * Moves up the daypart selected on the dayParts lists
 	 * 
 	 * @return
 	 */
@@ -162,7 +163,7 @@ public class DayPartAction extends StoreAdministrationBaseAction {
 	}
 
 	/**
-	 * This method removes a daypart from the list
+	 * Moves down the daypart selected on the dayParts lists
 	 * 
 	 * @return
 	 */
@@ -193,6 +194,7 @@ public class DayPartAction extends StoreAdministrationBaseAction {
 				log.debug("About to save store: " + getStore());
 			}
 			
+			//Adding a the newDayPart to the list if needed
 			if (getNewDayPart().getName() != null && !"".equals(getNewDayPart().getName()) 
 				&& getNewDayPart().getStartHour() != null){				
 				addNewDayPartToList();
@@ -215,15 +217,22 @@ public class DayPartAction extends StoreAdministrationBaseAction {
 	
 
 
+	/**
+	 * Prepares the dayParts list to be saved on the DB.
+	 * Handles the updated, created and removed dayParts on the list.
+	 */
 	private void setDayPartsToStore() {
 		HashMap<Integer, DayPart> dbDayPartTable= new HashMap<Integer, DayPart>();
 		HashMap<Integer, DayPart> requestDayPartTable= new HashMap<Integer, DayPart>();
 		
-		//removing the deleted dayParts
+		//Removing the deleted dayParts
+		//we use an auxliar hashtables to identify the changes.
+		
 		for (DayPart auxDayPart: getDayParts()){
 			requestDayPartTable.put(auxDayPart.getId(), auxDayPart);
 		}
-
+		
+		//Ttmporal array is needed as we need objects that don't have any link to original list.
 		DayPart[] dayPartsDb = (DayPart[]) getStore().getDayParts().toArray(new DayPart[getStore().getDayParts().size()]);
 		
 		for (int i=0; i < dayPartsDb.length; i++){
@@ -233,6 +242,8 @@ public class DayPartAction extends StoreAdministrationBaseAction {
 		}
 		
 		//Updating the existing dayParts and adding the new ones
+		//we use an auxliar hashtables to identify the changes.
+
 		for (DayPart auxDayPart: getStore().getDayParts()){
 			if (requestDayPartTable.containsKey(auxDayPart.getId())){
 				dbDayPartTable.put(auxDayPart.getId(), auxDayPart);
@@ -257,8 +268,13 @@ public class DayPartAction extends StoreAdministrationBaseAction {
 	}
 
 	/**
-	 * @param index1
-	 * @param index0
+	 * This method swaps 2 dayParts on the DayParts list. 
+	 * Indexes passed as parameter should be valid indexes.
+	 * 
+	 * It also updates the index Positions on the dayParts references.
+	 * 
+	 * @param index1 index of the dayPart to swap 
+	 * @param index0 index of the dayPart to swap
 	 */
 	private void swapDayParts(int index1, int index0) {
 		DayPart dayPartAux = getDayParts().get(index1);
@@ -271,6 +287,9 @@ public class DayPartAction extends StoreAdministrationBaseAction {
 		getDayParts().set(index0, dayPartAux);
 	}	
 	
+	/**
+	 * This method sets the index Position of the dayParts elements with the element index of list.
+	 */
 	private void fixDayPartsPositionIndex(){
 		int i = 0;
 		for (DayPart dayPart:getDayParts()){
