@@ -1,15 +1,25 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-
 <br />
-              <s:form action="store_save" theme="simple">
-              <s:hidden name="store.id" theme="simple"/>
+<s:form id="dayPartDefinition_form" action="storeDayPartDefinition_save" theme="simple">
+<s:hidden name="store.id" theme="simple"/>
 <table border="0" cellspacing="0" align="center">
 	
 	<tr>
 		<td id="subtitleBar" nowrap><s:text name="store.storeoperations.title" /> - <s:text name="store.storeoperations.daypartdefinition.title" /></td>
 	</tr>
-
+    <tr>
+    	<td class="errorMessage" align="center">
+     	<table border="0" align="center" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
+    		<tr>
+   				<td>
+       				<s:fielderror theme="simple"/>
+       				<s:actionerror theme="simple"/>
+      			</td>
+  		  	</tr>
+    	</table>
+    	</td>
+    </tr>	
 	<tr>
 		<td align="center">
 			<table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0" align="center">
@@ -22,107 +32,45 @@
 								<td><s:text name="store.storeoperations.daypartdefinition.starttime.label" /></td>
 								<td>&nbsp;</td>
 							</tr>
-							<tr class="editorTableOddRow">
+							<s:iterator value="dayParts" status="itDayPart">
+							<s:hidden name="dayParts[%{#itDayPart.index}].id" value="%{id}" theme="simple"/>
+							<s:hidden name="dayParts[%{#itDayPart.index}].positionIndex" value="%{positionIndex}" theme="simple"/>
+							<tr class="editorTable<s:if test="#itDayPart.even">Even</s:if><s:else>Odd</s:else>Row">
 								<td>
 									<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 										<tr>
-											<td><a href="<s:url value="#" includeParams="none"/>"><img src="<s:url value="/images/up.png" includeParams="none"/>"/></a></td>
-											<td><a href="<s:url value="#" includeParams="none"/>"><img src="<s:url value="/images/down.png" includeParams="none"/>"/></a></td>
+											<td><a href="#" onclick="dayPartDefinition_form.action='storeDayPartDefinition_oneUp.action?index=<s:property value='#itDayPart.index'/>'; dayPartDefinition_form.submit();"><img src="<s:url value="/images/up.png" includeParams="none"/>"/></a></td>
+											<td><a href="#" onclick="dayPartDefinition_form.action='storeDayPartDefinition_oneDown.action?index=<s:property value='#itDayPart.index'/>'; dayPartDefinition_form.submit();"><img src="<s:url value="/images/down.png" includeParams="none"/>"/></a></td>
 										</tr>
 									</table>
 								</td>							
-								<td class="value"><input type="text" value="Day Part 1" size="25" maxlength="150"/></td>
-								<td class="value"><input type="text" value="08:00" size="5" maxlength="5"/></td>
+								<td class="value"><s:textfield name="dayParts[%{#itDayPart.index}].name" value="%{name}" size="25" maxlength="100" theme="simple" /></td>
+								<td class="value"><s:textfield name="dayParts[%{#itDayPart.index}].startHour" value="%{startHour}" size="5" maxlength="5" theme="simple" /></td>
 								<td>
 									<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 										<tr>
-											<td><a href="<s:url value="#" includeParams="none"/>"><img src="<s:url value="/images/delete.png" includeParams="none"/>"/></a></td>
+											<td><a href="#" onclick="dayPartDefinition_form.action='storeDayPartDefinition_remove.action?index=<s:property value='#itDayPart.index'/>'; dayPartDefinition_form.submit();"><img src="<s:url value="/images/delete.png" includeParams="none"/>"/></a></td>
 										</tr>
 									</table>
 								</td>
 							</tr>
+							</s:iterator>
 							<tr class="editorTableEvenRow">
 								<td>
 									<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 										<tr>
-											<td><a href="<s:url value="#" includeParams="none"/>"><img src="<s:url value="/images/up.png" includeParams="none"/>"/></a></td>
-											<td><a href="<s:url value="#" includeParams="none"/>"><img src="<s:url value="/images/down.png" includeParams="none"/>"/></a></td>
+											<td>&nbsp;</td>
+											<td>&nbsp;</td>
 										</tr>
 									</table>
-								</td>								
-								<td class="value"><input type="text" value="Day Part 2" size="25" maxlength="150"/></td>
-								<td class="value"><input type="text" value="10:00" size="5" maxlength="5"/></td>
+								</td>							
+
+								<td class="value"><s:textfield name="newDayPart.name" size="25" maxlength="100" theme="simple" /></td>
+								<td class="value"><s:textfield name="newDayPart.startHour" size="5" maxlength="5" theme="simple" /></td>
 								<td>
 									<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 										<tr>
-											<td><a href="<s:url value="#" includeParams="none"/>"><img src="<s:url value="/images/delete.png" includeParams="none"/>"/></a></td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-							<tr class="editorTableOddRow">
-								<td>
-									<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
-										<tr>
-											<td><a href="<s:url value="#" includeParams="none"/>"><img src="<s:url value="/images/up.png" includeParams="none"/>"/></a></td>
-											<td><a href="<s:url value="#" includeParams="none"/>"><img src="<s:url value="/images/down.png" includeParams="none"/>"/></a></td>
-										</tr>
-									</table>
-								</td>								
-								<td class="value"><input type="text" value="Day Part 3" size="25" maxlength="150"/></td>
-								<td class="value"><input type="text" value="08:00" size="5" maxlength="5"/></td>
-								<td>
-									<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
-										<tr>
-											<td><a href="<s:url value="#" includeParams="none"/>"><img src="<s:url value="/images/delete.png" includeParams="none"/>"/></a></td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-							<tr class="editorTableEvenRow">
-								<td>
-									<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
-										<tr>
-											<td><a href="<s:url value="#" includeParams="none"/>"><img src="<s:url value="/images/up.png" includeParams="none"/>"/></a></td>
-											<td><a href="<s:url value="#" includeParams="none"/>"><img src="<s:url value="/images/down.png" includeParams="none"/>"/></a></td>
-										</tr>
-									</table>
-								</td>								
-								<td class="value"><input type="text" value="Day Part 4" size="25" maxlength="150"/></td>
-								<td class="value"><input type="text" value="10:00" size="5" maxlength="5"/></td>
-								<td>
-									<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
-										<tr>
-											<td><a href="<s:url value="#" includeParams="none"/>"><img src="<s:url value="/images/delete.png" includeParams="none"/>"/></a></td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-							<tr class="editorTableOddRow">
-								<td>
-									<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
-										<tr>
-											<td><a href="<s:url value="#" includeParams="none"/>"><img src="<s:url value="/images/up.png" includeParams="none"/>"/></a></td>
-											<td><a href="<s:url value="#" includeParams="none"/>"><img src="<s:url value="/images/down.png" includeParams="none"/>"/></a></td>
-										</tr>
-									</table>
-								</td>								
-								<td class="value"><input type="text" value="Day Part 5" size="25" maxlength="150"/></td>
-								<td class="value"><input type="text" value="08:00" size="5" maxlength="5"/></td>
-								<td>
-									<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
-										<tr>
-											<td><a href="<s:url value="#" includeParams="none"/>"><img src="<s:url value="/images/delete.png" includeParams="none"/>"/></a></td>
-										</tr>
-									</table>
-								</td>
-							</tr>														
-							<tr class="editorTableEvenRow">
-								<td class="value" colspan="3">&nbsp;</td>
-								<td>
-									<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
-										<tr>
-											<td><a href="<s:url value="#" includeParams="none"/>"><img src="<s:url value="/images/add.png" includeParams="none"/>"/></a></td>
+											<td><a href="#" onclick="dayPartDefinition_form.action='storeDayPartDefinition_add.action'; dayPartDefinition_form.submit();"><img src="<s:url value="/images/add.png" includeParams="none"/>"/></a></td>
 										</tr>
 									</table>
 								</td>

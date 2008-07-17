@@ -11,7 +11,7 @@
 		</id>
 		
 		<property name="name" column="name" type="string" length="100" />
-		<!-- property name="positionIndex" column="position_index" type="int" /-->
+		<property name="positionIndex" column="position_index" type="int" />
 		<property name="startHour" column="start_hour" type="timestamp" />
 		
 		<many-to-one name="store" class="Store" foreign-key="fk_dayparts_stores">

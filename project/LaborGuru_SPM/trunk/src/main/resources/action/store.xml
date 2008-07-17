@@ -30,12 +30,15 @@
 			<result name="success" type="redirectAction">store_edit</result>
 		</action>		
 
-		<action name="storeDaypartDefinition_*" method="{1}" class="com.laborguru.action.store.StorePositionPrepareAction">
+		<action name="storeDayPartDefinition_*" method="{1}" class="com.laborguru.action.store.DayPartAction">
 			<result name="edit" type="tiles">editDaypartDefinition</result>
 			<result name="show" type="tiles">showDaypartDefinition</result>
 			<result name="cancelEdit" type="redirectAction">listStoresPage</result>
 			<result name="cancelShow" type="redirectAction">store_list</result>
 			<result name="input" type="tiles">editDaypartDefinition</result>
+			<result name="success" type="redirectAction">store_edit</result> 			
+						
+			<interceptor-ref name="spmStackWithoutConversionError"/>
 		</action>		
 
 		<action name="storeWeekdayGuestServ_*" method="{1}" class="com.laborguru.action.store.WeekdayGuestServicesPrepareAction">
