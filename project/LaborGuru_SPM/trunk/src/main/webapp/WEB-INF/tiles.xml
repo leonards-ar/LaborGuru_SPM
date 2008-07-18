@@ -162,4 +162,11 @@
 		<put-attribute name="storeExtDataBody" value="/tiles/store/fixedpostrush_view.jsp" />
 	</definition>	
 
+	<definition name="editUtilization" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/utilization_edit.jsp" />
+	</definition>
+
+	<definition name="showUtilization" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/utilization_view.jsp" />
+	</definition>
 </tiles-definitions>

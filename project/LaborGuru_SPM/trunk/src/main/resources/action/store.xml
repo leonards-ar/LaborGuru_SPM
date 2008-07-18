@@ -129,6 +129,17 @@
 			<result name="cancelShow" type="redirectAction">store_show</result>
 			<result name="input" type="tiles">editFixedPostRush</result>
 			<result name="success" type="redirectAction">store_edit</result>
-		</action>					
+		</action>			
+
+		<action name="storeUtilization_*" method="{1}" class="com.laborguru.action.store.UtilizationPrepareAction">
+			<result name="edit" type="tiles">editUtilization</result>
+			<result name="show" type="tiles">showUtilization</result>
+			<result name="cancelEdit" type="redirectAction">store_edit</result>
+			<result name="cancelShow" type="redirectAction">store_show</result>
+			<result name="input" type="tiles">editUtilization</result>
+			<result name="success" type="redirectAction">store_edit</result>
+		</action>			
+
+				
 	</package>
 </struts>

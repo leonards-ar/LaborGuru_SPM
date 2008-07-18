@@ -22,16 +22,17 @@
 								<td><s:text name="store.laborassumptions.utilization.bottom.label" /></td>
 								<td><s:text name="store.laborassumptions.utilization.top.label" /></td>
 							</tr>							
-							<tr>
-								<td class="editorTableFirstColumn">Position!!!</td>
-								<td class="editorTableOddRow"><s:property value='bottom'/></td>
-								<td class="editorTableOddRow"><s:property value='top'/></td>
-							</tr>
-							<tr>
-								<td class="editorTableFirstColumn">Position!!!</td>
-								<td class="editorTableEvenRow"><s:property value='bottom'/></td>
-								<td class="editorTableEvenRow"><s:property value='top'/></td>
-							</tr>							
+							<s:iterator id="position" value="storePositions" status="pStatus">
+								<tr>
+									<td class="editorTableFirstColumn"><s:property value="name"/></td>
+									<td class="editorTable<s:if test="#pStatus.even">Even</s:if><s:else>Odd</s:else>Row">
+										<s:property value="utilizationBottom"/>
+										</td>
+									<td class="editorTable<s:if test="#pStatus.even">Even</s:if><s:else>Odd</s:else>Row">
+										<s:property value="utilizationTop"/>
+										</td>
+								</tr>
+							</s:iterator>							
 						</table>
 					</td>
 				</tr>
@@ -52,7 +53,7 @@
 							</tr>
 							<tr>
 								<td class="editorTableFirstColumn"><s:text name="store.laborassumptions.utilization.nonguestallpos.title" /></td>
-								<td class="editorTableOddRow"><s:property name='allpos'/></td>
+								<td class="editorTableOddRow"><s:property name='store.allPositionsUtilization'/></td>
 							</tr>
 					
 						</table>					
