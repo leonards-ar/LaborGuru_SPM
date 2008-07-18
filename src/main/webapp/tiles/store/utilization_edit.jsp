@@ -37,18 +37,20 @@
 								<td><s:text name="store.laborassumptions.utilization.guest.position.label" /></td>
 								<td><s:text name="store.laborassumptions.utilization.bottom.label" /></td>
 								<td><s:text name="store.laborassumptions.utilization.top.label" /></td>
-							</tr>							
-							<tr>
-								<td class="editorTableFirstColumn">Position!!!</td>
-								<td class="editorTableOddRow"><s:textfield name='bottom' size="4" maxlength="4"/></td>
-								<td class="editorTableOddRow"><s:textfield name='top' size="4" maxlength="4"/></td>
-							</tr>
-							<tr>
-								<td class="editorTableFirstColumn">Position!!!</td>
-								<td class="editorTableEvenRow"><s:textfield name='bottom' size="4" maxlength="4"/></td>
-								<td class="editorTableEvenRow"><s:textfield name='top' size="4" maxlength="4"/></td>
-							</tr>							
-
+							</tr>			
+							<s:iterator id="position" value="storePositions" status="pStatus">
+								<tr>
+									<td class="editorTableFirstColumn"><s:property value="name"/></td>
+									<td class="editorTable<s:if test="#pStatus.even">Even</s:if><s:else>Odd</s:else>Row">
+										<s:hidden name="storePositions[%{#pStatus.index}].id" />
+										<s:hidden name="storePositions[%{#pStatus.index}].name" />
+										<s:textfield name="storePositions[%{#pStatus.index}].utilizationBottom" size="3" maxlength="3"/>
+										</td>
+									<td class="editorTable<s:if test="#pStatus.even">Even</s:if><s:else>Odd</s:else>Row">
+										<s:textfield name="storePositions[%{#pStatus.index}].utilizationTop" size="3" maxlength="3"/>
+										</td>
+								</tr>
+							</s:iterator>											
 							<tr>
 								<td colspan="3" class="infoMessage"><s:text name="store.laborassumptions.utilization.guest.message" /></td>		
 							</tr>						
@@ -72,7 +74,7 @@
 							</tr>
 							<tr>
 								<td class="editorTableFirstColumn"><s:text name="store.laborassumptions.utilization.nonguestallpos.title" /></td>
-								<td class="editorTableOddRow"><s:textfield name='allpos' size="4" maxlength="4"/></td>
+								<td class="editorTableOddRow"><s:textfield name='store.allPositionsUtilization' size="3" maxlength="3"/></td>
 							</tr>
 							<tr>
 								<td colspan="3" class="infoMessage"><s:text name="store.laborassumptions.utilization.nonguest.message" /></td>		
