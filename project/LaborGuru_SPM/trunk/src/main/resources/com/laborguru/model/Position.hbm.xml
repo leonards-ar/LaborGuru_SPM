@@ -11,10 +11,18 @@
 		</id>
 		
 		<property name="name" column="name" length="100" />
+		<property name="utilizationBottom" column="utilization_bottom" type="double" not-null="false"/>
+		<property name="utilizationTop" column="utilization_top" type="double" not-null="false"/>
+		<property name="utilizationMinimum" column="utilization_min" type="double" not-null="false"/>
+		<property name="utilizationMaximum" column="utilization_max" type="double" not-null="false"/>
 		
 		<many-to-one name="store" class="Store" foreign-key="fk_positions_stores">
 			<column name="store_id"/>
 		</many-to-one>
+		
+ 		<many-to-one name="sharedPosition" class="Position" foreign-key="fk_positions_positions">
+			<column name="shared_position_id" not-null="false"/>
+		</many-to-one>		
 		
 	    <list name="dayOfWeekData" cascade="all" table="tbl_day_of_week_values" lazy="true" inverse="true">
 	        <key column="position_id" foreign-key="fk_position_dayofweekvalues"/>
