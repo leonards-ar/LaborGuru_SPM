@@ -27,6 +27,7 @@ public class Store extends SpmObject {
 	private Set<Position> positions;
 	private List<OperationTime> operationTimes;
 	private List<DayPart> dayParts;
+	private Double allPositionsUtilization;
 	
 	/**
 	 * Store toString
@@ -308,5 +309,19 @@ public class Store extends SpmObject {
 		if (dayPart.getStore() != null){
 			dayPart.setStore(null);
 		}
+	}
+
+	/**
+	 * @return the allPositionsUtilization
+	 */
+	public Double getAllPositionsUtilization() {
+		return allPositionsUtilization;
+	}
+
+	/**
+	 * @param allPositionsUtilization the allPositionsUtilization to set
+	 */
+	public void setAllPositionsUtilization(Double allPositionsUtilization) {
+		this.allPositionsUtilization = allPositionsUtilization;
 	}	
 }

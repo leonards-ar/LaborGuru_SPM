@@ -24,6 +24,12 @@ public class Position extends SpmObject implements ComparableObject{
 	
 	private List<DayOfWeekData> dayOfWeekData;
 	private Set<DayPartData> dayPartData;
+	private Position sharedPosition;
+	private Double utilizationBottom;
+	private Double utilizationTop;
+	private Double utilizationMinimum;
+	private Double utilizationMaximum;
+	
 	
 	/**
 	 * Position toString
@@ -199,5 +205,75 @@ public class Position extends SpmObject implements ComparableObject{
 			// Missing store or first day of week
 			return getDayOfWeekData();
 		}
+	}
+
+	/**
+	 * @return the sharedPosition
+	 */
+	public Position getSharedPosition() {
+		return sharedPosition;
+	}
+
+	/**
+	 * @param sharedPosition the sharedPosition to set
+	 */
+	public void setSharedPosition(Position sharedPosition) {
+		this.sharedPosition = sharedPosition;
+	}
+
+	/**
+	 * @return the utilizationBottom
+	 */
+	public Double getUtilizationBottom() {
+		return utilizationBottom;
+	}
+
+	/**
+	 * @param utilizationBottom the utilizationBottom to set
+	 */
+	public void setUtilizationBottom(Double utilizationBottom) {
+		this.utilizationBottom = utilizationBottom;
+	}
+
+	/**
+	 * @return the utilizationTop
+	 */
+	public Double getUtilizationTop() {
+		return utilizationTop;
+	}
+
+	/**
+	 * @param utilizationTop the utilizationTop to set
+	 */
+	public void setUtilizationTop(Double utilizationTop) {
+		this.utilizationTop = utilizationTop;
+	}
+
+	/**
+	 * @return the utilizationMinimum
+	 */
+	public Double getUtilizationMinimum() {
+		return utilizationMinimum;
+	}
+
+	/**
+	 * @param utilizationMinimum the utilizationMinimum to set
+	 */
+	public void setUtilizationMinimum(Double utilizationMinimum) {
+		this.utilizationMinimum = utilizationMinimum;
+	}
+
+	/**
+	 * @return the utilizationMaximum
+	 */
+	public Double getUtilizationMaximum() {
+		return utilizationMaximum;
+	}
+
+	/**
+	 * @param utilizationMaximum the utilizationMaximum to set
+	 */
+	public void setUtilizationMaximum(Double utilizationMaximum) {
+		this.utilizationMaximum = utilizationMaximum;
 	}
 }
