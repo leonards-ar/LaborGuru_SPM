@@ -56,7 +56,7 @@
 		<profile>
 			<id>development</id>
 			<properties>
-				<db.url>jdbc:mysql://localhost:3306/spm</db.url>
+				<db.url>jdbc:mysql://74.228.19.19:3306/spm</db.url>
 			</properties>
 		</profile>
 	</profiles>
