@@ -2,7 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <br />
-              <s:form action="storeGuestServiceUtilization_save" theme="simple">
+              <s:form action="storeUtilization_save" theme="simple">
               <s:hidden name="storeId" theme="simple"/>
 <table border="0" cellspacing="0" align="center">
 
@@ -20,7 +20,7 @@
               	</td>
               </tr>	
 	<tr>
-		<td id="subtitleBar" nowrap><s:text name="store.laborassumptions.title" /> - <s:text name="store.laborassumptions.guestserviceutilization.title" /></td>
+		<td id="subtitleBar" nowrap><s:text name="store.laborassumptions.title" /> - <s:text name="store.laborassumptions.utilization.guest.title" /></td>
 	</tr>
 
 	<tr>
@@ -31,12 +31,12 @@
 						<table border="0" cellpadding="3" cellspacing="1" align="center">
 							<tr class="editorTableHeader">
 								<td>&nbsp;</td>
-								<td colaspan="2"><s:text name="store.laborassumptions.serviceutilizationlimits.title" /></td>
+								<td colaspan="2"><s:text name="store.laborassumptions.utilization.guest.label" /></td>
 							</tr>
 							<tr class="editorTableHeader">
-								<td><s:text name="store.laborassumptions.serviceutilization.position.title" /></td>
-								<td><s:text name="store.laborassumptions.utilizationbottom.label" /></td>
-								<td><s:text name="store.laborassumptions.utilizationtop.label" /></td>
+								<td><s:text name="store.laborassumptions.utilization.guest.position.label" /></td>
+								<td><s:text name="store.laborassumptions.utilization.bottom.label" /></td>
+								<td><s:text name="store.laborassumptions.utilization.top.label" /></td>
 							</tr>							
 							<tr>
 								<td class="editorTableFirstColumn">Position!!!</td>
@@ -50,14 +50,14 @@
 							</tr>							
 
 							<tr>
-								<td colspan="3" class="infoMessage"><s:text name="store.laborassumptions.guestserviceutilization.message" /></td>		
+								<td colspan="3" class="infoMessage"><s:text name="store.laborassumptions.utilization.guest.message" /></td>		
 							</tr>						
 						</table>
 					</td>
 				</tr>
 
 	<tr>
-		<td id="subtitleBar" nowrap><s:text name="store.laborassumptions.title" /> - <s:text name="store.laborassumptions.nonguestserviceutilization.title" /></td>
+		<td id="subtitleBar" nowrap><s:text name="store.laborassumptions.title" /> - <s:text name="store.laborassumptions.utilization.nonguest.title" /></td>
 	</tr>
 
 	<tr>
@@ -68,14 +68,14 @@
 						<table border="0" cellpadding="3" cellspacing="1" align="center">
 							<tr class="editorTableHeader">
 								<td>&nbsp;</td>
-								<td><s:text name="store.laborassumptions.nonguestserviceutilization.title" /></td>
+								<td><s:text name="store.laborassumptions.utilization.nonguest.label" /></td>
 							</tr>
 							<tr>
-								<td class="editorTableFirstColumn"><s:text name="store.laborassumptions.nonguestserviceutilizationallpositions.title" /></td>
+								<td class="editorTableFirstColumn"><s:text name="store.laborassumptions.utilization.nonguestallpos.title" /></td>
 								<td class="editorTableOddRow"><s:textfield name='allpos' size="4" maxlength="4"/></td>
 							</tr>
 							<tr>
-								<td colspan="3" class="infoMessage"><s:text name="store.laborassumptions.nonguestserviceutilization.message" /></td>		
+								<td colspan="3" class="infoMessage"><s:text name="store.laborassumptions.utilization.nonguest.message" /></td>		
 							</tr>						
 						</table>					
 					</td>
