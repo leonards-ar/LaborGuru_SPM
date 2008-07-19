@@ -48,12 +48,32 @@ public class UtilizationPrepareAction extends StoreAdministrationBaseAction {
 	 */
 	private void setPositions() {
 		for(Position pos : getStore().getPositions()) {
-			int idx = getStorePositions().indexOf(pos);
+			int idx = getIndexById(pos.getId());
 			if(idx >= 0) {
 				pos.setUtilizationBottom(getStorePositions().get(idx).getUtilizationBottom());
 				pos.setUtilizationTop(getStorePositions().get(idx).getUtilizationTop());
 			}
 		}
+	}
+	
+	/**
+	 * As equality in Positions is defined taking into account
+	 * other values rather than the ID, and this CRUD just
+	 * references previously existing positions, then
+	 * this method searches a position by its ID.
+	 * @param positionId
+	 * @return
+	 */
+	private int getIndexById(Integer positionId) {
+		if(positionId == null) {
+			return -1;
+		}
+		for(int i=0; i < getStorePositions().size(); i++) {
+			if(positionId.equals(getStorePositions().get(i).getId())) {
+				return i;
+			}
+		}
+		return -1;
 	}
 	
 	/**

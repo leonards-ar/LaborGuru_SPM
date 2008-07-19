@@ -15,7 +15,7 @@
 						<table border="0" cellpadding="3" cellspacing="1" align="center">
 							<tr class="editorTableHeader">
 								<td>&nbsp;</td>
-								<td colaspan="2"><s:text name="store.laborassumptions.utilization.guest.label" /></td>
+								<td colspan="2"><s:text name="store.laborassumptions.utilization.guest.label" /></td>
 							</tr>
 							<tr class="editorTableHeader">
 								<td><s:text name="store.laborassumptions.utilization.guest.position.label" /></td>
@@ -26,10 +26,10 @@
 								<tr>
 									<td class="editorTableFirstColumn"><s:property value="name"/></td>
 									<td class="editorTable<s:if test="#pStatus.even">Even</s:if><s:else>Odd</s:else>Row">
-										<s:property value="utilizationBottom"/>
+										<s:text name="percentage"><s:param name="value" value="utilizationBottom"/></s:text>%									
 										</td>
 									<td class="editorTable<s:if test="#pStatus.even">Even</s:if><s:else>Odd</s:else>Row">
-										<s:property value="utilizationTop"/>
+										<s:text name="percentage"><s:param name="value" value="utilizationTop"/></s:text>%									
 										</td>
 								</tr>
 							</s:iterator>							
@@ -44,7 +44,7 @@
 	<tr>
 		<td align="left">
 			<table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0">
-				<tr class="editFormOddRow">
+				<tr class="editFormEvenRow">
 					<td>
 						<table border="0" cellpadding="3" cellspacing="1" align="center">
 							<tr class="editorTableHeader">
@@ -53,7 +53,9 @@
 							</tr>
 							<tr>
 								<td class="editorTableFirstColumn"><s:text name="store.laborassumptions.utilization.nonguestallpos.title" /></td>
-								<td class="editorTableOddRow"><s:property name='store.allPositionsUtilization'/></td>
+								<td class="editorTableOddRow">
+										<s:text name="percentage"><s:param name="value" value="store.allPositionsUtilization"/></s:text>%
+								</td>
 							</tr>
 					
 						</table>					
