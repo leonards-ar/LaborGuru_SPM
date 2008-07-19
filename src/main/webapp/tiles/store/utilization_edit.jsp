@@ -31,7 +31,7 @@
 						<table border="0" cellpadding="3" cellspacing="1" align="center">
 							<tr class="editorTableHeader">
 								<td>&nbsp;</td>
-								<td colaspan="2"><s:text name="store.laborassumptions.utilization.guest.label" /></td>
+								<td colspan="2"><s:text name="store.laborassumptions.utilization.guest.label" /></td>
 							</tr>
 							<tr class="editorTableHeader">
 								<td><s:text name="store.laborassumptions.utilization.guest.position.label" /></td>
@@ -44,11 +44,17 @@
 									<td class="editorTable<s:if test="#pStatus.even">Even</s:if><s:else>Odd</s:else>Row">
 										<s:hidden name="storePositions[%{#pStatus.index}].id" />
 										<s:hidden name="storePositions[%{#pStatus.index}].name" />
-										<s:textfield name="storePositions[%{#pStatus.index}].utilizationBottom" size="3" maxlength="3"/>
-										</td>
+										<s:text name="percentage" id="ub">
+											<s:param name="value" value="utilizationBottom"/>
+										</s:text>
+										<s:textfield name="storePositions[%{#pStatus.index}].utilizationBottom" value="%{#ub}" size="6" maxlength="6"/>%
+									</td>
 									<td class="editorTable<s:if test="#pStatus.even">Even</s:if><s:else>Odd</s:else>Row">
-										<s:textfield name="storePositions[%{#pStatus.index}].utilizationTop" size="3" maxlength="3"/>
-										</td>
+										<s:text name="percentage" id="ut">
+											<s:param name="value" value="utilizationTop"/>
+										</s:text>										
+										<s:textfield name="storePositions[%{#pStatus.index}].utilizationTop" value="%{#ut}" size="6" maxlength="6"/>%
+									</td>
 								</tr>
 							</s:iterator>											
 							<tr>
@@ -65,7 +71,7 @@
 	<tr>
 		<td align="left">
 			<table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0">
-				<tr class="editFormOddRow">
+				<tr class="editFormEvenRow">
 					<td>
 						<table border="0" cellpadding="3" cellspacing="1" align="center">
 							<tr class="editorTableHeader">
@@ -74,7 +80,12 @@
 							</tr>
 							<tr>
 								<td class="editorTableFirstColumn"><s:text name="store.laborassumptions.utilization.nonguestallpos.title" /></td>
-								<td class="editorTableOddRow"><s:textfield name='store.allPositionsUtilization' size="3" maxlength="3"/></td>
+								<td class="editorTableOddRow">
+										<s:text name="percentage" id="apu">
+											<s:param name="value" value="store.allPositionsUtilization"/>
+										</s:text>								
+								<s:textfield name='store.allPositionsUtilization' value="%{#apu}" size="6" maxlength="6"/>%
+								</td>
 							</tr>
 							<tr>
 								<td colspan="3" class="infoMessage"><s:text name="store.laborassumptions.utilization.nonguest.message" /></td>		

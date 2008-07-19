@@ -31,7 +31,7 @@
 						<table border="0" cellpadding="3" cellspacing="1" align="center">
 							<tr class="editorTableHeader">
 								<td>&nbsp;</td>
-								<td colaspan="2"><s:text name="store.laborassumptions.utilizationlimits.guest.label" /></td>
+								<td colspan="2"><s:text name="store.laborassumptions.utilizationlimits.guest.label" /></td>
 							</tr>
 							<tr class="editorTableHeader">
 								<td><s:text name="store.laborassumptions.utilizationlimits.guest.position.label" /></td>
