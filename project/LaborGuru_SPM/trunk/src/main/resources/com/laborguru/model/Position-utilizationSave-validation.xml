@@ -25,7 +25,7 @@
 	</field>
 	
 	<validator type="expression">
-		<param name="expression"><![CDATA[ utilizationBottom <= utilizationTop ]]></param>
+		<param name="expression"><![CDATA[ ( (utilizationBottom == null) || (utilizationTop == null) ) || (utilizationBottom <= utilizationTop) ]]></param>
 		<message key="error.utilization.bottomLessEqualThanTop.invalid"/>
 	</validator>	
 </validators>
