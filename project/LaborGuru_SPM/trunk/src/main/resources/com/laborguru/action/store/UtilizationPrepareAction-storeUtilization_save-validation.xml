@@ -3,12 +3,14 @@
 <validators> 
   <field name="storePositions">
        <field-validator type="visitor">
+       	  <param name="appendPrefix">false</param>
           <param name="context">utilizationSave</param>               
           <message>Utilization: </message>
       </field-validator>       
   </field>
   <field name="allPositionsUtilization">
        <field-validator type="visitor">
+          <param name="appendPrefix">false</param>
           <param name="context">utilizationSave</param>               
           <message>All positions utilization: </message>
       </field-validator>       
