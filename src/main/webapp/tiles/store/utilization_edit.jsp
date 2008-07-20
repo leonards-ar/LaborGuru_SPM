@@ -44,15 +44,19 @@
 									<td class="editorTable<s:if test="#pStatus.even">Even</s:if><s:else>Odd</s:else>Row">
 										<s:hidden name="storePositions[%{#pStatus.index}].id" />
 										<s:hidden name="storePositions[%{#pStatus.index}].name" />
-										<s:text name="percentage" id="ub">
-											<s:param name="value" value="utilizationBottom"/>
-										</s:text>
+										<s:if test="utilizationBottom != null">
+											<s:text name="percentage" id="ub">
+												<s:param name="value" value="utilizationBottom"/>
+											</s:text>
+										</s:if>
 										<s:textfield name="storePositions[%{#pStatus.index}].utilizationBottom" value="%{#ub}" size="6" maxlength="6"/>%
 									</td>
 									<td class="editorTable<s:if test="#pStatus.even">Even</s:if><s:else>Odd</s:else>Row">
-										<s:text name="percentage" id="ut">
-											<s:param name="value" value="utilizationTop"/>
-										</s:text>										
+										<s:if test="utilizationTop != null">
+											<s:text name="percentage" id="ut">
+												<s:param name="value" value="utilizationTop"/>
+											</s:text>		
+										</s:if>								
 										<s:textfield name="storePositions[%{#pStatus.index}].utilizationTop" value="%{#ut}" size="6" maxlength="6"/>%
 									</td>
 								</tr>
@@ -81,10 +85,12 @@
 							<tr>
 								<td class="editorTableFirstColumn"><s:text name="store.laborassumptions.utilization.nonguestallpos.title" /></td>
 								<td class="editorTableOddRow">
+								<s:if test="allPositionsUtilization != null">
 										<s:text name="percentage" id="apu">
-											<s:param name="value" value="store.allPositionsUtilization"/>
-										</s:text>								
-								<s:textfield name='store.allPositionsUtilization' value="%{#apu}" size="6" maxlength="6"/>%
+											<s:param name="value" value="allPositionsUtilization"/>
+										</s:text>	
+								</s:if>							
+								<s:textfield name='allPositionsUtilization' value="%{#apu}" size="6" maxlength="6"/>%
 								</td>
 							</tr>
 							<tr>

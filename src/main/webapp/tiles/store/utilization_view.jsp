@@ -26,10 +26,14 @@
 								<tr>
 									<td class="editorTableFirstColumn"><s:property value="name"/></td>
 									<td class="editorTable<s:if test="#pStatus.even">Even</s:if><s:else>Odd</s:else>Row">
-										<s:text name="percentage"><s:param name="value" value="utilizationBottom"/></s:text>%									
+										<s:if test="utilizationBottom != null">
+										<s:text name="percentage"><s:param name="value" value="utilizationBottom"/></s:text>%
+										</s:if>								
 										</td>
 									<td class="editorTable<s:if test="#pStatus.even">Even</s:if><s:else>Odd</s:else>Row">
-										<s:text name="percentage"><s:param name="value" value="utilizationTop"/></s:text>%									
+									<s:if test="utilizationTop != null">
+										<s:text name="percentage"><s:param name="value" value="utilizationTop"/></s:text>%		
+									</s:if>							
 										</td>
 								</tr>
 							</s:iterator>							
@@ -54,7 +58,9 @@
 							<tr>
 								<td class="editorTableFirstColumn"><s:text name="store.laborassumptions.utilization.nonguestallpos.title" /></td>
 								<td class="editorTableOddRow">
-										<s:text name="percentage"><s:param name="value" value="store.allPositionsUtilization"/></s:text>%
+								<s:if test="allPositionsUtilization != null">
+										<s:text name="percentage"><s:param name="value" value="allPositionsUtilization"/></s:text>%
+								</s:if>
 								</td>
 							</tr>
 					
