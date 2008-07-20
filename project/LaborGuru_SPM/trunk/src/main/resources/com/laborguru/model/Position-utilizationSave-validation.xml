@@ -3,14 +3,12 @@
 <validators>	    	
 	<field name="utilizationBottom">
 		<field-validator type="double" short-circuit="true">
-			<param name="repopulateField">true</param>
 			<param name="minInclusive">0.01</param>
 			<message key="error.utilization.bottom.invalid"/>
 		</field-validator>
 	</field>
 	<field name="utilizationTop">
 		<field-validator type="double" short-circuit="true">
-			<param name="repopulateField">true</param>
 			<param name="minInclusive">0.01</param>
 			<message key="error.utilization.top.invalid"/>
 		</field-validator>
