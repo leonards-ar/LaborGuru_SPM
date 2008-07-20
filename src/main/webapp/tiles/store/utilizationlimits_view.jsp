@@ -27,12 +27,12 @@
 									<td class="editorTableFirstColumn"><s:property value="name"/></td>
 									<td class="editorTable<s:if test="#pStatus.even">Even</s:if><s:else>Odd</s:else>Row">
 										<s:if test="utilizationMinimum != null">
-										<s:textfield name="utilizationMinimum" theme="simple"/>
+										<s:property value="utilizationMinimum"/>
 										</s:if>								
 										</td>
 									<td class="editorTable<s:if test="#pStatus.even">Even</s:if><s:else>Odd</s:else>Row">
-									<s:if test="utilizationTop != null">
-										<s:textfield name="utilizationMaximum" theme="simple"/>
+									<s:if test="utilizationMaximum != null">
+										<s:property value="utilizationMaximum"/>
 									</s:if>							
 										</td>
 								</tr>
