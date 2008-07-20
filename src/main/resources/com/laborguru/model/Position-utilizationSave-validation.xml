@@ -13,10 +13,4 @@
 			<message key="error.utilization.top.invalid"/>
 		</field-validator>
 	</field>
-	<field name="allPositionsUtilization">
-		<field-validator type="double">
-			<param name="minInclusive">0.01</param>
-			<message key="error.utilization.all.positions.invalid"/>
-		</field-validator>
-	</field>	
 </validators>
