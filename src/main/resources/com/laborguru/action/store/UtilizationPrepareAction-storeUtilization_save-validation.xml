@@ -9,7 +9,6 @@
   </field>
   <field name="allPositionsUtilization">
 	   <field-validator type="conversion" short-circuit="true">
-	   		<param name="repopulateField">true</param>
 	   		<message key="error.utilization.all.positions.invalid"/>
 	    </field-validator>
 	    	

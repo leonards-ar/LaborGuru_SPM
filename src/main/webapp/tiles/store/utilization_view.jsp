@@ -28,7 +28,7 @@
 									<td class="editorTable<s:if test="#pStatus.even">Even</s:if><s:else>Odd</s:else>Row">
 										<s:if test="utilizationBottom != null">
 										<s:text name="percentage"><s:param name="value" value="utilizationBottom"/></s:text>%
-										</s:if>								
+										</s:if>			
 										</td>
 									<td class="editorTable<s:if test="#pStatus.even">Even</s:if><s:else>Odd</s:else>Row">
 									<s:if test="utilizationTop != null">
