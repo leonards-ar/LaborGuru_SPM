@@ -71,7 +71,6 @@ public class UtilizationPrepareAction extends StoreUtilizationBaseAction {
 	protected void setPositionUtilizationValues(Position src, Position dest) {
 		dest.setUtilizationBottom(src.getUtilizationBottom());
 		dest.setUtilizationTop(src.getUtilizationTop());
-		
 	}	
 
 }
