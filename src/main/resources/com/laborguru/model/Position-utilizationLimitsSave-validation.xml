@@ -6,7 +6,7 @@
 	   		<message key="error.utilization.limits.minimum.invalid"/>
 	    </field-validator>
 	    	
-		<field-validator type="double">
+		<field-validator type="double" short-circuit="true">
 			<param name="minInclusive">0.00</param>
 			<param name="maxInclusive">100.00</param>
 			<message key="error.utilization.limits.minimum.invalid"/>
@@ -17,14 +17,14 @@
 	   		<message key="error.utilization.limits.maximum.invalid"/>
 	    </field-validator>
 	    	
-		<field-validator type="double">
+		<field-validator type="double" short-circuit="true">
 			<param name="minInclusive">0.00</param>
 			<param name="maxInclusive">100.00</param>
 			<message key="error.utilization.limits.maximum.invalid"/>
 		</field-validator>
 	</field>
 	<validator type="expression">
-		<param name="expression"><![CDATA[ utilizationMinimum <= utilizationMaximum ]]></param>
+		<param name="expression"><![CDATA[ ( (utilizationMinimum == null) || (utilizationMaximum == null)) || (utilizationMinimum <= utilizationMaximum) ]]></param>
 		<message key="error.utilization.limits.minimumLessEqualThanMaximum.invalid"/>
 	</validator>
 </validators>
