@@ -142,7 +142,7 @@
 			<interceptor-ref name="spmStackWithoutConversionError"/>
 		</action>			
 
-		<action name="storeUtilizationLimits_*" method="{1}" class="com.laborguru.action.store.LimitsUtilizationAction">
+		<action name="storeUtilizationLimits_*" method="{1}" class="com.laborguru.action.store.UtilizationLimitsAction">
 			<result name="edit" type="tiles">editUtilizationLimits</result>
 			<result name="show" type="tiles">showUtilizationLimits</result>
 			<result name="cancelEdit" type="redirectAction">store_edit</result>

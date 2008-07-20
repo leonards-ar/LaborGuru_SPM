@@ -1,5 +1,5 @@
 /*
- * File name: LimitsUtilizationAction.java
+ * File name: UtilizationLimitsAction.java
  * Creation date: Jul 18, 2008 4:57:38 PM
  * Copyright Mindpool
  */
@@ -14,14 +14,14 @@ import com.laborguru.model.Position;
  * @since SPM 1.0
  *
  */
-public class LimitsUtilizationAction extends StoreUtilizationBaseAction {
+public class UtilizationLimitsAction extends StoreUtilizationBaseAction {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 
 	 */
-	public LimitsUtilizationAction() {
+	public UtilizationLimitsAction() {
 	}
 	
 	/**
