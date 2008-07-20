@@ -2,7 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <br />
-              <s:form action="storeUtilizationLimit_save" theme="simple">
+              <s:form action="storeUtilizationLimits_save" theme="simple">
               <s:hidden name="storeId" theme="simple"/>
 <table border="0" cellspacing="0" align="center">
 
@@ -38,17 +38,21 @@
 								<td><s:text name="store.laborassumptions.utilization.min.label" /></td>
 								<td><s:text name="store.laborassumptions.utilization.max.label" /></td>
 							</tr>							
-							<tr>
-								<td class="editorTableFirstColumn">Position!!!</td>
-								<td class="editorTableOddRow"><s:textfield name='min' size="4" maxlength="4"/></td>
-								<td class="editorTableOddRow"><s:textfield name='max' size="4" maxlength="4"/></td>
-							</tr>
-							<tr>
-								<td class="editorTableFirstColumn">Position!!!</td>
-								<td class="editorTableEvenRow"><s:textfield name='min' size="4" maxlength="4"/></td>
-								<td class="editorTableEvenRow"><s:textfield name='max' size="4" maxlength="4"/></td>
-							</tr>							
-
+							<s:iterator id="position" value="storePositions" status="pStatus">
+								<s:hidden name="storePositions[%{#pStatus.index}].name" value="%{name}" disabled="true" theme="simple"/>
+								<s:hidden name="storePositions[%{#pStatus.index}].id" />
+								<tr>
+									<td class="editorTableFirstColumn">
+										<s:property value="name"/>
+									</td>
+									<td class="editorTable<s:if test="#pStatus.even">Even</s:if><s:else>Odd</s:else>Row">
+										<s:textfield name="storePositions[%{#pStatus.index}].utilizationMinimum" value="%{utilizationMinimum}" theme="simple" size="6" maxlength="6"/>
+									</td>
+									<td class="editorTable<s:if test="#pStatus.even">Even</s:if><s:else>Odd</s:else>Row">
+										<s:textfield name="storePositions[%{#pStatus.index}].utilizationMaximum" value="%{utilizationMaximum}" theme="simple" size="6" maxlength="6"/>
+									</td>
+								</tr>
+							</s:iterator>											
 							<tr>
 								<td colspan="3" class="infoMessage"><s:text name="store.laborassumptions.utilizationlimits.guest.message" /></td>		
 							</tr>						
