@@ -22,16 +22,21 @@
 								<td><s:text name="store.laborassumptions.utilization.min.label" /></td>
 								<td><s:text name="store.laborassumptions.utilization.max.label" /></td>
 							</tr>							
-							<tr>
-								<td class="editorTableFirstColumn">Position!!!</td>
-								<td class="editorTableOddRow"><s:property value='min'/></td>
-								<td class="editorTableOddRow"><s:property value='max'/></td>
-							</tr>
-							<tr>
-								<td class="editorTableFirstColumn">Position!!!</td>
-								<td class="editorTableEvenRow"><s:property value='min'/></td>
-								<td class="editorTableEvenRow"><s:property value='max'/></td>
-							</tr>							
+							<s:iterator id="position" value="storePositions" status="pStatus">
+								<tr>
+									<td class="editorTableFirstColumn"><s:property value="name"/></td>
+									<td class="editorTable<s:if test="#pStatus.even">Even</s:if><s:else>Odd</s:else>Row">
+										<s:if test="utilizationMinimum != null">
+										<s:textfield name="utilizationMinimum" theme="simple"/>
+										</s:if>								
+										</td>
+									<td class="editorTable<s:if test="#pStatus.even">Even</s:if><s:else>Odd</s:else>Row">
+									<s:if test="utilizationTop != null">
+										<s:textfield name="utilizationMaximum" theme="simple"/>
+									</s:if>							
+										</td>
+								</tr>
+							</s:iterator>							
 						</table>
 					</td>
 				</tr>
