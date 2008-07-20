@@ -24,7 +24,7 @@ import com.laborguru.model.Position;
 public class UtilizationPrepareAction extends StoreAdministrationBaseAction {
 	private static Logger log = Logger.getLogger(UtilizationPrepareAction.class);
 	private List<Position> storePositions;
-	
+	private Double allPositionsUtilization;
 	/**
 	 * 
 	 */
@@ -39,8 +39,9 @@ public class UtilizationPrepareAction extends StoreAdministrationBaseAction {
 	/**
 	 * 
 	 */
-	private void loadPositions() {
+	private void loadUtilization() {
 		setStorePositions(getStore().getOrderedPositions());
+		setAllPositionsUtilization(getStore().getAllPositionsUtilization());
 	}
 	
 	/**
@@ -83,7 +84,7 @@ public class UtilizationPrepareAction extends StoreAdministrationBaseAction {
 	 * @throws Exception
 	 */
 	public String edit() throws Exception {
-		loadPositions();
+		loadUtilization();
 		
 		return SpmActionResult.EDIT.getResult();
 	}
@@ -95,7 +96,7 @@ public class UtilizationPrepareAction extends StoreAdministrationBaseAction {
 	 * @throws Exception
 	 */
 	public String show() throws Exception {
-		loadPositions();
+		loadUtilization();
 		
 		return SpmActionResult.SHOW.getResult();
 	}	
@@ -110,6 +111,8 @@ public class UtilizationPrepareAction extends StoreAdministrationBaseAction {
 		try {
 			
 			setPositions();
+			
+			getStore().setAllPositionsUtilization(getAllPositionsUtilization());
 			
 			if(log.isDebugEnabled()) {
 				log.debug("About to save store: " + getStore());
@@ -143,6 +146,20 @@ public class UtilizationPrepareAction extends StoreAdministrationBaseAction {
 	 */
 	public void setStorePositions(List<Position> storePositions) {
 		this.storePositions = storePositions;
+	}
+
+	/**
+	 * @return the allPositionsUtilization
+	 */
+	public Double getAllPositionsUtilization() {
+		return allPositionsUtilization;
+	}
+
+	/**
+	 * @param allPositionsUtilization the allPositionsUtilization to set
+	 */
+	public void setAllPositionsUtilization(Double allPositionsUtilization) {
+		this.allPositionsUtilization = allPositionsUtilization;
 	}	
 
 }
