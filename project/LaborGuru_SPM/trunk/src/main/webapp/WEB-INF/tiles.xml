@@ -169,4 +169,12 @@
 	<definition name="showUtilization" extends="storeExtendedCRUD">
 		<put-attribute name="storeExtDataBody" value="/tiles/store/utilization_view.jsp" />
 	</definition>
+
+	<definition name="editUtilizationLimits" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/utilizationlimits_edit.jsp" />
+	</definition>
+
+	<definition name="showUtilizationLimits" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/utilizationlimits_view.jsp" />
+	</definition>	
 </tiles-definitions>
