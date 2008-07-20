@@ -7,4 +7,10 @@
           <message>Utilization: </message>
       </field-validator>       
   </field>
+  <field name="allPositionsUtilization">
+       <field-validator type="visitor">
+          <param name="context">utilizationSave</param>               
+          <message>All positions utilization: </message>
+      </field-validator>       
+  </field>
 </validators> 
