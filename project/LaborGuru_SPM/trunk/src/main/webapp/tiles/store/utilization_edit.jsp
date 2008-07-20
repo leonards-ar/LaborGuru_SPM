@@ -51,6 +51,9 @@
 											<s:param name="value" value="utilizationBottom"/>
 										</s:text>
 									</s:if>
+									<s:else>
+										<s:set name="ub" value=""/>
+									</s:else>
 									<s:textfield name="storePositions[%{#pStatus.index}].utilizationBottom" value="%{#ub}" size="6" maxlength="6"/>%
 								</td>
 								<td class="editorTable<s:if test="#pStatus.even">Even</s:if><s:else>Odd</s:else>Row">
@@ -58,7 +61,11 @@
 										<s:text name="percentage" id="ut">
 											<s:param name="value" value="utilizationTop"/>
 										</s:text>		
-									</s:if>								
+									</s:if>		
+									<s:else>
+										<s:set name="ut" value=""/>
+									</s:else>
+															
 									<s:textfield name="storePositions[%{#pStatus.index}].utilizationTop" value="%{#ut}" size="6" maxlength="6"/>%
 								</td>
 							</tr>
@@ -94,7 +101,11 @@
 										<s:text name="percentage" id="apu">
 											<s:param name="value" value="allPositionsUtilization"/>
 										</s:text>	
-								</s:if>							
+								</s:if>				
+									<s:else>
+										<s:set name="apu" value=""/>
+									</s:else>
+											
 								<s:textfield name='allPositionsUtilization' value="%{#apu}" size="6" maxlength="6"/>%
 								</td>
 							</tr>

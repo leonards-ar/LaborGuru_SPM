@@ -3,7 +3,6 @@
 <validators>	    	
 	<field name="utilizationBottom">
 	   <field-validator type="conversion" short-circuit="true">
-	   		<param name="repopulateField">true</param>
 	   		<message key="error.utilization.bottom.invalid"/>
 	    </field-validator>
 	    	
@@ -15,7 +14,6 @@
 	</field>
 	<field name="utilizationTop">
 	   <field-validator type="conversion" short-circuit="true">
-	   		<param name="repopulateField">true</param>
 	   		<message key="error.utilization.top.invalid"/>
 	    </field-validator>
 	    	
