@@ -1,33 +1,32 @@
 <!DOCTYPE validators PUBLIC "-//OpenSymphony Group//XWork Validator 1.0.2//EN"
        "http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
 <validators>	    	
-	<field name="utilizationBottom">
+	<field name="utilizationMinimum">
 	   <field-validator type="conversion" short-circuit="true">
 	   		<param name="repopulateField">true</param>
-	   		<message key="error.utilization.bottom.invalid"/>
+	   		<message key="error.utilization.limits.minimum.invalid"/>
 	    </field-validator>
 	    	
 		<field-validator type="double">
 			<param name="minInclusive">0.01</param>
 			<param name="maxInclusive">100.00</param>
-			<message key="error.utilization.bottom.invalid"/>
+			<message key="error.utilization.limits.minimum.invalid"/>
 		</field-validator>
 	</field>
-	<field name="utilizationTop">
+	<field name="utilizationMaximum">
 	   <field-validator type="conversion" short-circuit="true">
 	   		<param name="repopulateField">true</param>
-	   		<message key="error.utilization.top.invalid"/>
+	   		<message key="error.utilization.limits.maximum.invalid"/>
 	    </field-validator>
 	    	
 		<field-validator type="double">
 			<param name="minInclusive">0.01</param>
 			<param name="maxInclusive">100.00</param>
-			<message key="error.utilization.top.invalid"/>
+			<message key="error.utilization.limits.maximum.invalid"/>
 		</field-validator>
 	</field>
-	
 	<validator type="expression">
-		<param name="expression"><![CDATA[ utilizationBottom <= utilizationTop ]]></param>
-		<message key="error.utilization.bottomLessEqualThanTop.invalid"/>
-	</validator>	
+		<param name="expression"><![CDATA[ utilizationMinimum <= utilizationMaximum ]]></param>
+		<message key="error.utilization.limits.minimumLessEqualThanMaximum.invalid"/>
+	</validator>
 </validators>
