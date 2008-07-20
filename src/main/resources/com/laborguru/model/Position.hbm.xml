@@ -11,10 +11,22 @@
 		</id>
 		
 		<property name="name" column="name" length="100" />
-		<property name="utilizationBottom" column="utilization_bottom" type="double" not-null="false"/>
-		<property name="utilizationTop" column="utilization_top" type="double" not-null="false"/>
-		<property name="utilizationMinimum" column="utilization_min" type="double" not-null="false"/>
-		<property name="utilizationMaximum" column="utilization_max" type="double" not-null="false"/>
+		
+		<property name="utilizationBottom" type="double">
+			<column name="utilization_bottom" not-null="false" default="65.00" />
+		</property>
+		
+		<property name="utilizationTop" type="double">
+			<column name="utilization_top" not-null="false" default="85.00" />
+		</property>
+		
+		<property name="utilizationMinimum" type="double">
+			<column name="utilization_min" not-null="false" default="0.00" />
+		</property>
+		
+		<property name="utilizationMaximum" type="double">
+			<column name="utilization_max" not-null="false" default="0.00" />
+		</property>
 		
 		<many-to-one name="store" class="Store" foreign-key="fk_positions_stores">
 			<column name="store_id"/>

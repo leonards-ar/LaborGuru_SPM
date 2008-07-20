@@ -11,8 +11,11 @@
 		<property name="name" column="name" type="string" length="150" />
 		<property name="code" column="code" type="string" length="150" />
 		<property name="firstDayOfWeekAsInteger" column="first_day_of_week" type="int"/>
-	    <property name="allPositionsUtilization" column="all_pos_utilization" type="double" not-null="false"/>  
-	    
+
+	    <property name="allPositionsUtilization" type="double">
+			<column name="all_pos_utilization" not-null="false" default="90.00" />
+		</property>
+	      	    
 	    <set name="positions" cascade="all-delete-orphan" table="tbl_positions" lazy="true" inverse="true">
 	        <key column="store_id" foreign-key="fk_stores_positions"/>
 	        <one-to-many class="Position"/>

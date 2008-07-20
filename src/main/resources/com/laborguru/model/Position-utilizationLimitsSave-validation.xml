@@ -3,24 +3,22 @@
 <validators>	    	
 	<field name="utilizationMinimum">
 	   <field-validator type="conversion" short-circuit="true">
-	   		<param name="repopulateField">true</param>
 	   		<message key="error.utilization.limits.minimum.invalid"/>
 	    </field-validator>
 	    	
 		<field-validator type="double">
-			<param name="minInclusive">0.01</param>
+			<param name="minInclusive">0.00</param>
 			<param name="maxInclusive">100.00</param>
 			<message key="error.utilization.limits.minimum.invalid"/>
 		</field-validator>
 	</field>
 	<field name="utilizationMaximum">
 	   <field-validator type="conversion" short-circuit="true">
-	   		<param name="repopulateField">true</param>
 	   		<message key="error.utilization.limits.maximum.invalid"/>
 	    </field-validator>
 	    	
 		<field-validator type="double">
-			<param name="minInclusive">0.01</param>
+			<param name="minInclusive">0.00</param>
 			<param name="maxInclusive">100.00</param>
 			<message key="error.utilization.limits.maximum.invalid"/>
 		</field-validator>
