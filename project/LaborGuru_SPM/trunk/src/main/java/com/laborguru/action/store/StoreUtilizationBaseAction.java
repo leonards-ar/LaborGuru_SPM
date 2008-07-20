@@ -22,7 +22,9 @@ import com.laborguru.model.Position;
  *
  */
 public abstract class StoreUtilizationBaseAction extends StoreAdministrationBaseAction {
-	private static Logger log = Logger.getLogger(StoreUtilizationBaseAction.class);
+
+	private static final long serialVersionUID = 1L;
+	private static Logger log = Logger.getLogger(StoreUtilizationBaseAction.class);	
 	private List<Position> storePositions;
 	
 	/**
