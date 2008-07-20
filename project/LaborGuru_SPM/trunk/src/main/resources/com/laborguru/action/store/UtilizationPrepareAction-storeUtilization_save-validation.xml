@@ -7,4 +7,16 @@
           <message>Utilization: </message>
       </field-validator>       
   </field>
+  <field name="allPositionsUtilization">
+	   <field-validator type="conversion" short-circuit="true">
+	   		<param name="repopulateField">true</param>
+	   		<message key="error.utilization.all.positions.invalid"/>
+	    </field-validator>
+	    	
+		<field-validator type="double">
+			<param name="minInclusive">0.01</param>
+			<param name="maxInclusive">100.00</param>
+			<message key="error.utilization.all.positions.invalid"/>
+		</field-validator>   
+  </field>  
 </validators> 

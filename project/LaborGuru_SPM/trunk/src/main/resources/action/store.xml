@@ -138,6 +138,8 @@
 			<result name="cancelShow" type="redirectAction">store_show</result>
 			<result name="input" type="tiles">editUtilization</result>
 			<result name="success" type="redirectAction">store_edit</result>
+			
+			<interceptor-ref name="spmStackWithoutConversionError"/>
 		</action>			
 
 				

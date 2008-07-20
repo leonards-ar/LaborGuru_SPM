@@ -3,6 +3,7 @@
 <validators> 
    <field name="store"> 
       <field-validator type="visitor"> 
+          <param name="context">storeSave</param>
           <message>Store: </message>
       </field-validator>  
   </field> 
