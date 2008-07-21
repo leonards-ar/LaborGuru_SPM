@@ -6,9 +6,8 @@
 	   		<message key="error.utilization.limits.minimum.invalid"/>
 	    </field-validator>
 	    	
-		<field-validator type="double" short-circuit="true">
-			<param name="minInclusive">0.00</param>
-			<param name="maxInclusive">100.00</param>
+		<field-validator type="int" short-circuit="true">
+			<param name="min">0</param>
 			<message key="error.utilization.limits.minimum.invalid"/>
 		</field-validator>
 	</field>
@@ -17,9 +16,8 @@
 	   		<message key="error.utilization.limits.maximum.invalid"/>
 	    </field-validator>
 	    	
-		<field-validator type="double" short-circuit="true">
-			<param name="minInclusive">0.00</param>
-			<param name="maxInclusive">100.00</param>
+		<field-validator type="int" short-circuit="true">
+			<param name="min">0</param>
 			<message key="error.utilization.limits.maximum.invalid"/>
 		</field-validator>
 	</field>
