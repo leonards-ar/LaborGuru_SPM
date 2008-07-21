@@ -27,8 +27,8 @@ public class Position extends SpmObject implements ComparableObject{
 	private Position sharedPosition;
 	private Double utilizationBottom;
 	private Double utilizationTop;
-	private Double utilizationMinimum;
-	private Double utilizationMaximum;
+	private Integer utilizationMinimum;
+	private Integer utilizationMaximum;
 	
 	
 	/**
@@ -252,28 +252,28 @@ public class Position extends SpmObject implements ComparableObject{
 	/**
 	 * @return the utilizationMinimum
 	 */
-	public Double getUtilizationMinimum() {
+	public Integer getUtilizationMinimum() {
 		return utilizationMinimum;
 	}
 
 	/**
 	 * @param utilizationMinimum the utilizationMinimum to set
 	 */
-	public void setUtilizationMinimum(Double utilizationMinimum) {
+	public void setUtilizationMinimum(Integer utilizationMinimum) {
 		this.utilizationMinimum = utilizationMinimum;
 	}
 
 	/**
 	 * @return the utilizationMaximum
 	 */
-	public Double getUtilizationMaximum() {
+	public Integer getUtilizationMaximum() {
 		return utilizationMaximum;
 	}
 
 	/**
 	 * @param utilizationMaximum the utilizationMaximum to set
 	 */
-	public void setUtilizationMaximum(Double utilizationMaximum) {
+	public void setUtilizationMaximum(Integer utilizationMaximum) {
 		this.utilizationMaximum = utilizationMaximum;
 	}
 }

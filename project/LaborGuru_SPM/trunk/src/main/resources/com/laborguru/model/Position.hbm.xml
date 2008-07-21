@@ -20,12 +20,12 @@
 			<column name="utilization_top" not-null="false" default="85.00" />
 		</property>
 		
-		<property name="utilizationMinimum" type="double">
-			<column name="utilization_min" not-null="false" default="0.00" />
+		<property name="utilizationMinimum" type="integer">
+			<column name="utilization_min" not-null="false" default="0" />
 		</property>
 		
-		<property name="utilizationMaximum" type="double">
-			<column name="utilization_max" not-null="false" default="0.00" />
+		<property name="utilizationMaximum" type="integer">
+			<column name="utilization_max" not-null="false" default="0" />
 		</property>
 		
 		<many-to-one name="store" class="Store" foreign-key="fk_positions_stores">
