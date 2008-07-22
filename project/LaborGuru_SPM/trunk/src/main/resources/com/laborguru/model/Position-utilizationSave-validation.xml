@@ -5,7 +5,9 @@
 	   <field-validator type="conversion" short-circuit="true">
 	   		<message key="error.utilization.bottom.invalid"/>
 	    </field-validator>
-	    	
+		<field-validator type="required">
+			<message key="error.utilization.bottom.required" />
+		</field-validator>	    	
 		<field-validator type="double">
 			<param name="minInclusive">0.01</param>
 			<param name="maxInclusive">100.00</param>
@@ -16,6 +18,9 @@
 	   <field-validator type="conversion" short-circuit="true">
 	   		<message key="error.utilization.top.invalid"/>
 	    </field-validator>
+		<field-validator type="required">
+			<message key="error.utilization.top.required" />
+		</field-validator>	    	
 	    	
 		<field-validator type="double">
 			<param name="minInclusive">0.01</param>
