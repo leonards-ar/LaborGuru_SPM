@@ -27,6 +27,8 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 	
 	private List<Position> removePositions;
 
+	private String newPositionName;
+	
 	private Integer index;
 
 	/**
@@ -60,7 +62,6 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 	 */
 	public String edit() {
 		loadPositions();
-		getPositions().add(new Position());
 		return SpmActionResult.EDIT.getResult();
 	}
 
@@ -74,10 +75,10 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 		return SpmActionResult.SHOW.getResult();
 	}
 
-	public void setStorePositionsName() {
-		if("".equals(getPositions().get(getPositions().size() - 1).getName().trim())) {
-			//remove the empty position used for add new ones
-			getPositions().remove(getPositions().size() - 1);
+	private void setStorePositionsName() {
+		if(!"".equals(getNewPositionName().trim())) {
+			
+			getPositions().add(getNewPosition(getNewPositionName()));
 		}
 		
 		for (Position position: getPositions()) {
@@ -140,13 +141,25 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 	}
 
 	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
+	private Position getNewPosition(String name) {
+		Position newPosition = new Position();
+		newPosition.setName(getNewPositionName());		
+		return newPosition;
+	}
+	
+	/**
 	 * add a Blank Position
 	 * 
 	 * @return
 	 */
 	public String addPosition() {
-		if(!"".equals(getPositions().get(getPositions().size() - 1).getName().trim())){
-			positions.add(new Position());
+		if(!"".equals(getNewPositionName().trim())){
+			getPositions().add(getNewPosition(getNewPositionName()));
+			setNewPositionName(null);
 		}
 		return SpmActionResult.EDIT.getResult();
 	}
@@ -164,23 +177,6 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 		return SpmActionResult.EDIT.getResult();
 	}
 
-	/**
-	 * validates that any name is not empty
-	 * 
-	 * @see com.opensymphony.xwork2.ActionSupport#validate()
-	 */
-	 //TODO do validation by xml.
-	public void validate() {
-		if(getPositions() != null) {
-			for(int i = 0; i < getPositions().size() - 1; i++ ) {
-				if("".equals(getPositions().get(i).getName())) {
-					addFieldError("name", getText("error.storeoperations.positionnames.name.required"));
-					break;
-				}
-			}
-		}
-	}
-	
 	/**
 	 * @return the positions
 	 */
@@ -212,6 +208,22 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 	 */
 	public void setRemovePositions(List<Position> removePositions) {
 		this.removePositions = removePositions;
+	}
+	
+	
+
+	/**
+	 * @return the newPositionName
+	 */
+	public String getNewPositionName() {
+		return newPositionName;
+	}
+
+	/**
+	 * @param newPosition the newPosition to set
+	 */
+	public void setNewPositionName(String newPositionName) {
+		this.newPositionName = newPositionName;
 	}
 
 	/**
