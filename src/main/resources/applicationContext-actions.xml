@@ -12,6 +12,19 @@
 		<property name="referenceDataService" ref="referenceDataService"/>		
 	</bean>
 
+	<bean id="storeAction" class="com.laborguru.action.store.StorePrepareAction">
+		<property name="storeService" ref="storeService"/>
+		<property name="customerService" ref="customerService"/>
+		<property name="regionService" ref="regionService"/>
+		<property name="areaService" ref="areaService"/>
+		<property name="storeToSave" ref="storeToSave"/>
+	</bean>
+	
+	<bean id="storePositionAction" class="com.laborguru.action.store.StorePositionPrepareAction">
+		<property name="storeService" ref="storeService"/>
+		<property name="position" ref="position"/>
+	</bean>	
+	
 	<bean id="employee" class="com.laborguru.model.Employee" scope="prototype">
 		<property name="maxHoursWeek" value="40"/>
 		<property name="maxDaysWeek" value="5"/>
@@ -20,12 +33,15 @@
 		<property name="status" value="0"/>
 		<property name="hireDate" ref="dateTemplateToday"/>
 	</bean>
-			
-	<bean id="storeAction" class="com.laborguru.action.store.StorePrepareAction">
-		<property name="storeService" ref="storeService"/>
-		<property name="customerService" ref="customerService"/>
-		<property name="regionService" ref="regionService"/>
-		<property name="areaService" ref="areaService"/>
+
+	<bean id="position" class="com.laborguru.model.Position" scope="prototype">
+		<property name="utilizationBottom" value="65.0"/>	
+		<property name="utilizationTop" value="85.0"/>
+	</bean>
+	
+	<bean id="storeToSave" class="com.laborguru.model.Store" scope="prototype">
+		<property name="allPositionsUtilization" value="90"/>
+		<property name="firstDayOfWeekAsInteger" value="0"/>
 	</bean>
 		
 	<bean id="dateTemplateToday" class="java.util.Date"/>

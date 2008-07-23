@@ -29,6 +29,12 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 
 	private String newPositionName;
 	
+	/**
+	 * This property holds an empty position set by Spring containing
+	 * default values
+	 */
+	private Position position;
+	
 	private Integer index;
 
 	/**
@@ -75,31 +81,42 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 		return SpmActionResult.SHOW.getResult();
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	private Position getPositionById(Integer id) {
+		if(id != null) {
+			for(Position storePosition: getStore().getPositions()){
+				if (id.equals(storePosition.getId())) {
+					return storePosition;
+				}
+			}		
+		}
+		return null;
+	}
+	
+	/**
+	 * 
+	 */
 	private void setStorePositionsName() {
-		if(!"".equals(getNewPositionName().trim())) {
-			
+		if (!"".equals(getNewPositionName().trim())) {
 			getPositions().add(getNewPosition(getNewPositionName()));
 		}
-		
-		for (Position position: getPositions()) {
-			Position aPosition = position;
-			if(position.getId() != null) {
-				for(Position storePosition: getStore().getPositions()){
-					if (storePosition.getId().equals(aPosition.getId())) {
-						aPosition = storePosition;
-						aPosition.setName(position.getName());
-						break;
-				}
-			} 
-		
+
+		// Add or update existing positions
+		for (Position position : getPositions()) {
+			Position storePosition = getPositionById(position.getId());
+			if (storePosition != null) {
+				storePosition.setName(position.getName());
 			} else {
-				aPosition = position;
-				aPosition.setStore(getStore());
+				getStore().addPosition(getNewPosition(position.getName()));
 			}
-				getStore().addPosition(aPosition);
 		}
-		
-		for(Position position: getRemovePositions()) {
+
+		// Delete positions
+		for (Position position : getRemovePositions()) {
 			position.setStore(getStore());
 			getStore().getPositions().remove(position);
 		}
@@ -146,7 +163,7 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 	 * @return
 	 */
 	private Position getNewPosition(String name) {
-		Position newPosition = new Position();
+		Position newPosition = getPosition();
 		newPosition.setName(getNewPositionName());		
 		return newPosition;
 	}
@@ -245,6 +262,23 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 	 */
 	public void setIndex(Integer index) {
 		this.index = index;
+	}
+
+	/**
+	 * @return the position
+	 */
+	public Position getPosition() {
+		if(position == null) {
+			position = new Position();
+		}
+		return position;
+	}
+
+	/**
+	 * @param position the position to set
+	 */
+	public void setPosition(Position position) {
+		this.position = position;
 	}
 	
 }
