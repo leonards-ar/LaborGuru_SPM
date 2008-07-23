@@ -176,5 +176,13 @@
 
 	<definition name="showUtilizationLimits" extends="storeExtendedCRUD">
 		<put-attribute name="storeExtDataBody" value="/tiles/store/utilizationlimits_view.jsp" />
+	</definition>
+	
+	<definition name="editActivitySharing" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/activitysharing_edit.jsp" />
 	</definition>	
+	
+		<definition name="showActivitySharing" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/activitysharing_view.jsp" />
+	</definition>
 </tiles-definitions>
