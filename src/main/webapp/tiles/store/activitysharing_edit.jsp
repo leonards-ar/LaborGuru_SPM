@@ -2,7 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <br />
-              <s:form action="storeRoleSharing_save" theme="simple">
+              <s:form action="storeActivitySharing_save" theme="simple">
               <s:hidden name="storeId" theme="simple"/>
 <table border="0" cellspacing="0" align="center">
 
@@ -33,14 +33,17 @@
 								<td><s:text name="store.laborassumptions.activitysharing.position.label" /></td>
 								<td><s:text name="store.laborassumptions.activitysharing.sharingwith.label" /></td>
 							</tr>
-							<tr>
-								<td class="editorTableFirstColumn">Position!!!</td>
-								<td class="editorTableOddRow"><select></select></td>
-							</tr>
-							<tr>
-								<td class="editorTableFirstColumn">Position!!!</td>
-								<td class="editorTableEvenRow"><select></select></td>
-							</tr>							
+							<s:iterator id="position" value="storePositions" status="itPosition">
+								<tr>
+								<td class="editorTableFirstColumn">
+								<s:hidden name="storePositions[%{#itPosition.index}].id" theme="simple"/>
+								<s:hidden name="storePositions[%{#itPosition.index}].name" theme="simple"/>
+								<s:property value="%{name}"/>
+								</td>
+								<td class="editorTable<s:if test="#itPosition.even">Even</s:if><s:else>Odd</s:else>Row">
+								<s:select name="storePositions[%{#itPosition.index}].sharedPosition.id" list="storePositions" listKey="id" listValue="name" headerKey="" headerValue="%{getText('store.activitySharing.search.position.header.label')}" theme="simple" />
+								</td>
+							</s:iterator>							
 						</table>
 					</td>
 				</tr>

@@ -151,6 +151,15 @@
 			<result name="success" type="redirectAction">store_edit</result>
 			
 			<interceptor-ref name="spmStackWithoutConversionError"/>
+		</action>
+		
+		<action name="storeActivitySharing_*" method="{1}" class="com.laborguru.action.store.ActivitySharingPrepareAction">
+			<result name="edit" type="tiles">editActivitySharing</result>
+			<result name="show" type="tiles">showActivitySharing</result>
+			<result name="cancelEdit" type="redirectAction">store_edit</result>
+			<result name="cancelShow" type="redirectAction">store_show</result>
+			<result name="input" type="tiles">editActivitySharing</result>
+			<result name="success" type="redirectAction">store_edit</result>
 		</action>					
 	</package>
 </struts>
