@@ -181,6 +181,9 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 	 * @return the positions
 	 */
 	public List<Position> getPositions() {
+		if(positions == null) {
+			setPositions(new ArrayList<Position>());
+		}
 		return positions;
 	}
 
