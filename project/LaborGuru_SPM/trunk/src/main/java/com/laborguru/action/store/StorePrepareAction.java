@@ -38,7 +38,15 @@ public class StorePrepareAction extends SpmAction implements Preparable {
 	private AreaService areaService;
 
 	private Store store;
-
+	
+	/**
+	 * As the store CRUD is special and is editing among different
+	 * pages, the Store CRUD only updates certain information. This
+	 * property will hold the complete store to save with all it's
+	 * relations.
+	 */
+	private Store storeToSave;
+	
 	private List<Store> stores;
 
 	private List<Customer> customers;
@@ -291,10 +299,19 @@ public class StorePrepareAction extends SpmAction implements Preparable {
 	 */
 	public String save() throws Exception {
 		
-		log.debug(this.store);
+		log.debug(getStore());
 
-		store.setArea(getStoreArea());
-		storeService.save(this.store);
+		if(getStore().getId() != null) {
+			setStoreToSave(getStoreService().getStoreById(getStore()));
+		} else {
+			// storeToSave already contains default values (thanks Spring!)
+		}
+		
+		getStoreToSave().setName(getStore().getName());
+		getStoreToSave().setCode(getStore().getCode());
+		getStoreToSave().setArea(getStoreArea());
+		
+		storeService.save(getStoreToSave());
 
 		return SpmActionResult.LISTACTION.getResult();
 
@@ -308,7 +325,7 @@ public class StorePrepareAction extends SpmAction implements Preparable {
 	 */
 	public String delete() throws Exception {
 		//Getting store
-		Store auxStore = storeService.getStoreById(this.store);		
+		Store auxStore = storeService.getStoreById(getStore());		
 		storeService.delete(auxStore);
 		
 		return SpmActionResult.LISTACTION.getResult();
@@ -560,5 +577,18 @@ public class StorePrepareAction extends SpmAction implements Preparable {
 	public void setStoreArea(Area storeArea) {
 		this.storeArea = storeArea;
 	}
-	
+
+	/**
+	 * @return the storeToSave
+	 */
+	public Store getStoreToSave() {
+		return storeToSave;
+	}
+
+	/**
+	 * @param storeToSave the storeToSave to set
+	 */
+	public void setStoreToSave(Store storeToSave) {
+		this.storeToSave = storeToSave;
+	}
 }
