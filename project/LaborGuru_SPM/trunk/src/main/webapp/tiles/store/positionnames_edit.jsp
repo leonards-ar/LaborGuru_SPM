@@ -41,20 +41,28 @@
 						<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 							<tr>
 								<td>
-								<s:if test="#itPosition.last">
-									<a href="<s:url value="#" includeParams="none"/>" onclick="storePositions_form.action='storePositionNames_addPosition.action'; storePositions_form.submit();"><img
-									src="<s:url value="/images/add.png" includeParams="none"/>" /></a>
-								</s:if>
-								<s:else>
 									<a href="<s:url value="#" includeParams="none"/>" onclick="storePositions_form.action='storePositionNames_removePosition.action?index=<s:property value='#itPosition.index'/>'; storePositions_form.submit();"><img
 									src="<s:url value="/images/delete.png" includeParams="none"/>" /></a>
-								</s:else>
 								</td>
 							</tr>
 						</table>
 						</td>
 					</tr>
 				</s:iterator>
+					<tr class="editorTableEvenRow">
+						<td class="value">
+						<s:textfield name="newPositionName" size="25" maxlength="150" theme="simple" /></td>
+						<td>
+						<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
+							<tr>
+								<td>
+									<a href="<s:url value="#" includeParams="none"/>" onclick="storePositions_form.action='storePositionNames_addPosition.action'; storePositions_form.submit();"><img
+									src="<s:url value="/images/add.png" includeParams="none"/>" /></a>
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
 			</table>
 			</td>
 		</tr>
