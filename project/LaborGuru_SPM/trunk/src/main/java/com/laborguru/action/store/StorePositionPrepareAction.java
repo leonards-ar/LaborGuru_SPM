@@ -159,22 +159,21 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 	}
 
 	/**
-	 * Get a New Position with the name passed as a parameter; 
+	 * Add a new position to the Position List; 
 	 * @param name
 	 * @return
 	 */
-	private Position addNewPosition() {
+	private void addNewPosition() {
 		Position newPosition = getPosition();
 		newPosition.setName(getNewPositionName());
 		newPosition.setPositionIndex(getPositions().size());
 		getPositions().add(newPosition);
-		return newPosition;
 	}
 	
 	
 	
 	/**
-	 * add a Blank Position
+	 * add a Position
 	 * 
 	 * @return
 	 */
