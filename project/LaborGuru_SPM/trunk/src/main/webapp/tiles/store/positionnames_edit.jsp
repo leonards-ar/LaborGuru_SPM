@@ -28,14 +28,24 @@
 			<td align="center">
 			<table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0" align="center">
 				<tr class="editorTableHeader">
-					<td colspan="2"><s:text
-						name="store.storeoperations.positionnames.label" /></td>
+					<td >&nbsp;</td>
+					<td colspan="2"><s:text name="store.storeoperations.positionnames.label" /></td>
 				</tr>
 
 				<s:iterator id="position" value="positions" status="itPosition">
 					<tr class="editorTable<s:if test="#itPosition.even">Even</s:if><s:else>Odd</s:else>Row">
+						<td>
+							<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
+								<tr>
+									<td><a href="#" onclick="storePositions_form.action='storePositionNames_oneUp.action?index=<s:property value='#itPosition.index'/>'; storePositions_form.submit();"><img src="<s:url value="/images/up.png" includeParams="none"/>"/></a></td>
+									<td><a href="#" onclick="storePositions_form.action='storePositionNames_oneDown.action?index=<s:property value='#itPosition.index'/>'; storePositions_form.submit();"><img src="<s:url value="/images/down.png" includeParams="none"/>"/></a></td>
+								</tr>
+							</table>
+						</td>							
+					
 						<td class="value">
 						<s:hidden name="positions[%{#itPosition.index}].id"/>
+						<s:hidden name="positions[%{#itPosition.index}].positionIndex"/>
 						<s:textfield name="positions[%{#itPosition.index}].name" value="%{name}" size="25" maxlength="150" theme="simple" /></td>
 						<td>
 						<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
@@ -50,6 +60,7 @@
 					</tr>
 				</s:iterator>
 					<tr class="editorTableEvenRow">
+						<td>&nbsp;</td>
 						<td class="value">
 						<s:textfield name="newPositionName" size="25" maxlength="150" theme="simple" /></td>
 						<td>

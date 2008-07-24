@@ -45,7 +45,10 @@
 	    <set name="dayPartData" cascade="all" table="tbl_day_part_values" lazy="true" inverse="true">
 	        <key column="position_id" foreign-key="fk_positions_daypartvalues"/>
 	        <one-to-many class="DayPartData"/>
-	    </set>	    
+	    </set>
+	    
+	    <property name="positionIndex" column="position_index" type="int" />
+	    	    
 	</class>	
 	<database-object>
 		<create>ALTER TABLE tbl_positions AUTO_INCREMENT=1000</create>

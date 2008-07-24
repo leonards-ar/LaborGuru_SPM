@@ -16,10 +16,11 @@
 			<column name="all_pos_utilization" not-null="false" default="90.00" />
 		</property>
 	      	    
-	    <set name="positions" cascade="all-delete-orphan" table="tbl_positions" lazy="true" inverse="true">
+	    <list name="positions" cascade="all-delete-orphan" table="tbl_positions" lazy="true" inverse="true">
 	        <key column="store_id" foreign-key="fk_stores_positions"/>
+	        <list-index column="position_index"/>
 	        <one-to-many class="Position"/>
-	    </set>
+	    </list>
 	    		
 	    <list name="operationTimes" cascade="all-delete-orphan" table="tbl_operation_times" lazy="true" inverse="true">
 	        <key column="store_id" foreign-key="fk_stores_operationtimes"/>
