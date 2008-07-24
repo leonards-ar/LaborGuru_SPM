@@ -44,7 +44,7 @@ public abstract class StorePositionDayPartDataBaseAction extends StoreAdministra
 	 */
 	public String[][] getDayPartValues() {
 		if(dayPartValues == null) {
-			List<Position> p = getStore().getOrderedPositions();
+			List<Position> p = getStore().getPositions();
 			List<DayPart> d = getStore().getDayParts();
 			setDayPartValues(new String[p.size()][d.size()]);
 		}
@@ -64,7 +64,7 @@ public abstract class StorePositionDayPartDataBaseAction extends StoreAdministra
 	 */
 	private void loadDayPartData() {
 		if(getStore() != null) {
-			List<Position> p = getStore().getOrderedPositions();
+			List<Position> p = getStore().getPositions();
 			List<DayPart> d = getStore().getDayParts();
 
 			DayPartData aDayPartData;
@@ -89,7 +89,7 @@ public abstract class StorePositionDayPartDataBaseAction extends StoreAdministra
 	 */
 	private void setDayPartData() {
 		if(getStore() != null) {
-			List<Position> p = getStore().getOrderedPositions();
+			List<Position> p = getStore().getPositions();
 			List<DayPart> d = getStore().getDayParts();
 
 			DayPartData aDayPartData;
@@ -172,7 +172,7 @@ public abstract class StorePositionDayPartDataBaseAction extends StoreAdministra
 	public void validate() {
 		
 		if(this.dayPartValues != null) {
-			List<Position> p = getStore().getOrderedPositions();
+			List<Position> p = getStore().getPositions();
 			List<DayPart> d = getStore().getDayParts();
 			
 			for(int i=0; i < getDayPartValues().length; i++) {

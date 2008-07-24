@@ -102,7 +102,7 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 	 */
 	private void setStorePositionsName() {
 		if (!"".equals(getNewPositionName().trim())) {
-			getPositions().add(getNewPosition(getNewPositionName()));
+			addNewPosition();
 		}
 
 		// Add or update existing positions
@@ -110,8 +110,9 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 			Position storePosition = getPositionById(position.getId());
 			if (storePosition != null) {
 				storePosition.setName(position.getName());
+				storePosition.setPositionIndex(position.getPositionIndex());
 			} else {
-				getStore().addPosition(getNewPosition(position.getName()));
+				getStore().addPosition(position);
 			}
 		}
 
@@ -153,20 +154,24 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 	 */
 	public void loadPositions() {
 		if (getStore() != null) {
-			setPositions(getStore().getOrderedPositions());
+			setPositions(getStore().getPositions());
 		}
 	}
 
 	/**
-	 * 
+	 * Get a New Position with the name passed as a parameter; 
 	 * @param name
 	 * @return
 	 */
-	private Position getNewPosition(String name) {
+	private Position addNewPosition() {
 		Position newPosition = getPosition();
-		newPosition.setName(getNewPositionName());		
+		newPosition.setName(getNewPositionName());
+		newPosition.setPositionIndex(getPositions().size());
+		getPositions().add(newPosition);
 		return newPosition;
 	}
+	
+	
 	
 	/**
 	 * add a Blank Position
@@ -175,7 +180,7 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 	 */
 	public String addPosition() {
 		if(!"".equals(getNewPositionName().trim())){
-			getPositions().add(getNewPosition(getNewPositionName()));
+			addNewPosition();
 			setNewPositionName(null);
 		}
 		return SpmActionResult.EDIT.getResult();
@@ -190,10 +195,71 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 		Position removePosition = getPositions().remove(getIndex().intValue());
 		if(removePosition.getId() != null) {
 			getRemovePositions().add(removePosition);
+			fixPositionIndex();
 		}
 		return SpmActionResult.EDIT.getResult();
 	}
 
+	/**
+	 * This method sets the index Position of the dayParts elements with the element index of list.
+	 */
+	private void fixPositionIndex(){
+		int i = 0;
+		for (Position position: getPositions()){
+			position.setPositionIndex(i++);
+		}
+	}
+	
+	/**
+	 * Moves a Position up.
+	 * @return
+	 */
+	public String oneUp() {
+		if (getIndex() != null && getIndex() > 0) {
+			int indexAux = getIndex(); 
+			int indexPrev = indexAux - 1;
+			
+			swapPositions(indexAux, indexPrev);			
+		}
+		return SpmActionResult.EDIT.getResult();
+	}
+	
+	/**
+	 * Moves a Position Down
+	 * @return
+	 */
+	public String oneDown() {
+		if (getIndex() !=null && getIndex() < getPositions().size() - 1) {
+			int indexAux = getIndex();
+			int indexNext = indexAux + 1;
+			if(indexNext < getPositions().size()) {
+				swapPositions(indexNext, indexAux);
+			}
+		}
+		return SpmActionResult.EDIT.getResult();
+	}
+	
+	/**
+	 * This method swaps 2 positions on the positions list. 
+	 * Indexes passed as parameter should be valid indexes.
+	 * 
+	 * It also updates the index Positions on the dayParts references.
+	 * 
+	 * @param index1 index of the dayPart to swap 
+	 * @param index0 index of the dayPart to swap
+	 */
+	private void swapPositions(int index1, int index0) {
+		Position positionAux = getPositions().get(index1);
+		Position positionPrev = getPositions().get(index0);
+		
+		positionAux.setPositionIndex(index0); 			
+		positionPrev.setPositionIndex(index1);
+					
+		positionAux = getPositions().set(index1, positionPrev);
+		getPositions().set(index0, positionAux);
+	}	
+	
+	
 	/**
 	 * @return the positions
 	 */

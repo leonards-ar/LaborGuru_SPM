@@ -47,7 +47,7 @@ public abstract class StorePositionDayOfWeekDataBaseAction extends StoreAdminist
 	 */
 	public String[][] getDayOfWeekValues() {
 		if(dayOfWeekValues == null) {
-			List<Position> p = getStore().getOrderedPositions();
+			List<Position> p = getStore().getPositions();
 			setDayOfWeekValues(new String[p.size()][DayOfWeek.values().length]);
 		}
 		return dayOfWeekValues;
@@ -66,7 +66,7 @@ public abstract class StorePositionDayOfWeekDataBaseAction extends StoreAdminist
 	 */
 	private void loadDayOfWeekData() {
 		if(getStore() != null) {
-			List<Position> p = getStore().getOrderedPositions();
+			List<Position> p = getStore().getPositions();
 
 			DayOfWeekData aDayOfWeekData;
 			int firstDayOfWeekIndex = getStore().getFirstDayOfWeek().ordinal();
@@ -108,7 +108,7 @@ public abstract class StorePositionDayOfWeekDataBaseAction extends StoreAdminist
 	 */
 	private void setDayOfWeekData() {
 		if(getStore() != null) {
-			List<Position> p = getStore().getOrderedPositions();
+			List<Position> p = getStore().getPositions();
 
 			DayOfWeekData aDayOfWeekData;
 			int firstDayOfWeekIndex = getStore().getFirstDayOfWeek().ordinal();
@@ -193,7 +193,7 @@ public abstract class StorePositionDayOfWeekDataBaseAction extends StoreAdminist
 	public void validate() {
 		
 		if(this.dayOfWeekValues != null) {
-			List<Position> p = getStore().getOrderedPositions();
+			List<Position> p = getStore().getPositions();
 			
 			for(int i=0; i < getDayOfWeekValues().length; i++) {
 				for(int j=0; j < getDayOfWeekValues()[0].length; j++) {

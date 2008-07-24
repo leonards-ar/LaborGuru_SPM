@@ -54,7 +54,7 @@ public abstract class StoreUtilizationBaseAction extends StoreAdministrationBase
 	 * 
 	 */
 	private void loadUtilization() {
-		setStorePositions(getStore().getOrderedPositions());
+		setStorePositions(getStore().getPositions());
 		loadExtraInformation();
 	}
 	
