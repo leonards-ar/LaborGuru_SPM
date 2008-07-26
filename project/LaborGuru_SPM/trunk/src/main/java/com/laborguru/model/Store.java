@@ -1,16 +1,11 @@
 package com.laborguru.model;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
-
-import com.laborguru.model.comparator.SpmComparator;
 
 public class Store extends SpmObject {
 
@@ -24,7 +19,7 @@ public class Store extends SpmObject {
 	private String code;
 	private DayOfWeek firstDayOfWeek;
 	private Area area;
-	private Set<Position> positions;
+	private List<Position> positions;
 	private List<OperationTime> operationTimes;
 	private List<DayPart> dayParts;
 	private Double allPositionsUtilization;
@@ -122,28 +117,20 @@ public class Store extends SpmObject {
 	/**
 	 * @return the positions
 	 */
-	public Set<Position> getPositions() {
+	public List<Position> getPositions() {
 		if(positions == null) {
-			setPositions(new HashSet<Position>());
+			setPositions(new ArrayList<Position>());
 		}
 		return positions;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	public List<Position> getOrderedPositions() {
-		List<Position> orderedPositions = new ArrayList<Position>(getPositions());
-		Collections.sort(orderedPositions, new SpmComparator()); 			
-		return orderedPositions;
-	}
+
 	/**
 	 * it is private to enforce the cardinality with the addPositions.
 	 * DO NOT MAKE IT PUBLIC
 	 * @param childMenuItems
 	 */
-	private void setPositions(Set<Position> positions) {
+	private void setPositions(List<Position> positions) {
 		this.positions = positions;
 	}
 	
