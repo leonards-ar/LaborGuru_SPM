@@ -5,7 +5,7 @@
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
 	<!--  Action's declarations  -->
-	<bean id="employeeAction" class="com.laborguru.action.employee.EmployeePrepareAction" scope="prototype">
+	<!-- bean id="employeeAction" class="com.laborguru.action.employee.EmployeePrepareAction" scope="prototype">
 		<property name="positionService" ref="positionService"/>
 		<property name="employeeService" ref="employeeService"/>
 		<property name="employee" ref="employee"/>
@@ -23,7 +23,7 @@
 	<bean id="storePositionAction" class="com.laborguru.action.store.StorePositionPrepareAction">
 		<property name="storeService" ref="storeService"/>
 		<property name="position" ref="position"/>
-	</bean>	
+	</bean-->	
 	
 	<bean id="employee" class="com.laborguru.model.Employee" scope="prototype">
 		<property name="maxHoursWeek" value="40"/>

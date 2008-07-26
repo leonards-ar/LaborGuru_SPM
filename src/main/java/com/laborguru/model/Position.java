@@ -30,6 +30,7 @@ public class Position extends SpmObject implements ComparableObject{
 	private Integer utilizationMinimum;
 	private Integer utilizationMaximum;
 	
+	private Integer positionIndex;
 	
 	/**
 	 * Position toString
@@ -275,5 +276,19 @@ public class Position extends SpmObject implements ComparableObject{
 	 */
 	public void setUtilizationMaximum(Integer utilizationMaximum) {
 		this.utilizationMaximum = utilizationMaximum;
+	}
+
+	/**
+	 * @return the positionIndex
+	 */
+	public Integer getPositionIndex() {
+		return positionIndex;
+	}
+
+	/**
+	 * @param positionIndex the positionIndex to set
+	 */
+	public void setPositionIndex(Integer positionIndex) {
+		this.positionIndex = positionIndex;
 	}
 }
