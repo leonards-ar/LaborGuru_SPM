@@ -182,7 +182,21 @@
 		<put-attribute name="storeExtDataBody" value="/tiles/store/activitysharing_edit.jsp" />
 	</definition>	
 	
-		<definition name="showActivitySharing" extends="storeExtendedCRUD">
+	<definition name="showActivitySharing" extends="storeExtendedCRUD">
 		<put-attribute name="storeExtDataBody" value="/tiles/store/activitysharing_view.jsp" />
 	</definition>
+
+	<!-- Customer tiles definition -->
+	<definition name="listCustomersPage" extends="baseLayoutWithMenu">
+		<put-attribute name="body" value="/tiles/customer/list.jsp" />
+	</definition>
+		
+	<definition name="editCustomerPage" extends="baseLayoutWithMenu">
+		<put-attribute name="body" value="/tiles/customer/edit.jsp" />
+	</definition>
+
+	<definition name="showCustomerPage" extends="baseLayoutWithMenu">
+		<put-attribute name="body" value="/tiles/customer/view.jsp" />
+	</definition>	
+	
 </tiles-definitions>

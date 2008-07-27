@@ -39,7 +39,7 @@
   <tbl_menu_items menu_item_id="5" label_key="store.menu.label" help_key="STORE_MENU_HELP" target="/store/store_list.action" position="0" permission_id="5"/>
   <tbl_menu_items menu_item_id="6" label_key="store.submenu.list" help_key="STORE_LIST_HELP" target="/store/store_list.action" position="1" parent_id="5" permission_id="6"/>
   <tbl_menu_items menu_item_id="7" label_key="store.submenu.create" help_key="STORE_ADD_HELP" target="/store/store_add.action" position="0" parent_id="5" permission_id="7"/>
-  <tbl_menu_items menu_item_id="8" label_key="customer.menu.label" help_key="CUSTOMER_MENU_HELP" target="/customer/cusotmer_list.action" position="0" permission_id="8"/>
+  <tbl_menu_items menu_item_id="8" label_key="customer.menu.label" help_key="CUSTOMER_MENU_HELP" target="/customer/customer_list.action" position="0" permission_id="8"/>
   <tbl_menu_items menu_item_id="9" label_key="customer.submenu.list" help_key="CUSTOMER_LIST_HELP" target="/customer/customer_list.action" position="1" parent_id="8" permission_id="9"/>
   <tbl_menu_items menu_item_id="10" label_key="customer.submenu.create" help_key="CUSTOMER_ADD_HELP" target="/customer/customer_add.action" position="0" parent_id="8" permission_id="10"/>
   <tbl_stores store_id="1" name="microcentro" area_id="1"/>
