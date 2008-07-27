@@ -29,6 +29,9 @@
   <tbl_permissions permission_id="5" name="VIEW_STORE" description="View and query stores"/>
   <tbl_permissions permission_id="6" name="EDIT_STORE" description="Edit existing stores"/>
   <tbl_permissions permission_id="7" name="CREATE_STORE" description="Create new stores"/>
+  <tbl_permissions permission_id="8" name="VIEW_CUSTOMER" description="View and query customers"/>
+  <tbl_permissions permission_id="9" name="EDIT_CUSTOMER" description="Edit existing customers"/>
+  <tbl_permissions permission_id="10" name="CREATE_CUSTOMER" description="Create new customers"/>  
   <tbl_menu_items menu_item_id="1" label_key="home.menu.label" help_key="HOME_MENU_HELP" target="/home/home.action" position="0" permission_id="1"/>
   <tbl_menu_items menu_item_id="2" label_key="employee.menu.label" help_key="EMPLOYEE_MENU_HELP" target="/employee/employee_list.action" position="0" permission_id="2"/>
   <tbl_menu_items menu_item_id="3" label_key="employee.submenu.list" help_key="EMPLOYEE_LIST_HELP" target="/employee/employee_list.action" position="1" parent_id="2" permission_id="3"/>
@@ -36,6 +39,9 @@
   <tbl_menu_items menu_item_id="5" label_key="store.menu.label" help_key="STORE_MENU_HELP" target="/store/store_list.action" position="0" permission_id="5"/>
   <tbl_menu_items menu_item_id="6" label_key="store.submenu.list" help_key="STORE_LIST_HELP" target="/store/store_list.action" position="1" parent_id="5" permission_id="6"/>
   <tbl_menu_items menu_item_id="7" label_key="store.submenu.create" help_key="STORE_ADD_HELP" target="/store/store_add.action" position="0" parent_id="5" permission_id="7"/>
+  <tbl_menu_items menu_item_id="8" label_key="customer.menu.label" help_key="CUSTOMER_MENU_HELP" target="/customer/cusotmer_list.action" position="0" permission_id="8"/>
+  <tbl_menu_items menu_item_id="9" label_key="customer.submenu.list" help_key="CUSTOMER_LIST_HELP" target="/customer/customer_list.action" position="1" parent_id="8" permission_id="9"/>
+  <tbl_menu_items menu_item_id="10" label_key="customer.submenu.create" help_key="CUSTOMER_ADD_HELP" target="/customer/customer_add.action" position="0" parent_id="8" permission_id="10"/>
   <tbl_stores store_id="1" name="microcentro" area_id="1"/>
   <tbl_positions position_id="1" name="chef" position_index="0" store_id="1"/>
   <tbl_positions position_id="2" name="waiter" position_index="1" store_id="1"/>
@@ -50,6 +56,9 @@
   <tbl_profiles_permissions profile_id="1" permission_id="5"/>
   <tbl_profiles_permissions profile_id="1" permission_id="6"/>
   <tbl_profiles_permissions profile_id="1" permission_id="7"/>
+  <tbl_profiles_permissions profile_id="1" permission_id="8"/>
+  <tbl_profiles_permissions profile_id="1" permission_id="9"/>
+  <tbl_profiles_permissions profile_id="1" permission_id="10"/>
   <tbl_profiles_permissions profile_id="2" permission_id="1"/>
   <tbl_users user_id="1" username="mcapurro" password="1234" status="0" email="mcapurro@gmail.com" name="Mariano" surname="Capurro" login_count="0" creation_date="2008-07-07"/>
   <tbl_users user_id="2" username="cnunezre" password="1234" status="0" email="cnunezre@gmail.com" name="Cristian" surname="Nunez Rebolledo" login_count="0" creation_date="2008-07-07"/>
