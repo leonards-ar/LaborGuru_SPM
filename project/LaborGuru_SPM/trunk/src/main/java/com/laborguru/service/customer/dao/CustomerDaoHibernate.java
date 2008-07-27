@@ -9,7 +9,7 @@ import com.laborguru.model.Customer;
 public class CustomerDaoHibernate extends HibernateDaoSupport implements CustomerDao {
 
 	public List<Customer> findAll() {
-		return getHibernateTemplate().loadAll(Customer.class);
+		return (List<Customer>) getHibernateTemplate().loadAll(Customer.class);
 	}
 	
 	/**

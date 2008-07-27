@@ -27,4 +27,11 @@ public interface CustomerService extends Service {
 	 * @return The complete customer object
 	 */
 	Customer getCustomerById(Customer customer);
+
+	/**
+	 * Retrieve a list of all customers
+	 * @param customer
+	 * @return The complete customer object
+	 */
+	List<Customer> getAllCustomers();
 }
