@@ -42,5 +42,15 @@ public class CustomerServiceBean implements CustomerService {
 	public List<Customer> getAllCustomers() {
 		return this.customerDao.findAll();
 	}
+
+	/**
+	 * Retrieves a list of customers filtered by the customerSearch
+	 * @param customerSearch the filter
+	 * @return the list of customers
+	 * @see com.laborguru.service.customer.CustomerService#filterCustomers(com.laborguru.model.Customer)
+	 */
+	public List<Customer> filterCustomers(Customer customerSearch) {
+		return this.customerDao.applyFilter(customerSearch);
+	}
 	
 }

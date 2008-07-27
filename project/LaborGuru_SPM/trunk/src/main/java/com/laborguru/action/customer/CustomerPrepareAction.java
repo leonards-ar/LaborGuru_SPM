@@ -13,7 +13,22 @@ public class CustomerPrepareAction extends SpmAction {
 	private static final long serialVersionUID = 1L;
 	private List<Customer> customers = new ArrayList<Customer>();
 	private CustomerService customerService;
+	private Customer customerSearch = new Customer();
 	
+	/**
+	 * @return the customerSearch
+	 */
+	public Customer getCustomerSearch() {
+		return customerSearch;
+	}
+
+	/**
+	 * @param customerSearch the customerSearch to set
+	 */
+	public void setCustomerSearch(Customer customerSearch) {
+		this.customerSearch = customerSearch;
+	}
+
 	/**
 	 * @return the customerService
 	 */
@@ -44,6 +59,14 @@ public class CustomerPrepareAction extends SpmAction {
 
 	public String list(){
 		setCustomers(customerService.getAllCustomers());
+		
+		return SpmActionResult.LIST.getResult();
+	}
+
+
+	public String search(){
+		
+		setCustomers(customerService.filterCustomers(this.getCustomerSearch()));
 		
 		return SpmActionResult.LIST.getResult();
 	}

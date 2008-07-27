@@ -15,7 +15,7 @@
 			<table border="0" cellspacing="6" align="center" id="searchFormTable">
 				<tr>
 					<td class="form_label" nowrap><s:text name="customer.name.label" /></td>
-					<td><s:textfield name="searchCustomer.name" size="30" theme="simple" /></td>
+					<td><s:textfield name="customerSearch.name" size="30" theme="simple" /></td>
 					<td><s:submit key="search.button" theme="simple" cssClass="button" /></td>
 				</tr>
 			</table>

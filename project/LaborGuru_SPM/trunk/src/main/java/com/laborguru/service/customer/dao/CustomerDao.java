@@ -16,4 +16,13 @@ public interface CustomerDao {
 	List<Customer> findAll();
 	
 	Customer getCustomerById(Customer customer);
+
+	/**
+	 * Retrieves a list of customers based on the filter passed in as parameter.
+	 * If there is no customers that match the criteria return an empty list.
+	 * 
+	 * @param customerSearch The filter
+	 * @return The customer list
+	 */
+	List<Customer> applyFilter(Customer customerSearch);
 }

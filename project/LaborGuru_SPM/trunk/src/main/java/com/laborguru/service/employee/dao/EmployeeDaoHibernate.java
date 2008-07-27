@@ -2,16 +2,16 @@ package com.laborguru.service.employee.dao;
 
 import java.util.List;
 
-import com.laborguru.logger.DefaultSpmLogger;
+import org.apache.log4j.Logger;
+
 import com.laborguru.model.Employee;
 import com.laborguru.model.Store;
 import com.laborguru.model.filter.SearchEmployeeFilter;
 import com.laborguru.service.dao.hibernate.SpmHibernateDao;
 
-public class EmployeeDaoHibernate extends SpmHibernateDao implements
-		EmployeeDao {
+public class EmployeeDaoHibernate extends SpmHibernateDao implements EmployeeDao {
 
-	private static final DefaultSpmLogger spmLog = DefaultSpmLogger.getInstance();
+	private static final Logger log = Logger.getLogger(EmployeeDaoHibernate.class);	
 
 	/**
 	 * 
@@ -62,7 +62,7 @@ public class EmployeeDaoHibernate extends SpmHibernateDao implements
 			throw new IllegalArgumentException("The store in the filter is empty.");
 		}
 		
-		spmLog.debugLog("In applyFilter with search employee filter:"+ searchEmployee);
+		log.debug("In applyFilter with search employee filter:"+ searchEmployee);
 		
 		StringBuilder sb = new StringBuilder("from Employee employee where");
 
@@ -79,7 +79,7 @@ public class EmployeeDaoHibernate extends SpmHibernateDao implements
 			sb.append(" or employee.surname like '%"+searchEmployee.getFullName()+"%'");
 		}
 		
-		spmLog.debugLog("Calling hibernate with query:"+ sb.toString());
+		log.debug("Calling hibernate with query:"+ sb.toString());
 
 		
 		return (List<Employee>)getHibernateTemplate().find(sb.toString());
