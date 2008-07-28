@@ -9,9 +9,8 @@
 			<generator class="identity" />
 		</id>
 		<property name="name" column="name" type="string" length="100" />
-		<many-to-one name="region" class="Region" foreign-key="fk_areas_region">
-			<column name="region_id"/>
-		</many-to-one>
+		
+		<many-to-one name="region" class="Region" column="region_id" not-null="true" foreign-key="fk_areas_region" />
 	</class>
 	<database-object>
 		<create>ALTER TABLE tbl_areas AUTO_INCREMENT=1000</create>

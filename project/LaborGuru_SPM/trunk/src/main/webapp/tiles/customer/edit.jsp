@@ -47,10 +47,10 @@
 	<tr>
 		<td>
 		<br/>
-			<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
+			<table border="0" cellpadding="0" cellspacing="6" colspan="0" cellspan="0">
 				<tr>
 					<td align="center">
-					<table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0" align="center">
+					<table border="0" cellpadding="3" cellspacing="1" colspan="0" cellspan="0" align="center">
 						<tr class="editorTableHeader">
 							<td colspan="2"><s:text name="customer.region.label" /></td>
 						</tr>

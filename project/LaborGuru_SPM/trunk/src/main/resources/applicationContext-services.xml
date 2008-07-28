@@ -10,10 +10,28 @@
 		<property name="customerDao" ref="customerDao" />
 	</bean>
 	
-	<bean id="regionService" class="com.laborguru.service.region.RegionServiceBean">
-		<property name="regionDao" ref="regionDao" />
-	</bean>
+	<bean id="regionServiceTarget" class="com.laborguru.service.region.RegionServiceBean" autowire="byType"/>
 	
+	<bean id="regionService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.laborguru.service.region.RegionService</value>
+			</list>
+		</property>	
+	
+		<property name="target">
+			<ref bean="regionServiceTarget"/>
+		</property>		
+		
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>	
+		
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributeSourceDefault"/>
+		</property>			
+	</bean>
+		
 	<bean id="areaService" class="com.laborguru.service.area.AreaServiceBean">
 		<property name="areaDao" ref="areaDao" />
 	</bean>

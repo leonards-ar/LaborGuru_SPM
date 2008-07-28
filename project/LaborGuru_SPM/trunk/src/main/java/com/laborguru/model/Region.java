@@ -143,5 +143,19 @@ public class Region extends SpmObject {
 		
 		area.setRegion(this);
 		getAreas().add(area);
-	}		
+	}
+	
+	/**
+	 * 
+	 * @param area
+	 */
+	public void removeArea(Area area) {
+		if (area == null){
+			throw new IllegalArgumentException("Null area passed in as parameter");
+		}
+		
+		getAreas().remove(area);
+		
+		area.setRegion(null);
+	}
 }
