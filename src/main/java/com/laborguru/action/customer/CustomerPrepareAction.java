@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
+import com.laborguru.frontend.HttpRequestConstants;
 import com.laborguru.model.Customer;
 import com.laborguru.model.Region;
 import com.laborguru.service.customer.CustomerService;
@@ -126,13 +127,20 @@ public class CustomerPrepareAction extends SpmAction implements Preparable{
 		this.customers = customers;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String list(){
 		setCustomers(customerService.getAllCustomers());
 		
 		return SpmActionResult.LIST.getResult();
 	}
 
-
+	/**
+	 * 
+	 * @return
+	 */
 	public String search(){
 		
 		setCustomers(customerService.filterCustomers(this.getCustomerSearch()));
@@ -166,6 +174,14 @@ public class CustomerPrepareAction extends SpmAction implements Preparable{
 	 *  Load full customer from the property customerId
 	 */
 	private void loadCustomerFromId() {
+		Integer id = getCustomerId();
+		//:TODO: Better way to communicate actions in Struts 2?
+		if(id == null) {
+			id = (Integer) getSession().get(HttpRequestConstants.CUSTOMER_TO_EDIT_ID);
+			setCustomerId(id);
+		}
+		getSession().put(HttpRequestConstants.CUSTOMER_TO_EDIT_ID, id);
+		
 		Customer tmpCustomer = new Customer();
 		tmpCustomer.setId(this.getCustomerId());
 		this.setCustomer(customerService.getCustomerById(tmpCustomer));

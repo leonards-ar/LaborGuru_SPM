@@ -340,8 +340,9 @@ public class StorePrepareAction extends SpmAction implements Preparable {
 		if(id == null) {
 			id = (Integer) getSession().get(HttpRequestConstants.STORE_TO_EDIT_ID);
 			setStoreId(id);
-			getSession().remove(HttpRequestConstants.STORE_TO_EDIT_ID);
 		}
+		getSession().remove(HttpRequestConstants.STORE_TO_EDIT_ID);
+
 		Store tmpStore = new Store();
 		tmpStore.setId(id);
 		this.setStore(getStoreService().getStoreById(tmpStore));
