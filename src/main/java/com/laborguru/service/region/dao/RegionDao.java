@@ -2,6 +2,7 @@ package com.laborguru.service.region.dao;
 
 import java.util.List;
 
+import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.Region;
 
 
@@ -25,5 +26,13 @@ public interface RegionDao {
 	 * @param region The region to retrieve (holds the region id)
 	 * @return
 	 */
-	Region getRegionById(Region region);	
+	Region getRegionById(Region region);
+	
+	/**
+	 * Saves or updates a region
+	 * @param region region to save or update
+	 * @return the region updated.
+	 * @throws SpmCheckedException In case there is any error during save
+	 */
+	Region save(Region region) throws SpmCheckedException;		
 }

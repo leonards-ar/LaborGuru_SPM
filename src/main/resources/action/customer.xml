@@ -14,7 +14,7 @@
 		
 		<action name="customerRegion_*" method="{1}" class="com.laborguru.action.customer.CustomerRegionPrepareAction">
 			<result name="edit" type="tiles">editCustomerRegionPage</result>
-			<result name="editCustomer" type="redirectAction">customer_edit</result>
+			<result name="success" type="redirectAction">customer_edit</result>
 			<result name="input" type="tiles">editCustomerRegionPage</result>			
 		</action>
 					

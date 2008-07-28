@@ -25,7 +25,7 @@
               <tr>                            
               <td align="center">              
               <s:form name="customerRegion_form" id="customerRegion_form" action="customerRegion_save" theme="simple">
-              <s:hidden name="region.id" theme="simple"/>
+              <s:hidden name="regionId" theme="simple"/>
               
               <table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0" align="center">
               	<tr class="editFormEvenRow">
@@ -35,56 +35,59 @@
               	
               	<tr class="editFormOddRow">
                     <td align="right" class="form_label" nowrap>* <s:text name="customer.region.name.label" /></td>
-                    <td align="left" class="value"><s:textfield name="region.name" size="30" theme="simple"/></td>
+                    <td align="left" class="value"><s:textfield name="regionName" maxlength="100" size="30" theme="simple"/></td>
 				</tr>
                                   	
               	<tr class="editFormEvenRow">
-					<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
-						<tr>
-							<td align="center">
-							<table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0" align="center">
-								<tr class="editorTableHeader">
-									<td colspan="2"><s:text name="customer.region.area.label" /></td>
-								</tr>
-				
-								<s:iterator id="area" value="areas" status="itArea">
-									<tr class="editorTable<s:if test="#itArea.even">Even</s:if><s:else>Odd</s:else>Row">
-										<td class="value">
-											<s:hidden name="areas[%{#itArea.index}].id"/>
-											<s:textfield name="areas[%{#itArea.index}].name" value="%{name}" size="30" maxlength="150" theme="simple" />
-										</td>
-										<td>
-											<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
-												<tr>
-													<td>
-														<a href="<s:url value="#" includeParams="none"/>" onclick="customerRegion_form.action='customerRegion_removeArea.action?index=<s:property value='id'/>'; customerRegion_form.submit();">
-															<img src="<s:url value="/images/delete.png" includeParams="none"/>" />
-														</a>
-													</td>
-												</tr>
-											</table>
-										</td>
+              		<td colspan="2">
+              			<br/>
+						<table border="0" cellpadding="0" cellspacing="6" colspan="0" cellspan="0">
+							<tr>
+								<td align="center">
+								<table border="0" cellpadding="3" cellspacing="1" colspan="0" cellspan="0" align="center">
+									<tr class="editorTableHeader">
+										<td colspan="2"><s:text name="customer.region.area.label" /></td>
 									</tr>
-								</s:iterator>
-									<tr class="editorTableEvenRow">
-										<td class="value">
-											<s:textfield name="newAreaName" size="30" maxlength="150" theme="simple" />
-										</td>
-										<td>
-											<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
-												<tr>
-													<td>
-														<a href="<s:url value="#" includeParams="none"/>" onclick="customerRegion_form.action='customerRegion_addArea.action'; customerRegion_form.submit();"><img
-														src="<s:url value="/images/add.png" includeParams="none"/>" /></a>
-													</td>
-												</tr>
-											</table>
-										</td>
-									</tr>
-								</table>
-							</td>
-						</tr>
-					</table>
+					
+									<s:iterator id="area" value="areas" status="itArea">
+										<tr class="editorTable<s:if test="#itArea.even">Even</s:if><s:else>Odd</s:else>Row">
+											<td class="value">
+												<s:hidden name="areas[%{#itArea.index}].id"/>
+												<s:textfield name="areas[%{#itArea.index}].name" value="%{name}" size="30" maxlength="150" theme="simple" />
+											</td>
+											<td>
+												<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
+													<tr>
+														<td>
+															<a href="<s:url value="#" includeParams="none"/>" onclick="customerRegion_form.action='customerRegion_removeArea.action?index=<s:property value='#itArea.index'/>'; customerRegion_form.submit();">
+																<img src="<s:url value="/images/delete.png" includeParams="none"/>" />
+															</a>
+														</td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</s:iterator>
+										<tr class="editorTableEvenRow">
+											<td class="value">
+												<s:textfield name="newAreaName" size="30" maxlength="150" theme="simple" />
+											</td>
+											<td>
+												<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
+													<tr>
+														<td>
+															<a href="<s:url value="#" includeParams="none"/>" onclick="customerRegion_form.action='customerRegion_addArea.action'; customerRegion_form.submit();"><img
+															src="<s:url value="/images/add.png" includeParams="none"/>" /></a>
+														</td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</td>
                 </tr>
                 
               	<tr class="editFormOddRow">

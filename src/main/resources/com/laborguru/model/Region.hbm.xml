@@ -12,7 +12,7 @@
 		<many-to-one name="customer" class="Customer" foreign-key="fk_regions_customer">
 			<column name="customer_id"/>
 		</many-to-one>
-	    <set name="areas" table="tbl_areas" lazy="true">
+	    <set name="areas" table="tbl_areas" lazy="true" cascade="all-delete-orphan" inverse="true">
 	        <key column="region_id" foreign-key="fk_regions_areas"/>
 	        <one-to-many class="Area"/>
 	    </set>			
