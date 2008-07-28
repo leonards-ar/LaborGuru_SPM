@@ -41,13 +41,10 @@
               	<tr class="editFormEvenRow">
 					<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 						<tr>
-							<td id="subtitleBar" nowrap><s:text name="customer.region.areas.title" /></td>
-						</tr>
-						<tr>
 							<td align="center">
 							<table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0" align="center">
 								<tr class="editorTableHeader">
-									<td colspan="2"><s:text name="customer.region..area.label" /></td>
+									<td colspan="2"><s:text name="customer.region.area.label" /></td>
 								</tr>
 				
 								<s:iterator id="area" value="areas" status="itArea">
@@ -60,7 +57,7 @@
 											<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 												<tr>
 													<td>
-														<a href="<s:url value="#" includeParams="none"/>" onclick="customerRegion_form.action='customerRegion_removeArea.action?index=<s:property value='#itArea.index'/>'; customerRegion_form.submit();">
+														<a href="<s:url value="#" includeParams="none"/>" onclick="customerRegion_form.action='customerRegion_removeArea.action?index=<s:property value='id'/>'; customerRegion_form.submit();">
 															<img src="<s:url value="/images/delete.png" includeParams="none"/>" />
 														</a>
 													</td>
@@ -71,7 +68,7 @@
 								</s:iterator>
 									<tr class="editorTableEvenRow">
 										<td class="value">
-											<s:textfield name="newAreaName" size="25" maxlength="150" theme="simple" />
+											<s:textfield name="newAreaName" size="30" maxlength="150" theme="simple" />
 										</td>
 										<td>
 											<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">

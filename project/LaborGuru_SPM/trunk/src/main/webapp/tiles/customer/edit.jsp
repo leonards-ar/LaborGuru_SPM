@@ -70,7 +70,10 @@
 												</a>
 											</td>
 											<td>
-												<a href="<s:url value="#" includeParams="none"/>" onclick="customer_form.action='customer_editRegion.action?index=<s:property value='#itRegion.index'/>'; customer_form.submit();">
+											<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>" />
+											</td>
+											<td>
+												<a href="<s:url value="#" includeParams="none"/>" onclick="customer_form.action='customerRegion_edit.action?regionId=<s:property value='id'/>'; customer_form.submit();">
 													<img src="<s:url value="/images/edit.png" includeParams="none"/>" />
 												</a>
 											</td>

@@ -199,4 +199,8 @@
 		<put-attribute name="body" value="/tiles/customer/view.jsp" />
 	</definition>	
 	
+	<definition name="editCustomerRegionPage" extends="baseLayoutWithMenu">
+		<put-attribute name="body" value="/tiles/customer/region_edit.jsp" />
+	</definition>		
+	
 </tiles-definitions>
