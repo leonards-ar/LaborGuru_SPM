@@ -57,6 +57,13 @@ public class CustomerRegionPrepareAction extends SpmAction implements Preparable
 	}
 
 	/**
+	 * 
+	 */
+	public void prepareEdit() {
+		loadRegionFromId();
+	}
+	
+	/**
 	 * Prepares the edit page
 	 * @return
 	 * @throws Exception
