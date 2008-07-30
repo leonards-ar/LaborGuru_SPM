@@ -126,5 +126,24 @@ public class Customer extends SpmObject{
 		
 		region.setCustomer(this);
 		getRegions().add(region);
+	}
+	
+	/**
+	 * Removes a region from the customer. Handles the bi-directional
+	 * relation.
+	 * @param region The region to remove
+	 */
+	public void removeRegion(Region region){
+		
+		if (region == null){
+			throw new IllegalArgumentException("Null region passed in as parameter");
+		}
+				
+		getRegions().remove(region);
+		
+		if (region.getCustomer() != null){
+			region.setCustomer(null);
+		}
 	}	
+	
 }

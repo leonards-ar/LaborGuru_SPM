@@ -41,4 +41,16 @@ public interface CustomerService extends Service {
 	 * @return The customer list
 	 */
 	List<Customer> filterCustomers(Customer customerSearch);
+
+	/**
+	 * Saves or updates a customer object
+	 * @param customer The customer
+	 */
+	void save(Customer customer);
+
+	/**
+	 * Deletes a customer
+	 * @param customer The customer
+	 */
+	void delete(Customer customer);
 }

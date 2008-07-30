@@ -9,9 +9,9 @@
 			<generator class="identity" />
 		</id>
 		<property name="name" column="name" type="string" length="100" />
-		<many-to-one name="customer" class="Customer" foreign-key="fk_regions_customer">
-			<column name="customer_id"/>
-		</many-to-one>
+
+		<many-to-one name="customer" class="Customer" column="customer_id" not-null="true" foreign-key="fk_regions_customer"/>
+
 	    <set name="areas" table="tbl_areas" lazy="true" cascade="all-delete-orphan" inverse="true">
 	        <key column="region_id" foreign-key="fk_regions_areas"/>
 	        <one-to-many class="Area"/>

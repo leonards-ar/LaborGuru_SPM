@@ -1,7 +1,11 @@
 package com.laborguru.action.customer;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import org.apache.log4j.Logger;
 
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
@@ -21,6 +25,8 @@ import com.opensymphony.xwork2.Preparable;
  */
 public class CustomerPrepareAction extends SpmAction implements Preparable{
 
+	private static Logger log = Logger.getLogger(CustomerPrepareAction.class);
+
 	private static final long serialVersionUID = 1L;
 
 	private CustomerService customerService;
@@ -29,9 +35,43 @@ public class CustomerPrepareAction extends SpmAction implements Preparable{
 	private List<Customer> customers = new ArrayList<Customer>();
 	private Customer customerSearch = new Customer();
 	private Customer customer = new Customer();
+	
 	private List<Region> regions = new ArrayList<Region>();
 	private String newRegionName;
+	private String customerName;
+	
 	private Integer index;
+	private Integer customerId;
+	private boolean removePage;
+
+	
+	/**
+	 * @return the removePage
+	 */
+	public boolean isRemovePage() {
+		return removePage;
+	}
+
+	/**
+	 * @param removePage the removePage to set
+	 */
+	public void setRemovePage(boolean removePage) {
+		this.removePage = removePage;
+	}
+
+	/**
+	 * @return the customerName
+	 */
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	/**
+	 * @param customerName the customerName to set
+	 */
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
 	
 	/**
 	 * @return the index
@@ -103,8 +143,6 @@ public class CustomerPrepareAction extends SpmAction implements Preparable{
 		this.customer = customer;
 	}
 
-
-	private Integer customerId;
 
 	/**
 	 * @return the customerId
@@ -192,9 +230,40 @@ public class CustomerPrepareAction extends SpmAction implements Preparable{
 	public String edit() throws Exception {
 		
 		loadCustomerFromId();
-		setRegions(new ArrayList<Region>(customer.getRegions()));
+		
+		setCustomerName(getCustomer().getName());
+		setRegions(new ArrayList<Region>(getCustomer().getRegions()));
 		
 		return SpmActionResult.EDIT.getResult();
+	}
+
+	
+	/**
+	 * Prepares the view page
+	 * 
+	 * @return
+	 */
+	public String show() {
+		loadCustomerFromId();
+		
+		setCustomerName(getCustomer().getName());
+		
+		return SpmActionResult.SHOW.getResult();
+	}	
+	
+	
+	/**
+	 * Prepare removes page
+	 * @return
+	 * @throws Exception
+	 */
+	public String remove() throws Exception {
+
+		loadCustomerFromId();
+				
+		this.setRemovePage(true);
+		
+		return SpmActionResult.SHOW.getResult();
 	}
 	
 	/**
@@ -212,12 +281,19 @@ public class CustomerPrepareAction extends SpmAction implements Preparable{
 	 * @throws Exception
 	 */
 	public String addRegion() throws Exception {
-		Region regionAux = new Region();
-		regionAux.setName(getNewRegionName());
-		getRegions().add(regionAux);
+		addNewRegion();
 		setNewRegionName(null);
 		
 		return SpmActionResult.EDIT.getResult();
+	}
+
+	/**
+	 * adds new region to Region list
+	 */
+	private void addNewRegion() {
+		Region regionAux = new Region();
+		regionAux.setName(getNewRegionName());
+		getRegions().add(regionAux);
 	}	
 	
 	/**
@@ -232,7 +308,108 @@ public class CustomerPrepareAction extends SpmAction implements Preparable{
 		
 		return SpmActionResult.EDIT.getResult();
 	}	
+
+	/**
+	 * Deletes a customer
+	 * @return
+	 * @throws Exception
+	 */
+	public String delete() throws Exception {		
+		
+		if(log.isDebugEnabled()) {
+			log.debug("About to delete customer: " + getCustomer());
+		}
+		
+		Customer aCustomer = customerService.getCustomerById(this.getCustomer());		
+		customerService.delete(aCustomer);
+		
+		if(log.isDebugEnabled()) {
+			log.debug("Customer successfully deleted, for customer with id: " + getCustomer().getId());
+		}
+		
+		return SpmActionResult.SUCCESS.getResult();
+	}	
 	
+	/**
+	 * Saves a customer
+	 * @return
+	 * @throws Exception
+	 */
+	public String save() throws Exception {
+		
+		if (getCustomerId() != null)
+			loadCustomerFromId();
+		
+		if(log.isDebugEnabled()) {
+			log.debug("About to save customer: " + getCustomer());
+		}
+		
+		getCustomer().setName(getCustomerName());
+		
+		//Adding a new region to the list if needed
+		if (getNewRegionName() != null && !"".equals(getNewRegionName().trim()) ){				
+			addNewRegion();
+		}
+		
+		setRegionsToCustomer();
+
+		getCustomerService().save(getCustomer());
+
+		if(log.isInfoEnabled()) {
+			log.info("Customer successfully updated for customer with id [" + getCustomer().getId() + "]");
+		}
+		
+		return SpmActionResult.SUCCESS.getResult();
+	}	
+
+	/**
+	 * Prepares the region list to be saved on the DB.
+	 * Handles the updated, created and removed region on the list.
+	 */	
+	private void setRegionsToCustomer() {
+		Set<Region> regionsToRemove = new HashSet<Region>();
+		
+		// Update existing regions
+		for (Region dbRegion : getCustomer().getRegions()) {
+			Region aRegion = getRegionById(getRegions(), dbRegion.getId());
+			if(aRegion != null) {
+				dbRegion.setName(aRegion.getName());
+			} else {
+				regionsToRemove.add(dbRegion);
+			}
+		}
+
+		// Remove regions
+		for(Region regionToRemove : regionsToRemove) {
+			getCustomer().removeRegion(regionToRemove);
+		}
+		
+		// Add new regions
+		for(Region aRegion : getRegions()) {
+			if(aRegion.getId() == null) {
+				getCustomer().addRegion(aRegion);
+			}
+		}			
+	
+	}
+
+	/**
+	 * Lookup for a region with id:"id".
+	 * @param regionList
+	 * @param id
+	 * @return The region or null if doesn't find any match
+	 */
+	private Region getRegionById(List<Region> regionList, Integer id) {
+
+		for(Region aRegion : regionList) {
+			if(id.equals(aRegion.getId())) {
+				return aRegion;
+			}
+		}
+		
+		return null;	
+	}
+
 	/**
 	 *  Load full customer from the property customerId
 	 */
