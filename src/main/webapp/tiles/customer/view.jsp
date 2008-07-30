@@ -48,7 +48,7 @@
 								</td>
 								<td>
 									<table order="0" cellpadding="2" cellspacing="2" colspan="0" cellspan="0">
-										<s:iterator id="area" value="regions[%{#itRegion.index}].areas" status="itArea">
+										<s:iterator id="area" value="customer.regions[%{#itRegion.index}].areas" status="itArea">
 										<tr>
 											<td>
 												<s:property value="#area.name"/>
