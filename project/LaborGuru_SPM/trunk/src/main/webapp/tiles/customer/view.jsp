@@ -44,14 +44,14 @@
 						<s:iterator id="region" value="customer.regions" status="itRegion">
 							<tr class="editorTable<s:if test="#itRegion.even">Even</s:if><s:else>Odd</s:else>Row">
 								<td class="value">
-									<s:property value="#region.name"/>
+									<s:property value="name"/>
 								</td>
 								<td>
-									<table order="0" cellpadding="2" cellspacing="2" colspan="0" cellspan="0">
-										<s:iterator id="area" value="customer.regions[%{#itRegion.index}].areas" status="itArea">
+									<table border="0" cellpadding="2" cellspacing="2" colspan="0" cellspan="0">
+										<s:iterator id="area" value="areas" status="itArea">
 										<tr>
 											<td>
-												<s:property value="#area.name"/>
+												<s:property value="name"/>
 											</td>
 										</tr>
 										</s:iterator>
