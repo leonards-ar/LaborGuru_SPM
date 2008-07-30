@@ -6,4 +6,10 @@
 			<message key="error.name.required" />
 		</field-validator>      
   </field>
+  <field name="regions">
+       <field-validator type="visitor">
+          <param name="context">customerSave</param>               
+          <message>Regions list: </message>
+      </field-validator>       
+  </field>  
 </validators> 
