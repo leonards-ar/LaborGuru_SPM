@@ -52,5 +52,24 @@ public class CustomerServiceBean implements CustomerService {
 	public List<Customer> filterCustomers(Customer customerSearch) {
 		return this.customerDao.applyFilter(customerSearch);
 	}
+
+	/**
+	 * Saves a customer
+	 * @param customer
+	 * @see com.laborguru.service.customer.CustomerService#save(com.laborguru.model.Customer)
+	 */
+	public void save(Customer customer) {
+		this.customerDao.save(customer);
+	}
+
+	/**
+	 * Deletes a customer
+	 * 
+	 * @param customer
+	 * @see com.laborguru.service.customer.CustomerService#delete(com.laborguru.model.Customer)
+	 */
+	public void delete(Customer customer) {
+		this.customerDao.delete(customer);
+	}
 	
 }

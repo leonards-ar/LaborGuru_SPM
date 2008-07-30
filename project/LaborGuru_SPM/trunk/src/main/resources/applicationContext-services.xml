@@ -5,10 +5,28 @@
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
 	<!--  Services's declarations -->
+	<bean id="customerServiceTarget" class="com.laborguru.service.customer.CustomerServiceBean" autowire="byType"/>
 	
-	<bean id="customerService" class="com.laborguru.service.customer.CustomerServiceBean">
-		<property name="customerDao" ref="customerDao" />
+	<bean id="customerService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.laborguru.service.customer.CustomerService</value>
+			</list>
+		</property>	
+	
+		<property name="target">
+			<ref bean="customerServiceTarget"/>
+		</property>		
+		
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>	
+		
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributeSourceDefault"/>
+		</property>			
 	</bean>
+
 	
 	<bean id="regionServiceTarget" class="com.laborguru.service.region.RegionServiceBean" autowire="byType"/>
 	

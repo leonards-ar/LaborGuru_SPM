@@ -41,7 +41,7 @@
 							<td><s:text name="customer.region.area.label" /></td>
 						</tr>
 		
-						<s:iterator id="region" value="regions" status="itRegion">
+						<s:iterator id="region" value="customer.regions" status="itRegion">
 							<tr class="editorTable<s:if test="#itRegion.even">Even</s:if><s:else>Odd</s:else>Row">
 								<td class="value">
 									<s:property value="#region.name"/>
@@ -69,10 +69,10 @@
    	<tr class="editFormOddRow">
          <td width="100%" align="right" colspan="2">
           <s:form theme="simple"> 
-          <s:hidden name="customer.id"/>
           <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
            <tr>
            	<s:if test="removePage">
+          		<s:hidden name="customer.id"/>
            		<td><s:submit action="customer_list" key="cancel.button" theme="simple" cssClass="button"/></td>    
          			<td><s:submit action="customer_delete" key="remove.button" theme="simple" cssClass="button"/></td>
            	</s:if>

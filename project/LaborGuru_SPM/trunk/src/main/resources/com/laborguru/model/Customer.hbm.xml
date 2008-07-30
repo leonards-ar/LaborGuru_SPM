@@ -9,7 +9,8 @@
 			<generator class="identity" />
 		</id>
 		<property name="name" column="name" type="string" length="100" />
-	    <set name="regions" table="tbl_regions" lazy="true">
+		
+	    <set name="regions" table="tbl_regions" lazy="true" cascade="all-delete-orphan" inverse="true">
 	        <key column="customer_id" foreign-key="fk_customers_regions"/>
 	        <one-to-many class="Region"/>
 	    </set>		

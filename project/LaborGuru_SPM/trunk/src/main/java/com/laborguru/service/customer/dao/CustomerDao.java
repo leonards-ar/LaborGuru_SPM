@@ -25,4 +25,16 @@ public interface CustomerDao {
 	 * @return The customer list
 	 */
 	List<Customer> applyFilter(Customer customerSearch);
+
+	/**
+	 * Saves or updates a customer
+	 * @param customer The customer
+	 */
+	void save(Customer customer);
+	
+	/**
+	 * Deletes a customer
+	 * @param customer The customer
+	 */
+	public void delete(Customer customer);
 }

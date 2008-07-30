@@ -4,7 +4,7 @@
 <br/>
 <table border="0" cellspacing="0" align="center">
       <s:form name="customer_form" id="customer_form" action="customer_save" theme="simple">
-      <s:hidden name="customer.id" theme="simple"/>
+      <s:hidden name="customerId" theme="simple"/>
 	<tr>
 		<td>
 	    <table border="0" cellspacing="0" align="center">
@@ -37,7 +37,7 @@
               <table id="editFormTable" border="0" cellpadding="6" cellspacing="0" align="center">
               	<tr class="editFormOddRow">
                     <td align="right" class="form_label" nowrap>* <s:text name="customer.name.label" /></td>
-                    <td align="left" class="value"><s:textfield name="customer.name" size="30" theme="simple"/></td>
+                    <td align="left" class="value"><s:textfield name="customerName" size="30" theme="simple"/></td>
 				</tr>
               </table>
               </tr>                            
