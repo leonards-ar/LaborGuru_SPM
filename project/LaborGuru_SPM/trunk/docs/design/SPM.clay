@@ -604,19 +604,6 @@
 <variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
 </data-type>
 </column>
-<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="position_share_with_id" remarks="" uid="c5acfe:11b18d1c771:-7ebf">
-<column-description></column-description>
-<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
-<variant type-name-pattern="INT"/>
-<variant precision-max="10" precision-min="0" precision-variable="%n" type-name-pattern="INT(%n)"/>
-<variant precision-max="10" precision-min="0" precision-variable="%n" type-name-pattern="INT(%n) UNSIGNED"/>
-<variant precision-max="10" precision-min="0" precision-variable="%n" type-name-pattern="INT(%n) UNSIGNED ZEROFILL"/>
-<variant precision-max="10" precision-min="0" precision-variable="%n" type-name-pattern="INT(%n) ZEROFILL"/>
-<variant type-name-pattern="INT UNSIGNED"/>
-<variant type-name-pattern="INT UNSIGNED ZEROFILL"/>
-<variant type-name-pattern="INT ZEROFILL"/>
-</data-type>
-</column>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="guest_utilization_bottom" remarks="" uid="c5acfe:11b18d1c771:-7d98">
 <column-description></column-description>
 <data-type jdbc-type="8" name="DOUBLE" selected-variant-pattern="DOUBLE">
