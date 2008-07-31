@@ -664,7 +664,7 @@
 <variant precision-max="255" precision-min="0" precision-variable="%n" type-name-pattern="CHAR(%n) BINARY"/>
 </data-type>
 </column>
-<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="position_index" remarks="" uid="e77997:11b54ef755e:-7fe8">
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="position_group_id" remarks="" uid="1b2c43e:11b78cd6309:-7e11">
 <column-description></column-description>
 <data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
 <variant type-name-pattern="INT"/>
@@ -691,12 +691,12 @@
 </foreign-key-figure>
 <foreign-key-column column-name="store_id" referenced-key-column-name="store_id"/>
 </foreign-key>
-<foreign-key alias="" name="FK_tbl_positions_2" on-delete="" on-update="" referenced-key="PK_TBL_POSITIONS" referenced-table="tbl_positions" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="c5acfe:11b18d1c771:-7d44">
+<foreign-key alias="" name="FK_tbl_positions_2" on-delete="" on-update="" referenced-key="PK_TBL_POSITION_GROUPS" referenced-table="tbl_position_groups" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="1b2c43e:11b78cd6309:-7e77">
 <foreign-key-description></foreign-key-description>
 <foreign-key-figure>
 <fk-fig-bendpoint-list/>
 </foreign-key-figure>
-<foreign-key-column column-name="position_share_with_id" referenced-key-column-name="position_id"/>
+<foreign-key-column column-name="position_group_id" referenced-key-column-name="position_group_id"/>
 </foreign-key>
 </foreign-key-list>
 <index-list/>
@@ -1119,7 +1119,7 @@
 </table>
 <table alias="" name="tbl_day_part_values" remarks="" uid="c5acfe:11b18d1c771:-7fec">
 <table-description></table-description>
-<table-figure-bounds height="135" width="217" x="975" y="515"/>
+<table-figure-bounds height="135" width="217" x="1199" y="510"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="position_id" remarks="" uid="c5acfe:11b18d1c771:-7fe8">
 <column-description></column-description>
@@ -1252,7 +1252,7 @@
 </table>
 <table alias="" name="tbl_day_of_week_values" remarks="" uid="c5acfe:11b18d1c771:-7f6d">
 <table-description></table-description>
-<table-figure-bounds height="-1" width="-1" x="1299" y="513"/>
+<table-figure-bounds height="-1" width="-1" x="1298" y="336"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="day_of_week_value_id" remarks="" uid="c5acfe:11b18d1c771:-7f5f">
 <column-description></column-description>
@@ -1358,6 +1358,55 @@
 <fk-fig-bendpoint-list/>
 </foreign-key-figure>
 <foreign-key-column column-name="position_id" referenced-key-column-name="position_id"/>
+</foreign-key>
+</foreign-key-list>
+<index-list/>
+</table>
+<table alias="" name="tbl_position_groups" remarks="" uid="b16656:11b6af0c8fd:-7fe9">
+<table-description></table-description>
+<table-figure-bounds height="63" width="176" x="937" y="533"/>
+<column-list>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="position_group_id" remarks="" uid="b16656:11b6af0c8fd:-7fe5">
+<column-description></column-description>
+<data-type jdbc-type="4" name="INT" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+<variant precision-max="10" precision-min="0" precision-variable="%n" type-name-pattern="INT(%n)"/>
+<variant precision-max="10" precision-min="0" precision-variable="%n" type-name-pattern="INT(%n) UNSIGNED"/>
+<variant precision-max="10" precision-min="0" precision-variable="%n" type-name-pattern="INT(%n) UNSIGNED ZEROFILL"/>
+<variant precision-max="10" precision-min="0" precision-variable="%n" type-name-pattern="INT(%n) ZEROFILL"/>
+<variant type-name-pattern="INT UNSIGNED"/>
+<variant type-name-pattern="INT UNSIGNED ZEROFILL"/>
+<variant type-name-pattern="INT ZEROFILL"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="150" decimal-digits="0" default-value="" mandatory="false" name="name" remarks="" uid="b16656:11b6af0c8fd:-7fe4">
+<column-description></column-description>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="255" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+<variant precision-max="255" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n) BINARY"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="10" decimal-digits="0" default-value="" mandatory="false" name="store_id" remarks="" uid="1b2c43e:11b78cd6309:-7fe7">
+<column-description></column-description>
+<data-type jdbc-type="1" literal-prefix="'" literal-suffix="'" name="CHAR" selected-variant-pattern="CHAR(%n)">
+<variant type-name-pattern="CHAR"/>
+<variant precision-max="255" precision-min="0" precision-variable="%n" type-name-pattern="CHAR(%n)"/>
+<variant precision-max="255" precision-min="0" precision-variable="%n" type-name-pattern="CHAR(%n) BINARY"/>
+</data-type>
+</column>
+</column-list>
+<primary-key alias="" name="PK_TBL_POSITION_GROUPS" remarks="" uid="b16656:11b6af0c8fd:-7fe8">
+<primary-key-description></primary-key-description>
+<primary-key-column name="position_group_id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list>
+<foreign-key alias="" name="FK_tbl_position_groups_2" on-delete="" on-update="" referenced-key="PK_TBL_STORES" referenced-table="tbl_stores" referenced-table-schema="DEFAULT_SCHEMA" remarks="" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="" uid="1b2c43e:11b78cd6309:-7fbd">
+<foreign-key-description></foreign-key-description>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="store_id" referenced-key-column-name="store_id"/>
 </foreign-key>
 </foreign-key-list>
 <index-list/>
