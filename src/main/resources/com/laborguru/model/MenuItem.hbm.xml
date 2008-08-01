@@ -13,7 +13,7 @@
         <property name="labelKey" column="label_key" type="string" length="50" not-null="true"/>       
         <property name="helpKey" column="help_key" type="string" length="50" />        
         <property name="target" column="target" type="string" length="200"/>       
-        <property name="position" column="position" type="int" length="50" />        
+        <property name="position" column="position" type="int"/>        
 
 
 		<!-- Parent can be null for root menu items -->

@@ -34,7 +34,7 @@ public class MenuItem extends SpmObject {
 
 	private Permission permission;
 	
-	private List<MenuItem> childMenuItems;
+	private Set<MenuItem> childMenuItems;
 	
 	/**
 	 * MenuItem toString
@@ -145,14 +145,20 @@ public class MenuItem extends SpmObject {
 	}
 
 	public Set<MenuItem> getChildMenuItems() {
-		return new HashSet<MenuItem>(childMenuItems);
-	}
-
-	public List<MenuItem> getOrderedChildMenuItems() {
 		if(childMenuItems == null) {
 			setChildMenuItems(new HashSet<MenuItem>());
 		}
-		return childMenuItems;
+		return this.childMenuItems;
+	}
+
+	public List<MenuItem> getOrderedChildMenuItems() {
+		if(this.childMenuItems != null && this.childMenuItems.size() > 0) {
+			List<MenuItem> ordered = new ArrayList<MenuItem>(childMenuItems);
+			Collections.sort(ordered, new MenuItemPositionComparator());			
+			return ordered;
+		} else {
+			return new ArrayList<MenuItem>();
+		}
 	}
 	
 	/**
@@ -161,8 +167,7 @@ public class MenuItem extends SpmObject {
 	 * @param childMenuItems
 	 */
 	private void setChildMenuItems(Set<MenuItem> childMenuItems) {
-		this.childMenuItems = new ArrayList<MenuItem>(childMenuItems);
-		Collections.sort(this.childMenuItems, new MenuItemPositionComparator());			
+		this.childMenuItems = childMenuItems;
 	}
 
 	/**
