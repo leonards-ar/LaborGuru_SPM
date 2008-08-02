@@ -1,11 +1,16 @@
 package com.laborguru.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+
+import com.laborguru.model.comparator.SpmComparator;
 
 public class Store extends SpmObject {
 
@@ -23,6 +28,7 @@ public class Store extends SpmObject {
 	private List<OperationTime> operationTimes;
 	private List<DayPart> dayParts;
 	private Double allPositionsUtilization;
+	private Set<PositionGroup> positionGroups;
 	
 	/**
 	 * Store toString
@@ -310,5 +316,50 @@ public class Store extends SpmObject {
 	 */
 	public void setAllPositionsUtilization(Double allPositionsUtilization) {
 		this.allPositionsUtilization = allPositionsUtilization;
-	}	
+	}
+
+	/**
+	 * @return the postionGroups
+	 */
+	public Set<PositionGroup> getPositionGroups() {
+		if(positionGroups == null) {
+			positionGroups = new HashSet<PositionGroup>();
+		}
+		return positionGroups;
+	}
+
+	/** 
+	 * Get Ordered PositionGroups
+	 * @return
+	 */
+	public List<PositionGroup> getOrderedPositionGroups() {
+		List orderedPositionGroups = new ArrayList<PositionGroup>(getPositionGroups());
+		Collections.sort(orderedPositionGroups, new SpmComparator());
+		return orderedPositionGroups;
+	}
+	
+	/**
+	 * @param postionGroups the postionGroups to set
+	 */
+	private void setPositionGroups(Set<PositionGroup> positionGroups) {
+		this.positionGroups = positionGroups;
+	}
+	
+	/**
+	 * Add a positionGroup
+	 * @param positionGroup
+	 */
+	public void addPositionGroup(PositionGroup positionGroup) {
+		if (positionGroup == null){
+			throw new IllegalArgumentException("Null position group passed in as parameter");
+		}
+		
+		if (positionGroup.getStore() != null){
+			positionGroup.getStore().getPositionGroups().remove(positionGroup);
+		}
+		
+		positionGroup.setStore(this);
+		getPositionGroups().add(positionGroup);
+	}
+	
 }
