@@ -3,8 +3,8 @@
 <validators> 
   <field name="storePositions">
        <field-validator type="visitor">
-          <param name="context">activitySharingSave</param>               
-          <message>Position: </message>
+          <param name="context">positionGroupSave</param>               
+          <message>Position Group: </message>
       </field-validator>       
   </field>
   
