@@ -11,6 +11,13 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.laborguru.model.comparator.ComparableObject;
 
+/**
+ *
+ * @author <a href="fbarrera@gmail.com">Federico Barrera Oro</a>
+ * @version 1.0
+ * @since SPM 1.0
+ *
+ */
 public class Position extends SpmObject implements ComparableObject{
 
 	/**
@@ -24,7 +31,7 @@ public class Position extends SpmObject implements ComparableObject{
 	
 	private List<DayOfWeekData> dayOfWeekData;
 	private Set<DayPartData> dayPartData;
-	private Position sharedPosition;
+	private PositionGroup positionGroup;
 	private Double utilizationBottom;
 	private Double utilizationTop;
 	private Integer utilizationMinimum;
@@ -160,6 +167,7 @@ public class Position extends SpmObject implements ComparableObject{
 	/**
 	 * @param dayOfWeekData the dayOfWeekData to set
 	 */
+
 	public void setDayOfWeekData(List<DayOfWeekData> dayOfWeekData) {
 		this.dayOfWeekData = dayOfWeekData;
 	}
@@ -206,20 +214,6 @@ public class Position extends SpmObject implements ComparableObject{
 			// Missing store or first day of week
 			return getDayOfWeekData();
 		}
-	}
-
-	/**
-	 * @return the sharedPosition
-	 */
-	public Position getSharedPosition() {
-		return sharedPosition;
-	}
-
-	/**
-	 * @param sharedPosition the sharedPosition to set
-	 */
-	public void setSharedPosition(Position sharedPosition) {
-		this.sharedPosition = sharedPosition;
 	}
 
 	/**
@@ -290,5 +284,19 @@ public class Position extends SpmObject implements ComparableObject{
 	 */
 	public void setPositionIndex(Integer positionIndex) {
 		this.positionIndex = positionIndex;
+	}
+
+	/**
+	 * @return the positionGroup
+	 */
+	public PositionGroup getPositionGroup() {
+		return positionGroup;
+	}
+
+	/**
+	 * @param positionGroup the positionGroup to set
+	 */
+	public void setPositionGroup(PositionGroup positionGroup) {
+		this.positionGroup = positionGroup;
 	}
 }

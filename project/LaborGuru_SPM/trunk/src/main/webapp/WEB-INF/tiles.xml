@@ -186,6 +186,14 @@
 		<put-attribute name="storeExtDataBody" value="/tiles/store/activitysharing_view.jsp" />
 	</definition>
 
+	<definition name="editPositionGroup" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/positiongroupnames_edit.jsp" />
+	</definition>	
+	
+	<definition name="showPositionGroup" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/positiongroupnames_view.jsp" />
+	</definition>
+	
 	<!-- Customer tiles definition -->
 	<definition name="listCustomersPage" extends="baseLayoutWithMenu">
 		<put-attribute name="body" value="/tiles/customer/list.jsp" />

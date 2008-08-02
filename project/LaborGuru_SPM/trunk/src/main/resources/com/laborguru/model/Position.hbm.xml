@@ -32,8 +32,8 @@
 			<column name="store_id"/>
 		</many-to-one>
 		
- 		<many-to-one name="sharedPosition" class="Position" foreign-key="fk_positions_positions">
-			<column name="shared_position_id" not-null="false"/>
+ 		<many-to-one name="positionGroup" class="PositionGroup" foreign-key="fk_positions_position_groups">
+			<column name="position_group_id" not-null="false"/>
 		</many-to-one>		
 		
 	    <list name="dayOfWeekData" cascade="all" table="tbl_day_of_week_values" lazy="true" inverse="true">
@@ -47,7 +47,7 @@
 	        <one-to-many class="DayPartData"/>
 	    </set>
 	    
-	    <property name="positionIndex" column="position_index" type="int" />
+	    <property name="positionIndex" column="position_index" type="int" not-null="true"/>
 	    	    
 	</class>	
 	<database-object>
