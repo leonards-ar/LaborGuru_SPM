@@ -160,6 +160,15 @@
 			<result name="cancelShow" type="redirectAction">store_show</result>
 			<result name="input" type="tiles">editActivitySharing</result>
 			<result name="success" type="redirectAction">store_edit</result>
+		</action>
+		
+		<action name="positionGroup_*" method="{1}" class="com.laborguru.action.store.PositionGroupPrepareAction">
+			<result name="edit" type="tiles">editPositionGroup</result>
+			<result name="show" type="tiles">showPositionGroup</result>
+			<result name="cancelEdit" type="redirectAction">store_edit</result>
+			<result name="cancelShow" type="redirectAction">store_show</result>
+			<result name="input" type="tiles">editPositionGroup</result>
+			<result name="success" type="redirectAction">store_edit</result>
 		</action>					
 	</package>
 </struts>

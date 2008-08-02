@@ -15,7 +15,7 @@
 	    <property name="allPositionsUtilization" type="double">
 			<column name="all_pos_utilization" not-null="false" default="90.00" />
 		</property>
-	      	    
+
 	    <list name="positions" cascade="all-delete-orphan" table="tbl_positions" lazy="true" inverse="true">
 	        <key column="store_id" foreign-key="fk_stores_positions"/>
 	        <list-index column="position_index"/>
@@ -33,7 +33,12 @@
 	        <list-index column="position_index"/>
 	        <one-to-many class="DayPart"/>
 	    </list>
-	    	    	    
+
+		<set name="positionGroups" cascade="all-delete-orphan" table="tbl_position_groups" lazy="true" inverse="true">
+	        <key column="store_id" foreign-key="fk_stores_position_groups"/>
+	        <one-to-many class="PositionGroup"/>
+	    </set>
+	    	    	    	    
 		<many-to-one name="area" class="Area" foreign-key="fk_stores_areas">
 			<column name="area_id"/>
 		</many-to-one>

@@ -16,7 +16,7 @@
 				 		<s:set name="positionList" value="storePositions" scope="request"/>
 						<display:table name="positionList" class="results" sort="external">		    
 						    <display:column property="name" titleKey="store.laborassumptions.activitysharing.position.label"/>
-						    <display:column property="sharedPosition.name" titleKey="store.laborassumptions.activitysharing.sharingwith.label"/>
+						    <display:column property="positionGroup.name" titleKey="store.laborassumptions.activitysharing.sharingwith.label"/>
 						    <display:setProperty name="paging.banner.all_items_found" value="" />
 						    <display:setProperty name="paging.banner.one_item_found" value="" />
 							<display:setProperty name="css.tr.even" value="editorTableEvenRow"/>
