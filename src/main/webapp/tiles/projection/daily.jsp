@@ -2,7 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <br/>
-<s:form action="employee_save" theme="simple">
+<s:form action="daily_save" theme="simple">
 	      <table border="0" cellspacing="0" align="center">
 		      <tr>
 			      <td id="titleBar">
