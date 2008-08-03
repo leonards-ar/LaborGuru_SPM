@@ -211,4 +211,14 @@
 		<put-attribute name="body" value="/tiles/customer/region_edit.jsp" />
 	</definition>		
 	
+	<!-- Projections -->
+	<definition name="editHalfHourPage" extends="baseLayoutWithMenu">
+		<put-attribute name="htmlExtHeader" value="/tiles/dojoHtmlExtHeader.jsp" />
+		<put-attribute name="body" value="/tiles/projection/halfhour.jsp" />
+	</definition>
+	
+	<definition name="editDailyPage" extends="baseLayoutWithMenu">
+		<put-attribute name="htmlExtHeader" value="/tiles/dojoHtmlExtHeader.jsp" />
+		<put-attribute name="body" value="/tiles/projection/daily.jsp" />
+	</definition>		
 </tiles-definitions>

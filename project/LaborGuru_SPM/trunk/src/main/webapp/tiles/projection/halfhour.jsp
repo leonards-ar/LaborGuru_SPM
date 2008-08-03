@@ -2,7 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <br/>
-<s:form action="employee_save" theme="simple">
+<s:form action="halfhour_save" theme="simple">
 	      <table border="0" cellspacing="0" align="center">
 		      <tr>
 			      <td id="titleBar">
@@ -227,22 +227,22 @@
 											</table>                    			
 			                    			<!-- End Half Hour Projection -->
                     					</td>
-                    					<td>
+                    					<td valign="top">
 			                    			<!-- Action buttons -->
 			                    			<br/>
 			                    			<br/>
 						                    <table border="0" cellpadding="5" cellspacing="5" colspan="0" cellspan="0">
 							                    <tr>
-							                		<td><s:submit id="saveButton" key="projection.halfhour.revise.button" theme="simple" cssClass="button"/></td>
+							                		<td align="center"><s:submit id="saveButton" key="projection.halfhour.revise.button" theme="simple" cssClass="button"/></td>
 							                	</tr>
 							                    <tr>
-							                		<td><s:submit id="saveButton" key="save.button" theme="simple" cssClass="button"/></td>
+							                		<td align="center"><s:submit id="saveButton" key="save.button" theme="simple" cssClass="button"/></td>
 							                	</tr>
 							                	<tr>
-							                    	<td><s:reset id="resetButton" key="reset.button" theme="simple" cssClass="button"/></td>
+							                    	<td align="center"><s:reset id="resetButton" key="reset.button" theme="simple" cssClass="button"/></td>
 							                    </tr>
 							                    <tr>
-							                    	<td><s:submit id="cancelButton" key="cancel.button" action="daily_edit" theme="simple" cssClass="button"/></td>		                    
+							                    	<td align="center"><s:submit id="cancelButton" key="cancel.button" action="halfhour_edit" theme="simple" cssClass="button"/></td>		                    
 							                    </tr>
 						                    </table>                    
 			                    			<!-- End Action buttons -->
