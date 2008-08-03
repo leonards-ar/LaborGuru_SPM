@@ -56,7 +56,7 @@
 												<s:textfield name="areas[%{#itArea.index}].name" value="%{name}" size="30" maxlength="150" theme="simple" />
 											</td>
 											<td>
-												<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
+												<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 													<tr>
 														<td>
 															<a href="<s:url value="#" includeParams="none"/>" onclick="customerRegion_form.action='customerRegion_removeArea.action?index=<s:property value='#itArea.index'/>'; customerRegion_form.submit();">
