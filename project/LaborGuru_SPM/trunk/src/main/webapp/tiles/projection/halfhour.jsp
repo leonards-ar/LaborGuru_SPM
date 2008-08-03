@@ -62,164 +62,164 @@
 												</tr>
 												<!-- Iterate for each half hour from open to close hour -->
 												<tr>
-													<td class="editorTableFirstColumn"></td>
-													<td class="editorTableEvenRow">9:00</td>
+													<td class="editorTableFirstColumn">9:00</td>
+													<td class="editorTableEvenRow">$</td>
 													<td class="editorTableEvenRow">$<input type="text" size="10" value=""/></td>
 													<td class="editorTableEvenRow">$</td>
 												</tr>
 												<tr>
-													<td class="editorTableFirstColumn"></td>
-													<td class="editorTableOddRow">9:30</td>
+													<td class="editorTableFirstColumn">9:30</td>
+													<td class="editorTableOddRow">$ 200</td>
 													<td class="editorTableOddRow">$<input type="text" size="10" value="200"/></td>
 													<td class="editorTableOddRow">$ 200</td>
 												</tr>												
 												<tr>
-													<td class="editorTableFirstColumn"></td>
-													<td class="editorTableEvenRow">10:00</td>
+													<td class="editorTableFirstColumn">10:00</td>
+													<td class="editorTableEvenRow">$</td>
 													<td class="editorTableEvenRow">$<input type="text" size="10" value=""/></td>
 													<td class="editorTableEvenRow">$</td>
 												</tr>
 												<tr>
-													<td class="editorTableFirstColumn"></td>
-													<td class="editorTableOddRow">10:30</td>
+													<td class="editorTableFirstColumn">10:30</td>
+													<td class="editorTableOddRow">$ 200</td>
 													<td class="editorTableOddRow">$<input type="text" size="10" value="200"/></td>
 													<td class="editorTableOddRow">$ 200</td>
 												</tr>												
 												<tr>
-													<td class="editorTableFirstColumn"></td>
-													<td class="editorTableEvenRow">11:00</td>
+													<td class="editorTableFirstColumn">11:00</td>
+													<td class="editorTableEvenRow">$</td>
 													<td class="editorTableEvenRow">$<input type="text" size="10" value=""/></td>
 													<td class="editorTableEvenRow">$</td>
 												</tr>
 												<tr>
-													<td class="editorTableFirstColumn"></td>
-													<td class="editorTableOddRow">11:30</td>
+													<td class="editorTableFirstColumn">11:30</td>
+													<td class="editorTableOddRow">$ 200</td>
 													<td class="editorTableOddRow">$<input type="text" size="10" value="200"/></td>
 													<td class="editorTableOddRow">$ 200</td>
 												</tr>												
 												<tr>
-													<td class="editorTableFirstColumn"></td>
-													<td class="editorTableEvenRow">12:00</td>
+													<td class="editorTableFirstColumn">12:00</td>
+													<td class="editorTableEvenRow">$</td>
 													<td class="editorTableEvenRow">$<input type="text" size="10" value=""/></td>
 													<td class="editorTableEvenRow">$</td>
 												</tr>
 												<tr>
-													<td class="editorTableFirstColumn"></td>
-													<td class="editorTableOddRow">12:30</td>
+													<td class="editorTableFirstColumn">12:30</td>
+													<td class="editorTableOddRow">$ 200</td>
 													<td class="editorTableOddRow">$<input type="text" size="10" value="200"/></td>
 													<td class="editorTableOddRow">$ 200</td>
 												</tr>												
 												<tr>
-													<td class="editorTableFirstColumn"></td>
-													<td class="editorTableEvenRow">13:00</td>
+													<td class="editorTableFirstColumn">13:00</td>
+													<td class="editorTableEvenRow">$</td>
 													<td class="editorTableEvenRow">$<input type="text" size="10" value=""/></td>
 													<td class="editorTableEvenRow">$</td>
 												</tr>
 												<tr>
-													<td class="editorTableFirstColumn"></td>
-													<td class="editorTableOddRow">13:30</td>
+													<td class="editorTableFirstColumn">13:30</td>
+													<td class="editorTableOddRow">$ 200</td>
 													<td class="editorTableOddRow">$<input type="text" size="10" value="200"/></td>
 													<td class="editorTableOddRow">$ 200</td>
 												</tr>												
 												<tr>
-													<td class="editorTableFirstColumn"></td>
-													<td class="editorTableEvenRow">14:00</td>
+													<td class="editorTableFirstColumn">14:00</td>
+													<td class="editorTableEvenRow">$</td>
 													<td class="editorTableEvenRow">$<input type="text" size="10" value=""/></td>
 													<td class="editorTableEvenRow">$</td>
 												</tr>
 												<tr>
-													<td class="editorTableFirstColumn"></td>
-													<td class="editorTableOddRow">14:30</td>
+													<td class="editorTableFirstColumn">14:30</td>
+													<td class="editorTableOddRow">$ 200</td>
 													<td class="editorTableOddRow">$<input type="text" size="10" value="200"/></td>
 													<td class="editorTableOddRow">$ 200</td>
 												</tr>												
 												<tr>
-													<td class="editorTableFirstColumn"></td>
-													<td class="editorTableEvenRow">15:00</td>
+													<td class="editorTableFirstColumn">15:00</td>
+													<td class="editorTableEvenRow">$</td>
 													<td class="editorTableEvenRow">$<input type="text" size="10" value=""/></td>
 													<td class="editorTableEvenRow">$</td>
 												</tr>
 												<tr>
-													<td class="editorTableFirstColumn"></td>
-													<td class="editorTableOddRow">15:30</td>
+													<td class="editorTableFirstColumn">15:30</td>
+													<td class="editorTableOddRow">$ 200</td>
 													<td class="editorTableOddRow">$<input type="text" size="10" value="200"/></td>
 													<td class="editorTableOddRow">$ 200</td>
 												</tr>												
 												<tr>
-													<td class="editorTableFirstColumn"></td>
-													<td class="editorTableEvenRow">16:00</td>
+													<td class="editorTableFirstColumn">16:00</td>
+													<td class="editorTableEvenRow">$</td>
 													<td class="editorTableEvenRow">$<input type="text" size="10" value=""/></td>
 													<td class="editorTableEvenRow">$</td>
 												</tr>
 												<tr>
-													<td class="editorTableFirstColumn"></td>
-													<td class="editorTableOddRow">16:30</td>
+													<td class="editorTableFirstColumn">16:30</td>
+													<td class="editorTableOddRow">$ 200</td>
 													<td class="editorTableOddRow">$<input type="text" size="10" value="200"/></td>
 													<td class="editorTableOddRow">$ 200</td>
 												</tr>												
 												<tr>
-													<td class="editorTableFirstColumn"></td>
-													<td class="editorTableEvenRow">17:00</td>
+													<td class="editorTableFirstColumn">17:00</td>
+													<td class="editorTableEvenRow">$</td>
 													<td class="editorTableEvenRow">$<input type="text" size="10" value=""/></td>
 													<td class="editorTableEvenRow">$</td>
 												</tr>
 												<tr>
-													<td class="editorTableFirstColumn"></td>
-													<td class="editorTableOddRow">17:30</td>
+													<td class="editorTableFirstColumn">17:30</td>
+													<td class="editorTableOddRow">$ 200</td>
 													<td class="editorTableOddRow">$<input type="text" size="10" value="200"/></td>
 													<td class="editorTableOddRow">$ 200</td>
 												</tr>												
 												<tr>
-													<td class="editorTableFirstColumn"></td>
-													<td class="editorTableEvenRow">18:00</td>
+													<td class="editorTableFirstColumn">18:00</td>
+													<td class="editorTableEvenRow">$</td>
 													<td class="editorTableEvenRow">$<input type="text" size="10" value=""/></td>
 													<td class="editorTableEvenRow">$</td>
 												</tr>
 												<tr>
-													<td class="editorTableFirstColumn"></td>
-													<td class="editorTableOddRow">18:30</td>
+													<td class="editorTableFirstColumn">18:30</td>
+													<td class="editorTableOddRow">$ 200</td>
 													<td class="editorTableOddRow">$<input type="text" size="10" value="200"/></td>
 													<td class="editorTableOddRow">$ 200</td>
 												</tr>												
 												<tr>
-													<td class="editorTableFirstColumn"></td>
-													<td class="editorTableEvenRow">19:00</td>
+													<td class="editorTableFirstColumn">19:00</td>
+													<td class="editorTableEvenRow">$</td>
 													<td class="editorTableEvenRow">$<input type="text" size="10" value=""/></td>
 													<td class="editorTableEvenRow">$</td>
 												</tr>
 												<tr>
-													<td class="editorTableFirstColumn"></td>
-													<td class="editorTableOddRow">19:30</td>
+													<td class="editorTableFirstColumn">19:30</td>
+													<td class="editorTableOddRow">$ 200</td>
 													<td class="editorTableOddRow">$<input type="text" size="10" value="200"/></td>
 													<td class="editorTableOddRow">$ 200</td>
 												</tr>												
 												<tr>
-													<td class="editorTableFirstColumn"></td>
-													<td class="editorTableEvenRow">20:00</td>
+													<td class="editorTableFirstColumn">20:00</td>
+													<td class="editorTableEvenRow">$</td>
 													<td class="editorTableEvenRow">$<input type="text" size="10" value=""/></td>
 													<td class="editorTableEvenRow">$</td>
 												</tr>
 												<tr>
-													<td class="editorTableFirstColumn"></td>
-													<td class="editorTableOddRow">20:30</td>
+													<td class="editorTableFirstColumn">20:30</td>
+													<td class="editorTableOddRow">$ 200</td>
 													<td class="editorTableOddRow">$<input type="text" size="10" value="200"/></td>
 													<td class="editorTableOddRow">$ 200</td>
 												</tr>												
 												<tr>
-													<td class="editorTableFirstColumn"></td>
-													<td class="editorTableEvenRow">21:00</td>
+													<td class="editorTableFirstColumn">21:00</td>
+													<td class="editorTableEvenRow">$</td>
 													<td class="editorTableEvenRow">$<input type="text" size="10" value=""/></td>
 													<td class="editorTableEvenRow">$</td>
 												</tr>
 												<tr>
-													<td class="editorTableFirstColumn"></td>
-													<td class="editorTableOddRow">21:30</td>
+													<td class="editorTableFirstColumn">21:30</td>
+													<td class="editorTableOddRow">$ 200</td>
 													<td class="editorTableOddRow">$<input type="text" size="10" value="200"/></td>
 													<td class="editorTableOddRow">$ 200</td>
 												</tr>												
 												<tr>
-													<td class="editorTableFirstColumn"></td>
-													<td class="editorTableEvenRow">22:00</td>
+													<td class="editorTableFirstColumn">22:00</td>
+													<td class="editorTableEvenRow">$</td>
 													<td class="editorTableEvenRow">$<input type="text" size="10" value=""/></td>
 													<td class="editorTableEvenRow">$</td>
 												</tr>
