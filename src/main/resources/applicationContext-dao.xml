@@ -47,6 +47,8 @@
 				<value>com/laborguru/model/DayOfWeekData.hbm.xml</value>				
 				<value>com/laborguru/model/DayPartData.hbm.xml</value>
 				<value>com/laborguru/model/PositionGroup.hbm.xml</value>
+				<value>com/laborguru/model/HalfHourProjection.hbm.xml</value>
+				<value>com/laborguru/model/DailyProjection.hbm.xml</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
