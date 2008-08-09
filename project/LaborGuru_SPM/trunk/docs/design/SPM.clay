@@ -814,7 +814,7 @@
 </table>
 <table alias="" name="tbl_operation_times" remarks="" uid="16d864e:11abbfde91b:-7ff2">
 <table-description></table-description>
-<table-figure-bounds height="115" width="179" x="761" y="764"/>
+<table-figure-bounds height="95" width="179" x="761" y="764"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="operation_time_id" remarks="" uid="16d864e:11abbfde91b:-7fe7">
 <column-description></column-description>
@@ -1514,13 +1514,13 @@
 <variant type-name-pattern="INT ZEROFILL"/>
 </data-type>
 </column>
-<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="date" remarks="" uid="cb5cd6:11b99e89965:-7f8d">
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="projection_date" remarks="" uid="cb5cd6:11b99e89965:-7f8d">
 <column-description></column-description>
 <data-type jdbc-type="91" literal-prefix="'" literal-suffix="'" name="DATE" selected-variant-pattern="DATE">
 <variant type-name-pattern="DATE"/>
 </data-type>
 </column>
-<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="starting_hour" remarks="" uid="cb5cd6:11b99e89965:-7f8c">
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="starting_time" remarks="" uid="cb5cd6:11b99e89965:-7f8c">
 <column-description></column-description>
 <data-type jdbc-type="93" literal-prefix="'" literal-suffix="'" name="TIMESTAMP" selected-variant-pattern="TIMESTAMP">
 <variant type-name-pattern="TIMESTAMP"/>
@@ -1552,7 +1552,7 @@
 </table>
 <table alias="" name="tbl_halfhour_projections" remarks="" uid="cb5cd6:11b99e89965:-7f59">
 <table-description></table-description>
-<table-figure-bounds height="85" width="199" x="401" y="869"/>
+<table-figure-bounds height="85" width="199" x="515" y="896"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="half_hour_projections_id" remarks="" uid="cb5cd6:11b99e89965:-7f3e">
 <column-description></column-description>
