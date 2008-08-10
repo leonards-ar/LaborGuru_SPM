@@ -34,7 +34,7 @@
 								<td><s:property value="dayOfWeekName"/>
 								</s:iterator>
 							</tr>
-							<s:iterator id="position" value="store.orderedPositions" status="pStatus">
+							<s:iterator id="position" value="store.positions" status="pStatus">
 								<tr>
 									<td class="editorTableFirstColumn"><s:property value="name"/></td>
 									<s:iterator id="dayOfWeekName" value="dayOfWeekNames" status="dowStatus">

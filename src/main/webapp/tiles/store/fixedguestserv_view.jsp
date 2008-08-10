@@ -20,7 +20,7 @@
 								<td><s:property value="name"/>
 								</s:iterator>
 							</tr>
-							<s:iterator id="position" value="store.orderedPositions" status="pStatus">
+							<s:iterator id="position" value="store.positions" status="pStatus">
 								<tr>
 									<td class="editorTableFirstColumn"><s:property value="name"/></td>
 									<s:iterator id="dayPart" value="store.dayParts" status="dpStatus">
