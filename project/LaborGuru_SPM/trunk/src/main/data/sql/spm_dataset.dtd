@@ -12,7 +12,8 @@
     tbl_profiles_permissions*,
     tbl_users*,
     tbl_day_parts*,
-    tbl_users_profiles*)>
+    tbl_users_profiles*,
+    tbl_historic_sales*)>
 
 <!ELEMENT tbl_areas EMPTY>
 <!ATTLIST tbl_areas
@@ -135,6 +136,18 @@
     start_hour CDATA #IMPLIED
     store_id CDATA #REQUIRED
     position_index CDATA #REQUIRED
+>
+
+<!ELEMENT tbl_historic_sales EMPTY>
+<!ATTLIST tbl_historic_sales
+    historic_sales_id CDATA #REQUIRED
+    date_time CDATA #REQUIRED
+    day_of_week CDATA #REQUIRED
+    sales_value CDATA #IMPLIED
+    checks_number CDATA #IMPLIED
+    guests_number CDATA #IMPLIED
+    product CDATA #IMPLIED    
+    store_id CDATA #REQUIRED
 >
 
 <!ELEMENT tbl_users_profiles EMPTY>

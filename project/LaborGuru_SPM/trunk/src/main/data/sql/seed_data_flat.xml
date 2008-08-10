@@ -84,4 +84,18 @@
   <tbl_day_parts day_part_id="3" store_id="1" name="Post Lunch" position_index="2"/>
   <tbl_day_parts day_part_id="4" store_id="1" name="Pre Dinner" position_index="3"/>
   <tbl_day_parts day_part_id="5" store_id="1" name="Dinner" position_index="4"/>
+  <tbl_historic_sales historic_sales_id="1" date_time="2008-08-10 09:00:00" day_of_week="1" sales_value="27.8" store_id="1"/>
+  <tbl_historic_sales historic_sales_id="50" date_time="2008-08-10 09:30:00" day_of_week="1" sales_value="27.8" store_id="1"/>
+  <tbl_historic_sales historic_sales_id="100" date_time="2008-08-11 09:00:00" day_of_week="2" sales_value="27.8" store_id="1"/>
+  <tbl_historic_sales historic_sales_id="150" date_time="2008-08-11 09:30:00" day_of_week="2" sales_value="27.8" store_id="1"/>
+  <tbl_historic_sales historic_sales_id="200" date_time="2008-08-12 09:00:00" day_of_week="3" sales_value="27.8" store_id="1"/>
+  <tbl_historic_sales historic_sales_id="250" date_time="2008-08-12 09:30:00" day_of_week="3" sales_value="27.8" store_id="1"/>
+  <tbl_historic_sales historic_sales_id="300" date_time="2008-08-13 09:00:00" day_of_week="4" sales_value="27.8" store_id="1"/>
+  <tbl_historic_sales historic_sales_id="350" date_time="2008-08-13 09:30:00" day_of_week="4" sales_value="27.8" store_id="1"/>
+  <tbl_historic_sales historic_sales_id="400" date_time="2008-08-14 09:00:00" day_of_week="5" sales_value="27.8" store_id="1"/>
+  <tbl_historic_sales historic_sales_id="450" date_time="2008-08-14 09:30:00" day_of_week="5" sales_value="27.8" store_id="1"/>
+  <tbl_historic_sales historic_sales_id="500" date_time="2008-08-15 09:00:00" day_of_week="6" sales_value="27.8" store_id="1"/>
+  <tbl_historic_sales historic_sales_id="550" date_time="2008-08-15 09:30:00" day_of_week="6" sales_value="27.8" store_id="1"/>
+  <tbl_historic_sales historic_sales_id="600" date_time="2008-08-16 09:00:00" day_of_week="7" sales_value="27.8" store_id="1"/>
+  <tbl_historic_sales historic_sales_id="650" date_time="2008-08-16 09:30:00" day_of_week="7" sales_value="27.8" store_id="1"/>
 </dataset>

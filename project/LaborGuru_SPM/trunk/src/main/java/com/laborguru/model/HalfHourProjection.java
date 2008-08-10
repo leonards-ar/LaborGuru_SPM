@@ -1,5 +1,7 @@
 package com.laborguru.model;
 
+import java.math.BigDecimal;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -18,9 +20,10 @@ public class HalfHourProjection extends SpmObject{
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
-	private Double adjustedValue;
-	private int index;
+	private BigDecimal adjustedValue;
+	private Integer index;
 	private DailyProjection projection;
+	private Boolean fixed;
 	
 	/**
 	 * @param obj
@@ -103,29 +106,43 @@ public class HalfHourProjection extends SpmObject{
 	/**
 	 * @return the adjustedValue
 	 */
-	public Double getAdjustedValue() {
+	public BigDecimal getAdjustedValue() {
 		return adjustedValue;
 	}
 
 	/**
 	 * @param adjustedValue the adjustedValue to set
 	 */
-	public void setAdjustedValue(Double adjustedValue) {
+	public void setAdjustedValue(BigDecimal adjustedValue) {
 		this.adjustedValue = adjustedValue;
 	}
 
 	/**
 	 * @return the index
 	 */
-	public int getIndex() {
+	public Integer getIndex() {
 		return index;
 	}
 
 	/**
 	 * @param index the index to set
 	 */
-	public void setIndex(int index) {
+	public void setIndex(Integer index) {
 		this.index = index;
+	}
+
+	/**
+	 * @return the fixed
+	 */
+	public Boolean getFixed() {
+		return fixed;
+	}
+
+	/**
+	 * @param fixed the fixed to set
+	 */
+	public void setFixed(Boolean fixed) {
+		this.fixed = fixed;
 	}
 	
 
