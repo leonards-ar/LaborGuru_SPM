@@ -75,7 +75,7 @@ public abstract class StorePositionDayPartDataBaseAction extends StoreAdministra
 					if(aDayPartData != null) {
 						getDayPartValues()[i][j] = getValueToShow(aDayPartData);
 					} else {
-						// Leave it null. At the bigining there might be no values.
+						// Leave it null. At the beginning there might be no values.
 						getDayPartValues()[i][j] = null;
 					}
 				}
