@@ -22,16 +22,54 @@
               		</table>
               	</td>
               </tr>
+
+              <tr>
+              	<td align="center">
+                  	<!-- Start week table -->
+                  	<table align="center" id="calendarTable" width="100%" border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
+                  		<tr>
+                  			<td align="center">
+                  				<table align="center" border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
+                  					<tr>
+			                  			<td class="calendarTableColumn" width="10%" nowrap="nowrap"><a href="#" class="calendarUnselectedWeekLink">25 Apr</a></td>
+			                  			<td class="calendarTableColumn" nowrap="nowrap"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>|<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+			                  			<td class="calendarTableColumn" width="10%" nowrap="nowrap"><a href="#" class="calendarUnselectedWeekLink">3 May</a></td>
+			                  			<td class="calendarTableColumn" nowrap="nowrap"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>|<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+			                  			<td class="calendarTableColumn" width="10%" nowrap="nowrap"><a href="#" class="calendarUnselectedWeekLink">11 May</a></td>
+			                  			<td class="calendarTableColumn"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+			                  			<td class="calendarTableColumn" nowrap="nowrap">
+			                  				<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
+			                  					<tr>
+			                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+			                  						<td><a href="#"><img src="<s:url value="/images/cal_prev.png" includeParams="none"/>" border="0"/></a></td>
+			                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+			                  						<td class="calendarSelectedWeekText" nowrap="nowrap">week of May 18th, 2008</td>
+			                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+			                  						<td><a href="#"><img src="<s:url value="/images/cal_next.png" includeParams="none"/>" border="0"/></a></td>
+			                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+			                  					</tr>
+			                  				</table>
+			                  			</td>
+			                  			<td class="calendarTableColumn"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+			                  			<td class="calendarTableColumn" width="10%" nowrap="nowrap"><a href="#" class="calendarUnselectedWeekLink">25 May</a></td>
+			                  			<td class="calendarTableColumn" nowrap="nowrap"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>|<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+			                  			<td class="calendarTableColumn" width="10%" nowrap="nowrap"><a href="#" class="calendarUnselectedWeekLink">1 Jun</a></td>
+			                  			<td class="calendarTableColumn" nowrap="nowrap"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>|<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+			                  			<td class="calendarTableColumn" width="10%" nowrap="nowrap"><a href="#" class="calendarUnselectedWeekLink">8 Jun</a></td>
+			                  		</tr>
+			                  	</table>
+			                 </td>
+			              </tr>
+                  	</table>
+                  	<!-- End week table -->              	
+              	</td>
+              </tr>
               
               <tr>                            
               	<td>              
              		<table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0">
-		              	<tr class="editFormOddRow">
-		                    <td width="20%" align="right" class="form_label" nowrap><s:text name="projection.daily.week.label" /></td>
-		                    <td width="80%" align="left" class="value"><s:datetimepicker displayFormat="MM/dd/yyyy" disabled="true" name="object.field" theme="simple"/></td>
-		                </tr>
 		              	<tr class="editFormEvenRow">
-		                    <td width="20%" align="right" class="form_label" nowrap><s:text name="projection.daily.weeksused.label" /></td>
+		                    <td width="20%" align="right" class="form_label" nowrap="nowrap"><s:text name="projection.daily.weeksused.label" /></td>
 		                    <td width="80%" align="left" class="value">
 		                    	<select>
 		                    		<option value="1">Last week</option>

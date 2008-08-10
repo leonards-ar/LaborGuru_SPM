@@ -214,6 +214,68 @@ table.results th a {
 	text-decoration: underline;
 }
 
+.calendarUnselectedWeekLink {
+	font-size: 12px;
+	font-family: tahoma, arial, sans-serif;
+	color: #184E01;
+	text-decoration: none;
+	font-weight: normal;
+}
+
+.calendarUnselectedWeekLink:hover {
+	text-decoration: underline;
+}
+
+#calendarTable {
+	background-color: #F7F7F7;
+}
+
+.calendarTableColumn {
+	text-align: center;
+}
+
+.calendarSelectedWeekText {
+	font-size: 12px;
+	font-family: tahoma, arial, sans-serif;
+	color: #184E01;
+	text-decoration: none;
+	font-weight: bold;	
+}
+
+.calendarWeekDayTableColumn {
+	text-align: center;
+	background-color: #DEEFDC;
+}
+
+.calendarWeekDayTableRowSeparator {
+	height: 3px;
+	background-color: FFFFFF;
+}
+
+.availableWeekDayLink {
+	font-size: 12px;
+	font-family: tahoma, arial, sans-serif;
+	text-decoration: none;
+	color: #184E01;
+}
+
+.availableWeekDayLink:hover {
+	text-decoration: underline;
+}
+
+.availableWeekDay {
+	background-color: #DEEFDC;
+	text-align: center;
+}
+
+.selectedWeekDay {
+	background-color: #184E01;
+	text-align: center;
+	font-size: 12px;
+	font-family: tahoma, arial, sans-serif;
+	font-weight: bold;
+	color: #FFFFFF;
+}
 
 /* css for display tags */ 
 .pagebanner {
