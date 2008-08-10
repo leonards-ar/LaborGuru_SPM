@@ -1405,7 +1405,7 @@
 </table>
 <table alias="" name="tbl_historic_sales" remarks="" uid="cb5cd6:11b99e89965:-7fe9">
 <table-description></table-description>
-<table-figure-bounds height="119" width="189" x="328" y="710"/>
+<table-figure-bounds height="148" width="189" x="234" y="709"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="historic_sales_id" remarks="" uid="cb5cd6:11b99e89965:-7fe0">
 <column-description></column-description>
@@ -1480,6 +1480,19 @@
 <variant type-name-pattern="INT"/>
 </data-type>
 </column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="day_of_week" remarks="" uid="ebc6bf:11ba9a5c2dd:-7fe1">
+<column-description></column-description>
+<data-type jdbc-type="5" name="SMALLINT" selected-variant-pattern="SMALLINT">
+<variant type-name-pattern="SMALLINT"/>
+<variant precision-max="5" precision-min="0" precision-variable="%n" type-name-pattern="SMALLINT(%n)"/>
+<variant precision-max="5" precision-min="0" precision-variable="%n" type-name-pattern="SMALLINT(%n) UNSIGNED"/>
+<variant precision-max="5" precision-min="0" precision-variable="%n" type-name-pattern="SMALLINT(%n) UNSIGNED ZEROFILL"/>
+<variant precision-max="5" precision-min="0" precision-variable="%n" type-name-pattern="SMALLINT(%n) ZEROFILL"/>
+<variant type-name-pattern="SMALLINT UNSIGNED"/>
+<variant type-name-pattern="SMALLINT UNSIGNED ZEROFILL"/>
+<variant type-name-pattern="SMALLINT ZEROFILL"/>
+</data-type>
+</column>
 </column-list>
 <primary-key alias="" name="PK_TBL_HISTORIC_SALES" remarks="" uid="cb5cd6:11b99e89965:-7fe8">
 <primary-key-description></primary-key-description>
@@ -1499,7 +1512,7 @@
 </table>
 <table alias="" name="tbl_projections" remarks="" uid="cb5cd6:11b99e89965:-7f97">
 <table-description></table-description>
-<table-figure-bounds height="87" width="152" x="561" y="721"/>
+<table-figure-bounds height="87" width="152" x="586" y="750"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="projections_id" remarks="" uid="cb5cd6:11b99e89965:-7f93">
 <column-description></column-description>
@@ -1552,7 +1565,7 @@
 </table>
 <table alias="" name="tbl_halfhour_projections" remarks="" uid="cb5cd6:11b99e89965:-7f59">
 <table-description></table-description>
-<table-figure-bounds height="85" width="199" x="515" y="896"/>
+<table-figure-bounds height="100" width="203" x="546" y="914"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="half_hour_projections_id" remarks="" uid="cb5cd6:11b99e89965:-7f3e">
 <column-description></column-description>
@@ -1604,6 +1617,12 @@
 <variant type-name-pattern="INT UNSIGNED"/>
 <variant type-name-pattern="INT UNSIGNED ZEROFILL"/>
 <variant type-name-pattern="INT ZEROFILL"/>
+</data-type>
+</column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="fixed" remarks="" uid="ebc6bf:11ba9a5c2dd:-7fe4">
+<column-description></column-description>
+<data-type jdbc-type="-7" name="BOOLEAN" selected-variant-pattern="BOOLEAN">
+<variant type-name-pattern="BOOLEAN"/>
 </data-type>
 </column>
 </column-list>
