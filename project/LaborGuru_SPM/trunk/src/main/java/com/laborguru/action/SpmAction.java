@@ -8,6 +8,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import com.laborguru.exception.ErrorMessage;
 import com.laborguru.frontend.HttpRequestConstants;
 import com.laborguru.model.Employee;
+import com.laborguru.model.Store;
 import com.laborguru.model.User;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -73,5 +74,25 @@ public class SpmAction extends ActionSupport implements SessionAware {
            return ServletActionContext.getRequest().getRemoteAddr();
    }
 
+	/**
+	 * Returns the store from the logged user if he is an employee or
+	 * the store must be received as a parameter when an Administrator
+	 * is creating store employees
+	 * @return The store the employee belongs to
+	 */
+	protected Store getEmployeeStore() {
+		Store store = (Store) getSession().get(HttpRequestConstants.STORE);
+		if(store == null) {
+			Employee employee = getLoggedEmployeeOrNull();
+			if(employee != null) {
+				store = employee.getStore();
+			} else {
+				//:TODO: Remove this, as it only works for now
+				store = new Store();
+				store.setId(new Integer(1));
+			}
+		}
+		return store;
+	}   
 	
 }

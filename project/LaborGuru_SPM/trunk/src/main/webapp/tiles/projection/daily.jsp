@@ -2,7 +2,8 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <br/>
-<s:form action="daily_save" theme="simple">
+<s:form id="daily_form" name="daily_form" action="daily_save" theme="simple">
+<s:hidden id="selectedDate" name="selectedDate"/>
 	      <table border="0" cellspacing="0" align="center">
 		      <tr>
 			      <td id="titleBar">
@@ -31,31 +32,43 @@
                   			<td align="center">
                   				<table align="center" border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
                   					<tr>
-			                  			<td class="calendarTableColumn" width="10%" nowrap="nowrap"><a href="#" class="calendarUnselectedWeekLink">25 Apr</a></td>
-			                  			<td class="calendarTableColumn" nowrap="nowrap"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>|<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-			                  			<td class="calendarTableColumn" width="10%" nowrap="nowrap"><a href="#" class="calendarUnselectedWeekLink">3 May</a></td>
-			                  			<td class="calendarTableColumn" nowrap="nowrap"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>|<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-			                  			<td class="calendarTableColumn" width="10%" nowrap="nowrap"><a href="#" class="calendarUnselectedWeekLink">11 May</a></td>
+                  						<s:iterator id="d" value="weekDaySelector.previousStartingWeekDays" status="itDate">
+			                  				<td class="calendarTableColumn" width="10%" nowrap="nowrap">
+			                  					<a href="<s:url value="#" includeParams="none"/>" onclick="daily_form.action='daily_changeWeek.action'; daily_form.selectedDate.value='<s:text name='projection.weekdayselector.input.dateformat'><s:param value='d'/></s:text>'; daily_form.submit();" class="calendarUnselectedWeekLink">
+			                  						<s:text name='projection.weekdayselector.availableweek.dateformat'><s:param value='d'/></s:text>
+			                  					</a>
+			                  				</td>
+			                  			
+				                  			<s:if test="!#itDate.isLast">
+				                  			<td class="calendarTableColumn" nowrap="nowrap"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>|<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+	                  						</s:if>
+                  						</s:iterator>
 			                  			<td class="calendarTableColumn"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
 			                  			<td class="calendarTableColumn" nowrap="nowrap">
 			                  				<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 			                  					<tr>
 			                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-			                  						<td><a href="#"><img src="<s:url value="/images/cal_prev.png" includeParams="none"/>" border="0"/></a></td>
+			                  						<td><a href="<s:url value="#" includeParams="none"/>" onclick="daily_form.action='daily_changeWeek.action'; daily_form.selectedDate.value='<s:text name='projection.weekdayselector.input.dateformat'><s:param value='weekDaySelector.previousStartingWeekDay'/></s:text>'; daily_form.submit();"><img src="<s:url value="/images/cal_prev.png" includeParams="none"/>" border="0"/></a></td>
 			                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-			                  						<td class="calendarSelectedWeekText" nowrap="nowrap">week of May 18th, 2008</td>
+			                  						<td class="calendarSelectedWeekText" nowrap="nowrap"><s:text name='projection.weekdayselector.selectedweek.dateformat'><s:param value='weekDaySelector.startingWeekDay'/></s:text></td>
 			                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-			                  						<td><a href="#"><img src="<s:url value="/images/cal_next.png" includeParams="none"/>" border="0"/></a></td>
+			                  						<td><a href="<s:url value="#" includeParams="none"/>" onclick="daily_form.action='daily_changeWeek.action'; daily_form.selectedDate.value='<s:text name='projection.weekdayselector.input.dateformat'><s:param value='weekDaySelector.nextStartingWeekDay'/></s:text>'; daily_form.submit();"><img src="<s:url value="/images/cal_next.png" includeParams="none"/>" border="0"/></a></td>
 			                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
 			                  					</tr>
 			                  				</table>
 			                  			</td>
 			                  			<td class="calendarTableColumn"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-			                  			<td class="calendarTableColumn" width="10%" nowrap="nowrap"><a href="#" class="calendarUnselectedWeekLink">25 May</a></td>
-			                  			<td class="calendarTableColumn" nowrap="nowrap"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>|<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-			                  			<td class="calendarTableColumn" width="10%" nowrap="nowrap"><a href="#" class="calendarUnselectedWeekLink">1 Jun</a></td>
-			                  			<td class="calendarTableColumn" nowrap="nowrap"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>|<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-			                  			<td class="calendarTableColumn" width="10%" nowrap="nowrap"><a href="#" class="calendarUnselectedWeekLink">8 Jun</a></td>
+                  						<s:iterator id="d" value="weekDaySelector.nextStartingWeekDays" status="itDate">
+			                  				<td class="calendarTableColumn" width="10%" nowrap="nowrap">
+			                  					<a href="<s:url value="#" includeParams="none"/>" onclick="daily_form.action='daily_changeWeek.action'; daily_form.selectedDate.value='<s:text name='projection.weekdayselector.input.dateformat'><s:param value='d'/></s:text>'; daily_form.submit();" class="calendarUnselectedWeekLink">
+			                  						<s:text name='projection.weekdayselector.availableweek.dateformat'><s:param value='d'/></s:text>
+			                  					</a>
+			                  				</td>
+			                  			
+				                  			<s:if test="!#itDate.isLast">
+											<td class="calendarTableColumn" nowrap="nowrap"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>|<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+											</s:if>
+                  						</s:iterator>			                  			
 			                  		</tr>
 			                  	</table>
 			                 </td>

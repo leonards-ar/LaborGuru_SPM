@@ -6,10 +6,8 @@ import java.util.Map;
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.exception.SpmCheckedException;
-import com.laborguru.frontend.HttpRequestConstants;
 import com.laborguru.model.Employee;
 import com.laborguru.model.Position;
-import com.laborguru.model.Store;
 import com.laborguru.model.filter.SearchEmployeeFilter;
 import com.laborguru.service.data.ReferenceDataService;
 import com.laborguru.service.employee.EmployeeService;
@@ -87,27 +85,6 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 		loadListsForAddEditPage();
 	}
 
-	/**
-	 * Returns the store from the logged user if he is an employee or
-	 * the store must be received as a parameter when an Administrator
-	 * is creating store employees
-	 * @return The store the employee belongs to
-	 */
-	private Store getEmployeeStore() {
-		Store store = (Store) getSession().get(HttpRequestConstants.STORE);
-		if(store == null) {
-			Employee employee = getLoggedEmployeeOrNull();
-			if(employee != null) {
-				store = employee.getStore();
-			} else {
-				//:TODO: Remove this, as it only works for now
-				store = new Store();
-				store.setId(new Integer(1));
-			}
-		}
-		return store;
-	}
-	
 	/**
 	 * Loads position and status list
 	 */

@@ -1,6 +1,5 @@
 package com.laborguru.action.projection;
 
-import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.opensymphony.xwork2.Preparable;
 
@@ -12,7 +11,7 @@ import com.opensymphony.xwork2.Preparable;
  *
  */
 @SuppressWarnings("serial")
-public class DailyProjectionsPrepareAction extends SpmAction implements Preparable {
+public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction implements Preparable {
 
 	/**
 	 * Prepare the data to be used on the edit page
@@ -45,6 +44,7 @@ public class DailyProjectionsPrepareAction extends SpmAction implements Preparab
 	 * @throws Exception
 	 */
 	public String edit() throws Exception {
+		getWeekDaySelector();
 		return SpmActionResult.EDIT.getResult();
 	}
 

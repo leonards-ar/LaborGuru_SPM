@@ -34,17 +34,28 @@ public class WeekDaySelector implements Serializable {
 	private static final int DEFAULT_WEEKS_TO_SHOW = 3;
 	
 	private int weeksToShow = DEFAULT_WEEKS_TO_SHOW;
-	
-	private Date startingWeekDay = getFirstDayOfWeek(new Date());
+
+	private DayOfWeek startingDayOfWeek;
+
+	private Date startingWeekDay;
 	
 	private Date selectedDay;
 	
-	private DayOfWeek startingDayOfWeek = DayOfWeek.MONDAY;
 	
 	/**
 	 * 
 	 */
 	public WeekDaySelector() {
+		this(null);
+	}
+	
+	/**
+	 * 
+	 * @param startingDayOfWeek
+	 */
+	public WeekDaySelector(DayOfWeek startingDayOfWeek) {
+		setStartingDayOfWeek(startingDayOfWeek != null ? startingDayOfWeek : DayOfWeek.MONDAY);
+		setStartingWeekDay(getFirstDayOfWeek(new Date()));
 	}
 	
 	/**
@@ -264,10 +275,26 @@ public class WeekDaySelector implements Serializable {
 		List<Date> startingWeekDays = new ArrayList<Date>(getWeeksToShow());
 		
 		for(int i = getWeeksToShow(); i > 0; i--) {
-			startingWeekDays.add(addOrSubstractDays(getStartingWeekDay(), -1 * i));
+			startingWeekDays.add(addOrSubstractDays(getStartingWeekDay(), -1 * DayOfWeek.values().length * i));
 		}
 		
 		return startingWeekDays;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Date getPreviousStartingWeekDay() {
+		return addOrSubstractDays(getStartingWeekDay(), -1 * DayOfWeek.values().length);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Date getNextStartingWeekDay() {
+		return addOrSubstractDays(getStartingWeekDay(), DayOfWeek.values().length);
 	}
 	
 	/**
@@ -278,7 +305,7 @@ public class WeekDaySelector implements Serializable {
 		List<Date> startingWeekDays = new ArrayList<Date>(getWeeksToShow());
 		
 		for(int i = 1; i <= getWeeksToShow(); i++) {
-			startingWeekDays.add(addOrSubstractDays(getStartingWeekDay(), i));
+			startingWeekDays.add(addOrSubstractDays(getStartingWeekDay(), DayOfWeek.values().length * i));
 		}
 		
 		return startingWeekDays;

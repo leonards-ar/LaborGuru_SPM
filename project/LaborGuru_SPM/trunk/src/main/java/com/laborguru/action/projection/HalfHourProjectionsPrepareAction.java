@@ -1,6 +1,5 @@
 package com.laborguru.action.projection;
 
-import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.opensymphony.xwork2.Preparable;
 
@@ -12,7 +11,7 @@ import com.opensymphony.xwork2.Preparable;
  *
  */
 @SuppressWarnings("serial")
-public class HalfHourProjectionsPrepareAction extends SpmAction implements Preparable {
+public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseAction implements Preparable {
 
 	/**
 	 * Prepare the data to be used on the edit page
