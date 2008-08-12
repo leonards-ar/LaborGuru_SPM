@@ -32,14 +32,14 @@
                   			<td align="center">
                   				<table align="center" border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
                   					<tr>
-                  						<s:iterator id="d" value="weekDaySelector.previousStartingWeekDays" status="itDate">
+                  						<s:iterator id="prevDate" value="weekDaySelector.previousStartingWeekDays" status="itPrevDate">
 			                  				<td class="calendarTableColumn" width="10%" nowrap="nowrap">
-			                  					<a href="<s:url value="#" includeParams="none"/>" onclick="daily_form.action='daily_changeWeek.action'; daily_form.selectedDate.value='<s:text name='projection.weekdayselector.input.dateformat'><s:param value='d'/></s:text>'; daily_form.submit();" class="calendarUnselectedWeekLink">
-			                  						<s:text name='projection.weekdayselector.availableweek.dateformat'><s:param value='d'/></s:text>
+			                  					<a href="<s:url value="#" includeParams="none"/>" onclick="daily_form.action='daily_changeWeek.action'; daily_form.selectedDate.value='<s:text name='projection.weekdayselector.input.dateformat'><s:param value='prevDate'/></s:text>'; daily_form.submit();" class="calendarUnselectedWeekLink">
+			                  						<s:text name='projection.weekdayselector.availableweek.dateformat'><s:param value='prevDate'/></s:text>
 			                  					</a>
 			                  				</td>
 			                  			
-				                  			<s:if test="!#itDate.isLast">
+				                  			<s:if test="!#itPrevDate.last">
 				                  			<td class="calendarTableColumn" nowrap="nowrap"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>|<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
 	                  						</s:if>
                   						</s:iterator>
@@ -58,14 +58,14 @@
 			                  				</table>
 			                  			</td>
 			                  			<td class="calendarTableColumn"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-                  						<s:iterator id="d" value="weekDaySelector.nextStartingWeekDays" status="itDate">
+                  						<s:iterator id="nextDate" value="weekDaySelector.nextStartingWeekDays" status="itNextDate">
 			                  				<td class="calendarTableColumn" width="10%" nowrap="nowrap">
-			                  					<a href="<s:url value="#" includeParams="none"/>" onclick="daily_form.action='daily_changeWeek.action'; daily_form.selectedDate.value='<s:text name='projection.weekdayselector.input.dateformat'><s:param value='d'/></s:text>'; daily_form.submit();" class="calendarUnselectedWeekLink">
-			                  						<s:text name='projection.weekdayselector.availableweek.dateformat'><s:param value='d'/></s:text>
+			                  					<a href="<s:url value="#" includeParams="none"/>" onclick="daily_form.action='daily_changeWeek.action'; daily_form.selectedDate.value='<s:text name='projection.weekdayselector.input.dateformat'><s:param value='nextDate'/></s:text>'; daily_form.submit();" class="calendarUnselectedWeekLink">
+			                  						<s:text name='projection.weekdayselector.availableweek.dateformat'><s:param value='nextDate'/></s:text>
 			                  					</a>
 			                  				</td>
 			                  			
-				                  			<s:if test="!#itDate.isLast">
+				                  			<s:if test="!#itNextDate.last">
 											<td class="calendarTableColumn" nowrap="nowrap"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>|<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
 											</s:if>
                   						</s:iterator>			                  			
@@ -99,13 +99,9 @@
 									<tr class="editorTableHeader">
 										<td><s:text name="projection.daily.sales.label" /></td>
 										<!-- Iterate week days -->
-										<td>Mon 12/10</td>
-										<td>Tue 13/10</td>
-										<td>Wed 14/10</td>
-										<td>Thu 15/10</td>
-										<td>Fri 16/10</td>
-										<td>Sat 17/10</td>
-										<td>Sun 18/10</td>
+										<s:iterator id="weekDay" value="weekDaySelector.weekDays">
+										<td><s:text name='projection.daily.weekday.dateformat'><s:param value='weekDay'/></s:text></td>
+										</s:iterator>
 										<!-- End Iterate week days -->
 										<td><s:text name="projection.daily.weektotal.label" /></td>
 									</tr>
