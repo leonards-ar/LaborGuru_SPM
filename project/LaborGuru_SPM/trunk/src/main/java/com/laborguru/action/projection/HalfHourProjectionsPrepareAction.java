@@ -44,6 +44,9 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	 * @throws Exception
 	 */
 	public String edit() throws Exception {
+		// Force object initialization
+		getWeekDaySelector();
+		
 		return SpmActionResult.EDIT.getResult();
 	}
 
