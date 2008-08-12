@@ -44,6 +44,7 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	 * @throws Exception
 	 */
 	public String edit() throws Exception {
+		// Force object initialization
 		getWeekDaySelector();
 		return SpmActionResult.EDIT.getResult();
 	}

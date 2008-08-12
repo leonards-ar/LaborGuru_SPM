@@ -22,6 +22,8 @@ public abstract class ProjectionCalendarBaseAction extends SpmAction {
 	
 	private String selectedDate;
 	
+	private String selectedWeekDay;
+	
 	/**
 	 * 
 	 */
@@ -51,6 +53,8 @@ public abstract class ProjectionCalendarBaseAction extends SpmAction {
 	 */
 	public String changeWeek() {
 		getWeekDaySelector().setStringStartingWeekDay(getSelectedDate());
+		getWeekDaySelector().setStringSelectedDay(getSelectedDate());
+		
 		return SpmActionResult.INPUT.getResult();
 	}
 	
@@ -59,7 +63,8 @@ public abstract class ProjectionCalendarBaseAction extends SpmAction {
 	 * @return
 	 */
 	public String changeDay() {
-		getWeekDaySelector().setStringSelectedDay(getSelectedDate());
+		getWeekDaySelector().setStringStartingWeekDay(getSelectedDate());
+		getWeekDaySelector().setStringSelectedDay(getSelectedWeekDay());
 		
 		return SpmActionResult.INPUT.getResult();
 	}
@@ -76,5 +81,19 @@ public abstract class ProjectionCalendarBaseAction extends SpmAction {
 	 */
 	public void setSelectedDate(String selectedDate) {
 		this.selectedDate = selectedDate;
+	}
+
+	/**
+	 * @return the selectedWeekDay
+	 */
+	public String getSelectedWeekDay() {
+		return selectedWeekDay;
+	}
+
+	/**
+	 * @param selectedWeekDay the selectedWeekDay to set
+	 */
+	public void setSelectedWeekDay(String selectedWeekDay) {
+		this.selectedWeekDay = selectedWeekDay;
 	}
 }

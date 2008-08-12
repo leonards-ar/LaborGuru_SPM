@@ -56,6 +56,7 @@ public class WeekDaySelector implements Serializable {
 	public WeekDaySelector(DayOfWeek startingDayOfWeek) {
 		setStartingDayOfWeek(startingDayOfWeek != null ? startingDayOfWeek : DayOfWeek.MONDAY);
 		setStartingWeekDay(getFirstDayOfWeek(new Date()));
+		setSelectedDay(new Date());
 	}
 	
 	/**
@@ -331,5 +332,14 @@ public class WeekDaySelector implements Serializable {
 		}
 		
 		return weekDays;
+	}
+	
+	/**
+	 * 
+	 * @param d
+	 * @return
+	 */
+	public boolean isSelectedWeekDay(Date d) {
+		return getStringSelectedDay() != null && d != null && getStringSelectedDay().equals(DATE_FORMAT.format(d));
 	}
 }

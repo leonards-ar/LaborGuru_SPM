@@ -2,7 +2,10 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <br/>
-<s:form action="halfhour_save" theme="simple">
+<s:form id="halfhour_form" name="halfhour_form" action="halfhour_save" theme="simple">
+<s:hidden id="selectedDate" name="selectedDate"/>
+<s:hidden id="selectedWeekDay" name="selectedWeekDay"/>
+
 	      <table border="0" cellspacing="0" align="center">
 		      <tr>
 			      <td id="titleBar">
@@ -31,31 +34,43 @@
                   			<td align="center">
                   				<table align="center" border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
                   					<tr>
-			                  			<td class="calendarTableColumn" width="10%" nowrap="nowrap"><a href="#" class="calendarUnselectedWeekLink">25 Apr</a></td>
-			                  			<td class="calendarTableColumn" nowrap="nowrap"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>|<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-			                  			<td class="calendarTableColumn" width="10%" nowrap="nowrap"><a href="#" class="calendarUnselectedWeekLink">3 May</a></td>
-			                  			<td class="calendarTableColumn" nowrap="nowrap"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>|<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-			                  			<td class="calendarTableColumn" width="10%" nowrap="nowrap"><a href="#" class="calendarUnselectedWeekLink">11 May</a></td>
+                  						<s:iterator id="prevDate" value="weekDaySelector.previousStartingWeekDays" status="itPrevDate">
+			                  				<td class="calendarTableColumn" width="10%" nowrap="nowrap">
+			                  					<a href="<s:url value="#" includeParams="none"/>" onclick="halfhour_form.action='halfhour_changeWeek.action'; halfhour_form.selectedDate.value='<s:text name='projection.weekdayselector.input.dateformat'><s:param value='prevDate'/></s:text>'; halfhour_form.submit();" class="calendarUnselectedWeekLink">
+			                  						<s:text name='projection.weekdayselector.availableweek.dateformat'><s:param value='prevDate'/></s:text>
+			                  					</a>
+			                  				</td>
+			                  			
+				                  			<s:if test="!#itPrevDate.last">
+				                  			<td class="calendarTableColumn" nowrap="nowrap"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>|<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+	                  						</s:if>
+                  						</s:iterator>
 			                  			<td class="calendarTableColumn"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
 			                  			<td class="calendarTableColumn" nowrap="nowrap">
 			                  				<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 			                  					<tr>
 			                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-			                  						<td><a href="#"><img src="<s:url value="/images/cal_prev.png" includeParams="none"/>" border="0"/></a></td>
+			                  						<td><a href="<s:url value="#" includeParams="none"/>" onclick="halfhour_form.action='halfhour_changeWeek.action'; halfhour_form.selectedDate.value='<s:text name='projection.weekdayselector.input.dateformat'><s:param value='weekDaySelector.previousStartingWeekDay'/></s:text>'; halfhour_form.submit();"><img src="<s:url value="/images/cal_prev.png" includeParams="none"/>" border="0"/></a></td>
 			                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-			                  						<td class="calendarSelectedWeekText" nowrap="nowrap">week of May 18th, 2008</td>
+			                  						<td class="calendarSelectedWeekText" nowrap="nowrap"><s:text name='projection.weekdayselector.selectedweek.dateformat'><s:param value='weekDaySelector.startingWeekDay'/></s:text></td>
 			                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-			                  						<td><a href="#"><img src="<s:url value="/images/cal_next.png" includeParams="none"/>" border="0"/></a></td>
+			                  						<td><a href="<s:url value="#" includeParams="none"/>" onclick="halfhour_form.action='halfhour_changeWeek.action'; halfhour_form.selectedDate.value='<s:text name='projection.weekdayselector.input.dateformat'><s:param value='weekDaySelector.nextStartingWeekDay'/></s:text>'; halfhour_form.submit();"><img src="<s:url value="/images/cal_next.png" includeParams="none"/>" border="0"/></a></td>
 			                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
 			                  					</tr>
 			                  				</table>
 			                  			</td>
 			                  			<td class="calendarTableColumn"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-			                  			<td class="calendarTableColumn" width="10%" nowrap="nowrap"><a href="#" class="calendarUnselectedWeekLink">25 May</a></td>
-			                  			<td class="calendarTableColumn" nowrap="nowrap"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>|<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-			                  			<td class="calendarTableColumn" width="10%" nowrap="nowrap"><a href="#" class="calendarUnselectedWeekLink">1 Jun</a></td>
-			                  			<td class="calendarTableColumn" nowrap="nowrap"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>|<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-			                  			<td class="calendarTableColumn" width="10%" nowrap="nowrap"><a href="#" class="calendarUnselectedWeekLink">8 Jun</a></td>
+                  						<s:iterator id="nextDate" value="weekDaySelector.nextStartingWeekDays" status="itNextDate">
+			                  				<td class="calendarTableColumn" width="10%" nowrap="nowrap">
+			                  					<a href="<s:url value="#" includeParams="none"/>" onclick="halfhour_form.action='halfhour_changeWeek.action'; halfhour_form.selectedDate.value='<s:text name='projection.weekdayselector.input.dateformat'><s:param value='nextDate'/></s:text>'; halfhour_form.submit();" class="calendarUnselectedWeekLink">
+			                  						<s:text name='projection.weekdayselector.availableweek.dateformat'><s:param value='nextDate'/></s:text>
+			                  					</a>
+			                  				</td>
+			                  			
+				                  			<s:if test="!#itNextDate.last">
+											<td class="calendarTableColumn" nowrap="nowrap"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>|<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+											</s:if>
+                  						</s:iterator>			                  			
 			                  		</tr>
 			                  	</table>
 			                 </td>
@@ -67,19 +82,20 @@
 			              	<td align="center" class="calendarWeekDayTableColumn">
 								<table align="center" border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
                   					<tr>
-                  						<td width="13%" class="availableWeekDay"><a href="#" class="availableWeekDayLink">Mon</a></td>
+                  						<s:iterator id="weekDay" value="weekDaySelector.weekDays" status="itWeekDay">
+                  						<s:if test="%{weekDaySelector.isSelectedWeekDay(#weekDay)}">
+                  						<td width="13%" class="selectedWeekDay"><s:text name='projection.halfhour.weekday.dateformat'><s:param value='weekDay'/></s:text></td>
+                  						</s:if>
+                  						<s:else>
+                  						<td width="13%" class="availableWeekDay"><a href="<s:url value="#" includeParams="none"/>" onclick="halfhour_form.action='halfhour_changeDay.action'; halfhour_form.selectedWeekDay.value='<s:text name='projection.weekdayselector.input.dateformat'><s:param value='weekDay'/></s:text>'; halfhour_form.submit();" class="availableWeekDayLink">
+                  						<s:text name='projection.halfhour.weekday.dateformat'><s:param value='weekDay'/></s:text>
+                  						</a>
+                  						</td>                  						
+                  						</s:else>
+                  						<s:if test="!#itWeekDay.last">
                   						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-                  						<td width="13%" class="selectedWeekDay">Tue</td>
-                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-                  						<td width="13%" class="availableWeekDay"><a href="#" class="availableWeekDayLink">Wed</a></td>
-                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-                  						<td width="13%" class="availableWeekDay"><a href="#" class="availableWeekDayLink">Thu</a></td>
-                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-                  						<td width="13%" class="availableWeekDay"><a href="#" class="availableWeekDayLink">Fri</a></td>
-                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-                  						<td width="13%" class="availableWeekDay"><a href="#" class="availableWeekDayLink">Sat</a></td>
-                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-                  						<td width="13%" class="availableWeekDay"><a href="#" class="availableWeekDayLink">Sun</a></td>
+                  						</s:if>
+                  						</s:iterator>
                   					</tr>
                   				</table>			              		
 			              	</td>
@@ -93,7 +109,7 @@
               	<td>              
              		<table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0">
 		              	<tr class="editFormEvenRow">
-		                    <td width="20%" align="right" class="form_label" nowrap><s:text name="projection.halfhour.weeksused.label" /></td>
+		                    <td width="20%" align="right" class="form_label" nowrap="nowrap"><s:text name="projection.halfhour.weeksused.label" /></td>
 		                    <td width="80%" align="left" class="value">
 		                    	<select>
 		                    		<option value="1">Last week</option>
