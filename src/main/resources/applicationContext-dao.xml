@@ -20,6 +20,8 @@
 	<bean id="regionDao" class="com.laborguru.service.region.dao.RegionDaoHibernate" autowire="byType"/>
 	
 	<bean id="customerDao" class="com.laborguru.service.customer.dao.CustomerDaoHibernate" autowire="byType"/>
+
+	<bean id="projectionDao" class="com.laborguru.service.projection.dao.ProjectionDaoHibernate" autowire="byType"/>
 						
 	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
 		<property name="sessionFactory">
@@ -49,6 +51,7 @@
 				<value>com/laborguru/model/PositionGroup.hbm.xml</value>
 				<value>com/laborguru/model/HalfHourProjection.hbm.xml</value>
 				<value>com/laborguru/model/DailyProjection.hbm.xml</value>
+				<value>com/laborguru/model/HistoricSales.hbm.xml</value>				
 			</list>
 		</property>
 		<property name="hibernateProperties">

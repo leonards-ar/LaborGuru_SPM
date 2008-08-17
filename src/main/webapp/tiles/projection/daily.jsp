@@ -84,12 +84,7 @@
 		              	<tr class="editFormEvenRow">
 		                    <td width="20%" align="right" class="form_label" nowrap="nowrap"><s:text name="projection.daily.weeksused.label" /></td>
 		                    <td width="80%" align="left" class="value">
-		                    	<select>
-		                    		<option value="1">Last week</option>
-		                    		<option value="2">2 weeks</option>
-		                    		<option value="3">3 weeks</option>
-		                    		<option value="4">4 weeks</option>
-		                    	</select>
+                    			<s:select name="usedWeeks" list="usedWeeksMap" listKey="key" listValue="%{getText(value)}" theme="simple" onchange="daily_form.action='daily_edit.action'; daily_form.submit();" />
 		                    </td>
 		                </tr>
 		              	<tr class="editFormOddRow">
@@ -100,31 +95,25 @@
 										<td><s:text name="projection.daily.sales.label" /></td>
 										<!-- Iterate week days -->
 										<s:iterator id="weekDay" value="weekDaySelector.weekDays">
-										<td><s:text name='projection.daily.weekday.dateformat'><s:param value='weekDay'/></s:text></td>
+											<td><s:text name='projection.daily.weekday.dateformat'><s:param value='weekDay'/></s:text></td>
 										</s:iterator>
 										<!-- End Iterate week days -->
 										<td><s:text name="projection.daily.weektotal.label" /></td>
 									</tr>
 									<tr>
-										<td class="editorTableFirstColumn"><s:text name="projection.daily.projection.label" /></td>
-										<td class="editorTableOddRow">$ 2,400</td>
-										<td class="editorTableOddRow">$ 3,400</td>
-										<td class="editorTableOddRow">$ 2,100</td>
-										<td class="editorTableOddRow">$ 6,100</td>
-										<td class="editorTableOddRow">$ 4,250</td>
-										<td class="editorTableOddRow">$ 8,800</td>
-										<td class="editorTableOddRow">$ 1,330</td>
-										<td class="editorTableOddRow"><b>$ 28,380</b></td>
+										<td class="editorTableFirstColumn"><s:text name="projection.daily.projection.label"/></td>
+										<!-- Iterate week days -->
+										<s:iterator value="calculatedProjections">
+											<td class="editorTableEvenRow"><s:property /></td>
+										</s:iterator>
+										<!-- End Iterate week days -->
+										<td class="editorTableEvenRow"><b><s:property value="totalProjected"/></b></td>
 									</tr>
 									<tr>
 										<td class="editorTableFirstColumn"><s:text name="projection.daily.adjusted.label" /></td>
-										<td class="editorTableEvenRow"><input type="text" value="$ 2,400" size="10"/></td>
-										<td class="editorTableEvenRow"><input type="text" value="$ 3,400" size="10"/></td>
-										<td class="editorTableEvenRow"><input type="text" value="$ 2,100" size="10"/></td>
-										<td class="editorTableEvenRow"><input type="text" value="$ 6,100" size="10"/></td>
-										<td class="editorTableEvenRow"><input type="text" value="$ 4,250" size="10"/></td>
-										<td class="editorTableEvenRow"><input type="text" value="$ 8,800" size="10"/></td>
-										<td class="editorTableEvenRow"><input type="text" value="$ 1,330" size="10"/></td>
+										<s:iterator value="adjustedProjections">
+											<td class="editorTableEvenRow"><s:property /></td>
+										</s:iterator>
 										<td class="editorTableEvenRow">&nbsp;</td>
 									</tr>									
 								</table>                    			

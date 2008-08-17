@@ -36,4 +36,12 @@ public interface ReferenceDataService extends Service {
 	 * @return Status map.
 	 */
 	Map<String, String> getStatus();
+	
+	/**
+	 * Retrieves the different values for weeks used. The map key is the
+	 * number of weeks and the map value is the message bundle key to the
+	 * label
+	 * @return Usedweeks map.
+	 */
+	Map<Integer, String> getUsedWeeks();
 }

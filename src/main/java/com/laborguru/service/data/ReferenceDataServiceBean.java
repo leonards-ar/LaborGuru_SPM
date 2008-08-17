@@ -42,6 +42,14 @@ public class ReferenceDataServiceBean implements ReferenceDataService {
 	}
 
 	/**
+	 * @return
+	 * @see com.laborguru.service.data.ReferenceDataService#getUsedWeeks()
+	 */
+	public Map<Integer, String> getUsedWeeks() {
+		return (Map<Integer, String>) getReferenceData().get("usedWeeks");
+	}	
+	
+	/**
 	 * @return the referenceData
 	 */
 	public Map<String, Object> getReferenceData() {
