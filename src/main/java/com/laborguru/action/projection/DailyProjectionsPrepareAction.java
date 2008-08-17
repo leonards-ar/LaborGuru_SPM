@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.service.data.ReferenceDataService;
@@ -40,7 +41,7 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 		if (getUsedWeeks() == null || getUsedWeeks() == 0) 
 			setUsedWeeks(4);
 		
-		setUsedWeeksMap(referenceDataService.getUsedWeeks());
+		setUsedWeeksMap(new TreeMap<Integer, String>(referenceDataService.getUsedWeeks()));
 	}
 	
 
