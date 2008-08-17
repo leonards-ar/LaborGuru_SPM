@@ -1,5 +1,6 @@
 package com.laborguru.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +28,16 @@ public class DailyProjection extends SpmObject {
 	private Store store;
 	
 	private List<HalfHourProjection> halfHourProjections;
+	
+	public BigDecimal getDailyProjectionValue(){
+		BigDecimal retValue = new BigDecimal("0");
+		
+		for (HalfHourProjection aHalfHourProjection: getHalfHourProjections()){
+			retValue.add(aHalfHourProjection.getAdjustedValue());
+		}
+		
+		return retValue;
+	}
 	
 	@Override
 	public boolean equals(Object obj) {

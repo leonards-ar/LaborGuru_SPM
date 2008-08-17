@@ -5,6 +5,8 @@
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
 	<!--  Services's declarations -->
+	<bean id="projectionService" class="com.laborguru.service.projection.ProjectionServiceBean" autowire="byType"/>
+	
 	<bean id="customerServiceTarget" class="com.laborguru.service.customer.CustomerServiceBean" autowire="byType"/>
 	
 	<bean id="customerService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">

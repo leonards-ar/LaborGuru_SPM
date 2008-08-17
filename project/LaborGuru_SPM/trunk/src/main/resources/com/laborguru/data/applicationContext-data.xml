@@ -13,6 +13,9 @@
 				<entry key="status">
 					<ref bean="status"/>
 				</entry>
+				<entry key="usedWeeks">
+					<ref bean="usedWeeks"/>
+				</entry>
 			</map>
 		</constructor-arg>
 	</bean> 
@@ -90,4 +93,23 @@
 		</constructor-arg>
 	</bean>
 	
+	<bean id="usedWeeks" class="java.util.HashMap" singleton="true">
+		<description>Different values for the number of weeks used on the sales projections</description>
+		<constructor-arg>
+			<map>
+				<entry key="1">
+					<value>projection.weekused.option.1</value>
+				</entry>
+				<entry key="2">
+					<value>projection.weekused.option.2</value>
+				</entry>
+				<entry key="3">
+					<value>projection.weekused.option.3</value>
+				</entry>
+				<entry key="4">
+					<value>projection.weekused.option.4</value>
+				</entry>
+			</map>
+		</constructor-arg>
+	</bean>	
 </beans>

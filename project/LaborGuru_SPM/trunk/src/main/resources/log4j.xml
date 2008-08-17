@@ -52,7 +52,7 @@
 	</logger-->
 	
 	<logger name="message" additivity="false">
-		<level value="INFO" />
+		<level value="DEBUG" />
 		<appender-ref ref="message_append"/>
 	</logger>
 	
@@ -66,12 +66,23 @@
 		<appender-ref ref="message_append"/>
 		<appender-ref ref="STDOUT"/>
 	</logger>
+
+	<logger name="com.laborguru" additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="message_append"/>
+		<appender-ref ref="STDOUT"/>
+	</logger>
 		
 	<logger name="org.acegisecurity" additivity="false">
 		<level value="INFO"/>
 		<appender-ref ref="STDOUT" />
 	</logger>
 
+	<logger name="com.opensymphony" additivity="false">
+		<level value="WARN"/>
+		<appender-ref ref="STDOUT" />
+	</logger>
+	
 	<logger name="org.springframework" additivity="false">
 		<level value="WARN"/>
 		<appender-ref ref="STDOUT" />
