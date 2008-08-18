@@ -45,7 +45,7 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	 */
 	public String edit() throws Exception {
 		// Force object initialization
-		getWeekDaySelector();
+		setSelectedDate(getWeekDaySelector().getStringStartingWeekDay());
 		
 		return SpmActionResult.EDIT.getResult();
 	}
@@ -68,4 +68,5 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 		*/
 		return SpmActionResult.INPUT.getResult();
 	}
+	
 }
