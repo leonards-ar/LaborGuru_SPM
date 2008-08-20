@@ -21,7 +21,7 @@ import com.opensymphony.xwork2.Preparable;
 @SuppressWarnings("serial")
 public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction implements Preparable {
 
-	private ProjectionService projectionService;
+	
 	private ReferenceDataService referenceDataService;
 
 	private List<BigDecimal> calculatedProjections = new ArrayList<BigDecimal>(7);
@@ -65,8 +65,8 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 		getWeekDaySelector();
 		
 		//Get calculated projections
-		setCalculatedProjections(projectionService.getAvgDailyProjectionForAWeek(getUsedWeeks(), this.getEmployeeStore(), getWeekDaySelector().getStartingWeekDay()));
-		setAdjustedProjections(projectionService.getAdjustedDailyProjectionForAWeek(this.getEmployeeStore(), getWeekDaySelector().getStartingWeekDay()));
+		setCalculatedProjections(getProjectionService().getAvgDailyProjectionForAWeek(getUsedWeeks(), this.getEmployeeStore(), getWeekDaySelector().getStartingWeekDay()));
+		setAdjustedProjections(getProjectionService().getAdjustedDailyProjectionForAWeek(this.getEmployeeStore(), getWeekDaySelector().getStartingWeekDay()));
 				
 		//calculate and set the total
 		for (BigDecimal aValue: getCalculatedProjections()){
@@ -140,22 +140,7 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	}
 
 
-	/**
-	 * @return the projectionService
-	 */
-	public ProjectionService getProjectionService() {
-		return projectionService;
-	}
-
-
-	/**
-	 * @param projectionService the projectionService to set
-	 */
-	public void setProjectionService(ProjectionService projectionService) {
-		this.projectionService = projectionService;
-	}
-
-
+	
 	/**
 	 * @return the adjustedProjections
 	 */

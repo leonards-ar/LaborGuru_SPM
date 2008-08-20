@@ -8,6 +8,7 @@ package com.laborguru.action.projection;
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.WeekDaySelector;
+import com.laborguru.service.projection.ProjectionService;
 
 /**
  *
@@ -18,6 +19,8 @@ import com.laborguru.frontend.model.WeekDaySelector;
  */
 public abstract class ProjectionCalendarBaseAction extends SpmAction {
 
+	private ProjectionService projectionService;
+	
 	private WeekDaySelector weekDaySelector;
 	
 	private String selectedDate;
@@ -96,4 +99,21 @@ public abstract class ProjectionCalendarBaseAction extends SpmAction {
 	public void setSelectedWeekDay(String selectedWeekDay) {
 		this.selectedWeekDay = selectedWeekDay;
 	}
+	
+	/**
+	 * @return the projectionService
+	 */
+	public ProjectionService getProjectionService() {
+		return projectionService;
+	}
+
+
+	/**
+	 * @param projectionService the projectionService to set
+	 */
+	public void setProjectionService(ProjectionService projectionService) {
+		this.projectionService = projectionService;
+	}
+
+
 }
