@@ -31,19 +31,27 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	private Integer usedWeeks;
 
 	private BigDecimal totalProjected = new BigDecimal("0");
+	private BigDecimal totalAdjusted = new BigDecimal("0");
+	
 	
 	/**
 	 * Prepare the data to be used on the edit page
 	 * @throws Exception
 	 */
 	public void prepareEdit(){
-				
+		pageSetup();		
+	}
+
+	/**
+	 * Performs all the initializations that must be performed
+	 * before the destination page is shown
+	 */
+	private void pageSetup() {
 		if (getUsedWeeks() == null || getUsedWeeks() == 0) 
 			setUsedWeeks(4);
 		
 		setUsedWeeksMap(new TreeMap<Integer, String>(referenceDataService.getUsedWeeks()));
 	}
-	
 
 	/**
 	 * Prepare data to be used in the actions methods defined for this action
@@ -54,6 +62,35 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 		//It's needed by the Preparable interface, don't comment out or removed
 	}
 
+	/**
+	 * 
+	 */
+	private void setupDailyProjectionData() {
+		// Force object initialization
+		getWeekDaySelector();
+		
+		//Get calculated projections
+		setCalculatedProjections(getProjectionService().getAvgDailyProjectionForAWeek(getUsedWeeks(), this.getEmployeeStore(), getWeekDaySelector().getStartingWeekDay()));
+		setAdjustedProjections(getProjectionService().getAdjustedDailyProjectionForAWeek(this.getEmployeeStore(), getWeekDaySelector().getStartingWeekDay()));
+		
+		// Set default adjusted values
+		for(int i = 0; i < getAdjustedProjections().size(); i++) {
+			if(getAdjustedProjections().get(i).intValue() == 0) {
+				getAdjustedProjections().set(i, getCalculatedProjections().get(i));
+			}
+		}
+		
+		//calculate and set the total
+		for (BigDecimal aValue: getCalculatedProjections()){
+			this.totalProjected = totalProjected.add(aValue);
+		}
+
+		//calculate and set the total
+		for (BigDecimal aValue: getAdjustedProjections()){
+			this.totalAdjusted = totalAdjusted.add(aValue);
+		}
+		
+	}
 	
 	/**
 	 * Prepares the edit page
@@ -61,17 +98,7 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	 * @throws Exception
 	 */
 	public String edit() throws Exception {
-		// Force object initialization
-		getWeekDaySelector();
-		
-		//Get calculated projections
-		setCalculatedProjections(getProjectionService().getAvgDailyProjectionForAWeek(getUsedWeeks(), this.getEmployeeStore(), getWeekDaySelector().getStartingWeekDay()));
-		setAdjustedProjections(getProjectionService().getAdjustedDailyProjectionForAWeek(this.getEmployeeStore(), getWeekDaySelector().getStartingWeekDay()));
-				
-		//calculate and set the total
-		for (BigDecimal aValue: getCalculatedProjections()){
-			this.totalProjected = totalProjected.add(aValue);
-		}
+		setupDailyProjectionData();
 		
 		return SpmActionResult.EDIT.getResult();
 	}
@@ -186,5 +213,60 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	 */
 	public void setUsedWeeksMap(Map<Integer, String> usedWeeksMap) {
 		this.usedWeeksMap = usedWeeksMap;
+	}
+
+	
+	/**
+	 * 
+	 * 
+	 * @see com.laborguru.action.projection.ProjectionCalendarBaseAction#prepareChangeDay()
+	 */
+	@Override
+	public void prepareChangeDay() {
+		pageSetup();
+	}
+
+	/**
+	 * 
+	 * 
+	 * @see com.laborguru.action.projection.ProjectionCalendarBaseAction#prepareChangeWeek()
+	 */
+	@Override
+	public void prepareChangeWeek() {
+		pageSetup();
+	}
+
+	/**
+	 * 
+	 * 
+	 * @see com.laborguru.action.projection.ProjectionCalendarBaseAction#processChangeDay()
+	 */
+	@Override
+	protected void processChangeDay() {
+		setupDailyProjectionData();
+	}
+
+	/**
+	 * 
+	 * 
+	 * @see com.laborguru.action.projection.ProjectionCalendarBaseAction#processChangeWeek()
+	 */
+	@Override
+	protected void processChangeWeek() {
+		setupDailyProjectionData();
+	}
+
+	/**
+	 * @return the totalAdjusted
+	 */
+	public BigDecimal getTotalAdjusted() {
+		return totalAdjusted;
+	}
+
+	/**
+	 * @param totalAdjusted the totalAdjusted to set
+	 */
+	public void setTotalAdjusted(BigDecimal totalAdjusted) {
+		this.totalAdjusted = totalAdjusted;
 	}
 }

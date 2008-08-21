@@ -68,5 +68,40 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 		*/
 		return SpmActionResult.INPUT.getResult();
 	}
+
+	/**
+	 * 
+	 * 
+	 * @see com.laborguru.action.projection.ProjectionCalendarBaseAction#prepareChangeDay()
+	 */
+	@Override
+	public void prepareChangeDay() {
+	}
+
+	/**
+	 * 
+	 * @see com.laborguru.action.projection.ProjectionCalendarBaseAction#prepareChangeWeek()
+	 */
+	@Override
+	public void prepareChangeWeek() {
+	}
+
+	/**
+	 * 
+	 * 
+	 * @see com.laborguru.action.projection.ProjectionCalendarBaseAction#processChangeDay()
+	 */
+	@Override
+	protected void processChangeDay() {
+	}
+
+	/**
+	 * 
+	 * 
+	 * @see com.laborguru.action.projection.ProjectionCalendarBaseAction#processChangeWeek()
+	 */
+	@Override
+	protected void processChangeWeek() {
+	}
 	
 }

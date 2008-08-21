@@ -51,6 +51,30 @@ public abstract class ProjectionCalendarBaseAction extends SpmAction {
 	}
 
 	/**
+	 * Actions that must be performed before
+	 * this action is executed
+	 */
+	public abstract void prepareChangeWeek();
+	
+	/**
+	 * Actions that must be performed before
+	 * this action is executed
+	 */
+	public abstract void prepareChangeDay();
+	
+	/**
+	 * Performs any needed calculations after
+	 * a change week action is issued.
+	 */
+	protected abstract void processChangeWeek();
+
+	/**
+	 * Performs any needed calculations after
+	 * a change day action is issued.
+	 */
+	protected abstract void processChangeDay();
+	
+	/**
 	 * 
 	 * @return
 	 */
@@ -58,6 +82,8 @@ public abstract class ProjectionCalendarBaseAction extends SpmAction {
 		getWeekDaySelector().setStringStartingWeekDay(getSelectedDate());
 		getWeekDaySelector().setStringSelectedDay(getSelectedDate());
 		
+		processChangeWeek();
+
 		return SpmActionResult.INPUT.getResult();
 	}
 	
@@ -68,6 +94,8 @@ public abstract class ProjectionCalendarBaseAction extends SpmAction {
 	public String changeDay() {
 		getWeekDaySelector().setStringStartingWeekDay(getSelectedDate());
 		getWeekDaySelector().setStringSelectedDay(getSelectedWeekDay());
+		
+		processChangeDay();
 		
 		return SpmActionResult.INPUT.getResult();
 	}
