@@ -104,17 +104,17 @@
 										<td class="editorTableFirstColumn"><s:text name="projection.daily.projection.label"/></td>
 										<!-- Iterate week days -->
 										<s:iterator value="calculatedProjections">
-											<td class="editorTableEvenRow"><s:property /></td>
+											<td class="editorTableOddRow"><s:property /></td>
 										</s:iterator>
 										<!-- End Iterate week days -->
-										<td class="editorTableEvenRow"><b><s:property value="totalProjected"/></b></td>
+										<td class="editorTableOddRow"><b><s:property value="totalProjected"/></b></td>
 									</tr>
 									<tr>
 										<td class="editorTableFirstColumn"><s:text name="projection.daily.adjusted.label" /></td>
-										<s:iterator value="adjustedProjections">
-											<td class="editorTableEvenRow"><s:property /></td>
+										<s:iterator value="adjustedProjections" status="itAdjusted">
+											<td class="editorTableEvenRow"><s:textfield name="adjustedProjections[%{#itAdjusted.index}]" size="7" maxlength="15" theme="simple" /></td>
 										</s:iterator>
-										<td class="editorTableEvenRow">&nbsp;</td>
+										<td class="editorTableEvenRow"><b><s:property value="totalAdjusted"/></b></td>
 									</tr>									
 								</table>                    			
                     			<!-- End Daily Projection -->
