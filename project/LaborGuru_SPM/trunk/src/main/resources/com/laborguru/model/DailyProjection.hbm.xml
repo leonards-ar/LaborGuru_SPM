@@ -6,7 +6,7 @@
 <hibernate-mapping package="com.laborguru.model" schema="spm">
 	<class name="DailyProjection" table="tbl_projections">
 	
-		<id name="id" type="long" unsaved-value="null" column="projections_id">
+		<id name="id" type="long" unsaved-value="null" column="projection_id">
 			<generator class="identity" />
 		</id>
 		
