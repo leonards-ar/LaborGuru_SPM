@@ -8,23 +8,24 @@ import java.util.TreeMap;
 
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.service.data.ReferenceDataService;
-import com.laborguru.service.projection.ProjectionService;
 import com.opensymphony.xwork2.Preparable;
 
 /**
  * This action deals with Daily Projections.
+ * 
  * @author <a href="mcapurro@gmail.com">Mariano Capurro</a>
  * @version 1.0
  * @since SPM 1.0
- *
+ * 
  */
 @SuppressWarnings("serial")
-public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction implements Preparable {
+public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction
+		implements Preparable {
 
-	
 	private ReferenceDataService referenceDataService;
 
-	private List<BigDecimal> calculatedProjections = new ArrayList<BigDecimal>(7);
+	private List<BigDecimal> calculatedProjections = new ArrayList<BigDecimal>(
+			7);
 	private List<BigDecimal> adjustedProjections = new ArrayList<BigDecimal>(7);
 	private Map<Integer, String> usedWeeksMap;
 
@@ -32,34 +33,36 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 
 	private BigDecimal totalProjected = new BigDecimal("0");
 	private BigDecimal totalAdjusted = new BigDecimal("0");
-	
-	
+
 	/**
 	 * Prepare the data to be used on the edit page
+	 * 
 	 * @throws Exception
 	 */
-	public void prepareEdit(){
-		pageSetup();		
+	public void prepareEdit() {
+		pageSetup();
 	}
 
 	/**
-	 * Performs all the initializations that must be performed
-	 * before the destination page is shown
+	 * Performs all the initializations that must be performed before the
+	 * destination page is shown
 	 */
 	private void pageSetup() {
-		if (getUsedWeeks() == null || getUsedWeeks() == 0) 
+		if (getUsedWeeks() == null || getUsedWeeks() == 0)
 			setUsedWeeks(4);
-		
-		setUsedWeeksMap(new TreeMap<Integer, String>(referenceDataService.getUsedWeeks()));
+
+		setUsedWeeksMap(new TreeMap<Integer, String>(referenceDataService
+				.getUsedWeeks()));
 	}
 
 	/**
 	 * Prepare data to be used in the actions methods defined for this action
+	 * 
 	 * @throws Exception
 	 * @see com.opensymphony.xwork2.Preparable#prepare()
 	 */
 	public void prepare() throws Exception {
-		//It's needed by the Preparable interface, don't comment out or removed
+		// It's needed by the Preparable interface, don't comment out or removed
 	}
 
 	/**
@@ -68,57 +71,61 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	private void setupDailyProjectionData() {
 		// Force object initialization
 		getWeekDaySelector();
-		
-		//Get calculated projections
-		setCalculatedProjections(getProjectionService().getAvgDailyProjectionForAWeek(getUsedWeeks(), this.getEmployeeStore(), getWeekDaySelector().getStartingWeekDay()));
-		setAdjustedProjections(getProjectionService().getAdjustedDailyProjectionForAWeek(this.getEmployeeStore(), getWeekDaySelector().getStartingWeekDay()));
-		
+
+		// Get calculated projections
+		setCalculatedProjections(getProjectionService()
+				.getAvgDailyProjectionForAWeek(getUsedWeeks(),
+						this.getEmployeeStore(),
+						getWeekDaySelector().getStartingWeekDay()));
+		setAdjustedProjections(getProjectionService()
+				.getAdjustedDailyProjectionForAWeek(this.getEmployeeStore(),
+						getWeekDaySelector().getStartingWeekDay()));
+
 		// Set default adjusted values
-		for(int i = 0; i < getAdjustedProjections().size(); i++) {
-			if(getAdjustedProjections().get(i).intValue() == 0) {
-				getAdjustedProjections().set(i, getCalculatedProjections().get(i));
+		for (int i = 0; i < getAdjustedProjections().size(); i++) {
+			if (getAdjustedProjections().get(i).intValue() == 0) {
+				getAdjustedProjections().set(i,
+						getCalculatedProjections().get(i));
 			}
 		}
-		
-		//calculate and set the total
-		for (BigDecimal aValue: getCalculatedProjections()){
+
+		// calculate and set the total
+		for (BigDecimal aValue : getCalculatedProjections()) {
 			this.totalProjected = totalProjected.add(aValue);
 		}
 
-		//calculate and set the total
-		for (BigDecimal aValue: getAdjustedProjections()){
+		// calculate and set the total
+		for (BigDecimal aValue : getAdjustedProjections()) {
 			this.totalAdjusted = totalAdjusted.add(aValue);
 		}
-		
+
 	}
-	
+
 	/**
 	 * Prepares the edit page
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
 	public String edit() throws Exception {
 		setupDailyProjectionData();
-		
+
 		return SpmActionResult.EDIT.getResult();
 	}
 
-
-	
 	/**
 	 * Stores an employee on the DB
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
-	public String save() throws Exception {		
+	public String save() throws Exception {
 		/*
-		try {
-
-
-		} catch (SpmCheckedException e) {
-			addActionError(e.getErrorMessage());
-		}
-		*/
+		 * try {
+		 * 
+		 *  } catch (SpmCheckedException e) {
+		 * addActionError(e.getErrorMessage()); }
+		 */
 		return SpmActionResult.INPUT.getResult();
 	}
 
@@ -130,7 +137,8 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	}
 
 	/**
-	 * @param calculatedProjections the calculatedProjections to set
+	 * @param calculatedProjections
+	 *            the calculatedProjections to set
 	 */
 	public void setCalculatedProjections(List<BigDecimal> calculatedProjections) {
 		this.calculatedProjections = calculatedProjections;
@@ -144,12 +152,12 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	}
 
 	/**
-	 * @param usedWeeks the usedWeeks to set
+	 * @param usedWeeks
+	 *            the usedWeeks to set
 	 */
 	public void setUsedWeeks(Integer usedWeeks) {
 		this.usedWeeks = usedWeeks;
 	}
-
 
 	/**
 	 * @return the totalProjected
@@ -158,16 +166,14 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 		return totalProjected;
 	}
 
-
 	/**
-	 * @param totalProjected the totalProjected to set
+	 * @param totalProjected
+	 *            the totalProjected to set
 	 */
 	public void setTotalProjected(BigDecimal totalProjected) {
 		this.totalProjected = totalProjected;
 	}
 
-
-	
 	/**
 	 * @return the adjustedProjections
 	 */
@@ -175,14 +181,13 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 		return adjustedProjections;
 	}
 
-
 	/**
-	 * @param adjustedProjections the adjustedProjections to set
+	 * @param adjustedProjections
+	 *            the adjustedProjections to set
 	 */
 	public void setAdjustedProjections(List<BigDecimal> adjustedProjections) {
 		this.adjustedProjections = adjustedProjections;
 	}
-
 
 	/**
 	 * @return the referenceDataService
@@ -191,14 +196,14 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 		return referenceDataService;
 	}
 
-
 	/**
-	 * @param referenceDataService the referenceDataService to set
+	 * @param referenceDataService
+	 *            the referenceDataService to set
 	 */
-	public void setReferenceDataService(ReferenceDataService referenceDataService) {
+	public void setReferenceDataService(
+			ReferenceDataService referenceDataService) {
 		this.referenceDataService = referenceDataService;
 	}
-
 
 	/**
 	 * @return the usedWeeksMap
@@ -207,15 +212,14 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 		return usedWeeksMap;
 	}
 
-
 	/**
-	 * @param usedWeeksMap the usedWeeksMap to set
+	 * @param usedWeeksMap
+	 *            the usedWeeksMap to set
 	 */
 	public void setUsedWeeksMap(Map<Integer, String> usedWeeksMap) {
 		this.usedWeeksMap = usedWeeksMap;
 	}
 
-	
 	/**
 	 * 
 	 * 
@@ -264,7 +268,8 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	}
 
 	/**
-	 * @param totalAdjusted the totalAdjusted to set
+	 * @param totalAdjusted
+	 *            the totalAdjusted to set
 	 */
 	public void setTotalAdjusted(BigDecimal totalAdjusted) {
 		this.totalAdjusted = totalAdjusted;
