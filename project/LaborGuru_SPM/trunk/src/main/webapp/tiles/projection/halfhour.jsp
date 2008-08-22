@@ -111,13 +111,7 @@
 		              	<tr class="editFormEvenRow">
 		                    <td width="20%" align="right" class="form_label" nowrap="nowrap"><s:text name="projection.halfhour.weeksused.label" /></td>
 		                    <td width="80%" align="left" class="value">
-		                    	<select>
-		                    		<option value="1">Last week</option>
-		                    		<option value="2">2 weeks</option>
-		                    		<option value="3">3 weeks</option>
-		                    		<option value="4">4 weeks</option>
-		                    	</select>
-		                    </td>
+							<s:select name="usedWeeks" list="usedWeeksMap" listKey="key" listValue="%{getText(value)}" theme="simple" onchange="halfhour_form.action='halfhour_edit.action'; halfhour_form.submit();" />		                    </td>
 		                </tr>
 		              	<tr class="editFormOddRow">
                     		<td width="100%" align="center" colspan="2">
@@ -132,175 +126,22 @@
 													<td><s:text name="projection.halfhour.changes.label" /></td>
 													<td><s:text name="projection.halfhour.revisedprojection.label" /></td>
 												</tr>
-												<tr>
+  												<tr>
 													<td class="editorTableFirstColumn"><b><s:text name="projection.halfhour.daytotal.label" /></b></td>
-													<td class="editorTableOddRow"><b>$ 28,380</b></td>
-													<td class="editorTableOddRow"><b>$ 2,100</b></td>
-													<td class="editorTableOddRow"><b>$ 2,100</b></td>
+  													<td class="editorTableOddRow"><div id="sumProjectionValues"><b><s:property value="sumProjectedValues"/></b></div></td>
+													<td class="editorTableOddRow"><div id="sumAdjustedValues"><b><s:property value="sumAdjustedValues"/></b></div></td>
+													<td class="editorTableOddRow"><div id="sumRevisedValues"><b><s:property value="sumRevisedValues"/></b></div></td>
+													
 												</tr>
 												<!-- Iterate for each half hour from open to close hour -->
-												<tr>
-													<td class="editorTableFirstColumn">9:00</td>
-													<td class="editorTableEvenRow">$</td>
-													<td class="editorTableEvenRow">$<input type="text" size="10" value=""/></td>
-													<td class="editorTableEvenRow">$</td>
+												<s:iterator id="halfhourElement" value="projectionElements" status="itHalfHourProjection">
+												<tr class="editorTable<s:if test="#itHalfHourProjection.even">Even</s:if><s:else>Odd</s:else>Row">
+  												    <td class="editorTableFirstColumn"><s:property value="hour"/></td>
+													<td class="editorTableEvenRow">$<s:property value="projectedValue" /></td>
+													<td class="editorTableEvenRow">$<s:textfield name="projectionElements[%{#itHalfHourProjection.index}].adjustedValue" size="10" theme="simple" /></td>
+													<td class="editorTableEvenRow">$<s:property value="revisedValue"/></td>
 												</tr>
-												<tr>
-													<td class="editorTableFirstColumn">9:30</td>
-													<td class="editorTableOddRow">$ 200</td>
-													<td class="editorTableOddRow">$<input type="text" size="10" value="200"/></td>
-													<td class="editorTableOddRow">$ 200</td>
-												</tr>												
-												<tr>
-													<td class="editorTableFirstColumn">10:00</td>
-													<td class="editorTableEvenRow">$</td>
-													<td class="editorTableEvenRow">$<input type="text" size="10" value=""/></td>
-													<td class="editorTableEvenRow">$</td>
-												</tr>
-												<tr>
-													<td class="editorTableFirstColumn">10:30</td>
-													<td class="editorTableOddRow">$ 200</td>
-													<td class="editorTableOddRow">$<input type="text" size="10" value="200"/></td>
-													<td class="editorTableOddRow">$ 200</td>
-												</tr>												
-												<tr>
-													<td class="editorTableFirstColumn">11:00</td>
-													<td class="editorTableEvenRow">$</td>
-													<td class="editorTableEvenRow">$<input type="text" size="10" value=""/></td>
-													<td class="editorTableEvenRow">$</td>
-												</tr>
-												<tr>
-													<td class="editorTableFirstColumn">11:30</td>
-													<td class="editorTableOddRow">$ 200</td>
-													<td class="editorTableOddRow">$<input type="text" size="10" value="200"/></td>
-													<td class="editorTableOddRow">$ 200</td>
-												</tr>												
-												<tr>
-													<td class="editorTableFirstColumn">12:00</td>
-													<td class="editorTableEvenRow">$</td>
-													<td class="editorTableEvenRow">$<input type="text" size="10" value=""/></td>
-													<td class="editorTableEvenRow">$</td>
-												</tr>
-												<tr>
-													<td class="editorTableFirstColumn">12:30</td>
-													<td class="editorTableOddRow">$ 200</td>
-													<td class="editorTableOddRow">$<input type="text" size="10" value="200"/></td>
-													<td class="editorTableOddRow">$ 200</td>
-												</tr>												
-												<tr>
-													<td class="editorTableFirstColumn">13:00</td>
-													<td class="editorTableEvenRow">$</td>
-													<td class="editorTableEvenRow">$<input type="text" size="10" value=""/></td>
-													<td class="editorTableEvenRow">$</td>
-												</tr>
-												<tr>
-													<td class="editorTableFirstColumn">13:30</td>
-													<td class="editorTableOddRow">$ 200</td>
-													<td class="editorTableOddRow">$<input type="text" size="10" value="200"/></td>
-													<td class="editorTableOddRow">$ 200</td>
-												</tr>												
-												<tr>
-													<td class="editorTableFirstColumn">14:00</td>
-													<td class="editorTableEvenRow">$</td>
-													<td class="editorTableEvenRow">$<input type="text" size="10" value=""/></td>
-													<td class="editorTableEvenRow">$</td>
-												</tr>
-												<tr>
-													<td class="editorTableFirstColumn">14:30</td>
-													<td class="editorTableOddRow">$ 200</td>
-													<td class="editorTableOddRow">$<input type="text" size="10" value="200"/></td>
-													<td class="editorTableOddRow">$ 200</td>
-												</tr>												
-												<tr>
-													<td class="editorTableFirstColumn">15:00</td>
-													<td class="editorTableEvenRow">$</td>
-													<td class="editorTableEvenRow">$<input type="text" size="10" value=""/></td>
-													<td class="editorTableEvenRow">$</td>
-												</tr>
-												<tr>
-													<td class="editorTableFirstColumn">15:30</td>
-													<td class="editorTableOddRow">$ 200</td>
-													<td class="editorTableOddRow">$<input type="text" size="10" value="200"/></td>
-													<td class="editorTableOddRow">$ 200</td>
-												</tr>												
-												<tr>
-													<td class="editorTableFirstColumn">16:00</td>
-													<td class="editorTableEvenRow">$</td>
-													<td class="editorTableEvenRow">$<input type="text" size="10" value=""/></td>
-													<td class="editorTableEvenRow">$</td>
-												</tr>
-												<tr>
-													<td class="editorTableFirstColumn">16:30</td>
-													<td class="editorTableOddRow">$ 200</td>
-													<td class="editorTableOddRow">$<input type="text" size="10" value="200"/></td>
-													<td class="editorTableOddRow">$ 200</td>
-												</tr>												
-												<tr>
-													<td class="editorTableFirstColumn">17:00</td>
-													<td class="editorTableEvenRow">$</td>
-													<td class="editorTableEvenRow">$<input type="text" size="10" value=""/></td>
-													<td class="editorTableEvenRow">$</td>
-												</tr>
-												<tr>
-													<td class="editorTableFirstColumn">17:30</td>
-													<td class="editorTableOddRow">$ 200</td>
-													<td class="editorTableOddRow">$<input type="text" size="10" value="200"/></td>
-													<td class="editorTableOddRow">$ 200</td>
-												</tr>												
-												<tr>
-													<td class="editorTableFirstColumn">18:00</td>
-													<td class="editorTableEvenRow">$</td>
-													<td class="editorTableEvenRow">$<input type="text" size="10" value=""/></td>
-													<td class="editorTableEvenRow">$</td>
-												</tr>
-												<tr>
-													<td class="editorTableFirstColumn">18:30</td>
-													<td class="editorTableOddRow">$ 200</td>
-													<td class="editorTableOddRow">$<input type="text" size="10" value="200"/></td>
-													<td class="editorTableOddRow">$ 200</td>
-												</tr>												
-												<tr>
-													<td class="editorTableFirstColumn">19:00</td>
-													<td class="editorTableEvenRow">$</td>
-													<td class="editorTableEvenRow">$<input type="text" size="10" value=""/></td>
-													<td class="editorTableEvenRow">$</td>
-												</tr>
-												<tr>
-													<td class="editorTableFirstColumn">19:30</td>
-													<td class="editorTableOddRow">$ 200</td>
-													<td class="editorTableOddRow">$<input type="text" size="10" value="200"/></td>
-													<td class="editorTableOddRow">$ 200</td>
-												</tr>												
-												<tr>
-													<td class="editorTableFirstColumn">20:00</td>
-													<td class="editorTableEvenRow">$</td>
-													<td class="editorTableEvenRow">$<input type="text" size="10" value=""/></td>
-													<td class="editorTableEvenRow">$</td>
-												</tr>
-												<tr>
-													<td class="editorTableFirstColumn">20:30</td>
-													<td class="editorTableOddRow">$ 200</td>
-													<td class="editorTableOddRow">$<input type="text" size="10" value="200"/></td>
-													<td class="editorTableOddRow">$ 200</td>
-												</tr>												
-												<tr>
-													<td class="editorTableFirstColumn">21:00</td>
-													<td class="editorTableEvenRow">$</td>
-													<td class="editorTableEvenRow">$<input type="text" size="10" value=""/></td>
-													<td class="editorTableEvenRow">$</td>
-												</tr>
-												<tr>
-													<td class="editorTableFirstColumn">21:30</td>
-													<td class="editorTableOddRow">$ 200</td>
-													<td class="editorTableOddRow">$<input type="text" size="10" value="200"/></td>
-													<td class="editorTableOddRow">$ 200</td>
-												</tr>												
-												<tr>
-													<td class="editorTableFirstColumn">22:00</td>
-													<td class="editorTableEvenRow">$</td>
-													<td class="editorTableEvenRow">$<input type="text" size="10" value=""/></td>
-													<td class="editorTableEvenRow">$</td>
-												</tr>
+												</s:iterator>												
 												<!-- End Iterate for each half hour from open to close hour -->							
 											</table>                    			
 			                    			<!-- End Half Hour Projection -->

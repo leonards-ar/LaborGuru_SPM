@@ -1,6 +1,7 @@
 package com.laborguru.service.projection.dao;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,16 +22,17 @@ import com.laborguru.model.Store;
  */
 public class ProjectionDaoHibernate extends HibernateDaoSupport implements ProjectionDao {
 
-	private static final Logger log = Logger.getLogger(ProjectionDaoHibernate.class);	
-
+	private static final Logger log = Logger.getLogger(ProjectionDaoHibernate.class);
+	
 	public List<DailyProjection> getAdjustedDailyProjectionForAWeek(Store store, Date startWeekDate) {
 		
 		DateTime startDate = new DateTime(startWeekDate);
 		
 		DateTime startTime = startDate.withTime(0, 0, 0, 0);
 		DateTime endTime = startDate.plusDays(6).withTime(23, 59, 59, 999);
-		
-		log.debug("Before getting adjusted daily projections - Parameters: Store Id:"+ store.getId()+" startDate:"+startTime.toString()+" endDate:"+endTime.toString());
+		if(log.isDebugEnabled()){
+			log.debug("Before getting adjusted daily projections - Parameters: Store Id:"+ store.getId()+" startDate:"+startTime.toString()+" endDate:"+endTime.toString());
+		}
 		
 		return (List<DailyProjection>)  getHibernateTemplate().findByNamedParam("from DailyProjection dp " +
 				"where dp.store.id=:storeId AND dp.projectionDate >= :startDate AND dp.projectionDate <= :endDate",
@@ -53,13 +55,17 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 		DateTime startTime = startDate.minusWeeks(numberOfWeeks).withTime(0, 0, 0, 0);
 		DateTime endTime = startDate.minusDays(1).withTime(23, 59, 59, 999);
 		
-		log.debug("Before getting avg daily projections - Parameters: Store Id:"+ store.getId()+" startDate:"+startTime.toString()+" endDate:"+endTime.toString());
+		if(log.isDebugEnabled()){
+			log.debug("Before getting avg daily projections - Parameters: Store Id:"+ store.getId()+" startDate:"+startTime.toString()+" endDate:"+endTime.toString());
+		}
 		
 		List<Double> avgSalesList = getHibernateTemplate().findByNamedParam("select avg(hs.salesValue) from HistoricSales hs " +
 				"where hs.store.id=:storeId AND hs.dateTime >= :startDate AND hs.dateTime <= :endDate group by hs.dayOfWeek",
 				new String[] {"storeId", "startDate", "endDate"}, new Object[] {store.getId(), startTime.toDate(), endTime.toDate()} );
 
-		log.debug("After getting avg daily projections - Average Sales List size: Store Id:"+ avgSalesList.size());
+		if(log.isDebugEnabled()){
+			log.debug("After getting avg daily projections - Average Sales List size: Store Id:"+ avgSalesList.size());
+		}
 		
 		List<BigDecimal> retSalesList = new ArrayList<BigDecimal>(avgSalesList.size());
 		
@@ -68,6 +74,30 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 		}
 		
 		return retSalesList;
+	}
+	
+	public DailyProjection getDailyProjection(Store store, Date selectedDate) {
+		
+		DateTime dt = new DateTime(selectedDate);
+		dt = dt.withTime(0, 0, 0, 0);
+
+		if(log.isDebugEnabled()) {
+			log.debug("Before getting daily projections - Parameters: Store Id:"+ store.getId()+" selectedDate:"+dt.toString());
+		}
+
+		List<DailyProjection> projections =  getHibernateTemplate().findByNamedParam("from DailyProjection dp where dp.store.id=:storeId and dp.projectionDate=:projectionDate" , 
+				new String[]{"storeId", "projectionDate"}, 
+				new Object[]{store.getId(), dt.toDate()});
+		
+		if(projections.size() == 0) {
+			return null;
+		}
+		
+		if(projections.size() > 1) {
+			log.warn("There is more than one result for store Id: " + store.getId() + " and date: " + selectedDate);
+		}
+		
+		return projections.get(0);
 	}
 
 }
