@@ -13,7 +13,9 @@
     tbl_users*,
     tbl_day_parts*,
     tbl_users_profiles*,
-    tbl_historic_sales*)>
+    tbl_historic_sales*,
+    tbl_projections*,
+    tbl_halfhour_projection*)>
 
 <!ELEMENT tbl_areas EMPTY>
 <!ATTLIST tbl_areas
@@ -138,6 +140,12 @@
     position_index CDATA #REQUIRED
 >
 
+<!ELEMENT tbl_users_profiles EMPTY>
+<!ATTLIST tbl_users_profiles
+    user_id CDATA #REQUIRED
+    profile_id CDATA #REQUIRED
+>
+
 <!ELEMENT tbl_historic_sales EMPTY>
 <!ATTLIST tbl_historic_sales
     historic_sales_id CDATA #REQUIRED
@@ -150,9 +158,20 @@
     store_id CDATA #REQUIRED
 >
 
-<!ELEMENT tbl_users_profiles EMPTY>
-<!ATTLIST tbl_users_profiles
-    user_id CDATA #REQUIRED
-    profile_id CDATA #REQUIRED
+<!ELEMENT tbl_projections EMPTY>
+<!ATTLIST tbl_projections
+	projection_id CDATA #REQUIRED
+	projection_date CDATA #IMPLIED
+	starting_time CDATA #IMPLIED
+	store_id CDATA #REQUIRED
+>
+
+<!ELEMENT tbl_halfhour_projection EMPTY>
+<!ATTLIST tbl_halfhour_projection
+	half_hour_id CDATA #REQUIRED
+	adjusted_value CDATA #IMPLIED
+	half_hour_index CDATA #IMPLIED
+	fixed CDATA #IMPLIED
+	projection_id CDATA #REQUIRED
 >
 
