@@ -5,9 +5,13 @@
  */
 package com.laborguru.action.projection;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.WeekDaySelector;
+import com.laborguru.service.data.ReferenceDataService;
 import com.laborguru.service.projection.ProjectionService;
 
 /**
@@ -20,12 +24,19 @@ import com.laborguru.service.projection.ProjectionService;
 public abstract class ProjectionCalendarBaseAction extends SpmAction {
 
 	private ProjectionService projectionService;
+
+	private ReferenceDataService referenceDataService;
 	
 	private WeekDaySelector weekDaySelector;
 	
 	private String selectedDate;
 	
 	private String selectedWeekDay;
+	
+	private Map<Integer, String> usedWeeksMap;
+
+	private Integer usedWeeks;
+
 	
 	/**
 	 * 
@@ -43,6 +54,18 @@ public abstract class ProjectionCalendarBaseAction extends SpmAction {
 		return weekDaySelector;
 	}
 
+	/**
+	 * Performs all the initializations that must be performed before the
+	 * destination page is shown
+	 */
+	protected void pageSetup() {
+		if (getUsedWeeks() == null || getUsedWeeks() == 0)
+			setUsedWeeks(4);
+
+		setUsedWeeksMap(new TreeMap<Integer, String>(referenceDataService
+				.getUsedWeeks()));
+	}
+	
 	/**
 	 * @param weekDaySelector the weekDaySelector to set
 	 */
@@ -142,6 +165,50 @@ public abstract class ProjectionCalendarBaseAction extends SpmAction {
 	public void setProjectionService(ProjectionService projectionService) {
 		this.projectionService = projectionService;
 	}
+
+	/**
+	 * @return the usedWeeks
+	 */
+	public Integer getUsedWeeks() {
+		return usedWeeks;
+	}
+
+	/**
+	 * @param usedWeeks
+	 *            the usedWeeks to set
+	 */
+	public void setUsedWeeks(Integer usedWeeks) {
+		this.usedWeeks = usedWeeks;
+	}
+
+	/**
+	 * @return the usedWeeksMap
+	 */
+	public Map<Integer, String> getUsedWeeksMap() {
+		return usedWeeksMap;
+	}
+
+	/**
+	 * @param usedWeeksMap the usedWeeksMap to set
+	 */
+	public void setUsedWeeksMap(Map<Integer, String> usedWeeksMap) {
+		this.usedWeeksMap = usedWeeksMap;
+	}
+
+	/**
+	 * @return the referenceDataService
+	 */
+	public ReferenceDataService getReferenceDataService() {
+		return referenceDataService;
+	}
+
+	/**
+	 * @param referenceDataService the referenceDataService to set
+	 */
+	public void setReferenceDataService(ReferenceDataService referenceDataService) {
+		this.referenceDataService = referenceDataService;
+	}
+
 
 
 }

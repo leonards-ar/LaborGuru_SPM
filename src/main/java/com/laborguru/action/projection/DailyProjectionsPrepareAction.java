@@ -3,11 +3,8 @@ package com.laborguru.action.projection;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import com.laborguru.action.SpmActionResult;
-import com.laborguru.service.data.ReferenceDataService;
 import com.opensymphony.xwork2.Preparable;
 
 /**
@@ -22,15 +19,12 @@ import com.opensymphony.xwork2.Preparable;
 public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction
 		implements Preparable {
 
-	private ReferenceDataService referenceDataService;
+	
 
 	private List<BigDecimal> calculatedProjections = new ArrayList<BigDecimal>(
 			7);
 	private List<BigDecimal> adjustedProjections = new ArrayList<BigDecimal>(7);
-	private Map<Integer, String> usedWeeksMap;
-
-	private Integer usedWeeks;
-
+	
 	private BigDecimal totalProjected = new BigDecimal("0");
 	private BigDecimal totalAdjusted = new BigDecimal("0");
 
@@ -43,17 +37,7 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction
 		pageSetup();
 	}
 
-	/**
-	 * Performs all the initializations that must be performed before the
-	 * destination page is shown
-	 */
-	private void pageSetup() {
-		if (getUsedWeeks() == null || getUsedWeeks() == 0)
-			setUsedWeeks(4);
 
-		setUsedWeeksMap(new TreeMap<Integer, String>(referenceDataService
-				.getUsedWeeks()));
-	}
 
 	/**
 	 * Prepare data to be used in the actions methods defined for this action
@@ -145,21 +129,6 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction
 	}
 
 	/**
-	 * @return the usedWeeks
-	 */
-	public Integer getUsedWeeks() {
-		return usedWeeks;
-	}
-
-	/**
-	 * @param usedWeeks
-	 *            the usedWeeks to set
-	 */
-	public void setUsedWeeks(Integer usedWeeks) {
-		this.usedWeeks = usedWeeks;
-	}
-
-	/**
 	 * @return the totalProjected
 	 */
 	public BigDecimal getTotalProjected() {
@@ -189,36 +158,6 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction
 		this.adjustedProjections = adjustedProjections;
 	}
 
-	/**
-	 * @return the referenceDataService
-	 */
-	public ReferenceDataService getReferenceDataService() {
-		return referenceDataService;
-	}
-
-	/**
-	 * @param referenceDataService
-	 *            the referenceDataService to set
-	 */
-	public void setReferenceDataService(
-			ReferenceDataService referenceDataService) {
-		this.referenceDataService = referenceDataService;
-	}
-
-	/**
-	 * @return the usedWeeksMap
-	 */
-	public Map<Integer, String> getUsedWeeksMap() {
-		return usedWeeksMap;
-	}
-
-	/**
-	 * @param usedWeeksMap
-	 *            the usedWeeksMap to set
-	 */
-	public void setUsedWeeksMap(Map<Integer, String> usedWeeksMap) {
-		this.usedWeeksMap = usedWeeksMap;
-	}
 
 	/**
 	 * 

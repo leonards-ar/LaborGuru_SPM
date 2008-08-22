@@ -12,4 +12,6 @@ public interface ProjectionDao {
 	List<BigDecimal> getAvgDailyProjectionForAWeek(Integer numberOfWeeks, Store store, Date startWeekDate);
 
 	List<DailyProjection> getAdjustedDailyProjectionForAWeek(Store store, Date startWeekDate);
+	
+	DailyProjection getDailyProjection(Store store, Date selectedDate);
 }

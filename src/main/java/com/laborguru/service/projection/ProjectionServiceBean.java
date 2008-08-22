@@ -55,6 +55,10 @@ public class ProjectionServiceBean implements ProjectionService {
 		return retProjections;	
 	}
 
+	public DailyProjection getDailyProjection(Store store, Date selectedDate) {
+		
+		return projectionDao.getDailyProjection(store, selectedDate);
+	}
 	/**
 	 * @return the projectionDao
 	 */
