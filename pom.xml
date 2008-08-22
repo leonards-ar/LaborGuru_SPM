@@ -50,7 +50,7 @@
 		<profile>
 			<id>federico</id>
 			<properties>
-				<db.url>jdbc:mysql://192.168.1.103:3306/spm</db.url>
+				<db.url>jdbc:mysql://192.168.1.5:3306/spm</db.url>
 			</properties>
 		</profile>
 		<profile>
