@@ -23,7 +23,6 @@ public class HalfHourProjection extends SpmObject{
 	private BigDecimal adjustedValue;
 	private Integer index;
 	private DailyProjection projection;
-	private Boolean fixed;
 	
 	/**
 	 * @param obj
@@ -130,20 +129,5 @@ public class HalfHourProjection extends SpmObject{
 	public void setIndex(Integer index) {
 		this.index = index;
 	}
-
-	/**
-	 * @return the fixed
-	 */
-	public Boolean getFixed() {
-		return fixed;
-	}
-
-	/**
-	 * @param fixed the fixed to set
-	 */
-	public void setFixed(Boolean fixed) {
-		this.fixed = fixed;
-	}
-	
 
 }
