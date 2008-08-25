@@ -12,7 +12,6 @@
 		
 		<property name="adjustedValue" column="adjusted_value" type="big_decimal"/>
 		<property name="index" column="half_hour_index" type="int" />
-		<property name="fixed" column="fixed" type="boolean"/>
 		
 		<many-to-one name="projection" class="DailyProjection" column="projection_id" not-null="true" foreign-key="fk_halfhours_projections" />
 	</class>
