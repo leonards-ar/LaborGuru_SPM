@@ -71,5 +71,21 @@ public class ProjectionServiceBean implements ProjectionService {
 	 */
 	public void setProjectionDao(ProjectionDao projectionDao) {
 		this.projectionDao = projectionDao;
-	}	
+	}
+	
+	public List<BigDecimal> calculateFixedDistribution(BigDecimal totalSales, BigDecimal totalAdjusted, BigDecimal totalChangedValues, List<BigDecimal> elements){
+
+		List<BigDecimal> calculatedValues = new ArrayList<BigDecimal>();
+		
+		BigDecimal porcentajeAdjusted = totalAdjusted.divide(totalSales, 16, BigDecimal.ROUND_UP).subtract(new BigDecimal(1));
+		BigDecimal porcentajeNotChanged = totalChangedValues.divide(totalSales, 16, BigDecimal.ROUND_UP).subtract(new BigDecimal(1));
+		
+		for(BigDecimal value: elements) {
+			calculatedValues.add(value.multiply(porcentajeAdjusted.divide(porcentajeNotChanged, 16, BigDecimal.ROUND_HALF_EVEN)).setScale(16, BigDecimal.ROUND_HALF_EVEN)); 
+			
+		}
+		
+		return calculatedValues;
+	}
+	
 }
