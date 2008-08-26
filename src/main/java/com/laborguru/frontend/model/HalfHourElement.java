@@ -9,6 +9,7 @@ import java.math.BigDecimal;
  */
 public class HalfHourElement {
 
+	private Long id;
 	private String hour;
 	private BigDecimal projectedValue;
 	private BigDecimal adjustedValue;
@@ -75,6 +76,22 @@ public class HalfHourElement {
 	 */
 	public void setRevisedValue(BigDecimal revisedValue) {
 		this.revisedValue = revisedValue;
-	}	
-	
+	}
+
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 }
