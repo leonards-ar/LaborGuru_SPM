@@ -171,7 +171,6 @@
 	half_hour_id CDATA #REQUIRED
 	adjusted_value CDATA #IMPLIED
 	half_hour_index CDATA #IMPLIED
-	fixed CDATA #IMPLIED
 	projection_id CDATA #REQUIRED
 >
 
