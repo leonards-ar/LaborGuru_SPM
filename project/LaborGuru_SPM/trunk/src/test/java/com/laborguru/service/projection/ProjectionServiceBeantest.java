@@ -1,4 +1,4 @@
-package com.labroguru.service.projection;
+package com.laborguru.service.projection;
 
 import static org.easymock.EasyMock.createMock;
 import static org.junit.Assert.assertEquals;
