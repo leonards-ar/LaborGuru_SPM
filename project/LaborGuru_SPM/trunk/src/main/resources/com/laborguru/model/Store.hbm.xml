@@ -12,6 +12,9 @@
 		<property name="code" column="code" type="string" length="150" />
 		<property name="firstDayOfWeekAsInteger" column="first_day_of_week" type="int"/>
 
+		<property name="dailyProjectionsWeeksDefault" column="daily_projections_weeks_default" type="int"/>
+		<property name="halfHourProjectionsWeeksDefault" column="half_hour_projections_weeks_default" type="int"/>
+
 	    <property name="allPositionsUtilization" type="double">
 			<column name="all_pos_utilization" not-null="false" default="90.00" />
 		</property>

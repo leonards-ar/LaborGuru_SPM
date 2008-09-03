@@ -15,7 +15,9 @@ import com.opensymphony.xwork2.ActionSupport;
 /**
  * Spm Action Type
  * General point where we define common settings and task for SPM actions. 
- * @author cnunez
+ * @author <a href="cnunezre@gmail.com">Cristian Nunez Rebolledo</a>
+ * @version 1.0
+ * @since SPM 1.0
  *
  */
 @SuppressWarnings("serial")

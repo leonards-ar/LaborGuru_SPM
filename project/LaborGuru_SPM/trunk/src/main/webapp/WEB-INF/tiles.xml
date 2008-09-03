@@ -219,4 +219,8 @@
 	<definition name="editDailyPage" extends="baseLayoutWithMenu">
 		<put-attribute name="body" value="/tiles/projection/daily.jsp" />
 	</definition>		
+
+	<definition name="editSettingsPage" extends="baseLayoutWithMenu">
+		<put-attribute name="body" value="/tiles/projection/settings.jsp" />
+	</definition>
 </tiles-definitions>

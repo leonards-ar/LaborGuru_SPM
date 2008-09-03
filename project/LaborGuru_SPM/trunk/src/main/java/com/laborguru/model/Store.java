@@ -24,6 +24,9 @@ public class Store extends SpmObject {
 	private String code;
 	private DayOfWeek firstDayOfWeek;
 	private Area area;
+	private Integer dailyProjectionsWeeksDefault;
+	private Integer halfHourProjectionsWeeksDefault;
+
 	private List<Position> positions;
 	private List<OperationTime> operationTimes;
 	private List<DayPart> dayParts;
@@ -360,6 +363,35 @@ public class Store extends SpmObject {
 		
 		positionGroup.setStore(this);
 		getPositionGroups().add(positionGroup);
+	}
+
+	/**
+	 * @return the dailyProjectionsWeeksDefault
+	 */
+	public Integer getDailyProjectionsWeeksDefault() {
+		return dailyProjectionsWeeksDefault;
+	}
+
+	/**
+	 * @param dailyProjectionsWeeksDefault the dailyProjectionsWeeksDefault to set
+	 */
+	public void setDailyProjectionsWeeksDefault(Integer dailyProjectionsWeeksDefault) {
+		this.dailyProjectionsWeeksDefault = dailyProjectionsWeeksDefault;
+	}
+
+	/**
+	 * @return the halfHourProjectionsWeeksDefault
+	 */
+	public Integer getHalfHourProjectionsWeeksDefault() {
+		return this.halfHourProjectionsWeeksDefault;
+	}
+
+	/**
+	 * @param halfHourProjectionsWeeksDefault the halfHourProjectionsWeeksDefault to set
+	 */
+	public void setHalfHourProjectionsWeeksDefault(
+			Integer halfHourProjectionsWeeksDefault) {
+		this.halfHourProjectionsWeeksDefault = halfHourProjectionsWeeksDefault;
 	}
 	
 }

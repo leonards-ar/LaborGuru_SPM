@@ -35,6 +35,7 @@
   <tbl_permissions permission_id="11" name="MANAGER_PROJECTIONS" description="Manage projections"/>  
   <tbl_permissions permission_id="12" name="EDIT_DAILY_PROJECTIONS" description="Manage daily projections"/>  
   <tbl_permissions permission_id="13" name="EDIT_HALFHOUR_PROJECTIONS" description="Manage half hour projections"/>
+  <tbl_permissions permission_id="14" name="EDIT_SETTINGS_PROJECTIONS" description="Manage settings projections"/>
   <tbl_menu_items menu_item_id="1" label_key="home.menu.label" help_key="HOME_MENU_HELP" target="/home/home.action" position="0" permission_id="1"/>
   <tbl_menu_items menu_item_id="2" label_key="employee.menu.label" help_key="EMPLOYEE_MENU_HELP" target="/employee/employee_list.action" position="1" permission_id="2"/>
   <tbl_menu_items menu_item_id="3" label_key="employee.submenu.list" help_key="EMPLOYEE_LIST_HELP" target="/employee/employee_list.action" position="1" parent_id="2" permission_id="3"/>
@@ -48,7 +49,8 @@
   <tbl_menu_items menu_item_id="11" label_key="projection.menu.create" help_key="PROJECTION_HELP" target="/projection/daily_edit.action" position="4" permission_id="11"/>
   <tbl_menu_items menu_item_id="12" label_key="projection.submenu.daily" help_key="PROJECTION_DAILY_HELP" target="/projection/daily_edit.action" position="0" parent_id="11" permission_id="12"/>
   <tbl_menu_items menu_item_id="13" label_key="projection.submenu.halfhour" help_key="PROJECTION_HALFHOUR_HELP" target="/projection/halfhour_edit.action" position="1" parent_id="11" permission_id="13"/>
-  <tbl_stores store_id="1" name="microcentro" area_id="1"/>
+  <tbl_menu_items menu_item_id="14" label_key="projection.submenu.settings" help_key="PROJECTION_SETTINGS_HELP" target="/projection/settings_edit.action" position="2" parent_id="11" permission_id="14"/>
+  <tbl_stores store_id="1" name="microcentro" area_id="1" half_hour_projections_weeks_default="4" daily_projections_weeks_default="4"/>
   <tbl_positions position_id="1" name="chef" position_index="0" store_id="1"/>
   <tbl_positions position_id="2" name="waiter" position_index="1" store_id="1"/>
   <tbl_positions position_id="3" name="cook" position_index="2" store_id="1"/>

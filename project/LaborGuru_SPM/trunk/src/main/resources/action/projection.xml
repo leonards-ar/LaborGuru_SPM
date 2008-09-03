@@ -16,5 +16,10 @@
 			<result name="input" type="tiles">editHalfHourPage</result>			
 			<result name="success" type="tiles">editHalfHourPage</result>
 		</action>		
+
+		<action name="settings_*" method="{1}" class="com.laborguru.action.projection.ProjectionSettingsPrepareAction">
+			<result name="edit" type="tiles">editSettingsPage</result>
+			<result name="input" type="tiles">editSettingsPage</result>			
+		</action>
 	</package>
 </struts>
