@@ -114,6 +114,8 @@
     code CDATA #IMPLIED
     first_day_of_week CDATA #IMPLIED
     area_id CDATA #IMPLIED
+    daily_projections_weeks_default CDATA #IMPLIED
+    half_hour_projections_weeks_default CDATA #IMPLIED
 >
 
 <!ELEMENT tbl_users EMPTY>
