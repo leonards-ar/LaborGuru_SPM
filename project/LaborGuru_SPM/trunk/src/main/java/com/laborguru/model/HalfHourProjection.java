@@ -1,6 +1,8 @@
 package com.laborguru.model;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -23,6 +25,7 @@ public class HalfHourProjection extends SpmObject{
 	private BigDecimal adjustedValue;
 	private Integer index;
 	private DailyProjection projection;
+	
 	
 	/**
 	 * @param obj
@@ -115,7 +118,7 @@ public class HalfHourProjection extends SpmObject{
 	public void setAdjustedValue(BigDecimal adjustedValue) {
 		this.adjustedValue = adjustedValue;
 	}
-
+	
 	/**
 	 * @return the index
 	 */

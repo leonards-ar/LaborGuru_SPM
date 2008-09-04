@@ -15,7 +15,7 @@
     tbl_users_profiles*,
     tbl_historic_sales*,
     tbl_projections*,
-    tbl_halfhour_projection*)>
+    tbl_halfhour_projections*)>
 
 <!ELEMENT tbl_areas EMPTY>
 <!ATTLIST tbl_areas
@@ -168,8 +168,8 @@
 	store_id CDATA #REQUIRED
 >
 
-<!ELEMENT tbl_halfhour_projection EMPTY>
-<!ATTLIST tbl_halfhour_projection
+<!ELEMENT tbl_halfhour_projections EMPTY>
+<!ATTLIST tbl_halfhour_projections
 	half_hour_id CDATA #REQUIRED
 	adjusted_value CDATA #IMPLIED
 	half_hour_index CDATA #IMPLIED

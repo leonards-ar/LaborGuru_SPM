@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.laborguru.model.DailyProjection;
+import com.laborguru.model.HalfHourProjection;
 import com.laborguru.model.Store;
 import com.laborguru.service.Service;
 import com.laborguru.service.projection.dao.ProjectionDao;
@@ -25,7 +26,9 @@ public interface ProjectionService extends Service{
 	DailyProjection getDailyProjection(Store store, Date selectedDate);
 	
 	List<BigDecimal> calculateFixedDistribution(BigDecimal totalSales, BigDecimal totalAdjusted, BigDecimal totalChangedValues, List<BigDecimal> elements);
-		
+
+	List<HalfHourProjection> getAvgHalfHourProjection(Integer numberOfWeeks, BigDecimal amoutProjection, Store store, Date selectedDate);
+	
 	void setProjectionDao(ProjectionDao projectionDao);
 	
 }

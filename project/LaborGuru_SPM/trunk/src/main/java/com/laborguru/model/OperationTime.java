@@ -6,6 +6,7 @@
 package com.laborguru.model;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -168,6 +169,14 @@ public class OperationTime extends SpmObject {
 		this.dayOfWeek = dayOfWeek;
 	}
 
+	public static OperationTime getOperationTimeByDayOfWeek(List<OperationTime> list, DayOfWeek dayOfWeek) {
+		for(OperationTime aOperationTime: list) {
+			if(aOperationTime.getDayOfWeek().equals(dayOfWeek)) {
+				return aOperationTime;
+			}
+		}
+		return null;
+	}
 	/**
 	 * 
 	 * @return
@@ -183,5 +192,7 @@ public class OperationTime extends SpmObject {
 	   	.append("close hour", closeHour)
 	   	.toString();
 	}
+	
+	
 
 }
