@@ -4,19 +4,20 @@
     "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="com.laborguru.model" schema="spm">
-	<class name="HalfHourProjection" table="tbl_halfhour_projection">
+	<class name="HalfHourProjection" table="tbl_halfhour_projections">
 	
 		<id name="id" type="long" unsaved-value="null" column="half_hour_id">
 			<generator class="identity" />
 		</id>
-		
 		<property name="adjustedValue" column="adjusted_value" type="big_decimal"/>
 		<property name="index" column="half_hour_index" type="int" />
 		
 		<many-to-one name="projection" class="DailyProjection" column="projection_id" not-null="true" foreign-key="fk_halfhours_projections" />
-	</class>
+	</class>  	
+	
 	<database-object>
-		<create>ALTER TABLE tbl_halfhour_projection AUTO_INCREMENT=1000</create>
+		<create>ALTER TABLE tbl_halfhour_projections AUTO_INCREMENT=1000</create>
 		<drop></drop>
-	</database-object>   	
+	</database-object>
+	
 </hibernate-mapping>

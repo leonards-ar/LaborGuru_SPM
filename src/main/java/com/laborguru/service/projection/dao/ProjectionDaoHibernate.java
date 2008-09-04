@@ -1,9 +1,9 @@
 package com.laborguru.service.projection.dao;
 
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -11,6 +11,7 @@ import org.joda.time.DateTime;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.laborguru.model.DailyProjection;
+import com.laborguru.model.HalfHourCalculated;
 import com.laborguru.model.Store;
 
 /**
@@ -98,6 +99,36 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 		}
 		
 		return projections.get(0);
+	}
+	
+	public List<HalfHourCalculated> getAvgHalfHourProjection(Integer numberOfWeeks, Store store, Date selectedDate){
+		
+		DateTime startDate = new DateTime(selectedDate);
+		
+		DateTime startTime = startDate.minusWeeks(numberOfWeeks).withTime(0, 0, 0, 0);
+		DateTime endTime = startDate.minusDays(1).withTime(23, 59, 59, 999);
+		
+		if(log.isDebugEnabled()) {
+			log.debug("Before getting avg daily projections - Parameters: Store Id:"+ store.getId()+" startDate:"+startTime.toString("yyyy-MM-dd HH:mm:ss") + " endDate:" + endTime.toString("yyyy-MM-dd HH:mm:ss") + " dayOfWeek:" + startDate.getDayOfWeek());
+		}
+		
+		List sumProjections = getHibernateTemplate().findByNamedQueryAndNamedParam("halfHourProjections", new String[]{"storeId","startDate","endDate","dayOfWeek"}, new Object[]{store.getId(),startTime.toString("yyyy-MM-dd HH:mm:ss"),endTime.toString("yyyy-MM-dd HH:mm:ss"),startDate.getDayOfWeek()});
+	
+		
+		List<HalfHourCalculated> projections = new ArrayList<HalfHourCalculated>();
+		
+		Iterator i = sumProjections.iterator();
+		
+		while ( i.hasNext() ) {
+			Object[] row = (Object[]) i.next();
+			
+			BigDecimal number = new BigDecimal((Double)row[1]/numberOfWeeks.intValue());
+			HalfHourCalculated hhc = new HalfHourCalculated((String)row[0], number);
+			projections.add(hhc);
+
+		}
+		return sumProjections;
+
 	}
 
 }

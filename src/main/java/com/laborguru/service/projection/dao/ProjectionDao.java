@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.laborguru.model.DailyProjection;
+import com.laborguru.model.HalfHourCalculated;
 import com.laborguru.model.Store;
 
 public interface ProjectionDao {
@@ -14,4 +15,6 @@ public interface ProjectionDao {
 	List<DailyProjection> getAdjustedDailyProjectionForAWeek(Store store, Date startWeekDate);
 	
 	DailyProjection getDailyProjection(Store store, Date selectedDate);
+	
+	List<HalfHourCalculated> getAvgHalfHourProjection(Integer numberOfWeeks, Store store, Date selectedDate);
 }

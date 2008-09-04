@@ -1,11 +1,13 @@
 package com.laborguru.action.projection;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 
 import com.laborguru.action.SpmActionResult;
@@ -23,13 +25,14 @@ import com.opensymphony.xwork2.Preparable;
  * 
  */
 @SuppressWarnings("serial")
-public class HalfHourProjectionsPrepareAction extends
-		ProjectionCalendarBaseAction implements Preparable {
-
+public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseAction implements Preparable {
+	private static final Logger log = Logger.getLogger(HalfHourProjectionsPrepareAction.class);
+	
 	private List<HalfHourElement> projectionElements;
-	private BigDecimal sumProjectedValues = new BigDecimal(0);
-	private BigDecimal sumAdjustedValues = new BigDecimal(0);
-	private BigDecimal sumRevisedValues = new BigDecimal(0);
+	private BigDecimal totalProjectedValues = new BigDecimal(0).setScale(2);
+	private BigDecimal totalAdjustedValues = new BigDecimal(0).setScale(2);
+	private BigDecimal totalRevisedValues = new BigDecimal(0).setScale(2);
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
 	/**
 	 * Prepare the data to be used on the edit page
@@ -46,6 +49,7 @@ public class HalfHourProjectionsPrepareAction extends
 	 * @throws Exception
 	 */
 	public void prepareSave() {
+		pageSetup();
 	}
 
 	/**
@@ -83,6 +87,7 @@ public class HalfHourProjectionsPrepareAction extends
 		 * } catch (SpmCheckedException e) {
 		 * addActionError(e.getErrorMessage()); }
 		 */
+		 setResults();
 		return SpmActionResult.INPUT.getResult();
 	}
 
@@ -105,6 +110,95 @@ public class HalfHourProjectionsPrepareAction extends
 		pageSetup();
 	}
 
+	public void prepareReviseProjections() {
+		pageSetup();
+	}
+	
+	public String reviseProjections() {
+		calculateProjections();
+		return SpmActionResult.EDIT.getResult();
+	}
+
+	public String reviseUsedWeeks() {
+		getNewValues();
+		return SpmActionResult.EDIT.getResult();
+		
+	}
+	
+	private void getNewValues(){
+		List<HalfHourProjection> projections = getProjectionService().getAvgHalfHourProjection(getUsedWeeks(), getTotalProjectedValues(), getEmployeeStore(), this.getFormatDate(getSelectedDate()));
+		
+		//set new values;
+		for(int i=0; i < getProjectionElements().size(); i++) {
+			getProjectionElements().get(i).setProjectedValue(projections.get(i).getAdjustedValue());
+		}
+		
+		//if there is adjusted values calculate the revised projections
+		if(getTotalAdjustedValues().intValue() > 0) {
+			calculateProjections();
+		}
+	}
+	
+	private void calculateProjections() {
+		BigDecimal totalOldProjectedValues = new BigDecimal(0);
+		setTotalAdjustedValues(new BigDecimal(0));		
+		List<BigDecimal> values = new ArrayList<BigDecimal>();
+		for (HalfHourElement element : getProjectionElements()) {
+			if (element.getAdjustedValue() != null) {
+				setTotalAdjustedValues(getTotalAdjustedValues().add(element.getAdjustedValue()));
+				totalOldProjectedValues = totalOldProjectedValues.add(element.getProjectedValue());
+			}
+			values.add(element.getProjectedValue());
+		}
+
+		values = getProjectionService().calculateFixedDistribution(
+				getTotalProjectedValues(), getTotalAdjustedValues(), totalOldProjectedValues,
+				values);
+
+		
+		setRevisedValues(values);
+
+	}
+	
+	private void setRevisedValues(List<BigDecimal> values) {
+		setTotalRevisedValues(new BigDecimal(0));
+		for (int i = 0; i < values.size(); i++) {
+			if (getProjectionElements().get(i).getAdjustedValue() == null) {
+				getProjectionElements().get(i).setRevisedValue(values.get(i));
+				setTotalRevisedValues(getTotalRevisedValues().add(values.get(i)));
+			} else {
+				getProjectionElements().get(i).setRevisedValue(
+						getProjectionElements().get(i).getAdjustedValue());
+				setTotalRevisedValues(getTotalRevisedValues().add(getProjectionElements().get(i).getAdjustedValue()));
+			}
+		}
+	}
+
+	private void setResults() {
+		DailyProjection dailyProjection = getProjectionService().getDailyProjection(getEmployeeStore(), new Date(getSelectedDate()));
+		for(HalfHourElement element: getProjectionElements()) {
+			HalfHourProjection halfHourProjection = getHalfHourProjectionById(element.getId());
+			if(getTotalRevisedValues().intValue() > 0) {
+				halfHourProjection.setAdjustedValue(element.getRevisedValue());
+			} else {
+				halfHourProjection.setAdjustedValue(element.getProjectedValue());
+			}
+			dailyProjection.addHalfHourProjection(halfHourProjection);
+		}
+	}
+	
+	private HalfHourProjection getHalfHourProjectionById(Long id) {
+		HalfHourProjection element = null;
+		DailyProjection dailyProjection = getProjectionService().getDailyProjection(getEmployeeStore(), getWeekDaySelector().getSelectedDay());
+		for(HalfHourProjection halfHourProjection: dailyProjection.getHalfHourProjections()) {
+			if(halfHourProjection.getId().equals(id)) {
+				element = halfHourProjection;
+				break;
+			}
+		}
+		return element;
+	}
+	
 	/**
 	 * 
 	 * 
@@ -127,37 +221,54 @@ public class HalfHourProjectionsPrepareAction extends
 
 	private void setUpHalfHourProjection() {
 		// Force object initialization
-		try{
-		getWeekDaySelector().setSelectedDay(new SimpleDateFormat("yyyy-MM-dd").parse("2008-08-20"));
-		} catch(Exception e) {
+		try {
+			getWeekDaySelector().setSelectedDay(
+					new SimpleDateFormat("yyyy-MM-dd").parse("2008-08-20"));
+			setSelectedDate("20080820");
+			setSelectedWeekDay("20080817");
 			
+		} catch (Exception e) {
+
 		}
-		
-		//setSelectedDate(getWeekDaySelector().getStringStartingWeekDay());
-		
-		DailyProjection dailyProjection = getProjectionService().getDailyProjection(getEmployeeStore(),
-						getWeekDaySelector().getSelectedDay());
+
+		// setSelectedDate(getWeekDaySelector().getStringStartingWeekDay());
+
+		DailyProjection dailyProjection = getProjectionService().getDailyProjection(getEmployeeStore(), getWeekDaySelector().getSelectedDay());
 
 		if (dailyProjection != null) {
-			BigDecimal sumProjections = new BigDecimal(0);
-			for (HalfHourProjection halfHourProjection : dailyProjection.getHalfHourProjections()) {
-				HalfHourElement element = new HalfHourElement();
-				element.setHour(getTime(dailyProjection.getStartingTime(), halfHourProjection.getIndex()));
-				element.setProjectedValue(halfHourProjection.getAdjustedValue());
-				element.setRevisedValue(new BigDecimal(0));
-				this.getProjectionElements().add(element);
-				sumProjections = sumProjections.add(halfHourProjection.getAdjustedValue());
-			}
-			setSumProjectedValues(sumProjections);
+			setHalfHourElement(dailyProjection.getHalfHourProjections(), dailyProjection.getStartingTime());
 		}
 	}
 
+	private void setHalfHourElement(List<HalfHourProjection> halfHourProjections, Date startTime){
+		
+		BigDecimal totalProjections = new BigDecimal(0);
+		for (HalfHourProjection halfHourProjection : halfHourProjections) {
+			HalfHourElement element = new HalfHourElement();
+			element.setId(halfHourProjection.getId());
+			element.setHour(getTime(startTime, halfHourProjection.getIndex()));
+			element.setProjectedValue(halfHourProjection.getAdjustedValue());
+			element.setRevisedValue(new BigDecimal(0));
+			this.getProjectionElements().add(element);
+			totalProjections = totalProjections.add(halfHourProjection.getAdjustedValue());
+		}
+		setTotalProjectedValues(totalProjections);
+	}
+	
 	private String getTime(Date startTime, Integer elementIndex) {
 		DateTime datetime = new DateTime(startTime);
-		return datetime.plusMinutes((30 * elementIndex.intValue())).toString(
-				"HH:mm");
+		return datetime.plusMinutes((30 * elementIndex.intValue())).toString("HH:mm");
 	}
 
+	private Date getFormatDate(String date) {
+		try {
+		return sdf.parse(date); 
+		} catch (ParseException e) {
+			log.error("Error trying to parse: " + date);
+		}
+		return null;
+		
+	}
 	/**
 	 * @return the projectionElements
 	 */
@@ -178,48 +289,46 @@ public class HalfHourProjectionsPrepareAction extends
 	}
 
 	/**
-	 * @return the sumProjectedValues
+	 * @return the totalProjectedValues
 	 */
-	public BigDecimal getSumProjectedValues() {
-		return sumProjectedValues;
+	public BigDecimal getTotalProjectedValues() {
+		return totalProjectedValues;
 	}
 
 	/**
-	 * @param sumProjectedValues
-	 *            the sumProjectedValues to set
+	 * @param totalProjectedValues the totalProjectedValues to set
 	 */
-	public void setSumProjectedValues(BigDecimal sumProjectedValues) {
-		this.sumProjectedValues = sumProjectedValues;
+	public void setTotalProjectedValues(BigDecimal totalProjectedValues) {
+		this.totalProjectedValues = totalProjectedValues.setScale(2, BigDecimal.ROUND_HALF_UP);
 	}
 
 	/**
-	 * @return the sumAdjustedValues
+	 * @return the totalAdjustedValues
 	 */
-	public BigDecimal getSumAdjustedValues() {
-		return sumAdjustedValues;
+	public BigDecimal getTotalAdjustedValues() {
+		return totalAdjustedValues;
 	}
 
 	/**
-	 * @param sumAdjustedValues
-	 *            the sumAdjustedValues to set
+	 * @param totalAdjustedValues the totalAdjustedValues to set
 	 */
-	public void setSumAdjustedValues(BigDecimal sumAdjustedValues) {
-		this.sumAdjustedValues = sumAdjustedValues;
+	public void setTotalAdjustedValues(BigDecimal totalAdjustedValues) {
+		this.totalAdjustedValues = totalAdjustedValues.setScale(2, BigDecimal.ROUND_HALF_UP);
 	}
 
 	/**
-	 * @return the sumRevisedValues
+	 * @return the totalRevisedValues
 	 */
-	public BigDecimal getSumRevisedValues() {
-		return sumRevisedValues;
+	public BigDecimal getTotalRevisedValues() {
+		return totalRevisedValues;
 	}
 
 	/**
-	 * @param sumRevisedValues
-	 *            the sumRevisedValues to set
+	 * @param totalRevisedValues the totalRevisedValues to set
 	 */
-	public void setSumRevisedValues(BigDecimal sumRevisedValues) {
-		this.sumRevisedValues = sumRevisedValues;
+	public void setTotalRevisedValues(BigDecimal totalRevisedValues) {
+		this.totalRevisedValues = totalRevisedValues.setScale(2, BigDecimal.ROUND_HALF_UP);
 	}
+
 
 }

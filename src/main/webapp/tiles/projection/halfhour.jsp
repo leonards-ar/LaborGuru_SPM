@@ -111,7 +111,7 @@
 		              	<tr class="editFormEvenRow">
 		                    <td width="20%" align="right" class="form_label" nowrap="nowrap"><s:text name="projection.halfhour.weeksused.label" /></td>
 		                    <td width="80%" align="left" class="value">
-							<s:select name="usedWeeks" list="usedWeeksMap" listKey="key" listValue="%{getText(value)}" theme="simple" onchange="halfhour_form.action='halfhour_edit.action'; halfhour_form.submit();" />		                    </td>
+							<s:select name="usedWeeks" list="usedWeeksMap" listKey="key" listValue="%{getText(value)}" theme="simple" onchange="halfhour_form.action='halfhour_reviseUsedWeeks.action'; halfhour_form.submit();" />		                    </td>
 		                </tr>
 		              	<tr class="editFormOddRow">
                     		<td width="100%" align="center" colspan="2">
@@ -127,18 +127,25 @@
 													<td><s:text name="projection.halfhour.revisedprojection.label" /></td>
 												</tr>
   												<tr>
+													<s:hidden id="totalProjectedValues" name="totalProjectedValues"/>
+													<s:hidden id="totalAdjustedValues" name="totalAdjustedValues"/>
+													<s:hidden id="totalRevisedValues" name="totalRevisedValues"/>
 													<td class="editorTableFirstColumn"><b><s:text name="projection.halfhour.daytotal.label" /></b></td>
-  													<td class="editorTableOddRow"><div id="sumProjectionValues"><b><s:property value="sumProjectedValues"/></b></div></td>
-													<td class="editorTableOddRow"><div id="sumAdjustedValues"><b><s:property value="sumAdjustedValues"/></b></div></td>
-													<td class="editorTableOddRow"><div id="sumRevisedValues"><b><s:property value="sumRevisedValues"/></b></div></td>
+  													<td class="editorTableOddRow"><div id="totalProjectionValues"><b><s:property value="totalProjectedValues"/></b></div></td>
+													<td class="editorTableOddRow"><div id="totalAdjustedValues"><b><s:property value="totalAdjustedValues"/></b></div></td>
+													<td class="editorTableOddRow"><div id="totalRevisedValues"><b><s:property value="totalRevisedValues"/></b></div></td>
 													
 												</tr>
 												<!-- Iterate for each half hour from open to close hour -->
 												<s:iterator id="halfhourElement" value="projectionElements" status="itHalfHourProjection">
-												<tr class="editorTable<s:if test="#itHalfHourProjection.even">Even</s:if><s:else>Odd</s:else>Row">
+												<tr>
+													<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].id"/>
+													<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].hour"/>
   												    <td class="editorTableFirstColumn"><s:property value="hour"/></td>
+													<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].projectedValue"/>
 													<td class="editorTableEvenRow">$<s:property value="projectedValue" /></td>
 													<td class="editorTableEvenRow">$<s:textfield name="projectionElements[%{#itHalfHourProjection.index}].adjustedValue" size="10" theme="simple" /></td>
+													<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].revisedValue"/>
 													<td class="editorTableEvenRow">$<s:property value="revisedValue"/></td>
 												</tr>
 												</s:iterator>												
@@ -152,7 +159,7 @@
 			                    			<br/>
 						                    <table border="0" cellpadding="5" cellspacing="5" colspan="0" cellspan="0">
 							                    <tr>
-							                		<td align="center"><s:submit id="saveButton" key="projection.halfhour.revise.button" theme="simple" cssClass="button"/></td>
+							                		<td align="center"><s:submit id="reviseButton" key="projection.halfhour.revise.button" theme="simple" cssClass="button" onclick="halfhour_form.action='halfhour_reviseProjections.action'"/></td>
 							                	</tr>
 							                    <tr>
 							                		<td align="center"><s:submit id="saveButton" key="save.button" theme="simple" cssClass="button"/></td>
