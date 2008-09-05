@@ -33,6 +33,9 @@
 		<db.driver>com.mysql.jdbc.Driver</db.driver>
 		<db.username>spm</db.username>
 		<db.password>java1234</db.password>
+		<db.maxActive>2</db.maxActive>
+		<db.maxIdle>1</db.maxIdle>
+		<db.validationQuery>select 1</db.validationQuery>
 	</properties>
 	<profiles>
 		<profile>
