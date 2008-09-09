@@ -28,7 +28,7 @@
 	    <joined-subclass name="Employee" table="tbl_employees">
 	    	<key column="user_id" foreign-key="fk_users_employees"/>
 	    	
-	    	<many-to-one name="store" class="Store" foreign-key="fk_employees_stores">
+	    	<many-to-one name="store" class="Store" foreign-key="fk_employees_stores" lazy="false">
 				<column name="store_id"/>
 			</many-to-one>
   			<many-to-one name="defaultPosition" class="Position" foreign-key="fk_employees_positions">

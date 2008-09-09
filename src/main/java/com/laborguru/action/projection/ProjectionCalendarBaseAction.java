@@ -60,7 +60,7 @@ public abstract class ProjectionCalendarBaseAction extends SpmAction {
 	 */
 	protected void pageSetup() {
 		if (getUsedWeeks() == null || getUsedWeeks() == 0)
-			setUsedWeeks(4);
+			setUsedWeeks(this.getEmployeeStore().getDailyProjectionsWeeksDefault());
 
 		setUsedWeeksMap(new TreeMap<Integer, String>(referenceDataService
 				.getUsedWeeks()));

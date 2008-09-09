@@ -65,7 +65,7 @@ public class ProjectionSettingsPrepareAction extends SpmAction implements Prepar
 		
 		storeService.save(getEmployeeStore());
 		
-		return SpmActionResult.INPUT.getResult();
+		return SpmActionResult.SUCCESS.getResult();
 	}
 
 	/**
