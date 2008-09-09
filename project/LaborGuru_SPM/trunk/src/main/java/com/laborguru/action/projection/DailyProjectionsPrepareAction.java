@@ -17,12 +17,9 @@ import com.opensymphony.xwork2.Preparable;
  */
 @SuppressWarnings("serial")
 public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction
-		implements Preparable {
+		implements Preparable {	
 
-	
-
-	private List<BigDecimal> calculatedProjections = new ArrayList<BigDecimal>(
-			7);
+	private List<BigDecimal> calculatedProjections = new ArrayList<BigDecimal>(7);
 	private List<BigDecimal> adjustedProjections = new ArrayList<BigDecimal>(7);
 	
 	private BigDecimal totalProjected = new BigDecimal("0");

@@ -15,16 +15,16 @@ public class Employee extends User {
 	private String phone;
 	private String phone2;
 	private Date hireDate;
-	private int maxHoursWeek;
-	private int maxDaysWeek;
-	private int maxHoursDay;
+	private Integer maxHoursWeek;
+	private Integer maxDaysWeek;
+	private Integer maxHoursDay;
 	private String address;
 	private String address2;
 	private String city;
 	private String state;
 	private String zip;
 	private String comments;
-	private double wage;
+	private Double wage;
 	private String employeeId;
 	
 	/**
@@ -107,7 +107,7 @@ public class Employee extends User {
 	 * 
 	 * @return
 	 */
-	public int getMaxHoursWeek() {
+	public Integer getMaxHoursWeek() {
 		return maxHoursWeek;
 	}
 	
@@ -115,7 +115,7 @@ public class Employee extends User {
 	 * 
 	 * @param maxHoursWeek
 	 */
-	public void setMaxHoursWeek(int maxHoursWeek) {
+	public void setMaxHoursWeek(Integer maxHoursWeek) {
 		this.maxHoursWeek = maxHoursWeek;
 	}
 	
@@ -123,7 +123,7 @@ public class Employee extends User {
 	 * 
 	 * @return
 	 */
-	public int getMaxDaysWeek() {
+	public Integer getMaxDaysWeek() {
 		return maxDaysWeek;
 	}
 	
@@ -131,7 +131,7 @@ public class Employee extends User {
 	 * 
 	 * @param maxDaysWeek
 	 */
-	public void setMaxDaysWeek(int maxDaysWeek) {
+	public void setMaxDaysWeek(Integer maxDaysWeek) {
 		this.maxDaysWeek = maxDaysWeek;
 	}
 	
@@ -139,7 +139,7 @@ public class Employee extends User {
 	 * 
 	 * @return
 	 */
-	public int getMaxHoursDay() {
+	public Integer getMaxHoursDay() {
 		return maxHoursDay;
 	}
 	
@@ -147,7 +147,7 @@ public class Employee extends User {
 	 * 
 	 * @param maxHoursDay
 	 */
-	public void setMaxHoursDay(int maxHoursDay) {
+	public void setMaxHoursDay(Integer maxHoursDay) {
 		this.maxHoursDay = maxHoursDay;
 	}
 	
@@ -264,14 +264,14 @@ public class Employee extends User {
 	/**
 	 * @return the wage
 	 */
-	public double getWage() {
+	public Double getWage() {
 		return wage;
 	}
 	
 	/**
 	 * @param wage the wage to set
 	 */
-	public void setWage(double wage) {
+	public void setWage(Double wage) {
 		this.wage = wage;
 	}
 	

@@ -20,6 +20,7 @@
 		<action name="settings_*" method="{1}" class="com.laborguru.action.projection.ProjectionSettingsPrepareAction">
 			<result name="edit" type="tiles">editSettingsPage</result>
 			<result name="input" type="tiles">editSettingsPage</result>			
+			<result name="success" type="redirectAction"><param name="actionName">daily_edit</param></result>						
 		</action>
 	</package>
 </struts>

@@ -88,6 +88,8 @@ public class SpmAction extends ActionSupport implements SessionAware {
 			Employee employee = getLoggedEmployeeOrNull();
 			if(employee != null) {
 				store = employee.getStore();
+				//Setting back the store to the session
+				getSession().put(HttpRequestConstants.STORE,store);
 			} else {
 				//:TODO: Remove this, as it only works for now
 				store = new Store();
