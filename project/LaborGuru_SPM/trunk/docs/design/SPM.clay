@@ -1592,7 +1592,7 @@
 </table>
 <table alias="" name="tbl_halfhour_projections" remarks="" uid="cb5cd6:11b99e89965:-7f59">
 <table-description></table-description>
-<table-figure-bounds height="100" width="203" x="546" y="914"/>
+<table-figure-bounds height="87" width="203" x="546" y="914"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="half_hour_projections_id" remarks="" uid="cb5cd6:11b99e89965:-7f3e">
 <column-description></column-description>
@@ -1645,12 +1645,6 @@
 <variant type-name-pattern="INT UNSIGNED"/>
 <variant type-name-pattern="INT UNSIGNED ZEROFILL"/>
 <variant type-name-pattern="INT ZEROFILL"/>
-</data-type>
-</column>
-<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="fixed" remarks="" uid="ebc6bf:11ba9a5c2dd:-7fe4">
-<column-description></column-description>
-<data-type jdbc-type="-7" name="BOOLEAN" selected-variant-pattern="BOOLEAN">
-<variant type-name-pattern="BOOLEAN"/>
 </data-type>
 </column>
 </column-list>
