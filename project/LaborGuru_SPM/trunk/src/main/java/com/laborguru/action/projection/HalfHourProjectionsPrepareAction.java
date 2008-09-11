@@ -165,11 +165,11 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 		for (int i = 0; i < values.size(); i++) {
 			if (getProjectionElements().get(i).getAdjustedValue() == null) {
 				getProjectionElements().get(i).setRevisedValue(values.get(i));
-				setTotalRevisedValues(getTotalRevisedValues().add(values.get(i)));
+				setTotalRevisedValues(getTotalRevisedValues().add(values.get(i).setScale(0, BigDecimal.ROUND_HALF_UP)));
 			} else {
 				getProjectionElements().get(i).setRevisedValue(
 						getProjectionElements().get(i).getAdjustedValue());
-				setTotalRevisedValues(getTotalRevisedValues().add(getProjectionElements().get(i).getAdjustedValue()));
+				setTotalRevisedValues(getTotalRevisedValues().add(getProjectionElements().get(i).getAdjustedValue().setScale(0, BigDecimal.ROUND_HALF_UP)));
 			}
 		}
 	}
@@ -299,7 +299,7 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	 * @param totalProjectedValues the totalProjectedValues to set
 	 */
 	public void setTotalProjectedValues(BigDecimal totalProjectedValues) {
-		this.totalProjectedValues = totalProjectedValues.setScale(2, BigDecimal.ROUND_HALF_UP);
+		this.totalProjectedValues = totalProjectedValues.setScale(0, BigDecimal.ROUND_HALF_UP);
 	}
 
 	/**
@@ -313,7 +313,7 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	 * @param totalAdjustedValues the totalAdjustedValues to set
 	 */
 	public void setTotalAdjustedValues(BigDecimal totalAdjustedValues) {
-		this.totalAdjustedValues = totalAdjustedValues.setScale(2, BigDecimal.ROUND_HALF_UP);
+		this.totalAdjustedValues = totalAdjustedValues.setScale(0, BigDecimal.ROUND_HALF_UP);
 	}
 
 	/**
@@ -327,7 +327,7 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	 * @param totalRevisedValues the totalRevisedValues to set
 	 */
 	public void setTotalRevisedValues(BigDecimal totalRevisedValues) {
-		this.totalRevisedValues = totalRevisedValues.setScale(2, BigDecimal.ROUND_HALF_UP);
+		this.totalRevisedValues = totalRevisedValues.setScale(0, BigDecimal.ROUND_HALF_UP);
 	}
 
 
