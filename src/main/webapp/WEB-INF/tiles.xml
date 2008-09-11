@@ -223,4 +223,10 @@
 	<definition name="editSettingsPage" extends="baseLayoutWithMenu">
 		<put-attribute name="body" value="/tiles/projection/settings.jsp" />
 	</definition>
+	
+	<!-- Schedule -->
+	<definition name="addShift" extends="baseLayoutWithMenu">
+		<put-attribute name="body" value="/tiles/schedule/addShift.jsp"/>
+	</definition>
+	
 </tiles-definitions>

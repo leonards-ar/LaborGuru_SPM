@@ -503,3 +503,16 @@ select {
 	color: #184E01;
 	text-align: center;
 }
+
+#titleBar2 {
+	height: 22px;
+	width: 100%;
+	background-color: #A3D39C;
+	background-image: url(../images/title-bar-bg.png);
+	background-position: top;
+	background-repeat: repeat-x;
+	color: #FFFFFF;
+	padding-left: 7px;
+	font-size: 20px;
+	text-align: left;
+}
