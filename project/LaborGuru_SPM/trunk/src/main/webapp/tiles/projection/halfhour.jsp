@@ -131,9 +131,9 @@
 													<s:hidden id="totalAdjustedValues" name="totalAdjustedValues"/>
 													<s:hidden id="totalRevisedValues" name="totalRevisedValues"/>
 													<td class="editorTableFirstColumn"><b><s:text name="projection.halfhour.daytotal.label" /></b></td>
-  													<td class="editorTableOddRow"><div id="totalProjectionValues"><b><s:property value="totalProjectedValues"/></b></div></td>
-													<td class="editorTableOddRow"><div id="totalAdjustedValues"><b><s:property value="totalAdjustedValues"/></b></div></td>
-													<td class="editorTableOddRow"><div id="totalRevisedValues"><b><s:property value="totalRevisedValues"/></b></div></td>
+  													<td class="editorTableOddRow"><div id="totalProjectionValues"><b><s:text name="currency"><s:param value="totalProjectedValues"/></s:text></b></div></td>
+													<td class="editorTableOddRow"><div id="totalAdjustedValues"><b><s:text name="currency"><s:param value="totalAdjustedValues"/></s:text></b></div></td>
+													<td class="editorTableOddRow"><div id="totalRevisedValues"><b><s:text name="currency"><s:param value="totalRevisedValues"/></s:text></b></div></td>
 													
 												</tr>
 												<!-- Iterate for each half hour from open to close hour -->
@@ -143,10 +143,10 @@
 													<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].hour"/>
   												    <td class="editorTableFirstColumn"><s:property value="hour"/></td>
 													<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].projectedValue"/>
-													<td class="editorTableEvenRow">$<s:property value="projectedValue" /></td>
-													<td class="editorTableEvenRow">$<s:textfield name="projectionElements[%{#itHalfHourProjection.index}].adjustedValue" size="10" theme="simple" /></td>
+													<td class="editorTableEvenRow"><s:text name="currency"><s:param value="projectedValue" /></s:text></td>
+													<td class="editorTableEvenRow"><s:textfield name="projectionElements[%{#itHalfHourProjection.index}].adjustedValue" size="10" theme="simple" /></td>
 													<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].revisedValue"/>
-													<td class="editorTableEvenRow">$<s:property value="revisedValue"/></td>
+													<td class="editorTableEvenRow"><s:text name="currency"><s:param value="revisedValue"/></s:text></td>
 												</tr>
 												</s:iterator>												
 												<!-- End Iterate for each half hour from open to close hour -->							
