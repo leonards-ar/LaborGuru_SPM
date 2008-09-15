@@ -108,7 +108,7 @@ public class ProjectionServiceBean implements ProjectionService {
 				}
 			}
 			HalfHourProjection halfHourProjection = new HalfHourProjection();
-			BigDecimal newValue = new BigDecimal(halfHourElement.getValue().doubleValue() / numberOfWeeks.intValue());
+			BigDecimal newValue = new BigDecimal(halfHourElement.getValue().doubleValue());
 			sumProjections = sumProjections.add(newValue);
 			halfHourProjection.setAdjustedValue(newValue);
 			halfHourProjection.setIndex(getIndex(new DateTime(halfHourElement.getTime()), openHour));

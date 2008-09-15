@@ -111,8 +111,11 @@
 									</tr>
 									<tr>
 										<td class="editorTableFirstColumn"><s:text name="projection.daily.adjusted.label" /></td>
-										<s:iterator value="adjustedProjections" status="itAdjusted">
-											<td class="editorTableEvenRow"><s:textfield name="adjustedProjections[%{#itAdjusted.index}]" size="7" maxlength="15" theme="simple" /></td>
+										<s:iterator id="myProjections" value="adjustedProjections" status="itAdjusted">
+											<s:text name="currency" id="adjustedValues">
+												<s:param name="value" value="myProjections"/>
+											</s:text>
+											<td class="editorTableEvenRow"><s:textfield name="adjustedProjections[%{#itAdjusted.index}]" value="%{#adjustedValues}" size="7" maxlength="15" theme="simple" /></td>
 										</s:iterator>
 										<td class="editorTableEvenRow"><b><s:text name="currency"><s:param value="totalAdjusted"/></s:text></b></td>
 									</tr>									
