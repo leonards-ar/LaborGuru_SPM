@@ -15,7 +15,7 @@
         <property name="dayOfWeekIndex" column="day_of_week" type="int" not-null="true"/>        
 
 		<many-to-one name="store" class="Store" foreign-key="fk_operation_times_store">
-			<column name="store_id"/>
+			<column name="store_id" not-null="true"/>
 		</many-to-one>
     </class>
 	<database-object>

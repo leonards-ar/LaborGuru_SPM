@@ -17,4 +17,6 @@ public interface ProjectionDao {
 	DailyProjection getDailyProjection(Store store, Date selectedDate);
 	
 	List<HalfHourCalculated> getAvgHalfHourProjection(Integer numberOfWeeks, Store store, Date selectedDate);
+
+	void save(DailyProjection projection);
 }

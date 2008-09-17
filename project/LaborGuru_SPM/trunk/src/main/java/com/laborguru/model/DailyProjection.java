@@ -1,6 +1,7 @@
 package com.laborguru.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,13 +28,13 @@ public class DailyProjection extends SpmObject {
 	
 	private Store store;
 	
-	private List<HalfHourProjection> halfHourProjections;
+	private List<HalfHourProjection> halfHourProjections = new ArrayList<HalfHourProjection>();
 	
 	public BigDecimal getDailyProjectionValue(){
 		BigDecimal retValue = new BigDecimal("0");
 		
 		for (HalfHourProjection aHalfHourProjection: getHalfHourProjections()){
-			retValue.add(aHalfHourProjection.getAdjustedValue());
+			retValue = retValue.add(aHalfHourProjection.getAdjustedValue());
 		}
 		
 		return retValue;
@@ -181,7 +182,7 @@ public class DailyProjection extends SpmObject {
 	 * relation.
 	 * @param halfHourProjection The halfHourProjection to remove
 	 */
-	public void removeDayPart(HalfHourProjection halfHourProjection){
+	public void removeHalfHourProjection(HalfHourProjection halfHourProjection){
 		
 		if (halfHourProjection == null){
 			throw new IllegalArgumentException("Null halfHourProjection passed in as parameter");
