@@ -5,7 +5,27 @@
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
 	<!--  Services's declarations -->
-	<bean id="projectionService" class="com.laborguru.service.projection.ProjectionServiceBean" autowire="byType"/>
+	<bean id="projectionServiceTarget" class="com.laborguru.service.projection.ProjectionServiceBean" autowire="byType"/>
+
+	<bean id="projectionService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.laborguru.service.projection.ProjectionService</value>
+			</list>
+		</property>	
+	
+		<property name="target">
+			<ref bean="projectionServiceTarget"/>
+		</property>		
+		
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>	
+		
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributeSourceDefault"/>
+		</property>			
+	</bean>
 	
 	<bean id="customerServiceTarget" class="com.laborguru.service.customer.CustomerServiceBean" autowire="byType"/>
 	

@@ -10,6 +10,10 @@ public class HalfHourCalculated extends SpmObject {
 	private String time;
 	private BigDecimal value;
 	
+	public HalfHourCalculated(){
+		super();
+	}
+	
 	public HalfHourCalculated(String time, BigDecimal value){
 		this.time = time;
 		this.value = value;

@@ -25,9 +25,9 @@
 	<sql-query name="halfHourProjections">
 	
 		<return-scalar column="time" type="string"/>
-		<return-scalar column="value" type="double"/>
+		<return-scalar column="value" type="big_decimal"/>
 		
-		<![CDATA[SELECT if(MINUTE(hs.date_time) >= 30, CONCAT(hour(hs.date_time), ':30'), 
+		<![CDATA[SELECT if(MINUTE(hs.date_time) >= 30, CONCAT(HOUR(hs.date_time), ':30'), 
 		CONCAT(HOUR(hs.date_time),':00')) as time, 
 		SUM(hs.sales_value) as value
 		FROM tbl_historic_sales hs 

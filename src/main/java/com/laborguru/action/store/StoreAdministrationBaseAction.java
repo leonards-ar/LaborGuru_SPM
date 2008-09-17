@@ -7,7 +7,6 @@ package com.laborguru.action.store;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
@@ -17,6 +16,7 @@ import com.laborguru.action.SpmAction;
 import com.laborguru.frontend.HttpRequestConstants;
 import com.laborguru.model.Store;
 import com.laborguru.service.store.StoreService;
+import com.laborguru.util.SpmConstants;
 import com.opensymphony.xwork2.Preparable;
 
 /**
@@ -26,8 +26,7 @@ import com.opensymphony.xwork2.Preparable;
  * @since SPM 1.0
  *
  */
-public abstract class StoreAdministrationBaseAction extends SpmAction implements
-		Preparable {
+public abstract class StoreAdministrationBaseAction extends SpmAction implements Preparable {
 	private static Logger log = Logger.getLogger(StoreAdministrationBaseAction.class);
 
 	private Store store;
@@ -36,15 +35,12 @@ public abstract class StoreAdministrationBaseAction extends SpmAction implements
 	
 	private StoreService storeService;
 
-	private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
-	private static final NumberFormat DOUBLE_FORMAT_5 = DecimalFormat.getInstance(Locale.US);
-	private static final NumberFormat DOUBLE_FORMAT_2 = DecimalFormat.getInstance(Locale.US);
 	static {
-		if(DOUBLE_FORMAT_5 instanceof DecimalFormat) {
-			((DecimalFormat)DOUBLE_FORMAT_5).applyPattern("0.#####");
+		if(SpmConstants.DOUBLE_FORMAT_5 instanceof DecimalFormat) {
+			((DecimalFormat)SpmConstants.DOUBLE_FORMAT_5).applyPattern("0.#####");
 		}
-		if(DOUBLE_FORMAT_2 instanceof DecimalFormat) {
-			((DecimalFormat)DOUBLE_FORMAT_2).applyPattern("0.##");
+		if(SpmConstants.DOUBLE_FORMAT_2 instanceof DecimalFormat) {
+			((DecimalFormat)SpmConstants.DOUBLE_FORMAT_2).applyPattern("0.##");
 		}		
 	}
 	private static final int DEFAULT_DECIMALS = 5;
@@ -143,7 +139,7 @@ public abstract class StoreAdministrationBaseAction extends SpmAction implements
 	 */
 	protected String dateToDisplayTime(Date d) {
 		if(d != null) {
-			return TIME_FORMAT.format(d);
+			return SpmConstants.TIME_FORMAT.format(d);
 		} else {
 			return null;
 		}
@@ -157,7 +153,7 @@ public abstract class StoreAdministrationBaseAction extends SpmAction implements
 	protected Date displayTimeToDate(String time) {
 		try {
 			if(time != null) {
-				return TIME_FORMAT.parse(time);
+				return SpmConstants.TIME_FORMAT.parse(time);
 			} else {
 				return null;
 			}
@@ -175,9 +171,9 @@ public abstract class StoreAdministrationBaseAction extends SpmAction implements
 	private NumberFormat getDoubleFormat(int decimals) {
 		switch(decimals) {
 			case 2:
-				return DOUBLE_FORMAT_2;
+				return SpmConstants.DOUBLE_FORMAT_2;
 			case 5:
-				return DOUBLE_FORMAT_5;
+				return SpmConstants.DOUBLE_FORMAT_5;
 			default:
 				NumberFormat nf = DecimalFormat.getInstance(Locale.US);
 				String format = "0.";

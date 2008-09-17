@@ -2,6 +2,7 @@ package com.laborguru.service.projection.dao;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -35,9 +36,15 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 			log.debug("Before getting adjusted daily projections - Parameters: Store Id:"+ store.getId()+" startDate:"+startTime.toString()+" endDate:"+endTime.toString());
 		}
 		
-		return (List<DailyProjection>)  getHibernateTemplate().findByNamedParam("from DailyProjection dp " +
+		List<DailyProjection> projections  = (List<DailyProjection>)  getHibernateTemplate().findByNamedParam("from DailyProjection dp " +
 				"where dp.store.id=:storeId AND dp.projectionDate >= :startDate AND dp.projectionDate <= :endDate",
 				new String[] {"storeId", "startDate", "endDate"}, new Object[] {store.getId(), startTime.toDate(), endTime.toDate()} );		
+		
+		if(log.isDebugEnabled()){
+			log.debug("After getting adjusted daily projections - Average Sales List size: Store Id:"+ projections.size());
+		}
+		
+		return projections;
 	}
 
 	/**
@@ -60,7 +67,7 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 			log.debug("Before getting avg daily projections - Parameters: Store Id:"+ store.getId()+" startDate:"+startTime.toString()+" endDate:"+endTime.toString());
 		}
 		
-		List<Double> avgSalesList = getHibernateTemplate().findByNamedParam("select avg(hs.salesValue) from HistoricSales hs " +
+		List<BigDecimal> avgSalesList = getHibernateTemplate().findByNamedParam("select sum(hs.salesValue) from HistoricSales hs " +
 				"where hs.store.id=:storeId AND hs.dateTime >= :startDate AND hs.dateTime <= :endDate group by hs.dayOfWeek",
 				new String[] {"storeId", "startDate", "endDate"}, new Object[] {store.getId(), startTime.toDate(), endTime.toDate()} );
 
@@ -70,8 +77,8 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 		
 		List<BigDecimal> retSalesList = new ArrayList<BigDecimal>(avgSalesList.size());
 		
-		for (Double aValue: avgSalesList){
-			retSalesList.add(new BigDecimal(aValue.toString()));
+		for (BigDecimal aValue: avgSalesList){
+			retSalesList.add(aValue.divide(BigDecimal.valueOf(numberOfWeeks)));
 		}
 		
 		return retSalesList;
@@ -108,27 +115,46 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 		DateTime startTime = startDate.minusWeeks(numberOfWeeks).withTime(0, 0, 0, 0);
 		DateTime endTime = startDate.minusDays(1).withTime(23, 59, 59, 999);
 		
+		Calendar calendarDate = Calendar.getInstance();
+		calendarDate.setTime(selectedDate);
+		
 		if(log.isDebugEnabled()) {
-			log.debug("Before getting avg daily projections - Parameters: Store Id:"+ store.getId()+" startDate:"+startTime.toString("yyyy-MM-dd HH:mm:ss") + " endDate:" + endTime.toString("yyyy-MM-dd HH:mm:ss") + " dayOfWeek:" + startDate.getDayOfWeek());
+			log.debug("Before getting avg half hour projections - Parameters: Store Id:"+ store.getId()+" startDate:"+startTime.toString("yyyy-MM-dd HH:mm:ss") + " endDate:" + endTime.toString("yyyy-MM-dd HH:mm:ss") + " dayOfWeek:" + startDate.getDayOfWeek());
 		}
 		
-		List sumProjections = getHibernateTemplate().findByNamedQueryAndNamedParam("halfHourProjections", new String[]{"storeId","startDate","endDate","dayOfWeek"}, new Object[]{store.getId(),startTime.toString("yyyy-MM-dd HH:mm:ss"),endTime.toString("yyyy-MM-dd HH:mm:ss"),startDate.getDayOfWeek()});
+		List sumProjections = getHibernateTemplate().findByNamedQueryAndNamedParam(
+				"halfHourProjections", 
+				new String[]{"storeId","startDate","endDate","dayOfWeek"}, 
+				new Object[]{store.getId(),startTime.toString("yyyy-MM-dd HH:mm:ss"),endTime.toString("yyyy-MM-dd HH:mm:ss"), calendarDate.get(Calendar.DAY_OF_WEEK)});
 	
 		
-		List<HalfHourCalculated> projections = new ArrayList<HalfHourCalculated>();
+		List<HalfHourCalculated> projections = new ArrayList<HalfHourCalculated>(sumProjections.size());
 		
 		Iterator i = sumProjections.iterator();
 		
 		while ( i.hasNext() ) {
 			Object[] row = (Object[]) i.next();
 			
-			BigDecimal number = new BigDecimal((Double)row[1]/numberOfWeeks.intValue());
+			BigDecimal number =  ((BigDecimal) (row[1])).divide(BigDecimal.valueOf(numberOfWeeks));
 			HalfHourCalculated hhc = new HalfHourCalculated((String)row[0], number);
 			projections.add(hhc);
 
 		}
-		return sumProjections;
+		return projections;
 
+	}
+
+	/**
+	 * @param projection
+	 * @see com.laborguru.service.projection.dao.ProjectionDao#save(com.laborguru.model.DailyProjection)
+	 */
+	public void save(DailyProjection projection) {
+		
+		DateTime dt = new DateTime(projection.getProjectionDate());
+		dt = dt.withTime(0, 0, 0, 0);
+		projection.setProjectionDate(dt.toDate());
+		
+		getHibernateTemplate().save(projection);
 	}
 
 }

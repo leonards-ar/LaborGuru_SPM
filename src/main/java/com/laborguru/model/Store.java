@@ -1,7 +1,9 @@
 package com.laborguru.model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -199,6 +201,25 @@ public class Store extends SpmObject {
 		.isEquals();
 	}
 
+	
+	/**
+	 * Returns the operation time by date
+	 * @return the operationTime
+	 */
+	public OperationTime getStoreOperationTimeByDate(Date date) {
+	
+		Calendar dateCalendar = Calendar.getInstance();
+		dateCalendar.setTime(date);
+		
+		for(OperationTime aOperationTime: getOperationTimes()) {
+			if(dateCalendar.get(Calendar.DAY_OF_WEEK) == aOperationTime.getDayOfWeek().getDayOfWeek()) {
+				return aOperationTime;
+			}
+		}
+		
+		return null;		
+	}	
+	
 	/**
 	 * @return the operationTime
 	 */

@@ -29,6 +29,8 @@ public interface ProjectionService extends Service{
 
 	List<HalfHourProjection> getAvgHalfHourProjection(Integer numberOfWeeks, BigDecimal amoutProjection, Store store, Date selectedDate);
 	
+	void saveDailyProjection(Store store, BigDecimal projectionAmount, Date selectedDate);
+	
 	void setProjectionDao(ProjectionDao projectionDao);
 	
 }

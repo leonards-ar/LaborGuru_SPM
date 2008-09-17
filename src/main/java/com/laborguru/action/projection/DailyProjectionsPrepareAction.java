@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.laborguru.action.SpmActionResult;
+import com.laborguru.exception.ErrorEnum;
+import com.laborguru.exception.ErrorMessage;
+import com.laborguru.model.OperationTime;
+import com.laborguru.model.Store;
 import com.opensymphony.xwork2.Preparable;
 
 /**
@@ -16,12 +20,11 @@ import com.opensymphony.xwork2.Preparable;
  * 
  */
 @SuppressWarnings("serial")
-public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction
-		implements Preparable {	
+public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction implements Preparable {
 
 	private List<BigDecimal> calculatedProjections = new ArrayList<BigDecimal>(7);
 	private List<BigDecimal> adjustedProjections = new ArrayList<BigDecimal>(7);
-	
+
 	private BigDecimal totalProjected = new BigDecimal("0");
 	private BigDecimal totalAdjusted = new BigDecimal("0");
 
@@ -33,8 +36,6 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction
 	public void prepareEdit() {
 		pageSetup();
 	}
-
-
 
 	/**
 	 * Prepare data to be used in the actions methods defined for this action
@@ -54,19 +55,13 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction
 		getWeekDaySelector();
 
 		// Get calculated projections
-		setCalculatedProjections(getProjectionService()
-				.getAvgDailyProjectionForAWeek(getUsedWeeks(),
-						this.getEmployeeStore(),
-						getWeekDaySelector().getStartingWeekDay()));
-		setAdjustedProjections(getProjectionService()
-				.getAdjustedDailyProjectionForAWeek(this.getEmployeeStore(),
-						getWeekDaySelector().getStartingWeekDay()));
+		setCalculatedProjections(getProjectionService().getAvgDailyProjectionForAWeek(getUsedWeeks(), this.getEmployeeStore(), getWeekDaySelector().getStartingWeekDay()));
+		setAdjustedProjections(getProjectionService().getAdjustedDailyProjectionForAWeek(this.getEmployeeStore(), getWeekDaySelector().getStartingWeekDay()));
 
 		// Set default adjusted values
 		for (int i = 0; i < getAdjustedProjections().size(); i++) {
 			if (getAdjustedProjections().get(i).intValue() == 0) {
-				getAdjustedProjections().set(i,
-						getCalculatedProjections().get(i));
+				getAdjustedProjections().set(i, getCalculatedProjections().get(i));
 			}
 		}
 
@@ -101,13 +96,28 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction
 	 * @throws Exception
 	 */
 	public String save() throws Exception {
-		/*
-		 * try {
-		 * 
-		 *  } catch (SpmCheckedException e) {
-		 * addActionError(e.getErrorMessage()); }
-		 */
-		return SpmActionResult.INPUT.getResult();
+
+		//TODO:This should be validated in a different place/way. As we have to show something to Nioko tomorrow I'm putting it here just for now.
+		//Now it's ugly, very ugly....
+		Store storeAux = this.getEmployeeStore();		
+		for (int j=0; j < 7; j++){
+			OperationTime operationTime = storeAux.getStoreOperationTimeByDate(getWeekDaySelector().getWeekDays().get(j));
+			if (operationTime == null || operationTime.getOpenHour() == null || operationTime.getCloseHour() == null){
+				addActionError(new ErrorMessage(ErrorEnum.OPERATION_TIME_IS_NOT_SET_FOR_STORE.name()));
+				prepareEdit();
+				setupDailyProjectionData();				
+				return SpmActionResult.INPUT.getResult();
+			}
+
+		}
+
+		//Saving each projection
+		int i=0;
+		for (BigDecimal dailyProjection: getAdjustedProjections()){
+			getProjectionService().saveDailyProjection(this.getEmployeeStore(), dailyProjection,getWeekDaySelector().getWeekDays().get(i));
+			i++;
+		}
+		return SpmActionResult.SUCCESS.getResult();
 	}
 
 	/**
@@ -154,7 +164,6 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction
 	public void setAdjustedProjections(List<BigDecimal> adjustedProjections) {
 		this.adjustedProjections = adjustedProjections;
 	}
-
 
 	/**
 	 * 
