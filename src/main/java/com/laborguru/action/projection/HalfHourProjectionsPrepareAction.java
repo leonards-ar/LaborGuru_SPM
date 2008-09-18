@@ -221,17 +221,7 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 
 	private void setUpHalfHourProjection() {
 		// Force object initialization
-		try {
-			getWeekDaySelector().setSelectedDay(
-					new SimpleDateFormat("yyyy-MM-dd").parse("2008-08-20"));
-			setSelectedDate("20080820");
-			setSelectedWeekDay("20080817");
-			
-		} catch (Exception e) {
-
-		}
-
-		// setSelectedDate(getWeekDaySelector().getStringStartingWeekDay());
+		setSelectedDate(getWeekDaySelector().getStringStartingWeekDay());
 
 		DailyProjection dailyProjection = getProjectionService().getDailyProjection(getEmployeeStore(), getWeekDaySelector().getSelectedDay());
 
