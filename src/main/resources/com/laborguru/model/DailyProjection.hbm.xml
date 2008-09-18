@@ -15,7 +15,7 @@
 		
 		<many-to-one name="store" class="Store" column="store_id" not-null="true" foreign-key="fk_projections_stores" />
 
-	    <list name="halfHourProjections" cascade="all-delete-orphan" table="tbl_halfhour_projection" lazy="true" inverse="true">
+	    <list name="halfHourProjections" cascade="all-delete-orphan" table="tbl_halfhour_projections" lazy="true" inverse="true">
 	        <key column="projection_id" foreign-key="fk_halfhours_projections"/>
 	        <list-index column="half_hour_index"/>
 	        <one-to-many class="HalfHourProjection"/>
