@@ -34,8 +34,8 @@
 		WHERE hs.store_id=:storeId 
 		AND hs.date_time BETWEEN STR_TO_DATE(:startDate,'%Y-%m-%d %H:%i:%s') AND STR_TO_DATE(:endDate,'%Y-%m-%d %H:%i:%s') 
 		AND day_of_week=:dayOfWeek 
-		GROUP BY time
-		ORDER BY STR_TO_DATE(time, GET_FORMAT(TIME,'ISO'))]]>
+		GROUP BY if(MINUTE(hs.date_time) >= 30, CONCAT(HOUR(hs.date_time), ':30'),CONCAT(HOUR(hs.date_time),':00'))
+		ORDER BY STR_TO_DATE(if(MINUTE(hs.date_time) >= 30, CONCAT(HOUR(hs.date_time), ':30'),CONCAT(HOUR(hs.date_time),':00')), GET_FORMAT(TIME,'ISO'))]]>
 	</sql-query> 
 	
 	<database-object>
