@@ -169,6 +169,12 @@ public class OperationTime extends SpmObject {
 		this.dayOfWeek = dayOfWeek;
 	}
 
+	/**
+	 * 
+	 * @param list
+	 * @param dayOfWeek
+	 * @return
+	 */
 	public static OperationTime getOperationTimeByDayOfWeek(List<OperationTime> list, DayOfWeek dayOfWeek) {
 		for(OperationTime aOperationTime: list) {
 			if(aOperationTime.getDayOfWeek().equals(dayOfWeek)) {
@@ -177,6 +183,7 @@ public class OperationTime extends SpmObject {
 		}
 		return null;
 	}
+	
 	/**
 	 * 
 	 * @return
