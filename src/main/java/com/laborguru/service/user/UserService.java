@@ -1,5 +1,8 @@
 package com.laborguru.service.user;
 
+import java.util.List;
+
+import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.User;
 import com.laborguru.service.Service;
 import com.laborguru.service.user.dao.UserDao;
@@ -19,7 +22,7 @@ public interface UserService extends Service {
 	 * @param user object that will be save.
 	 * @return user Saved.
 	 */
-	User save(User user);
+	User save(User user) throws SpmCheckedException;
 	/**
 	 * Retrieves  a user by userName
 	 * @param A User object containing a username.
@@ -27,6 +30,25 @@ public interface UserService extends Service {
 	 */
 	User getUserByUserName(User user);
 
+	/**
+	 * Finds all the users that are not employee.
+	 * @return
+	 */
+	List<User> findAll();
+	
+	/**
+	 * Deletes a user.
+	 * @param user
+	 */
+	void delete(User user);
+	
+	/**
+	 * Retrieves a user by id
+	 * @param user
+	 * @return
+	 */
+	User getUserById(User user);
+	
 	/**
 	 * Setter for User Dao
 	 * @param userDao UserDao
