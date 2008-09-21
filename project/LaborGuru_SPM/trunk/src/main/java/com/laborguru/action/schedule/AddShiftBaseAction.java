@@ -139,6 +139,10 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	 * @return the storeSchedule
 	 */
 	public StoreSchedule getStoreSchedule() {
+		if(storeSchedule == null) {
+			storeSchedule = new StoreSchedule();
+			storeSchedule.setStore(getEmployeeStore());
+		}
 		return storeSchedule;
 	}
 
@@ -302,7 +306,7 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	private Integer getOpenHourColspan(Date hour) {
 		Calendar cal = CalendarUtils.getCalendar(hour);
 		int minutes = cal.get(Calendar.MINUTE);
-		for(int i = 1; MINUTES_INTERVAL * i <= 60 ;i++ ) {
+		for(int i = 0; MINUTES_INTERVAL * i <= 60 ;i++ ) {
 			if(minutes <= MINUTES_INTERVAL * i) {
 				return new Integer((60/MINUTES_INTERVAL) - i);
 			}

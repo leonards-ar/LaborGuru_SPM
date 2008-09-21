@@ -225,7 +225,7 @@
 						<td class="scheduleCellHeader"><s:text name="schedule.addshift.out_hour"/></td>
 						<td class="scheduleCellHeader"><s:text name="schedule.addshift.total_hours"/></td>
 						<s:iterator id="hourLabel" value="scheduleLabelHours" status="itHourLabel">     
-							<td class="scheduleCellHeader" colspan="<s:property value="hourLabel.colspan"/>"><s:text name='schedule.addshift.hour.dateformat'><s:param value='hourLabel.hour'/></s:text></td>
+							<td class="scheduleCellHeader" colspan="<s:property value="colspan"/>"><s:text name='schedule.addshift.hour.dateformat'><s:param value='hour'/></s:text></td>
 						</s:iterator>         
 				    </tr>
 				    <!-- Header -->
