@@ -1,5 +1,6 @@
 package com.laborguru.frontend.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 
@@ -7,8 +8,13 @@ import java.math.BigDecimal;
  * @author 
  *
  */
-public class HalfHourElement {
+public class HalfHourElement implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3084686923963998744L;
+	
 	private Long id;
 	private String hour;
 	private BigDecimal projectedValue;
