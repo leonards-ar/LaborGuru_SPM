@@ -224,144 +224,24 @@
 						<td class="scheduleCellHeader"><s:text name="schedule.addshift.in_hour"/></td>    
 						<td class="scheduleCellHeader"><s:text name="schedule.addshift.out_hour"/></td>
 						<td class="scheduleCellHeader"><s:text name="schedule.addshift.total_hours"/></td>
-						<s:iterator>     
-						<td class="scheduleCellHeader" colspan="4">4</td>
+						<s:iterator id="hourLabel" value="scheduleLabelHours" status="itHourLabel">     
+							<td class="scheduleCellHeader" colspan="<s:property value="hourLabel.colspan"/>"><s:text name='schedule.addshift.hour.dateformat'><s:param value='hourLabel.hour'/></s:text></td>
 						</s:iterator>         
-						<td class="scheduleCellHeader" colspan="4">5</td>            
-						<td class="scheduleCellHeader" colspan="4">6</td>            
-						<td class="scheduleCellHeader" colspan="4">7</td>            
-						<td class="scheduleCellHeader" colspan="4">8</td>            
 				    </tr>
 				    <!-- Header -->
 				    
 				    <!-- Employees -->
 				    <tr class="scheduleMainTableEmployeeRow">
-						<td class="scheduleNameCell">Ignacio Goris</td>    
-						<td class="scheduleValueCell" id="inHour_0">4</td>    
-						<td class="scheduleValueCell" id="outHour_0">8</td>
-						<td class="scheduleValueCell" id="totalHours_0">4</td>            
-				
-						<td id='cell_0_0' onclick="scheduleClick(this, 0,0, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden" id="schedule_0_0" name="schedule_0_0" value=""/></td>            
-						<td id='cell_0_1' onclick="scheduleClick(this, 0,1, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden" id="schedule_0_1" name="schedule_0_1" value=""/></td>            
-						<td id='cell_0_2' onclick="scheduleClick(this, 0,2, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden" id="schedule_0_2" name="schedule_0_2" value=""/></td>            
-						<td id='cell_0_3' onclick="scheduleClick(this, 0,3, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden" id="schedule_0_3" name="schedule_0_3" value=""/></td>            
-				
-						<td id='cell_0_4' onclick="scheduleClick(this, 0,4, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden" id="schedule_0_4" name="schedule_0_4" value=""/></td>            
-						<td id='cell_0_5' onclick="scheduleClick(this, 0,5, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden" id="schedule_0_5" name="schedule_0_5" value=""/></td>            
-						<td id='cell_0_6' onclick="scheduleClick(this, 0,6, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden" id="schedule_0_6" name="schedule_0_6" value=""/></td>            
-						<td id='cell_0_7' onclick="scheduleClick(this, 0,7, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden" id="schedule_0_7" name="schedule_0_7" value=""/></td>            
-				
-						<td id='cell_0_8' onclick="scheduleClick(this, 0,8, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_0_8" value=""/></td>            
-						<td id='cell_0_9' onclick="scheduleClick(this, 0,9, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_0_9" value=""/></td>            
-						<td id='cell_0_10' onclick="scheduleClick(this, 0,10, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_0_10" value=""/></td>            
-						<td id='cell_0_11' onclick="scheduleClick(this, 0,11, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_0_11" value=""/></td>            
-				
-						<td id='cell_0_12' onclick="scheduleClick(this, 0,12, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_0_12" value=""/></td>            
-						<td id='cell_0_13' onclick="scheduleClick(this, 0,13, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_0_13" value=""/></td>            
-						<td id='cell_0_14' onclick="scheduleClick(this, 0,14, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_0_14" value=""/></td>            
-						<td id='cell_0_15' onclick="scheduleClick(this, 0,15, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_0_15" value=""/></td>            
-				
-						<td id='cell_0_16' onclick="scheduleClick(this, 0,16, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_0_16" value=""/></td>            
-						<td id='cell_0_17' onclick="scheduleClick(this, 0,17, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_0_17" value=""/></td>            
-						<td id='cell_0_18' onclick="scheduleClick(this, 0,18, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_0_18" value=""/></td>            
-						<td id='cell_0_19' onclick="scheduleClick(this, 0,19, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_0_19" value=""/></td>            
+				    	<td class="scheduleNameCell"><select></select></td>
+						<td class="scheduleNameCell">Add</td>    
+						<td class="scheduleValueCell" id="inHour_0">XX</td>    
+						<td class="scheduleValueCell" id="outHour_0">XX</td>
+						<td class="scheduleValueCell" id="totalHours_0">XX</td>            
+						<s:iterator id="hour" value="scheduleIndividualHours" status="itHour">     
+						<td id='cell_<s:property value="itHour.index"/>_<s:property value="itHour.index"/>' onclick="scheduleClick(this, <s:property value="itHour.index"/>,<s:property value="itHour.index"/>, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden" id="schedule_<s:property value="itHour.index"/>_<s:property value="itHour.index"/>" name="schedule_<s:property value="itHour.index"/>_<s:property value="itHour.index"/>" value=""/></td>            
+						</s:iterator>
 				    </tr>
-				    
-				    <tr class="scheduleMainTableEmployeeRow">
-						<td class="scheduleNameCell">Federico Barrera Oro</td>    
-						<td class="scheduleValueCell" id="inHour_1">4</td>    
-						<td class="scheduleValueCell" id="outHour_1">8</td>
-						<td class="scheduleValueCell" id="totalHours_1">4</td>             
-				
-						<td id='cell_1_0' onclick="scheduleClick(this, 1,0, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_1_0" value=""/></td>            
-						<td id='cell_1_1' onclick="scheduleClick(this, 1,1, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_1_1" value=""/></td>            
-						<td id='cell_1_2' onclick="scheduleClick(this, 1,2, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_1_2" value=""/></td>            
-						<td id='cell_1_3' onclick="scheduleClick(this, 1,3, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_1_3" value=""/></td>            
-				
-						<td id='cell_1_4' onclick="scheduleClick(this, 1,4, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_1_4" value=""/></td>            
-						<td id='cell_1_5' onclick="scheduleClick(this, 1,5, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_1_5" value=""/></td>            
-						<td id='cell_1_6' onclick="scheduleClick(this, 1,6, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_1_6" value=""/></td>            
-						<td id='cell_1_7' onclick="scheduleClick(this, 1,7, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_1_7" value=""/></td>            
-				
-						<td id='cell_1_8' onclick="scheduleClick(this, 1,8, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_1_8" value=""/></td>            
-						<td id='cell_1_9' onclick="scheduleClick(this, 1,9, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_1_9" value=""/></td>            
-						<td id='cell_1_10' onclick="scheduleClick(this, 1,10, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_1_10" value=""/></td>            
-						<td id='cell_1_11' onclick="scheduleClick(this, 1,11, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_1_11" value=""/></td>            
-				
-						<td id='cell_1_12' onclick="scheduleClick(this, 1,12, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_1_12" value=""/></td>            
-						<td id='cell_1_13' onclick="scheduleClick(this, 1,13, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_1_13" value=""/></td>            
-						<td id='cell_1_14' onclick="scheduleClick(this, 1,14, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_1_14" value=""/></td>            
-						<td id='cell_1_15' onclick="scheduleClick(this, 1,15, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_1_15" value=""/></td>            
-				
-						<td id='cell_1_16' onclick="scheduleClick(this, 1,16, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_1_16" value=""/></td>            
-						<td id='cell_1_17' onclick="scheduleClick(this, 1,17, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_1_17" value=""/></td>            
-						<td id='cell_1_18' onclick="scheduleClick(this, 1,18, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_1_18" value=""/></td>            
-						<td id='cell_1_19' onclick="scheduleClick(this, 1,19, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_1_19" value=""/></td>            
-				    </tr>
-				    
-				    <tr class="scheduleMainTableEmployeeRow">
-						<td class="scheduleNameCell">Cristian Nuñez Rebolledo</td>    
-						<td class="scheduleValueCell" id="inHour_2">4</td>    
-						<td class="scheduleValueCell" id="outHour_2">8</td>
-						<td class="scheduleValueCell" id="totalHours_2">4</td>             
-				
-						<td id='cell_2_0' onclick="scheduleClick(this, 2,0, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_2_0" value=""/></td>            
-						<td id='cell_2_1' onclick="scheduleClick(this, 2,1, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_2_1" value=""/></td>            
-						<td id='cell_2_2' onclick="scheduleClick(this, 2,2, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_2_2" value=""/></td>            
-						<td id='cell_2_3' onclick="scheduleClick(this, 2,3, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_2_3" value=""/></td>            
-				
-						<td id='cell_2_4' onclick="scheduleClick(this, 2,4, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_2_4" value=""/></td>            
-						<td id='cell_2_5' onclick="scheduleClick(this, 2,5, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_2_5" value=""/></td>            
-						<td id='cell_2_6' onclick="scheduleClick(this, 2,6, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_2_6" value=""/></td>            
-						<td id='cell_2_7' onclick="scheduleClick(this, 2,7, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_2_7" value=""/></td>            
-				
-						<td id='cell_2_8' onclick="scheduleClick(this, 2,8, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_2_8" value=""/></td>            
-						<td id='cell_2_9' onclick="scheduleClick(this, 2,9, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_2_9" value=""/></td>            
-						<td id='cell_2_10' onclick="scheduleClick(this, 2,10, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_2_10" value=""/></td>            
-						<td id='cell_2_11' onclick="scheduleClick(this, 2,11, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_2_11" value=""/></td>            
-				
-						<td id='cell_2_12' onclick="scheduleClick(this, 2,12, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_2_12" value=""/></td>            
-						<td id='cell_2_13' onclick="scheduleClick(this, 2,13, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_2_13" value=""/></td>            
-						<td id='cell_2_14' onclick="scheduleClick(this, 2,14, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_2_14" value=""/></td>            
-						<td id='cell_2_15' onclick="scheduleClick(this, 2,15, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_2_15" value=""/></td>            
-				
-						<td id='cell_2_16' onclick="scheduleClick(this, 2,16, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_2_16" value=""/></td>            
-						<td id='cell_2_17' onclick="scheduleClick(this, 2,17, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_2_17" value=""/></td>            
-						<td id='cell_2_18' onclick="scheduleClick(this, 2,18, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_2_18" value=""/></td>            
-						<td id='cell_2_19' onclick="scheduleClick(this, 2,19, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_2_19" value=""/></td>            
-				    </tr>    
-				    
-				    <tr class="scheduleMainTableEmployeeRow">
-						<td class="scheduleNameCell">Mariano Capurro</td>    
-						<td class="scheduleValueCell" id="inHour_3">4</td>    
-						<td class="scheduleValueCell" id="outHour_3">8</td>
-						<td class="scheduleValueCell" id="totalHours_3">4</td>           
-				
-						<td id='cell_3_0' onclick="scheduleClick(this, 3,0, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_3_0" value=""/></td>            
-						<td id='cell_3_1' onclick="scheduleClick(this, 3,1, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_3_1" value=""/></td>            
-						<td id='cell_3_2' onclick="scheduleClick(this, 3,2, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_3_2" value=""/></td>            
-						<td id='cell_3_3' onclick="scheduleClick(this, 3,3, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_3_3" value=""/></td>            
-				        
-						<td id='cell_3_4' onclick="scheduleClick(this, 3,4, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_3_4" value=""/></td>            
-						<td id='cell_3_5' onclick="scheduleClick(this, 3,5, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_3_5" value=""/></td>            
-						<td id='cell_3_6' onclick="scheduleClick(this, 3,6, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_3_6" value=""/></td>            
-						<td id='cell_3_7' onclick="scheduleClick(this, 3,7, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_3_7" value=""/></td>            
-				
-						<td id='cell_3_8' onclick="scheduleClick(this, 3,8, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_3_8" value=""/></td>            
-						<td id='cell_3_9' onclick="scheduleClick(this, 3,9, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_3_9" value=""/></td>            
-						<td id='cell_3_10' onclick="scheduleClick(this, 3,10, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_3_10" value=""/></td>            
-						<td id='cell_3_11' onclick="scheduleClick(this, 3,11, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_3_11" value=""/></td>            
-				        
-						<td id='cell_3_12' onclick="scheduleClick(this, 3,12, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_3_12" value=""/></td>            
-						<td id='cell_3_13' onclick="scheduleClick(this, 3,13, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_3_13" value=""/></td>            
-						<td id='cell_3_14' onclick="scheduleClick(this, 3,14, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_3_14" value=""/></td>            
-						<td id='cell_3_15' onclick="scheduleClick(this, 3,15, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_3_15" value=""/></td>            
-				
-						<td id='cell_3_16' onclick="scheduleClick(this, 3,16, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_3_16" value=""/></td>            
-						<td id='cell_3_17' onclick="scheduleClick(this, 3,17, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_3_17" value=""/></td>            
-						<td id='cell_3_18' onclick="scheduleClick(this, 3,18, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_3_18" value=""/></td>            
-						<td id='cell_3_19' onclick="scheduleClick(this, 3,19, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden"  name="schedule_3_19" value=""/></td>            
-				    </tr>       
+
 				    <!-- Employees -->
 				    
 				</table>			

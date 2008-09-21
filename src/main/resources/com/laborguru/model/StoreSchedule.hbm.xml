@@ -15,11 +15,7 @@
 			<column name="store_id" not-null="true"/>
 		</many-to-one>
 
-		<many-to-one name="storeSchedule" class="StoreSchedule" foreign-key="fk_employeeschedules_storeschedules" not-null="true">
-			<column name="store_schedule_id" not-null="true"/>
-		</many-to-one>
-
-		<set name="employeeSchedules" cascade="all-delete-orphan" table="tbl_employee_schedules" lazy="true" inverse="true">
+		<set name="employeeSchedules" cascade="all-delete-orphan" table="tbl_employee_schedules" inverse="true">
 	        <key column="store_schedule_id" foreign-key="fk_storeschedules_employeeschedules"/>
 	        <one-to-many class="EmployeeSchedule"/>
 	    </set>

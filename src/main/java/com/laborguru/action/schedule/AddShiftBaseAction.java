@@ -6,14 +6,17 @@
 package com.laborguru.action.schedule;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
+import com.laborguru.frontend.model.ScheduleHourLabelElement;
 import com.laborguru.frontend.model.WeekDaySelector;
 import com.laborguru.model.OperationTime;
 import com.laborguru.model.StoreSchedule;
+import com.laborguru.util.CalendarUtils;
 
 /**
  *
@@ -156,10 +159,13 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	public List<Date> getScheduleIndividualHours() {
 		if(getStoreSchedule() != null && getStoreSchedule().getStore() != null) {
 			OperationTime operationTime = getStoreSchedule().getStore().getOperationTime(getWeekDaySelector().getSelectedDayOfWeek());
-			Date d = operationTime != null ? operationTime.getOpenHour() : null;
-			List hours = new ArrayList<Date>();
-			while(d != null && d.before(operationTime.getCloseHour())) {
-				
+			Date closeHour = getScheduleCloseHour(operationTime.getCloseHour());
+			Date d = operationTime != null ? getScheduleOpenHour(operationTime.getOpenHour()) : null;
+			
+			List<Date> hours = new ArrayList<Date>();
+			while(d != null && d.getTime() <= closeHour.getTime()) {
+				hours.add(d);
+				d = new Date(d.getTime() + MINUTES_INTERVAL * 60000L);
 			}
 			return hours;
 		} else {
@@ -172,7 +178,136 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	 * schedule hours
 	 * @return
 	 */
-	public List<Date> getScheduleLabelHours() {
+	public List<ScheduleHourLabelElement> getScheduleLabelHours() {
+		if(getStoreSchedule() != null && getStoreSchedule().getStore() != null) {
+			OperationTime operationTime = getStoreSchedule().getStore().getOperationTime(getWeekDaySelector().getSelectedDayOfWeek());
+			
+			Date d = operationTime != null ? getScheduleOpenHour(operationTime.getOpenHour()) : null;
+			Date baseCloseHour = getScheduleBaseHour(operationTime.getCloseHour());
+			
+			List<ScheduleHourLabelElement> hours = new ArrayList<ScheduleHourLabelElement>();
+			
+			// Open hour is a special case
+			hours.add(new ScheduleHourLabelElement(d, getOpenHourColspan(d)));
+			
+			d = getScheduleBaseHour(CalendarUtils.addOrSubstractHours(d, 1));
+
+			while(d != null && d.getTime() < baseCloseHour.getTime()) {
+				hours.add(new ScheduleHourLabelElement(d, getHourColspan(d)));
+				d = getScheduleBaseHour(CalendarUtils.addOrSubstractHours(d, 1));
+			}
+			
+			if(operationTime.getCloseHour().getTime() > baseCloseHour.getTime()) {
+				hours.add(new ScheduleHourLabelElement(baseCloseHour, getCloseHourColspan(d)));
+			}
+			
+			return hours;
+			
+		} else {
+			return new ArrayList<ScheduleHourLabelElement>();
+		}
+	}
+	
+	/**
+	 * 
+	 * @param storeOpenHour
+	 * @return
+	 */
+	private Date getScheduleOpenHour(Date storeOpenHour) {
+		if(storeOpenHour != null) {
+			Calendar cal = CalendarUtils.getCalendar(storeOpenHour);
+			int minutes = cal.get(Calendar.MINUTE);
+			for(int i = 0; MINUTES_INTERVAL * i <= 60 ;i++ ) {
+				if(minutes <= MINUTES_INTERVAL * i) {
+					cal.set(Calendar.MINUTE, MINUTES_INTERVAL * i);
+					return cal.getTime();
+				}
+			}
+			// This should never happend as minutes should always be less than 60
+			return storeOpenHour;
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 * 
+	 * @param storeOpenHour
+	 * @return
+	 */
+	private Date getScheduleCloseHour(Date storeCloseHour) {
+		if(storeCloseHour != null) {
+			Calendar cal = CalendarUtils.getCalendar(storeCloseHour);
+			int minutes = cal.get(Calendar.MINUTE);
+
+			for(int i = 0; minutes > 0 && MINUTES_INTERVAL * i <= 60 ;i++ ) {
+				if(minutes <= MINUTES_INTERVAL * i) {
+					cal.set(Calendar.MINUTE, MINUTES_INTERVAL * i);
+					return cal.getTime();
+				}
+			}
+			// Null means that close hour is at the minute 0
+			return storeCloseHour;
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	private Date getScheduleBaseHour(Date storeCloseHour) {
+		if(storeCloseHour != null) {
+			Calendar cal = CalendarUtils.getCalendar(storeCloseHour);
+			cal.set(Calendar.MINUTE, 0);
+			return cal.getTime();
+		} else {
+			return null;
+		}
+		
+	}
+	
+	/**
+	 * 
+	 * @param hour Hour that must be normalized according to MINUTES_INTERVAL
+	 * @return
+	 */
+	private Integer getCloseHourColspan(Date hour) {
+		Calendar cal = CalendarUtils.getCalendar(hour);
+		int minutes = cal.get(Calendar.MINUTE);
+		for(int i = 0; MINUTES_INTERVAL * i <= 60 ;i++ ) {
+			if(minutes <= MINUTES_INTERVAL * i) {
+				return new Integer(i);
+			}
+		}
+		// This should never happend as minutes should always be less than 60
 		return null;
 	}
+	
+	/**
+	 * 
+	 * @param hour
+	 * @return
+	 */
+	private Integer getHourColspan(Date hour) {
+		return new Integer(60 / MINUTES_INTERVAL);
+	}
+	
+	/**
+	 * 
+	 * @param hour Hour that must be normalized according to MINUTES_INTERVAL
+	 * @return
+	 */
+	private Integer getOpenHourColspan(Date hour) {
+		Calendar cal = CalendarUtils.getCalendar(hour);
+		int minutes = cal.get(Calendar.MINUTE);
+		for(int i = 1; MINUTES_INTERVAL * i <= 60 ;i++ ) {
+			if(minutes <= MINUTES_INTERVAL * i) {
+				return new Integer((60/MINUTES_INTERVAL) - i);
+			}
+		}
+		// This should never happend as minutes should always be less than 60
+		return null;
+	}	
 }

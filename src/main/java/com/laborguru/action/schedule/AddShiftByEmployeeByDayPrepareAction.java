@@ -18,7 +18,7 @@ import com.opensymphony.xwork2.Preparable;
  *
  */
 public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  implements Preparable {
-	private static final Logger LOGGER = Logger.getLogger(AddShiftByEmployeeByDayPrepareAction.class);
+	private static final Logger log = Logger.getLogger(AddShiftByEmployeeByDayPrepareAction.class);
 	
 	/**
 	 * 

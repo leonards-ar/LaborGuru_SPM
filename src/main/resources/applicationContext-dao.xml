@@ -54,9 +54,9 @@
 				<value>com/laborguru/model/HalfHourProjection.hbm.xml</value>
 				<value>com/laborguru/model/DailyProjection.hbm.xml</value>
 				<value>com/laborguru/model/HistoricSales.hbm.xml</value>				
-				<value>com/laborguru/model/Shift.hbm.xml</value>
-				<value>com/laborguru/model/EmployeeSchedule.hbm.xml</value>				
 				<value>com/laborguru/model/StoreSchedule.hbm.xml</value>				
+				<value>com/laborguru/model/EmployeeSchedule.hbm.xml</value>				
+				<value>com/laborguru/model/Shift.hbm.xml</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

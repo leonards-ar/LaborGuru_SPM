@@ -10,10 +10,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.laborguru.model.DayOfWeek;
+import com.laborguru.util.CalendarUtils;
 
 /**
  *
@@ -99,7 +99,7 @@ public class WeekDaySelector implements Serializable {
 	 * @return
 	 */
 	public DayOfWeek getSelectedDayOfWeek() {
-		return  getDayOfWeek(getSelectedDay());
+		return  CalendarUtils.getDayOfWeek(getSelectedDay());
 	}
 	
 	/**
@@ -158,55 +158,6 @@ public class WeekDaySelector implements Serializable {
 	}
 
 	/**
-	 * 
-	 * @param d
-	 * @param startingDayOfWeek
-	 * @return
-	 */
-	private Date getFirstDayOfWeek(Date d) {
-		DayOfWeek dayOfWeek = getDayOfWeek(d);
-		Calendar day = getCalendar(d);
-		
-		if(dayOfWeek != null && day != null) {
-			int daysTosubstract = Math.abs(dayOfWeek.ordinal() - getStartingDayOfWeek().ordinal());
-			day.add(Calendar.DAY_OF_MONTH, -1 * daysTosubstract);
-			return day.getTime();
-		} else {
-			return null;
-		}
-	}
-	
-	/**
-	 * 
-	 * @param d
-	 * @return
-	 */
-	private Calendar getCalendar(Date d) {
-		if(d != null) {
-			Calendar cal = GregorianCalendar.getInstance();
-			cal.setTime(d);
-			return cal;
-		} else {
-			return null;
-		}		
-	}
-	
-	/**
-	 * 
-	 * @param d
-	 * @return
-	 */
-	private DayOfWeek getDayOfWeek(Date d) {
-		Calendar cal = getCalendar(d);
-		if(cal != null) {
-			int dof = cal.get(Calendar.DAY_OF_WEEK);
-			return DayOfWeek.values()[dof - 1];
-		} else {
-			return null;
-		}		
-	}
-
-	/**
 	 * @return the startingDayOfWeek
 	 */
 	public DayOfWeek getStartingDayOfWeek() {
@@ -228,17 +179,7 @@ public class WeekDaySelector implements Serializable {
 		setStartingWeekDay(getFirstDayOfWeek(d));
 	}
 	
-	/**
-	 * 
-	 * @param d
-	 * @param daysToAddOrSubstract
-	 * @return
-	 */
-	private Date addOrSubstractDays(Date d, int daysToAddOrSubstract) {
-		Calendar cal = getCalendar(d);
-		cal.add(Calendar.DAY_OF_MONTH, daysToAddOrSubstract);
-		return cal.getTime();
-	}
+
 	
 	/**
 	 * 
@@ -284,7 +225,7 @@ public class WeekDaySelector implements Serializable {
 		List<Date> startingWeekDays = new ArrayList<Date>(getWeeksToShow());
 		
 		for(int i = getWeeksToShow(); i > 0; i--) {
-			startingWeekDays.add(addOrSubstractDays(getStartingWeekDay(), -1 * DayOfWeek.values().length * i));
+			startingWeekDays.add(CalendarUtils.addOrSubstractDays(getStartingWeekDay(), -1 * DayOfWeek.values().length * i));
 		}
 		
 		return startingWeekDays;
@@ -292,10 +233,29 @@ public class WeekDaySelector implements Serializable {
 	
 	/**
 	 * 
+	 * @param d
+	 * @param startingDayOfWeek
+	 * @return
+	 */
+	private Date getFirstDayOfWeek(Date d) {
+		DayOfWeek dayOfWeek = CalendarUtils.getDayOfWeek(d);
+		Calendar day = CalendarUtils.getCalendar(d);
+		
+		if(dayOfWeek != null && day != null) {
+			int daysTosubstract = Math.abs(dayOfWeek.ordinal() - getStartingDayOfWeek().ordinal());
+			day.add(Calendar.DAY_OF_MONTH, -1 * daysTosubstract);
+			return day.getTime();
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 * 
 	 * @return
 	 */
 	public Date getPreviousStartingWeekDay() {
-		return addOrSubstractDays(getStartingWeekDay(), -1 * DayOfWeek.values().length);
+		return CalendarUtils.addOrSubstractDays(getStartingWeekDay(), -1 * DayOfWeek.values().length);
 	}
 	
 	/**
@@ -303,7 +263,7 @@ public class WeekDaySelector implements Serializable {
 	 * @return
 	 */
 	public Date getNextStartingWeekDay() {
-		return addOrSubstractDays(getStartingWeekDay(), DayOfWeek.values().length);
+		return CalendarUtils.addOrSubstractDays(getStartingWeekDay(), DayOfWeek.values().length);
 	}
 	
 	/**
@@ -314,7 +274,7 @@ public class WeekDaySelector implements Serializable {
 		List<Date> startingWeekDays = new ArrayList<Date>(getWeeksToShow());
 		
 		for(int i = 1; i <= getWeeksToShow(); i++) {
-			startingWeekDays.add(addOrSubstractDays(getStartingWeekDay(), DayOfWeek.values().length * i));
+			startingWeekDays.add(CalendarUtils.addOrSubstractDays(getStartingWeekDay(), DayOfWeek.values().length * i));
 		}
 		
 		return startingWeekDays;
@@ -336,7 +296,7 @@ public class WeekDaySelector implements Serializable {
 		List<Date> weekDays = new ArrayList<Date>(DayOfWeek.values().length);
 		
 		for(int i = 0; i < DayOfWeek.values().length; i++) {
-			weekDays.add(addOrSubstractDays(getStartingWeekDay(), i));
+			weekDays.add(CalendarUtils.addOrSubstractDays(getStartingWeekDay(), i));
 		}
 		
 		return weekDays;
