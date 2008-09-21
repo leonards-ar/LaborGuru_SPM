@@ -230,4 +230,18 @@
 		<put-attribute name="body" value="/tiles/schedule/addshiftbyemployee.jsp"/>
 	</definition>
 	
+	<!-- User tiles definition -->
+	<definition name="listUserPage" extends="baseLayoutWithMenu">
+		<put-attribute name="body" value="/tiles/user/list.jsp" />
+	</definition>
+		
+	<definition name="editUserPage" extends="baseLayoutWithMenu">
+		<put-attribute name="htmlExtHeader" value="/tiles/dojoHtmlExtHeader.jsp" />
+		<put-attribute name="body" value="/tiles/user/edit.jsp" />
+	</definition>
+
+	<definition name="showUserPage" extends="baseLayoutWithMenu">
+		<put-attribute name="body" value="/tiles/user/view.jsp" />
+	</definition>	
+	
 </tiles-definitions>
