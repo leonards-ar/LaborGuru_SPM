@@ -1,6 +1,7 @@
 package com.laborguru.action.projection;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,10 +29,16 @@ import com.opensymphony.xwork2.Preparable;
 public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseAction implements Preparable {
 	private static final Logger log = Logger.getLogger(HalfHourProjectionsPrepareAction.class);
 	
+	private static final int DECIMAL_SCALE = 16;
+	private static final RoundingMode ROUNDING_MODE = RoundingMode.HALF_EVEN;
+	private static final String INIT_VALUE_ZERO = "0.00";
+
+	private static final BigDecimal BIG_DECIMAL_ZERO = new BigDecimal(INIT_VALUE_ZERO);
+
 	private List<HalfHourElement> projectionElements;
-	private BigDecimal totalProjectedValues = new BigDecimal(0);
-	private BigDecimal totalAdjustedValues = new BigDecimal(0);
-	private BigDecimal totalRevisedValues = new BigDecimal(0);
+	private BigDecimal totalProjectedValues = new BigDecimal(INIT_VALUE_ZERO);
+	private BigDecimal totalAdjustedValues = new BigDecimal(INIT_VALUE_ZERO);
+	private BigDecimal totalRevisedValues = new BigDecimal(INIT_VALUE_ZERO);
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
 	/**
@@ -52,47 +59,8 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 		pageSetup();
 	}
 
+	
 	/**
-	 * Prepare data to be used in the actions methods defined for this action
-	 * 
-	 * @throws Exception
-	 * @see com.opensymphony.xwork2.Preparable#prepare()
-	 */
-	public void prepare() throws Exception {
-		// It's needed by the Preparable interface, don't comment out or removed
-	}
-
-	/**
-	 * Prepares the edit page
-	 * 
-	 * @return
-	 * @throws Exception
-	 */
-	public String edit() throws Exception {
-		setUpHalfHourProjection();
-		return SpmActionResult.EDIT.getResult();
-	}
-
-	/**
-	 * Stores an employee on the DB
-	 * 
-	 * @return
-	 * @throws Exception
-	 */
-	public String save() throws Exception {
-		/*
-		 * try {
-		 * 
-		 * 
-		 * } catch (SpmCheckedException e) {
-		 * addActionError(e.getErrorMessage()); }
-		 */
-		 setResults();
-		return SpmActionResult.INPUT.getResult();
-	}
-
-	/**
-	 * 
 	 * 
 	 * @see com.laborguru.action.projection.ProjectionCalendarBaseAction#prepareChangeDay()
 	 */
@@ -110,12 +78,61 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 		pageSetup();
 	}
 
+	/**
+	 * 
+	 */
 	public void prepareReviseProjections() {
 		pageSetup();
+	}	
+	/**
+	 * Prepare data to be used in the actions methods defined for this action
+	 * 
+	 * @throws Exception
+	 * @see com.opensymphony.xwork2.Preparable#prepare()
+	 */
+	public void prepare() throws Exception {
+		// It's needed by the Preparable interface, don't comment out or removed
+	}
+
+	/**
+	 * 
+	 * 
+	 * @see com.laborguru.action.projection.ProjectionCalendarBaseAction#processChangeDay()
+	 */
+	@Override
+	protected void processChangeDay() {
+		setUpHalfHourProjection();
+	}
+
+	/**
+	 * 
+	 * 
+	 * @see com.laborguru.action.projection.ProjectionCalendarBaseAction#processChangeWeek()
+	 */
+	@Override
+	protected void processChangeWeek() {
+		setUpHalfHourProjection();
+	}	
+		
+	/**
+	 * Prepares the edit page
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String edit() throws Exception {
+		setUpHalfHourProjection();
+		return SpmActionResult.EDIT.getResult();
+	}
+
+	public String save() throws Exception {		
+		 setResults();
+		return SpmActionResult.INPUT.getResult();
 	}
 	
 	public String reviseProjections() {
-		calculateProjections();
+		calculateAndSetReviseProjections();
+		
 		return SpmActionResult.EDIT.getResult();
 	}
 
@@ -135,44 +152,48 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 		
 		//if there is adjusted values calculate the revised projections
 		if(getTotalAdjustedValues().intValue() > 0) {
-			calculateProjections();
+			calculateAndSetReviseProjections();
 		}
 	}
+
 	
-	private void calculateProjections() {
-		BigDecimal totalOldProjectedValues = new BigDecimal(0);
-		setTotalAdjustedValues(new BigDecimal(0));		
-		List<BigDecimal> values = new ArrayList<BigDecimal>();
+	/**
+	 * Private method that calculates and sets the revised projections values for the collection ProjectionElements.
+	 */
+	private void calculateAndSetReviseProjections() {
+		
+		BigDecimal totalAdjusted = new BigDecimal(INIT_VALUE_ZERO);
+		BigDecimal totalProjections = new BigDecimal(INIT_VALUE_ZERO);
+		BigDecimal percentageNotChangedHours = new BigDecimal(INIT_VALUE_ZERO);
+		BigDecimal totalOriginalAdjustedProjections = new BigDecimal(INIT_VALUE_ZERO);
+		BigDecimal totalRevised = new BigDecimal(INIT_VALUE_ZERO);
+		
+		//Getting totals for Adjusted and Projected values		
 		for (HalfHourElement element : getProjectionElements()) {
 			if (element.getAdjustedValue() != null) {
-				setTotalAdjustedValues(getTotalAdjustedValues().add(element.getAdjustedValue()));
-				totalOldProjectedValues = totalOldProjectedValues.add(element.getProjectedValue());
+				totalAdjusted = totalAdjusted.add(element.getAdjustedValue());
+				totalOriginalAdjustedProjections = totalOriginalAdjustedProjections.add(element.getProjectedValue());
 			}
-			values.add(element.getProjectedValue());
+			
+			totalProjections = totalProjections.add(element.getProjectedValue());
 		}
-
-		values = getProjectionService().calculateFixedDistribution(
-				getTotalProjectedValues(), getTotalAdjustedValues(), totalOldProjectedValues,
-				values);
-
 		
-		setRevisedValues(values);
-
-	}
-	
-	private void setRevisedValues(List<BigDecimal> values) {
-		setTotalRevisedValues(new BigDecimal(0));
-		for (int i = 0; i < values.size(); i++) {
-			if (getProjectionElements().get(i).getAdjustedValue() == null) {
-				getProjectionElements().get(i).setRevisedValue(values.get(i));
-				setTotalRevisedValues(getTotalRevisedValues().add(values.get(i)));
-			} else {
-				getProjectionElements().get(i).setRevisedValue(
-						getProjectionElements().get(i).getAdjustedValue());
-				setTotalRevisedValues(getTotalRevisedValues().add(getProjectionElements().get(i).getAdjustedValue()));
+		//Calculating percentageNotChangedHours
+		percentageNotChangedHours = totalProjections.subtract(totalOriginalAdjustedProjections);
+		percentageNotChangedHours = percentageNotChangedHours.divide(totalProjections, DECIMAL_SCALE, ROUNDING_MODE);
+		
+		//Calculating revised projection value
+		if (!percentageNotChangedHours.equals(BIG_DECIMAL_ZERO)){
+			for (HalfHourElement element : getProjectionElements()) {
+				getProjectionService().calculateRevisedValue(element, totalAdjusted, totalProjections, percentageNotChangedHours);
+				totalRevised = totalRevised.add(element.getRevisedValue());
 			}
 		}
+		setTotalRevisedValues(totalRevised);
+		setTotalAdjustedValues(totalAdjusted);
+		setTotalProjectedValues(totalProjections);
 	}
+		
 
 	private void setResults() {
 		// removed new Date(getSelectedDate())
@@ -200,25 +221,7 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 		return element;
 	}
 	
-	/**
-	 * 
-	 * 
-	 * @see com.laborguru.action.projection.ProjectionCalendarBaseAction#processChangeDay()
-	 */
-	@Override
-	protected void processChangeDay() {
-		setUpHalfHourProjection();
-	}
 
-	/**
-	 * 
-	 * 
-	 * @see com.laborguru.action.projection.ProjectionCalendarBaseAction#processChangeWeek()
-	 */
-	@Override
-	protected void processChangeWeek() {
-		setUpHalfHourProjection();
-	}
 
 	private void setUpHalfHourProjection() {
 		// Force object initialization
@@ -233,7 +236,7 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 
 	private void setHalfHourElement(List<HalfHourProjection> halfHourProjections, Date startTime){
 		
-		BigDecimal totalProjections = new BigDecimal(0);
+		BigDecimal totalProjections = new BigDecimal(INIT_VALUE_ZERO);
 		for (HalfHourProjection halfHourProjection : halfHourProjections) {
 			HalfHourElement element = new HalfHourElement();
 			element.setId(halfHourProjection.getId());
