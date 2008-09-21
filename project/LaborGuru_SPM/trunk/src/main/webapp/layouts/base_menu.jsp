@@ -6,12 +6,11 @@
 <html>
 	<head>
 		<title><s:text name="application.title"/></title>
-		<tiles:insertAttribute name="htmlExtHeader" />
 		<link rel="stylesheet" href="<s:url value="/css/style.css" includeParams="none" />" type="text/css" charset="utf-8" />
+		<tiles:insertAttribute name="htmlExtHeader" />
 	</head>
 	<body>
-		<table width="100%" border="0" cellpadding="0" cellspacing="0"
-			id="bodyTable" colspan="0" cellspan="0">
+		<table width="100%" border="0" cellpadding="0" cellspacing="0" id="bodyTable" colspan="0" cellspan="0">
 			<!-- Header and Menu -->
 			<tr>
 				<td id="headerRow"><tiles:insertAttribute name="header" /></td>

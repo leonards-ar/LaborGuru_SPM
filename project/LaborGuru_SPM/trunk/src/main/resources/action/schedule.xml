@@ -4,8 +4,10 @@
         "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
 	<package name="schedule" namespace="/schedule" extends="spm-default">
-		<action name="addShift">
-			<result type="tiles">addShift</result>
+		<action name="addshiftbyemployee_*" method="{1}" class="com.laborguru.action.schedule.AddShiftByEmployeeByDayPrepareAction">
+			<result name="edit" type="tiles">editShiftByEmployeeByDatePage</result>
+			<result name="input" type="tiles">editShiftByEmployeeByDatePage</result>			
+			<result name="success" type="redirectAction"><param name="actionName">addshiftbyemployee_edit</param></result>						
 		</action>
 	</package>
 </struts>

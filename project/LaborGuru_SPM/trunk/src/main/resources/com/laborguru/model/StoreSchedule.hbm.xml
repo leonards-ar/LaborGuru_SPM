@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.laborguru.model" schema="spm">
+	<class name="StoreSchedule" table="tbl_store_schedules">
+		<id name="id" type="int" unsaved-value="null" column="store_schedule_id">
+			<generator class="identity" />
+		</id>
+		
+        <property name="day" column="day" type="timestamp" not-null="false"/>       
+
+		<many-to-one name="store" class="Store" foreign-key="fk_storeschedules_stores" not-null="true">
+			<column name="store_id" not-null="true"/>
+		</many-to-one>
+
+		<many-to-one name="storeSchedule" class="StoreSchedule" foreign-key="fk_employeeschedules_storeschedules" not-null="true">
+			<column name="store_schedule_id" not-null="true"/>
+		</many-to-one>
+
+		<set name="employeeSchedules" cascade="all-delete-orphan" table="tbl_employee_schedules" lazy="true" inverse="true">
+	        <key column="store_schedule_id" foreign-key="fk_storeschedules_employeeschedules"/>
+	        <one-to-many class="EmployeeSchedule"/>
+	    </set>
+	</class>
+	<database-object>
+		<create>ALTER TABLE tbl_store_schedules AUTO_INCREMENT=1000</create>
+		<drop></drop>
+	</database-object>   	
+</hibernate-mapping>

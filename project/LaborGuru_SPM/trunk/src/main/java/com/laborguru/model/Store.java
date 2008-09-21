@@ -231,6 +231,23 @@ public class Store extends SpmObject {
 	}
 
 	/**
+	 * 
+	 * @param dayOfWeek
+	 * @return
+	 */
+	public OperationTime getOperationTime(DayOfWeek dayOfWeek) {
+		if(dayOfWeek == null) {
+			throw new IllegalArgumentException("DayOfWeek cannot be null");
+		}
+		for(OperationTime ot : getOperationTimes()) {
+			if(dayOfWeek.equals(ot.getDayOfWeek())) {
+				return ot;
+			}
+		}
+		return null;
+	}
+	
+	/**
 	 * @param operationTime the operationTime to set
 	 */
 	private void setOperationTimes(List<OperationTime> operationTimes) {

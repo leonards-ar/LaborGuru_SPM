@@ -95,6 +95,14 @@ public class WeekDaySelector implements Serializable {
 	}
 
 	/**
+	 * 
+	 * @return
+	 */
+	public DayOfWeek getSelectedDayOfWeek() {
+		return  getDayOfWeek(getSelectedDay());
+	}
+	
+	/**
 	 * @param selectedDay the selectedDay to set
 	 */
 	public void setSelectedDay(Date selectedDay) {
