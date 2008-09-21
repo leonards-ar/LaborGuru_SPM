@@ -13,6 +13,7 @@ import java.util.Locale;
 import org.apache.log4j.Logger;
 
 import com.laborguru.action.SpmAction;
+import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.frontend.HttpRequestConstants;
 import com.laborguru.model.Store;
 import com.laborguru.service.store.StoreService;
@@ -51,6 +52,21 @@ public abstract class StoreAdministrationBaseAction extends SpmAction implements
 	public StoreAdministrationBaseAction() {
 	}
 
+	
+	/**
+	 * This method saves a store and load the updated object into session.
+	 * Should be used for all the actions which save a store in the store administration
+	 * screens. 
+	 * TODO: CN - Go through the store administration actions and refactor to use this method. 
+	 * @param store
+	 * @throws SpmCheckedException
+	 */
+	protected void saveStoreAndLoadItIntoSession(Store store) throws SpmCheckedException{
+		Store auxStore = getStoreService().save(store);
+		getSession().put(HttpRequestConstants.STORE,auxStore);
+	}
+	
+	
 	/**
 	 * Prepare data to be used in the actions methods defined for this action
 	 * 
