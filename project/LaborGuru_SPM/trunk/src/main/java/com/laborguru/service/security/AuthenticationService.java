@@ -5,6 +5,7 @@ import java.util.Date;
 
 import org.springframework.dao.DataAccessException;
 
+import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.logger.DefaultSpmLogger;
 import com.laborguru.model.User;
 import com.laborguru.service.user.UserService;
@@ -55,7 +56,11 @@ public class AuthenticationService implements UserAuthenticationService {
 					reason = UserAuthenticationService.BAD_PASSWORD;
 				}
 			}
+			try {
 			service.save(user);
+			} catch(SpmCheckedException e){
+				log.errorLog("Error trying to save user.");
+			}
 		} else {
 			reason = UserAuthenticationService.UNKNOWN_USER_ERROR;
 		}
