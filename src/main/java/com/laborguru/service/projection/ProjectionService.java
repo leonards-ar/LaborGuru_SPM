@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import com.laborguru.frontend.model.HalfHourElement;
 import com.laborguru.model.DailyProjection;
 import com.laborguru.model.HalfHourProjection;
 import com.laborguru.model.Store;
@@ -24,6 +25,8 @@ public interface ProjectionService extends Service{
 	List<BigDecimal> getAdjustedDailyProjectionForAWeek(Store store, Date startWeekDate);
 	
 	DailyProjection getDailyProjection(Store store, Date selectedDate);
+
+	HalfHourElement calculateRevisedValue(HalfHourElement halfHourElement, BigDecimal totalAdjusted, BigDecimal totalProjected, BigDecimal percentageNotChangedHours);
 	
 	List<BigDecimal> calculateFixedDistribution(BigDecimal totalSales, BigDecimal totalAdjusted, BigDecimal totalChangedValues, List<BigDecimal> elements);
 
