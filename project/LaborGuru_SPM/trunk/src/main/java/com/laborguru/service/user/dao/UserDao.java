@@ -1,5 +1,7 @@
 package com.laborguru.service.user.dao;
 
+import java.util.List;
+
 import com.laborguru.model.User;
 
 
@@ -40,5 +42,20 @@ public interface UserDao {
 	 * @param auxUser
 	 */
 	void evict(User auxUser);
+	
+	/**
+	 * Retrieves a user by id.
+	 * @param user
+	 * @return
+	 */
+	User getUserById(User user);
+	
+	/**
+	 * Finds all users that are not employee.
+	 * @return
+	 */
+	List<User> findAll();
+	
+	void delete(User user);
 	
 }
