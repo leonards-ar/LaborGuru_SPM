@@ -91,6 +91,11 @@
 		<property name="menuDao" ref="menuDao" />
 	</bean>
 
+	<bean id="profileService"
+		class="com.laborguru.service.profile.ProfileServiceBean">
+		<property name="profileDao" ref="profileDao" />
+	</bean>
+	
 	<bean id="userService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		<property name="proxyInterfaces">
 			<list>
