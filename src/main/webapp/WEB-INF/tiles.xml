@@ -225,8 +225,9 @@
 	</definition>
 	
 	<!-- Schedule -->
-	<definition name="addShift" extends="baseLayoutWithMenu">
-		<put-attribute name="body" value="/tiles/schedule/addShift.jsp"/>
+	<definition name="editShiftByEmployeeByDatePage" extends="baseLayoutWithMenu">
+		<put-attribute name="htmlExtHeader" value="/tiles/scheduleHtmlExtHeader.jsp" />
+		<put-attribute name="body" value="/tiles/schedule/addshiftbyemployee.jsp"/>
 	</definition>
 	
 </tiles-definitions>

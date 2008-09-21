@@ -175,7 +175,8 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	}
 
 	private void setResults() {
-		DailyProjection dailyProjection = getProjectionService().getDailyProjection(getEmployeeStore(), new Date(getSelectedDate()));
+		// removed new Date(getSelectedDate())
+		DailyProjection dailyProjection = getProjectionService().getDailyProjection(getEmployeeStore(), getWeekDaySelector().getSelectedDay());
 		for(HalfHourElement element: getProjectionElements()) {
 			HalfHourProjection halfHourProjection = getHalfHourProjectionById(element.getId());
 			if(getTotalRevisedValues().intValue() > 0) {

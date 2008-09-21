@@ -1,0 +1,98 @@
+/*
+Colors:
+Table Borders: #184E01
+
+Selected: #00FF00
+
+
+*/
+#scheduleActionsTable {
+}
+
+#scheduleMainTable {
+	border: 2px solid #184E01;
+}
+
+
+.scheduleMainTableHeader {
+	background-color: #A3D39C;
+	color: #184E01;
+	font-size: 13px;
+	text-align: center;
+	font-family: tahoma, arial, sans-serif;
+	font-weight: bold;
+}
+
+.scheduleCellHeader {
+	border: 1px solid #184E01;
+}
+
+.scheduleActionMessage {
+	color: orange;
+	font-size: 11px;
+	text-align: left;
+	font-family: tahoma, arial, sans-serif;
+}
+
+.scheduleMainTableEmployeeRow {
+}
+
+.scheduleNameCell {
+	border: 1px solid #184E01;
+	background-color: #DEEFDC;
+	color: #184E01;
+	font-size: 12px;
+	text-align: left;
+	font-family: tahoma, arial, sans-serif;
+}
+
+.scheduleValueCell {
+	border: 1px solid #184E01;
+	background-color: #DEEFDC;
+	color: #184E01;
+	font-size: 12px;
+	text-align: center;
+	font-family: tahoma, arial, sans-serif;
+	font-weight: bold;
+}
+
+
+td.scheduleStartSelection {
+	background-color: #000000;
+	border: 1px solid #184E01;
+}
+
+td.scheduleSelected {
+	border-right: 1px hidden #00FF00;
+	border-left: 1px hidden #00FF00;
+	border-top:1px solid #184E01;
+	border-bottom: 1px solid #184E01;
+	background-color: #00FF00;
+	width: 7px;
+}
+
+
+td.scheduleBreak {
+	border-right: 1px hidden #FF0000;
+	border-left: 1px hidden #FF0000;
+	border-top:1px solid #184E01;
+	border-bottom: 1px solid #184E01;
+	width: 7px;
+	background-color: #FF0000;
+}
+
+td.scheduleEmpty {
+	background-color: #FFFFFF;
+	border: 1px solid #184E01;
+	width: 5px;
+}
+
+td.scheduleEndSelection {
+	background-color: #000000;
+	border: 1px solid #184E01;
+}
+
+td.scheduleSelectingOver {
+	background-color: #000000;
+	border: 1px solid #184E01;
+}

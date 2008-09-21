@@ -516,3 +516,38 @@ select {
 	font-size: 20px;
 	text-align: left;
 }
+
+#fullHeightTable {
+	height: 100%;
+}
+
+#windowTable {
+	border: 1px solid #A3D39C;
+}
+
+.windowTableHeader {
+	background-color: #A3D39C;
+	background-image: url(../images/table-header-bg.png);
+	background-position: center;
+	background-repeat: repeat-x;
+	color: #184E01;
+	font-size: 12px;
+	text-align: center;
+	font-family: tahoma, arial, sans-serif;
+	font-weight: bold;	
+}
+
+.windowTableLabel {
+	color: #A3D39C;
+	text-align: center;
+	font-family: tahoma, arial, sans-serif;
+	font-weight: bold;	
+	font-size: 11px;	
+}
+
+.windowTableValue {
+	color: #184E01;
+	font-family: tahoma, arial, sans-serif;
+	font-size: 11px;	
+	text-align: center;
+}

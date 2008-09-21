@@ -51,8 +51,8 @@
   <tbl_menu_items menu_item_id="12" label_key="projection.submenu.daily" help_key="PROJECTION_DAILY_HELP" target="/projection/daily_edit.action" position="0" parent_id="11" permission_id="12"/>
   <tbl_menu_items menu_item_id="13" label_key="projection.submenu.halfhour" help_key="PROJECTION_HALFHOUR_HELP" target="/projection/halfhour_edit.action" position="1" parent_id="11" permission_id="13"/>
   <tbl_menu_items menu_item_id="14" label_key="projection.submenu.settings" help_key="PROJECTION_SETTINGS_HELP" target="/projection/settings_edit.action" position="2" parent_id="11" permission_id="14"/>
-  <tbl_menu_items menu_item_id="15" label_key="schedule.menu.label" help_key="SCHEDULE_MENU_HELP" target="/schedule/addShift.action" position="5" permission_id="15"/>
-  <tbl_menu_items menu_item_id="16" label_key="schedule.submenu.addshift" help_key="SCHEDULE_ADDSHIFT_HELP" target="/schedule/addShift.action" position="1" parent_id="15" permission_id="15"/>
+  <tbl_menu_items menu_item_id="15" label_key="schedule.menu.label" help_key="SCHEDULE_MENU_HELP" target="/schedule/addshiftbyemployee_edit.action" position="5" permission_id="15"/>
+  <tbl_menu_items menu_item_id="16" label_key="schedule.submenu.addshift" help_key="SCHEDULE_ADDSHIFT_HELP" target="/schedule/addshiftbyemployee_edit.action" position="1" parent_id="15" permission_id="15"/>
   <tbl_stores store_id="1" name="microcentro" area_id="1" half_hour_projections_weeks_default="4" daily_projections_weeks_default="4"/>
   <tbl_positions position_id="1" name="chef" position_index="0" store_id="1"/>
   <tbl_positions position_id="2" name="waiter" position_index="1" store_id="1"/>

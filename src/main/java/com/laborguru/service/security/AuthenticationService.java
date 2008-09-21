@@ -56,11 +56,11 @@ public class AuthenticationService implements UserAuthenticationService {
 					reason = UserAuthenticationService.BAD_PASSWORD;
 				}
 			}
-			try {
+			//try {
 			service.save(user);
-			} catch(SpmCheckedException e){
-				log.errorLog("Error trying to save user.");
-			}
+			//} catch(SpmCheckedException e){
+			//	log.errorLog("Error trying to save user.");
+			//}
 		} else {
 			reason = UserAuthenticationService.UNKNOWN_USER_ERROR;
 		}
