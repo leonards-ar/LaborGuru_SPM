@@ -63,4 +63,5 @@
 	<include file="action/customer.xml" />	
 	<include file="action/projection.xml" />	
 	<include file="action/schedule.xml" />
+	<include file="action/user.xml"/>
 </struts>
