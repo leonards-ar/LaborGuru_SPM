@@ -63,4 +63,28 @@ public class UserDaoHibernate extends HibernateDaoSupport implements UserDao {
 	public void evict(User auxUser) {
 		getHibernateTemplate().evict(auxUser);
 	}
+	
+	/**
+	 * Retrieves a User by id.
+	 * @param user
+	 * @return
+	 * @see com.laborguru.service.user.dao.UserDao#getUserById(com.laborguru.model.User)
+	 */
+	public User getUserById(User user) {
+		return (User)getHibernateTemplate().get(User.class, user.getId());
+	}
+	
+	/**
+	 * Finds all users that are not employee.
+	 * @return
+	 * @see com.laborguru.service.user.dao.UserDao#findAll()
+	 */
+	public List<User> findAll(){
+		return (List<User>)getHibernateTemplate().find("from User");
+	}
+	
+	public void delete(User user){
+		getHibernateTemplate().delete(user);
+	}
+	
 }
