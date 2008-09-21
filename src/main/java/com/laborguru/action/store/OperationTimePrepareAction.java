@@ -131,8 +131,8 @@ public class OperationTimePrepareAction extends StoreAdministrationBaseAction {
 				log.debug("About to save store: " + getStore());
 			}
 			
-			getStoreService().save(getStore());
-
+			saveStoreAndLoadItIntoSession(getStore());
+			
 			if(log.isInfoEnabled()) {
 				log.info("Store hours of operation successfully updated for store with id [" + getStoreId() + "]");
 			}
