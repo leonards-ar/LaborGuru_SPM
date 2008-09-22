@@ -143,5 +143,17 @@ public class StoreSchedule extends SpmObject {
 		this.id = id;
 	}
 
-
+	/**
+	 * 
+	 * @param employee
+	 * @return
+	 */
+	public EmployeeSchedule getEmployeeSchedule(Employee employee) {
+		for(EmployeeSchedule anEmployeeSchedule : getEmployeeSchedules()) {
+			if(anEmployeeSchedule.getEmployee() != null && anEmployeeSchedule.getEmployee().getId() != null && employee != null && anEmployeeSchedule.getEmployee().getId().equals(employee.getId())) {
+				return anEmployeeSchedule;
+			}
+		}
+		return null;
+	}
 }

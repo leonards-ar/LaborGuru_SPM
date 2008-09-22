@@ -35,7 +35,7 @@ public class EmployeeSchedule extends SpmObject {
 	 */
 	public EmployeeSchedule() {
 	}
-	
+
 	/**
 	 * @return the id
 	 */

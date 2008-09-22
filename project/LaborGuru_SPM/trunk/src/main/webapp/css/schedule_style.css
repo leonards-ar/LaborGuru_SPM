@@ -87,6 +87,12 @@ td.scheduleEmpty {
 	width: 5px;
 }
 
+td.scheduleUnavailable {
+	background-color: #CACACA;
+	border: 1px solid #184E01;
+	width: 5px;
+}
+
 td.scheduleEndSelection {
 	background-color: #000000;
 	border: 1px solid #184E01;

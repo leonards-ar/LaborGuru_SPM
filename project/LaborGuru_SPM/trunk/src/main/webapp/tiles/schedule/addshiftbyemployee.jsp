@@ -224,7 +224,7 @@
 						<td class="scheduleCellHeader"><s:text name="schedule.addshift.in_hour"/></td>    
 						<td class="scheduleCellHeader"><s:text name="schedule.addshift.out_hour"/></td>
 						<td class="scheduleCellHeader"><s:text name="schedule.addshift.total_hours"/></td>
-						<s:iterator id="hourLabel" value="scheduleLabelHours" status="itHourLabel">     
+						<s:iterator id="hourLabel" value="scheduleLabelHours" status="#itHourLabel">     
 							<td class="scheduleCellHeader" colspan="<s:property value="colspan"/>"><s:text name='schedule.addshift.hour.dateformat'><s:param value='hour'/></s:text></td>
 						</s:iterator>         
 				    </tr>
@@ -237,8 +237,18 @@
 						<td class="scheduleValueCell" id="inHour_0">XX</td>    
 						<td class="scheduleValueCell" id="outHour_0">XX</td>
 						<td class="scheduleValueCell" id="totalHours_0">XX</td>            
-						<s:iterator id="hour" value="scheduleIndividualHours" status="itHour">     
-						<td id='cell_<s:property value="itHour.index"/>_<s:property value="itHour.index"/>' onclick="scheduleClick(this, <s:property value="itHour.index"/>,<s:property value="itHour.index"/>, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden" id="schedule_<s:property value="itHour.index"/>_<s:property value="itHour.index"/>" name="schedule_<s:property value="itHour.index"/>_<s:property value="itHour.index"/>" value=""/></td>            
+						<s:iterator id="hour" value="scheduleIndividualHours" status="itHour">
+							<s:if test="#itHour.first">
+								<s:iterator id="startToIgnore" value="scheduleIndividualStartHoursToIgnore">
+									<td class="scheduleUnavailable"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+								</s:iterator>
+							</s:if>  
+							<td id='cell_<s:property value="#itHour.index"/>_<s:property value="#itHour.index"/>' onclick="scheduleClick(this, <s:property value="#itHour.index"/>,<s:property value="#itHour.index"/>, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden" id="schedule_<s:property value="#itHour.index"/>_<s:property value="#itHour.index"/>" name="schedule_<s:property value="#itHour.index"/>_<s:property value="#itHour.index"/>" value=""/></td>            
+							<s:if test="#itHour.last">
+								<s:iterator id="startToIgnore" value="scheduleIndividualEndHoursToIgnore">
+									<td class="scheduleUnavailable"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+								</s:iterator>
+							</s:if> 
 						</s:iterator>
 				    </tr>
 

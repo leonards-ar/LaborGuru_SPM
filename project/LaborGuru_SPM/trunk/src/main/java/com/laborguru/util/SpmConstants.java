@@ -10,5 +10,7 @@ public class SpmConstants {
 	public static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
 	public static final NumberFormat DOUBLE_FORMAT_5 = DecimalFormat.getInstance(Locale.US);
 	public static final NumberFormat DOUBLE_FORMAT_2 = DecimalFormat.getInstance(Locale.US);
-
+	
+	public static final String SCHEDULE_BREAK = "__break__";
+	public static final String SCHEDULE_FREE = "";
 }

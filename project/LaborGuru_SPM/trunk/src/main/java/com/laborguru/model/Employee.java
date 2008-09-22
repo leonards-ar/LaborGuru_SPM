@@ -29,6 +29,22 @@ public class Employee extends User {
 	
 	/**
 	 * 
+	 */
+	public Employee() {
+		this(null);
+	}
+	
+	/**
+	 * 
+	 * @param employeeId
+	 */
+	public Employee(Integer employeeId) {
+		super();
+		setId(employeeId);
+	}
+	
+	/**
+	 * 
 	 * @return
 	 */
 	public Store getStore() {
