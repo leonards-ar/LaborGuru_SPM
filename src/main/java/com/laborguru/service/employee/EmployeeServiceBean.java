@@ -1,5 +1,6 @@
 package com.laborguru.service.employee;
 
+import java.util.Date;
 import java.util.List;
 
 import com.laborguru.exception.ErrorEnum;
@@ -90,7 +91,7 @@ public class EmployeeServiceBean implements EmployeeService {
 			spmLog.errorLog(exMgs);
 			throw new SpmCheckedException(exMgs, ErrorEnum.USERNAME_ALREADY_EXIST_ERROR, new String[]{employee.getUserName()});
 		}
-		
+		employee.setCreationDate(new Date());
 		return  employeeDao.save(employee);
 	}
 
@@ -113,6 +114,7 @@ public class EmployeeServiceBean implements EmployeeService {
 		//Evicting the user
 		userDao.evict(auxUser);
 		
+		employee.setLastUpdateDate(new Date());
 		return employeeDao.save(employee);
 	}
 
