@@ -22,12 +22,13 @@ public class ScheduleHourLabelElement implements Serializable {
 	private static final long serialVersionUID = -6089474005607716084L;
 	private Date hour;
 	private Integer colspan;
+	private Integer selectableCount;
 	
 	/**
 	 * 
 	 */
 	public ScheduleHourLabelElement() {
-		this(null, null);
+		this(null, null, null);
 	}
 
 	/**
@@ -35,10 +36,11 @@ public class ScheduleHourLabelElement implements Serializable {
 	 * @param hour
 	 * @param colspan
 	 */
-	public ScheduleHourLabelElement(Date hour, Integer colspan) {
+	public ScheduleHourLabelElement(Date hour, Integer colspan, Integer selectableCount) {
 		super();
 		setHour(hour);
 		setColspan(colspan);
+		setSelectableCount(selectableCount);
 	}
 	
 	/**
@@ -67,6 +69,20 @@ public class ScheduleHourLabelElement implements Serializable {
 	 */
 	public void setColspan(Integer colspan) {
 		this.colspan = colspan;
+	}
+
+	/**
+	 * @return the selectableCount
+	 */
+	public Integer getSelectableCount() {
+		return selectableCount;
+	}
+
+	/**
+	 * @param selectableCount the selectableCount to set
+	 */
+	public void setSelectableCount(Integer selectableCount) {
+		this.selectableCount = selectableCount;
 	}
 
 }

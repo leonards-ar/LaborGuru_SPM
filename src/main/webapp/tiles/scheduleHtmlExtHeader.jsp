@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %> 
 <%@ taglib prefix="s" uri="/struts-tags" %> 
 
-<s:head theme="ajax"/>
+<!--s:head theme="ajax"/-->
 <link rel="stylesheet" href="<s:url value="/css/schedule_style.css" includeParams="none" />" type="text/css" charset="utf-8" />
 
 <script language="javascript" type="text/javascript">
