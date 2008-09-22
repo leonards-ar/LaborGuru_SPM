@@ -80,7 +80,7 @@ public class UserDaoHibernate extends HibernateDaoSupport implements UserDao {
 	 * @see com.laborguru.service.user.dao.UserDao#findAll()
 	 */
 	public List<User> findAll(){
-		return (List<User>)getHibernateTemplate().find("from User");
+		return (List<User>)getHibernateTemplate().find("from User as user where not exists (from Employee as employee where employee.id = user.id)");
 	}
 	
 	public void delete(User user){
