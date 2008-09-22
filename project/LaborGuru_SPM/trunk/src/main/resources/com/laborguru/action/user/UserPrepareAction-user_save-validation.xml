@@ -6,6 +6,11 @@
 			<message>User: </message>
 		</field-validator>
 	</field>
+	<field name="user.password">
+		<field-validator type="requiredstring">
+			<message key="error.password.required" />
+		</field-validator>
+	</field>
 	<!--  field name="selectedProfiles">
 		<field-validator type="expression">
 			<param name="notEmpty">selectedProfiles.size>0</param>
