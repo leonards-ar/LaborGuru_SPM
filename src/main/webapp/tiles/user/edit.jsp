@@ -5,7 +5,7 @@
 	      <table border="0" cellspacing="0" align="center">
 		      <tr>
 			      <td id="titleBar">
-			      <s:if test="user.id == null">
+			      <s:if test="user == null">
 			      	<s:text name="user.create.title" />
 			      </s:if>
 			      <s:else>
@@ -41,24 +41,31 @@
               	<tr class="editFormOddRow">
                     <td width="15%" align="right" class="form_label" nowrap>* <s:text name="user.username.label" /></td>
                     <td width="35%" align="left" class="value"><s:textfield name="user.userName" size="15" theme="simple"/></td>
-                    <td width="15%" align="right" class="form_label" nowrap><s:text name="user.password.label" /></td>
-                    <td width="35%" align="left" class="value"><s:password name="user.password" size="20" theme="simple"/></td>
+                    <td width="15%" align="right" class="form_label" nowrap><s:text name="user.email.label" /></td>
+                    <td width="35%" align="left" class="value"><s:textfield name="user.email" size="20" theme="simple"/></td>
                 </tr>
 
               	<tr class="editFormEvenRow">
-                    <td width="15%" align="right" class="form_label" nowrap><s:text name="user.email.label" /></td>
-                    <td width="35%" align="left" class="value"><s:textfield name="user.email" size="20" theme="simple"/></td>
+                    <td width="15%" align="right" class="form_label" nowrap>* <s:text name="user.password.label" /></td>
+                    <td width="35%" align="left" class="value"><s:password name="user.password" showPassword="true" size="20" theme="simple"/></td>
                     <td width="15%" align="right" class="form_label" nowrap>* <s:text name="user.confirm.password.label" /></td>
-                    <td width="35%" align="left" class="value"><s:password name="passwordConfirmation" size="20" theme="simple"/></td>
+                    <td width="35%" align="left" class="value"><s:password name="passwordConfirmation" showPassword="true" size="20" theme="simple"/></td>
                 </tr>
 
               	<tr class="editFormOddRow">
+                    <td width="15%" align="right" class="form_label" nowrap>* <s:text name="user.status.label" /></td>
+                    <td width="35%" align="left" class="value"><s:select name="user.status" list="statusMap" listKey="key" listValue="%{getText(value)}"/></td>
+                    <td width="15%" align="right" class="form_label" nowrap><s:text name="user.profile.label" /></td>
+                    <td width="35%" align="left" class="value"><s:select name="selectedProfiles" list="profiles" listKey="id" listValue="name" multiple="true" theme="simple"/></td>
+                </tr>
+
+              	<tr class="editFormEvenRow">
                     <td width="100%" align="right" colspan="4">
 	                    <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
 		                    <tr>
 		                		<td><s:submit id="saveButton" key="save.button" theme="simple" cssClass="button"/></td>
 		                    	<td><s:reset id="resetButton" key="reset.button" theme="simple" cssClass="button"/></td>
-		                    	<td><s:submit id="cancelButton" key="cancel.button" action="employee_list" theme="simple" cssClass="button"/></td>		                    
+		                    	<td><s:submit id="cancelButton" key="cancel.button" action="user_list" theme="simple" cssClass="button"/></td>		                    
 		                    </tr>
 	                    </table>                    
                     </td>
