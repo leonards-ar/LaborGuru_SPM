@@ -2,9 +2,13 @@ package com.laborguru.service.user.dao;
 
 import java.util.List;
 
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.apache.log4j.Logger;
 
 import com.laborguru.model.User;
+import com.laborguru.model.filter.SearchUserFilter;
+import com.laborguru.service.dao.hibernate.SpmHibernateDao;
+
+
 
  
 /**
@@ -14,14 +18,18 @@ import com.laborguru.model.User;
  * @since SPM 1.0
  *
  */
-public class UserDaoHibernate extends HibernateDaoSupport implements UserDao {
-
+public class UserDaoHibernate extends SpmHibernateDao implements UserDao {
+	
+	private static Logger log = Logger.getLogger(UserDaoHibernate.class);
 	
 	
 	/* (non-Javadoc)
 	 * @see com.laborguru.service.user.dao.UserDao#save(com.laborguru.model.User)
 	 */
 	public User save(User user) {
+		if(log.isDebugEnabled()) {
+			log.debug("Updating user: " + user);
+		}
 		getHibernateTemplate().saveOrUpdate(user);
 		return user;
 	}
@@ -82,7 +90,36 @@ public class UserDaoHibernate extends HibernateDaoSupport implements UserDao {
 	public List<User> findAll(){
 		return (List<User>)getHibernateTemplate().find("from User as user where not exists (from Employee as employee where employee.id = user.id)");
 	}
+
+	/**
+	 * 
+	 * @param searchUserFilter
+	 * @return
+	 * @see com.laborguru.service.user.dao.UserDao#applyFilters(com.laborguru.model.filter.SearchUserFilter)
+	 */
+	public List<User>applyFilters(SearchUserFilter searchUserFilter) {
+		
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("from User as user where not exists(from Employee as employee where employee.id=user.id)");
+		
+		if(includeInFilter(searchUserFilter.getFullName())) {
+			sb.append(" and (user.name like '%" + searchUserFilter.getFullName() + "%'");
+			sb.append(" or user.surname like '%" + searchUserFilter.getFullName() + "%')");
+		}
+
+		if(log.isDebugEnabled()) {
+			log.debug(sb.toString());
+		}
+		
+		return (List<User>)getHibernateTemplate().find(sb.toString());
+	}
 	
+	/**
+	 * 
+	 * @param user
+	 * @see com.laborguru.service.user.dao.UserDao#delete(com.laborguru.model.User)
+	 */
 	public void delete(User user){
 		getHibernateTemplate().delete(user);
 	}

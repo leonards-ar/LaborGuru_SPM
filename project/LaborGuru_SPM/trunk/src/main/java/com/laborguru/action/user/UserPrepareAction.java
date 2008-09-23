@@ -7,9 +7,9 @@ import java.util.Map;
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.exception.SpmCheckedException;
-import com.laborguru.model.Employee;
 import com.laborguru.model.Profile;
 import com.laborguru.model.User;
+import com.laborguru.model.filter.SearchUserFilter;
 import com.laborguru.service.data.ReferenceDataService;
 import com.laborguru.service.profile.ProfileService;
 import com.laborguru.service.user.UserService;
@@ -35,7 +35,7 @@ public class UserPrepareAction extends SpmAction implements Preparable{
 	private List<Profile> profiles;
 	private Map<String, String> statusMap;
 	
-	private String searchUsername;
+	private SearchUserFilter searchUser;
 
 	private UserService userService;
 	private ProfileService profileService;
@@ -136,6 +136,12 @@ public class UserPrepareAction extends SpmAction implements Preparable{
 	public String show() throws Exception {
 		loadUserById();
 		return SpmActionResult.SHOW.getResult();
+	}
+	
+	
+	public String search() throws Exception {
+		setUsers(userService.filterUser(getSearchUser()));
+		return SpmActionResult.LIST.getResult();
 	}
 	
 	public String save() throws Exception {
@@ -255,17 +261,17 @@ public class UserPrepareAction extends SpmAction implements Preparable{
 	}
 
 	/**
-	 * @return the searchUsername
+	 * @return the searchUser
 	 */
-	public String getSearchUsername() {
-		return searchUsername;
+	public SearchUserFilter getSearchUser() {
+		return searchUser;
 	}
 
 	/**
-	 * @param searchUsername the searchUsername to set
+	 * @param searchUser the searchUser to set
 	 */
-	public void setSearchUsername(String searchUsername) {
-		this.searchUsername = searchUsername;
+	public void setSearchUser(SearchUserFilter searchUser) {
+		this.searchUser = searchUser;
 	}
 
 	/**
