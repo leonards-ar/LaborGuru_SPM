@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.User;
+import com.laborguru.model.filter.SearchUserFilter;
 import com.laborguru.service.user.dao.UserDao;
 
 /**
@@ -121,6 +122,21 @@ public class UserServiceBean implements UserService {
 	 */
 	public void delete(User user) {
 		userDao.delete(user);
+	}
+	
+	/**
+	 * Searches a user by name and surname
+	 * @param searchUserFilter
+	 * @return
+	 */
+	public List<User> filterUser(SearchUserFilter searchUserFilter) {
+		
+		if(searchUserFilter == null) {
+			log.error("The filter passed as parameter is null");
+			throw new IllegalArgumentException("The filter passed as parameter is null");
+		}
+		
+		return userDao.applyFilters(searchUserFilter);
 	}
 	
 	/* (non-Javadoc)

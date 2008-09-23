@@ -3,6 +3,7 @@ package com.laborguru.service.user.dao;
 import java.util.List;
 
 import com.laborguru.model.User;
+import com.laborguru.model.filter.SearchUserFilter;
 
 
 /**
@@ -55,7 +56,18 @@ public interface UserDao {
 	 * @return
 	 */
 	List<User> findAll();
-	
+
+	/**
+	 * finds a user by name and surname
+	 * @param searchUserFilter
+	 * @return
+	 */
+	List<User>applyFilters(SearchUserFilter searchUserFilter);
+	/**
+	 * Deletes a user.
+	 * @param user
+	 */
 	void delete(User user);
 	
+
 }

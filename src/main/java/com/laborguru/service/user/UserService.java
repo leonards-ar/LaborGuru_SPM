@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.User;
+import com.laborguru.model.filter.SearchUserFilter;
 import com.laborguru.service.Service;
 import com.laborguru.service.user.dao.UserDao;
 
@@ -48,7 +49,13 @@ public interface UserService extends Service {
 	 * @return
 	 */
 	User getUserById(User user);
-	
+
+	/**
+	 * Searches a user by name and surname
+	 * @param searchUserFilter
+	 * @return
+	 */
+	List<User> filterUser(SearchUserFilter searchUserFilter);
 	/**
 	 * Setter for User Dao
 	 * @param userDao UserDao
