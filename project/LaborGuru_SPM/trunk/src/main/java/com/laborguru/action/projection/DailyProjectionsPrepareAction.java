@@ -38,6 +38,26 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	}
 
 	/**
+	 * 
+	 * 
+	 * @see com.laborguru.action.projection.ProjectionCalendarBaseAction#prepareChangeDay()
+	 */
+	@Override
+	public void prepareChangeDay() {
+		prepareEdit();
+	}
+
+	/**
+	 * 
+	 * 
+	 * @see com.laborguru.action.projection.ProjectionCalendarBaseAction#prepareChangeWeek()
+	 */
+	@Override
+	public void prepareChangeWeek() {
+		prepareEdit();
+	}
+	
+	/**
 	 * Prepare data to be used in the actions methods defined for this action
 	 * 
 	 * @throws Exception
@@ -77,6 +97,27 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 
 	}
 
+
+	/**
+	 * 
+	 * 
+	 * @see com.laborguru.action.projection.ProjectionCalendarBaseAction#processChangeDay()
+	 */
+	@Override
+	protected void processChangeDay() {
+		setupDailyProjectionData();
+	}
+
+	/**
+	 * 
+	 * 
+	 * @see com.laborguru.action.projection.ProjectionCalendarBaseAction#processChangeWeek()
+	 */
+	@Override
+	protected void processChangeWeek() {
+		setupDailyProjectionData();
+	}	
+	
 	/**
 	 * Prepares the edit page
 	 * 
@@ -163,46 +204,6 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	 */
 	public void setAdjustedProjections(List<BigDecimal> adjustedProjections) {
 		this.adjustedProjections = adjustedProjections;
-	}
-
-	/**
-	 * 
-	 * 
-	 * @see com.laborguru.action.projection.ProjectionCalendarBaseAction#prepareChangeDay()
-	 */
-	@Override
-	public void prepareChangeDay() {
-		pageSetup();
-	}
-
-	/**
-	 * 
-	 * 
-	 * @see com.laborguru.action.projection.ProjectionCalendarBaseAction#prepareChangeWeek()
-	 */
-	@Override
-	public void prepareChangeWeek() {
-		pageSetup();
-	}
-
-	/**
-	 * 
-	 * 
-	 * @see com.laborguru.action.projection.ProjectionCalendarBaseAction#processChangeDay()
-	 */
-	@Override
-	protected void processChangeDay() {
-		setupDailyProjectionData();
-	}
-
-	/**
-	 * 
-	 * 
-	 * @see com.laborguru.action.projection.ProjectionCalendarBaseAction#processChangeWeek()
-	 */
-	@Override
-	protected void processChangeWeek() {
-		setupDailyProjectionData();
 	}
 
 	/**
