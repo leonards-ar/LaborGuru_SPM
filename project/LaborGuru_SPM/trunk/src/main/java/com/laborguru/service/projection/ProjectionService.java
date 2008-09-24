@@ -28,10 +28,8 @@ public interface ProjectionService extends Service{
 
 	HalfHourElement calculateRevisedValue(HalfHourElement halfHourElement, BigDecimal totalAdjusted, BigDecimal totalProjected, BigDecimal percentageNotChangedHours);
 	
-	List<BigDecimal> calculateFixedDistribution(BigDecimal totalSales, BigDecimal totalAdjusted, BigDecimal totalChangedValues, List<BigDecimal> elements);
-
-	List<HalfHourProjection> getAvgHalfHourProjection(Integer numberOfWeeks, BigDecimal amoutProjection, Store store, Date selectedDate);
-	
+	List<HalfHourProjection> calculateDailyHalfHourProjection(Store store, BigDecimal projectionAmount, Date selectedDate, Integer numberOfWeeks);
+		
 	void saveDailyProjection(Store store, BigDecimal projectionAmount, Date selectedDate);
 	
 	void setProjectionDao(ProjectionDao projectionDao);

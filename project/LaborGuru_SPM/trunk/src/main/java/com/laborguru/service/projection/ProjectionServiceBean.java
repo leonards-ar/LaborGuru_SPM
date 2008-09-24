@@ -11,7 +11,6 @@ import org.joda.time.DateTime;
 
 import com.laborguru.frontend.model.HalfHourElement;
 import com.laborguru.model.DailyProjection;
-import com.laborguru.model.DayOfWeek;
 import com.laborguru.model.HalfHourCalculated;
 import com.laborguru.model.HalfHourProjection;
 import com.laborguru.model.OperationTime;
@@ -128,8 +127,7 @@ public class ProjectionServiceBean implements ProjectionService {
 		projection.setStartingTime(store.getStoreOperationTimeByDate(selectedDate).getOpenHour());
 
 		projectionDao.save(projection);
-	}
-	
+	}	
 	
 	/**
 	 * @param projectionAmount
@@ -140,7 +138,7 @@ public class ProjectionServiceBean implements ProjectionService {
 		
 		List<HalfHourCalculated> avgCalculatedHalfHourList = getAvgHalfHourListByStoreAndDate(store, selectedDate, numberOfWeeks);
 		
-		BigDecimal totalAvgProjections = new BigDecimal(0);
+		BigDecimal totalAvgProjections = new BigDecimal(INIT_VALUE_ZERO);
 		
 		for(HalfHourCalculated halfHour: avgCalculatedHalfHourList){
 			totalAvgProjections = totalAvgProjections.add(halfHour.getValue());
@@ -152,7 +150,13 @@ public class ProjectionServiceBean implements ProjectionService {
 		
 		for(HalfHourCalculated halfHour: avgCalculatedHalfHourList){
 			HalfHourProjection aHalfHourProjection = new HalfHourProjection();
-			aHalfHourProjection.setAdjustedValue(projectionAmount.multiply(halfHour.getValue().divide(totalAvgProjections, DECIMAL_SCALE, ROUNDING_MODE)));
+			
+			if (totalAvgProjections.doubleValue() > 0.0){
+				aHalfHourProjection.setAdjustedValue(projectionAmount.multiply(halfHour.getValue().divide(totalAvgProjections, DECIMAL_SCALE, ROUNDING_MODE)));				
+			}else {
+				aHalfHourProjection.setAdjustedValue(new BigDecimal(INIT_VALUE_ZERO));
+			}
+			
 			aHalfHourProjection.setIndex(index++);
 			projectionHalfHourList.add(aHalfHourProjection);
 		}		
@@ -260,72 +264,6 @@ public class ProjectionServiceBean implements ProjectionService {
 		return halfHourElement;
 	}	
 	
-
-	/**
-	 * @param totalSales
-	 * @param totalAdjusted
-	 * @param totalChangedValues
-	 * @param elements
-	 * @return
-	 * @see com.laborguru.service.projection.ProjectionService#calculateFixedDistribution(java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.util.List)
-	 */
-	public List<BigDecimal> calculateFixedDistribution(BigDecimal totalSales, BigDecimal totalAdjusted, BigDecimal totalChangedValues, List<BigDecimal> elements){
-
-		List<BigDecimal> calculatedValues = new ArrayList<BigDecimal>();
-		
-		BigDecimal porcentajeAdjusted = totalAdjusted.divide(totalSales, 16, BigDecimal.ROUND_UP).subtract(new BigDecimal(1));
-		BigDecimal porcentajeNotChanged = totalChangedValues.divide(totalSales, 16, BigDecimal.ROUND_UP).subtract(new BigDecimal(1));
-		
-		for(BigDecimal value: elements) {
-			calculatedValues.add(value.multiply(porcentajeAdjusted.divide(porcentajeNotChanged, 16, BigDecimal.ROUND_HALF_EVEN)).setScale(16, BigDecimal.ROUND_HALF_EVEN)); 			
-		}
-		
-		return calculatedValues;
-	}
-	
-	public List<HalfHourProjection> getAvgHalfHourProjection(Integer numberOfWeeks, BigDecimal amountProjection, Store store, Date selectedDate){
-		
-		List<HalfHourCalculated> avgProjections = projectionDao.getAvgHalfHourProjection(numberOfWeeks, store, selectedDate);
-		
-		List<HalfHourProjection> projections = new ArrayList<HalfHourProjection>();
-		
-		DateTime selectedDateJoda = new DateTime(selectedDate.getTime());
-		OperationTime operationTime = OperationTime.getOperationTimeByDayOfWeek(store.getOperationTimes(), DayOfWeek.values()[selectedDateJoda.getDayOfWeek()]);
-		
-		BigDecimal sumProjections = new BigDecimal(INIT_VALUE_ZERO);
-		
-		DateTime openHour = new DateTime(operationTime.getOpenHour());
-		DateTime nextHour = new DateTime(openHour);
-
-		for(HalfHourCalculated halfHourElement: avgProjections) {
-			DateTime hour = new DateTime(halfHourElement.getTime());
-			
-			if(hour.getHourOfDay() > nextHour.getHourOfDay()){
-				while(hour.getHourOfDay() > nextHour.getHourOfDay()) {
-					HalfHourProjection aHalfHourProjection = new HalfHourProjection();
-					aHalfHourProjection.setAdjustedValue(new BigDecimal(INIT_VALUE_ZERO));
-					int index = getIndex(nextHour, openHour);
-					aHalfHourProjection.setIndex(index);
-					projections.add(aHalfHourProjection);
-					nextHour = nextHour.plusMinutes(HALF_HOUR);
-				}
-			}
-			
-			HalfHourProjection halfHourProjection = new HalfHourProjection();
-			BigDecimal newValue = new BigDecimal(halfHourElement.getValue().doubleValue());
-			sumProjections = sumProjections.add(newValue);
-			halfHourProjection.setAdjustedValue(newValue);
-			halfHourProjection.setIndex(getIndex(new DateTime(halfHourElement.getTime()), openHour));
-			projections.add(halfHourProjection);
-			nextHour = nextHour.plusMinutes(HALF_HOUR);
-		}
-		
-		for(int i=0; i < projections.size(); i++) {
-			BigDecimal calculatedValue = projections.get(i).getAdjustedValue().multiply(amountProjection.divide(sumProjections));
-			projections.get(i).setAdjustedValue(calculatedValue);
-		}
-		return projections;
-	}
 	
 	/**
 	 * 
@@ -353,12 +291,6 @@ public class ProjectionServiceBean implements ProjectionService {
 	 */
 	public void setProjectionDao(ProjectionDao projectionDao) {
 		this.projectionDao = projectionDao;
-	}
-	
-	private int getIndex(DateTime hour, DateTime startHour) {
-		DateTime indexHour = hour.minusMinutes(startHour.getMinuteOfDay() + startHour.getMinuteOfHour());
-		return (indexHour.getMinuteOfDay() + indexHour.getMinuteOfHour()) / HALF_HOUR;
-		
 	}
 	
 	

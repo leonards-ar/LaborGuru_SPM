@@ -1,6 +1,7 @@
 package com.laborguru.service.projection.dao;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,6 +26,9 @@ import com.laborguru.model.Store;
 public class ProjectionDaoHibernate extends HibernateDaoSupport implements ProjectionDao {
 
 	private static final Logger log = Logger.getLogger(ProjectionDaoHibernate.class);
+
+	private static final int DECIMAL_SCALE = 16;
+	private static final RoundingMode ROUNDING_MODE = RoundingMode.HALF_EVEN;
 	
 	public List<DailyProjection> getAdjustedDailyProjectionForAWeek(Store store, Date startWeekDate) {
 		
@@ -78,7 +82,7 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 		List<BigDecimal> retSalesList = new ArrayList<BigDecimal>(avgSalesList.size());
 		
 		for (BigDecimal aValue: avgSalesList){
-			retSalesList.add(aValue.divide(BigDecimal.valueOf(numberOfWeeks)));
+			retSalesList.add(aValue.divide(BigDecimal.valueOf(numberOfWeeks), DECIMAL_SCALE, ROUNDING_MODE));
 		}
 		
 		return retSalesList;
@@ -131,14 +135,13 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 		List<HalfHourCalculated> projections = new ArrayList<HalfHourCalculated>(sumProjections.size());
 		
 		Iterator i = sumProjections.iterator();
+		BigDecimal numberOfWeeksAux = new BigDecimal(numberOfWeeks);
 		
 		while ( i.hasNext() ) {
-			Object[] row = (Object[]) i.next();
-			
-			BigDecimal number =  ((BigDecimal) (row[1])).divide(BigDecimal.valueOf(numberOfWeeks));
+			Object[] row = (Object[]) i.next();			
+			BigDecimal number =  ((BigDecimal) (row[1])).divide(numberOfWeeksAux, DECIMAL_SCALE, ROUNDING_MODE);
 			HalfHourCalculated hhc = new HalfHourCalculated((String)row[0], number);
 			projections.add(hhc);
-
 		}
 		return projections;
 
