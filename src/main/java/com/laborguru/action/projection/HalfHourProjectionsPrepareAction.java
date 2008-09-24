@@ -53,12 +53,18 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	/**
 	 * Prepare the data to be used on the add page
 	 * 
-	 * @throws Exception
 	 */
 	public void prepareSave() {
 		pageSetup();
 	}
 
+	/**
+	 *  Prepare the data to be used on the revise used weeks result page (edit page)
+	 * 
+	 */
+	public void prepareReviseUsedWeeks(){
+		pageSetup();
+	}
 	
 	/**
 	 * 
@@ -138,20 +144,27 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 
 	public String reviseUsedWeeks() {
 		getNewValues();
-		return SpmActionResult.EDIT.getResult();
 		
+		return SpmActionResult.EDIT.getResult();		
 	}
 	
+	/**
+	 * 
+	 */
 	private void getNewValues(){
-		List<HalfHourProjection> projections = getProjectionService().getAvgHalfHourProjection(getUsedWeeks(), getTotalProjectedValues(), getEmployeeStore(), this.getFormatDate(getSelectedDate()));
-		
+		List<HalfHourProjection> projections = getProjectionService().calculateDailyHalfHourProjection(getEmployeeStore(), getTotalProjectedValues(), getWeekDaySelector().getSelectedDay(), getUsedWeeks());
+		BigDecimal totalProjections = new BigDecimal(INIT_VALUE_ZERO);
+
 		//set new values;
 		for(int i=0; i < getProjectionElements().size(); i++) {
 			getProjectionElements().get(i).setProjectedValue(projections.get(i).getAdjustedValue());
+			totalProjections = totalProjections.add(projections.get(i).getAdjustedValue());
 		}
 		
+		setTotalProjectedValues(totalProjections);
+		
 		//if there is adjusted values calculate the revised projections
-		if(getTotalAdjustedValues().intValue() > 0) {
+		if(getTotalAdjustedValues().doubleValue() > 0.00) {
 			calculateAndSetReviseProjections();
 		}
 	}

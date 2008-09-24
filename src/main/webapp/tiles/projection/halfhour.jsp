@@ -111,7 +111,7 @@
 		              	<tr class="editFormEvenRow">
 		                    <td width="20%" align="right" class="form_label" nowrap="nowrap"><s:text name="projection.halfhour.weeksused.label" /></td>
 		                    <td width="80%" align="left" class="value">
-							<s:select name="usedWeeks" list="usedWeeksMap" listKey="key" listValue="%{getText(value)}" theme="simple" onchange="halfhour_form.action='halfhour_reviseUsedWeeks.action'; halfhour_form.submit();" />		                    </td>
+							<s:select name="usedWeeks" list="usedWeeksMap" listKey="key" listValue="%{getText(value)}" theme="simple" onchange="halfhour_form.action='halfhour_reviseUsedWeeks.action'; halfhour_form.submit();" /></td>
 		                </tr>
 		              	<tr class="editFormOddRow">
                     		<td width="100%" align="center" colspan="2">

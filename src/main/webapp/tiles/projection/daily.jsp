@@ -86,7 +86,7 @@
 		                    <td width="25%" align="left" class="value">
                     			<s:select name="usedWeeks" list="usedWeeksMap" listKey="key" listValue="%{getText(value)}" theme="simple" onchange="daily_form.action='daily_edit.action'; daily_form.submit();" />
 		                    </td>
-							<td width="60%" align="left"><s:text name='projection.weekdayselector.selectedday.dateformat.long'><s:param value='weekDaySelector.startingWeekDay'/></s:text></td>
+							<td width="60%" align="left"><s:text name='projection.weekdayselector.selectedday.dateformat.long'><s:param value='weekDaySelector.selectedDay'/></s:text></td>
 		                </tr>
 		              	<tr class="editFormOddRow">
                     		<td width="100%" align="center" colspan="3">
