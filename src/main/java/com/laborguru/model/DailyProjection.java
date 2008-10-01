@@ -29,9 +29,28 @@ public class DailyProjection extends SpmObject {
 	private Store store;
 	
 	private List<HalfHourProjection> halfHourProjections = new ArrayList<HalfHourProjection>();
+		
 	
+/*	public void completeHalfHourProjections(){
+		
+		if (getProjectionDate() == null){
+			throw new IllegalArgumentException("projectionDate is null");
+		}
+		
+		OperationTime operationTime = getStore().getStoreOperationTimeByDate(projectionDate)
+		
+		if (operationTime == null){
+			throw new IllegalArgumentException("operationTime for date:"+ SpmConstants.dateToDisplayDate(getProjectionDate()) +" is null");
+		}
+				
+		buildStrategy.buildHalfHourProjectionsList(getHalfHourProjections(), getStore().getStoreOperationTimeByDate(getProjectionDate()));		
+	}*/
+	
+	/**
+	 * @return
+	 */
 	public BigDecimal getDailyProjectionValue(){
-		BigDecimal retValue = new BigDecimal("0");
+		BigDecimal retValue = new BigDecimal("0.00");
 		
 		for (HalfHourProjection aHalfHourProjection: getHalfHourProjections()){
 			retValue = retValue.add(aHalfHourProjection.getAdjustedValue());

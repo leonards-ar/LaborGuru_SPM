@@ -83,13 +83,12 @@
              		<table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0">
 		              	<tr class="editFormEvenRow">
 		                    <td width="15%" align="right" class="form_label" nowrap="nowrap"><s:text name="projection.daily.weeksused.label" /></td>
-		                    <td width="25%" align="left" class="value">
+		                    <td width="85%" align="left" class="value">
                     			<s:select name="usedWeeks" list="usedWeeksMap" listKey="key" listValue="%{getText(value)}" theme="simple" onchange="daily_form.action='daily_edit.action'; daily_form.submit();" />
 		                    </td>
-							<td width="60%" align="left"><s:text name='projection.weekdayselector.selectedday.dateformat.long'><s:param value='weekDaySelector.selectedDay'/></s:text></td>
 		                </tr>
 		              	<tr class="editFormOddRow">
-                    		<td width="100%" align="center" colspan="3">
+                    		<td width="100%" align="center" colspan="2">
                     			<!-- Daily Projection -->
 								<table border="0" cellpadding="3" cellspacing="1" colspan="0" cellspan="0" align="center">
 									<tr class="editorTableHeader">
@@ -126,7 +125,7 @@
 		                </tr>
  
 		 		       	<tr class="editFormOddRow">
-		                    <td width="100%" align="right" colspan="3">
+		                    <td width="100%" align="right" colspan="2">
 			                    <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
 				                    <tr>
 				                		<td><s:submit id="saveButton" key="save.button" theme="simple" cssClass="button"/></td>

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -13,7 +14,7 @@ import org.joda.time.DateTime;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.laborguru.model.DailyProjection;
-import com.laborguru.model.HalfHourCalculated;
+import com.laborguru.model.HalfHourProjection;
 import com.laborguru.model.Store;
 
 /**
@@ -112,7 +113,7 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 		return projections.get(0);
 	}
 	
-	public List<HalfHourCalculated> getAvgHalfHourProjection(Integer numberOfWeeks, Store store, Date selectedDate){
+	public List<HalfHourProjection> getAvgHalfHourProjection(Integer numberOfWeeks, Store store, Date selectedDate){
 		
 		DateTime startDate = new DateTime(selectedDate);
 		
@@ -132,16 +133,20 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 				new Object[]{store.getId(),startTime.toString("yyyy-MM-dd HH:mm:ss"),endTime.toString("yyyy-MM-dd HH:mm:ss"), calendarDate.get(Calendar.DAY_OF_WEEK)});
 	
 		
-		List<HalfHourCalculated> projections = new ArrayList<HalfHourCalculated>(sumProjections.size());
+		List<HalfHourProjection> projections = new LinkedList<HalfHourProjection>();
 		
-		Iterator i = sumProjections.iterator();
+		Iterator<Object[]> iterator = sumProjections.iterator();
 		BigDecimal numberOfWeeksAux = new BigDecimal(numberOfWeeks);
 		
-		while ( i.hasNext() ) {
-			Object[] row = (Object[]) i.next();			
+		while ( iterator.hasNext() ) {
+			Object[] row = (Object[]) iterator.next();			
 			BigDecimal number =  ((BigDecimal) (row[1])).divide(numberOfWeeksAux, DECIMAL_SCALE, ROUNDING_MODE);
-			HalfHourCalculated hhc = new HalfHourCalculated((String)row[0], number);
-			projections.add(hhc);
+			HalfHourProjection hhp = new HalfHourProjection();
+			
+			hhp.setTime((String) row[0]);
+			hhp.setAdjustedValue(number);
+			projections.add(hhp);
+			
 		}
 		return projections;
 

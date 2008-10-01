@@ -32,6 +32,8 @@ public interface ProjectionService extends Service{
 		
 	void saveDailyProjection(Store store, BigDecimal projectionAmount, Date selectedDate);
 	
+	void saveProjection(Store store, List<HalfHourProjection> halfHourProjectionList, Date selectedDate);
+
 	void setProjectionDao(ProjectionDao projectionDao);
 	
 }

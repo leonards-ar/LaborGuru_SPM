@@ -1,12 +1,13 @@
 package com.laborguru.model;
 
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+
+import com.laborguru.util.SpmConstants;
 
 
 /**
@@ -25,8 +26,13 @@ public class HalfHourProjection extends SpmObject{
 	private BigDecimal adjustedValue;
 	private Integer index;
 	private DailyProjection projection;
+	private Date time;
 	
 	
+	public HalfHourProjection(){
+		
+	}
+		
 	/**
 	 * @param obj
 	 * @return
@@ -133,4 +139,38 @@ public class HalfHourProjection extends SpmObject{
 		this.index = index;
 	}
 
+	/**
+	 * @return the time
+	 */
+	public Date getTime() {
+		return time;
+	}
+
+	/**
+	 * @param time the time to set
+	 */
+	public void setTime(Date time) {
+		this.time = time;
+	}
+
+	
+	/**
+	 * Sets time 
+	 * @param time the time to set
+	 */
+	public void setTime(String time) {
+		setTime(SpmConstants.displayTimeToDate(time));
+	}	
+	
+	/**
+	 * Returns time as string if not null.
+	 * @return the time as string
+	 */
+	public String getTimeAsString(){
+		
+		if (time != null)
+			return SpmConstants.dateToDisplayTime(this.getTime());
+		
+		return null;
+	}
 }
