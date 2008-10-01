@@ -2,7 +2,6 @@ package com.laborguru.service.projection;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,12 +10,9 @@ import org.joda.time.DateTime;
 
 import com.laborguru.frontend.model.HalfHourElement;
 import com.laborguru.model.DailyProjection;
-import com.laborguru.model.HalfHourCalculated;
 import com.laborguru.model.HalfHourProjection;
-import com.laborguru.model.OperationTime;
 import com.laborguru.model.Store;
 import com.laborguru.service.projection.dao.ProjectionDao;
-import com.laborguru.util.SpmConstants;
 
 /**
  *
@@ -31,9 +27,10 @@ public class ProjectionServiceBean implements ProjectionService {
 	private static final RoundingMode ROUNDING_MODE = RoundingMode.HALF_EVEN;
 	private static final String INIT_VALUE_ZERO = "0.00";
 	private static final int HALF_HOUR = 30;
+	private static final int HALF_HOURS_IN_A_DAY=48;
 	
 	private ProjectionDao projectionDao;
-
+	
 	/**
 	 * This method returns a list with the historic average sales value for a week, starting since the "startWeekDate" and using "numberOfWeeks" weeks as source for the
 	 * calculations. 
@@ -99,34 +96,43 @@ public class ProjectionServiceBean implements ProjectionService {
 
 	/**
 	 * @param store
+	 * @param halfHourProjectionList
 	 * @param selectedDate
-	 * @return
 	 */
-	public void saveDailyProjection(Store store, BigDecimal projectionAmount, Date selectedDate) {
-		
+	public void saveProjection(Store store, List<HalfHourProjection> halfHourProjectionList, Date selectedDate){
 		DailyProjection projection =  projectionDao.getDailyProjection(store, selectedDate);
 		
 		if (projection == null){
 			projection = new DailyProjection();
 			projection.setProjectionDate(selectedDate);
 			projection.setStore(store);
+
+			for (HalfHourProjection aHalfHour: halfHourProjectionList){
+				projection.addHalfHourProjection(aHalfHour);
+			}
 		} else {		
-			HalfHourProjection[] tmpProjections = projection.getHalfHourProjections().toArray(new HalfHourProjection[projection.getHalfHourProjections().size()]);
-			
-			for (int i=0; i < tmpProjections.length; i++){
-				projection.removeHalfHourProjection(tmpProjections[i]);
+			int i=0;
+			for (HalfHourProjection aHalfHour: projection.getHalfHourProjections()){
+				aHalfHour.setAdjustedValue(halfHourProjectionList.get(i).getAdjustedValue());
+				i++;
 			}		
-		}
-				
-		List<HalfHourProjection> calculatedHalfHourList = calculateDailyHalfHourProjection(store, projectionAmount, selectedDate, store.getHalfHourProjectionsWeeksDefault());		
-		
-		for (HalfHourProjection aHalfHour: calculatedHalfHourList){
-			projection.addHalfHourProjection(aHalfHour);
 		}
 		
 		projection.setStartingTime(store.getStoreOperationTimeByDate(selectedDate).getOpenHour());
 
-		projectionDao.save(projection);
+		projectionDao.save(projection);		
+	}
+	
+	
+	
+	/**
+	 * @param store
+	 * @param selectedDate
+	 * @return
+	 */
+	public void saveDailyProjection(Store store, BigDecimal projectionAmount, Date selectedDate) {
+		List<HalfHourProjection> calculatedHalfHourList = calculateDailyHalfHourProjection(store, projectionAmount, selectedDate, store.getHalfHourProjectionsWeeksDefault());		
+		saveProjection(store, calculatedHalfHourList, selectedDate);
 	}	
 	
 	/**
@@ -134,35 +140,28 @@ public class ProjectionServiceBean implements ProjectionService {
 	 * @param selectedDate
 	 * @param store
 	 */
-	public List<HalfHourProjection> calculateDailyHalfHourProjection(Store store, BigDecimal projectionAmount, Date selectedDate, Integer numberOfWeeks){
+	public List<HalfHourProjection> calculateDailyHalfHourProjection(Store store, BigDecimal projectionAmount, Date selectedDate, Integer numberOfWeeks){		
 		
-		List<HalfHourCalculated> avgCalculatedHalfHourList = getAvgHalfHourListByStoreAndDate(store, selectedDate, numberOfWeeks);
+		//Getting the average half hours values for the last "numberOfWeeks" weeks.
+		List<HalfHourProjection> avgCalculatedHalfHourList = getAvgHalfHourListByStoreAndDate(store, selectedDate, numberOfWeeks);
 		
 		BigDecimal totalAvgProjections = new BigDecimal(INIT_VALUE_ZERO);
 		
-		for(HalfHourCalculated halfHour: avgCalculatedHalfHourList){
-			totalAvgProjections = totalAvgProjections.add(halfHour.getValue());
+		//Calculating the total
+		for(HalfHourProjection halfHour: avgCalculatedHalfHourList){
+			totalAvgProjections = totalAvgProjections.add(halfHour.getAdjustedValue());
 		}		
-		
-		List<HalfHourProjection> projectionHalfHourList = new ArrayList<HalfHourProjection>(avgCalculatedHalfHourList.size());
-		
-		int index=0;
-		
-		for(HalfHourCalculated halfHour: avgCalculatedHalfHourList){
-			HalfHourProjection aHalfHourProjection = new HalfHourProjection();
-			
-			if (totalAvgProjections.doubleValue() > 0.0){
-				aHalfHourProjection.setAdjustedValue(projectionAmount.multiply(halfHour.getValue().divide(totalAvgProjections, DECIMAL_SCALE, ROUNDING_MODE)));				
-			}else {
-				aHalfHourProjection.setAdjustedValue(new BigDecimal(INIT_VALUE_ZERO));
+				
+		//Calculating the weight of each half hour (the distribution) and getting the value for the projection.
+		//If total avg projections is zero, set all the values to zero.
+		if (totalAvgProjections.doubleValue() > 0.0){
+			for(HalfHourProjection halfHour: avgCalculatedHalfHourList){
+				halfHour.setAdjustedValue(projectionAmount.multiply(halfHour.getAdjustedValue().divide(totalAvgProjections, DECIMAL_SCALE, ROUNDING_MODE)));			
 			}
-			
-			aHalfHourProjection.setIndex(index++);
-			projectionHalfHourList.add(aHalfHourProjection);
-		}		
-		
+		} 
+				
 		//TODO:Put an assertion to check that the total is the same to projection amount.
-		return projectionHalfHourList;
+		return avgCalculatedHalfHourList;
 	}
 
 
@@ -172,50 +171,52 @@ public class ProjectionServiceBean implements ProjectionService {
 	 * @param numberOfWeeks
 	 * @return
 	 */
-	public List<HalfHourCalculated> getAvgHalfHourListByStoreAndDate(Store store, Date selectedDate, Integer numberOfWeeks) {
+	public List<HalfHourProjection> getAvgHalfHourListByStoreAndDate(Store store, Date selectedDate, Integer numberOfWeeks) {
 		
-		//TODO:Throw an exception if operation time is not set
-		List<HalfHourCalculated> avgProjections = projectionDao.getAvgHalfHourProjection(numberOfWeeks, store, selectedDate);
+		List<HalfHourProjection> avgProjections = projectionDao.getAvgHalfHourProjection(numberOfWeeks, store, selectedDate);
 		
-		return  completeHalfHourProjectionsList(avgProjections, store.getStoreOperationTimeByDate(selectedDate));
-		
+		return completeTimeHalfHourProjectionsList(avgProjections);		
 	}
 	
 	/**
 	 * @param avgProjections
 	 * @param store
 	 */
-	private List<HalfHourCalculated> completeHalfHourProjectionsList(List<HalfHourCalculated> avgProjections, OperationTime operationTime) {
-		DateTime openHour = new DateTime(operationTime.getOpenHour().getTime());
-		DateTime closeHour = new DateTime(operationTime.getCloseHour().getTime());
+	private List<HalfHourProjection> completeTimeHalfHourProjectionsList(List<HalfHourProjection> avgProjections) {
+		DateTime openHour = new DateTime().withDate(1970, 1, 1).withTime(0,30,0,0);
+		DateTime closeHour = new DateTime().withDate(1970, 1, 2).withTime(0,0,0,0);
 				
-		List<HalfHourCalculated> auxListStartIndex = getSubListStartingInOpenHour(avgProjections, openHour);		
-		List<HalfHourCalculated> retList = new ArrayList<HalfHourCalculated>(auxListStartIndex.size());
+		List<HalfHourProjection> retList = new ArrayList<HalfHourProjection>(HALF_HOURS_IN_A_DAY);
 
 		DateTime nextTime = new DateTime(openHour);
 		
-		for(HalfHourCalculated currentHalfHour: auxListStartIndex) {
-			DateTime currentTime = new DateTime(displayTimeToDate(currentHalfHour.getTime()).getTime());
+		int index=0;
+		
+		for(HalfHourProjection currentHalfHour: avgProjections) {
+			DateTime currentTime = new DateTime(currentHalfHour.getTime().getTime());
 			
 			while(currentTime.isAfter(nextTime)) {
-				HalfHourCalculated aHalfHourCalculated = new HalfHourCalculated(nextTime.toString("HH:mm"), new BigDecimal(INIT_VALUE_ZERO));
-				retList.add(aHalfHourCalculated);
+				HalfHourProjection aHalfHourProjection = new HalfHourProjection();
+				aHalfHourProjection.setTime(nextTime.toDate());
+				aHalfHourProjection.setAdjustedValue(new BigDecimal(INIT_VALUE_ZERO));
+				aHalfHourProjection.setIndex(index++);
+				retList.add(aHalfHourProjection);
 				nextTime = nextTime.plusMinutes(HALF_HOUR);
 			}
-
-			if (currentTime.isAfter(closeHour)){
-				break;
-			}
 			
-			HalfHourCalculated aHalfHourCalculated = new HalfHourCalculated(currentTime.toString("HH:mm"), currentHalfHour.getValue());
-			retList.add(aHalfHourCalculated);
+			currentHalfHour.setIndex(index++);
+			retList.add(currentHalfHour);
+
 			nextTime = nextTime.plusMinutes(HALF_HOUR);
 		}
 		
 		
 		while(nextTime.isBefore(closeHour) || nextTime.isEqual(closeHour)){
-			HalfHourCalculated aHalfHourCalculated = new HalfHourCalculated(nextTime.toString("HH:mm"), new BigDecimal(INIT_VALUE_ZERO));
-			retList.add(aHalfHourCalculated);
+			HalfHourProjection aHalfHourProjection = new HalfHourProjection();
+			aHalfHourProjection.setTime(nextTime.toDate());
+			aHalfHourProjection.setAdjustedValue(new BigDecimal(INIT_VALUE_ZERO));
+			aHalfHourProjection.setIndex(index++);
+			retList.add(aHalfHourProjection);
 			nextTime = nextTime.plusMinutes(HALF_HOUR);
 		}
 		
@@ -227,7 +228,7 @@ public class ProjectionServiceBean implements ProjectionService {
 	 * @param avgProjections
 	 * @param openHour
 	 * @return
-	 */
+	 *
 	private List<HalfHourCalculated> getSubListStartingInOpenHour(List<HalfHourCalculated> avgProjections, DateTime openHour) {
 		int startIndex=0;
 		
@@ -242,7 +243,7 @@ public class ProjectionServiceBean implements ProjectionService {
 		
 		List<HalfHourCalculated> auxListStartIndex = avgProjections.subList(startIndex, avgProjections.size());
 		return auxListStartIndex;
-	}
+	}/
 	
 	/**
 	 * @param halfHourElement
@@ -265,19 +266,6 @@ public class ProjectionServiceBean implements ProjectionService {
 	}	
 	
 	
-	/**
-	 * 
-	 * @param time
-	 * @return
-	 */
-	private Date displayTimeToDate(String time) {
-		try {
-			return SpmConstants.TIME_FORMAT.parse(time);
-		} catch (ParseException ex) {
-			//TODO: log.error("Cannot parse time [" + time + "]", ex);
-			return null;
-		}
-	}	
 	
 	/**
 	 * @return the projectionDao

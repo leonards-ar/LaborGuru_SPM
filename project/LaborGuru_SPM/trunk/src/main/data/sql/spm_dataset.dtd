@@ -12,6 +12,7 @@
     tbl_profiles_permissions*,
     tbl_users*,
     tbl_day_parts*,
+	tbl_operation_times*,
     tbl_users_profiles*,
     tbl_historic_sales*,
     tbl_projections*,
@@ -140,6 +141,15 @@
     start_hour CDATA #IMPLIED
     store_id CDATA #REQUIRED
     position_index CDATA #REQUIRED
+>
+
+<!ELEMENT tbl_operation_times EMPTY>
+<!ATTLIST tbl_operation_times
+    operation_time_id CDATA #REQUIRED
+    open_hour CDATA #REQUIRED
+    close_hour CDATA #IMPLIED
+    day_of_week CDATA #REQUIRED
+    store_id CDATA #REQUIRED
 >
 
 <!ELEMENT tbl_users_profiles EMPTY>

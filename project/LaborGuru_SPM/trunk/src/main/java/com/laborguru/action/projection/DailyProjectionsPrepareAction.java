@@ -44,7 +44,7 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	 */
 	@Override
 	public void prepareChangeDay() {
-		prepareEdit();
+		//It's need it as it was declared abstract in the super class. We are not using change day for daily projection behaviour.
 	}
 
 	/**
@@ -73,7 +73,8 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	private void setupDailyProjectionData() {
 		// Force object initialization
 		getWeekDaySelector();
-
+		
+		
 		// Get calculated projections
 		setCalculatedProjections(getProjectionService().getAvgDailyProjectionForAWeek(getUsedWeeks(), this.getEmployeeStore(), getWeekDaySelector().getStartingWeekDay()));
 		setAdjustedProjections(getProjectionService().getAdjustedDailyProjectionForAWeek(this.getEmployeeStore(), getWeekDaySelector().getStartingWeekDay()));
@@ -97,7 +98,6 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 
 	}
 
-
 	/**
 	 * 
 	 * 
@@ -105,7 +105,7 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	 */
 	@Override
 	protected void processChangeDay() {
-		setupDailyProjectionData();
+		//It's need it as it was declared abstract in the super class. We are not using change day for daily projection behaviour.
 	}
 
 	/**

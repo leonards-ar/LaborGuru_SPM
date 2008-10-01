@@ -17,7 +17,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.laborguru.model.HalfHourCalculated;
 import com.laborguru.model.HalfHourProjection;
 import com.laborguru.model.Store;
 import com.laborguru.model.helpers.StoreTestHelper;
@@ -55,13 +54,13 @@ public class ProjectionDaoHibernateTest extends SpmDaoHibernateTest {
 		Date selectedDate = new SimpleDateFormat("yyyy-MM-dd").parse("2008-08-20");
 		Integer numberOfWeeks = new Integer(4);
 		
-		List<HalfHourCalculated> projections = projectionDao.getAvgHalfHourProjection(numberOfWeeks, store, selectedDate);
+		List<HalfHourProjection> projections = projectionDao.getAvgHalfHourProjection(numberOfWeeks, store, selectedDate);
 		
 		assertNotNull(projections);
 		
 		assertTrue(projections.size() > 0);
 		
-		for(HalfHourCalculated aProjection: projections){
+		for(HalfHourProjection aProjection: projections){
 			System.out.println("halfHourProjection: " + aProjection);
 		}
 		
