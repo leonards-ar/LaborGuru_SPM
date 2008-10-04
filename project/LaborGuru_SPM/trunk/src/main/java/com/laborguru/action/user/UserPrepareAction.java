@@ -29,7 +29,7 @@ public class UserPrepareAction extends SpmAction implements Preparable{
 	private Integer userId;
 	private User user;
 	private List<User> users;
-	private List<Integer> selectedProfiles;
+	
 
 	
 	private List<Profile> profiles;
@@ -41,6 +41,7 @@ public class UserPrepareAction extends SpmAction implements Preparable{
 	private ProfileService profileService;
 	private ReferenceDataService referenceDataService;
 	
+	private Profile userProfile;
 	private String passwordConfirmation;
 	private boolean removePage;
 	
@@ -99,8 +100,6 @@ public class UserPrepareAction extends SpmAction implements Preparable{
 	
 	public String edit() throws Exception {
 		loadUserById();
-		setPasswordConfirmation();
-		setSelectedProfiles();
 		return SpmActionResult.EDIT.getResult();
 	}
 	
@@ -146,9 +145,7 @@ public class UserPrepareAction extends SpmAction implements Preparable{
 	
 	public String save() throws Exception {
 		try {
-			for(Integer id: getSelectedProfiles()) {
-				getUser().addProfile(getProfileById(id));
-			}
+			getUser().setProfile(getUserProfile());
 			userService.save(getUser());
 			return SpmActionResult.LISTACTION.getResult();
 			
@@ -168,18 +165,10 @@ public class UserPrepareAction extends SpmAction implements Preparable{
 		User tmpUser = new User();
 		tmpUser.setId(userId);
 		setUser(userService.getUserById(tmpUser));
-		setPasswordConfirmation(user.getPassword());
+		setPasswordConfirmation(getUser().getPassword());
+		setUserProfile(getUser().getProfile());
 	}
 	
-	private void setPasswordConfirmation() {
-		setPasswordConfirmation(user.getPassword());
-	}
-	
-	private void setSelectedProfiles() {
-		for(Profile profile: getUser().getProfiles()) {
-			getSelectedProfiles().add(profile.getId());
-		}
-	}
 	private Profile getProfileById(Integer id) {
 		for(Profile profile: getProfiles()) {
 			if(profile.getId().equals(id)){
@@ -331,23 +320,6 @@ public class UserPrepareAction extends SpmAction implements Preparable{
 	}
 
 	/**
-	 * @return the selectedProfiles
-	 */
-	public List<Integer> getSelectedProfiles() {
-		if(selectedProfiles == null){
-			selectedProfiles = new ArrayList<Integer>();
-		}
-		return selectedProfiles;
-	}
-
-	/**
-	 * @param selectedProfiles the selectedProfiles to set
-	 */
-	public void setSelectedProfiles(List<Integer> selectedProfiles) {
-		this.selectedProfiles = selectedProfiles;
-	}
-
-	/**
 	 * @return the removePage
 	 */
 	public boolean isRemovePage() {
@@ -360,5 +332,20 @@ public class UserPrepareAction extends SpmAction implements Preparable{
 	public void setRemovePage(boolean removePage) {
 		this.removePage = removePage;
 	}
+
+	/**
+	 * @return the userProfile
+	 */
+	public Profile getUserProfile() {
+		return userProfile;
+	}
+
+	/**
+	 * @param userProfile the userProfile to set
+	 */
+	public void setUserProfile(Profile userProfile) {
+		this.userProfile = userProfile;
+	}
+
 
 }

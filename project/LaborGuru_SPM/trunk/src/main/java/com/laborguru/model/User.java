@@ -2,6 +2,7 @@ package com.laborguru.model;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -259,6 +260,21 @@ public class User extends SpmObject {
 	 */
 	public void setLastUpdateDate(Date lastUpdateDate) {
 		this.lastUpdateDate = lastUpdateDate;
+	}
+
+	/**
+	 * The user will have only one profile.
+	 * But it keeps having a Set of Profiles in case of a change in specifications.
+	 * @param profile
+	 */
+	public void setProfile(Profile profile){
+		getProfiles().clear();
+		getProfiles().add(profile);
+	}
+	
+	public Profile getProfile() {
+		Iterator<Profile> it = getProfiles().iterator();
+		return it.next();
 	}
 	
 	/**
