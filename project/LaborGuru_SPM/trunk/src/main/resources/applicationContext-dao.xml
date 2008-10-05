@@ -24,6 +24,8 @@
 	<bean id="projectionDao" class="com.laborguru.service.projection.dao.ProjectionDaoHibernate" autowire="byType"/>
 	
 	<bean id="profileDao" class="com.laborguru.service.profile.dao.ProfileDaoHibernate" autowire="byType"/>
+
+	<bean id="scheduleDao" class="com.laborguru.service.schedule.dao.ScheduleDaoHibernate" autowire="byType"/>
 						
 	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
 		<property name="sessionFactory">

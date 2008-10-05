@@ -5,6 +5,8 @@
  */
 package com.laborguru.util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -78,5 +80,30 @@ public class CalendarUtils {
 		} else {
 			return null;
 		}		
-	}	
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public static Date todayWithoutTime() {
+		return removeTimeFromDate(new Date());
+	}
+	
+	/**
+	 * 
+	 * @param d
+	 * @return
+	 */
+	public static Date removeTimeFromDate(Date d) {
+		try {
+			final SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+			String str = df.format(d);
+			return df.parse(str);
+		} catch(ParseException ex) {
+			// Should never happen
+			return null;
+		}
+		
+	}
 }

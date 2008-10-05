@@ -231,27 +231,68 @@
 				    <!-- Header -->
 				    
 				    <!-- Employees -->
+				    <s:iterator id="data" value="scheduleData" status="itScheduleData">
+					    <tr class="scheduleMainTableEmployeeRow">
+					    	<td class="scheduleNameCell"><s:select name="scheduleData[%{#itScheduleData.index}].positionId" list="positions" listKey="id" listValue="name" theme="simple"/></td>
+							<td class="scheduleNameCell">
+								<s:url id="employeeList" action="scheduleemployeeautocomplete"/>
+								<s:autocompleter name="scheduleData[%{#itScheduleData.index}].employeeName" keyName="scheduleData[%{#itScheduleData.index}].employeeId" loadMinimumCount="3" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring"/>
+							</td>    
+							<td class="scheduleValueCell" id="inHour_<s:property value="#itScheduleData.index"/>"><s:hidden name="scheduleData[%{#itScheduleData.index}].inHour"/><s:property value="#data.inHour"/></td>    
+							<td class="scheduleValueCell" id="outHour_<s:property value="#itScheduleData.index"/>"><s:hidden name="scheduleData[%{#itScheduleData.index}].outHour"/><s:property value="#data.outHour"/></td>
+							<td class="scheduleValueCell" id="totalHours_<s:property value="#itScheduleData.index"/>"><s:hidden name="scheduleData[%{#itScheduleData.index}].totalHours"/><s:property value="#data.totalHours"/></td>            
+							<s:iterator id="hour" value="scheduleIndividualHours" status="itHour">
+								<s:if test="#itHour.first">
+									<s:iterator id="startToIgnore" value="scheduleIndividualStartHoursToIgnore">
+										<td class="scheduleUnavailable"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+									</s:iterator>
+								</s:if>  
+								<td id='cell_<s:property value="#itScheduleData.index"/>_<s:property value="#itHour.index"/>' onclick="scheduleClick(this, <s:property value="#itScheduleData.index"/>,<s:property value="#itHour.index"/>,'<s:property value="#data.positionId"/>');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>
+									<s:hidden id="schedule_%{#itScheduleData.index}_%{#itHour.index}" name="scheduleData[%{#itScheduleData.index}].schedule[%{#itHour.index}]"/>
+								</td>            
+								<s:if test="#itHour.last">
+									<s:iterator id="startToIgnore" value="scheduleIndividualEndHoursToIgnore">
+										<td class="scheduleUnavailable"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+									</s:iterator>
+								</s:if> 
+							</s:iterator>
+					    </tr>
+					</s:iterator>
+					
+					<!-- Add new employee to schedule -->
 				    <tr class="scheduleMainTableEmployeeRow">
-				    	<td class="scheduleNameCell"><select></select></td>
-						<td class="scheduleNameCell">Add</td>    
-						<td class="scheduleValueCell" id="inHour_0">XX</td>    
-						<td class="scheduleValueCell" id="outHour_0">XX</td>
-						<td class="scheduleValueCell" id="totalHours_0">XX</td>            
+				    	<td class="scheduleNameCell"><s:select name="newEmployeePositionId" list="positions" listKey="id" listValue="name" theme="simple"/></td>
+						<td class="scheduleNameCell">
+							<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
+								<tr>
+									<td>
+										<s:url id="employeeList" action="scheduleemployeeautocomplete"/>
+										<s:autocompleter name="newEmployeeName" loadMinimumCount="3" keyName="newEmployeeId" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring" />
+									</td>
+									<td>
+										<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>
+									</td>
+									<td><s:submit id="addEmployeeButton" onclick="addshiftbyemployee_form.action='addshiftbyemployee_addEmployee.action'; return true;" key="schedule.addshift.addemployee.button" theme="simple" cssClass="button"/></td>
+								</tr>
+							</table>
+						</td>    
+						<td class="scheduleValueCell"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>    
+						<td class="scheduleValueCell"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+						<td class="scheduleValueCell"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>            
 						<s:iterator id="hour" value="scheduleIndividualHours" status="itHour">
 							<s:if test="#itHour.first">
 								<s:iterator id="startToIgnore" value="scheduleIndividualStartHoursToIgnore">
 									<td class="scheduleUnavailable"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
 								</s:iterator>
 							</s:if>  
-							<td id='cell_<s:property value="#itHour.index"/>_<s:property value="#itHour.index"/>' onclick="scheduleClick(this, <s:property value="#itHour.index"/>,<s:property value="#itHour.index"/>, 'Default Position Name');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class="scheduleEmpty">&nbsp;<input type="hidden" id="schedule_<s:property value="#itHour.index"/>_<s:property value="#itHour.index"/>" name="schedule_<s:property value="#itHour.index"/>_<s:property value="#itHour.index"/>" value=""/></td>            
+							<td class="scheduleUnavailable"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
 							<s:if test="#itHour.last">
 								<s:iterator id="startToIgnore" value="scheduleIndividualEndHoursToIgnore">
 									<td class="scheduleUnavailable"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
 								</s:iterator>
 							</s:if> 
 						</s:iterator>
-				    </tr>
-
+				    </tr>					
 				    <!-- Employees -->
 				    
 				</table>			

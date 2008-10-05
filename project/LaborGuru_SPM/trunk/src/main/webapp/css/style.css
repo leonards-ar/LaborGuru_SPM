@@ -104,9 +104,7 @@ a.link:hover {
 	background-color: #DEEFDC;
 }
 
-input,textarea {
-	border: 1px solid #003300;
-}
+
 
 input.button {
 	padding: 2px 5px 3px 5px;
@@ -430,6 +428,12 @@ img {
 }
 
 select {
+	font-size: 11px;
+	border: 1px solid #859D31;
+}
+
+input,textarea {
+	border: 1px solid #003300;
 	font-size: 11px;
 	border: 1px solid #859D31;
 }
