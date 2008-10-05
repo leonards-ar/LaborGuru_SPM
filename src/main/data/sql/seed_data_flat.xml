@@ -69,6 +69,7 @@
   
   <tbl_profiles profile_id="1" name="ROLE_USER" description="Profile Desc"/>
   <tbl_profiles profile_id="2" name="ROLE_FAKE" description="Profile Desc"/>
+  <tbl_profiles profile_id="3" name="ROLE_STORE_MANAGER" description="Store Manager"/>
   <tbl_profiles_permissions profile_id="1" permission_id="1"/>
   <tbl_profiles_permissions profile_id="1" permission_id="2"/>
   <tbl_profiles_permissions profile_id="1" permission_id="3"/>

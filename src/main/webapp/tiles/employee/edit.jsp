@@ -46,20 +46,24 @@
                     <td width="35%" align="left" class="value"><s:textfield name="employee.email" size="20" theme="simple"/></td>
                 </tr>
               	<tr class="editFormEvenRow">
+                    <td width="15%" align="right" class="form_label" nowrap><s:text name="user.password.label" /></td>
+                    <td width="35%" align="left" class="value"><s:password name="employee.password" showPassword="true" size="20" theme="simple"/></td>
+                    <td width="15%" align="right" class="form_label" nowrap><s:text name="user.confirm.password.label" /></td>
+                    <td width="35%" align="left" class="value"><s:password name="passwordConfirmation" showPassword="true" size="20" theme="simple"/></td>
+                </tr>
+              	<tr class="editFormOddRow">
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.phone.label" /></td>
                     <td width="35%" align="left" class="value"><s:textfield name="employee.phone" size="15" theme="simple"/></td>
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.phone2.label" /></td>
                     <td width="35%" align="left" class="value"><s:textfield name="employee.phone2" size="15" theme="simple"/></td>
                 </tr>
-
-              	<tr class="editFormOddRow">
+              	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.employeeid.label" /></td>
                     <td width="35%" align="left" class="value"><s:textfield name="employee.employeeId" size="10" theme="simple"/></td>
                     <td width="15%" align="right" class="form_label" nowrap>* <s:text name="employee.wage.label" /></td>
                     <td width="35%" align="left" class="value"><s:textfield name="employee.wage" size="4" theme="simple"/></td>
                 </tr>
-                
-              	<tr class="editFormEvenRow">
+              	<tr class="editFormOddRow">
               	<td colspan="4" align="center">
 					<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0"><tr>
                     <td align="right" class="form_label" nowrap><s:text name="employee.maxdaysweek.label" /></td>
@@ -76,7 +80,7 @@
 					</tr></table>
               	</td>
                 </tr>
-              	<tr class="editFormOddRow">
+              	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.defaultposition.label" /></td>
                     <td width="35%" align="left" class="value">
                     <s:select name="employee.defaultPosition.id" list="positions" listKey="id" listValue="name" theme="simple"/>
@@ -86,22 +90,22 @@
                     <s:select name="employee.status" list="statusMap" listKey="key" listValue="%{getText(value)}" theme="simple"/>
                     </td>
                 </tr>
-              	<tr class="editFormEvenRow">
+              	<tr class="editFormOddRow">
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.ismanager.label" /></td>
                     <td width="35%" align="left" class="value"><s:checkbox name="employee.manager" fieldValue="true" theme="simple"/></td>
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.hiredate.label" /></td>
                     <td width="35%" align="left" class="value"><s:datetimepicker displayFormat="MM/dd/yyyy" disabled="true" name="employee.hireDate" theme="simple"/></td>
                 </tr>
 
-              	<tr class="editFormOddRow">
+              	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.address.label" /></td>
                     <td width="85%" align="left" class="value" colspan="3"><s:textfield name="employee.address" size="50" theme="simple"/></td>
                 </tr>
-              	<tr class="editFormEvenRow">
+              	<tr class="editFormOddRow">
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.address2.label" /></td>
                     <td width="85%" align="left" class="value" colspan="3"><s:textfield name="employee.address2" size="50" theme="simple"/></td>
                 </tr>
-              	<tr class="editFormOddRow">
+              	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.city.label" /></td>
               	<td width="35%" align="left" class="value"><s:textfield name="employee.city" size="20" theme="simple"/></td>
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.state.label" /></td>
@@ -118,13 +122,13 @@
               	</td>
               	
                 </tr>                
-              	<tr class="editFormEvenRow">
+              	<tr class="editFormEOddRow">
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.comments.label" /></td>
                     <td width="35%" align="left" class="value"><s:textarea name="employee.comments" cols="40" rows="2" theme="simple"/></td>
                     <td width="15%" align="right" class="form_label" nowrap>&nbsp;</td>
                     <td width="35%" align="left" class="value">&nbsp;</td>
                 </tr>
-              	<tr class="editFormOddRow">
+              	<tr class="editFormEvenRow">
                     <td width="100%" align="right" colspan="4">
 	                    <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
 		                    <tr>

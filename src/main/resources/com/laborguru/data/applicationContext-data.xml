@@ -16,6 +16,12 @@
 				<entry key="usedWeeks">
 					<ref bean="usedWeeks"/>
 				</entry>
+				<entry key="managerRole">
+					<ref bean="managerRole"/>
+				</entry>
+				<entry key="employeeRole">
+					<ref bean="managerRole"/>
+				</entry>				
 			</map>
 		</constructor-arg>
 	</bean> 
@@ -111,5 +117,16 @@
 				</entry>
 			</map>
 		</constructor-arg>
+	</bean>
+	
+	<bean id="managerRole" class="com.laborguru.model.Profile">
+	  <description>Manager Role of a store</description>
+	  <property name="id" value="3"/>
+	</bean>
+	
+	<bean id="employeeRole" class="com.laborguru.model.Profile">
+	  <description>Default employee Role of a store</description>
+	  <property name="id" value="1"/>
 	</bean>	
+		
 </beans>

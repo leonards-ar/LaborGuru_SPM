@@ -8,6 +8,7 @@ import com.laborguru.action.SpmActionResult;
 import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.Employee;
 import com.laborguru.model.Position;
+import com.laborguru.model.Profile;
 import com.laborguru.model.filter.SearchEmployeeFilter;
 import com.laborguru.service.data.ReferenceDataService;
 import com.laborguru.service.employee.EmployeeService;
@@ -37,6 +38,7 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	private Map<String, String> statusMap;
 	private List<String> statesList;
 	
+	private String passwordConfirmation;	
 	private Integer employeeId;
 	private boolean removePage;
 
@@ -194,6 +196,15 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 		}
 		
 		try {
+
+			if(getEmployee().isManager()) {
+				//Set Employee Manager Role
+				getEmployee().setProfile(getReferenceDataService().getManagerRole());
+				
+			} else {
+				getEmployee().setProfile(getReferenceDataService().getEmployeeRole());
+			}
+			
 			employeeService.save(this.employee);
 
 			return SpmActionResult.LISTACTION.getResult();
@@ -228,6 +239,7 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 		Employee tmpEmployee = new Employee();
 		tmpEmployee.setId(this.employeeId);
 		this.setEmployee(employeeService.getEmployeeById(tmpEmployee));
+		setPasswordConfirmation(getEmployee().getPassword());
 	}	
 	
 	public EmployeeService getEmployeeService() {
@@ -342,4 +354,19 @@ public class EmployeePrepareAction extends SpmAction implements Preparable {
 	public void setStatesList(List<String> statesList) {
 		this.statesList = statesList;
 	}
+
+	/**
+	 * @return the passwordConfirmation
+	 */
+	public String getPasswordConfirmation() {
+		return passwordConfirmation;
+	}
+
+	/**
+	 * @param passwordConfirmation the passwordConfirmation to set
+	 */
+	public void setPasswordConfirmation(String passwordConfirmation) {
+		this.passwordConfirmation = passwordConfirmation;
+	}
+	
 }
