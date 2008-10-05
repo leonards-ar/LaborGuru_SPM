@@ -23,6 +23,7 @@ import com.laborguru.model.OperationTime;
 import com.laborguru.model.Position;
 import com.laborguru.model.Shift;
 import com.laborguru.model.StoreSchedule;
+import com.laborguru.service.schedule.ScheduleService;
 import com.laborguru.util.CalendarUtils;
 import com.laborguru.util.SpmConstants;
 
@@ -42,7 +43,11 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	
 	private StoreSchedule storeSchedule;
 	
+	private ScheduleService scheduleService;
+	
 	public static final int MINUTES_INTERVAL = 15;
+	
+
 	
 	/**
 	 * 
@@ -150,8 +155,15 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	 */
 	public StoreSchedule getStoreSchedule() {
 		if(storeSchedule == null) {
-			storeSchedule = new StoreSchedule();
-			storeSchedule.setStore(getEmployeeStore());
+			try {
+				storeSchedule = getScheduleService().getStoreScheduleByDate(getEmployeeStore(), getWeekDaySelector().getSelectedDay());
+			} catch(RuntimeException ex) {
+				ex.printStackTrace();
+			}
+			if(storeSchedule == null) {
+				storeSchedule = new StoreSchedule();
+				storeSchedule.setStore(getEmployeeStore());
+			}
 		}
 		return storeSchedule;
 	}
@@ -429,7 +441,32 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	 * @param position
 	 */
 	private void cleanStoreSchedule(Set<Integer> employeeIds, Position position) {
-		
+		if(getStoreSchedule() != null && employeeIds != null) {
+			Set<EmployeeSchedule> employeeSchedulesToRemove = new HashSet<EmployeeSchedule>();
+			Set<Shift> shiftsToRemove = new HashSet<Shift>();
+			
+			for(EmployeeSchedule employeeSchedule : getStoreSchedule().getEmployeeSchedules()) {
+				if(employeeSchedule.getEmployee() != null && !employeeIds.contains(employeeSchedule.getEmployee().getId())) {
+					if(position == null) {
+						// Applies for all positions
+						employeeSchedulesToRemove.add(employeeSchedule);
+					} else {
+						for(Shift shift : employeeSchedule.getShifts()) {
+							if(isEqualPosition(shift.getPosition(), position)) {
+								shiftsToRemove.add(shift);
+							}
+						}
+						employeeSchedule.getShifts().removeAll(shiftsToRemove);
+						// There are no more shifts, then remove the employee schedule
+						//:TODO: Should remove also all employee schedules with just break shifts???
+						if(employeeSchedule.getShifts().isEmpty()) {
+							employeeSchedulesToRemove.add(employeeSchedule);
+						}
+					}
+				}
+			}
+			getStoreSchedule().getEmployeeSchedules().removeAll(employeeSchedulesToRemove);
+		}
 	}
 
 	/**
@@ -439,9 +476,152 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	 * @param position
 	 */
 	private void setShifts(List<ScheduleRow> source, EmployeeSchedule employeeSchedule, Position position) {
-		
+		if(position == null) {
+			setShiftsAllPositions(source, employeeSchedule);
+		} else {
+			setShiftsForPosition(source, employeeSchedule, position);
+		}
 	}
 	
+	/**
+	 * 
+	 * @param source
+	 * @param employeeSchedule
+	 * @param position
+	 */
+	private void setShiftsForPosition(List<ScheduleRow> source, EmployeeSchedule employeeSchedule, Position position) {
+		int shiftPosition = 0;
+		List<Shift> rowShifts;
+		List<Shift> currentShifts = employeeSchedule.getShifts();
+		
+		for(ScheduleRow row : source) {
+			rowShifts = retrieveShifts(row);
+			for(Shift aShift : rowShifts) {
+				if(isEqualPosition(position, aShift.getPosition())) {
+					while(shiftPosition < currentShifts.size() && !isEqualPosition(position, currentShifts.get(shiftPosition).getPosition())) {
+						shiftPosition++;
+					}
+					
+					if(shiftPosition < currentShifts.size()) {
+						updateShift(aShift, currentShifts.get(shiftPosition));
+						shiftPosition++;
+					} else {
+						aShift.setEmployeeSchedule(employeeSchedule);
+						currentShifts.add(aShift);
+					}
+				}
+			}
+		}
+		
+		// Remove non-existing shifts
+		if(shiftPosition < currentShifts.size()) {
+			for(int i = currentShifts.size() - 1; i >= shiftPosition; i--) {
+				if(isEqualPosition(position, currentShifts.get(i).getPosition())) {
+					currentShifts.remove(i);
+				}
+			}
+		}		
+	}
+	
+	/**
+	 * 
+	 * @param source
+	 * @param destination
+	 */
+	private void updateShift(Shift source, Shift destination) {
+		destination.setFromHour(source.getFromHour());
+		destination.setToHour(source.getToHour());
+		destination.setPosition(source.getPosition());
+	}
+	
+	/**
+	 * 
+	 * @param source
+	 * @param employeeSchedule
+	 */
+	private void setShiftsAllPositions(List<ScheduleRow> source, EmployeeSchedule employeeSchedule) {
+		int shiftPosition = 0;
+		List<Shift> rowShifts;
+		List<Shift> currentShifts = employeeSchedule.getShifts();
+		
+		for(ScheduleRow row : source) {
+			rowShifts = retrieveShifts(row);
+			for(Shift aShift : rowShifts) {
+				if(shiftPosition < currentShifts.size()) {
+					updateShift(aShift, currentShifts.get(shiftPosition));
+					shiftPosition++;
+				} else {
+					aShift.setEmployeeSchedule(employeeSchedule);
+					currentShifts.add(aShift);
+				}
+			}
+		}
+		
+		// Remove non-existing shifts
+		if(shiftPosition < currentShifts.size()) {
+			for(int i = currentShifts.size() - 1; i >= shiftPosition; i--)
+				currentShifts.remove(i);
+		}
+	}
+	
+	/**
+	 * 
+	 * @param row
+	 * @return
+	 */
+	private List<Shift> retrieveShifts(ScheduleRow row) {
+		List<Shift> rowShifts = new ArrayList<Shift>();
+		
+		Shift aShift = null;
+		String currentShift = null;
+		String element;
+		for(int i = 0; i < row.getSchedule().size(); i++) {
+			element = row.getSchedule().get(i);
+			
+			if(currentShift == null && !SpmConstants.SCHEDULE_FREE.equals(element)) {
+				currentShift = element;
+				aShift = new Shift();
+				aShift.setFromHour(getScheduleIndividualHours().get(i));
+			} else if(currentShift != null && !currentShift.equals(element)) {
+				aShift.setToHour(getScheduleIndividualHours().get(i - 1));
+				
+				if(SpmConstants.SCHEDULE_BREAK.equals(currentShift)) {
+					aShift.setPosition(null);
+				} else {
+					Position pos = new Position();
+					//:TODO: Validation
+					pos.setId(new Integer(currentShift));
+					aShift.setPosition(pos);
+				}
+				rowShifts.add(aShift);
+				aShift = null;
+				
+				if(SpmConstants.SCHEDULE_FREE.equals(element)) {
+					currentShift = null;
+				} else {
+					currentShift = element;
+					aShift = new Shift();
+					aShift.setFromHour(getScheduleIndividualHours().get(i));
+				}
+			}
+		}
+		
+		if(currentShift != null) {
+			aShift.setToHour(getScheduleIndividualHours().get(getScheduleIndividualHours().size() - 1));
+			
+			if(SpmConstants.SCHEDULE_BREAK.equals(currentShift)) {
+				aShift.setPosition(null);
+			} else {
+				Position pos = new Position();
+				//:TODO: Validation
+				pos.setId(new Integer(currentShift));
+				aShift.setPosition(pos);
+			}
+			rowShifts.add(aShift);			
+		}
+		return rowShifts;
+	}
+
 	/**
 	 * 
 	 * @param employeeId
@@ -613,5 +793,19 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	 */
 	public void setScheduleIndividualHours(List<Date> scheduleIndividualHours) {
 		this.scheduleIndividualHours = scheduleIndividualHours;
+	}
+
+	/**
+	 * @return the scheduleService
+	 */
+	public ScheduleService getScheduleService() {
+		return scheduleService;
+	}
+
+	/**
+	 * @param scheduleService the scheduleService to set
+	 */
+	public void setScheduleService(ScheduleService scheduleService) {
+		this.scheduleService = scheduleService;
 	}
 }

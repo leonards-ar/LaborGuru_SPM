@@ -55,8 +55,8 @@ public class WeekDaySelector implements Serializable {
 	 */
 	public WeekDaySelector(DayOfWeek startingDayOfWeek) {
 		setStartingDayOfWeek(startingDayOfWeek != null ? startingDayOfWeek : DayOfWeek.MONDAY);
-		setStartingWeekDay(getFirstDayOfWeek(new Date()));
-		setSelectedDay(new Date());
+		setStartingWeekDay(getFirstDayOfWeek(CalendarUtils.todayWithoutTime()));
+		setSelectedDay(CalendarUtils.todayWithoutTime());
 	}
 	
 	/**
