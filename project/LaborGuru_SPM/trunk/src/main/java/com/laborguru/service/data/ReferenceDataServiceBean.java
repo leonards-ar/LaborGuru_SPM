@@ -8,6 +8,8 @@ package com.laborguru.service.data;
 import java.util.List;
 import java.util.Map;
 
+import com.laborguru.model.Profile;
+
 /**
  *
  * @author <a href="mcapurro@gmail.com">Mariano Capurro</a>
@@ -48,6 +50,24 @@ public class ReferenceDataServiceBean implements ReferenceDataService {
 	public Map<Integer, String> getUsedWeeks() {
 		return (Map<Integer, String>) getReferenceData().get("usedWeeks");
 	}	
+
+	/**
+	 * 
+	 * @return
+	 * @see com.laborguru.service.data.ReferenceDataService#getManagerRoleId()
+	 */
+	public Profile getManagerRole() {
+		return (Profile)getReferenceData().get("managerRole");
+	}
+	
+	/**
+	 * 
+	 * @return
+	 * @see com.laborguru.service.data.ReferenceDataService#getEmployeeRoleId()
+	 */
+	public Profile getEmployeeRole() {
+		return (Profile)getReferenceData().get("employeeRole");
+	}
 	
 	/**
 	 * @return the referenceData

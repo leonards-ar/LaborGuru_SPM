@@ -8,6 +8,7 @@ package com.laborguru.service.data;
 import java.util.List;
 import java.util.Map;
 
+import com.laborguru.model.Profile;
 import com.laborguru.service.Service;
 
 /**
@@ -44,4 +45,16 @@ public interface ReferenceDataService extends Service {
 	 * @return Usedweeks map.
 	 */
 	Map<Integer, String> getUsedWeeks();
+	
+	/**
+	 * Retrieves the manager role id.
+	 * @return
+	 */
+	Profile getManagerRole();
+	
+	/**
+	 * Retrieves the default employee role id.
+	 * @return
+	 */
+	Profile getEmployeeRole();
 }
