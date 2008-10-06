@@ -20,7 +20,7 @@
 					<ref bean="managerRole"/>
 				</entry>
 				<entry key="employeeRole">
-					<ref bean="managerRole"/>
+					<ref bean="employeeRole"/>
 				</entry>				
 			</map>
 		</constructor-arg>
