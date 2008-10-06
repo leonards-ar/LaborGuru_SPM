@@ -5,6 +5,7 @@
  */
 package com.laborguru.action.schedule;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -55,6 +56,22 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	public AddShiftBaseAction() {
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public Integer getTotalIndividualHours() {
+		return new Integer(getScheduleIndividualHours().size());
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getBreakId() {
+		return SpmConstants.SCHEDULE_BREAK;
+	}
+	
 	/**
 	 * @return the weekDaySelector
 	 */
@@ -717,7 +734,8 @@ public abstract class AddShiftBaseAction extends SpmAction {
 			
 			
 			List<Date> scheduleBuckets = getScheduleIndividualHours();
-			List<String> occupation = initializeScheduleRow(scheduleBuckets);
+			List<String> occupation = initializeScheduleRow();
+			List<String> hours = initializeScheduleHoursRow();
 			
 			for(Shift aShift : employeeSchedule.getShifts()) {
 				if(aShift.isBreak() || isEqualPosition(shift.getPosition(), aShift.getPosition())) {
@@ -729,6 +747,7 @@ public abstract class AddShiftBaseAction extends SpmAction {
 			}
 			
 			aRow.setSchedule(occupation);
+			aRow.setHours(hours);
 			
 			return aRow;
 		} else {
@@ -772,14 +791,31 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	 * @param scheduleBuckets
 	 * @return
 	 */
-	private List<String> initializeScheduleRow(List<Date> scheduleBuckets) {
-		List<String> scheduleRow = new ArrayList<String>(scheduleBuckets.size());
-		for(int i = 0; i < scheduleBuckets.size(); i++) {
+	protected List<String> initializeScheduleRow() {
+		int size = getScheduleIndividualHours().size();
+		List<String> scheduleRow = new ArrayList<String>(size);
+		for(int i = 0; i < size; i++) {
 			scheduleRow.add(SpmConstants.SCHEDULE_FREE);
 		}
 		return scheduleRow;
 	}
 
+	/**
+	 * 
+	 * @param scheduleBuckets
+	 * @return
+	 */
+	protected List<String> initializeScheduleHoursRow() {
+		List<Date> scheduleBuckets = getScheduleIndividualHours();
+		List<String> hoursRow = new ArrayList<String>(scheduleBuckets.size());
+		final SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+		for(int i = 0; i < scheduleBuckets.size(); i++) {
+			hoursRow.add(df.format(scheduleBuckets.get(i)));
+		}
+		return hoursRow;
+	}	
+	
+	
 	/**
 	 * @param scheduleLabelHours the scheduleLabelHours to set
 	 */

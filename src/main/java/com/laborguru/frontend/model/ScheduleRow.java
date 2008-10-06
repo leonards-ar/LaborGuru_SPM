@@ -8,6 +8,8 @@ package com.laborguru.frontend.model;
 import java.io.Serializable;
 import java.util.List;
 
+import com.laborguru.util.SpmConstants;
+
 /**
  *
  * @author <a href="mcapurro@gmail.com">Mariano Capurro</a>
@@ -29,6 +31,7 @@ public class ScheduleRow implements Serializable {
 	private String outHour;
 	private String totalHours;
 	private List<String> schedule;
+	private List<String> hours;
 	
 	/**
 	 * 
@@ -133,4 +136,45 @@ public class ScheduleRow implements Serializable {
 	public void setSchedule(List<String> schedule) {
 		this.schedule = schedule;
 	}
+
+	/**
+	 * @return the hours
+	 */
+	public List<String> getHours() {
+		return hours;
+	}
+
+	/**
+	 * @param hours the hours to set
+	 */
+	public void setHours(List<String> hours) {
+		this.hours = hours;
+	}
+	
+	/**
+	 * 
+	 * @param shiftIndex
+	 * @return
+	 */
+	public boolean isBreakShift(int shiftIndex) {
+		if(shiftIndex >= 0 && shiftIndex < getSchedule().size()) {
+			return SpmConstants.SCHEDULE_BREAK.equals(getSchedule().get(shiftIndex));
+		} else {
+			return false;
+		}
+	}
+	
+	/**
+	 * 
+	 * @param shiftIndex
+	 * @return
+	 */
+	public boolean isFreeShift(int shiftIndex) {
+		if(shiftIndex >= 0 && shiftIndex < getSchedule().size()) {
+			return SpmConstants.SCHEDULE_FREE.equals(getSchedule().get(shiftIndex));
+		} else {
+			return false;
+		}
+	}
+	
 }

@@ -10,6 +10,7 @@
 	}
 
 </style>
+
 <link rel="stylesheet" href="<s:url value="/css/schedule_style.css" includeParams="none" />" type="text/css" charset="utf-8" />
 
 <script language="javascript" type="text/javascript">
@@ -34,20 +35,26 @@ var scheduleState = 1;
 
 var fromColumn;
 var toColumn;
+
 var currentRow;
 var previousClassName;
 var onMouseOutEnabled = true;
 
-var TOTAL_COLS = 20;
-var OPEN_TIME = 4;
-var BREAK = '__break__';
-var CANNOT_CHANGE_ROW_MSG = 'Must select the end time in the same row';
+var TOTAL_COLS = 0;
+var TOTAL_ROWS = 0;
+var TIME_INTERVAL = 15;
+var BREAK = null;
+var CANNOT_CHANGE_ROW_MSG = null;
+var END_TIME_MSG = null;
+var START_TIME_MSG = null;
 
-function initialize(totalCols, OpenHour, breakTxt, cannotChangeRowMsg) {
+function initialize(totalCols, totalRows, breakTxt, cannotChangeRowMsg, startTimeMsg, endTimeMsg) {
 	TOTAL_COLS = totalCols;
-	OPEN_TIME = OpenHour;
+	TOTAL_ROWS = totalRows;
 	BREAK = breakTxt;
 	CANNOT_CHANGE_ROW_MSG = cannotChangeRowMsg;
+	START_TIME_MSG = startTimeMsg;
+	END_TIME_MSG = endTimeMsg;
 }
 
 function getObjectByID(objectId) {
@@ -68,7 +75,7 @@ function scheduleClick(tdObj, rowNum, colNum, positionId)
 		tdObj.className = 'scheduleStartSelection';
 		onMouseOutEnabled = false;
 		scheduleState += 1;
-		setMessage('Select the finish time');
+		setMessage(END_TIME_MSG);
 	} else if(scheduleState == 2 || scheduleState == 4 || scheduleState == 6) {
 		if(currentRow != rowNum) {
 			setMessage(CANNOT_CHANGE_ROW_MSG);
@@ -81,12 +88,18 @@ function scheduleClick(tdObj, rowNum, colNum, positionId)
 				toColumn = colNum;
 			}
 			
-			
 			for(var i = fromColumn; i <= toColumn; i++) {
 				var cell = getObjectByID('cell_' + currentRow + '_' + i);
 				cell.className = getClassName();
-				var inputObj = getObjectByID('schedule_' + rowNum + '_' + i); 
-				inputObj.value = positionId;
+				var inputObj = getObjectByID('schedule_' + rowNum + '_' + i);
+				if(scheduleState == 2) {
+					inputObj.value = positionId;
+				} else if(scheduleState == 4) {
+					inputObj.value = BREAK;
+				} else {
+					inputObj.value = '';
+				}
+				
 			}
 			refreshRow(rowNum);
 
@@ -119,7 +132,7 @@ function changeAction(actionCode)
 	fromColumn = null;
 	toColumn = null;
 	scheduleState = actionCode;
-	setMessage('Select the starting time');
+	setMessage(START_TIME_MSG);
 }
 
 function setMessage(msgTxt) {
@@ -142,6 +155,71 @@ function scheduleOnMouseOut(tdObj) {
 	previousColor = null;
 }
 
+function getHours(time) {
+	var i = time.indexOf(':');
+	if(i >= 0) {
+		return time.substring(0, i);
+	} else {
+		return time.substring(0, 2);
+	}
+}
+
+function getMinutes(time) {
+	var i = time.indexOf(':');
+	if(i >= 0) {
+		return time.substring(i + 1, time.length);
+	} else {
+		return time.substring(2, 4);
+	}
+}
+
+function integerDivision(numerator, denominator) {
+    var remainder = numerator % denominator;
+    var quotient = ( numerator - remainder ) / denominator;
+
+    if ( quotient >= 0 )
+        quotient = Math.floor( quotient );
+    else  // negative
+        quotient = Math.ceil( quotient );
+
+	return quotient;
+}
+
+
+function timeInMinutes(time) {
+	if(time != null && time != '') {
+		return parseInt(getHours(time)) * 60 + parseInt(getMinutes(time));
+	} else {
+		return 0;
+	}
+}
+
+function minutesToTime(minutes) {
+	var h = integerDivision(minutes, 60);
+	var m = minutes % 60;
+	
+	return formatTimeNumber(h) + ':' + formatTimeNumber(m);
+}
+
+function formatTimeNumber(n) {
+	n = '' + n;
+	
+	if(n == null || n == '') {
+		return '00';
+	}
+	
+	if(n.length < 2) {
+		return '0' + n;
+	}
+	
+	return n;
+}
+
+function refreshRows() {
+	for(var i=0; i < TOTAL_ROWS; i++) {
+		refreshRow(i);
+	}
+}
 
 function refreshRow(rowNum) {
 	var inHour = null;
@@ -149,26 +227,74 @@ function refreshRow(rowNum) {
 	var totalHours = 0;
 	
 	for(var i=0; i < TOTAL_COLS; i++) {
-		var inputObj = getObjectByID('schedule_' + rowNum + '_' + i); 
+		var inputObj = getObjectByID('schedule_' + rowNum + '_' + i);
+		var inputHourObj = getObjectByID('schedulehour_' + rowNum + '_' + i);
 		var value = null;
+		var currentHour = null;
+		
 		if(inputObj) {
 			value = inputObj.value;
 		}
+		
+		if(inputHourObj) {
+			currentHour = inputHourObj.value;
+		}
+		
 		if(value != null && value != '' && value != BREAK) {
-			var currentHour = OPEN_TIME + 0.25 * i;
+			
+			
 			if(inHour == null) {
 				inHour = currentHour;
 			}
 			if(outHour == null || outHour < currentHour) {
 				outHour = currentHour;
 			}
-			totalHours += 0.25;
+			
+			totalHours += 15;
 		}
 	}
 
-	getObjectByID('inHour_' + rowNum).innerHTML = inHour;
-	getObjectByID('outHour_' + rowNum).innerHTML = outHour;
-	getObjectByID('totalHours_' + rowNum).innerHTML = totalHours;
+	totalHours = minutesToTime(totalHours);
+	
+	if(outHour != null && outHour != '') {
+		outHour = timeInMinutes(outHour) + 15;
+		outHour = minutesToTime(outHour);
+	} else {
+		outHour = '';
+	}
+	
+	if(inHour == null) {
+		inHour = '';
+	}
+	
+	var o1 = getObjectByID('inHourInput_' + rowNum);
+	var o2 = getObjectByID('outHourInput_' + rowNum);
+	var o3 = getObjectByID('totalHoursInput_' + rowNum);
+	
+	if(o1) {
+		o1.value = inHour;
+	}
+	
+	if(o2) {
+		o2.value = outHour;
+	}
+	if(o3) {
+		o3.value = totalHours;
+	}
+
+	var o4 = getObjectByID('inHour_' + rowNum);
+	var o5 = getObjectByID('outHour_' + rowNum);
+	var o6 = getObjectByID('totalHours_' + rowNum);
+	
+	if(o4) {
+		o4.innerHTML = inHour;
+	}
+	if(o5) {
+		o5.innerHTML = outHour;
+	}
+	if(o6) {
+		o6.innerHTML = totalHours;
+	}		
 }
 </script>
 
