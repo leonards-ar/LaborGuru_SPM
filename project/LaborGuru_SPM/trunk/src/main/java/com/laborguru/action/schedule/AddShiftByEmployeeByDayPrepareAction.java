@@ -47,10 +47,17 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	}
 
 	/**
+	 * 
+	 * @return
+	 */
+	public Integer getScheduleRows() {
+		return new Integer(getScheduleData().size());
+	}
+	
+	/**
 	 * Loads position and status list
 	 */
 	private void loadPageData() {
-		log.debug("");
 		this.setPositions(getPositionService().getPositionsByStore(getEmployeeStore()));
 	}
 	
@@ -128,11 +135,13 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	public String addEmployee() {
 		ScheduleRow newRow = new ScheduleRow();
 		newRow.setEmployeeId(getNewEmployeeId());
-		newRow.setInHour("0");
-		newRow.setOutHour("0");
-		newRow.setTotalHours("0");
+		newRow.setInHour("00:00");
+		newRow.setOutHour("00:00");
+		newRow.setTotalHours("00:00");
 		newRow.setPositionId(getNewEmployeePositionId());
 		newRow.setEmployeeName(getNewEmployeeName());
+		newRow.setSchedule(initializeScheduleRow());
+		newRow.setHours(initializeScheduleHoursRow());
 		
 		getScheduleData().add(newRow);
 		
