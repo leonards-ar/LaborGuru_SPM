@@ -136,7 +136,9 @@
   													<td class="editorTableOddRow"><div id="totalProjectionValues"><b><s:text name="currency"><s:param value="totalProjectedValues"/></s:text></b></div></td>
 													<td class="editorTableOddRow"><div id="totalAdjustedValues"><b><s:text name="currency"><s:param value="totalAdjustedValues"/></s:text></b></div></td>
 													<td class="editorTableOddRow"><div id="totalRevisedValues"><b><s:text name="currency"><s:param value="totalRevisedValues"/></s:text></b></div></td>
-													
+													<s:hidden name="totalProjectionValues"/>
+													<s:hidden name="totalAdjustedValues"/>
+													<s:hidden name="totalRevisedValues"/>
 												</tr>
 												<!-- Iterate for each half hour from open to close hour -->
 												<s:iterator id="halfhourElement" value="projectionElements" status="itHalfHourProjection">

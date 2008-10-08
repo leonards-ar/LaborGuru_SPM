@@ -2,7 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <br/>
-<s:form id="daily_form" name="daily_form" action="daily_save" theme="simple">
+<s:form id="daily_form" name="daily_form" action="dailySave" theme="simple">
 <s:hidden id="selectedDate" name="selectedDate"/>
 	      <table border="0" cellspacing="0" align="center">
 		      <tr>
@@ -16,7 +16,6 @@
 	              	<table border="0" align="center" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
               			<tr>
               				<td>
-				              	<s:fielderror theme="simple"/>
 				              	<s:actionerror theme="simple"/>
 			              	</td>
             		  	</tr>
@@ -103,20 +102,31 @@
 									<tr>
 										<td class="editorTableFirstColumn"><s:text name="projection.daily.projection.label"/></td>
 										<!-- Iterate week days -->
-										<s:iterator id="calculatedProjection" value="calculatedProjections">
+										<s:iterator id="calculatedProjection" value="calculatedProjections" status="itCalculated">
+											<s:text name="currency" id="calculatedValue">
+												<s:param name="value" value="calculatedProjection"/>
+											</s:text>
+											<s:hidden name="calculatedProjections[%{#itCalculated.index}]" value="%{#calculatedValue}"/>
 											<td class="editorTableOddRow"><s:text name="currency"><s:param value="calculatedProjection"/></s:text></td>
 										</s:iterator>
 										<!-- End Iterate week days -->
+										<s:hidden name="totalProjected" theme="simple"/>
 										<td class="editorTableOddRow"><b><s:text name="currency"><s:param value="totalProjected"/></s:text></b></td>
 									</tr>
 									<tr>
 										<td class="editorTableFirstColumn"><s:text name="projection.daily.adjusted.label" /></td>
 										<s:iterator id="myProjections" value="adjustedProjections" status="itAdjusted">
-											<s:text name="currency" id="adjustedValues">
-												<s:param name="value" value="myProjections"/>
-											</s:text>
-											<td class="editorTableEvenRow"><s:textfield name="adjustedProjections[%{#itAdjusted.index}]" value="%{#adjustedValues}" size="7" maxlength="15" theme="simple" /></td>
+											<s:if test="%{#myProjections != null}">
+												<s:text name="currency" id="adjustedValues">
+													<s:param name="value" value="myProjections"/>
+												</s:text>
+											</s:if>	
+											<s:else>
+											   	<s:set name="adjustedValues" value=""/>
+											</s:else>
+											<td class="editorTableEvenRow"><s:textfield name="adjustedProjections[%{#itAdjusted.index}]" value="%{#adjustedValues}" size="7" maxlength="15" theme="simple" cssStyle="text-align: center;" /></td>										
 										</s:iterator>
+										<s:hidden name="totalAdjusted" theme="simple"/>
 										<td class="editorTableEvenRow"><b><s:text name="currency"><s:param value="totalAdjusted"/></s:text></b></td>
 									</tr>									
 								</table>                    			
@@ -128,7 +138,7 @@
 		                    <td width="100%" align="right" colspan="2">
 			                    <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
 				                    <tr>
-				                		<td><s:submit id="saveButton" key="save.button" theme="simple" cssClass="button"/></td>
+				                		<td><s:submit id="saveButton" key="save.button" action="dailySave" theme="simple" cssClass="button"/></td>
 				                    	<td><s:reset id="resetButton" key="reset.button" theme="simple" cssClass="button"/></td>
 				                    	<td><s:submit id="cancelButton" key="cancel.button" action="daily_edit" theme="simple" cssClass="button"/></td>		                    
 				                    </tr>
