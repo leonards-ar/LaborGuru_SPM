@@ -43,15 +43,7 @@ public class ProjectionServiceBean implements ProjectionService {
 	public List<BigDecimal> getAvgDailyProjectionForAWeek(Integer numberOfWeeks, Store store, Date startWeekDate) {
 		
 		List<BigDecimal> retProjections = projectionDao.getAvgDailyProjectionForAWeek(numberOfWeeks, store, startWeekDate);
-		
-		if (retProjections == null  || retProjections.isEmpty()){
-			retProjections = new ArrayList<BigDecimal>(7);
-		
-			for (int i=0; i<7; i++){
-				retProjections.add(new BigDecimal(INIT_VALUE_ZERO));
-			}
-		}
-		
+				
 		return retProjections;
 	}
 
@@ -68,16 +60,9 @@ public class ProjectionServiceBean implements ProjectionService {
 		List<DailyProjection> projections = projectionDao.getAdjustedDailyProjectionForAWeek(store, startWeekDate);
 		List<BigDecimal> retProjections = new ArrayList<BigDecimal>(7);
 		
-		if (projections == null  || projections.isEmpty()){
-		
-			for (int i=0; i<7; i++){
-				retProjections.add(new BigDecimal(INIT_VALUE_ZERO));
-			}
-		} else {
-			for (DailyProjection aProjection: projections){
-				retProjections.add(aProjection.getDailyProjectionValue());
-			}			
-		}
+		for (DailyProjection aProjection: projections){
+			retProjections.add(aProjection.getDailyProjectionValue());
+		}			
 		
 		return retProjections;	
 	}

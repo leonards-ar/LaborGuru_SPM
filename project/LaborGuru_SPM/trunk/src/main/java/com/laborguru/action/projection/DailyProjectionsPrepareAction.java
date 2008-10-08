@@ -5,10 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.laborguru.action.SpmActionResult;
-import com.laborguru.exception.ErrorEnum;
-import com.laborguru.exception.ErrorMessage;
-import com.laborguru.model.OperationTime;
-import com.laborguru.model.Store;
 import com.opensymphony.xwork2.Preparable;
 
 /**
@@ -37,6 +33,16 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 		pageSetup();
 	}
 
+	
+	/**
+	 * Prepare the data to be used on the edit page
+	 * 
+	 * @throws Exception
+	 */
+	public void prepareSave() {
+		pageSetup();
+	}
+	
 	/**
 	 * 
 	 * 
@@ -70,7 +76,7 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	/**
 	 * 
 	 */
-	private void setupDailyProjectionData() {
+	protected void setupDailyProjectionData() {
 		// Force object initialization
 		getWeekDaySelector();
 		
@@ -81,9 +87,8 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 
 		// Set default adjusted values
 		for (int i = 0; i < getAdjustedProjections().size(); i++) {
-			if (getAdjustedProjections().get(i).intValue() == 0) {
+			if (getAdjustedProjections().get(i) == null)
 				getAdjustedProjections().set(i, getCalculatedProjections().get(i));
-			}
 		}
 
 		// calculate and set the total
@@ -130,36 +135,6 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 		return SpmActionResult.EDIT.getResult();
 	}
 
-	/**
-	 * Stores an employee on the DB
-	 * 
-	 * @return
-	 * @throws Exception
-	 */
-	public String save() throws Exception {
-
-		//TODO:This should be validated in a different place/way. As we have to show something to Nioko tomorrow I'm putting it here just for now.
-		//Now it's ugly, very ugly....
-		Store storeAux = this.getEmployeeStore();		
-		for (int j=0; j < 7; j++){
-			OperationTime operationTime = storeAux.getStoreOperationTimeByDate(getWeekDaySelector().getWeekDays().get(j));
-			if (operationTime == null || operationTime.getOpenHour() == null || operationTime.getCloseHour() == null){
-				addActionError(new ErrorMessage(ErrorEnum.OPERATION_TIME_IS_NOT_SET_FOR_STORE.name()));
-				prepareEdit();
-				setupDailyProjectionData();				
-				return SpmActionResult.INPUT.getResult();
-			}
-
-		}
-
-		//Saving each projection
-		int i=0;
-		for (BigDecimal dailyProjection: getAdjustedProjections()){
-			getProjectionService().saveDailyProjection(this.getEmployeeStore(), dailyProjection,getWeekDaySelector().getWeekDays().get(i));
-			i++;
-		}
-		return SpmActionResult.SUCCESS.getResult();
-	}
 
 	/**
 	 * @return the calculatedProjections

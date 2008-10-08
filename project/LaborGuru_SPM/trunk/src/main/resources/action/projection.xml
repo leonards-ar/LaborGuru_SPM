@@ -10,11 +10,18 @@
 			<result name="input" type="tiles">editDailyPage</result>			
 			<result name="success" type="redirectAction"><param name="actionName">daily_edit</param></result>						
 		</action>
-		
+
+		<action name="dailySave" class="com.laborguru.action.projection.DailyProjectionsSaveAction">
+			<result name="input" type="tiles">editDailyPage</result>			
+			<result name="success" type="redirectAction"><param name="actionName">daily_edit</param></result>						
+		</action>
+				
 		<action name="halfhour_*" method="{1}" class="com.laborguru.action.projection.HalfHourProjectionsPrepareAction">
 			<result name="edit" type="tiles">editHalfHourPage</result>
 			<result name="input" type="tiles">editHalfHourPage</result>			
 			<result name="success" type="tiles">editHalfHourPage</result>
+			
+			<interceptor-ref name="spmStackWithoutConversionError"/>			
 		</action>		
 
 		<action name="settings_*" method="{1}" class="com.laborguru.action.projection.ProjectionSettingsPrepareAction">

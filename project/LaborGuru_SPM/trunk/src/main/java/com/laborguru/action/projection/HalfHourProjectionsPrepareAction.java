@@ -3,7 +3,6 @@ package com.laborguru.action.projection;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.laborguru.action.SpmActionResult;
@@ -29,9 +28,8 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	private static final RoundingMode ROUNDING_MODE = RoundingMode.HALF_EVEN;
 	private static final String INIT_VALUE_ZERO = "0.00";
 
-	private static final BigDecimal BIG_DECIMAL_ZERO = new BigDecimal(INIT_VALUE_ZERO);
 
-	private List<HalfHourElement> projectionElements;
+	private List<HalfHourElement> projectionElements = new ArrayList<HalfHourElement>();
 	private BigDecimal totalProjectedValues = new BigDecimal(INIT_VALUE_ZERO);
 	private BigDecimal totalAdjustedValues = new BigDecimal(INIT_VALUE_ZERO);
 	private BigDecimal totalRevisedValues = new BigDecimal(INIT_VALUE_ZERO);
@@ -130,7 +128,7 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 
 	public String save() throws Exception {
 		
-		getProjectionService().saveProjection(this.getEmployeeStore(), getElementsAsHalfHourProjectionList(), getWeekDaySelector().getSelectedDay());
+		getProjectionService().saveProjection(this.getEmployeeStore(), getElementsAsHalfHourProjectionList(getProjectionElements()), getWeekDaySelector().getSelectedDay());
 
 		return SpmActionResult.EDIT.getResult();
 	}
@@ -170,7 +168,7 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	}
 
 	/**
-	 * 
+	 * Setup the the projections element and the projected total from the daily projection
 	 */
 	private void setUpHalfHourProjection() {
 		// Force object initialization
@@ -178,11 +176,17 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 
 		DailyProjection dailyProjection = getProjectionService().getDailyProjection(getEmployeeStore(), getWeekDaySelector().getSelectedDay());
 
-		if (dailyProjection != null) {
-			setHalfHourElement(dailyProjection.getHalfHourProjections(), dailyProjection.getStartingTime());
+		if (dailyProjection != null) {	
+			//Setting projection element array
+			setProjectionElements(getHalfHourElementList(dailyProjection.getHalfHourProjections()));
+			
+			//Setting total value
+			for (HalfHourElement element: getProjectionElements()){
+				setTotalProjectedValues(getTotalProjectedValues().add(element.getProjectedValue()));
+			}
 		}else {
 			addActionError(new ErrorMessage(ErrorEnum.PROJECTION_DOES_NOT_EXIST.name()));
-			//TODO: CN - This should be removed when we found the way to ask from the front if actionErrors is empty.
+			//TODO: CN - This flag should be removed when we found the way to ask from the front if actionErrors is empty.
 			setProjectionError(true);
 		}
 	}	
@@ -220,7 +224,7 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 		percentageNotChangedHours = percentageNotChangedHours.divide(totalProjections, DECIMAL_SCALE, ROUNDING_MODE);
 		
 		//Calculating revised projection value
-		if (!percentageNotChangedHours.equals(BIG_DECIMAL_ZERO)){
+		if (!percentageNotChangedHours.equals(BigDecimal.ZERO)){
 			for (HalfHourElement element : getProjectionElements()) {
 				getProjectionService().calculateRevisedValue(element, totalAdjusted, totalProjections, percentageNotChangedHours);
 				totalRevised = totalRevised.add(element.getRevisedValue());
@@ -236,30 +240,35 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	 * @param halfHourProjections
 	 * @param startTime
 	 */
-	private void setHalfHourElement(List<HalfHourProjection> halfHourProjections, Date startTime){
-		this.getProjectionElements().clear();
-		BigDecimal totalProjections = new BigDecimal(INIT_VALUE_ZERO);
+	private List<HalfHourElement>  getHalfHourElementList(List<HalfHourProjection> halfHourProjections){
+
+		if (halfHourProjections == null)
+			return null;
+		
+		List<HalfHourElement> arrayList = new ArrayList<HalfHourElement>(halfHourProjections.size());
+		
 		for (HalfHourProjection halfHourProjection : halfHourProjections) {
 			HalfHourElement element = new HalfHourElement();
 			element.setId(halfHourProjection.getId());
 			element.setHour(halfHourProjection.getTimeAsString());
 			element.setProjectedValue(halfHourProjection.getAdjustedValue());
-			element.setRevisedValue(new BigDecimal(0));
-			this.getProjectionElements().add(element);
-			totalProjections = totalProjections.add(halfHourProjection.getAdjustedValue());
+			element.setRevisedValue(BigDecimal.ZERO);
+			arrayList.add(element);
 		}
-		setTotalProjectedValues(totalProjections);
+		
+		return arrayList;
 	}	
 	
 	/**
+	 * @param projectionElements2 TODO
 	 * @return
 	 */
-	private List<HalfHourProjection> getElementsAsHalfHourProjectionList() {
+	private List<HalfHourProjection> getElementsAsHalfHourProjectionList(List<HalfHourElement> auxElements) {
 		
-		List<HalfHourProjection> retList = new ArrayList<HalfHourProjection>(getProjectionElements().size());
+		List<HalfHourProjection> retList = new ArrayList<HalfHourProjection>(auxElements.size());
 		
 		int index=0;
-		for (HalfHourElement element : getProjectionElements()) {
+		for (HalfHourElement element : auxElements) {
 			HalfHourProjection aHalfHourProjection = new HalfHourProjection();
 			aHalfHourProjection.setIndex(index++);
 			aHalfHourProjection.setTime(element.getHour());
@@ -274,10 +283,6 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	 * @return the projectionElements
 	 */
 	public List<HalfHourElement> getProjectionElements() {
-		if (projectionElements == null) {
-			projectionElements = new ArrayList<HalfHourElement>();
-		}
-
 		return projectionElements;
 	}
 

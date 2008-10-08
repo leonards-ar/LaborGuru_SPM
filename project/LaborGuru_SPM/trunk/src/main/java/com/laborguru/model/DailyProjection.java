@@ -47,7 +47,9 @@ public class DailyProjection extends SpmObject {
 	}*/
 	
 	/**
-	 * @return
+	 * Returns the sum of all the halfhours defined for the projection.
+	 * If there is no halfhours returns NULL
+	 * @return the projection value or null
 	 */
 	public BigDecimal getDailyProjectionValue(){
 		BigDecimal retValue = new BigDecimal("0.00");
@@ -56,7 +58,7 @@ public class DailyProjection extends SpmObject {
 			retValue = retValue.add(aHalfHourProjection.getAdjustedValue());
 		}
 		
-		return retValue;
+		return getHalfHourProjections().isEmpty()? null:retValue;
 	}
 	
 	@Override
