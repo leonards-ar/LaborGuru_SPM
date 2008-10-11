@@ -172,8 +172,8 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	 */
 	private void setUpHalfHourProjection() {
 		// Force object initialization
-		setSelectedDate(getWeekDaySelector().getStringSelectedDay());
-
+		initilizeDayWeekSelector(getSelectedDate());
+		
 		DailyProjection dailyProjection = getProjectionService().getDailyProjection(getEmployeeStore(), getWeekDaySelector().getSelectedDay());
 
 		if (dailyProjection != null) {	

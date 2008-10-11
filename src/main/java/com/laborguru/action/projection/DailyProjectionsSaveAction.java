@@ -37,6 +37,9 @@ public class DailyProjectionsSaveAction extends DailyProjectionsPrepareAction {
 	 */
 	public String execute() throws Exception {
 
+		initilizeDayWeekSelector(getSelectedDate());
+
+		
 		//TODO:CN - This should be validated in a different place/way.I'm putting it here just for now.
 		//Now it's ugly, very ugly....
 		Store storeAux = this.getEmployeeStore();		
