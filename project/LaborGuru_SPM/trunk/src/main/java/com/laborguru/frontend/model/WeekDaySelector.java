@@ -118,7 +118,7 @@ public class WeekDaySelector implements Serializable {
 		try {
 			setStartingWeekDay(DATE_FORMAT.parse(startingWeekDay));
 		} catch (Throwable e) {
-			setStartingWeekDay(null);
+			setStartingWeekDay(getFirstDayOfWeek(CalendarUtils.todayWithoutTime()));
 		}
 	}
 	
@@ -142,7 +142,7 @@ public class WeekDaySelector implements Serializable {
 		try {
 			setSelectedDay(DATE_FORMAT.parse(selectedDay));
 		} catch (Throwable e) {
-			setSelectedDay(null);
+			setSelectedDay(CalendarUtils.todayWithoutTime());
 		}
 	}
 	
