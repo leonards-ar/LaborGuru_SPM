@@ -78,7 +78,8 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	 */
 	protected void setupDailyProjectionData() {
 		// Force object initialization
-		getWeekDaySelector();
+		getWeekDaySelector().setStringStartingWeekDay(getSelectedDate());
+		getWeekDaySelector().setStringSelectedDay(getSelectedDate());
 		
 		
 		// Get calculated projections
