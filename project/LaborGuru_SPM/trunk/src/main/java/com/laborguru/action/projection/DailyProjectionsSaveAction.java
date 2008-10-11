@@ -36,8 +36,8 @@ public class DailyProjectionsSaveAction extends DailyProjectionsPrepareAction {
 	 * @throws Exception
 	 */
 	public String execute() throws Exception {
-
-		initilizeDayWeekSelector(getSelectedDate());
+		//Initialize Calendar
+		initializeDayWeekSelector(getSelectedDate(), getSelectedDate());
 
 		
 		//TODO:CN - This should be validated in a different place/way.I'm putting it here just for now.

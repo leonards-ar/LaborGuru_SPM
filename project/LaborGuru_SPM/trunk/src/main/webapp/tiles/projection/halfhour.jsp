@@ -87,7 +87,7 @@
                   						<td width="13%" class="selectedWeekDay"><s:text name='projection.halfhour.weekday.dateformat'><s:param value='weekDay'/></s:text></td>
                   						</s:if>
                   						<s:else>
-                  						<td width="13%" class="availableWeekDay"><a href="<s:url value="#" includeParams="none"/>" onclick="halfhour_form.action='halfhour_changeDay.action'; halfhour_form.selectedWeekDay.value='<s:text name='projection.weekdayselector.input.dateformat'><s:param value='weekDay'/></s:text>'; halfhour_form.submit();" class="availableWeekDayLink">
+                  						<td width="13%" class="availableWeekDay"><a href="<s:url value="#" includeParams="none"/>" onclick="halfhour_form.action='halfhour_changeDay.action'; halfhour_form.selectedDate.value='<s:text name='projection.weekdayselector.input.dateformat'><s:param value='weekDay'/></s:text>'; halfhour_form.submit();" class="availableWeekDayLink">
                   						<s:text name='projection.halfhour.weekday.dateformat'><s:param value='weekDay'/></s:text>
                   						</a>
                   						</td>                  						
@@ -111,7 +111,7 @@
 		              	<tr class="editFormEvenRow">
 		                    <td width="15%" align="right" class="form_label" nowrap="nowrap"><s:text name="projection.halfhour.weeksused.label" /></td>
 		                    <td width="25%" align="left" class="value">
-								<s:select name="usedWeeks" list="usedWeeksMap" listKey="key" listValue="%{getText(value)}" theme="simple" onchange="halfhour_form.action='halfhour_reviseUsedWeeks.action'; halfhour_form.submit();" />
+								<s:select name="usedWeeks" list="usedWeeksMap" listKey="key" listValue="%{getText(value)}" theme="simple" onchange="halfhour_form.action='halfhour_reviseUsedWeeks.action';halfhour_form.submit();" />
 							</td>
 							<td width="60%" align="left"><s:text name='projection.weekdayselector.selectedday.dateformat.long'><s:param value='weekDaySelector.selectedDay'/></s:text></td>
 		                </tr>
@@ -163,7 +163,7 @@
 			                    			<br/>
 						                    <table border="0" cellpadding="5" cellspacing="5" colspan="0" cellspan="0">
 							                    <tr>
-							                		<td align="center"><s:submit id="reviseButton" key="projection.halfhour.revise.button" theme="simple" cssClass="button" onclick="halfhour_form.action='halfhour_reviseProjections.action'"/></td>
+							                		<td align="center"><s:submit id="reviseButton" key="projection.halfhour.revise.button" theme="simple" cssClass="button" action="halfhour_reviseProjections"/></td>
 							                	</tr>
 							                    <tr>
 							                		<td align="center"><s:submit id="saveButton" key="save.button" theme="simple" cssClass="button"/></td>

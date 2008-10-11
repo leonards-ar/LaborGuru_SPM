@@ -16,6 +16,8 @@
 
 		<interceptors>
 			<interceptor name="spm"	class="com.laborguru.frontend.struts2.SpmInterceptor" />
+			<interceptor name="spmConversionError"	class="com.laborguru.frontend.struts2.SpmConversionErrorInterceptor" />
+
 
 			<interceptor-stack name="spmStack">
 				<interceptor-ref name="spm" />
@@ -37,9 +39,12 @@
                 <interceptor-ref name="fileUpload"/>
                 <interceptor-ref name="checkbox"/>
                 <interceptor-ref name="staticParams"/>
-                <interceptor-ref name="params">
+                <interceptor-ref name="params">                
                   <param name="excludeParams">dojo\..*</param>
                 </interceptor-ref>
+                
+                <interceptor-ref name="spmConversionError"/>
+                
                 <interceptor-ref name="validation">
                     <param name="excludeMethods">input,back,cancel,browse</param>
                 </interceptor-ref>

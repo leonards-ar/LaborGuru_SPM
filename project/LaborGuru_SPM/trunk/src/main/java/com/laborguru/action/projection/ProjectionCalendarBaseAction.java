@@ -23,6 +23,8 @@ import com.laborguru.service.projection.ProjectionService;
  */
 public abstract class ProjectionCalendarBaseAction extends SpmAction {
 
+	private static final long serialVersionUID = 1L;
+
 	private ProjectionService projectionService;
 
 	private ReferenceDataService referenceDataService;
@@ -102,8 +104,7 @@ public abstract class ProjectionCalendarBaseAction extends SpmAction {
 	 * @return
 	 */
 	public String changeWeek() {
-		getWeekDaySelector().setStringStartingWeekDay(getSelectedDate());
-		getWeekDaySelector().setStringSelectedDay(getSelectedDate());
+		initializeDayWeekSelector(getSelectedDate(), getSelectedDate());
 		
 		processChangeWeek();
 
@@ -115,8 +116,8 @@ public abstract class ProjectionCalendarBaseAction extends SpmAction {
 	 * @return
 	 */
 	public String changeDay() {
-		getWeekDaySelector().setStringStartingWeekDay(getSelectedDate());
-		getWeekDaySelector().setStringSelectedDay(getSelectedWeekDay());
+		getWeekDaySelector().setStringStartingWeekDay(getSelectedWeekDay());
+		getWeekDaySelector().setStringSelectedDay(getSelectedDate());
 		
 		processChangeDay();
 		
@@ -124,8 +125,11 @@ public abstract class ProjectionCalendarBaseAction extends SpmAction {
 	}
 
 	
-	protected void initilizeDayWeekSelector(String aSelectedDate){
-		getWeekDaySelector().setStringStartingWeekDay(aSelectedDate);
+	/**
+	 * @param aSelectedDate
+	 */
+	protected void initializeDayWeekSelector(String aSelectedDate, String aFirstDayOfWeek){
+		getWeekDaySelector().setStringStartingWeekDay(aFirstDayOfWeek);
 		getWeekDaySelector().setStringSelectedDay(aSelectedDate);
 	}
 	

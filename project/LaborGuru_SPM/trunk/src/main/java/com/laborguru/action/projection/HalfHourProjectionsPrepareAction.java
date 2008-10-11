@@ -27,8 +27,7 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	private static final int DECIMAL_SCALE = 16;
 	private static final RoundingMode ROUNDING_MODE = RoundingMode.HALF_EVEN;
 	private static final String INIT_VALUE_ZERO = "0.00";
-
-
+	
 	private List<HalfHourElement> projectionElements = new ArrayList<HalfHourElement>();
 	private BigDecimal totalProjectedValues = new BigDecimal(INIT_VALUE_ZERO);
 	private BigDecimal totalAdjustedValues = new BigDecimal(INIT_VALUE_ZERO);
@@ -114,7 +113,8 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	protected void processChangeWeek() {
 		setUpHalfHourProjection();
 	}	
-		
+	
+	
 	/**
 	 * Prepares the edit page
 	 * 
@@ -122,24 +122,36 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	 * @throws Exception
 	 */
 	public String edit() throws Exception {
+		//Calendar initialization
+		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
+		
 		setUpHalfHourProjection();
 		return SpmActionResult.EDIT.getResult();
 	}
 
+
 	public String save() throws Exception {
-		
+		//Calendar initialization
+		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
+
 		getProjectionService().saveProjection(this.getEmployeeStore(), getElementsAsHalfHourProjectionList(getProjectionElements()), getWeekDaySelector().getSelectedDay());
 
 		return SpmActionResult.EDIT.getResult();
 	}
 	
 	public String reviseProjections() {
+		//Calendar initialization
+		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
+				
 		calculateAndSetReviseProjections();
 		
 		return SpmActionResult.EDIT.getResult();
 	}
 
 	public String reviseUsedWeeks() {
+		//Calendar initialization
+		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
+		
 		getNewValues();
 		
 		return SpmActionResult.EDIT.getResult();		
@@ -171,9 +183,10 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	 * Setup the the projections element and the projected total from the daily projection
 	 */
 	private void setUpHalfHourProjection() {
-		// Force object initialization
-		initilizeDayWeekSelector(getSelectedDate());
 		
+		//clear Totals
+		clearTotalPageValues();
+				
 		DailyProjection dailyProjection = getProjectionService().getDailyProjection(getEmployeeStore(), getWeekDaySelector().getSelectedDay());
 
 		if (dailyProjection != null) {	
@@ -191,7 +204,15 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 		}
 	}	
 	
-
+	/**
+	 * Clear the totals for the page
+	 */
+	private void clearTotalPageValues() {
+		totalProjectedValues = new BigDecimal(INIT_VALUE_ZERO);
+		totalAdjustedValues = new BigDecimal(INIT_VALUE_ZERO);
+		totalRevisedValues = new BigDecimal(INIT_VALUE_ZERO);
+	}
+	
 	/**
 	 * Private method that calculates and sets the revised projections values for the collection ProjectionElements.
 	 */
