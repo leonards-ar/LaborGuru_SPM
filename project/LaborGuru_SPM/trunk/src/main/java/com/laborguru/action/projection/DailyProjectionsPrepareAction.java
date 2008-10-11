@@ -32,16 +32,6 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	public void prepareEdit() {
 		pageSetup();
 	}
-
-	
-	/**
-	 * Prepare the data to be used on the edit page
-	 * 
-	 * @throws Exception
-	 */
-	public void prepareSave() {
-		pageSetup();
-	}
 	
 	/**
 	 * 
@@ -78,9 +68,7 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	 */
 	protected void setupDailyProjectionData() {
 		// Force object initialization
-		getWeekDaySelector().setStringStartingWeekDay(getSelectedDate());
-		getWeekDaySelector().setStringSelectedDay(getSelectedDate());
-		
+		initilizeDayWeekSelector(getSelectedDate());		
 		
 		// Get calculated projections
 		setCalculatedProjections(getProjectionService().getAvgDailyProjectionForAWeek(getUsedWeeks(), this.getEmployeeStore(), getWeekDaySelector().getStartingWeekDay()));

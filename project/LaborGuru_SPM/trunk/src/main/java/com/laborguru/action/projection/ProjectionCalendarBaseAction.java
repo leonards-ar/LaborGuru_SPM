@@ -123,6 +123,12 @@ public abstract class ProjectionCalendarBaseAction extends SpmAction {
 		return SpmActionResult.INPUT.getResult();
 	}
 
+	
+	protected void initilizeDayWeekSelector(String aSelectedDate){
+		getWeekDaySelector().setStringStartingWeekDay(aSelectedDate);
+		getWeekDaySelector().setStringSelectedDay(aSelectedDate);
+	}
+	
 	/**
 	 * @return the selectedDate
 	 */
