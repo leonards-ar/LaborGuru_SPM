@@ -68,7 +68,7 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	 */
 	protected void setupDailyProjectionData() {
 		// Force object initialization
-		initilizeDayWeekSelector(getSelectedDate());		
+		initializeDayWeekSelector(getSelectedDate(), getSelectedDate());		
 		
 		// Get calculated projections
 		setCalculatedProjections(getProjectionService().getAvgDailyProjectionForAWeek(getUsedWeeks(), this.getEmployeeStore(), getWeekDaySelector().getStartingWeekDay()));
