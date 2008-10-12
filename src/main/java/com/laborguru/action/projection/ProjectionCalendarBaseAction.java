@@ -116,8 +116,7 @@ public abstract class ProjectionCalendarBaseAction extends SpmAction {
 	 * @return
 	 */
 	public String changeDay() {
-		getWeekDaySelector().setStringStartingWeekDay(getSelectedWeekDay());
-		getWeekDaySelector().setStringSelectedDay(getSelectedDate());
+		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
 		
 		processChangeDay();
 		

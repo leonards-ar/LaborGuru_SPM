@@ -7,7 +7,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-import com.laborguru.util.SpmConstants;
+import com.laborguru.util.CalendarUtils;
 
 
 /**
@@ -159,7 +159,7 @@ public class HalfHourProjection extends SpmObject{
 	 * @param time the time to set
 	 */
 	public void setTime(String time) {
-		setTime(SpmConstants.displayTimeToDate(time));
+		setTime(CalendarUtils.displayTimeToDate(time));
 	}	
 	
 	/**
@@ -169,7 +169,7 @@ public class HalfHourProjection extends SpmObject{
 	public String getTimeAsString(){
 		
 		if (time != null)
-			return SpmConstants.dateToDisplayTime(this.getTime());
+			return CalendarUtils.dateToDisplayTime(this.getTime());
 		
 		return null;
 	}

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.laborguru.action.SpmActionResult;
+import com.laborguru.util.SpmConstants;
 import com.opensymphony.xwork2.Preparable;
 
 /**
@@ -21,8 +22,8 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	private List<BigDecimal> calculatedProjections = new ArrayList<BigDecimal>(7);
 	private List<BigDecimal> adjustedProjections = new ArrayList<BigDecimal>(7);
 
-	private BigDecimal totalProjected = new BigDecimal("0");
-	private BigDecimal totalAdjusted = new BigDecimal("0");
+	private BigDecimal totalProjected = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
+	private BigDecimal totalAdjusted = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
 
 	/**
 	 * Prepare the data to be used on the edit page
@@ -64,6 +65,14 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	}
 
 	/**
+	 * Clear the totals for the page
+	 */
+	private void clearTotalPageValues() {
+		setTotalAdjusted(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
+		setTotalProjected(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
+	}
+	
+	/**
 	 * 
 	 */
 	protected void setupDailyProjectionData() {
@@ -80,6 +89,8 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 				getAdjustedProjections().set(i, getCalculatedProjections().get(i));
 		}
 
+		clearTotalPageValues();
+				
 		// calculate and set the total
 		for (BigDecimal aValue : getCalculatedProjections()) {
 			this.totalProjected = totalProjected.add(aValue);
