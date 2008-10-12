@@ -1,7 +1,6 @@
 package com.laborguru.action.projection;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +10,7 @@ import com.laborguru.exception.ErrorMessage;
 import com.laborguru.frontend.model.HalfHourElement;
 import com.laborguru.model.DailyProjection;
 import com.laborguru.model.HalfHourProjection;
+import com.laborguru.util.SpmConstants;
 import com.opensymphony.xwork2.Preparable;
 
 /**
@@ -24,14 +24,10 @@ import com.opensymphony.xwork2.Preparable;
 @SuppressWarnings("serial")
 public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseAction implements Preparable {
 	
-	private static final int DECIMAL_SCALE = 16;
-	private static final RoundingMode ROUNDING_MODE = RoundingMode.HALF_EVEN;
-	private static final String INIT_VALUE_ZERO = "0.00";
-	
 	private List<HalfHourElement> projectionElements = new ArrayList<HalfHourElement>();
-	private BigDecimal totalProjectedValues = new BigDecimal(INIT_VALUE_ZERO);
-	private BigDecimal totalAdjustedValues = new BigDecimal(INIT_VALUE_ZERO);
-	private BigDecimal totalRevisedValues = new BigDecimal(INIT_VALUE_ZERO);
+	private BigDecimal totalProjectedValues = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
+	private BigDecimal totalAdjustedValues = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
+	private BigDecimal totalRevisedValues = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
 
 	private Boolean projectionError = false;
 	
@@ -126,6 +122,10 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
 		
 		setUpHalfHourProjection();
+		
+		setSelectedDate(getWeekDaySelector().getStringSelectedDay());
+		setSelectedWeekDay(getWeekDaySelector().getStringStartingWeekDay());
+		
 		return SpmActionResult.EDIT.getResult();
 	}
 
@@ -163,7 +163,7 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	private void getNewValues(){
 		
 		List<HalfHourProjection> projections = getProjectionService().calculateDailyHalfHourProjection(getEmployeeStore(), getTotalProjectedValues(), getWeekDaySelector().getSelectedDay(), getUsedWeeks());
-		BigDecimal totalProjections = new BigDecimal(INIT_VALUE_ZERO);
+		BigDecimal totalProjections = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
 
 		//set new values;
 		for(int i=0; i < getProjectionElements().size(); i++) {
@@ -208,9 +208,9 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	 * Clear the totals for the page
 	 */
 	private void clearTotalPageValues() {
-		totalProjectedValues = new BigDecimal(INIT_VALUE_ZERO);
-		totalAdjustedValues = new BigDecimal(INIT_VALUE_ZERO);
-		totalRevisedValues = new BigDecimal(INIT_VALUE_ZERO);
+		totalProjectedValues = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
+		totalAdjustedValues = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
+		totalRevisedValues = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
 	}
 	
 	/**
@@ -218,11 +218,11 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	 */
 	private void calculateAndSetReviseProjections() {
 		
-		BigDecimal totalAdjusted = new BigDecimal(INIT_VALUE_ZERO);
-		BigDecimal totalProjections = new BigDecimal(INIT_VALUE_ZERO);
-		BigDecimal percentageNotChangedHours = new BigDecimal(INIT_VALUE_ZERO);
-		BigDecimal totalOriginalAdjustedProjections = new BigDecimal(INIT_VALUE_ZERO);
-		BigDecimal totalRevised = new BigDecimal(INIT_VALUE_ZERO);
+		BigDecimal totalAdjusted = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
+		BigDecimal totalProjections = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
+		BigDecimal percentageNotChangedHours = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
+		BigDecimal totalOriginalAdjustedProjections = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
+		BigDecimal totalRevised = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
 		
 		//Getting totals for Adjusted and Projected values		
 		for (HalfHourElement element : getProjectionElements()) {
@@ -242,7 +242,7 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 		
 		//Calculating percentageNotChangedHours
 		percentageNotChangedHours = totalProjections.subtract(totalOriginalAdjustedProjections);
-		percentageNotChangedHours = percentageNotChangedHours.divide(totalProjections, DECIMAL_SCALE, ROUNDING_MODE);
+		percentageNotChangedHours = percentageNotChangedHours.divide(totalProjections, SpmConstants.DECIMAL_SCALE, SpmConstants.ROUNDING_MODE);
 		
 		//Calculating revised projection value
 		if (!percentageNotChangedHours.equals(BigDecimal.ZERO)){

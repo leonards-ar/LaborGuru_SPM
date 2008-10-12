@@ -106,4 +106,50 @@ public class CalendarUtils {
 		}
 		
 	}
+
+	/**
+	 * 
+	 * @param time
+	 * @return
+	 */
+	public static Date displayTimeToDate(String time) {
+		try {
+			return SpmConstants.TIME_FORMAT.parse(time);
+		} catch (ParseException ex) {
+			//TODO: log.error("Cannot parse time [" + time + "]", ex);
+			return null;
+		}
+	}
+
+	/**
+	 * 
+	 * @param time
+	 * @return
+	 */
+	public static String dateToDisplayTime(Date time) {
+			return SpmConstants.TIME_FORMAT.format(time);
+	}
+
+	/**
+	 * 
+	 * @param time
+	 * @return
+	 */
+	public static Date stringToDate(String time, String format) {
+		try {
+			return new SimpleDateFormat(format).parse(time);
+		} catch (ParseException ex) {
+			//TODO: log.error("Cannot parse time [" + time + "]", ex);
+			return null;
+		}
+	}
+
+	/**
+	 * 
+	 * @param time
+	 * @return
+	 */
+	public static String dateToString(Date time, String format) {
+			return new SimpleDateFormat(format).format(time);
+	}
 }

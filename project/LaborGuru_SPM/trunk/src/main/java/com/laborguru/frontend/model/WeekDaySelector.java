@@ -238,12 +238,19 @@ public class WeekDaySelector implements Serializable {
 	 * @param startingDayOfWeek
 	 * @return
 	 */
-	private Date getFirstDayOfWeek(Date d) {
+	public Date getFirstDayOfWeek(Date d) {
 		DayOfWeek dayOfWeek = CalendarUtils.getDayOfWeek(d);
 		Calendar day = CalendarUtils.getCalendar(d);
+		int daysTosubstract = 0;
 		
 		if(dayOfWeek != null && day != null) {
-			int daysTosubstract = Math.abs(dayOfWeek.ordinal() - getStartingDayOfWeek().ordinal());
+			
+			if (dayOfWeek.ordinal() < getStartingDayOfWeek().ordinal()){
+				daysTosubstract = 7 - (getStartingDayOfWeek().ordinal() - dayOfWeek.ordinal());
+			} else if (dayOfWeek.ordinal() > getStartingDayOfWeek().ordinal()){
+				daysTosubstract = dayOfWeek.ordinal() - getStartingDayOfWeek().ordinal();
+			} 			
+			
 			day.add(Calendar.DAY_OF_MONTH, -1 * daysTosubstract);
 			return day.getTime();
 		} else {

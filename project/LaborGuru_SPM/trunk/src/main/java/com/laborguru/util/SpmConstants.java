@@ -1,10 +1,9 @@
 package com.laborguru.util;
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 public class SpmConstants {
@@ -20,53 +19,7 @@ public class SpmConstants {
 	public static final String SCHEDULE_BREAK = "__break__";
 	public static final String SCHEDULE_FREE = "";
 	
-	
-	/**
-	 * 
-	 * @param time
-	 * @return
-	 */
-	public static Date displayTimeToDate(String time) {
-		try {
-			return SpmConstants.TIME_FORMAT.parse(time);
-		} catch (ParseException ex) {
-			//TODO: log.error("Cannot parse time [" + time + "]", ex);
-			return null;
-		}
-	}
-	
-
-	/**
-	 * 
-	 * @param time
-	 * @return
-	 */
-	public static String dateToDisplayTime(Date time) {
-			return SpmConstants.TIME_FORMAT.format(time);
-	}
-
-
-	/**
-	 * 
-	 * @param time
-	 * @return
-	 */
-	public static Date stringToDate(String time, String format) {
-		try {
-			return new SimpleDateFormat(format).parse(time);
-		} catch (ParseException ex) {
-			//TODO: log.error("Cannot parse time [" + time + "]", ex);
-			return null;
-		}
-	}
-	
-
-	/**
-	 * 
-	 * @param time
-	 * @return
-	 */
-	public static String dateToString(Date time, String format) {
-			return new SimpleDateFormat(format).format(time);
-	}
+	public static final String INIT_VALUE_ZERO = "0.00";
+	public static final int DECIMAL_SCALE = 16;
+	public static final RoundingMode ROUNDING_MODE = RoundingMode.HALF_EVEN;
 }
