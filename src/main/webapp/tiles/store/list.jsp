@@ -53,6 +53,12 @@
 		    <display:column href="store_remove.action" paramId="storeId" paramProperty="id" class="resultsColumnCentered"> 
 		    	<img src="<s:url value="/images/delete.png" includeParams="none"/>"/>
 		    </display:column>
+		    <display:column href="employeeStore_add.action" paramId="storeId" paramProperty="id" class="resultsColumnCentered"> 
+		    	<img src="<s:url value="/images/user_add.png" includeParams="none"/>"/>
+		    </display:column>
+		    <display:column href="employeeStore_list.action" paramId="storeId" paramProperty="id" class="resultsColumnCentered"> 
+		    	<img src="<s:url value="/images/user_group.png" includeParams="none"/>"/>
+		    </display:column>
 		</display:table>
 		<!-- Search Results -->
 		</td>

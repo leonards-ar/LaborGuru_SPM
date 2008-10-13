@@ -169,6 +169,15 @@
 			<result name="cancelShow" type="redirectAction">store_show</result>
 			<result name="input" type="tiles">editPositionGroup</result>
 			<result name="success" type="redirectAction">store_edit</result>
-		</action>					
+		</action>
+				
+		<action name="employeeStore_*" method="{1}" class="com.laborguru.action.employee.EmployeeStorePrepareAction">
+			<result name="edit" type="tiles">editStoreEmployeePage</result>
+			<result name="show" type="tiles">showStoreEmployeePage</result>
+			<result name="list" type="tiles">listStoreEmployeePage</result>
+			<result name="listAction" type="tiles">listStoreEmployeePage</result>
+			<result name="input" type="tiles">editEmployeePage</result>			
+		</action>
+
 	</package>
 </struts>
