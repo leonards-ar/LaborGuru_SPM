@@ -13,6 +13,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.ScheduleHourLabelElement;
@@ -24,6 +26,7 @@ import com.laborguru.model.OperationTime;
 import com.laborguru.model.Position;
 import com.laborguru.model.Shift;
 import com.laborguru.model.StoreSchedule;
+import com.laborguru.service.employee.EmployeeService;
 import com.laborguru.service.schedule.ScheduleService;
 import com.laborguru.util.CalendarUtils;
 import com.laborguru.util.SpmConstants;
@@ -36,6 +39,8 @@ import com.laborguru.util.SpmConstants;
  *
  */
 public abstract class AddShiftBaseAction extends SpmAction {
+	private static final Logger log = Logger.getLogger(AddShiftBaseAction.class);
+	
 	private WeekDaySelector weekDaySelector;
 	private String selectedDate;
 	private String selectedWeekDay;
@@ -45,6 +50,7 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	private StoreSchedule storeSchedule;
 	
 	private ScheduleService scheduleService;
+	private EmployeeService employeeService;
 	
 	public static final int MINUTES_INTERVAL = 15;
 	
@@ -175,7 +181,7 @@ public abstract class AddShiftBaseAction extends SpmAction {
 			try {
 				storeSchedule = getScheduleService().getStoreScheduleByDate(getEmployeeStore(), getWeekDaySelector().getSelectedDay());
 			} catch(RuntimeException ex) {
-				ex.printStackTrace();
+				log.error("Could not retrieve schedule for " + getWeekDaySelector().getSelectedDay() + " for store " + getEmployeeStore(), ex);
 			}
 			if(storeSchedule == null) {
 				storeSchedule = new StoreSchedule();
@@ -411,9 +417,11 @@ public abstract class AddShiftBaseAction extends SpmAction {
 			ScheduleRow aRow = null;
 			
 			for(EmployeeSchedule employeeSchedule : getStoreSchedule().getEmployeeSchedules()) {
+				boolean isFirst = true;
 				for(Shift shift : employeeSchedule.getShifts()) {
-					if((position == null || shift.isBreak() || (position != null && isEqualPosition(position, shift.getPosition())))) {
-						aRow = buildScheduleRow(employeeSchedule, shift, schedule); 
+					if(!shift.isBreak() && (position == null || (position != null && isEqualPosition(position, shift.getPosition())))) {
+						aRow = buildScheduleRow(employeeSchedule, shift, schedule, isFirst);
+						isFirst = false;
 						if(aRow != null) {
 							schedule.add(aRow);
 						}
@@ -436,12 +444,13 @@ public abstract class AddShiftBaseAction extends SpmAction {
 		getStoreSchedule().setStore(getEmployeeStore());
 		
 		Set<Integer> employeeIds = getDifferentEmployeeIds(schedule);
-		
+		Employee employee;
 		for(Integer employeeId : employeeIds) {
-			EmployeeSchedule employeeSchedule = getStoreSchedule().getEmployeeSchedule(new Employee(employeeId));
+			employee = getEmployeeService().getEmployeeById(new Employee(employeeId));
+			EmployeeSchedule employeeSchedule = getStoreSchedule().getEmployeeSchedule(employee);
 			if(employeeSchedule == null) {
 				employeeSchedule = new EmployeeSchedule();
-				employeeSchedule.setEmployee(new Employee(employeeId));
+				employeeSchedule.setEmployee(employee);
 				employeeSchedule.setStoreSchedule(getStoreSchedule());
 				getStoreSchedule().getEmployeeSchedules().add(employeeSchedule);
 			}
@@ -559,25 +568,25 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	private void setShiftsAllPositions(List<ScheduleRow> source, EmployeeSchedule employeeSchedule) {
 		int shiftPosition = 0;
 		List<Shift> rowShifts;
-		List<Shift> currentShifts = employeeSchedule.getShifts();
+		int currentShiftsSize = employeeSchedule.getShifts().size();
 		
 		for(ScheduleRow row : source) {
 			rowShifts = retrieveShifts(row);
 			for(Shift aShift : rowShifts) {
-				if(shiftPosition < currentShifts.size()) {
-					updateShift(aShift, currentShifts.get(shiftPosition));
+				if(shiftPosition < currentShiftsSize) {
+					updateShift(aShift, employeeSchedule.getShifts().get(shiftPosition));
 					shiftPosition++;
 				} else {
 					aShift.setEmployeeSchedule(employeeSchedule);
-					currentShifts.add(aShift);
+					employeeSchedule.addShift(aShift);
 				}
 			}
 		}
 		
 		// Remove non-existing shifts
-		if(shiftPosition < currentShifts.size()) {
-			for(int i = currentShifts.size() - 1; i >= shiftPosition; i--)
-				currentShifts.remove(i);
+		if(shiftPosition < currentShiftsSize) {
+			for(int i = currentShiftsSize - 1; i >= shiftPosition; i--)
+				employeeSchedule.getShifts().remove(i);
 		}
 	}
 	
@@ -600,7 +609,7 @@ public abstract class AddShiftBaseAction extends SpmAction {
 				aShift = new Shift();
 				aShift.setFromHour(getScheduleIndividualHours().get(i));
 			} else if(currentShift != null && !currentShift.equals(element)) {
-				aShift.setToHour(getScheduleIndividualHours().get(i - 1));
+				aShift.setToHour(getScheduleIndividualHours().get(i));
 				
 				if(SpmConstants.SCHEDULE_BREAK.equals(currentShift)) {
 					aShift.setPosition(null);
@@ -706,7 +715,7 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	private boolean alreadyInSchedule(List<ScheduleRow> schedule, Employee employee, Shift shift) {
 		for(ScheduleRow row : schedule) {
 			if(isEqualId(row.getEmployeeId(), employee != null ? employee.getId() : null)) {
-				if(shift.isBreak() && row.getPositionId() == null) {
+				if(shift.isBreak()/* && row.getPositionId() == null*/) {
 					// Employee has only breaks
 					return true;
 				} else if(isEqualId(row.getPositionId(), shift.getPosition() != null ? shift.getPosition().getId() : null)) {
@@ -725,10 +734,11 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	 * @param schedule
 	 * @return
 	 */
-	private ScheduleRow buildScheduleRow(EmployeeSchedule employeeSchedule, Shift shift, List<ScheduleRow> schedule) {
+	private ScheduleRow buildScheduleRow(EmployeeSchedule employeeSchedule, Shift shift, List<ScheduleRow> schedule, boolean isFirst) {
 		if(!alreadyInSchedule(schedule, employeeSchedule.getEmployee(), shift) && employeeSchedule.getEmployee() != null) {
 			ScheduleRow aRow = new ScheduleRow();
 			aRow.setEmployeeId(employeeSchedule.getEmployee().getId());
+			aRow.setOriginalEmployeeId(employeeSchedule.getEmployee().getId());
 			aRow.setEmployeeName(employeeSchedule.getEmployee().getFullName());
 			aRow.setPositionId(shift.getPosition() != null ? shift.getPosition().getId() : null);
 			
@@ -736,13 +746,20 @@ public abstract class AddShiftBaseAction extends SpmAction {
 			List<Date> scheduleBuckets = getScheduleIndividualHours();
 			List<String> occupation = initializeScheduleRow();
 			List<String> hours = initializeScheduleHoursRow();
+			boolean foundFirst = false;
 			
 			for(Shift aShift : employeeSchedule.getShifts()) {
-				if(aShift.isBreak() || isEqualPosition(shift.getPosition(), aShift.getPosition())) {
+				if((aShift.isBreak() && isFirst) || (aShift.isBreak() && foundFirst) || isEqualPosition(shift.getPosition(), aShift.getPosition())) {
 					setScheduleOccupation(occupation, scheduleBuckets, aShift);
+					if(!aShift.isBreak()) {
+						foundFirst = true;
+					}
 				} else {
-					// Position changed!
-					break;
+					// Skip until first
+					if(foundFirst && !aShift.isBreak()) {
+						// Position changed!
+						break;
+					}
 				}
 			}
 			
@@ -764,8 +781,17 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	private void setScheduleOccupation(List<String> occupation, List<Date> scheduleBuckets, Shift shift) {
 		int from = getIndexOfBucket(shift.getFromHour(), scheduleBuckets);
 		int to = getIndexOfBucket(shift.getToHour(), scheduleBuckets);
+		// Just one bucket shift or must include last bucket
+		if(to > from && to < scheduleBuckets.size() - 1) {
+			to -= 1;
+		}
+		String value;
 		for(int i = from; i <= to; i++) {
-			occupation.set(i, shift.isBreak() ? SpmConstants.SCHEDULE_BREAK : String.valueOf(shift.getPosition().getId()));
+			value = occupation.get(i);
+			//Never override a shift with a break
+			if(!shift.isBreak() || (shift.isBreak() && SpmConstants.SCHEDULE_FREE.equals(value))) {
+				occupation.set(i, shift.isBreak() ? SpmConstants.SCHEDULE_BREAK : String.valueOf(shift.getPosition().getId()));
+			}
 		}
 	}
 	
@@ -779,7 +805,7 @@ public abstract class AddShiftBaseAction extends SpmAction {
 		Date anHour;
 		for(int i = 0; i < scheduleBuckets.size(); i++) {
 			anHour = scheduleBuckets.get(i);
-			if(hour.getTime() >= anHour.getTime()) {
+			if(hour.getTime() <= anHour.getTime()) {
 				return i;
 			}
 		}
@@ -843,5 +869,19 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	 */
 	public void setScheduleService(ScheduleService scheduleService) {
 		this.scheduleService = scheduleService;
+	}
+
+	/**
+	 * @return the employeeService
+	 */
+	public EmployeeService getEmployeeService() {
+		return employeeService;
+	}
+
+	/**
+	 * @param employeeService the employeeService to set
+	 */
+	public void setEmployeeService(EmployeeService employeeService) {
+		this.employeeService = employeeService;
 	}
 }

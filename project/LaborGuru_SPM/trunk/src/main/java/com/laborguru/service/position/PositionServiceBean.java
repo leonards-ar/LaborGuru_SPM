@@ -17,10 +17,18 @@ public class PositionServiceBean implements PositionService {
 
 	private PositionDao positionDao;
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public PositionDao getPositionDao() {
 		return positionDao;
 	}
 
+	/**
+	 * 
+	 * @param positionDao
+	 */
 	public void setPositionDao(PositionDao positionDao) {
 		this.positionDao = positionDao;
 	}
@@ -43,13 +51,36 @@ public class PositionServiceBean implements PositionService {
 		return positionDao.getPositionsByStore(store);
 	}
 
+	/**
+	 * 
+	 * @param position
+	 * @see com.laborguru.service.position.PositionService#delete(com.laborguru.model.Position)
+	 */
 	public void delete(Position position) {
 	}
 
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 * @see com.laborguru.service.position.PositionService#getPositionById(com.laborguru.model.Position)
+	 */
 	public Position getPositionById(Position position) {
-		return null;
+		if (position == null)
+			throw new IllegalArgumentException("Position passed in as parameter is null");
+
+		if (position.getId() == null)
+			throw new IllegalArgumentException("Position id  passed in as parameter is null");
+		
+		return getPositionDao().getPositionById(position);
 	}
 
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 * @see com.laborguru.service.position.PositionService#save(com.laborguru.model.Position)
+	 */
 	public Position save(Position position) {
 		return null;
 	}

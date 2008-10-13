@@ -5,6 +5,7 @@
  */
 package com.laborguru.action.schedule;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -82,6 +83,13 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 
 	/**
 	 * 
+	 */
+	public void prepareSelectPosition() {
+		loadPageData();
+	}
+	
+	/**
+	 * 
 	 * @see com.laborguru.action.schedule.AddShiftBaseAction#prepareChangeWeek()
 	 */
 	@Override
@@ -113,14 +121,49 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	}
 	
 	/**
+	 * Prepare the data to be used on the edit page
+	 */
+	public void prepareSave() {
+		loadPageData();
+	}
+	
+	/**
+	 * Prepare the data to be used on the edit page
+	 */
+	public void prepareCancel() {
+		loadPageData();
+	}
+	
+	/**
+	 * 
+	 */
+	private void setScheduleData() {
+		if(scheduleData == null || scheduleData.isEmpty()) {
+			setScheduleData(buildScheduleFor(getPosition()));
+		}		
+	}
+	
+	/**
 	 * 
 	 * @return
 	 */
 	public String edit() {
+		setScheduleData();
 		
 		return SpmActionResult.EDIT.getResult();
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public String selectPosition() {
+		resetScheduleData();
+		setScheduleData();
+		
+		return SpmActionResult.EDIT.getResult();
+	}
+	
 	/**
 	 * 
 	 */
@@ -135,9 +178,7 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	public String addEmployee() {
 		ScheduleRow newRow = new ScheduleRow();
 		newRow.setEmployeeId(getNewEmployeeId());
-		newRow.setInHour("00:00");
-		newRow.setOutHour("00:00");
-		newRow.setTotalHours("00:00");
+		newRow.setOriginalEmployeeId(getNewEmployeeId());
 		newRow.setPositionId(getNewEmployeePositionId());
 		newRow.setEmployeeName(getNewEmployeeName());
 		newRow.setSchedule(initializeScheduleRow());
@@ -153,11 +194,52 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	}
 	
 	/**
+	 * 
+	 * @return
+	 */
+	public String save() {
+		if(log.isDebugEnabled()) {
+			log.debug("About to save schedule data" + getScheduleData());
+		}
+		
+		setSchedule(getScheduleData(), getPosition());
+
+		if(log.isDebugEnabled()) {
+			log.debug("About to save schedule " + getStoreSchedule());
+		}
+		
+		getScheduleService().save(getStoreSchedule());
+
+		resetScheduleData();
+		setScheduleData();
+		
+		return SpmActionResult.EDIT.getResult();
+	}
+	
+	/**
+	 * 
+	 */
+	private void resetScheduleData() {
+		setScheduleData(null);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String cancel() {
+		resetScheduleData();
+		setScheduleData();
+		
+		return SpmActionResult.EDIT.getResult();
+	}
+	
+	/**
 	 * @return the scheduleData
 	 */
 	public List<ScheduleRow> getScheduleData() {
 		if(scheduleData == null) {
-			setScheduleData(buildScheduleFor(getPosition()));
+			setScheduleData(new ArrayList<ScheduleRow>());
 		}
 		return scheduleData;
 	}
@@ -173,6 +255,13 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	 * @return the position
 	 */
 	public Position getPosition() {
+		if(position != null && position.getId() == null) {
+			return null;
+		} else if(position != null) {
+			if(position.getName() == null) {
+				setPosition(getPositionService().getPositionById(position));
+			}
+		}
 		return position;
 	}
 
