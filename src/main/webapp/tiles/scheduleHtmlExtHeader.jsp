@@ -37,6 +37,7 @@ var fromColumn;
 var toColumn;
 
 var currentRow;
+var currentScheduleId;
 var previousClassName;
 var onMouseOutEnabled = true;
 
@@ -65,20 +66,21 @@ function getObjectByID(objectId) {
 	}
 }
 
-function scheduleClick(tdObj, rowNum, colNum, positionId)
+function scheduleClick(tdObj, rowNum, colNum, defaultPositionId, scheduleId)
 {
-	setMessage('');
+	setMessage('', scheduleId);
 	if(scheduleState == 1 || scheduleState == 3 || scheduleState == 5) {
+		currentScheduleId = scheduleId;
 		currentRow = rowNum;
 		fromColumn = colNum;
 		toColumn = null;
 		tdObj.className = 'scheduleStartSelection';
 		onMouseOutEnabled = false;
 		scheduleState += 1;
-		setMessage(END_TIME_MSG);
+		setMessage(END_TIME_MSG, scheduleId);
 	} else if(scheduleState == 2 || scheduleState == 4 || scheduleState == 6) {
-		if(currentRow != rowNum) {
-			setMessage(CANNOT_CHANGE_ROW_MSG);
+		if(currentRow != rowNum || currentScheduleId != scheduleId) {
+			setMessage(CANNOT_CHANGE_ROW_MSG, scheduleId);
 		} else {
 			tdObj.className = 'scheduleEndSelection';
 			if(colNum < fromColumn) {
@@ -89,11 +91,16 @@ function scheduleClick(tdObj, rowNum, colNum, positionId)
 			}
 			
 			for(var i = fromColumn; i <= toColumn; i++) {
-				var cell = getObjectByID('cell_' + currentRow + '_' + i);
+				var cell = getObjectByID(scheduleId + 'cell_' + currentRow + '_' + i);
 				cell.className = getClassName();
-				var inputObj = getObjectByID('schedule_' + rowNum + '_' + i);
+				var inputObj = getObjectByID(scheduleId + 'schedule_' + rowNum + '_' + i);
 				if(scheduleState == 2) {
-					inputObj.value = positionId;
+					var positionId = getPositionId(rowNum, scheduleId);
+					if(positionId) {
+						inputObj.value = positionId;
+					} else {
+						inputObj.value = defaultPositionId;
+					}
 				} else if(scheduleState == 4) {
 					inputObj.value = BREAK;
 				} else {
@@ -101,13 +108,13 @@ function scheduleClick(tdObj, rowNum, colNum, positionId)
 				}
 				
 			}
-			refreshRow(rowNum);
+			refreshRow(rowNum, scheduleId);
 
 			fromColumn = null;
 			toColumn = null;
 			onMouseOutEnabled = false;
 
-			changeAction(scheduleState - 1);
+			changeAction(scheduleState - 1, scheduleId);
 		}
 	}
 	
@@ -123,20 +130,20 @@ function getClassName() {
 	}
 }
 
-function changeAction(actionCode)
+function changeAction(actionCode, scheduleId)
 {
 	if(fromColumn != null && scheduleState != actionCode) {
-		var cell = getObjectByID('cell_' + currentRow + '_' + fromColumn);
+		var cell = getObjectByID(scheduleId + 'cell_' + currentRow + '_' + fromColumn);
 		cell.className = 'scheduleEmpty';
 	}
 	fromColumn = null;
 	toColumn = null;
 	scheduleState = actionCode;
-	setMessage(START_TIME_MSG);
+	setMessage(START_TIME_MSG, scheduleId);
 }
 
-function setMessage(msgTxt) {
-	var msg = getObjectByID('actionMessage');
+function setMessage(msgTxt, scheduleId) {
+	var msg = getObjectByID(scheduleId + 'actionMessage');
 	if(msg) {
 		msg.innerHTML = msgTxt;
 	}
@@ -215,20 +222,30 @@ function formatTimeNumber(n) {
 	return n;
 }
 
-function refreshRows() {
+function refreshRows(scheduleId) {
 	for(var i=0; i < TOTAL_ROWS; i++) {
-		refreshRow(i);
+		refreshRow(i, scheduleId);
 	}
 }
 
-function refreshRow(rowNum) {
+function getPositionId(rowNum, scheduleId) {
+	var selectObj = getObjectByID(scheduleId + 'scheduleposition_' + rowNum);
+	var positionId = null;
+	if(selectObj) {
+		positionId = selectObj.value;
+	}
+	return positionId;
+}
+
+function refreshRow(rowNum, scheduleId) {
 	var inHour = null;
 	var outHour = null;
 	var totalHours = 0;
 	
 	for(var i=0; i < TOTAL_COLS; i++) {
-		var inputObj = getObjectByID('schedule_' + rowNum + '_' + i);
-		var inputHourObj = getObjectByID('schedulehour_' + rowNum + '_' + i);
+		var inputObj = getObjectByID(scheduleId + 'schedule_' + rowNum + '_' + i);
+		var inputHourObj = getObjectByID(scheduleId + 'schedulehour_' + rowNum + '_' + i);
+		
 		var value = null;
 		var currentHour = null;
 		
@@ -241,7 +258,7 @@ function refreshRow(rowNum) {
 		}
 		
 		if(value != null && value != '' && value != BREAK) {
-			
+			inputObj.value = getPositionId(rowNum, scheduleId);			
 			
 			if(inHour == null) {
 				inHour = currentHour;
@@ -254,22 +271,27 @@ function refreshRow(rowNum) {
 		}
 	}
 
-	totalHours = minutesToTime(totalHours);
+	if(totalHours > 0) {
+		totalHours = minutesToTime(totalHours);
+	} else {
+		totalHours = '-';
+	}
 	
 	if(outHour != null && outHour != '') {
 		outHour = timeInMinutes(outHour) + 15;
 		outHour = minutesToTime(outHour);
 	} else {
-		outHour = '';
+		outHour = '-';
 	}
 	
 	if(inHour == null) {
-		inHour = '';
+		inHour = '-';
 	}
 	
-	var o1 = getObjectByID('inHourInput_' + rowNum);
-	var o2 = getObjectByID('outHourInput_' + rowNum);
-	var o3 = getObjectByID('totalHoursInput_' + rowNum);
+	
+	var o1 = getObjectByID(scheduleId + 'inHourInput_' + rowNum);
+	var o2 = getObjectByID(scheduleId + 'outHourInput_' + rowNum);
+	var o3 = getObjectByID(scheduleId + 'totalHoursInput_' + rowNum);
 	
 	if(o1) {
 		o1.value = inHour;
@@ -282,9 +304,9 @@ function refreshRow(rowNum) {
 		o3.value = totalHours;
 	}
 
-	var o4 = getObjectByID('inHour_' + rowNum);
-	var o5 = getObjectByID('outHour_' + rowNum);
-	var o6 = getObjectByID('totalHours_' + rowNum);
+	var o4 = getObjectByID(scheduleId + 'inHour_' + rowNum);
+	var o5 = getObjectByID(scheduleId + 'outHour_' + rowNum);
+	var o6 = getObjectByID(scheduleId + 'totalHours_' + rowNum);
 	
 	if(o4) {
 		o4.innerHTML = inHour;

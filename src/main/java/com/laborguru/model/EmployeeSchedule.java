@@ -5,6 +5,7 @@
  */
 package com.laborguru.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -68,9 +69,24 @@ public class EmployeeSchedule extends SpmObject {
 	 * @return the shifts
 	 */
 	public List<Shift> getShifts() {
+		if(shifts == null) {
+			shifts = new ArrayList<Shift>();
+		}
 		return shifts;
 	}
 
+	/**
+	 * 
+	 * @param shift
+	 */
+	public void addShift(Shift shift) {
+		if(shift != null) {
+			shift.setEmployeeSchedule(this);
+			shift.setShiftIndex(new Integer(getShifts().size()));
+			getShifts().add(shift);
+		}
+	}
+	
 	/**
 	 * @param shifts the shifts to set
 	 */

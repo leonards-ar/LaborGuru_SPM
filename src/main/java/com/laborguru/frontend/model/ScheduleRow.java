@@ -26,6 +26,7 @@ public class ScheduleRow implements Serializable {
 	
 	private Integer positionId;
 	private Integer employeeId;
+	private Integer originalEmployeeId;
 	private String employeeName;
 	private String inHour;
 	private String outHour;
@@ -57,7 +58,15 @@ public class ScheduleRow implements Serializable {
 	 * @return the employeeId
 	 */
 	public Integer getEmployeeId() {
-		return employeeId;
+		/*
+		 * Because of the missing attribute keyValue in the autocompleter
+		 * component, then a shadow employeeId must be kept.
+		 */
+		if(employeeId == null) {
+			return getOriginalEmployeeId();
+		} else {
+			return employeeId;
+		}
 	}
 
 	/**
@@ -175,6 +184,20 @@ public class ScheduleRow implements Serializable {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * @return the originalEmployeeId
+	 */
+	public Integer getOriginalEmployeeId() {
+		return originalEmployeeId;
+	}
+
+	/**
+	 * @param originalEmployeeId the originalEmployeeId to set
+	 */
+	public void setOriginalEmployeeId(Integer originalEmployeeId) {
+		this.originalEmployeeId = originalEmployeeId;
 	}
 	
 }

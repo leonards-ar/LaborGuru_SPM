@@ -30,6 +30,7 @@ public class Shift extends SpmObject {
 	private Date fromHour;
 	private Date toHour;
 	private Position position;
+	private Integer shiftIndex;
 	
 	/**
 	 * 
@@ -164,5 +165,19 @@ public class Shift extends SpmObject {
 	 */
 	public void setEmployeeSchedule(EmployeeSchedule employeeSchedule) {
 		this.employeeSchedule = employeeSchedule;
+	}
+
+	/**
+	 * @return the shiftIndex
+	 */
+	public Integer getShiftIndex() {
+		return shiftIndex;
+	}
+
+	/**
+	 * @param shiftIndex the shiftIndex to set
+	 */
+	public void setShiftIndex(Integer shiftIndex) {
+		this.shiftIndex = shiftIndex;
 	}	
 }
