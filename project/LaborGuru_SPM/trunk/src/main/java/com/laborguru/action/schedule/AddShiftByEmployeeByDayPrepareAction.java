@@ -60,6 +60,7 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	 */
 	private void loadPageData() {
 		this.setPositions(getPositionService().getPositionsByStore(getEmployeeStore()));
+		loadCalendarData();
 	}
 	
 	/**
@@ -103,6 +104,9 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	 */
 	@Override
 	protected void processChangeDay() {
+		setStoreSchedule(null);
+		resetScheduleData();
+		setScheduleData();
 	}
 
 	/**
@@ -148,6 +152,8 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	 * @return
 	 */
 	public String edit() {
+		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
+
 		setScheduleData();
 		
 		return SpmActionResult.EDIT.getResult();
@@ -158,6 +164,8 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	 * @return
 	 */
 	public String selectPosition() {
+		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
+		
 		resetScheduleData();
 		setScheduleData();
 		

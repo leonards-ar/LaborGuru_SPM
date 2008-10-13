@@ -129,7 +129,11 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 		return SpmActionResult.EDIT.getResult();
 	}
 
-
+	/**
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
 	public String save() throws Exception {
 		//Calendar initialization
 		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());

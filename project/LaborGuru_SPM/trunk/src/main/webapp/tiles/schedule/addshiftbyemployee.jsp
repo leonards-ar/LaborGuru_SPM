@@ -236,8 +236,8 @@
 					    			<s:select id="scheduleposition_%{#itScheduleData.index}" onchange="refreshRows('');" name="scheduleData[%{#itScheduleData.index}].positionId" list="positions" listKey="id" listValue="name" theme="simple"/>
 					    		</s:if>
 					    		<s:else>
-					    			<s:property value="#position.name"/>
-					    			<s:hidden id="scheduleposition_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].positionId" value="%(#position.id)"/>
+					    			<s:property value="position.name"/>
+					    			<s:hidden id="scheduleposition_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].positionId" value="%{position.id}"/>
 					    		</s:else>
 					    	</td>
 							<td class="scheduleNameCell">
@@ -274,8 +274,8 @@
 									<s:select name="newEmployeePositionId" list="positions" listKey="id" listValue="name" theme="simple"/>
 					    		</s:if>
 					    		<s:else>
-					    			<s:property value="#position.name"/>
-					    			<s:hidden name="newEmployeePositionId" value="%(#position.id)"/>
+					    			<s:property value="position.name"/>
+					    			<s:hidden name="newEmployeePositionId" value="%{position.id}"/>
 					    		</s:else>
 				    	</td>
 						<td class="scheduleNameCell">

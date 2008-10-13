@@ -146,14 +146,31 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	public void setSelectedWeekDay(String selectedWeekDay) {
 		this.selectedWeekDay = selectedWeekDay;
 	}
+
+	/**
+	 * 
+	 * @param weekSelectedDay
+	 * @param selectedDay
+	 */
+	protected void initializeDayWeekSelector(String weekSelectedDay, String selectedDay){
+		getWeekDaySelector().setStringSelectedDay(selectedDay);
+		getWeekDaySelector().setStringStartingWeekDay(weekSelectedDay);
+	}
+
+	/**
+	 * 
+	 */
+	protected void loadCalendarData() {
+		setSelectedDate(getWeekDaySelector().getStringStartingWeekDay());
+		setSelectedWeekDay(getWeekDaySelector().getStringSelectedDay());
+	}
 	
 	/**
 	 * 
 	 * @return
 	 */
 	public String changeWeek() {
-		getWeekDaySelector().setStringStartingWeekDay(getSelectedDate());
-		getWeekDaySelector().setStringSelectedDay(getSelectedDate());
+		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
 		
 		processChangeWeek();
 
@@ -165,8 +182,7 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	 * @return
 	 */
 	public String changeDay() {
-		getWeekDaySelector().setStringStartingWeekDay(getSelectedDate());
-		getWeekDaySelector().setStringSelectedDay(getSelectedWeekDay());
+		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
 		
 		processChangeDay();
 		
