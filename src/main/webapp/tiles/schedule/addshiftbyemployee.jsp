@@ -56,10 +56,8 @@
 													</select>
 												</td>
 												<td align="right" class="form_label"><s:text name="schedule.addshift.positions"/></td>
-												<td align="left">						
-													<select name="selectPositions">
-														<option>--- All Positions ---</option>
-													</select>
+												<td align="left">
+													<s:select onchange="addshiftbyemployee_form.action='addshiftbyemployee_selectPosition.action'; addshiftbyemployee_form.submit();" name="position.id" list="positions" listKey="id" listValue="name" theme="simple" headerKey="" headerValue="%{getText('schedule.addshift.positions.header.label')}"/>					
 												</td>
 											</tr>
 										</table>
@@ -200,11 +198,11 @@
 				<!-- Schedule selection action table -->
 				<table id="scheduleActionsTable" border="0" cellpadding="0" cellspacing="0">
 					<tr>
-				    	<td>[<a href="#" onclick="changeAction(1);">Set time</a>]</td>
+				    	<td>[<a href="#" onclick="changeAction(1, '');">Set time</a>]</td>
 				        <td>&nbsp;</td>
-				    	<td>[<a href="#" onclick="changeAction(3);">Set break</a>]</td>
+				    	<td>[<a href="#" onclick="changeAction(3, '');">Set break</a>]</td>
 				        <td>&nbsp;</td>
-				    	<td>[<a href="#" onclick="changeAction(5);">Delete</a>]</td>
+				    	<td>[<a href="#" onclick="changeAction(5, '');">Delete</a>]</td>
 				        <td>&nbsp;</td>
 						<td id="actionMessage" class="scheduleActionMessage"></td>        
 				    </tr>
@@ -233,9 +231,18 @@
 				    <!-- Employees -->
 				    <s:iterator id="data" value="scheduleData" status="itScheduleData">
 					    <tr class="scheduleMainTableEmployeeRow">
-					    	<td class="scheduleNameCell"><s:select name="scheduleData[%{#itScheduleData.index}].positionId" list="positions" listKey="id" listValue="name" theme="simple"/></td>
+					    	<td class="scheduleNameCell">
+					    		<s:if test="%{position == null}">
+					    			<s:select id="scheduleposition_%{#itScheduleData.index}" onchange="refreshRows('');" name="scheduleData[%{#itScheduleData.index}].positionId" list="positions" listKey="id" listValue="name" theme="simple"/>
+					    		</s:if>
+					    		<s:else>
+					    			<s:property value="#position.name"/>
+					    			<s:hidden id="scheduleposition_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].positionId" value="%(#position.id)"/>
+					    		</s:else>
+					    	</td>
 							<td class="scheduleNameCell">
-								<s:url id="employeeList" action="scheduleemployeeautocomplete"/>
+								<s:hidden name="scheduleData[%{#itScheduleData.index}].originalEmployeeId"/>
+								<s:url id="employeeList" action="scheduleemployeeautocomplete" includeParams="none"/>
 								<s:autocompleter name="scheduleData[%{#itScheduleData.index}].employeeName" keyName="scheduleData[%{#itScheduleData.index}].employeeId" loadMinimumCount="3" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring"/>
 							</td>    
 							<td class="scheduleValueCell" id="inHour_<s:property value="#itScheduleData.index"/>"><s:hidden id="inHourInput_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].inHour"/><s:property value="#data.inHour"/></td>    
@@ -247,7 +254,7 @@
 										<td class="scheduleUnavailable"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
 									</s:iterator>
 								</s:if>  
-								<td id='cell_<s:property value="#itScheduleData.index"/>_<s:property value="#itHour.index"/>' onclick="scheduleClick(this, <s:property value="#itScheduleData.index"/>,<s:property value="#itHour.index"/>,'<s:property value="#data.positionId"/>');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class='<s:if test="%{#data.isBreakShift(#itHour.index)}">scheduleBreak</s:if><s:else><s:if test="%{#data.isFreeShift(#itHour.index)}">scheduleEmpty</s:if><s:else>scheduleSelected</s:else></s:else>'><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>
+								<td id='cell_<s:property value="#itScheduleData.index"/>_<s:property value="#itHour.index"/>' onclick="scheduleClick(this, <s:property value="#itScheduleData.index"/>,<s:property value="#itHour.index"/>,'<s:property value="#data.positionId"/>', '');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class='<s:if test="%{#data.isBreakShift(#itHour.index)}">scheduleBreak</s:if><s:else><s:if test="%{#data.isFreeShift(#itHour.index)}">scheduleEmpty</s:if><s:else>scheduleSelected</s:else></s:else>'><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>
 									<s:hidden id="schedulehour_%{#itScheduleData.index}_%{#itHour.index}" name="scheduleData[%{#itScheduleData.index}].hours[%{#itHour.index}]"/>
 									<s:hidden id="schedule_%{#itScheduleData.index}_%{#itHour.index}" name="scheduleData[%{#itScheduleData.index}].schedule[%{#itHour.index}]"/>
 								</td>            
@@ -262,12 +269,20 @@
 					
 					<!-- Add new employee to schedule -->
 				    <tr class="scheduleMainTableEmployeeRow">
-				    	<td class="scheduleNameCell"><s:select name="newEmployeePositionId" list="positions" listKey="id" listValue="name" theme="simple"/></td>
+				    	<td class="scheduleNameCell">
+					    		<s:if test="%{position == null}">
+									<s:select name="newEmployeePositionId" list="positions" listKey="id" listValue="name" theme="simple"/>
+					    		</s:if>
+					    		<s:else>
+					    			<s:property value="#position.name"/>
+					    			<s:hidden name="newEmployeePositionId" value="%(#position.id)"/>
+					    		</s:else>
+				    	</td>
 						<td class="scheduleNameCell">
 							<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 								<tr>
 									<td>
-										<s:url id="employeeList" action="scheduleemployeeautocomplete"/>
+										<s:url id="employeeList" action="scheduleemployeeautocomplete" includeParams="none"/>
 										<s:autocompleter name="newEmployeeName" loadMinimumCount="3" keyName="newEmployeeId" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring" />
 									</td>
 									<td>
@@ -305,7 +320,7 @@
 				<table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
 					<tr>
 						<td><s:submit id="saveButton" key="save.button" theme="simple" cssClass="button"/></td>
-						<td><s:submit id="cancelButton" key="cancel.button" action="daily_edit" theme="simple" cssClass="button"/></td>		                    
+						<td><s:submit id="cancelButton" key="cancel.button" action="addshiftbyemployee_cancel" theme="simple" cssClass="button"/></td>		                    
       				</tr>
      			</table>                    
     		</td>
@@ -315,5 +330,5 @@
 
 <script language="javascript" type="text/javascript">
 initialize(<s:property value="totalIndividualHours"/>, <s:property value="scheduleRows"/>, '<s:property value="breakId"/>', '<s:text name="schedule.addshift.cannot_change_row_message"/>', '<s:text name="schedule.addshift.start_time_message"/>', '<s:text name="schedule.addshift.end_time_message"/>');
-refreshRows();
+refreshRows('');
 </script>

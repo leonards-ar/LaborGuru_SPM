@@ -10,6 +10,7 @@
 		</id>
         <property name="fromHour" column="from_hour" type="timestamp" not-null="false"/>       
         <property name="toHour" column="to_hour" type="timestamp" not-null="false"/>        
+        <property name="shiftIndex" column="shift_index" type="int" not-null="true"/>        
 
 		<many-to-one name="position" class="Position" foreign-key="fk_shifts_positions">
 			<column name="position_id" not-null="false"/>

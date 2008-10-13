@@ -20,4 +20,11 @@ public interface PositionDao {
 	 * @return List of positions
 	 */
 	List<Position> getPositionsByStore(Store store);
+	
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 */
+	Position getPositionById(Position position);
 }

@@ -37,10 +37,15 @@ public class ScheduleDaoHibernate extends HibernateDaoSupport implements Schedul
 	 * @see com.laborguru.service.schedule.dao.ScheduleDao#getStoreScheduleByDate(com.laborguru.model.Store, java.util.Date)
 	 */
 	public StoreSchedule getStoreScheduleByDate(Store store, Date date) {
-		log.debug("Searching schedule for day [" + date + "] for store [" + store + "]");
+		if(log.isDebugEnabled()) {
+			log.debug("Searching schedule for day [" + date + "] for store [" + store + "]");
+		}
+		
 		List<StoreSchedule> schedules = (List<StoreSchedule>) getHibernateTemplate().findByNamedParam("from StoreSchedule schedule where schedule.store.id = :storeId and schedule.day = :day", new String[]{"storeId", "day"}, new Object[] {store.getId(),date});
 		
-		log.info("Found [" + (schedules != null ? schedules.size() : "null") + "] schedules for day [" + date + "]");
+		if(log.isDebugEnabled()) {
+			log.debug("Found [" + (schedules != null ? schedules.size() : "null") + "] schedules for day [" + date + "]");
+		}
 		return schedules != null && schedules.size() > 0 ? schedules.get(0) : null;
 	}
 
@@ -50,7 +55,13 @@ public class ScheduleDaoHibernate extends HibernateDaoSupport implements Schedul
 	 * @see com.laborguru.service.schedule.dao.ScheduleDao#save(com.laborguru.model.StoreSchedule)
 	 */
 	public StoreSchedule save(StoreSchedule schedule) {
-		return null;
+		if (schedule == null){
+			throw new IllegalArgumentException("the schedule passed as parameter is null");
+		}
+		
+		getHibernateTemplate().saveOrUpdate(schedule);
+		
+		return schedule;
 	}
 
 }

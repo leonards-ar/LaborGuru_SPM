@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import com.laborguru.model.Employee;
 import com.laborguru.model.Position;
 import com.laborguru.model.Store;
 
@@ -26,6 +27,15 @@ public class PositionDaoHibernate extends HibernateDaoSupport implements Positio
 	public List<Position> getPositionsByStore(Store store) {
 		return (List<Position>)getHibernateTemplate().findByNamedParam(
 				"from Position position where position.store.id = :storeId", "storeId",store.getId());
+	}
+
+	/**
+	 * @param position
+	 * @return
+	 * @see com.laborguru.service.position.dao.PositionDao#getPositionById(com.laborguru.model.Position)
+	 */
+	public Position getPositionById(Position position) {
+		return (Position)getHibernateTemplate().get(Position.class, position.getId());
 	}
 
 }
