@@ -11,7 +11,5 @@
 			<result name="listAction" type="redirectAction">employee_list</result>
 			<result name="input" type="tiles">editEmployeePage</result>			
 		</action>
-		
-					
 	</package>
 </struts>

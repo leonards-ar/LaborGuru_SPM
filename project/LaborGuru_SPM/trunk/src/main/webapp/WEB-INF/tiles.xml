@@ -243,5 +243,17 @@
 	<definition name="showUserPage" extends="baseLayoutWithMenu">
 		<put-attribute name="body" value="/tiles/user/view.jsp" />
 	</definition>	
+
+	<!-- Employee by Store tiles definition -->	
+	<definition name="listStoreEmployeePage" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/user_list.jsp" />
+	</definition>
+
+	<definition name="editStoreEmployeePage" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/user_edit.jsp" />
+	</definition>	
 	
+	<definition name="showStoreEmployeePage" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/user_view.jsp" />
+	</definition>	
 </tiles-definitions>
