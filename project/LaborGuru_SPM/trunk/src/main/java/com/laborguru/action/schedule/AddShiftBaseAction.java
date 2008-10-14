@@ -242,6 +242,15 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	}
 	
 	/**
+	 * 
+	 * @return
+	 */
+	public Date getLastScheduleIndividualHour() {
+		Date d = getScheduleIndividualHours().get(getScheduleIndividualHours().size() - 1);
+		return new Date(d.getTime() + MINUTES_INTERVAL * 60000L);
+	}
+	
+	/**
 	 * This method returns a list with the labels of the
 	 * schedule hours
 	 * @return
@@ -535,6 +544,7 @@ public abstract class AddShiftBaseAction extends SpmAction {
 		int shiftPosition = 0;
 		List<Shift> rowShifts;
 		List<Shift> currentShifts = employeeSchedule.getShifts();
+		int currentShiftsSize = currentShifts.size();
 		
 		for(ScheduleRow row : source) {
 			rowShifts = retrieveShifts(row);
@@ -544,20 +554,20 @@ public abstract class AddShiftBaseAction extends SpmAction {
 						shiftPosition++;
 					}
 					
-					if(shiftPosition < currentShifts.size()) {
+					if(shiftPosition < currentShiftsSize) {
 						updateShift(aShift, currentShifts.get(shiftPosition));
 						shiftPosition++;
 					} else {
 						aShift.setEmployeeSchedule(employeeSchedule);
-						currentShifts.add(aShift);
+						employeeSchedule.addShift(aShift);
 					}
 				}
 			}
 		}
 		
 		// Remove non-existing shifts
-		if(shiftPosition < currentShifts.size()) {
-			for(int i = currentShifts.size() - 1; i >= shiftPosition; i--) {
+		if(shiftPosition < currentShiftsSize) {
+			for(int i = currentShiftsSize - 1; i >= shiftPosition; i--) {
 				if(isEqualPosition(position, currentShifts.get(i).getPosition())) {
 					currentShifts.remove(i);
 				}
@@ -649,7 +659,7 @@ public abstract class AddShiftBaseAction extends SpmAction {
 		}
 		
 		if(currentShift != null) {
-			aShift.setToHour(getScheduleIndividualHours().get(getScheduleIndividualHours().size() - 1));
+			aShift.setToHour(getLastScheduleIndividualHour());
 			
 			if(SpmConstants.SCHEDULE_BREAK.equals(currentShift)) {
 				aShift.setPosition(null);
@@ -797,11 +807,8 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	 */
 	private void setScheduleOccupation(List<String> occupation, List<Date> scheduleBuckets, Shift shift) {
 		int from = getIndexOfBucket(shift.getFromHour(), scheduleBuckets);
-		int to = getIndexOfBucket(shift.getToHour(), scheduleBuckets);
-		// Just one bucket shift or must include last bucket
-		if(to > from && to < scheduleBuckets.size() - 1) {
-			to -= 1;
-		}
+		int to = getIndexOfBucket(shift.getToHour(), scheduleBuckets) - 1;
+		
 		String value;
 		for(int i = from; i <= to; i++) {
 			value = occupation.get(i);
@@ -826,7 +833,7 @@ public abstract class AddShiftBaseAction extends SpmAction {
 				return i;
 			}
 		}
-		return -1;
+		return scheduleBuckets.size();
 	}
 	
 	/**
