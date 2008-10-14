@@ -130,8 +130,31 @@ function getClassName() {
 	}
 }
 
+function setScheduleActionImage(actionCode, scheduleId) {
+	if(actionCode == 1 || actionCode == 3 || actionCode == 5) {
+		var shiftImg = getObjectByID(scheduleId + 'scheduleShiftImage');
+		var breakImg = getObjectByID(scheduleId + 'scheduleBreakImage');
+		var deleteImg = getObjectByID(scheduleId + 'scheduleDeleteImage');
+		
+		if(actionCode == 1) {
+			if(shiftImg) {shiftImg.className = 'scheduleActionImageOn';}
+			if(breakImg) {breakImg.className = 'scheduleActionImageOff';}
+			if(deleteImg) {deleteImg.className = 'scheduleActionImageOff';}
+		} else if(actionCode == 3) {
+			if(shiftImg) {shiftImg.className = 'scheduleActionImageOff';}
+			if(breakImg) {breakImg.className = 'scheduleActionImageOn';}
+			if(deleteImg) {deleteImg.className = 'scheduleActionImageOff';}
+		} else if(actionCode == 5) {
+			if(shiftImg) {shiftImg.className = 'scheduleActionImageOff';}
+			if(breakImg) {breakImg.className = 'scheduleActionImageOff';}
+			if(deleteImg) {deleteImg.className = 'scheduleActionImageOn';}		}
+	}
+}
+
 function changeAction(actionCode, scheduleId)
 {
+	setScheduleActionImage(actionCode, scheduleId);
+	
 	if(fromColumn != null && scheduleState != actionCode) {
 		var cell = getObjectByID(scheduleId + 'cell_' + currentRow + '_' + fromColumn);
 		cell.className = 'scheduleEmpty';

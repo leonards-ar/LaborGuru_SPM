@@ -316,6 +316,12 @@ table.results th a {
 	font-family: tahoma, arial, sans-serif;
 }
 
+.captionText {
+	font-style: normal;
+	font-size: 11px;
+	font-family: tahoma, arial, sans-serif;
+}
+
 .infoMessage {
 	font-style: italic;
 	font-size: 11px;
