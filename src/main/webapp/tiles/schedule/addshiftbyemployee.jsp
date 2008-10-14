@@ -200,7 +200,7 @@
 					<tr>
 						<td align="left" width="50%">
 							<!-- Caption -->
-							<table border="0" cellpadding="0" cellspacing="0">
+							<table border="0" cellpadding="1" cellspacing="2">
 								<tr>
 									<td class="scheduleSelectedCaption"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
 									<td class="captionText"><s:text name="schedule.addshift.shift.caption"/></td>
@@ -219,11 +219,11 @@
 							<!-- Schedule selection action table -->
 							<table id="scheduleActionsTable" border="0" cellpadding="0" cellspacing="0">
 								<tr>
-							    	<td><a href="#" onclick="changeAction(1, '');"><img id="scheduleShiftImage" class="scheduleActionImageOff" border="0" src="<s:url value="/images/shift_on.png" includeParams="none"/>"/></a></td>
+							    	<td><a href="#" onclick="changeAction(1, '');"><img title="<s:text name="schedule.addshift.shift.alt"/>" alt="<s:text name="schedule.addshift.shift.alt"/>" id="scheduleShiftImage" class="scheduleActionImageOff" border="0" src="<s:url value="/images/shift_on.png" includeParams="none"/>"/></a></td>
 							        <td>&nbsp;&nbsp;</td>
-							    	<td><a href="#" onclick="changeAction(3, '');"><img id="scheduleBreakImage" class="scheduleActionImageOff" border="0" src="<s:url value="/images/break_on.png" includeParams="none"/>"/></a></td>
+							    	<td><a href="#" onclick="changeAction(3, '');"><img title="<s:text name="schedule.addshift.break.alt"/>" alt="<s:text name="schedule.addshift.break.alt"/>" id="scheduleBreakImage" class="scheduleActionImageOff" border="0" src="<s:url value="/images/break_on.png" includeParams="none"/>"/></a></td>
 							        <td>&nbsp;&nbsp;</td>
-							    	<td><a href="#" onclick="changeAction(5, '');"><img id="scheduleDeleteImage" class="scheduleActionImageOff" border="0" src="<s:url value="/images/delete_on.png" includeParams="none"/>"/></a></td>
+							    	<td><a href="#" onclick="changeAction(5, '');"><img title="<s:text name="schedule.addshift.free.alt"/>" alt="<s:text name="schedule.addshift.free.alt"/>" id="scheduleDeleteImage" class="scheduleActionImageOff" border="0" src="<s:url value="/images/delete_on.png" includeParams="none"/>"/></a></td>
 							        <td>&nbsp;&nbsp;</td>
 									<td id="actionMessage" class="scheduleActionMessage"></td>							    
 							    </tr>
