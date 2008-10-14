@@ -25,6 +25,7 @@ public class ScheduleRow implements Serializable {
 	private static final long serialVersionUID = -139301522656297022L;
 	
 	private Integer positionId;
+	private String positionName;
 	private Integer employeeId;
 	private Integer originalEmployeeId;
 	private String employeeName;
@@ -198,6 +199,20 @@ public class ScheduleRow implements Serializable {
 	 */
 	public void setOriginalEmployeeId(Integer originalEmployeeId) {
 		this.originalEmployeeId = originalEmployeeId;
+	}
+
+	/**
+	 * @return the positionName
+	 */
+	public String getPositionName() {
+		return positionName;
+	}
+
+	/**
+	 * @param positionName the positionName to set
+	 */
+	public void setPositionName(String positionName) {
+		this.positionName = positionName;
 	}
 	
 }

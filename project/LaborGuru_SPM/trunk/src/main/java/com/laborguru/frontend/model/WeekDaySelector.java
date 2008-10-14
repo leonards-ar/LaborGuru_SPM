@@ -318,4 +318,22 @@ public class WeekDaySelector implements Serializable {
 	public boolean isSelectedWeekDay(Date d) {
 		return getStringSelectedDay() != null && d != null && getStringSelectedDay().equals(DATE_FORMAT.format(d));
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isSelectedDateBeforeToday() {
+		Date today = CalendarUtils.todayWithoutTime();
+		return getSelectedDay().before(today);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isSelectedWeekBeforeTodaysWeek() {
+		Date today = CalendarUtils.todayWithoutTime();
+		return getStartingWeekDay().before(getFirstDayOfWeek(today));
+	}
 }

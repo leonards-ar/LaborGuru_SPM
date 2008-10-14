@@ -193,6 +193,7 @@
 			</td>
 		</tr>
 		
+		<s:if test="%{!weekDaySelector.isSelectedDateBeforeToday()}">
 		<tr>
 			<td align="center">
 				<!-- Schedule selection action table -->
@@ -210,7 +211,8 @@
 				<!-- Schedule selection action table -->
 			</td>
 		</tr>
-
+		</s:if>
+		
 		<tr>
 			<td align="center">
 			<!-- Schedule selection table -->
@@ -232,6 +234,10 @@
 				    <s:iterator id="data" value="scheduleData" status="itScheduleData">
 					    <tr class="scheduleMainTableEmployeeRow">
 					    	<td class="scheduleNameCell">
+					    	<s:if test="%{weekDaySelector.isSelectedDateBeforeToday()}">
+					    		<s:property value="#data.positionName"/>
+					    	</s:if>
+					    	<s:else>
 					    		<s:if test="%{position == null}">
 					    			<s:select id="scheduleposition_%{#itScheduleData.index}" onchange="refreshRows('');" name="scheduleData[%{#itScheduleData.index}].positionId" list="positions" listKey="id" listValue="name" theme="simple"/>
 					    		</s:if>
@@ -239,11 +245,18 @@
 					    			<s:property value="position.name"/>
 					    			<s:hidden id="scheduleposition_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].positionId" value="%{position.id}"/>
 					    		</s:else>
+					    		<s:hidden name="scheduleData[%{#itScheduleData.index}].positionName"/>
+					    	</s:else>
 					    	</td>
 							<td class="scheduleNameCell">
+							<s:if test="%{weekDaySelector.isSelectedDateBeforeToday()}">
+					    		<s:property value="#data.employeeName"/>
+							</s:if>
+							<s:else>
 								<s:hidden name="scheduleData[%{#itScheduleData.index}].originalEmployeeId"/>
 								<s:url id="employeeList" action="scheduleemployeeautocomplete" includeParams="none"/>
 								<s:autocompleter name="scheduleData[%{#itScheduleData.index}].employeeName" keyName="scheduleData[%{#itScheduleData.index}].employeeId" loadMinimumCount="3" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring"/>
+							</s:else>
 							</td>    
 							<td class="scheduleValueCell" id="inHour_<s:property value="#itScheduleData.index"/>"><s:hidden id="inHourInput_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].inHour"/><s:property value="#data.inHour"/></td>    
 							<td class="scheduleValueCell" id="outHour_<s:property value="#itScheduleData.index"/>"><s:hidden id="outHourInput_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].outHour"/><s:property value="#data.outHour"/></td>
@@ -254,7 +267,7 @@
 										<td class="scheduleUnavailable"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
 									</s:iterator>
 								</s:if>  
-								<td id='cell_<s:property value="#itScheduleData.index"/>_<s:property value="#itHour.index"/>' onclick="scheduleClick(this, <s:property value="#itScheduleData.index"/>,<s:property value="#itHour.index"/>,'<s:property value="#data.positionId"/>', '');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);" class='<s:if test="%{#data.isBreakShift(#itHour.index)}">scheduleBreak</s:if><s:else><s:if test="%{#data.isFreeShift(#itHour.index)}">scheduleEmpty</s:if><s:else>scheduleSelected</s:else></s:else>'><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>
+								<td id='cell_<s:property value="#itScheduleData.index"/>_<s:property value="#itHour.index"/>' <s:if test="%{!weekDaySelector.isSelectedDateBeforeToday()}">onclick="scheduleClick(this, <s:property value="#itScheduleData.index"/>,<s:property value="#itHour.index"/>,'<s:property value="#data.positionId"/>', '');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);"</s:if> class='<s:if test="%{#data.isBreakShift(#itHour.index)}">scheduleBreak</s:if><s:else><s:if test="%{#data.isFreeShift(#itHour.index)}">scheduleEmpty</s:if><s:else>scheduleSelected</s:else></s:else>'><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>
 									<s:hidden id="schedulehour_%{#itScheduleData.index}_%{#itHour.index}" name="scheduleData[%{#itScheduleData.index}].hours[%{#itHour.index}]"/>
 									<s:hidden id="schedule_%{#itScheduleData.index}_%{#itHour.index}" name="scheduleData[%{#itScheduleData.index}].schedule[%{#itHour.index}]"/>
 								</td>            
@@ -267,6 +280,7 @@
 					    </tr>
 					</s:iterator>
 					
+					<s:if test="%{!weekDaySelector.isSelectedDateBeforeToday()}">
 					<!-- Add new employee to schedule -->
 				    <tr class="scheduleMainTableEmployeeRow">
 				    	<td class="scheduleNameCell">
@@ -310,11 +324,13 @@
 						</s:iterator>
 				    </tr>					
 				    <!-- Employees -->
+				    </s:if>
 				    
 				</table>			
 			<!-- Schedule selection table -->
 			</td>
 		</tr>		
+		<s:if test="%{!weekDaySelector.isSelectedDateBeforeToday()}">
 		<tr>
 			<td width="100%" align="right">
 				<table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
@@ -325,6 +341,7 @@
      			</table>                    
     		</td>
 		</tr>
+		</s:if>
 	</table>
 </s:form>
 

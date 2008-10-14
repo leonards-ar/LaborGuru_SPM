@@ -757,6 +757,7 @@ public abstract class AddShiftBaseAction extends SpmAction {
 			aRow.setOriginalEmployeeId(employeeSchedule.getEmployee().getId());
 			aRow.setEmployeeName(employeeSchedule.getEmployee().getFullName());
 			aRow.setPositionId(shift.getPosition() != null ? shift.getPosition().getId() : null);
+			aRow.setPositionName(shift.getPosition() != null ? shift.getPosition().getName() : null);
 			
 			
 			List<Date> scheduleBuckets = getScheduleIndividualHours();

@@ -183,11 +183,29 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	 * 
 	 * @return
 	 */
+	private String getPositionName(Integer positionId) {
+		if(positionId != null) {
+			Position position = new Position();
+			position.setId(positionId);
+			position = getPositionService().getPositionById(position);
+			return position != null ? position.getName() : null;
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public String addEmployee() {
+		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
+		
 		ScheduleRow newRow = new ScheduleRow();
 		newRow.setEmployeeId(getNewEmployeeId());
 		newRow.setOriginalEmployeeId(getNewEmployeeId());
 		newRow.setPositionId(getNewEmployeePositionId());
+		newRow.setPositionName(getPositionName(getNewEmployeePositionId()));
 		newRow.setEmployeeName(getNewEmployeeName());
 		newRow.setSchedule(initializeScheduleRow());
 		newRow.setHours(initializeScheduleHoursRow());
@@ -206,6 +224,8 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	 * @return
 	 */
 	public String save() {
+		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
+		
 		if(log.isDebugEnabled()) {
 			log.debug("About to save schedule data" + getScheduleData());
 		}
@@ -236,6 +256,7 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	 * @return
 	 */
 	public String cancel() {
+		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
 		resetScheduleData();
 		setScheduleData();
 		
@@ -265,10 +286,8 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	public Position getPosition() {
 		if(position != null && position.getId() == null) {
 			return null;
-		} else if(position != null) {
-			if(position.getName() == null) {
-				setPosition(getPositionService().getPositionById(position));
-			}
+		} else if(position != null && position.getId() != null && position.getName() == null) {
+			position.setName(getPositionName(position.getId()));
 		}
 		return position;
 	}
