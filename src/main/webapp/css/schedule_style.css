@@ -71,6 +71,11 @@ td.scheduleSelected {
 	width: 7px;
 }
 
+td.scheduleSelectedCaption {
+	border:1px solid #184E01;
+	background-color: #00FF00;
+	width: 5px;
+}
 
 td.scheduleBreak {
 	border-right: 1px hidden #FF0000;
@@ -81,11 +86,25 @@ td.scheduleBreak {
 	background-color: #FF0000;
 }
 
+td.scheduleBreakCaption {
+	border:1px solid #184E01;
+	width: 5px;
+	background-color: #FF0000;
+}
+
+td.scheduleEmptyCaption {
+	border:1px solid #184E01;
+	width: 5px;
+	background-color: #FFFFFF;
+}
+
 td.scheduleEmpty {
 	background-color: #FFFFFF;
 	border: 1px solid #184E01;
 	width: 5px;
 }
+
+
 
 td.scheduleUnavailable {
 	background-color: #CACACA;
@@ -100,5 +119,13 @@ td.scheduleEndSelection {
 
 td.scheduleSelectingOver {
 	background-color: #000000;
+	border: 1px solid #184E01;
+}
+
+img.scheduleActionImageOff {
+	border: none;
+}
+
+img.scheduleActionImageOn {
 	border: 1px solid #184E01;
 }
