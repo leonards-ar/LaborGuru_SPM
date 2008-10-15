@@ -135,16 +135,6 @@ public abstract class EmployeeBaseAction extends SpmAction implements Preparable
 	}
 
 	/**
-	 * Loads position and status list
-	 */
-	protected void loadListsForAddEditPage() {
-		this.setPositions(positionService.getPositionsByStore(getEmployeeStore()));
-		this.setStatusMap(getReferenceDataService().getStatus());
-		//:TODO: Add country support
-		this.setStatesList(getReferenceDataService().getStates("us"));
-	}
-
-	/**
 	 * Prepare removes page
 	 * @return
 	 * @throws Exception
@@ -155,7 +145,6 @@ public abstract class EmployeeBaseAction extends SpmAction implements Preparable
 		loadEmployeeFromId();
 		setExtraInformation();
 		this.setRemovePage(true);
-		setExtraInformation();
 		return SpmActionResult.SHOW.getResult();
 	}
 	
@@ -168,7 +157,7 @@ public abstract class EmployeeBaseAction extends SpmAction implements Preparable
 		//Getting employee
 		Employee auxEmployee = getEmployeeService().getEmployeeById(getEmployee());		
 		getEmployeeService().delete(auxEmployee);
-		
+		setExtraInformation();
 		return SpmActionResult.LISTACTION.getResult();
 	}
 
@@ -193,7 +182,7 @@ public abstract class EmployeeBaseAction extends SpmAction implements Preparable
 		
 		//Setting the store on the filter
 		addFilters();
-		
+		setExtraInformation();
 		this.setStoreEmployees(getEmployeeService().filterEmployee(this.searchEmployee));
 		
 		return SpmActionResult.LIST.getResult();
@@ -233,6 +222,15 @@ public abstract class EmployeeBaseAction extends SpmAction implements Preparable
 		setPasswordConfirmation(getEmployee().getPassword());
 	}	
 	
+	/**
+	 * Load position and status list
+	 */
+	protected void loadListsForAddEditPage() {
+		this.setPositions(positionService.getPositionsByStore(getEmployeeStore()));
+		this.setStatusMap(getReferenceDataService().getStatus());
+		//:TODO: Add country support
+		this.setStatesList(getReferenceDataService().getStates("us"));
+	}
 
 	/**
 	 * @return the employee

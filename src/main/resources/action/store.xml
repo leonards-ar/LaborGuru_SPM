@@ -175,8 +175,11 @@
 			<result name="edit" type="tiles">editStoreEmployeePage</result>
 			<result name="show" type="tiles">showStoreEmployeePage</result>
 			<result name="list" type="tiles">listStoreEmployeePage</result>
-			<result name="listAction" type="tiles">listStoreEmployeePage</result>
-			<result name="input" type="tiles">editEmployeePage</result>			
+			<result name="listAction" type="redirectAction">
+			  <param name="actionName">employeeStore_list</param>
+			  <param name="storeId">${storeId}</param>
+			</result>
+			<result name="input" type="tiles">editStoreEmployeePage</result>			
 		</action>
 
 	</package>
