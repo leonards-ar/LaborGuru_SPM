@@ -115,6 +115,9 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	 */
 	@Override
 	protected void processChangeWeek() {
+		setStoreSchedule(null);
+		resetScheduleData();
+		setScheduleData();
 	}
 
 	/**
