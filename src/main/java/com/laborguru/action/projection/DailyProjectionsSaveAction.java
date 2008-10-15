@@ -1,12 +1,15 @@
 package com.laborguru.action.projection;
 
-import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.ErrorMessage;
+import com.laborguru.frontend.model.DailyProjectionElement;
 import com.laborguru.model.OperationTime;
 import com.laborguru.model.Store;
+import com.laborguru.util.CalendarUtils;
 
 /**
  * This action deals with Save for Daily Projections.
@@ -56,10 +59,16 @@ public class DailyProjectionsSaveAction extends DailyProjectionsPrepareAction {
 
 		//Saving each projection
 		int i=0;
-		for (BigDecimal dailyProjection: getAdjustedProjections()){
-			getProjectionService().saveDailyProjection(this.getEmployeeStore(), dailyProjection,getWeekDaySelector().getWeekDays().get(i));
+		List<Date> weekDates = getWeekDaySelector().getWeekDays();
+		for (DailyProjectionElement dailyProjection: getDailyProjections()){
+			getProjectionService().saveDailyProjection(this.getEmployeeStore(), dailyProjection.getAdjustedProjection(),weekDates.get(i), getWeekDaySelector().getFirstDayOfWeek(CalendarUtils.todayWithoutTime()));
 			i++;
 		}
+		
+		//Setting screen for edition
+		prepareEdit();
+		edit();
+
 		return SpmActionResult.SUCCESS.getResult();
 	}
 
@@ -67,14 +76,14 @@ public class DailyProjectionsSaveAction extends DailyProjectionsPrepareAction {
 	 * 
 	 * @see com.opensymphony.xwork2.ActionSupport#validate()
 	 */
-	public void validate(){
+	/*		public void validate(){
 		
 		//Checking if there was any error during the conversion
 		if (!this.getFieldErrors().isEmpty()){			
-			for (int i=0; i < getAdjustedProjections().size(); i++){
-				Object aObject = getAdjustedProjections().get(i);
+			for (int i=0; i < getDailyProjections().size(); i++){
+				DailyProjectionElement aObject = getDailyProjections().get(i);
 				
-				if (!BigDecimal.class.isAssignableFrom(aObject.getClass())){
+				if (!BigDecimal.class.isAssignableFrom(aObject.getAdjustedProjection().getClass())){
 					addActionError(getText("error.projection.daily.nonvalidnumber", new String[]{String.valueOf(i+1)}));
 					getAdjustedProjections().set(i, BigDecimal.ZERO);
 				}
@@ -83,8 +92,8 @@ public class DailyProjectionsSaveAction extends DailyProjectionsPrepareAction {
 		}
 		
 		//Checking values exist and are greater than zero.
-		for (int i=0; i < getAdjustedProjections().size(); i++){
-			BigDecimal aValue = getAdjustedProjections().get(i);
+		for (int i=0; i < getDailyProjections().size(); i++){
+			DailyProjectionElement aValue = getDailyProjections().get(i);
 			
 			if (aValue == null) {
 				addActionError(getText("error.projection.daily.required", new String[]{String.valueOf(i+1)}));
@@ -96,5 +105,5 @@ public class DailyProjectionsSaveAction extends DailyProjectionsPrepareAction {
 			}
 		}
 			
-	}
+	}*/
 }

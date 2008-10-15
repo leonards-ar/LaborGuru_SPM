@@ -22,4 +22,5 @@ public class SpmConstants {
 	public static final String INIT_VALUE_ZERO = "0.00";
 	public static final int DECIMAL_SCALE = 16;
 	public static final RoundingMode ROUNDING_MODE = RoundingMode.HALF_EVEN;
+	public static final int DAILY_PROJECTION_PERIOD_DAYS = 7;
 }

@@ -87,7 +87,7 @@
                   						<td width="13%" class="selectedWeekDay"><s:text name='projection.halfhour.weekday.dateformat'><s:param value='weekDay'/></s:text></td>
                   						</s:if>
                   						<s:else>
-                  						<td width="13%" class="availableWeekDay"><a href="<s:url value="#" includeParams="none"/>" onclick="halfhour_form.action='halfhour_changeDay.action'; halfhour_form.selectedDate.value='<s:text name='projection.weekdayselector.input.dateformat'><s:param value='weekDay'/></s:text>'; halfhour_form.submit();" class="availableWeekDayLink">
+                  						<td width="13%" class="availableWeekDay"><a href="<s:url value="#" includeParams="none"/>" onclick="halfhour_form.action='halfhour_changeDay.action';halfhour_form.selectedWeekDay.value='<s:text name='projection.weekdayselector.input.dateformat'><s:param value='weekDay'/></s:text>'; halfhour_form.submit();" class="availableWeekDayLink">
                   						<s:text name='projection.halfhour.weekday.dateformat'><s:param value='weekDay'/></s:text>
                   						</a>
                   						</td>                  						
@@ -110,10 +110,10 @@
              		<table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0">
 		              	<tr class="editFormEvenRow">
 		                    <td width="15%" align="right" class="form_label" nowrap="nowrap"><s:text name="projection.halfhour.weeksused.label" /></td>
-		                    <td width="25%" align="left" class="value">
-								<s:select name="usedWeeks" list="usedWeeksMap" listKey="key" listValue="%{getText(value)}" theme="simple" onchange="halfhour_form.action='halfhour_reviseUsedWeeks.action';halfhour_form.submit();" />
+		                    <td width="25%" align="left" class="value">						
+								<s:select name="usedWeeks" list="usedWeeksMap" listKey="key" listValue="%{getText(value)}" theme="simple" disabled="%{weekDaySelector.isSelectedDateBeforeToday()}" onchange="halfhour_form.action='halfhour_reviseUsedWeeks.action';halfhour_form.submit();" />
 							</td>
-							<td width="60%" align="left"><s:text name='projection.weekdayselector.selectedday.dateformat.long'><s:param value='weekDaySelector.selectedDay'/></s:text></td>
+							<td width="60%" align="left"><s:text name='projection.weekdayselector.selectedday.dateformat.long'><s:param value="weekDaySelector.selectedDay"/></s:text></td>
 		                </tr>
 		              	<tr class="editFormOddRow">
                     		<td width="100%" align="center" colspan="3">
@@ -141,42 +141,56 @@
 													<s:hidden name="totalRevisedValues"/>
 												</tr>
 												<!-- Iterate for each half hour from open to close hour -->
-												<s:iterator id="halfhourElement" value="projectionElements" status="itHalfHourProjection">
-												<tr>
-													<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].id"/>
-													<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].hour"/>
-  												    <td class="editorTableFirstColumn"><s:property value="hour"/></td>
-													<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].projectedValue"/>
-													<td class="editorTableEvenRow"><s:text name="currency"><s:param value="projectedValue" /></s:text></td>
-													<td class="editorTableEvenRow"><s:textfield name="projectionElements[%{#itHalfHourProjection.index}].adjustedValue" size="10" theme="simple" /></td>
-													<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].revisedValue"/>
-													<td class="editorTableEvenRow"><s:text name="currency"><s:param value="revisedValue"/></s:text></td>
-												</tr>
-												</s:iterator>												
+												<s:if test="%{!weekDaySelector.isSelectedDateBeforeToday()}">
+													<s:iterator id="halfhourElement" value="projectionElements" status="itHalfHourProjection">
+													<tr>
+														<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].id"/>
+														<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].hour"/>
+	  												    <td class="editorTableFirstColumn"><s:property value="hour"/></td>
+														<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].projectedValue"/>
+														<td class="editorTableEvenRow"><s:text name="currency"><s:param value="projectedValue" /></s:text></td>
+														<td class="editorTableEvenRow"><s:textfield name="projectionElements[%{#itHalfHourProjection.index}].adjustedValue" size="10" theme="simple" /></td>
+														<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].revisedValue"/>
+														<td class="editorTableEvenRow"><s:text name="currency"><s:param value="revisedValue"/></s:text></td>
+													</tr>
+													</s:iterator>
+												</s:if>
+												<s:else>
+													<s:iterator id="halfhourElement" value="projectionElements" status="itHalfHourProjection">
+													<tr>
+	  												    <td class="editorTableFirstColumn"><s:property value="hour"/></td>
+														<td class="editorTableEvenRow"><s:text name="currency"><s:param value="projectedValue" /></s:text></td>
+														<td class="editorTableEvenRow"><s:textfield size="10" theme="simple"/></td>
+														<td class="editorTableEvenRow"><s:text name="currency"><s:param value="revisedValue"/></s:text></td>
+													</tr>
+													</s:iterator>
+												</s:else>												
 												<!-- End Iterate for each half hour from open to close hour -->							
 											</table>                    			
 			                    			<!-- End Half Hour Projection -->
                     					</td>
-                    					<td valign="top">
-			                    			<!-- Action buttons -->
-			                    			<br/>
-			                    			<br/>
-						                    <table border="0" cellpadding="5" cellspacing="5" colspan="0" cellspan="0">
-							                    <tr>
-							                		<td align="center"><s:submit id="reviseButton" key="projection.halfhour.revise.button" theme="simple" cssClass="button" action="halfhour_reviseProjections"/></td>
-							                	</tr>
-							                    <tr>
-							                		<td align="center"><s:submit id="saveButton" key="save.button" theme="simple" cssClass="button"/></td>
-							                	</tr>
-							                	<tr>
-							                    	<td align="center"><s:reset id="resetButton" key="reset.button" theme="simple" cssClass="button"/></td>
-							                    </tr>
-							                    <tr>
-							                    	<td align="center"><s:submit id="cancelButton" key="cancel.button" action="halfhour_edit" theme="simple" cssClass="button"/></td>		                    
-							                    </tr>
-						                    </table>                    
-			                    			<!-- End Action buttons -->
-                    					</td>
+										<s:if test="%{!weekDaySelector.isSelectedDateBeforeToday()}">
+	                    					<td valign="top">
+				                    			<!-- Action buttons -->
+				                    			<br/>
+				                    			<br/>
+							                    <table border="0" cellpadding="5" cellspacing="5" colspan="0" cellspan="0">
+								                    <tr>
+								                		<td align="center"><s:submit id="reviseButton" key="projection.halfhour.revise.button" theme="simple" cssClass="button" action="halfhour_reviseProjections"/></td>
+								                	</tr>
+								                    <tr>
+								                		<td align="center"><s:submit id="saveButton" key="save.button" theme="simple" cssClass="button"/></td>
+								                	</tr>
+								                	<tr>
+								                    	<td align="center"><s:reset id="resetButton" key="reset.button" theme="simple" cssClass="button"/></td>
+								                    </tr>
+								                    <tr>
+								                    	<td align="center"><s:submit id="cancelButton" key="cancel.button" action="halfhour_edit" theme="simple" cssClass="button"/></td>		                    
+								                    </tr>
+							                    </table>                    
+				                    			<!-- End Action buttons -->
+	                    					</td>
+										</s:if>
                     				</tr>
                     			</table>
                     		</td>

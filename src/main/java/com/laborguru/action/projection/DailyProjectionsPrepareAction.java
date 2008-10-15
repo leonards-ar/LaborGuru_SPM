@@ -2,9 +2,13 @@ package com.laborguru.action.projection;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.laborguru.action.SpmActionResult;
+import com.laborguru.frontend.model.DailyProjectionElement;
+import com.laborguru.model.DailyProjection;
+import com.laborguru.util.CalendarUtils;
 import com.laborguru.util.SpmConstants;
 import com.opensymphony.xwork2.Preparable;
 
@@ -19,12 +23,13 @@ import com.opensymphony.xwork2.Preparable;
 @SuppressWarnings("serial")
 public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction implements Preparable {
 
-	private List<BigDecimal> calculatedProjections = new ArrayList<BigDecimal>(7);
-	private List<BigDecimal> adjustedProjections = new ArrayList<BigDecimal>(7);
-
+	private List<DailyProjectionElement> dailyProjections = new ArrayList<DailyProjectionElement>(SpmConstants.DAILY_PROJECTION_PERIOD_DAYS);
+	
+	
 	private BigDecimal totalProjected = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
 	private BigDecimal totalAdjusted = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
-
+		
+	
 	/**
 	 * Prepare the data to be used on the edit page
 	 * 
@@ -67,38 +72,60 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	/**
 	 * Clear the totals for the page
 	 */
-	private void clearTotalPageValues() {
+	private void clearPageValues() {
 		setTotalAdjusted(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
 		setTotalProjected(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
+		
+		getDailyProjections().clear();
 	}
+		
 	
 	/**
 	 * 
 	 */
 	protected void setupDailyProjectionData() {
+		Date calculatedDate;
+		
 		// Force object initialization
 		initializeDayWeekSelector(getSelectedDate(), getSelectedDate());		
+
+		clearPageValues();
+
+		//Setting the date for the weekly calculation
+		calculatedDate = getWeekDaySelector().getStartingWeekDay();
+		Date firstDayThisWeek =  getWeekDaySelector().getFirstDayOfWeek(CalendarUtils.todayWithoutTime());
+
+		if (calculatedDate.compareTo(firstDayThisWeek) >= 0){
+			calculatedDate = firstDayThisWeek;			
+		} 
 		
-		// Get calculated projections
-		setCalculatedProjections(getProjectionService().getAvgDailyProjectionForAWeek(getUsedWeeks(), this.getEmployeeStore(), getWeekDaySelector().getStartingWeekDay()));
-		setAdjustedProjections(getProjectionService().getAdjustedDailyProjectionForAWeek(this.getEmployeeStore(), getWeekDaySelector().getStartingWeekDay()));
+		calculatedDate = CalendarUtils.addOrSubstractDays(calculatedDate, -7);			
+		
+		
+		// Get calculated projections		
+		List<BigDecimal> calculatedProjections = getProjectionService().getAvgDailyProjectionForAWeek(getUsedWeeks(), this.getEmployeeStore(), calculatedDate);		
+		List<DailyProjection> adjustedProjections = getProjectionService().getAdjustedDailyProjectionForAWeek(this.getEmployeeStore(), getWeekDaySelector().getStartingWeekDay());
 
 		// Set default adjusted values
-		for (int i = 0; i < getAdjustedProjections().size(); i++) {
-			if (getAdjustedProjections().get(i) == null)
-				getAdjustedProjections().set(i, getCalculatedProjections().get(i));
+		for (int i = 0; i < SpmConstants.DAILY_PROJECTION_PERIOD_DAYS; i++) {
+			DailyProjectionElement dailyProjection = new DailyProjectionElement();
+			
+			dailyProjection.setAdjustedProjection(adjustedProjections.get(i).getDailyProjectionValue());			
+			dailyProjection.setCalculatedProjection(calculatedProjections.get(i));
+			dailyProjection.setProjectionDate(getWeekDaySelector().getWeekDays().get(i));
+
+			if (dailyProjection.getAdjustedProjection() == null)
+				dailyProjection.setAdjustedProjection(calculatedProjections.get(i));
+			
+			getDailyProjections().add(dailyProjection);
 		}
 
-		clearTotalPageValues();
 				
 		// calculate and set the total
-		for (BigDecimal aValue : getCalculatedProjections()) {
-			this.totalProjected = totalProjected.add(aValue);
-		}
+		for (DailyProjectionElement projection : getDailyProjections()) {
+			this.totalProjected = totalProjected.add(projection.getCalculatedProjection());
+			this.totalAdjusted = totalAdjusted.add(projection.getAdjustedProjection());
 
-		// calculate and set the total
-		for (BigDecimal aValue : getAdjustedProjections()) {
-			this.totalAdjusted = totalAdjusted.add(aValue);
 		}
 
 	}
@@ -120,6 +147,7 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	 */
 	@Override
 	protected void processChangeWeek() {
+		setUsedWeeks(this.getEmployeeStore().getDailyProjectionsWeeksDefault());
 		setupDailyProjectionData();
 	}	
 	
@@ -137,21 +165,6 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 
 
 	/**
-	 * @return the calculatedProjections
-	 */
-	public List<BigDecimal> getCalculatedProjections() {
-		return calculatedProjections;
-	}
-
-	/**
-	 * @param calculatedProjections
-	 *            the calculatedProjections to set
-	 */
-	public void setCalculatedProjections(List<BigDecimal> calculatedProjections) {
-		this.calculatedProjections = calculatedProjections;
-	}
-
-	/**
 	 * @return the totalProjected
 	 */
 	public BigDecimal getTotalProjected() {
@@ -167,21 +180,6 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	}
 
 	/**
-	 * @return the adjustedProjections
-	 */
-	public List<BigDecimal> getAdjustedProjections() {
-		return adjustedProjections;
-	}
-
-	/**
-	 * @param adjustedProjections
-	 *            the adjustedProjections to set
-	 */
-	public void setAdjustedProjections(List<BigDecimal> adjustedProjections) {
-		this.adjustedProjections = adjustedProjections;
-	}
-
-	/**
 	 * @return the totalAdjusted
 	 */
 	public BigDecimal getTotalAdjusted() {
@@ -194,5 +192,19 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	 */
 	public void setTotalAdjusted(BigDecimal totalAdjusted) {
 		this.totalAdjusted = totalAdjusted;
+	}
+
+	/**
+	 * @return the dailyProjections
+	 */
+	public List<DailyProjectionElement> getDailyProjections() {
+		return dailyProjections;
+	}
+
+	/**
+	 * @param dailyProjections the dailyProjections to set
+	 */
+	public void setDailyProjections(List<DailyProjectionElement> dailyProjections) {
+		this.dailyProjections = dailyProjections;
 	}
 }
