@@ -55,16 +55,9 @@ public class ProjectionServiceBean implements ProjectionService {
 	 * @return
 	 * @see com.laborguru.service.projection.ProjectionService#getAdjustedDailyProjectionForAWeek(com.laborguru.model.Store, java.util.Date)
 	 */
-	public List<BigDecimal> getAdjustedDailyProjectionForAWeek(Store store, Date startWeekDate) {		
+	public List<DailyProjection> getAdjustedDailyProjectionForAWeek(Store store, Date startWeekDate) {		
 		
-		List<DailyProjection> projections = projectionDao.getAdjustedDailyProjectionForAWeek(store, startWeekDate);
-		List<BigDecimal> retProjections = new ArrayList<BigDecimal>(7);
-		
-		for (DailyProjection aProjection: projections){
-			retProjections.add(aProjection.getDailyProjectionValue());
-		}			
-		
-		return retProjections;	
+		return projectionDao.getAdjustedDailyProjectionForAWeek(store, startWeekDate);	
 	}
 
 	/**
@@ -115,8 +108,8 @@ public class ProjectionServiceBean implements ProjectionService {
 	 * @param selectedDate
 	 * @return
 	 */
-	public void saveDailyProjection(Store store, BigDecimal projectionAmount, Date selectedDate) {
-		List<HalfHourProjection> calculatedHalfHourList = calculateDailyHalfHourProjection(store, projectionAmount, selectedDate, store.getHalfHourProjectionsWeeksDefault());		
+	public void saveDailyProjection(Store store, BigDecimal projectionAmount, Date selectedDate, Date dateForCalculation) {
+		List<HalfHourProjection> calculatedHalfHourList = calculateDailyHalfHourProjection(store, projectionAmount, dateForCalculation, store.getHalfHourProjectionsWeeksDefault());		
 		saveProjection(store, calculatedHalfHourList, selectedDate);
 	}	
 	

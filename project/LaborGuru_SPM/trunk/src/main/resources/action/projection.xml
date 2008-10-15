@@ -8,12 +8,11 @@
 		<action name="daily_*" method="{1}" class="com.laborguru.action.projection.DailyProjectionsPrepareAction">
 			<result name="edit" type="tiles">editDailyPage</result>
 			<result name="input" type="tiles">editDailyPage</result>			
-			<result name="success" type="redirectAction"><param name="actionName">daily_edit</param></result>						
 		</action>
 
 		<action name="dailySave" class="com.laborguru.action.projection.DailyProjectionsSaveAction">
 			<result name="input" type="tiles">editDailyPage</result>			
-			<result name="success" type="redirectAction"><param name="actionName">daily_edit</param></result>						
+			<result name="success" type="tiles">editDailyPage</result>				
 		</action>
 				
 		<action name="halfhour_*" method="{1}" class="com.laborguru.action.projection.HalfHourProjectionsPrepareAction">

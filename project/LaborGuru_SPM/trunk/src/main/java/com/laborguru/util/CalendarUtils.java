@@ -151,5 +151,5 @@ public class CalendarUtils {
 	 */
 	public static String dateToString(Date time, String format) {
 			return new SimpleDateFormat(format).format(time);
-	}
+	}	
 }

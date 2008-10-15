@@ -2,6 +2,8 @@ package com.laborguru.action.projection;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.laborguru.action.SpmActionResult;
@@ -9,7 +11,9 @@ import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.ErrorMessage;
 import com.laborguru.frontend.model.HalfHourElement;
 import com.laborguru.model.DailyProjection;
+import com.laborguru.model.DayOfWeek;
 import com.laborguru.model.HalfHourProjection;
+import com.laborguru.util.CalendarUtils;
 import com.laborguru.util.SpmConstants;
 import com.opensymphony.xwork2.Preparable;
 
@@ -31,6 +35,7 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 
 	private Boolean projectionError = false;
 	
+
 	/**
 	 * Prepare the data to be used on the edit page
 	 * 
@@ -97,6 +102,7 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	 */
 	@Override
 	protected void processChangeDay() {
+		setUsedWeeks(this.getEmployeeStore().getDailyProjectionsWeeksDefault());
 		setUpHalfHourProjection();
 	}
 
@@ -107,6 +113,7 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	 */
 	@Override
 	protected void processChangeWeek() {
+		setUsedWeeks(this.getEmployeeStore().getDailyProjectionsWeeksDefault());
 		setUpHalfHourProjection();
 	}	
 	
@@ -123,8 +130,8 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 		
 		setUpHalfHourProjection();
 		
-		setSelectedDate(getWeekDaySelector().getStringSelectedDay());
-		setSelectedWeekDay(getWeekDaySelector().getStringStartingWeekDay());
+		setSelectedDate(getWeekDaySelector().getStringStartingWeekDay());
+		setSelectedWeekDay(getWeekDaySelector().getStringSelectedDay());
 		
 		return SpmActionResult.EDIT.getResult();
 	}
@@ -166,7 +173,36 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	 */
 	private void getNewValues(){
 		
-		List<HalfHourProjection> projections = getProjectionService().calculateDailyHalfHourProjection(getEmployeeStore(), getTotalProjectedValues(), getWeekDaySelector().getSelectedDay(), getUsedWeeks());
+		//Setting the date for the calculation
+		//TODO: Put this in an auxiliary method URGENT!!!
+		Date auxSelectedDate = getWeekDaySelector().getSelectedDay();
+		DayOfWeek dayOfWeekCalculatedDay = CalendarUtils.getDayOfWeek(auxSelectedDate);
+
+		Date today = CalendarUtils.todayWithoutTime();;
+		DayOfWeek dayOfWeek = CalendarUtils.getDayOfWeek(today);
+		
+		Calendar day = CalendarUtils.getCalendar(today);
+		int daysTosubstract = 0;
+					
+		if (dayOfWeek.ordinal() < dayOfWeekCalculatedDay.ordinal()){
+			daysTosubstract = 7 - (dayOfWeekCalculatedDay.ordinal() - dayOfWeek.ordinal());
+		} else if (dayOfWeek.ordinal() > dayOfWeekCalculatedDay.ordinal()){
+			daysTosubstract = dayOfWeek.ordinal() - dayOfWeekCalculatedDay.ordinal();
+		} 			
+			
+		day.add(Calendar.DAY_OF_MONTH, -1 * daysTosubstract);
+		//TODO: END OF todo
+		
+		Date calculatedDate = CalendarUtils.addOrSubstractDays(day.getTime(), -7);		
+		
+		BigDecimal auxTotal = getTotalProjectedValues();
+		
+		if (getTotalProjectedValues().equals(BigDecimal.ZERO)){
+			DailyProjection dailyProjection = getProjectionService().getDailyProjection(getEmployeeStore(), getWeekDaySelector().getSelectedDay());
+			auxTotal = dailyProjection.getDailyProjectionValue();
+		}
+		
+		List<HalfHourProjection> projections = getProjectionService().calculateDailyHalfHourProjection(getEmployeeStore(), auxTotal, calculatedDate, getUsedWeeks());
 		BigDecimal totalProjections = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
 
 		//set new values;
@@ -200,7 +236,7 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 			//Setting total value
 			for (HalfHourElement element: getProjectionElements()){
 				setTotalProjectedValues(getTotalProjectedValues().add(element.getProjectedValue()));
-			}
+			}			
 		}else {
 			addActionError(new ErrorMessage(ErrorEnum.PROJECTION_DOES_NOT_EXIST.name()));
 			//TODO: CN - This flag should be removed when we found the way to ask from the front if actionErrors is empty.
@@ -257,7 +293,7 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 		}
 		setTotalRevisedValues(totalRevised);
 		setTotalAdjustedValues(totalAdjusted);
-		setTotalProjectedValues(totalProjections);		
+		setTotalProjectedValues(totalProjections);
 	}
 		
 
@@ -368,6 +404,4 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	public Boolean getProjectionError() {
 		return projectionError;
 	}
-
-
 }

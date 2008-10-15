@@ -127,9 +127,9 @@ public abstract class ProjectionCalendarBaseAction extends SpmAction {
 	/**
 	 * @param aSelectedDate
 	 */
-	protected void initializeDayWeekSelector(String aSelectedDate, String aFirstDayOfWeek){
-		getWeekDaySelector().setStringStartingWeekDay(aFirstDayOfWeek);
-		getWeekDaySelector().setStringSelectedDay(aSelectedDate);
+	protected void initializeDayWeekSelector(String aSelectedDate, String weekDay){
+		getWeekDaySelector().setStringStartingWeekDay(aSelectedDate);
+		getWeekDaySelector().setStringSelectedDay(weekDay);
 	}
 	
 	/**

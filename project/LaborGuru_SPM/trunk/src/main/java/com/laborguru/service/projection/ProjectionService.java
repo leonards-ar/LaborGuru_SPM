@@ -22,7 +22,7 @@ public interface ProjectionService extends Service{
 
 	List<BigDecimal> getAvgDailyProjectionForAWeek(Integer numberOfWeeks, Store store, Date startWeekDate);
 
-	List<BigDecimal> getAdjustedDailyProjectionForAWeek(Store store, Date startWeekDate);
+	List<DailyProjection> getAdjustedDailyProjectionForAWeek(Store store, Date startWeekDate);
 	
 	DailyProjection getDailyProjection(Store store, Date selectedDate);
 
@@ -30,7 +30,7 @@ public interface ProjectionService extends Service{
 	
 	List<HalfHourProjection> calculateDailyHalfHourProjection(Store store, BigDecimal projectionAmount, Date selectedDate, Integer numberOfWeeks);
 		
-	void saveDailyProjection(Store store, BigDecimal projectionAmount, Date selectedDate);
+	void saveDailyProjection(Store store, BigDecimal projectionAmount, Date selectedDate, Date dateForCalculation);
 	
 	void saveProjection(Store store, List<HalfHourProjection> halfHourProjectionList, Date selectedDate);
 
