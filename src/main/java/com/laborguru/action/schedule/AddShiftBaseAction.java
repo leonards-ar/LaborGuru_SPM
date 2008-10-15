@@ -575,6 +575,47 @@ public abstract class AddShiftBaseAction extends SpmAction {
 		}		
 	}
 	
+	
+	
+	/**
+	 * 
+	 * @see com.opensymphony.xwork2.ActionSupport#validate()
+	 */
+	protected void validateSchedule(List<ScheduleRow> schedule) {
+		Set<Integer> employeeIds = getDifferentEmployeeIds(schedule);
+
+		for(Integer employeeId : employeeIds) {
+			validateEmployeeSchedule(employeeId, schedule);
+		}
+	}
+
+	/**
+	 * 
+	 * @param employeeId
+	 * @param schedule
+	 */
+	private void validateEmployeeSchedule(Integer employeeId, List<ScheduleRow> schedule) {
+		List<ScheduleRow> employeeSchedules = getEmployeeSchedule(employeeId, schedule);
+		int buckets = getScheduleIndividualHours().size();
+		boolean collision = false;
+		int quantity;
+		
+		for(int i = 0; i < buckets && !collision; i++) {
+			quantity = 0;
+			for(int j = 0; j < employeeSchedules.size() && !collision; j++) {
+				if(!SpmConstants.SCHEDULE_FREE.equals(employeeSchedules.get(j).getSchedule().get(i))) {
+					quantity++;
+				}
+				collision = quantity > 1;
+			}
+		}
+		
+		if(collision) {
+			String employeeName = employeeSchedules.get(0).getEmployeeName();
+			addActionError(getText("error.schedule.addshift.employee_shift_collision", new String[]{employeeName}));
+		}
+	}
+	
 	/**
 	 * 
 	 * @param source
