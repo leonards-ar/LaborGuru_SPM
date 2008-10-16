@@ -119,6 +119,7 @@
 						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url namespace="/store" action="storeUtilizationLimits_show" includeParams="none"><s:param name="storeId" value="store.id"/></s:url>"><s:text name="store.laborassumptions.utilizationlimits.title" /></a></td></tr>
 						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url namespace="/store" action="storeMinimumStaffing_show" includeParams="none"><s:param name="storeId" value="store.id"/></s:url>"><s:text name="store.laborassumptions.minimumstaffing.title" /></a></td></tr>
 						    					<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url namespace="/store" action="storeActivitySharing_show" includeParams="none"><s:param name="storeId" value="store.id"/></s:url>"><s:text name="store.laborassumptions.activitysharing.title" /></a></td></tr>
+				    							<tr><td><img src="<s:url value="/images/bullet.gif" includeParams="none"/>"/></td><td nowrap><a class="actionsLink" href="<s:url namespace="/store" action="storeOtherFactors_show" includeParams="none"><s:param name="storeId" value="store.id"/></s:url>"><s:text name="store.laborassumptions.otherfactors.title" /></a></td></tr>
 				    						</table>
 						    			</td>
 					    			</tr>

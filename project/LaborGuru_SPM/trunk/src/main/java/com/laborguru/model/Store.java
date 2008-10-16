@@ -35,6 +35,13 @@ public class Store extends SpmObject {
 	private Double allPositionsUtilization;
 	private Set<PositionGroup> positionGroups;
 	
+	private Double scheduleInefficiency = null;
+	private Double fillInefficiency = null;
+	private Double trainingFactor = null;
+	private Double earnedBreakFactor = null;
+	private Double floorManagementFactor = null;
+	private Integer minimumFloorManagementHours = null;
+	
 	/**
 	 * Store toString
 	 * @return string version of the object 
@@ -430,6 +437,90 @@ public class Store extends SpmObject {
 	public void setHalfHourProjectionsWeeksDefault(
 			Integer halfHourProjectionsWeeksDefault) {
 		this.halfHourProjectionsWeeksDefault = halfHourProjectionsWeeksDefault;
+	}
+
+	/**
+	 * @return the scheduleInefficiency
+	 */
+	public Double getScheduleInefficiency() {
+		return scheduleInefficiency;
+	}
+
+	/**
+	 * @param scheduleInefficiency the scheduleInefficiency to set
+	 */
+	public void setScheduleInefficiency(Double scheduleInefficiency) {
+		this.scheduleInefficiency = scheduleInefficiency;
+	}
+
+	/**
+	 * @return the fillInefficiency
+	 */
+	public Double getFillInefficiency() {
+		return fillInefficiency;
+	}
+
+	/**
+	 * @param fillInefficiency the fillInefficiency to set
+	 */
+	public void setFillInefficiency(Double fillInefficiency) {
+		this.fillInefficiency = fillInefficiency;
+	}
+
+	/**
+	 * @return the trainingFactor
+	 */
+	public Double getTrainingFactor() {
+		return trainingFactor;
+	}
+
+	/**
+	 * @param trainingFactor the trainingFactor to set
+	 */
+	public void setTrainingFactor(Double trainingFactor) {
+		this.trainingFactor = trainingFactor;
+	}
+
+	/**
+	 * @return the earnedBreakFactor
+	 */
+	public Double getEarnedBreakFactor() {
+		return earnedBreakFactor;
+	}
+
+	/**
+	 * @param earnedBreakFactor the earnedBreakFactor to set
+	 */
+	public void setEarnedBreakFactor(Double earnedBreakFactor) {
+		this.earnedBreakFactor = earnedBreakFactor;
+	}
+
+	/**
+	 * @return the floorManagementFactor
+	 */
+	public Double getFloorManagementFactor() {
+		return floorManagementFactor;
+	}
+
+	/**
+	 * @param floorManagementFactor the floorManagementFactor to set
+	 */
+	public void setFloorManagementFactor(Double floorManagementFactor) {
+		this.floorManagementFactor = floorManagementFactor;
+	}
+
+	/**
+	 * @return the minimumFloorManagementHours
+	 */
+	public Integer getMinimumFloorManagementHours() {
+		return minimumFloorManagementHours;
+	}
+
+	/**
+	 * @param minimumFloorManagementHours the minimumFloorManagementHours to set
+	 */
+	public void setMinimumFloorManagementHours(Integer minimumFloorManagementHours) {
+		this.minimumFloorManagementHours = minimumFloorManagementHours;
 	}
 	
 }

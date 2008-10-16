@@ -182,5 +182,13 @@
 			<result name="input" type="tiles">editStoreEmployeePage</result>			
 		</action>
 
+		<action name="storeOtherFactors_*" method="{1}" class="com.laborguru.action.store.OtherFactorsPrepareAction">
+			<result name="edit" type="tiles">editOtherFactorsPage</result>
+			<result name="show" type="tiles">showOtherFactorsPage</result>
+			<result name="cancelEdit" type="redirectAction">store_edit</result> 
+			<result name="cancelShow" type="redirectAction">store_show</result> 
+			<result name="input" type="tiles">editOtherFactorsPage</result>
+			<result name="success" type="redirectAction">store_edit</result> 			
+		</action>
 	</package>
 </struts>

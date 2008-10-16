@@ -19,6 +19,13 @@
 			<column name="all_pos_utilization" not-null="false" default="90.00" />
 		</property>
 
+		<property name="minimumFloorManagementHours" column="minimum_floor_Management_hours" type="int"/>
+		<property name="scheduleInefficiency" column="schedule_inefficiency" type="double"/>
+		<property name="fillInefficiency" column="fill_inefficiency" type="double"/>
+		<property name="trainingFactor" column="training_factor" type="double"/>
+		<property name="earnedBreakFactor" column="earned_break_factor" type="double"/>
+		<property name="floorManagementFactor" column="floor_management_factor" type="double"/>
+
 	    <list name="positions" cascade="all-delete-orphan" table="tbl_positions" lazy="true" inverse="true">
 	        <key column="store_id" foreign-key="fk_stores_positions"/>
 	        <list-index column="position_index"/>

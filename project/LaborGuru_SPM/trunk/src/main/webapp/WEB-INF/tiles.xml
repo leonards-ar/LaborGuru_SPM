@@ -194,6 +194,14 @@
 		<put-attribute name="storeExtDataBody" value="/tiles/store/positiongroupnames_view.jsp" />
 	</definition>
 	
+	<definition name="editOtherFactors" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/otherfactors_edit.jsp" />
+	</definition>	
+	
+	<definition name="showOtherFactors" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/otherfactors_view.jsp" />
+	</definition>
+		
 	<!-- Customer tiles definition -->
 	<definition name="listCustomersPage" extends="baseLayoutWithMenu">
 		<put-attribute name="body" value="/tiles/customer/list.jsp" />
