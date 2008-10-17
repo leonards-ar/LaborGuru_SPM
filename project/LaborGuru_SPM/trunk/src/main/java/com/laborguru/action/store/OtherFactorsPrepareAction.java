@@ -110,14 +110,6 @@ public class OtherFactorsPrepareAction extends StoreAdministrationBaseAction {
 	}
 
 	/**
-	 * 
-	 * @see com.opensymphony.xwork2.ActionSupport#validate()
-	 */
-	@Override
-	public void validate() {
-	}
-
-	/**
 	 * @return the scheduleInefficiency
 	 */
 	public Double getScheduleInefficiency() {
