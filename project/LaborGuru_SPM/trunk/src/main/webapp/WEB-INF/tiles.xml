@@ -194,11 +194,11 @@
 		<put-attribute name="storeExtDataBody" value="/tiles/store/positiongroupnames_view.jsp" />
 	</definition>
 	
-	<definition name="editOtherFactors" extends="storeExtendedCRUD">
+	<definition name="editOtherFactorsPage" extends="storeExtendedCRUD">
 		<put-attribute name="storeExtDataBody" value="/tiles/store/otherfactors_edit.jsp" />
 	</definition>	
 	
-	<definition name="showOtherFactors" extends="storeExtendedCRUD">
+	<definition name="showOtherFactorsPage" extends="storeExtendedCRUD">
 		<put-attribute name="storeExtDataBody" value="/tiles/store/otherfactors_view.jsp" />
 	</definition>
 		
