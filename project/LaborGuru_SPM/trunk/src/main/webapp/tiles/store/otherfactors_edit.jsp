@@ -99,7 +99,7 @@
 				<tr class="editFormEvenRow">
                     <td align="right" class="form_label" nowrap><s:text name="store.laborassumptions.otherfactors.minimumfloormanagementhours.label" /></td>
                     <td align="left" class="value">
-						<s:textfield name="minimumFloorManagementHours" size="2" maxlength="2"/>%
+						<s:textfield name="minimumFloorManagementHours" size="2" maxlength="2"/>
                     </td>
 				</tr>				
 			</table>
