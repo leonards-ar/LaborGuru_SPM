@@ -61,9 +61,9 @@
 	   		<message key="error.otherfactors.minimumfloormanagementhours.invalid"/>
 	    </field-validator>
 	    	
-		<field-validator type="integer">
-			<param name="minInclusive">0</param>
-			<param name="maxInclusive">24</param>
+		<field-validator type="int">
+     		<param name="min">0</param>
+      		<param name="max">24</param>
 			<message key="error.otherfactors.minimumfloormanagementhours.invalid"/>
 		</field-validator>   
   </field> 
