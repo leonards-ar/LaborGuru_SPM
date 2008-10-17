@@ -50,11 +50,19 @@
 		</td>
 	</tr>
     <tr>
-     <s:form theme="simple">
-     <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0"><tr>                  
      <td align="right">
-       <s:submit action="store_list" key="back.button" theme="simple" cssClass="button"/>
-     </td></tr></table>
+     <s:form theme="simple">
+       <s:hidden name="storeId" theme="simple"/>
+       <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0"><tr>
+       <td>
+         <s:submit action="employeeStore_add" key="employee.create.button" theme="simple" cssClass="button"/>
+       </td>
+       <td>
+         <s:submit action="store_list" key="back.button" theme="simple" cssClass="button"/>
+       </td>
+       </tr>
+       </table>
      </s:form>
+     </td>
     </tr>
 </table>
