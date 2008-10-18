@@ -24,7 +24,7 @@
 
 
 	<tr>
-		<td align="left">
+		<td align="center">
 			<table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0">
 				<tr class="editFormOddRow">
                     <td align="right" class="form_label" nowrap><s:text name="store.laborassumptions.otherfactors.scheduleinefficiency.label" /></td>
