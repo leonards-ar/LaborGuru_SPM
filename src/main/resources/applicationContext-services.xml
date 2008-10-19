@@ -189,6 +189,28 @@
 
  	<bean id="scheduleServiceTarget" class="com.laborguru.service.schedule.ScheduleServiceBean" autowire="byType"/>
  					
+	<bean id="calculatedPositionStaffServiceTarget" class="com.laborguru.service.staffing.CalculatedPositionStaffServiceBean" autowire="byType"/>
+
+	<bean id="calculatedPositionStaffService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.laborguru.service.staffing.CalculatedPositionStaffService</value>
+			</list>
+		</property>	
+	
+		<property name="target">
+			<ref bean="calculatedPositionStaffServiceTarget"/>
+		</property>		
+		
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>	
+		
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributeSourceDefault"/>
+		</property>			
+	</bean>
+	 					
 	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory">
 			<ref bean="mySessionFactory"/>
