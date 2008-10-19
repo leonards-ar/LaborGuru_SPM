@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.laborguru.model" schema="spm">
+	<class name="DailyCalculatedPositionStaff" table="tbl_calculated_position_staffing">
+	
+		<id name="id" type="long" unsaved-value="null" column="calc_position_staffing_id">
+			<generator class="identity" />
+		</id>
+		
+		<property name="date" column="position_staffing_date" type="timestamp"/>
+		<property name="startingTime" column="starting_time" type="timestamp" />
+		
+		<many-to-one name="position" class="Position" column="position_id" not-null="true" foreign-key="fk_calcposstaff_positions" />
+
+	    <list name="halfHourCalculatedPositionStaffing" cascade="all-delete-orphan" table="tbl_halfhour_calculated_position_staffing" lazy="true" inverse="true">
+	        <key column="calc_position_staffing_id" foreign-key="fk_halfhours_calcposstaff"/>
+	        <list-index column="half_hour_index"/>
+	        <one-to-many class="HalfHourCalculatedPositionStaff"/>
+	    </list>
+	</class>
+	<database-object>
+		<create>ALTER TABLE tbl_calculated_position_staffing AUTO_INCREMENT=1000</create>
+		<drop></drop>
+	</database-object>   	
+</hibernate-mapping>

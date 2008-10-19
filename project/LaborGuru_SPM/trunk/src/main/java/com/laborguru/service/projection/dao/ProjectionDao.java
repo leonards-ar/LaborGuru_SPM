@@ -10,13 +10,43 @@ import com.laborguru.model.Store;
 
 public interface ProjectionDao {
 	
+	/**
+	 * 
+	 * @param numberOfWeeks
+	 * @param store
+	 * @param startWeekDate
+	 * @return
+	 */
 	List<BigDecimal> getAvgDailyProjectionForAWeek(Integer numberOfWeeks, Store store, Date startWeekDate);
 
+	/**
+	 * 
+	 * @param store
+	 * @param startWeekDate
+	 * @return
+	 */
 	List<DailyProjection> getAdjustedDailyProjectionForAWeek(Store store, Date startWeekDate);
 	
+	/**
+	 * 
+	 * @param store
+	 * @param selectedDate
+	 * @return
+	 */
 	DailyProjection getDailyProjection(Store store, Date selectedDate);
 	
+	/**
+	 * 
+	 * @param numberOfWeeks
+	 * @param store
+	 * @param selectedDate
+	 * @return
+	 */
 	List<HalfHourProjection> getAvgHalfHourProjection(Integer numberOfWeeks, Store store, Date selectedDate);
 
+	/**
+	 * 
+	 * @param projection
+	 */
 	void save(DailyProjection projection);
 }
