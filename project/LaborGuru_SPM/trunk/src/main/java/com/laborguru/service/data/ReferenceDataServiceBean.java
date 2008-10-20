@@ -70,6 +70,42 @@ public class ReferenceDataServiceBean implements ReferenceDataService {
 	}
 	
 	/**
+	 * 
+	 * @return
+	 * @see com.laborguru.service.data.ReferenceDataService#getAdministratorRole()
+	 */
+	public Profile getAdministratorRole() {
+		return (Profile)getReferenceData().get("adminRole");
+	}
+	
+	/**
+	 * 
+	 * @return
+	 * @see com.laborguru.service.data.ReferenceDataService#getCustomerRole()
+	 */
+	public Profile getCustomerRole() {
+		return (Profile)getReferenceData().get("customerRole");
+	}
+	
+	/**
+	 * 
+	 * @return
+	 * @see com.laborguru.service.data.ReferenceDataService#getRegionalRole()
+	 */
+	public Profile getRegionalRole() {
+		return (Profile)getReferenceData().get("regionalRole");
+	}
+	
+	/**
+	 * 
+	 * @return
+	 * @see com.laborguru.service.data.ReferenceDataService#getAreaRole()
+	 */
+	public Profile getAreaRole() {
+		return (Profile)getReferenceData().get("areaRole");
+	}	
+	
+	/**
 	 * @return the referenceData
 	 */
 	public Map<String, Object> getReferenceData() {

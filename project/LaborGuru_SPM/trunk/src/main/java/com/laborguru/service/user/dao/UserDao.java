@@ -2,6 +2,7 @@ package com.laborguru.service.user.dao;
 
 import java.util.List;
 
+import com.laborguru.model.Profile;
 import com.laborguru.model.User;
 import com.laborguru.model.filter.SearchUserFilter;
 
@@ -55,7 +56,7 @@ public interface UserDao {
 	 * Finds all users that are not employee.
 	 * @return
 	 */
-	List<User> findAll();
+	List<User> findUsersByProfile(Profile profile);
 
 	/**
 	 * finds a user by name and surname

@@ -17,11 +17,24 @@
 					<ref bean="usedWeeks"/>
 				</entry>
 				<entry key="managerRole">
-					<ref bean="managerRole"/>
+					<ref bean="storeManagerRole"/>
 				</entry>
 				<entry key="employeeRole">
 					<ref bean="employeeRole"/>
+				</entry>
+				<entry key="adminRole">
+					<ref bean="adminRole"/>
 				</entry>				
+				<entry key="customerRole">
+					<ref bean="customerManagerRole"/>
+				</entry>				
+				<entry key="regionalRole">
+					<ref bean="regionalManagerRole"/>
+				</entry>				
+				<entry key="areaRole">
+					<ref bean="areaManagerRole"/>
+				</entry>				
+								
 			</map>
 		</constructor-arg>
 	</bean> 
@@ -118,15 +131,36 @@
 			</map>
 		</constructor-arg>
 	</bean>
+
+	<bean id="adminRole" class="com.laborguru.model.Profile">
+	  <description>Administrator Role</description>
+	  <property name="id" value="1"/>
+	</bean>
 	
-	<bean id="managerRole" class="com.laborguru.model.Profile">
+	<bean id="storeManagerRole" class="com.laborguru.model.Profile">
 	  <description>Manager Role of a store</description>
-	  <property name="id" value="3"/>
+	  <property name="id" value="2"/>
 	</bean>
 	
 	<bean id="employeeRole" class="com.laborguru.model.Profile">
 	  <description>Default employee Role of a store</description>
-	  <property name="id" value="1"/>
+	  <property name="id" value="3"/>
 	</bean>	
-		
+	
+	<bean id="customerManagerRole" class="com.laborguru.model.Profile">
+	  <description>Role for users that manages a Client</description>
+	  <property name="id" value="4"/>
+	</bean>
+
+	<bean id="regionalManagerRole" class="com.laborguru.model.Profile">
+	  <description>Role for users that manages a Region</description>
+	  <property name="id" value="5"/>
+	</bean>
+
+	<bean id="areaManagerRole" class="com.laborguru.model.Profile">
+	  <description>Role for users that manages an Area</description>
+	  <property name="id" value="6"/>
+	</bean>
+	
+
 </beans>

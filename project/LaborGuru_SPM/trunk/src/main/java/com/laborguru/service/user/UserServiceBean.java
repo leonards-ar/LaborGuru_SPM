@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.SpmCheckedException;
+import com.laborguru.model.Profile;
 import com.laborguru.model.User;
 import com.laborguru.model.filter.SearchUserFilter;
 import com.laborguru.service.user.dao.UserDao;
@@ -66,8 +67,8 @@ public class UserServiceBean implements UserService {
 		return userDao.getUserByUsername(userLoggingOn);
 	}
 	
-	public List<User> findAll(){
-		return userDao.findAll();
+	public List<User> findUsersByProfile(Profile profile){
+		return userDao.findUsersByProfile(profile);
 	}
 
 	

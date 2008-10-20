@@ -3,6 +3,7 @@ package com.laborguru.service.user;
 import java.util.List;
 
 import com.laborguru.exception.SpmCheckedException;
+import com.laborguru.model.Profile;
 import com.laborguru.model.User;
 import com.laborguru.model.filter.SearchUserFilter;
 import com.laborguru.service.Service;
@@ -35,7 +36,7 @@ public interface UserService extends Service {
 	 * Finds all the users that are not employee.
 	 * @return
 	 */
-	List<User> findAll();
+	List<User> findUsersByProfile(Profile profile);
 	
 	/**
 	 * Deletes a user.

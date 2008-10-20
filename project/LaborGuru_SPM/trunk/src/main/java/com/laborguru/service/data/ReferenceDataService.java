@@ -57,4 +57,27 @@ public interface ReferenceDataService extends Service {
 	 * @return
 	 */
 	Profile getEmployeeRole();
+	
+	/**
+	 * Retrieves the default administrator role id
+	 * @return
+	 */
+	Profile getAdministratorRole();
+	
+	/**
+	 * Retrieves the default Customer Manager role id
+	 * @return
+	 */
+	Profile getCustomerRole();
+	
+	/**
+	 * Retrieves the default Regional Manager role id
+	 * @return
+	 */
+	Profile getRegionalRole();
+	
+	/**
+	 * Retrieves the default Area Manager role id
+	 */
+	Profile getAreaRole();
 }

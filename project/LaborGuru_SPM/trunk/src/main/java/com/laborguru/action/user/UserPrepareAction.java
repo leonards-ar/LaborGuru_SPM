@@ -31,17 +31,17 @@ public class UserPrepareAction extends UserBaseAction implements Preparable{
 	}
 
 	protected List<User> getUserList(){
-		return getUserService().findAll();
+		return getUserService().findUsersByProfile(getReferenceDataService().getAdministratorRole());
 	}
 	
 	public String search() throws Exception {
+		getSearchUser().setProfile(getReferenceDataService().getAdministratorRole());
 		setUsers(getUserService().filterUser(getSearchUser()));
 		return SpmActionResult.LIST.getResult();
 	}
 	
 	protected void addUserProfile(){
-		Profile profile = getReferenceDataService().getEmployeeRole();
-		getUser().setProfile(profile);
+		getUser().setProfile(getReferenceDataService().getAdministratorRole());
 	}
 	
 	/**
