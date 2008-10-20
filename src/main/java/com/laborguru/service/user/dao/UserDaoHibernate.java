@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.laborguru.model.Profile;
 import com.laborguru.model.User;
 import com.laborguru.model.filter.SearchUserFilter;
 import com.laborguru.service.dao.hibernate.SpmHibernateDao;
@@ -85,10 +86,10 @@ public class UserDaoHibernate extends SpmHibernateDao implements UserDao {
 	/**
 	 * Finds all users that are not employee.
 	 * @return
-	 * @see com.laborguru.service.user.dao.UserDao#findAll()
+	 * @see com.laborguru.service.user.dao.UserDao#findAdminUsers()
 	 */
-	public List<User> findAll(){
-		return (List<User>)getHibernateTemplate().find("from User as user where not exists (from Employee as employee where employee.id = user.id)");
+	public List<User> findUsersByProfile(Profile profile){
+		return (List<User>)getHibernateTemplate().findByNamedParam("select u from User as u join u.profiles as profile where profile.id = :searchString", "searchString", profile.getId());
 	}
 
 	/**
@@ -101,12 +102,24 @@ public class UserDaoHibernate extends SpmHibernateDao implements UserDao {
 		
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append("from User as user where not exists(from Employee as employee where employee.id=user.id)");
+		
+		sb.append("select user from User as user ");
+		
+		if(includeInFilter(searchUserFilter.getProfile())) {
+			sb.append(" join user.profiles as profile where ");
+			sb.append(" user.profile.id=" + searchUserFilter.getProfile());
+		}
 		
 		if(includeInFilter(searchUserFilter.getFullName())) {
-			sb.append(" and (user.name like '%" + searchUserFilter.getFullName() + "%'");
+			if(sb.indexOf("where") >= 0) {
+				sb.append(" and (user.name like '%" + searchUserFilter.getFullName() + "%'");
+			} else {
+				sb.append(" where (user.name like '%" + searchUserFilter.getFullName() + "%'");
+			}
 			sb.append(" or user.surname like '%" + searchUserFilter.getFullName() + "%')");
 		}
+		
+		
 
 		if(log.isDebugEnabled()) {
 			log.debug(sb.toString());

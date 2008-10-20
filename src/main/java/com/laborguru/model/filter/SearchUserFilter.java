@@ -1,5 +1,7 @@
 package com.laborguru.model.filter;
 
+import com.laborguru.model.Profile;
+
 /**
  *
  * @author <a href="fbarreraoro@gmail.com">Federico Barrera Oro</a>
@@ -11,6 +13,7 @@ public class SearchUserFilter {
 
 	private Integer userId;
 	private String fullName;
+	private Profile profile;
 	
 	/**
 	 * @return the userId
@@ -38,6 +41,20 @@ public class SearchUserFilter {
 	 */
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
+	}
+
+	/**
+	 * @return the profile
+	 */
+	public Profile getProfile() {
+		return profile;
+	}
+
+	/**
+	 * @param profile the profile to set
+	 */
+	public void setProfile(Profile profile) {
+		this.profile = profile;
 	}
 
 }
