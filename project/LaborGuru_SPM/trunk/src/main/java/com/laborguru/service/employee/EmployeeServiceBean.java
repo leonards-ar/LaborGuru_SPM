@@ -6,6 +6,7 @@ import java.util.List;
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.logger.DefaultSpmLogger;
+import com.laborguru.model.Customer;
 import com.laborguru.model.Employee;
 import com.laborguru.model.Store;
 import com.laborguru.model.User;
@@ -163,5 +164,9 @@ public class EmployeeServiceBean implements EmployeeService {
 		List<Employee> employees = employeeDao.applyFilter(searchEmployee);
 
 		return employees;	
+	}
+	
+	public List<Employee> getEmployeeByCustomer(Customer customer){
+		return null;
 	}
 }

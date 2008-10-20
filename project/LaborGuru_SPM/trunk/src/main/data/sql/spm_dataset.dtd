@@ -3,6 +3,9 @@
     tbl_regions*,
     tbl_areas*,
     tbl_employees*,
+    tbl_customer_users*,
+    tbl_region_users*,
+    tbl_area_users*,
     tbl_permissions*,    
     tbl_menu_items*,
     tbl_operation_times*,
@@ -53,6 +56,23 @@
     wage CDATA #IMPLIED
 >
 
+<!ELEMENT tbl_customer_users EMPTY>
+<!ATTLIST tbl_customer_users
+    user_id CDATA #REQUIRED
+    customer_id CDATA #REQUIRED
+>
+
+<!ELEMENT tbl_region_users EMPTY>
+<!ATTLIST tbl_region_users
+    user_id CDATA #REQUIRED
+    region_id CDATA #REQUIRED
+>
+
+<!ELEMENT tbl_area_users EMPTY>
+<!ATTLIST tbl_area_users
+    user_id CDATA #REQUIRED
+    area_id CDATA #REQUIRED
+>
 <!ELEMENT tbl_menu_items EMPTY>
 <!ATTLIST tbl_menu_items
     menu_item_id CDATA #REQUIRED

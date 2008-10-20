@@ -34,8 +34,8 @@
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="user.status.label" /></td>
                     <td width="35%" align="left" class="value"><s:text name="%{statusMap[user.status.toString()]}"/></td>
-                    <td width="15%" align="right" class="form_label" nowrap><s:text name="user.profile.label" /></td>
-                    <td width="35%" align="left" class="value"><s:select name="user.profiles" list="user.profiles" listKey="id" listValue="name" multiple="true" disabled="true" theme="simple"/></td>
+                    <td width="15%" align="right" class="form_label" nowrap>&nbsp;</td>
+                    <td width="35%" align="left" class="value">&nbsp;</td>
                 </tr>
 
               	<tr class="editFormOddRow">
