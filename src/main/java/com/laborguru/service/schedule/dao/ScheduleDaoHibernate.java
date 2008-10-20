@@ -56,7 +56,7 @@ public class ScheduleDaoHibernate extends HibernateDaoSupport implements Schedul
 	 */
 	public StoreSchedule save(StoreSchedule schedule) {
 		if (schedule == null){
-			throw new IllegalArgumentException("the schedule passed as parameter is null");
+			throw new IllegalArgumentException("The schedule passed as parameter is null");
 		}
 		
 		getHibernateTemplate().saveOrUpdate(schedule);

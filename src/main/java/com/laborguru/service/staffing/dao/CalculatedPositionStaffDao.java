@@ -5,6 +5,11 @@
  */
 package com.laborguru.service.staffing.dao;
 
+import java.util.Date;
+
+import com.laborguru.model.DailyCalculatedPositionStaff;
+import com.laborguru.model.Position;
+
 /**
  *
  * @author <a href="mcapurro@gmail.com">Mariano Capurro</a>
@@ -14,4 +19,18 @@ package com.laborguru.service.staffing.dao;
  */
 public interface CalculatedPositionStaffDao {
 
+	/**
+	 * 
+	 * @param position
+	 * @param date
+	 * @return
+	 */
+	DailyCalculatedPositionStaff getDailyCalculatedPositionStaffingByDate(Position position, Date date);
+	
+	/**
+	 * 
+	 * @param dailyCalulatedPositionStaff
+	 * @return
+	 */
+	DailyCalculatedPositionStaff save(DailyCalculatedPositionStaff dailyCalulatedPositionStaff);	
 }
