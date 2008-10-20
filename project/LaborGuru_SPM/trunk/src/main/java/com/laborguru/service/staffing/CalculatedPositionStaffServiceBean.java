@@ -12,8 +12,7 @@ package com.laborguru.service.staffing;
  * @since SPM 1.0
  *
  */
-public class CalculatedPositionStaffServiceBean implements
-		CalculatedPositionStaffService {
+public class CalculatedPositionStaffServiceBean implements CalculatedPositionStaffService {
 
 	/**
 	 * 
