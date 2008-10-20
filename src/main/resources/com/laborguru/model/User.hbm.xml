@@ -50,6 +50,30 @@
         	<property name="employeeId" column="employee_id" type="string" length="50" />
         	<property name="wage" column="wage" type="double" />
     	</joined-subclass>
+    	
+    	<joined-subclass name="CustomerUser" table="tbl_customer_users">
+    	   	<key column="user_id" foreign-key="fk_users_customers"/>
+	    	
+	    	<many-to-one name="customer" class="Customer" foreign-key="fk_customers_users" lazy="false">
+				<column name="customer_id"/>
+			</many-to-one>
+    	</joined-subclass>
+
+    	<joined-subclass name="RegionalUser" table="tbl_region_users">
+    	   	<key column="user_id" foreign-key="fk_users_regions"/>
+	    	
+	    	<many-to-one name="region" class="Region" foreign-key="fk_regions_users" lazy="false">
+				<column name="region_id"/>
+			</many-to-one>
+    	</joined-subclass>
+    	
+    	<joined-subclass name="AreaUser" table="tbl_area_users">
+    	   	<key column="user_id" foreign-key="fk_users_areas"/>
+	    	
+	    	<many-to-one name="area" class="Area" foreign-key="fk_areas_users" lazy="false">
+				<column name="area_id"/>
+			</many-to-one>
+    	</joined-subclass>    	    	
     </class>
 	<database-object>
 		<create>ALTER TABLE tbl_users AUTO_INCREMENT=1000</create>
