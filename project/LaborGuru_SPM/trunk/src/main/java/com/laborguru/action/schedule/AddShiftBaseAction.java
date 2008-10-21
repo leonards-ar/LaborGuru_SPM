@@ -28,6 +28,7 @@ import com.laborguru.model.Shift;
 import com.laborguru.model.StoreSchedule;
 import com.laborguru.service.employee.EmployeeService;
 import com.laborguru.service.schedule.ScheduleService;
+import com.laborguru.service.staffing.StaffingService;
 import com.laborguru.util.CalendarUtils;
 import com.laborguru.util.SpmConstants;
 
@@ -51,6 +52,7 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	
 	private ScheduleService scheduleService;
 	private EmployeeService employeeService;
+	private StaffingService staffingService;
 	
 	public static final int MINUTES_INTERVAL = 15;
 	
@@ -459,6 +461,22 @@ public abstract class AddShiftBaseAction extends SpmAction {
 		}
 	}
 
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 */
+	protected List<Integer> buildMinimumStaffingFor(Position position) {
+		int size = getScheduleIndividualHours().size();
+		List<Integer> minimumStaffing = new ArrayList<Integer>(size);
+		
+		for(Date time : getScheduleIndividualHours()) {
+			//:TODO: position == null => all store positions getStaffingService().
+		}
+		
+		return minimumStaffing;
+	}
+	
 	/**
 	 * 
 	 * @param schedule
@@ -948,5 +966,19 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	 */
 	public void setEmployeeService(EmployeeService employeeService) {
 		this.employeeService = employeeService;
+	}
+
+	/**
+	 * @return the staffingService
+	 */
+	public StaffingService getStaffingService() {
+		return staffingService;
+	}
+
+	/**
+	 * @param staffingService the staffingService to set
+	 */
+	public void setStaffingService(StaffingService staffingService) {
+		this.staffingService = staffingService;
 	}
 }
