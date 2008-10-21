@@ -172,6 +172,25 @@ public class DailyStaffing extends SpmObject {
 	}
 	
 	/**
+	 * 
+	 * @param time
+	 * @return
+	 */
+	public int getHalfHourIndex(Date time) {
+		if(time != null) {
+			long t = time.getTime();
+			for(HalfHourStaffing staffing : getHalfHourStaffing()) {
+				if(t >= staffing.getTime().getTime()) {
+					return staffing.getIndex().intValue();
+				}
+			}
+			return -1;
+		} else {
+			return -1;
+		}
+	}
+	
+	/**
 	 * Adds a HalfHourStaffing. Handles the bi-directional
 	 * relation.
 	 * @param halfHourStaffing The HalfHourStaffing to add
@@ -182,12 +201,9 @@ public class DailyStaffing extends SpmObject {
 			throw new IllegalArgumentException("Null halfHourStaffing passed in as parameter");
 		}
 		
-		if (halfHourStaffing.getDailyStaffing() != null){
-			halfHourStaffing.getDailyStaffing().getHalfHourStaffing().remove(halfHourStaffing);
-		}
-		
 		halfHourStaffing.setDailyStaffing(this);
 		getHalfHourStaffing().add(halfHourStaffing);
+		halfHourStaffing.setIndex(getHalfHourStaffing().size() - 1);
 	}
 	
 	/**
@@ -206,5 +222,7 @@ public class DailyStaffing extends SpmObject {
 		if (halfHourStaffing.getDailyStaffing() != null){
 			halfHourStaffing.setDailyStaffing(null);
 		}
+		
+		// :TODO: Update indexes
 	}	
 }
