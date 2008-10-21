@@ -84,6 +84,16 @@ public class CalendarUtils {
 	
 	/**
 	 * 
+	 * @param d
+	 * @return
+	 */
+	public static boolean isWeekendDay(Date d) {
+		DayOfWeek dof = getDayOfWeek(d);
+		return dof != null ? dof.equals(DayOfWeek.SATURDAY) || dof.equals(DayOfWeek.SUNDAY): false;
+	}
+	
+	/**
+	 * 
 	 * @return
 	 */
 	public static Date todayWithoutTime() {

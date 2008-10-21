@@ -25,7 +25,7 @@ public class HalfHourStaffing extends SpmObject {
 	private static final long serialVersionUID = 5159771872374865468L;
 	
 	private Long id;
-	private Integer calculatedStaff;
+	private Integer calculatedStaff = new Integer(0);
 	private Integer index;
 	private DailyStaffing dailyStaffing;
 	private Date time;

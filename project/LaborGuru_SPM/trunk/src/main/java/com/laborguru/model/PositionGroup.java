@@ -1,7 +1,6 @@
 package com.laborguru.model;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -87,6 +86,10 @@ public class PositionGroup extends SpmObject implements ComparableObject {
 		this.positions = positions;
 	}
 	
+	/**
+	 * 
+	 * @param position
+	 */
 	public void addPosition(Position position){
 		
 		if (position == null){
@@ -101,6 +104,12 @@ public class PositionGroup extends SpmObject implements ComparableObject {
 		getPositions().add(position);
 	}
 
+	/**
+	 * 
+	 * @param obj
+	 * @return
+	 * @see com.laborguru.model.SpmObject#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if(obj == null) 

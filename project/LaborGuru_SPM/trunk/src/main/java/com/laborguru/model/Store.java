@@ -381,7 +381,7 @@ public class Store extends SpmObject {
 	 * @return
 	 */
 	public List<PositionGroup> getOrderedPositionGroups() {
-		List orderedPositionGroups = new ArrayList<PositionGroup>(getPositionGroups());
+		List<PositionGroup> orderedPositionGroups = new ArrayList<PositionGroup>(getPositionGroups());
 		Collections.sort(orderedPositionGroups, new SpmComparator());
 		return orderedPositionGroups;
 	}
@@ -523,4 +523,17 @@ public class Store extends SpmObject {
 		this.minimumFloorManagementHours = minimumFloorManagementHours;
 	}
 	
+	/**
+	 * 
+	 * @param time
+	 * @return
+	 */
+	public DayPart getDayPartFor(Date time) {
+		for(DayPart dayPart : getDayParts()) {
+			if(time.getTime() >= dayPart.getStartHour().getTime()) {
+				return dayPart;
+			}
+		}
+		return null;
+	}
 }
