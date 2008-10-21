@@ -189,17 +189,17 @@
 
  	<bean id="scheduleServiceTarget" class="com.laborguru.service.schedule.ScheduleServiceBean" autowire="byType"/>
  					
-	<bean id="calculatedPositionStaffServiceTarget" class="com.laborguru.service.staffing.CalculatedPositionStaffServiceBean" autowire="byType"/>
+	<bean id="staffingServiceTarget" class="com.laborguru.service.staffing.StaffingServiceBean" autowire="byType"/>
 
-	<bean id="calculatedPositionStaffService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+	<bean id="staffingService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		<property name="proxyInterfaces">
 			<list>
-				<value>com.laborguru.service.staffing.CalculatedPositionStaffService</value>
+				<value>com.laborguru.service.staffing.StaffingService</value>
 			</list>
 		</property>	
 	
 		<property name="target">
-			<ref bean="calculatedPositionStaffServiceTarget"/>
+			<ref bean="staffingServiceTarget"/>
 		</property>		
 		
 		<property name="transactionManager">
