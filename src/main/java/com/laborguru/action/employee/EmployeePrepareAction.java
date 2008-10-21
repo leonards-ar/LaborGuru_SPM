@@ -2,10 +2,8 @@ package com.laborguru.action.employee;
 
 import java.util.List;
 
-import com.laborguru.action.SpmActionResult;
 import com.laborguru.model.Employee;
 import com.laborguru.model.Profile;
-import com.laborguru.model.filter.SearchEmployeeFilter;
 
 /**
  * This action deals with Employee CRUD.
