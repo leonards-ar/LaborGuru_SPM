@@ -9,7 +9,6 @@ import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.Employee;
 import com.laborguru.model.Position;
 import com.laborguru.model.Profile;
-import com.laborguru.model.Store;
 import com.laborguru.model.filter.SearchEmployeeFilter;
 import com.laborguru.service.data.ReferenceDataService;
 import com.laborguru.service.employee.EmployeeService;
