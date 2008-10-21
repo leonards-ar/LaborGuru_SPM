@@ -1,5 +1,5 @@
 /*
- * File name: CalculatedPositionStaffDao.java
+ * File name: StaffingDao.java
  * Creation date: 19/10/2008 16:55:31
  * Copyright Mindpool
  */
@@ -7,7 +7,7 @@ package com.laborguru.service.staffing.dao;
 
 import java.util.Date;
 
-import com.laborguru.model.DailyCalculatedPositionStaff;
+import com.laborguru.model.DailyStaffing;
 import com.laborguru.model.Position;
 
 /**
@@ -17,7 +17,7 @@ import com.laborguru.model.Position;
  * @since SPM 1.0
  *
  */
-public interface CalculatedPositionStaffDao {
+public interface StaffingDao {
 
 	/**
 	 * 
@@ -25,12 +25,12 @@ public interface CalculatedPositionStaffDao {
 	 * @param date
 	 * @return
 	 */
-	DailyCalculatedPositionStaff getDailyCalculatedPositionStaffingByDate(Position position, Date date);
+	DailyStaffing getDailyStaffingByDate(Position position, Date date);
 	
 	/**
 	 * 
-	 * @param dailyCalulatedPositionStaff
+	 * @param dailyStaffing
 	 * @return
 	 */
-	DailyCalculatedPositionStaff save(DailyCalculatedPositionStaff dailyCalulatedPositionStaff);	
+	DailyStaffing save(DailyStaffing dailyStaffing);	
 }

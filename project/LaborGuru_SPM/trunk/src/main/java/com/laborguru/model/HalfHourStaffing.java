@@ -1,5 +1,5 @@
 /*
- * File name: HalfHourCalculatedPositionStaff.java
+ * File name: HalfHourStaffing.java
  * Creation date: 19/10/2008 15:50:50
  * Copyright Mindpool
  */
@@ -18,7 +18,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @since SPM 1.0
  *
  */
-public class HalfHourCalculatedPositionStaff extends SpmObject {
+public class HalfHourStaffing extends SpmObject {
 	/**
 	 * 
 	 */
@@ -27,13 +27,13 @@ public class HalfHourCalculatedPositionStaff extends SpmObject {
 	private Long id;
 	private Integer calculatedStaff;
 	private Integer index;
-	private DailyCalculatedPositionStaff dailyCalculatedPositionStaff;
+	private DailyStaffing dailyStaffing;
 	private Date time;
 	
 	/**
 	 * 
 	 */
-	public HalfHourCalculatedPositionStaff() {
+	public HalfHourStaffing() {
 	}
 
 	/**
@@ -52,11 +52,11 @@ public class HalfHourCalculatedPositionStaff extends SpmObject {
 		if (getClass() != obj.getClass())
 			return false;		
 
-		final HalfHourCalculatedPositionStaff other = (HalfHourCalculatedPositionStaff) obj;
+		final HalfHourStaffing other = (HalfHourStaffing) obj;
 		
 		return new EqualsBuilder()
 		.append(getIndex(), other.getIndex())
-		.append(getDailyCalculatedPositionStaff(), other.getDailyCalculatedPositionStaff())
+		.append(getDailyStaffing(), other.getDailyStaffing())
 		.isEquals();	
 	}
 
@@ -68,7 +68,7 @@ public class HalfHourCalculatedPositionStaff extends SpmObject {
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37)
 		.append(getIndex())
-		.append(getDailyCalculatedPositionStaff())
+		.append(getDailyStaffing())
 		.toHashCode();
 	}
 
@@ -128,18 +128,17 @@ public class HalfHourCalculatedPositionStaff extends SpmObject {
 	}
 
 	/**
-	 * @return the dailyCalculatedPositionStaff
+	 * @return the dailyStaffing
 	 */
-	public DailyCalculatedPositionStaff getDailyCalculatedPositionStaff() {
-		return dailyCalculatedPositionStaff;
+	public DailyStaffing getDailyStaffing() {
+		return dailyStaffing;
 	}
 
 	/**
-	 * @param dailyCalculatedPositionStaff the dailyCalculatedPositionStaff to set
+	 * @param dailyStaffing the dailyStaffing to set
 	 */
-	public void setDailyCalculatedPositionStaff(
-			DailyCalculatedPositionStaff dailyCalculatedPositionStaff) {
-		this.dailyCalculatedPositionStaff = dailyCalculatedPositionStaff;
+	public void setDailyStaffing(DailyStaffing dailyStaffing) {
+		this.dailyStaffing = dailyStaffing;
 	}
 
 	/**

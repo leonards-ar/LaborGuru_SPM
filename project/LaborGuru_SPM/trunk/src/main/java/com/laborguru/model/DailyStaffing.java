@@ -1,5 +1,5 @@
 /*
- * File name: DailyCalculatedPositionStaff.java
+ * File name: DailyStaffing.java
  * Creation date: 19/10/2008 15:46:47
  * Copyright Mindpool
  */
@@ -20,7 +20,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @since SPM 1.0
  *
  */
-public class DailyCalculatedPositionStaff extends SpmObject {
+public class DailyStaffing extends SpmObject {
 	/**
 	 * 
 	 */
@@ -31,13 +31,13 @@ public class DailyCalculatedPositionStaff extends SpmObject {
 	private Date startingTime;
 	
 	private Position position;
-	private List<HalfHourCalculatedPositionStaff> halfHourCalculatedPositionStaffing;
+	private List<HalfHourStaffing> halfHourStaffing;
 	
 	
 	/**
 	 * 
 	 */
-	public DailyCalculatedPositionStaff() {
+	public DailyStaffing() {
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class DailyCalculatedPositionStaff extends SpmObject {
 		if (getClass() != obj.getClass())
 			return false;		
 
-		DailyCalculatedPositionStaff other = (DailyCalculatedPositionStaff) obj;
+		DailyStaffing other = (DailyStaffing) obj;
 		
 		return new EqualsBuilder()
 		.append(getDate(), other.getDate())
@@ -147,20 +147,20 @@ public class DailyCalculatedPositionStaff extends SpmObject {
 	}
 
 	/**
-	 * @return the halfHourCalculatedPositionStaffing
+	 * @return the halfHourStaffing
 	 */
-	public List<HalfHourCalculatedPositionStaff> getHalfHourCalculatedPositionStaffing() {
-		if(halfHourCalculatedPositionStaffing == null) {
-			halfHourCalculatedPositionStaffing = new ArrayList<HalfHourCalculatedPositionStaff>();
+	public List<HalfHourStaffing> getHalfHourStaffing() {
+		if(halfHourStaffing == null) {
+			halfHourStaffing = new ArrayList<HalfHourStaffing>();
 		}
-		return halfHourCalculatedPositionStaffing;
+		return halfHourStaffing;
 	}
 
 	/**
-	 * @param halfHourCalculatedPositionStaffing the halfHourCalculatedPositionStaffing to set
+	 * @param halfHourStaffing the halfHourStaffing to set
 	 */
-	public void setHalfHourCalculatedPositionStaffing(List<HalfHourCalculatedPositionStaff> halfHourCalculatedPositionStaffing) {
-		this.halfHourCalculatedPositionStaffing = halfHourCalculatedPositionStaffing;
+	public void setHalfHourStaffing(List<HalfHourStaffing> halfHourStaffing) {
+		this.halfHourStaffing = halfHourStaffing;
 	}
 
 	/**
@@ -172,39 +172,39 @@ public class DailyCalculatedPositionStaff extends SpmObject {
 	}
 	
 	/**
-	 * Adds a HalfHourCalculatedPositionStaff. Handles the bi-directional
+	 * Adds a HalfHourStaffing. Handles the bi-directional
 	 * relation.
-	 * @param halfHourCalculatedPositionStaff The HalfHourCalculatedPositionStaff to add
+	 * @param halfHourStaffing The HalfHourStaffing to add
 	 */
-	public void addHalfHourProjection(HalfHourCalculatedPositionStaff halfHourCalculatedPositionStaff){
+	public void addHalfHourProjection(HalfHourStaffing halfHourStaffing){
 		
-		if (halfHourCalculatedPositionStaff == null){
-			throw new IllegalArgumentException("Null halfHourCalculatedPositionStaff passed in as parameter");
+		if (halfHourStaffing == null){
+			throw new IllegalArgumentException("Null halfHourStaffing passed in as parameter");
 		}
 		
-		if (halfHourCalculatedPositionStaff.getDailyCalculatedPositionStaff() != null){
-			halfHourCalculatedPositionStaff.getDailyCalculatedPositionStaff().getHalfHourCalculatedPositionStaffing().remove(halfHourCalculatedPositionStaff);
+		if (halfHourStaffing.getDailyStaffing() != null){
+			halfHourStaffing.getDailyStaffing().getHalfHourStaffing().remove(halfHourStaffing);
 		}
 		
-		halfHourCalculatedPositionStaff.setDailyCalculatedPositionStaff(this);
-		getHalfHourCalculatedPositionStaffing().add(halfHourCalculatedPositionStaff);
+		halfHourStaffing.setDailyStaffing(this);
+		getHalfHourStaffing().add(halfHourStaffing);
 	}
 	
 	/**
 	 * Removes halfHourCalculatedPositionStaff from the HalfHourCalculatedPositionStaffing list. Handles the bi-directional
 	 * relation.
-	 * @param halfHourCalculatedPositionStaff The halfHourCalculatedPositionStaff to remove
+	 * @param halfHourStaffing The halfHourCalculatedPositionStaff to remove
 	 */
-	public void removeHalfHourProjection(HalfHourCalculatedPositionStaff halfHourCalculatedPositionStaff){
+	public void removeHalfHourProjection(HalfHourStaffing halfHourStaffing){
 		
-		if (halfHourCalculatedPositionStaff == null){
-			throw new IllegalArgumentException("Null halfHourCalculatedPositionStaff passed in as parameter");
+		if (halfHourStaffing == null){
+			throw new IllegalArgumentException("Null halfHourStaffing passed in as parameter");
 		}
 				
-		getHalfHourCalculatedPositionStaffing().remove(halfHourCalculatedPositionStaff);
+		getHalfHourStaffing().remove(halfHourStaffing);
 		
-		if (halfHourCalculatedPositionStaff.getDailyCalculatedPositionStaff() != null){
-			halfHourCalculatedPositionStaff.setDailyCalculatedPositionStaff(null);
+		if (halfHourStaffing.getDailyStaffing() != null){
+			halfHourStaffing.setDailyStaffing(null);
 		}
 	}	
 }
