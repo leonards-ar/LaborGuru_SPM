@@ -27,6 +27,8 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	private static final Logger log = Logger.getLogger(AddShiftByEmployeeByDayPrepareAction.class);
 	
 	private List<ScheduleRow> scheduleData;
+	private List<Integer> minimumStaffing;
+	
 	private Position position;
 	
 	private List<Position> positions;
@@ -147,7 +149,11 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	private void setScheduleData() {
 		if(scheduleData == null || scheduleData.isEmpty()) {
 			setScheduleData(buildScheduleFor(getPosition()));
-		}		
+		}
+		
+		if(minimumStaffing == null || minimumStaffing.isEmpty()) {
+			setMinimumStaffing(buildMinimumStaffingFor(getPosition()));
+		}
 	}
 	
 	/**
@@ -379,6 +385,23 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	@Override
 	public void validate() {
 		validateSchedule(getScheduleData());
+	}
+
+	/**
+	 * @return the minimumStaffing
+	 */
+	public List<Integer> getMinimumStaffing() {
+		if(minimumStaffing == null) {
+			setMinimumStaffing(new ArrayList<Integer>());
+		}		
+		return minimumStaffing;
+	}
+
+	/**
+	 * @param minimumStaffing the minimumStaffing to set
+	 */
+	public void setMinimumStaffing(List<Integer> minimumStaffing) {
+		this.minimumStaffing = minimumStaffing;
 	}	
 	
 	
