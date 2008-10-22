@@ -161,5 +161,31 @@ public class CalendarUtils {
 	 */
 	public static String dateToString(Date time, String format) {
 			return new SimpleDateFormat(format).format(time);
-	}	
+	}
+	
+	/**
+	 * This method returns a Calendar that represents this week's weekday taking as example the date's weekday passed as parameter.
+	 * For example: If we passed Monday 20/10/2008 as parameter, the method returns this week monday.
+	 * 
+	 * @param auxSelectedDate
+	 * @return
+	 */
+	public static Calendar getDayOfThisWeek(Date auxSelectedDate) {
+		DayOfWeek dayOfWeekCalculatedDay = CalendarUtils.getDayOfWeek(auxSelectedDate);
+
+		Date today = CalendarUtils.todayWithoutTime();;
+		DayOfWeek dayOfWeek = CalendarUtils.getDayOfWeek(today);
+		
+		Calendar day = CalendarUtils.getCalendar(today);
+		int daysTosubstract = 0;
+					
+		if (dayOfWeek.ordinal() < dayOfWeekCalculatedDay.ordinal()){
+			daysTosubstract = 7 - (dayOfWeekCalculatedDay.ordinal() - dayOfWeek.ordinal());
+		} else if (dayOfWeek.ordinal() > dayOfWeekCalculatedDay.ordinal()){
+			daysTosubstract = dayOfWeek.ordinal() - dayOfWeekCalculatedDay.ordinal();
+		} 			
+			
+		day.add(Calendar.DAY_OF_MONTH, -1 * daysTosubstract);
+		return day;
+	}
 }

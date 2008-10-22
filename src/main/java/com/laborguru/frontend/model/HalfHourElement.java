@@ -25,7 +25,6 @@ public class HalfHourElement implements Serializable {
 		
 	}
 	
-	
 	/**
 	 * @return the hour
 	 */

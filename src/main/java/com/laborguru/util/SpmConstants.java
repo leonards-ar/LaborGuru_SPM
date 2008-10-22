@@ -1,5 +1,6 @@
 package com.laborguru.util;
 
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -23,4 +24,5 @@ public class SpmConstants {
 	public static final int DECIMAL_SCALE = 16;
 	public static final RoundingMode ROUNDING_MODE = RoundingMode.HALF_EVEN;
 	public static final int DAILY_PROJECTION_PERIOD_DAYS = 7;
+	public static final BigDecimal BD_ZERO_VALUE = new BigDecimal(INIT_VALUE_ZERO);
 }

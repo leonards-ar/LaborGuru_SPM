@@ -13,6 +13,7 @@
 		<action name="dailySave" class="com.laborguru.action.projection.DailyProjectionsSaveAction">
 			<result name="input" type="tiles">editDailyPage</result>			
 			<result name="success" type="tiles">editDailyPage</result>				
+			<interceptor-ref name="spmStackWithoutConversionError"/>
 		</action>
 				
 		<action name="halfhour_*" method="{1}" class="com.laborguru.action.projection.HalfHourProjectionsPrepareAction">
