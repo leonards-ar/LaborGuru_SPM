@@ -1647,6 +1647,13 @@
 <variant type-name-pattern="INT ZEROFILL"/>
 </data-type>
 </column>
+<column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="false" name="time" remarks="" uid="10e18c:11d1566d0b4:-7fe1">
+<column-description></column-description>
+<data-type jdbc-type="93" literal-prefix="'" literal-suffix="'" name="TIMESTAMP" selected-variant-pattern="TIMESTAMP">
+<variant type-name-pattern="TIMESTAMP"/>
+<variant precision-max="14" precision-min="0" precision-variable="%n" type-name-pattern="TIMESTAMP(%n)"/>
+</data-type>
+</column>
 </column-list>
 <primary-key alias="" name="PK_TBL_HALFHOUR_PROJECTIONS" remarks="" uid="cb5cd6:11b99e89965:-7f58">
 <primary-key-description></primary-key-description>

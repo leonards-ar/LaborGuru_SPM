@@ -32,7 +32,7 @@ public class SpmBigDecimalConverter extends StrutsTypeConverter {
 		String value = values[0];
 		
 		if (value == null || "".equals(value.trim())){
-			return null;
+			return value;
 		}
 					
 		try {

@@ -259,5 +259,4 @@ public class ProjectionServiceBean implements ProjectionService {
 		this.projectionDao = projectionDao;
 	}
 	
-	
 }

@@ -4,7 +4,7 @@
   <field name="dailyProjections">
        <field-validator type="visitor">
           <param name="context">save</param>                      
-          <message>Adjusted Value: </message>
+          <message></message>
       </field-validator>       
   </field> 
 </validators> 

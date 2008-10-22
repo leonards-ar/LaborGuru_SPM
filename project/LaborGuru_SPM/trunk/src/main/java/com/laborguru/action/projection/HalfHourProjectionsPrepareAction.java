@@ -11,8 +11,8 @@ import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.ErrorMessage;
 import com.laborguru.frontend.model.HalfHourElement;
 import com.laborguru.model.DailyProjection;
-import com.laborguru.model.DayOfWeek;
 import com.laborguru.model.HalfHourProjection;
+import com.laborguru.model.OperationTime;
 import com.laborguru.util.CalendarUtils;
 import com.laborguru.util.SpmConstants;
 import com.opensymphony.xwork2.Preparable;
@@ -34,8 +34,44 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	private BigDecimal totalRevisedValues = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
 
 	private Boolean projectionError = false;
+	private OperationTime storeOperationTime;
 	
-
+	/**
+	 * Returns whether the page is editable
+	 * @return
+	 */
+	public boolean isEditable(){
+		return ((!getWeekDaySelector().isSelectedDateBeforeToday()) && (getTotalProjectedValues().doubleValue() > 0.00));
+	}
+	
+	/**
+	 * Returns the operation times for this store
+	 * @return
+	 */
+	public OperationTime getStoreOperationTime() {
+		if (this.storeOperationTime == null){
+			this.storeOperationTime = super.getEmployeeStore().getOperationTime(getWeekDaySelector().getSelectedDayOfWeek());
+		}
+		return this.storeOperationTime;
+	}
+	
+	
+	/**
+	 * Returns whether the halfhour should be showed.
+	 * @param halfHour
+	 * @return
+	 */
+	public boolean isHalfHourVisible(HalfHourElement halfHour){
+		Date time = CalendarUtils.displayTimeToDate(halfHour.getHour());
+		OperationTime auxOperationTime = getStoreOperationTime();
+		
+		if (time.before(auxOperationTime.getOpenHour()) || time.after(auxOperationTime.getCloseHour())){
+			return (halfHour.getProjectedValue().doubleValue() > 0.00);
+		}
+		
+		return true;
+	}
+	
 	/**
 	 * Prepare the data to be used on the edit page
 	 * 
@@ -174,30 +210,15 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	private void getNewValues(){
 		
 		//Setting the date for the calculation
-		//TODO: Put this in an auxiliary method URGENT!!!
 		Date auxSelectedDate = getWeekDaySelector().getSelectedDay();
-		DayOfWeek dayOfWeekCalculatedDay = CalendarUtils.getDayOfWeek(auxSelectedDate);
-
-		Date today = CalendarUtils.todayWithoutTime();;
-		DayOfWeek dayOfWeek = CalendarUtils.getDayOfWeek(today);
 		
-		Calendar day = CalendarUtils.getCalendar(today);
-		int daysTosubstract = 0;
-					
-		if (dayOfWeek.ordinal() < dayOfWeekCalculatedDay.ordinal()){
-			daysTosubstract = 7 - (dayOfWeekCalculatedDay.ordinal() - dayOfWeek.ordinal());
-		} else if (dayOfWeek.ordinal() > dayOfWeekCalculatedDay.ordinal()){
-			daysTosubstract = dayOfWeek.ordinal() - dayOfWeekCalculatedDay.ordinal();
-		} 			
-			
-		day.add(Calendar.DAY_OF_MONTH, -1 * daysTosubstract);
-		//TODO: END OF todo
+		Calendar day = CalendarUtils.getDayOfThisWeek(auxSelectedDate);
 		
 		Date calculatedDate = CalendarUtils.addOrSubstractDays(day.getTime(), -7);		
 		
 		BigDecimal auxTotal = getTotalProjectedValues();
 		
-		if (getTotalProjectedValues().equals(BigDecimal.ZERO)){
+		if (getTotalProjectedValues().equals(SpmConstants.BD_ZERO_VALUE)){
 			DailyProjection dailyProjection = getProjectionService().getDailyProjection(getEmployeeStore(), getWeekDaySelector().getSelectedDay());
 			auxTotal = dailyProjection.getDailyProjectionValue();
 		}
@@ -205,11 +226,21 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 		List<HalfHourProjection> projections = getProjectionService().calculateDailyHalfHourProjection(getEmployeeStore(), auxTotal, calculatedDate, getUsedWeeks());
 		BigDecimal totalProjections = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
 
-		//set new values;
+		//Get the new total;
 		for(int i=0; i < getProjectionElements().size(); i++) {
-			getProjectionElements().get(i).setProjectedValue(projections.get(i).getAdjustedValue());
 			totalProjections = totalProjections.add(projections.get(i).getAdjustedValue());
 		}
+		
+		//If the new total is zero we show an error page
+		if (totalProjections.equals(SpmConstants.BD_ZERO_VALUE)){
+			addActionError(new ErrorMessage(ErrorEnum.NO_PROJECTION_VALUES_FOR_SELECTED_WEEKS.name()));
+			return;
+		}
+		
+		//setting new values;
+		for(int i=0; i < getProjectionElements().size(); i++) {
+			getProjectionElements().get(i).setProjectedValue(projections.get(i).getAdjustedValue());
+		}		
 		
 		setTotalProjectedValues(totalProjections);
 		
@@ -285,7 +316,7 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 		percentageNotChangedHours = percentageNotChangedHours.divide(totalProjections, SpmConstants.DECIMAL_SCALE, SpmConstants.ROUNDING_MODE);
 		
 		//Calculating revised projection value
-		if (!percentageNotChangedHours.equals(BigDecimal.ZERO)){
+		if (!percentageNotChangedHours.equals(SpmConstants.BD_ZERO_VALUE)){
 			for (HalfHourElement element : getProjectionElements()) {
 				getProjectionService().calculateRevisedValue(element, totalAdjusted, totalProjections, percentageNotChangedHours);
 				totalRevised = totalRevised.add(element.getRevisedValue());

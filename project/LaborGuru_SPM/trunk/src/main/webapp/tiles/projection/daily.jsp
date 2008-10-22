@@ -104,11 +104,11 @@
 										<td class="editorTableFirstColumn"><s:text name="projection.daily.projection.label"/></td>
 										<!-- Iterate week days -->
 										<s:iterator value="dailyProjections" status="itProjection">
-											<s:text name="currency" id="calculatedValue">
+									<!-- 		<s:text name="currency" id="calcProjectionValue">
 												<s:param name="value" value="%{calculatedProjection}"/>
-											</s:text>
-											<s:hidden name="dailyProjections[%{#itProjection.index}].calculatedProjection" value="%{#calculatedValue}"/>
-											<td class="editorTableOddRow"><s:text name="currency"><s:param value="calculatedProjection"/></s:text></td>
+											</s:text>  -->
+											<s:hidden name="dailyProjections[%{#itProjection.index}].calculatedProjection" value="%{calculatedProjection}"/>
+											<td class="editorTableOddRow"><s:property value="calculatedProjection"/></td>
 										</s:iterator>
 										<!-- End Iterate week days -->
 										<s:hidden name="totalProjected" theme="simple"/>
@@ -118,16 +118,16 @@
 										<td class="editorTableFirstColumn"><s:text name="projection.daily.adjusted.label" /></td>
 										<s:iterator id="dailyProjection" value="dailyProjections" status="itProjection">
 											<s:hidden name="dailyProjections[%{#itProjection.index}].projectionDate" theme="simple"/>
-											<s:text name="currency" id="adjustedValue">
+									 <!--  		<s:text name="currency" id="adjProjectionValue">
 												<s:param name="value" value="%{adjustedProjection}"/>
-											</s:text>
+											</s:text>  -->
 											<td class="editorTableEvenRow">
 												<s:if test="%{#dailyProjection.editable}">
-													<s:textfield name="dailyProjections[%{#itProjection.index}].adjustedProjection" value="%{#adjustedValue}" size="7" maxlength="15" theme="simple" cssStyle="text-align: center;" /></td>
+													<s:textfield name="dailyProjections[%{#itProjection.index}].adjustedProjection" value="%{adjustedProjection}" size="7" maxlength="15" theme="simple" cssStyle="text-align: center;" /></td>
 												</s:if>
 												<s:else>
-													<s:text name="currency"><s:param value="adjustedProjection"/></s:text>
-													<s:hidden name="dailyProjections[%{#itProjection.index}].adjustedProjection" value="%{#adjustedValue}" theme="simple"/>
+													<s:property value="adjustedProjection"/>
+													<s:hidden name="dailyProjections[%{#itProjection.index}].adjustedProjection" value="%{adjustedProjection}" theme="simple"/>
 												</s:else>										
 										</s:iterator>
 										<s:hidden name="totalAdjusted" theme="simple"/>

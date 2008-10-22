@@ -111,7 +111,7 @@
 		              	<tr class="editFormEvenRow">
 		                    <td width="15%" align="right" class="form_label" nowrap="nowrap"><s:text name="projection.halfhour.weeksused.label" /></td>
 		                    <td width="25%" align="left" class="value">						
-								<s:select name="usedWeeks" list="usedWeeksMap" listKey="key" listValue="%{getText(value)}" theme="simple" disabled="%{weekDaySelector.isSelectedDateBeforeToday()}" onchange="halfhour_form.action='halfhour_reviseUsedWeeks.action';halfhour_form.submit();" />
+								<s:select name="usedWeeks" list="usedWeeksMap" listKey="key" listValue="%{getText(value)}" theme="simple" disabled="%{!isEditable()}" onchange="halfhour_form.action='halfhour_reviseUsedWeeks.action';halfhour_form.submit();" />
 							</td>
 							<td width="60%" align="left"><s:text name='projection.weekdayselector.selectedday.dateformat.long'><s:param value="weekDaySelector.selectedDay"/></s:text></td>
 		                </tr>
@@ -141,35 +141,44 @@
 													<s:hidden name="totalRevisedValues"/>
 												</tr>
 												<!-- Iterate for each half hour from open to close hour -->
+												<s:iterator id="halfhourElement" value="projectionElements" status="itHalfHourProjection">
 												<s:if test="%{!weekDaySelector.isSelectedDateBeforeToday()}">
-													<s:iterator id="halfhourElement" value="projectionElements" status="itHalfHourProjection">
-													<tr>
-														<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].id"/>
-														<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].hour"/>
-	  												    <td class="editorTableFirstColumn"><s:property value="hour"/></td>
-														<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].projectedValue"/>
-														<td class="editorTableEvenRow"><s:text name="currency"><s:param value="projectedValue" /></s:text></td>
-														<td class="editorTableEvenRow"><s:textfield name="projectionElements[%{#itHalfHourProjection.index}].adjustedValue" size="10" theme="simple" /></td>
-														<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].revisedValue"/>
-														<td class="editorTableEvenRow"><s:text name="currency"><s:param value="revisedValue"/></s:text></td>
-													</tr>
-													</s:iterator>
+													<s:if test="%{isHalfHourVisible(#halfhourElement)}">
+														<tr>
+															<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].id"/>
+															<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].hour"/>
+		  												    <td class="editorTableFirstColumn"><s:property value="hour"/></td>
+															<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].projectedValue"/>
+															<td class="editorTableEvenRow"><s:text name="currency"><s:param value="projectedValue" /></s:text></td>
+															<td class="editorTableEvenRow"><s:textfield name="projectionElements[%{#itHalfHourProjection.index}].adjustedValue" size="10" theme="simple" /></td>
+															<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].revisedValue"/>
+															<td class="editorTableEvenRow"><s:text name="currency"><s:param value="revisedValue"/></s:text></td>
+														</tr>
+													</s:if>
+													<s:else>
+															<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].id"/>
+															<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].hour"/>
+															<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].projectedValue"/>
+															<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].adjustedValue"/>
+															<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].revisedValue"/>
+													</s:else>
 												</s:if>
 												<s:else>
-													<s:iterator id="halfhourElement" value="projectionElements" status="itHalfHourProjection">
-													<tr>
-	  												    <td class="editorTableFirstColumn"><s:property value="hour"/></td>
-														<td class="editorTableEvenRow"><s:text name="currency"><s:param value="projectedValue" /></s:text></td>
-														<td class="editorTableEvenRow"><s:textfield size="10" theme="simple"/></td>
-														<td class="editorTableEvenRow"><s:text name="currency"><s:param value="revisedValue"/></s:text></td>
-													</tr>
-													</s:iterator>
-												</s:else>												
+													<s:if test="%{isHalfHourVisible(halfhourElement)}">
+														<tr>
+		  												    <td class="editorTableFirstColumn"><s:property value="hour"/></td>
+															<td class="editorTableEvenRow"><s:text name="currency"><s:param value="projectedValue" /></s:text></td>
+															<td class="editorTableEvenRow">&nbsp;</td>
+															<td class="editorTableEvenRow"><s:text name="currency"><s:param value="revisedValue"/></s:text></td>
+														</tr>
+													</s:if>
+												</s:else>
+												</s:iterator>												
 												<!-- End Iterate for each half hour from open to close hour -->							
 											</table>                    			
 			                    			<!-- End Half Hour Projection -->
                     					</td>
-										<s:if test="%{!weekDaySelector.isSelectedDateBeforeToday()}">
+										<s:if test="%{isEditable() && !hasErrors()}">
 	                    					<td valign="top">
 				                    			<!-- Action buttons -->
 				                    			<br/>
