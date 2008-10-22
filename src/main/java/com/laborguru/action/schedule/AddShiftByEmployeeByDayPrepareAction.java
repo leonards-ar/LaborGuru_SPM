@@ -66,6 +66,19 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	}
 	
 	/**
+	 * 
+	 */
+	public Integer getTotalStaffing() {
+		int total = 0;
+		
+		for(Integer i : getMinimumStaffing()) {
+			total += i != null ? i.intValue() : 0;
+		}
+		
+		return new Integer(total);
+	}
+	
+	/**
 	 * Prepare data to be used in the actions methods defined for this action
 	 * 
 	 * @throws Exception

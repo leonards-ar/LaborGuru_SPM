@@ -56,6 +56,74 @@ Break: #FDDB80
 	font-weight: bold;
 }
 
+.scheduleStaffingNameCell {
+	border: 1px solid #184E01;
+	background-color: #FFFFFF;
+	color: #184E01;
+	font-size: 12px;
+	text-align: right;
+	font-family: tahoma, arial, sans-serif;	
+}
+
+.scheduleStaffingValueCell {
+	border: 1px solid #184E01;
+	background-color: #DEEFDC;
+	color: #184E01;
+	font-size: 12px;
+	text-align: center;
+	font-family: tahoma, arial, sans-serif;
+}
+
+.scheduleTotalValueCell {
+	border: 1px solid #184E01;
+	background-color: #FFFFFF;
+	color: #184E01;
+	font-size: 12px;
+	text-align: center;
+	font-family: tahoma, arial, sans-serif;	
+}
+
+.scheduleStaffingUnavailable {
+	background-color: #CACACA;
+	border: 1px solid #184E01;
+	width: 5px;	
+}
+
+.scheduleStaffingCalculated {
+	background-color: #FFFFF;
+	border: 1px solid #184E01;
+	width: 5px;
+	color: #184E01;
+	font-size: 12px;
+	text-align: center;	
+}
+
+.scheduleStaffingDifferenceNegative {
+	background-color: #FFF337;
+	border: 1px solid #184E01;
+	width: 5px;
+	color: #FF1717;
+	font-size: 12px;
+	text-align: center;		
+}
+
+.scheduleStaffingDifferencePositive {
+	background-color: #F4D819;
+	border: 1px solid #184E01;
+	width: 5px;
+	color: #184E01;
+	font-size: 12px;
+	text-align: center;		
+}
+
+.scheduleStaffingDifferenceEqual {
+	background-color: #FFFFF;
+	border: 1px solid #184E01;
+	width: 5px;
+	color: #184E01;
+	font-size: 12px;
+	text-align: center;	
+}
 
 td.scheduleStartSelection {
 	background-color: #63B177;

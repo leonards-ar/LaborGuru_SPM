@@ -20,11 +20,13 @@ import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.ScheduleHourLabelElement;
 import com.laborguru.frontend.model.ScheduleRow;
 import com.laborguru.frontend.model.WeekDaySelector;
+import com.laborguru.model.DailyStaffing;
 import com.laborguru.model.Employee;
 import com.laborguru.model.EmployeeSchedule;
 import com.laborguru.model.OperationTime;
 import com.laborguru.model.Position;
 import com.laborguru.model.Shift;
+import com.laborguru.model.StoreDailyStaffing;
 import com.laborguru.model.StoreSchedule;
 import com.laborguru.service.employee.EmployeeService;
 import com.laborguru.service.schedule.ScheduleService;
@@ -469,9 +471,19 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	protected List<Integer> buildMinimumStaffingFor(Position position) {
 		int size = getScheduleIndividualHours().size();
 		List<Integer> minimumStaffing = new ArrayList<Integer>(size);
-		
-		for(Date time : getScheduleIndividualHours()) {
-			//:TODO: position == null => all store positions getStaffingService().
+
+		// :TODO: Improve performance. This will call getHalfHourStaffing every 15 minutes (2 times)
+		// This should be calculated only once
+		if(position == null) {
+			StoreDailyStaffing dailyStaffing = getStaffingService().getDailyStaffingByDate(getEmployeeStore(), getWeekDaySelector().getSelectedDay());
+			for(Date time : getScheduleIndividualHours()) {
+				minimumStaffing.add(new Integer(dailyStaffing.getHalfHourStaffing(time)));
+			}			
+		} else {
+			DailyStaffing dailyStaffing = getStaffingService().getDailyStaffingByDate(position, getWeekDaySelector().getSelectedDay());
+			for(Date time : getScheduleIndividualHours()) {
+				minimumStaffing.add(new Integer(dailyStaffing.getHalfHourStaffing(time)));
+			}			
 		}
 		
 		return minimumStaffing;
