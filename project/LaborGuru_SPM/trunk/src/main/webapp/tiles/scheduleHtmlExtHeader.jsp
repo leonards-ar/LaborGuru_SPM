@@ -217,7 +217,7 @@ function integerDivision(numerator, denominator) {
 
 
 function timeInMinutes(time) {
-	if(time != null && time != '') {
+	if(time != null && time != '' && n != '-') {
 		return parseInt(getHours(time)) * 60 + parseInt(getMinutes(time));
 	} else {
 		return 0;
@@ -234,7 +234,7 @@ function minutesToTime(minutes) {
 function formatTimeNumber(n) {
 	n = '' + n;
 	
-	if(n == null || n == '') {
+	if(n == null || n == '' || n == '-') {
 		return '00';
 	}
 	
@@ -246,9 +246,27 @@ function formatTimeNumber(n) {
 }
 
 function refreshRows(scheduleId) {
+	setTotalHours(scheduleId, 0);
 	for(var i=0; i < TOTAL_ROWS; i++) {
 		refreshRow(i, scheduleId);
 	}
+	refreshStaffing(scheduleId);
+}
+
+function setTotalHours(scheduleId, totalHours) {
+	var totalHoursObj = getObjectByID(scheduleId + 'total_cell');
+	if(totalHoursObj) {
+		totalHoursObj.innerHTML = minutesToTime(totalHours);
+	}
+}
+
+function updateTotalHours(scheduleId, oldTotalRowHours, newTotalRowHours) {
+	var totalHoursObj = getObjectByID(scheduleId + 'total_cell');
+	var currentTotal = 0;
+	if(totalHoursObj) {
+		currentTotal = timeInMinutes(totalHoursObj.innerHTML);
+	}
+	totalHoursObj.innerHTML = minutesToTime(currentTotal - oldTotalRowHours + newTotalRowHours);
 }
 
 function getPositionId(rowNum, scheduleId) {
@@ -260,10 +278,50 @@ function getPositionId(rowNum, scheduleId) {
 	return positionId;
 }
 
+function refreshStaffing(scheduleId) {
+	var rowTotal;
+	
+	for(var j=0; j < TOTAL_COLS; j++) {
+		rowTotal = 0;
+		for(var i=0; i < TOTAL_ROWS; i++) {
+			var inputObj = getObjectByID(scheduleId + 'schedule_' + i + '_' + j);
+			if(inputObj) {
+				value = inputObj.value;
+				if(value != null && value != '' && value != BREAK) {
+					rowTotal += 1;
+				}
+			}			
+		}
+		var totalObj = getObjectByID(scheduleId + 'total_cell_' + j);
+		if(totalObj) {
+			totalObj.innerHTML = rowTotal;
+		}
+		var minimunStaffingObj = getObjectByID(scheduleId + 'staffing_div_' + j);
+		var minimunStaffing = 0;
+		if(minimunStaffingObj) {
+			minimunStaffing = minimunStaffingObj.innerHTML;
+		}
+		
+		var diffObj = getObjectByID(scheduleId + 'difference_cell_' + j);
+		var difference = rowTotal - minimunStaffing;
+		if(diffObj) {
+			diffObj.innerHTML = difference;
+			if(difference == 0) {
+				diffObj.className = 'scheduleStaffingDifferenceEqual';
+			} else if(difference < 0) {
+				diffObj.className = 'scheduleStaffingDifferenceNegative';
+			} else {
+				diffObj.className = 'scheduleStaffingDifferencePositive';
+			}
+		}
+	}
+}
+
 function refreshRow(rowNum, scheduleId) {
 	var inHour = null;
 	var outHour = null;
 	var totalHours = 0;
+	var newTotalRowHours = 0;
 	
 	for(var i=0; i < TOTAL_COLS; i++) {
 		var inputObj = getObjectByID(scheduleId + 'schedule_' + rowNum + '_' + i);
@@ -293,7 +351,8 @@ function refreshRow(rowNum, scheduleId) {
 			totalHours += 15;
 		}
 	}
-
+	newTotalRowHours = totalHours;
+	
 	if(totalHours > 0) {
 		totalHours = minutesToTime(totalHours);
 	} else {
@@ -331,15 +390,24 @@ function refreshRow(rowNum, scheduleId) {
 	var o5 = getObjectByID(scheduleId + 'outHour_' + rowNum);
 	var o6 = getObjectByID(scheduleId + 'totalHours_' + rowNum);
 	
+	
 	if(o4) {
 		o4.innerHTML = inHour;
 	}
 	if(o5) {
 		o5.innerHTML = outHour;
 	}
+	
+	var oldTotalRowHours = '';
+
 	if(o6) {
+		oldTotalRowHours = o6.innerHTML;
 		o6.innerHTML = totalHours;
 	}		
+	
+	updateTotalHours(scheduleId, timeInMinutes(oldTotalRowHours), newTotalRowHours);
+	
+	return totalRowHours;
 }
 </script>
 
