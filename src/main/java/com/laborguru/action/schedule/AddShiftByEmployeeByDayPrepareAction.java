@@ -6,6 +6,7 @@
 package com.laborguru.action.schedule;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -14,6 +15,7 @@ import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.ScheduleRow;
 import com.laborguru.model.Position;
 import com.laborguru.service.position.PositionService;
+import com.laborguru.util.CalendarUtils;
 import com.opensymphony.xwork2.Preparable;
 
 /**
@@ -68,14 +70,26 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	/**
 	 * 
 	 */
-	public Integer getTotalStaffing() {
+	public Integer getTotalMinimutStaffingMinutes() {
 		int total = 0;
 		
 		for(Integer i : getMinimumStaffing()) {
 			total += i != null ? i.intValue() : 0;
 		}
 		
-		return new Integer(total);
+		return new Integer(MINUTES_INTERVAL * total);
+	}
+	
+	/**
+	 * 
+	 */
+	public Date getTotalMinimutStaffingTime() {
+		Integer min = getTotalMinimutStaffingMinutes();
+		if(min != null && min.intValue() > 0) {
+			return new Date(60000L * min.intValue());
+		} else {
+			return CalendarUtils.removeTimeFromDate(new Date());
+		}
 	}
 	
 	/**

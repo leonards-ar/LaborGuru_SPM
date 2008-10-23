@@ -529,9 +529,11 @@ public class Store extends SpmObject {
 	 * @return
 	 */
 	public DayPart getDayPartFor(Date time) {
-		for(DayPart dayPart : getDayParts()) {
-			if(time.getTime() >= dayPart.getStartHour().getTime()) {
-				return dayPart;
+		if(time != null) {
+			for(DayPart dayPart : getDayParts()) {
+				if(dayPart.getStartHour() != null && time.getTime() >= dayPart.getStartHour().getTime()) {
+					return dayPart;
+				}
 			}
 		}
 		return null;
