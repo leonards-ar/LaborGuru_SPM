@@ -217,7 +217,7 @@ function integerDivision(numerator, denominator) {
 
 
 function timeInMinutes(time) {
-	if(time != null && time != '' && n != '-') {
+	if(time != null && time != '' && time != '-') {
 		return parseInt(getHours(time)) * 60 + parseInt(getMinutes(time));
 	} else {
 		return 0;
@@ -234,7 +234,7 @@ function minutesToTime(minutes) {
 function formatTimeNumber(n) {
 	n = '' + n;
 	
-	if(n == null || n == '' || n == '-') {
+	if(n == null || n == '' || n == '-' || isNaN(n)) {
 		return '00';
 	}
 	
@@ -246,10 +246,10 @@ function formatTimeNumber(n) {
 }
 
 function refreshRows(scheduleId) {
-	setTotalHours(scheduleId, 0);
 	for(var i=0; i < TOTAL_ROWS; i++) {
 		refreshRow(i, scheduleId);
 	}
+	initTotalHours(scheduleId);
 	refreshStaffing(scheduleId);
 }
 
@@ -260,13 +260,56 @@ function setTotalHours(scheduleId, totalHours) {
 	}
 }
 
-function updateTotalHours(scheduleId, oldTotalRowHours, newTotalRowHours) {
+function setDifferenceTotal(scheduleId) {
+	var totalHoursObj = getObjectByID(scheduleId + 'total_cell');
+	var totalStaffingHoursObj = getObjectByID(scheduleId + 'total_staffing_cell');
+	var differenceTotalObj = getObjectByID(scheduleId + 'total_difference_cell');
+	
+	var total = 0;
+	var staffingTotal = 0;
+	
+	if(totalHoursObj) {
+		total = timeInMinutes(totalHoursObj.innerHTML);
+	}
+	if(totalStaffingHoursObj) {
+		staffingTotal = timeInMinutes(totalStaffingHoursObj.innerHTML);
+	}
+	
+	if(differenceTotalObj) {
+		differenceTotalObj.innerHTML = minutesToTime(Math.abs(total - staffingTotal));
+	}
+}
+
+function initTotalHours(scheduleId) {
+	var totalHours = 0;
+	for(var i=0; i < TOTAL_COLS; i++) {
+		var rowTotalObj = getObjectByID(scheduleId + 'totalHours_' + i);
+		if(rowTotalObj)	{
+			totalHours += timeInMinutes(rowTotalObj.innerHTML);
+		}
+		var totalObj = getObjectByID(scheduleId + 'total_cell_' + i);
+		if(totalObj) {
+			totalObj.innerHTML = '0';
+		}
+	}
+	
+	setTotalHours(scheduleId, totalHours);
+	setDifferenceTotal(scheduleId);
+}
+
+function updateTotalHours(scheduleId, oldTotalRowHours, newTotalRowHours, rowNum) {
 	var totalHoursObj = getObjectByID(scheduleId + 'total_cell');
 	var currentTotal = 0;
 	if(totalHoursObj) {
 		currentTotal = timeInMinutes(totalHoursObj.innerHTML);
+		if(isNaN(currentTotal)) {
+			currentTotal = 0;
+		}
+		totalHoursObj.innerHTML = minutesToTime(currentTotal - oldTotalRowHours + newTotalRowHours);
 	}
-	totalHoursObj.innerHTML = minutesToTime(currentTotal - oldTotalRowHours + newTotalRowHours);
+	// :TODO: Improve performance?
+	refreshStaffing(scheduleId);
+	setDifferenceTotal(scheduleId);
 }
 
 function getPositionId(rowNum, scheduleId) {
@@ -305,12 +348,14 @@ function refreshStaffing(scheduleId) {
 		var diffObj = getObjectByID(scheduleId + 'difference_cell_' + j);
 		var difference = rowTotal - minimunStaffing;
 		if(diffObj) {
-			diffObj.innerHTML = difference;
 			if(difference == 0) {
+				diffObj.innerHTML = difference;
 				diffObj.className = 'scheduleStaffingDifferenceEqual';
 			} else if(difference < 0) {
+				diffObj.innerHTML = -1 * difference;
 				diffObj.className = 'scheduleStaffingDifferenceNegative';
 			} else {
+				diffObj.innerHTML = difference;
 				diffObj.className = 'scheduleStaffingDifferencePositive';
 			}
 		}
@@ -405,9 +450,7 @@ function refreshRow(rowNum, scheduleId) {
 		o6.innerHTML = totalHours;
 	}		
 	
-	updateTotalHours(scheduleId, timeInMinutes(oldTotalRowHours), newTotalRowHours);
-	
-	return totalRowHours;
+	updateTotalHours(scheduleId, timeInMinutes(oldTotalRowHours), newTotalRowHours, rowNum);
 }
 </script>
 

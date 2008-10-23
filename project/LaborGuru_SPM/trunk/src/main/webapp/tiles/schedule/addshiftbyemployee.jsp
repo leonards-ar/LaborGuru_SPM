@@ -379,7 +379,7 @@
 				    
 				    <tr class="scheduleMainTableEmployeeRow">
 				    	<td colspan="4" class="scheduleStaffingNameCell"><s:text name="schedule.addshift.staffing.minimum_staffing"/>&nbsp;&nbsp;</td>
-				    	<td class="scheduleStaffingValueCell" id='total_staffing_cell'><s:property value='totalStaffing'/></td>
+				    	<td class="scheduleStaffingValueCell" id='total_staffing_cell'><s:text name='schedule.addshift.hourcell.dateformat'><s:param value='totalMinimutStaffingTime'/></s:text></td>
 							<s:iterator id="staffing" value="minimumStaffing" status="itStaffing">
 								<s:if test="#itStaffing.first">
 									<s:iterator id="startToIgnore" value="scheduleIndividualStartHoursToIgnore">
