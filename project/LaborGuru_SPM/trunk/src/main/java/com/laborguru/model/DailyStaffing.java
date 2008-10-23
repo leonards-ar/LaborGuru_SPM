@@ -179,13 +179,14 @@ public class DailyStaffing extends SpmObject {
 	public int getHalfHourIndex(Date time) {
 		if(time != null) {
 			long t = time.getTime();
-			for(int i = 0; i < getHalfHourStaffing().size(); i++) {
+			int size = getHalfHourStaffing().size();
+			for(int i = 0; i < size; i++) {
 				HalfHourStaffing staffing = getHalfHourStaffing().get(i);
-				if(t >= staffing.getTime().getTime()) {
-					return i;
+				if(t < staffing.getTime().getTime()) {
+					return i > 0 ? i - 1 : 0;
 				}
 			}
-			return -1;
+			return size - 1;
 		} else {
 			return -1;
 		}
