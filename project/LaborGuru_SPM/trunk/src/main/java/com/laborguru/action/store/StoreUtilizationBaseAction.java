@@ -136,6 +136,13 @@ public abstract class StoreUtilizationBaseAction extends StoreAdministrationBase
 	}	
 	
 	/**
+	 * 
+	 */
+	public void prepareSave() {
+		loadUtilization();
+	}
+	
+	/**
 	 * Stores a store on the DB
 	 * 
 	 * @return
