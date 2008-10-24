@@ -194,7 +194,7 @@
 								                    	<td align="center"><s:reset id="resetButton" key="reset.button" theme="simple" cssClass="button"/></td>
 								                    </tr>
 								                    <tr>
-								                    	<td align="center"><s:submit id="cancelButton" key="cancel.button" action="halfhour_edit" theme="simple" cssClass="button"/></td>		                    
+								                		<td align="center"><s:submit id="backDailyButton" key="projection.halfhour.backDaily.button" theme="simple" cssClass="button" action="daily_edit"/></td>
 								                    </tr>
 							                    </table>                    
 				                    			<!-- End Action buttons -->
