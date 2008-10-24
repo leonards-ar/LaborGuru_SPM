@@ -121,6 +121,8 @@ public class SpmInterceptor implements Interceptor {
 			}
 		}
 		
+		params.remove(HttpRequestConstants.MENU_ITEM_INDEX);
+		
 		return invocation.invoke();
 	}
 

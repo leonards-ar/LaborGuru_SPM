@@ -612,6 +612,7 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	 * @see com.opensymphony.xwork2.ActionSupport#validate()
 	 */
 	protected void validateSchedule(List<ScheduleRow> schedule) {
+		validateScheduleRows(schedule);
 		Set<Integer> employeeIds = getDifferentEmployeeIds(schedule);
 
 		for(Integer employeeId : employeeIds) {
@@ -619,6 +620,21 @@ public abstract class AddShiftBaseAction extends SpmAction {
 		}
 	}
 
+	/**
+	 * 
+	 * @param schedule
+	 */
+	private void validateScheduleRows(List<ScheduleRow> schedule) {
+		int rowCount = 1;
+		
+		for(ScheduleRow aRow : schedule) {
+			if(aRow.getEmployeeId() == null || aRow.getEmployeeId() <= 0) {
+				addActionError(getText("error.schedule.addshift.employee_missing", new String[]{String.valueOf(rowCount)}));
+			}
+			rowCount++;
+		}
+	}
+	
 	/**
 	 * 
 	 * @param employeeId
