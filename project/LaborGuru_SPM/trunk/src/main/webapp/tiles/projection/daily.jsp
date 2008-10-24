@@ -4,6 +4,7 @@
 <br/>
 <s:form id="daily_form" name="daily_form" action="dailySave" theme="simple">
 <s:hidden id="selectedDate" name="selectedDate"/>
+<s:hidden id="selectedWeekDay" name="selectedWeekDay"/>
 	      <table border="0" cellspacing="0" align="center">
 		      <tr>
 			      <td id="titleBar">
@@ -95,7 +96,11 @@
 										<td>&nbsp;</td>
 										<!-- Iterate week days -->
 										<s:iterator id="weekDay" value="weekDaySelector.weekDays">
-											<td><s:text name='projection.daily.weekday.dateformat'><s:param value='weekDay'/></s:text></td>
+											<td>
+												<a href="<s:url value="#" includeParams="none"/>" onclick="daily_form.action='halfhour_edit.action'; daily_form.selectedWeekDay.value='<s:text name='projection.weekdayselector.input.dateformat'><s:param value='weekDay'/></s:text>'; daily_form.submit();" class="calendarUnselectedWeekLink">
+			                  						<s:text name='projection.daily.weekday.dateformat'><s:param value='weekDay'/></s:text>
+			                  					</a>
+											</td>
 										</s:iterator>
 										<!-- End Iterate week days -->
 										<td><s:text name="projection.daily.weektotal.label" /></td>
@@ -104,9 +109,6 @@
 										<td class="editorTableFirstColumn"><s:text name="projection.daily.projection.label"/></td>
 										<!-- Iterate week days -->
 										<s:iterator value="dailyProjections" status="itProjection">
-									<!-- 		<s:text name="currency" id="calcProjectionValue">
-												<s:param name="value" value="%{calculatedProjection}"/>
-											</s:text>  -->
 											<s:hidden name="dailyProjections[%{#itProjection.index}].calculatedProjection" value="%{calculatedProjection}"/>
 											<td class="editorTableOddRow"><s:property value="calculatedProjection"/></td>
 										</s:iterator>
@@ -118,9 +120,6 @@
 										<td class="editorTableFirstColumn"><s:text name="projection.daily.adjusted.label" /></td>
 										<s:iterator id="dailyProjection" value="dailyProjections" status="itProjection">
 											<s:hidden name="dailyProjections[%{#itProjection.index}].projectionDate" theme="simple"/>
-									 <!--  		<s:text name="currency" id="adjProjectionValue">
-												<s:param name="value" value="%{adjustedProjection}"/>
-											</s:text>  -->
 											<td class="editorTableEvenRow">
 												<s:if test="%{#dailyProjection.editable}">
 													<s:textfield name="dailyProjections[%{#itProjection.index}].adjustedProjection" value="%{adjustedProjection}" size="7" maxlength="15" theme="simple" cssStyle="text-align: center;" /></td>
