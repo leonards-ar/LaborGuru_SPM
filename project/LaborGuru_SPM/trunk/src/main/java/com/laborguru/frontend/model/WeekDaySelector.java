@@ -325,7 +325,7 @@ public class WeekDaySelector implements Serializable {
 	 */
 	public boolean isSelectedDateBeforeToday() {
 		Date today = CalendarUtils.todayWithoutTime();
-		return getSelectedDay().before(today);
+		return !getSelectedDay().after(today);
 	}
 	
 	/**
