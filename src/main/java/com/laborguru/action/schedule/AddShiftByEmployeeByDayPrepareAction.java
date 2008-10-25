@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.ScheduleRow;
+import com.laborguru.model.Employee;
 import com.laborguru.model.Position;
 import com.laborguru.service.position.PositionService;
 import com.laborguru.util.CalendarUtils;
@@ -236,6 +237,7 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	 */
 	public String addEmployee() {
 		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
+		Employee newEmployee = getEmployeeService().getEmployeeById(new Employee(getNewEmployeeId()));
 		
 		ScheduleRow newRow = new ScheduleRow();
 		newRow.setEmployeeId(getNewEmployeeId());
@@ -245,6 +247,12 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 		newRow.setEmployeeName(getNewEmployeeName());
 		newRow.setSchedule(initializeScheduleRow());
 		newRow.setHours(initializeScheduleHoursRow());
+
+		if(newEmployee != null) {
+			newRow.setEmployeeMaxDaysWeek(newEmployee.getMaxDaysWeek());
+			newRow.setEmployeeMaxHoursDay(newEmployee.getMaxHoursDay());
+			newRow.setEmployeeMaxHoursWeek(newEmployee.getMaxHoursWeek());		
+		}
 		
 		getScheduleData().add(newRow);
 		

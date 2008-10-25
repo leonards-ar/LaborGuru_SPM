@@ -113,6 +113,32 @@ public class WeekDaySelector implements Serializable {
 	/**
 	 * 
 	 * @param startingWeekDay
+	 * @param selectedDay
+	 */
+	public void initializeChangeDay(String startingWeekDay, String selectedDay) {
+		setStringSelectedDay(selectedDay);
+		setStringStartingWeekDay(startingWeekDay);
+	}
+	
+	/**
+	 * 
+	 * @param startingWeekDay
+	 * @param oldSelectedDay
+	 */
+	public void initializeChangeWeek(String startingWeekDay, String oldSelectedDay) {
+		setStringStartingWeekDay(startingWeekDay);
+		setStringSelectedDay(oldSelectedDay);
+		DayOfWeek oldSelectedDayOfWeek = getSelectedDayOfWeek();
+		DayOfWeek startingWeekDayDayOfWeek = getStartingDayOfWeek();
+		int daysToAdd = oldSelectedDayOfWeek.ordinal() - startingWeekDayDayOfWeek.ordinal();
+		daysToAdd = daysToAdd >=0 ? daysToAdd : daysToAdd + DayOfWeek.values().length;
+		Date newSelectedDay = CalendarUtils.addOrSubstractDays(getStartingWeekDay(), daysToAdd);
+		setSelectedDay(newSelectedDay);
+	}
+	
+	/**
+	 * 
+	 * @param startingWeekDay
 	 */
 	public void setStringStartingWeekDay(String startingWeekDay) {
 		try {

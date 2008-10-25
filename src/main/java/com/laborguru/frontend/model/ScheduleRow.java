@@ -34,6 +34,9 @@ public class ScheduleRow implements Serializable {
 	private String totalHours;
 	private List<String> schedule;
 	private List<String> hours;
+	private Integer employeeMaxHoursWeek;
+	private Integer employeeMaxDaysWeek;
+	private Integer employeeMaxHoursDay;
 	
 	/**
 	 * 
@@ -213,6 +216,48 @@ public class ScheduleRow implements Serializable {
 	 */
 	public void setPositionName(String positionName) {
 		this.positionName = positionName;
+	}
+
+	/**
+	 * @return the employeeMaxHoursWeek
+	 */
+	public Integer getEmployeeMaxHoursWeek() {
+		return employeeMaxHoursWeek;
+	}
+
+	/**
+	 * @param employeeMaxHoursWeek the employeeMaxHoursWeek to set
+	 */
+	public void setEmployeeMaxHoursWeek(Integer employeeMaxHoursWeek) {
+		this.employeeMaxHoursWeek = employeeMaxHoursWeek;
+	}
+
+	/**
+	 * @return the employeeMaxDaysWeek
+	 */
+	public Integer getEmployeeMaxDaysWeek() {
+		return employeeMaxDaysWeek;
+	}
+
+	/**
+	 * @param employeeMaxDaysWeek the employeeMaxDaysWeek to set
+	 */
+	public void setEmployeeMaxDaysWeek(Integer employeeMaxDaysWeek) {
+		this.employeeMaxDaysWeek = employeeMaxDaysWeek;
+	}
+
+	/**
+	 * @return the employeeMaxHoursDay
+	 */
+	public Integer getEmployeeMaxHoursDay() {
+		return employeeMaxHoursDay;
+	}
+
+	/**
+	 * @param employeeMaxHoursDay the employeeMaxHoursDay to set
+	 */
+	public void setEmployeeMaxHoursDay(Integer employeeMaxHoursDay) {
+		this.employeeMaxHoursDay = employeeMaxHoursDay;
 	}
 	
 }
