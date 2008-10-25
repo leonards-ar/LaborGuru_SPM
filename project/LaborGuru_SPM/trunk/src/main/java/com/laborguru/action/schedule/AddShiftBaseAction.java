@@ -157,8 +157,7 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	 * @param selectedDay
 	 */
 	protected void initializeDayWeekSelector(String weekSelectedDay, String selectedDay){
-		getWeekDaySelector().setStringSelectedDay(selectedDay);
-		getWeekDaySelector().setStringStartingWeekDay(weekSelectedDay);
+		getWeekDaySelector().initializeChangeDay(weekSelectedDay, selectedDay);
 	}
 
 	/**
@@ -174,7 +173,7 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	 * @return
 	 */
 	public String changeWeek() {
-		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
+		getWeekDaySelector().initializeChangeWeek(getSelectedDate(), getSelectedWeekDay());
 		
 		processChangeWeek();
 
@@ -186,7 +185,7 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	 * @return
 	 */
 	public String changeDay() {
-		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
+		getWeekDaySelector().initializeChangeDay(getSelectedDate(), getSelectedWeekDay());
 		
 		processChangeDay();
 		
@@ -855,6 +854,9 @@ public abstract class AddShiftBaseAction extends SpmAction {
 			aRow.setEmployeeName(employeeSchedule.getEmployee().getFullName());
 			aRow.setPositionId(shift.getPosition() != null ? shift.getPosition().getId() : null);
 			aRow.setPositionName(shift.getPosition() != null ? shift.getPosition().getName() : null);
+			aRow.setEmployeeMaxDaysWeek(employeeSchedule.getEmployee().getMaxDaysWeek());
+			aRow.setEmployeeMaxHoursDay(employeeSchedule.getEmployee().getMaxHoursDay());
+			aRow.setEmployeeMaxHoursWeek(employeeSchedule.getEmployee().getMaxHoursWeek());
 			
 			
 			List<Date> scheduleBuckets = getScheduleIndividualHours();
