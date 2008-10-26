@@ -5,6 +5,7 @@
 <s:form id="addshiftbyemployee_form" name="addshiftbyemployee_form" action="addshiftbyemployee_save" theme="simple">
 	<s:hidden id="selectedDate" name="selectedDate"/>
 	<s:hidden id="selectedWeekDay" name="selectedWeekDay"/>
+	
 	<table border="0" cellspacing="0" align="center">
 		<tr>
 			<td id="titleBar"><s:text name="schedule.addshift.byemployee.title" /></td>
@@ -277,10 +278,11 @@
 					    		<s:property value="#data.employeeName"/>
 							</s:if>
 							<s:else>
-								<s:hidden name="scheduleData[%{#itScheduleData.index}].originalEmployeeId"/>
+								<s:hidden id="scheduleOriginalEmployeeId_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].originalEmployeeId"/>
+								<s:hidden id="scheduleEmployeeMaxWeekHours_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].employeeMaxHoursDay"/>
 								<s:url id="employeeList" action="scheduleemployeeautocomplete" includeParams="none"/>
-								<s:autocompleter name="scheduleData[%{#itScheduleData.index}].employeeName" keyName="scheduleData[%{#itScheduleData.index}].employeeId" loadMinimumCount="3" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring"/>
-							</s:else>
+								<s:autocompleter id="scheduleEmployee_%{#itScheduleData.index}" onchange="reloadEmployeeMaxHoursDay('', %{#itScheduleData.index}); return true;" name="scheduleData[%{#itScheduleData.index}].employeeName" keyName="scheduleData[%{#itScheduleData.index}].employeeId" loadMinimumCount="3" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring"/>
+							</s:else> 
 							</td>    
 							<td class="scheduleValueCell" id="inHour_<s:property value="#itScheduleData.index"/>"><s:hidden id="inHourInput_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].inHour"/><s:property value="#data.inHour"/></td>    
 							<td class="scheduleValueCell" id="outHour_<s:property value="#itScheduleData.index"/>"><s:hidden id="outHourInput_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].outHour"/><s:property value="#data.outHour"/></td>
@@ -425,7 +427,7 @@
 			<td width="100%" align="right">
 				<table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
 					<tr>
-						<td><s:submit id="saveButton" key="save.button" theme="simple" cssClass="button"/></td>
+						<td><s:submit id="saveButton" name="saveEmployee" key="save.button" theme="simple" cssClass="button"/></td>
 						<td><s:submit id="cancelButton" key="cancel.button" action="addshiftbyemployee_cancel" theme="simple" cssClass="button"/></td>		                    
       				</tr>
      			</table>                    

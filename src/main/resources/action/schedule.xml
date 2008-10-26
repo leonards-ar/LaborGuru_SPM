@@ -16,6 +16,9 @@
 		<action name="scheduleemployeeautocomplete" class="com.laborguru.action.schedule.ScheduleEmployeeAutocompleterAction">
 			<result type="json" name="success"><param name="root">storeEmployees</param></result>
 		</action>
+		<action name="scheduleemployeemaxhsday" class="com.laborguru.action.schedule.ScheduleEmployeeDataAction">
+			<result name="success">/spm/tiles/schedule/employeemaxhoursday.jsp</result>
+		</action>		
 	</package>
 
 </struts>

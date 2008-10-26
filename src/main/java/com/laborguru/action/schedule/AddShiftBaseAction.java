@@ -176,7 +176,9 @@ public abstract class AddShiftBaseAction extends SpmAction {
 		getWeekDaySelector().initializeChangeWeek(getSelectedDate(), getSelectedWeekDay());
 		
 		processChangeWeek();
-
+		
+		loadCalendarData();
+		
 		return SpmActionResult.INPUT.getResult();
 	}
 	
@@ -188,6 +190,8 @@ public abstract class AddShiftBaseAction extends SpmAction {
 		getWeekDaySelector().initializeChangeDay(getSelectedDate(), getSelectedWeekDay());
 		
 		processChangeDay();
+		
+		loadCalendarData();
 		
 		return SpmActionResult.INPUT.getResult();
 	}

@@ -41,6 +41,8 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	private String newEmployeeName;
 	private Integer newEmployeePositionId;
 	
+	private String saveEmployee;
+	
 	/**
 	 * 
 	 */
@@ -202,7 +204,7 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	 */
 	public String selectPosition() {
 		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
-		
+	
 		resetScheduleData();
 		setScheduleData();
 		
@@ -237,7 +239,12 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	 */
 	public String addEmployee() {
 		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
-		Employee newEmployee = getEmployeeService().getEmployeeById(new Employee(getNewEmployeeId()));
+		
+		Employee newEmployee = null;
+		if(getNewEmployeeId() != null) {
+			newEmployee = getEmployeeService().getEmployeeById(new Employee(getNewEmployeeId()));
+
+		}
 		
 		ScheduleRow newRow = new ScheduleRow();
 		newRow.setEmployeeId(getNewEmployeeId());
@@ -419,7 +426,11 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	 */
 	@Override
 	public void validate() {
-		validateSchedule(getScheduleData());
+		if(getSaveEmployee() != null) {
+			initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
+			
+			validateSchedule(getScheduleData());
+		}
 	}
 
 	/**
@@ -437,7 +448,20 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	 */
 	public void setMinimumStaffing(List<Integer> minimumStaffing) {
 		this.minimumStaffing = minimumStaffing;
-	}	
-	
-	
+	}
+
+	/**
+	 * @return the saveEmployee
+	 */
+	public String getSaveEmployee() {
+		return saveEmployee;
+	}
+
+	/**
+	 * @param saveEmployee the saveEmployee to set
+	 */
+	public void setSaveEmployee(String saveEmployee) {
+		this.saveEmployee = saveEmployee;
+	}
+
 }

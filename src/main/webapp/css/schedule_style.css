@@ -56,6 +56,16 @@ Break: #FDDB80
 	font-weight: bold;
 }
 
+.scheduleEmployeeTotalHoursExceeded {
+	border: 1px solid #184E01;
+	background-color: #FFF337;
+	color: #FF1717;
+	font-size: 12px;
+	text-align: center;
+	font-family: tahoma, arial, sans-serif;
+	font-weight: bold;
+}
+
 .scheduleStaffingNameCell {
 	border: 1px solid #184E01;
 	background-color: #FFFFFF;
