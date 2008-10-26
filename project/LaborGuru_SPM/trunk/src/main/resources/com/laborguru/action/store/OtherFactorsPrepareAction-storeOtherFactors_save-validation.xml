@@ -7,7 +7,7 @@
 	    </field-validator>
 	    	
 		<field-validator type="double">
-			<param name="minInclusive">0.01</param>
+			<param name="minInclusive">0.00</param>
 			<param name="maxInclusive">100.00</param>
 			<message key="error.otherfactors.scheduleinefficiency.invalid"/>
 		</field-validator>   
@@ -18,7 +18,7 @@
 	    </field-validator>
 	    	
 		<field-validator type="double">
-			<param name="minInclusive">0.01</param>
+			<param name="minInclusive">0.00</param>
 			<param name="maxInclusive">100.00</param>
 			<message key="error.otherfactors.fillinefficiency.invalid"/>
 		</field-validator>   
@@ -29,7 +29,7 @@
 	    </field-validator>
 	    	
 		<field-validator type="double">
-			<param name="minInclusive">0.01</param>
+			<param name="minInclusive">0.00</param>
 			<param name="maxInclusive">100.00</param>
 			<message key="error.otherfactors.trainingfactor.invalid"/>
 		</field-validator>   
@@ -40,7 +40,7 @@
 	    </field-validator>
 	    	
 		<field-validator type="double">
-			<param name="minInclusive">0.01</param>
+			<param name="minInclusive">0.00</param>
 			<param name="maxInclusive">100.00</param>
 			<message key="error.otherfactors.earnedbreakfactor.invalid"/>
 		</field-validator>   
@@ -51,7 +51,7 @@
 	    </field-validator>
 	    	
 		<field-validator type="double">
-			<param name="minInclusive">0.01</param>
+			<param name="minInclusive">0.00</param>
 			<param name="maxInclusive">100.00</param>
 			<message key="error.otherfactors.floormanagementfactor.invalid"/>
 		</field-validator>   

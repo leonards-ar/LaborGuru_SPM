@@ -74,6 +74,14 @@ public class ScheduleRow implements Serializable {
 	}
 
 	/**
+	 * 
+	 * @return
+	 */
+	public boolean isSelectedEmployeeChange() {
+		return employeeId != null && !employeeId.equals(getOriginalEmployeeId());
+	}
+	
+	/**
 	 * @param employeeId the employeeId to set
 	 */
 	public void setEmployeeId(Integer employeeId) {
