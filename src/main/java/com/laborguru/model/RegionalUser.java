@@ -10,7 +10,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @since SPM 1.0
  *
  */
-public class RegionalUser extends User {
+public class RegionalUser extends User implements Manager{
 
 	/**
 	 * Default serial version ID
@@ -19,6 +19,14 @@ public class RegionalUser extends User {
 	
 	private Region region;
 
+	public RegionalUser(){
+		
+	}
+	
+	public RegionalUser(User user){
+		super(user);
+	}
+	
 	/**
 	 * @return the region
 	 */

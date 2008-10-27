@@ -38,7 +38,23 @@ public class User extends SpmObject {
 	private Date lastUpdateDate;
 	private Set<Profile> profiles;
 	
+	public User(){
 		
+	}
+	
+	public User(User user){
+		this.id = user.getId();
+		this.userName = user.getUserName();
+		this.password = user.getPassword();
+		this.status = user.getStatus();
+		this.email = user.getEmail();
+		this.name = user.getName();
+		this.surname = user.getSurname();
+		this.lastLogon = user.getLastLogon();
+		this.loginCount = user.getLoginCount();
+		this.creationDate = user.getCreationDate();
+		this.profiles = user.getProfiles();
+	}
 	/**
 	 * @return
 	 * @see java.lang.Object#hashCode()

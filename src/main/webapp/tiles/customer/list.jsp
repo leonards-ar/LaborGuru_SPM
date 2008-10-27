@@ -46,6 +46,13 @@
 		    <display:column href="customer_remove.action" paramId="customerId" paramProperty="id" class="resultsColumnCentered"> 
 		    	<img src="<s:url value="/images/delete.png" includeParams="none"/>"/>
 		    </display:column>
+		    <display:column href="customerUser_add.action" paramId="paramId" paramProperty="id" class="resultsColumnCentered"> 
+		    	<img src="<s:url value="/images/user_add.png" includeParams="none"/>"/>
+		    </display:column>
+		    <display:column href="customerUser_list.action" paramId="paramId" paramProperty="id" class="resultsColumnCentered"> 
+		    	<img src="<s:url value="/images/user_group.png" includeParams="none"/>"/>
+		    </display:column>
+
 		</display:table>
 		<!-- Search Results -->
 		</td>

@@ -9,12 +9,20 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @since SPM 1.0
  *
  */
-public class CustomerUser extends User {
+public class CustomerUser extends User implements Manager{
 	/**
 	 * Default serial version ID
 	 */
 	private static final long serialVersionUID = 1L;
 
+	public CustomerUser(){
+		
+	}
+	
+	public CustomerUser(User user) {
+		super(user);
+	}
+	
 	private Customer customer;
 	
 	

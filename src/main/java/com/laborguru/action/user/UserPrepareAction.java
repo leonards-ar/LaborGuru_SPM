@@ -44,6 +44,8 @@ public class UserPrepareAction extends UserBaseAction implements Preparable{
 		getUser().setProfile(getReferenceDataService().getAdministratorRole());
 	}
 	
+	protected void setExtraInformation(){
+	}
 	/**
 	 * @return the searchUser
 	 */

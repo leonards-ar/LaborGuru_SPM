@@ -94,7 +94,7 @@ public class UserServiceBean implements UserService {
 	}
 
 	/**
-	 * Updates employee
+	 * Updates User
 	 */
 	private User update(User user) throws SpmCheckedException {
 							

@@ -263,5 +263,39 @@
 	
 	<definition name="showStoreEmployeePage" extends="storeExtendedCRUD">
 		<put-attribute name="storeExtDataBody" value="/tiles/store/user_view.jsp" />
+	</definition>
+	
+	<!-- Customer Managers tiles definition -->
+	<definition name="customerUsersData" template="/layouts/customer/customer_ext_crud.jsp" extends="baseLayoutWithMenu">
+	  <put-attribute name="objectData" value="/tiles/customer/customerdata.jsp" />
+	</definition>
+
+	<definition name="listCustomerUserPage" extends="customerUsersData">
+		<put-attribute name="objectExtDataBody" value="/tiles/customer/customeruser_list.jsp" />
+	</definition>
+
+	<definition name="showCustomerUserPage" extends="customerUsersData">
+		<put-attribute name="objectExtDataBody" value="/tiles/customer/user_view.jsp" />
+	</definition>
+	
+	<definition name="editCustomerUserPage" extends="customerUsersData">
+		<put-attribute name="objectExtDataBody" value="/tiles/customer/user_edit.jsp" />
+	</definition>	
+	
+	<!-- Regional Managers tiles definition -->
+	<definition name="regionalUsersData" template="/layouts/customer/customer_ext_crud.jsp" extends="baseLayoutWithMenu">
+	  <put-attribute name="objectData" value="/tiles/customer/regiondata.jsp" />
+	</definition>
+
+	<definition name="listRegionalUserPage" extends="regionalUsersData">
+		<put-attribute name="objectExtDataBody" value="/tiles/customer/regionaluser_list.jsp" />
+	</definition>
+
+	<definition name="showRegionalUserPage" extends="regionalUsersData">
+		<put-attribute name="objectExtDataBody" value="/tiles/customer/user_view.jsp" />
+	</definition>
+	
+	<definition name="editRegionalUserPage" extends="regionalUsersData">
+		<put-attribute name="objectExtDataBody" value="/tiles/customer/user_edit.jsp" />
 	</definition>	
 </tiles-definitions>
