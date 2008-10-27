@@ -9,6 +9,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts2.interceptor.ServletResponseAware;
+
 import com.laborguru.action.SpmAction;
 import com.laborguru.model.Employee;
 import com.laborguru.service.employee.EmployeeService;
@@ -20,7 +24,7 @@ import com.laborguru.service.employee.EmployeeService;
  * @since SPM 1.0
  *
  */
-public class ScheduleEmployeeAutocompleterAction extends SpmAction {
+public class ScheduleEmployeeAutocompleterAction extends SpmAction implements ServletResponseAware {
 
 	/**
 	 * 
@@ -30,6 +34,8 @@ public class ScheduleEmployeeAutocompleterAction extends SpmAction {
 	private Map<Integer, String> storeEmployees;
 	
 	private EmployeeService employeeService;
+	
+	private HttpServletResponse response;
 	
 	/**
 	 * 
@@ -60,7 +66,7 @@ public class ScheduleEmployeeAutocompleterAction extends SpmAction {
      */
     public String execute() throws Exception {
     	loadStoreEmployees();
-    	
+    	invalidateResponseCache();
         return SUCCESS;
     }
     
@@ -90,5 +96,34 @@ public class ScheduleEmployeeAutocompleterAction extends SpmAction {
 	 */
 	public void setEmployeeService(EmployeeService employeeService) {
 		this.employeeService = employeeService;
+	}
+
+	/**
+	 * 
+	 * @param arg0
+	 * @see org.apache.struts2.interceptor.ServletResponseAware#setServletResponse(javax.servlet.http.HttpServletResponse)
+	 */
+	public void setServletResponse(HttpServletResponse response) {
+		this.response = response;
+	}
+	
+	/**
+	 * 
+	 * @param arg0
+	 * @see org.apache.struts2.interceptor.ServletResponseAware#setServletResponse(javax.servlet.http.HttpServletResponse)
+	 */
+	public HttpServletResponse getServletResponse() {
+		return response;
+	}	
+	
+	/**
+	 * 
+	 */
+	private void invalidateResponseCache() {
+		if(getServletResponse() != null) {
+			getServletResponse().setHeader("Cache-Control","no-cache"); //HTTP 1.1
+			getServletResponse().setHeader("Pragma","no-cache"); //HTTP 1.0
+			getServletResponse().setDateHeader ("Expires", 0); //prevents caching at the proxy server		
+		}
 	}
 }
