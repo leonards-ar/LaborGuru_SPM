@@ -210,6 +210,28 @@
 			<ref bean="transactionAttributeSourceDefault"/>
 		</property>			
 	</bean>
+
+	<bean id="managerServiceTarget" class="com.laborguru.service.manager.ManagerServiceBean" autowire="byType"/>
+ 					
+	<bean id="managerService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.laborguru.service.manager.ManagerService</value>
+			</list>
+		</property>	
+	
+		<property name="target">
+			<ref bean="managerServiceTarget"/>
+		</property>		
+		
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>	
+		
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributeSourceDefault"/>
+		</property>			
+	</bean>
 	 					
 	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory">

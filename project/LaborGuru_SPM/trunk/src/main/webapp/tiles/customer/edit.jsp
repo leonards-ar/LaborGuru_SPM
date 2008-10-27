@@ -77,6 +77,16 @@
 													<img src="<s:url value="/images/edit.png" includeParams="none"/>" />
 												</a>
 											</td>
+											<td>
+												<a href="<s:url value="#" includeParams="none"/>" onclick="customer_form.action='regionalUser_add.action?paramId=<s:property value='id'/>'; customer_form.submit();">
+													<img src="<s:url value="/images/user_add.png" includeParams="none"/>" />
+												</a>
+											</td>
+											<td>
+												<a href="<s:url value="#" includeParams="none"/>" onclick="customer_form.action='regionalUser_list.action?paramId=<s:property value='id'/>'; customer_form.submit();">
+													<img src="<s:url value="/images/user_group.png" includeParams="none"/>" />
+												</a>
+											</td>
 										</tr>
 									</table>
 								</td>

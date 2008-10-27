@@ -9,7 +9,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @since SPM 1.0
  *
  */
-public class AreaUser extends User {
+public class AreaUser extends User implements Manager{
 	/**
 	 * Default serial version ID
 	 */

@@ -1,4 +1,4 @@
-package com.laborguru.action.user;
+package com.laborguru.action.customer;
 
 import java.util.List;
 import java.util.Map;
@@ -6,11 +6,12 @@ import java.util.Map;
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.exception.SpmCheckedException;
+import com.laborguru.model.Manager;
 import com.laborguru.model.Profile;
 import com.laborguru.model.User;
 import com.laborguru.service.data.ReferenceDataService;
+import com.laborguru.service.manager.ManagerService;
 import com.laborguru.service.profile.ProfileService;
-import com.laborguru.service.user.UserService;
 
 /**
  *
@@ -23,15 +24,15 @@ import com.laborguru.service.user.UserService;
 public abstract class UserBaseAction extends SpmAction {
 
 	private Integer paramId;
-	
 	private Integer userId;
+	private Manager manager;
 	private User user;
-	private List<User> users;
+	private List<Manager> users;
 	
 	private List<Profile> profiles;
 	private Map<String, String> statusMap;
 
-	private UserService userService;
+	private ManagerService managerService;
 	private ProfileService profileService;
 	private ReferenceDataService referenceDataService;
 
@@ -100,37 +101,42 @@ public abstract class UserBaseAction extends SpmAction {
 	 */
 	public String show() throws Exception {
 		loadUserById();
+		setExtraInformation();
 		return SpmActionResult.SHOW.getResult();
 	}
 	
 	public String remove() throws Exception {
 		loadUserById();
 		setRemovePage(true);
+		setUserId(getManager().getId());
+		setExtraInformation();
 		return SpmActionResult.SHOW.getResult();
 	}
 	
 	public String delete() throws Exception {		
 		//Getting user
-		User auxUser = getUserService().getUserById(getUser());		
-		getUserService().delete(auxUser);
-		
+		Manager auxManager = getUserById();
+		getManagerService().delete(auxManager);
+		setExtraInformation();
 		return SpmActionResult.LISTACTION.getResult();
 	}	
 	
 	public String edit() throws Exception {
 		loadUserById();
+		setExtraInformation();
 		return SpmActionResult.EDIT.getResult();
 	}
 	
 	public String add() throws Exception {
+		setExtraInformation();
 		return SpmActionResult.EDIT.getResult();
 	}
 
 	public String save() throws Exception {
 		try {
-			
-			addUserProfile();
-			getUserService().save(getUser());
+			setSaveObject();
+			getManagerService().save(getManager());
+			setExtraInformation();
 			return SpmActionResult.LISTACTION.getResult();
 			
 		} catch (SpmCheckedException e) {
@@ -141,20 +147,17 @@ public abstract class UserBaseAction extends SpmAction {
 	}
 	
 
-	
+
 	private void loadListsForAddEditPage() {
 		setProfiles(getProfileService().findAll());
 		setStatusMap(getReferenceDataService().getStatus());
 	}
-
-	private void loadUserById() {
-		User tmpUser = new User();
-		tmpUser.setId(userId);
-		setUser(userService.getUserById(tmpUser));
-		setPasswordConfirmation(getUser().getPassword());
+	
+	private void loadUserById(){
+		setManager(getUserById());
+		setPasswordConfirmation(getManager().getPassword());
 	}
 
-	
 	/**
 	 * @return the userId
 	 */
@@ -172,29 +175,29 @@ public abstract class UserBaseAction extends SpmAction {
 	/**
 	 * @return the user
 	 */
-	public User getUser() {
-		return user;
+	public Manager getManager() {
+		return manager;
 	}
 
 	/**
 	 * @param user the user to set
 	 */
-	public void setUser(User user) {
-		this.user = user;
+	public void setManager(Manager manager) {
+		this.manager = manager;
 	}
 
 	/**
 	 * @return the userService
 	 */
-	public UserService getUserService() {
-		return userService;
+	public ManagerService getManagerService() {
+		return managerService;
 	}
 
 	/**
 	 * @param userService the userService to set
 	 */
-	public void setUserService(UserService userService) {
-		this.userService = userService;
+	public void setManagerService(ManagerService managerService) {
+		this.managerService = managerService;
 	}
 
 	/**
@@ -243,14 +246,14 @@ public abstract class UserBaseAction extends SpmAction {
 	/**
 	 * @return the users
 	 */
-	public List<User> getUsers() {
+	public List<Manager> getUsers() {
 		return users;
 	}
 
 	/**
 	 * @param users the users to set
 	 */
-	public void setUsers(List<User> users) {
+	public void setUsers(List<Manager> users) {
 		this.users = users;
 	}
 
@@ -310,8 +313,24 @@ public abstract class UserBaseAction extends SpmAction {
 	public void setParamId(Integer paramId) {
 		this.paramId = paramId;
 	}
+	
 
-	protected abstract List<User>getUserList();
-	protected abstract void addUserProfile();
+	/**
+	 * @return the user
+	 */
+	public User getUser() {
+		return user;
+	}
+
+	/**
+	 * @param user the user to set
+	 */
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	protected abstract List<Manager>getUserList();
+	protected abstract void setSaveObject();
 	protected abstract void setExtraInformation();
+	protected abstract Manager getUserById();
 }

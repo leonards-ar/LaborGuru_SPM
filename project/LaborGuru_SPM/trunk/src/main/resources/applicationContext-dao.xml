@@ -28,6 +28,8 @@
 	<bean id="scheduleDao" class="com.laborguru.service.schedule.dao.ScheduleDaoHibernate" autowire="byType"/>
 
 	<bean id="staffingDao" class="com.laborguru.service.staffing.dao.StaffingDaoHibernate" autowire="byType"/>
+	
+	<bean id="managerDao" class="com.laborguru.service.manager.dao.ManagerDaoHibernate" autowire="byType"/>
 						
 	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
 		<property name="sessionFactory">
