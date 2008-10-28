@@ -206,6 +206,8 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
 	
 		resetScheduleData();
+		resetStaffingData();
+
 		setScheduleData();
 		
 		return SpmActionResult.EDIT.getResult();
@@ -292,6 +294,8 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 		resetScheduleData();
 		setScheduleData();
 		
+		addActionMessage(getText("schedule.addshift.save_success"));
+		
 		return SpmActionResult.EDIT.getResult();
 	}
 	
@@ -300,6 +304,13 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	 */
 	private void resetScheduleData() {
 		setScheduleData(null);
+	}
+	
+	/**
+	 * 
+	 */
+	private void resetStaffingData() {
+		setMinimumStaffing(null);
 	}
 	
 	/**

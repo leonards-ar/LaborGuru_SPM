@@ -348,6 +348,13 @@ table.results th a {
 	color: red;
 }
 
+.actionMessage {
+	font-size: 11px;
+	font-family: tahoma, arial, sans-serif;
+	color: green;
+	font-weight: bold;	
+} 
+
 #menuTable {
 	
 }

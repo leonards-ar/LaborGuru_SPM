@@ -104,19 +104,6 @@
 		</tr>
 		
 		<tr>
-			<td class="errorMessage" align="center">
-			<table border="0" align="center" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
-				<tr>
-					<td>
-						<s:fielderror theme="simple" />
-						<s:actionerror theme="simple" />
-					</td>
-				</tr>
-			</table>
-			</td>
-		</tr>
-
-		<tr>
 			<td align="center">
                   	<!-- Start week table -->
                   	<table align="center" id="calendarTable" border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
@@ -194,6 +181,23 @@
 			</td>
 		</tr>
 		
+		<tr>
+			<td align="center">
+			<table border="0" align="center" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
+				<tr>
+					<td class="errorMessage">
+						<s:fielderror theme="simple" />
+						<s:actionerror theme="simple" />
+					</td>
+				</tr>
+				<tr>
+					<td class="actionMessage">
+						<s:actionmessage theme="simple"/>
+					</td>
+				</tr>
+			</table>
+			</td>
+		</tr>		
 		
 		<tr>
 			<td align="center" width="100%">
