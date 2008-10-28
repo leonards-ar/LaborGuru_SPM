@@ -631,7 +631,7 @@ public abstract class AddShiftBaseAction extends SpmAction {
 		int rowCount = 1;
 		
 		for(ScheduleRow aRow : schedule) {
-			if(aRow.getEmployeeId() == null || aRow.getEmployeeId() <= 0) {
+			if(aRow.getEmployeeId() == null || aRow.getEmployeeId().intValue() <= 0) {
 				addActionError(getText("error.schedule.addshift.employee_missing", new String[]{String.valueOf(rowCount)}));
 			}
 			rowCount++;
