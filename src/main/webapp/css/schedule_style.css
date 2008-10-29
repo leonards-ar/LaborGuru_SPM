@@ -2,8 +2,8 @@
 Colors:
 Table Borders: #184E01
 
-Selected: #66FF99
-Break: #FDDB80
+Selected: #33CC33
+Break: #CCFF00
 
 */
 #scheduleActionsTable {
@@ -141,33 +141,33 @@ td.scheduleStartSelection {
 }
 
 td.scheduleSelected {
-	border-right: 1px hidden #66FF99;
-	border-left: 1px hidden #66FF99;
+	border-right: 1px hidden #33CC33;
+	border-left: 1px hidden #33CC33;
 	border-top:1px solid #184E01;
 	border-bottom: 1px solid #184E01;
-	background-color: #66FF99;
+	background-color: #33CC33;
 	width: 7px;
 }
 
 td.scheduleSelectedCaption {
 	border:1px solid #184E01;
-	background-color: #66FF99;
+	background-color: #33CC33;
 	width: 5px;
 }
 
 td.scheduleBreak {
-	border-right: 1px hidden #FDDB80;
-	border-left: 1px hidden #FDDB80;
+	border-right: 1px hidden #CCFF00;
+	border-left: 1px hidden #CCFF00;
 	border-top:1px solid #184E01;
 	border-bottom: 1px solid #184E01;
 	width: 7px;
-	background-color: #FDDB80;
+	background-color: #CCFF00;
 }
 
 td.scheduleBreakCaption {
 	border:1px solid #184E01;
 	width: 5px;
-	background-color: #FDDB80;
+	background-color: #CCFF00;
 }
 
 td.scheduleEmptyCaption {
@@ -206,4 +206,24 @@ img.scheduleActionImageOff {
 
 img.scheduleActionImageOn {
 	border: 1px solid #184E01;
+}
+
+.scheduleActionLabel {
+	font-family: tahoma, arial, sans-serif;
+	font-size: 11px;
+	font-weight: normal;
+	color: #336600;
+	text-decoration: none;	
+}
+	
+a.scheduleActionLink {
+	font-family: tahoma, arial, sans-serif;
+	font-size: 11px;
+	font-weight: normal;
+	color: #336600;
+	text-decoration: none;	
+}
+
+a.scheduleActionLink:hover {
+	text-decoration: underline;
 }
