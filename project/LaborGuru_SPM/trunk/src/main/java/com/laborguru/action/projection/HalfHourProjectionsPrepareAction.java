@@ -57,6 +57,14 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	
 	
 	/**
+	 * Returns whether the total for adjusted values is greater than zero
+	 * @return
+	 */
+	public boolean isTotalRevisedValuesGreaterThanZero(){
+		return this.getTotalRevisedValues().doubleValue() > 0.00;
+	}
+	
+	/**
 	 * Returns whether the halfhour should be showed.
 	 * @param halfHour
 	 * @return

@@ -164,7 +164,7 @@
 													</s:else>
 												</s:if>
 												<s:else>
-													<s:if test="%{isHalfHourVisible(halfhourElement)}">
+													<s:if test="%{isHalfHourVisible(#halfhourElement)}">
 														<tr>
 		  												    <td class="editorTableFirstColumn"><s:property value="hour"/></td>
 															<td class="editorTableEvenRow"><s:text name="currency"><s:param value="projectedValue" /></s:text></td>
@@ -187,9 +187,11 @@
 								                    <tr>
 								                		<td align="center"><s:submit id="reviseButton" key="projection.halfhour.revise.button" theme="simple" cssClass="button" action="halfhour_reviseProjections"/></td>
 								                	</tr>
+													<s:if test="%{isTotalRevisedValuesGreaterThanZero()}">
 								                    <tr>
 								                		<td align="center"><s:submit id="saveButton" key="save.button" theme="simple" cssClass="button"/></td>
 								                	</tr>
+													</s:if>
 								                	<tr>
 								                    	<td align="center"><s:reset id="resetButton" key="reset.button" theme="simple" cssClass="button"/></td>
 								                    </tr>
