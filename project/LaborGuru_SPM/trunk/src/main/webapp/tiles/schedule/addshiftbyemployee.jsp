@@ -199,48 +199,37 @@
 			</td>
 		</tr>		
 		
+		<s:if test="%{!weekDaySelector.isSelectedDateBeforeToday()}">
 		<tr>
 			<td align="center" width="100%">
 				<table border="0" cellpadding="0" cellspacing="0" width="100%">
 					<tr>
-						<td align="left" width="50%">
-							<!-- Caption -->
-							<table border="0" cellpadding="1" cellspacing="2">
-								<tr>
-									<td class="scheduleSelectedCaption"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-									<td class="captionText"><s:text name="schedule.addshift.shift.caption"/></td>
-									<td>&nbsp;</td>
-									<td class="scheduleBreakCaption"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-									<td class="captionText"><s:text name="schedule.addshift.break.caption"/></td>
-									<td>&nbsp;</td>
-									<td class="scheduleEmptyCaption"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-									<td class="captionText"><s:text name="schedule.addshift.free.caption"/></td>
-								</tr>
-							</table>
-							<!-- Caption -->
-						</td>
-						<s:if test="%{!weekDaySelector.isSelectedDateBeforeToday()}">
-						<td align="left" width="50%">
+						<td align="center" width="100%">
 							<!-- Schedule selection action table -->
 							<table id="scheduleActionsTable" border="0" cellpadding="0" cellspacing="0">
 								<tr>
-							    	<td><a href="#" onclick="changeAction(1, '');"><img title="<s:text name="schedule.addshift.shift.alt"/>" alt="<s:text name="schedule.addshift.shift.alt"/>" id="scheduleShiftImage" class="scheduleActionImageOff" border="0" src="<s:url value="/images/shift_on.png" includeParams="none"/>"/></a></td>
-							        <td>&nbsp;&nbsp;</td>
-							    	<td><a href="#" onclick="changeAction(3, '');"><img title="<s:text name="schedule.addshift.break.alt"/>" alt="<s:text name="schedule.addshift.break.alt"/>" id="scheduleBreakImage" class="scheduleActionImageOff" border="0" src="<s:url value="/images/break_on.png" includeParams="none"/>"/></a></td>
-							        <td>&nbsp;&nbsp;</td>
-							    	<td><a href="#" onclick="changeAction(5, '');"><img title="<s:text name="schedule.addshift.free.alt"/>" alt="<s:text name="schedule.addshift.free.alt"/>" id="scheduleDeleteImage" class="scheduleActionImageOff" border="0" src="<s:url value="/images/delete_on.png" includeParams="none"/>"/></a></td>
-							        <td>&nbsp;&nbsp;</td>
+							    	<td nowrap><a href="#" onclick="changeAction(1, '');"><img title="<s:text name="schedule.addshift.shift.alt"/>" alt="<s:text name="schedule.addshift.shift.alt"/>" id="scheduleShiftImage" class="scheduleActionImageOff" border="0" src="<s:url value="/images/add_shift.gif" includeParams="none"/>"/></a></td>
+							    	<td class="scheduleActionLabel" valign="middle">&nbsp;</td>
+							    	<td class="scheduleActionLabel" valign="middle"><a href="#" class="scheduleActionLink" onclick="changeAction(1, '');"><s:text name="schedule.addshift.shift.alt"/></a></td>
+							        <td class="scheduleActionLabel" valign="middle">&nbsp;|&nbsp;</td>
+							    	<td nowrap><a href="#" onclick="changeAction(3, '');"><img title="<s:text name="schedule.addshift.break.alt"/>" alt="<s:text name="schedule.addshift.break.alt"/>" id="scheduleBreakImage" class="scheduleActionImageOff" border="0" src="<s:url value="/images/add_break.gif" includeParams="none"/>"/></a></td>
+							    	<td class="scheduleActionLabel" valign="middle">&nbsp;</td>
+							    	<td class="scheduleActionLabel" valign="middle"><a href="#" class="scheduleActionLink" onclick="changeAction(3, '');"><s:text name="schedule.addshift.break.alt"/></a></td>
+							        <td class="scheduleActionLabel" valign="middle">&nbsp;|&nbsp;</td>
+							    	<td nowrap><a href="#" onclick="changeAction(5, '');"><img title="<s:text name="schedule.addshift.free.alt"/>" alt="<s:text name="schedule.addshift.free.alt"/>" id="scheduleDeleteImage" class="scheduleActionImageOff" border="0" src="<s:url value="/images/del_shift.gif" includeParams="none"/>"/></a></td>
+							    	<td class="scheduleActionLabel" valign="middle">&nbsp;</td>
+							    	<td class="scheduleActionLabel" valign="middle"><a href="#" class="scheduleActionLink" onclick="changeAction(5, '');"><s:text name="schedule.addshift.free.alt"/></a></td>
+							        <td class="scheduleActionMessage">&nbsp;&nbsp;</td>
 									<td id="actionMessage" class="scheduleActionMessage"></td>							    
 							    </tr>
 							</table>				
 							<!-- Schedule selection action table -->
 						</td>
-						</s:if>
 					</tr>
 				</table>
 			</td>
 		</tr>
-		
+		</s:if>
 		
 		<tr>
 			<td align="center">
@@ -425,7 +414,27 @@
 				</table>			
 			<!-- Schedule selection table -->
 			</td>
-		</tr>		
+		</tr>
+		
+		<tr>
+			<td width="100%" align="left">
+				<!-- Caption -->
+				<table border="0" cellpadding="1" cellspacing="2">
+					<tr>
+						<td class="scheduleSelectedCaption"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+						<td class="captionText"><s:text name="schedule.addshift.shift.caption"/></td>
+						<td>&nbsp;</td>
+						<td class="scheduleBreakCaption"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+						<td class="captionText"><s:text name="schedule.addshift.break.caption"/></td>
+						<td>&nbsp;</td>
+						<td class="scheduleEmptyCaption"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+						<td class="captionText"><s:text name="schedule.addshift.free.caption"/></td>
+					</tr>
+				</table>
+				<!-- Caption -->			
+			</td>
+		</tr>
+				
 		<s:if test="%{!weekDaySelector.isSelectedDateBeforeToday()}">
 		<tr>
 			<td width="100%" align="right">
