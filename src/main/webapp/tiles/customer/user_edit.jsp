@@ -66,7 +66,7 @@
 		                    <tr>
 		                		<td><s:submit id="saveButton" key="save.button" theme="simple" cssClass="button"/></td>
 		                    	<td><s:reset id="resetButton" key="reset.button" theme="simple" cssClass="button"/></td>
-		                    	<td><s:submit id="cancelButton" key="cancel.button" action="%{getText(previousActionName)}_list" theme="simple" cssClass="button"/></td>		                    
+		                    	<td><s:submit id="cancelButton" key="cancel.button" action="%{getText(actionName)}_list" theme="simple" cssClass="button"/></td>		                    
 		                    </tr>
 	                    </table>                    
                     </td>

@@ -10,7 +10,6 @@ import com.laborguru.model.Manager;
 import com.laborguru.model.Profile;
 import com.laborguru.model.User;
 import com.laborguru.model.filter.SearchManagerFilter;
-import com.laborguru.model.filter.SearchUserFilter;
 import com.laborguru.service.data.ReferenceDataService;
 import com.laborguru.service.manager.ManagerService;
 
@@ -29,7 +28,7 @@ public abstract class ManagerBaseAction extends SpmAction {
 	private Manager manager;
 	private User user;
 	private List<Manager> users;
-	private SearchManagerFilter searchUser;
+	private SearchManagerFilter searchManager;
 
 	private List<Profile> profiles;
 	private Map<String, String> statusMap;
@@ -148,7 +147,11 @@ public abstract class ManagerBaseAction extends SpmAction {
 		return SpmActionResult.EDIT.getResult();
 	}
 	
-
+	public String search(){
+		setCriteria();
+		setUsers(getManagerService().filterUser(getSearchManager()));
+		return SpmActionResult.LIST.getResult();
+	}
 
 	private void loadListsForAddEditPage() {
 		setStatusMap(getReferenceDataService().getStatus());
@@ -156,7 +159,8 @@ public abstract class ManagerBaseAction extends SpmAction {
 	
 	private void loadUserById(){
 		setManager(getUserById());
-		setPasswordConfirmation(getManager().getPassword());
+		setUser((User)getManager());
+		setPasswordConfirmation(getUser().getPassword());
 	}
 
 	/**
@@ -316,17 +320,23 @@ public abstract class ManagerBaseAction extends SpmAction {
 		this.user = user;
 	}
 
-	
-	public SearchManagerFilter getSearchUser() {
-		return searchUser;
+	/**
+	 * @return the searchManager
+	 */
+	public SearchManagerFilter getSearchManager() {
+		return searchManager;
 	}
 
-	public void setSearchUser(SearchManagerFilter searchUser) {
-		this.searchUser = searchUser;
+	/**
+	 * @param searchManager the searchManager to set
+	 */
+	public void setSearchManager(SearchManagerFilter searchManager) {
+		this.searchManager = searchManager;
 	}
 
 	protected abstract List<Manager>getUserList();
 	protected abstract void setSaveObject();
 	protected abstract void setExtraInformation();
 	protected abstract Manager getUserById();
+	protected abstract void setCriteria();
 }

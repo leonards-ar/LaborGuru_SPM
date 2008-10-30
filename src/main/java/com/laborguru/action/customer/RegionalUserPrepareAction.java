@@ -18,11 +18,11 @@ import com.opensymphony.xwork2.Preparable;
  *
  */
 @SuppressWarnings("serial")
-public class RegionalUserPrepareAction extends UserBaseAction implements
+public class RegionalUserPrepareAction extends ManagerBaseAction implements
 		Preparable {
 
-	private static String actionName = "regionalUser";
-	private static String previousActionName = "customer";
+	private String actionName = "regionalUser";
+	private String previousActionName = "customer";
 	private Region region;
 	
 	private RegionService regionService;
@@ -62,6 +62,12 @@ public class RegionalUserPrepareAction extends UserBaseAction implements
 		setManager(regionalUser);
 	}
 
+	protected void setCriteria() {
+		Region region = new Region();
+		region.setId(getParamId());
+		getSearchManager().setRegion(region);
+	}
+	
 	public void prepare() throws Exception {
 	}
 
@@ -74,29 +80,29 @@ public class RegionalUserPrepareAction extends UserBaseAction implements
 	/**
 	 * @return the actionName
 	 */
-	public static String getActionName() {
+	public String getActionName() {
 		return actionName;
 	}
 
 	/**
 	 * @param actionName the actionName to set
 	 */
-	public static void setActionName(String actionName) {
-		RegionalUserPrepareAction.actionName = actionName;
+	public void setActionName(String actionName) {
+		this.actionName = actionName;
 	}
 
 	/**
 	 * @return the previousActionName
 	 */
-	public static String getPreviousActionName() {
+	public String getPreviousActionName() {
 		return previousActionName;
 	}
 
 	/**
 	 * @param previousActionName the previousActionName to set
 	 */
-	public static void setPreviousActionName(String previousActionName) {
-		RegionalUserPrepareAction.previousActionName = previousActionName;
+	public void setPreviousActionName(String previousActionName) {
+		this.previousActionName = previousActionName;
 	}
 
 	/**

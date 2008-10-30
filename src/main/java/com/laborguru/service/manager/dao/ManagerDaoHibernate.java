@@ -2,6 +2,8 @@ package com.laborguru.service.manager.dao;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.laborguru.model.Area;
 import com.laborguru.model.AreaUser;
 import com.laborguru.model.Customer;
@@ -9,10 +11,12 @@ import com.laborguru.model.CustomerUser;
 import com.laborguru.model.Manager;
 import com.laborguru.model.Region;
 import com.laborguru.model.RegionalUser;
+import com.laborguru.model.filter.SearchManagerFilter;
 import com.laborguru.service.dao.hibernate.SpmHibernateDao;
 
 public class ManagerDaoHibernate extends SpmHibernateDao implements ManagerDao {
-
+	private static Logger log = Logger.getLogger(ManagerDaoHibernate.class);
+	
 	public ManagerDaoHibernate() {
 	}
 
@@ -43,21 +47,28 @@ public class ManagerDaoHibernate extends SpmHibernateDao implements ManagerDao {
 		return (AreaUser)getHibernateTemplate().get(AreaUser.class, manager.getId());
 	}
 
-	public CustomerUser save(CustomerUser user) {
-		getHibernateTemplate().saveOrUpdate(user);
-		return user;
+	public List<Manager> applyFilters(SearchManagerFilter searchManagerFilter) {
+		StringBuilder sb = new StringBuilder();
+		
+		
+		if(includeInFilter(searchManagerFilter.getArea())) {
+			sb.append("from AreaUser a where a.area.id=" + searchManagerFilter.getArea().getId());
+		} else if(includeInFilter(searchManagerFilter.getRegion())) {
+			sb.append("from RegionalUser a where a.region.id=" + searchManagerFilter.getRegion().getId());
+		} else if(includeInFilter(searchManagerFilter.getCustomer())){
+			sb.append("from CustomerUser a where a.customer.id=" + searchManagerFilter.getCustomer().getId());
+		}
+		
+		sb.append(" and (a.name like '%" + searchManagerFilter.getFullName() + "%'");
+		sb.append(" or a.surname like '%" + searchManagerFilter.getFullName() + "%')");
+		
+		if(log.isDebugEnabled()) {
+			log.debug(sb.toString());
+		}
+		
+		return (List<Manager>)getHibernateTemplate().find(sb.toString());
 	}
-
-	public RegionalUser save(RegionalUser user) {
-		getHibernateTemplate().saveOrUpdate(user);
-		return user;
-	}
-
-	public AreaUser save(AreaUser user) {
-		getHibernateTemplate().saveOrUpdate(user);
-		return user;
-	}
-
+	
 	public Manager save(Manager manager) {
 		getHibernateTemplate().saveOrUpdate(manager);
 		return manager;

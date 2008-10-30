@@ -9,6 +9,7 @@ import com.laborguru.model.CustomerUser;
 import com.laborguru.model.Manager;
 import com.laborguru.model.Region;
 import com.laborguru.model.RegionalUser;
+import com.laborguru.model.filter.SearchManagerFilter;
 
 /**
  *
@@ -18,12 +19,6 @@ import com.laborguru.model.RegionalUser;
  *
  */
 public interface ManagerDao {
-
-	CustomerUser save(CustomerUser user);
-	
-	RegionalUser save(RegionalUser user);
-	
-	AreaUser save(AreaUser user);
 
 	Manager save(Manager manager);
 	
@@ -36,5 +31,7 @@ public interface ManagerDao {
 	Manager getManagerById(Manager manager);
 	
 	void delete(Manager manager);
+	
+	List<Manager> applyFilters(SearchManagerFilter searchManagerFilter);
 
 }

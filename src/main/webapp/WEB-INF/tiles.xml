@@ -298,4 +298,21 @@
 	<definition name="editRegionalUserPage" extends="regionalUsersData">
 		<put-attribute name="objectExtDataBody" value="/tiles/customer/user_edit.jsp" />
 	</definition>	
+	
+	<!-- Area Managers tiles definition -->
+	<definition name="areaUsersData" template="/layouts/customer/customer_ext_crud.jsp" extends="baseLayoutWithMenu">
+	  <put-attribute name="objectData" value="/tiles/customer/areadata.jsp" />
+	</definition>
+
+	<definition name="listAreaUserPage" extends="areaUsersData">
+		<put-attribute name="objectExtDataBody" value="/tiles/customer/areauser_list.jsp" />
+	</definition>
+
+	<definition name="showAreaUserPage" extends="areaUsersData">
+		<put-attribute name="objectExtDataBody" value="/tiles/customer/user_view.jsp" />
+	</definition>
+	
+	<definition name="editAreaUserPage" extends="areaUsersData">
+		<put-attribute name="objectExtDataBody" value="/tiles/customer/user_edit.jsp" />
+	</definition>	
 </tiles-definitions>
