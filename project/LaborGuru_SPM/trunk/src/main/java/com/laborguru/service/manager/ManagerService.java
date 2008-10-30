@@ -7,6 +7,7 @@ import com.laborguru.model.Area;
 import com.laborguru.model.Customer;
 import com.laborguru.model.Manager;
 import com.laborguru.model.Region;
+import com.laborguru.model.filter.SearchManagerFilter;
 
 /**
  * It's intended to handle special kind of users.
@@ -63,4 +64,12 @@ public interface ManagerService {
 	 * @return
 	 */
 	List<Manager> getAreaUsersByArea(Area area);
+	
+	
+	/**
+	 * Retrieves a List of Managers applying a searchManagerFilter
+	 * @param searchManagerFilter
+	 * @return
+	 */
+	List<Manager> filterUser(SearchManagerFilter searchManagerFilter);
 }

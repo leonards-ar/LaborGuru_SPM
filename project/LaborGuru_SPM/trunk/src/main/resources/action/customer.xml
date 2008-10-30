@@ -39,6 +39,17 @@
 			  <param name="paramId">${paramId}</param>
 			</result>
 		</action>
+		
+		<action name="areaUser_*" method="{1}" class="com.laborguru.action.customer.AreaUserPrepareAction">
+			<result name="edit" type="tiles">editAreaUserPage</result>
+			<result name="show" type="tiles">showAreaUserPage</result>
+			<result name="list" type="tiles">listAreaUserPage</result>
+			<result name="input" type="tiles">editAreaUserPage</result>			
+			<result name="listAction" type="redirectAction">
+			  <param name="actionName">areaUser_list</param>
+			  <param name="paramId">${paramId}</param>
+			</result>
+		</action>		
 						
 	</package>
 </struts>

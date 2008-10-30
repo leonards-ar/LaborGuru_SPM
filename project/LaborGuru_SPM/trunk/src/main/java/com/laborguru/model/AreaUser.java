@@ -17,6 +17,14 @@ public class AreaUser extends User implements Manager{
 
 	private Area area;
 
+	public AreaUser() {
+		
+	}
+	
+	public AreaUser(User user){
+		super(user);
+	}
+	
 	/**
 	 * @return the area
 	 */

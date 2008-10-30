@@ -16,10 +16,10 @@ import com.opensymphony.xwork2.Preparable;
  *
  */
 @SuppressWarnings("serial")
-public class CustomerUserPrepareAction extends UserBaseAction implements Preparable {
+public class CustomerUserPrepareAction extends ManagerBaseAction implements Preparable {
 
-	private static String actionName = "customerUser";
-	private static String previousActionName = "customer";
+	private String actionName = "customerUser";
+	private String previousActionName = "customer";
 	
 	private Customer customer;
 	
@@ -59,6 +59,12 @@ public class CustomerUserPrepareAction extends UserBaseAction implements Prepara
 		tmpUser.setId(getUserId());
 		return getManagerService().getManagerById((Manager)tmpUser);
 	}
+	
+	protected void setCriteria() {
+		Customer customer = new Customer();
+		customer.setId(getParamId());
+		getSearchManager().setCustomer(customer);
+	}
 
 	public void prepare() throws Exception {
 	}
@@ -85,29 +91,29 @@ public class CustomerUserPrepareAction extends UserBaseAction implements Prepara
 	/**
 	 * @return the actionName
 	 */
-	public static String getActionName() {
+	public String getActionName() {
 		return actionName;
 	}
 
 	/**
 	 * @param actionName the actionName to set
 	 */
-	public static void setActionName(String actionName) {
-		CustomerUserPrepareAction.actionName = actionName;
+	public void setActionName(String actionName) {
+		this.actionName = actionName;
 	}
 
 	/**
 	 * @return the previousActionName
 	 */
-	public static String getPreviousActionName() {
+	public String getPreviousActionName() {
 		return previousActionName;
 	}
 
 	/**
 	 * @param previousActionName the previousActionName to set
 	 */
-	public static void setPreviousActionName(String previousActionName) {
-		CustomerUserPrepareAction.previousActionName = previousActionName;
+	public void setPreviousActionName(String previousActionName) {
+		this.previousActionName = previousActionName;
 	}
 
 	/**
