@@ -1,4 +1,4 @@
-html,body {
+html, body {
 	margin: 0;
 	padding: 0;
 	height: 100%;
@@ -17,9 +17,9 @@ a {
 }
 
 a.link {
-	font-family: tahoma, arial, sans-serif;
+	font-family: trebuchet ms, arial, sans-serif;
 	font-size: 11px;
-	color: #003300;
+	color: #333333;
 	font-weight: bold;
 	text-decoration: none;
 }
@@ -30,7 +30,7 @@ a.link:hover {
 
 #bodyTable {
 	height: 100%;
-	font: 11px tahoma, arial, sans-serif;
+	font: 11px trebuchet ms, arial, sans-serif;
 }
 
 #headerRow {
@@ -45,11 +45,11 @@ a.link:hover {
 
 #footerRow {
 	height: 20px;;
-	background-color: #DEEFDC;
+	background-color: #666666;
 	font-weight: bold;
 	text-decoration: none;
-	color: #003300;
-	font: 11px tahoma, arial, sans-serif;
+	color: #D6DE26;
+	font: 11px trebuchet ms, arial, sans-serif;	
 	text-align: center;
 }
 
@@ -59,49 +59,47 @@ a.link:hover {
 
 #headerTop {
 	height: 75px;
-	background-color: #A3D39C;
-	background-image: url(../images/header-top-bg.png);
-	background-position: bottom;
-	background-repeat: repeat-x;
+	background-color: #D6DE26;
+	background-image: url('../images/header-top-bg.png');
+	background-repeat: repeat-x; background-position-y:50%
 }
 
 #headerBottom {
 	height: 15px;
-	background-color: #DEEFDC;
+	background-color: #D6DE26;
 	font-weight: bold;
 	text-decoration: none;
-	color: #003300;
-	font: 11px tahoma, arial, sans-serif;
+	color: #333333;
+	font: 11px trebuchet ms, arial, sans-serif;
 }
 
 #titleBar {
 	height: 19px;
 	width: 100%;
-	background-color: #A3D39C;
-	background-image: url(../images/title-bar-bg.png);
-	background-position: top;
+	background-color: #D6DE26;
+	background-image: url('../images/title-bar-bg.png');
 	background-repeat: repeat-x;
-	color: #FFFFFF;
+	font-weight: bold;
+	color: #333333;
 	padding-left: 7px;
 	font-size: 13px;
-	text-align: center;
+	text-align: center; background-position-y:50%
 }
 
 #subtitleBar {
 	height: 19px;
 	width: 100%;
 	background-color: #A3D39C;
-	background-image: url(../images/title-bar-bg.png);
-	background-position: top;
+	background-image: url('../images/title-bar-bg.png');
 	background-repeat: repeat-x;
 	color: #FFFFFF;
 	padding-left: 7px;
 	font-size: 13px;
-	text-align: left;
+	text-align: left; background-position-y:50%
 }
 
 #loginFormTable {
-	background-color: #DEEFDC;
+	background-color: #E6E6E6;
 }
 
 
@@ -115,25 +113,25 @@ input.button {
 	border-right-width: 1px;
 	border-top-color: #D9DFEA;
 	border-left-color: #FFFFFF;
-	border-bottom-color: #003300;
-	border-right-color: #003300;
-	font-family: tahoma, arial, sans-serif;
+	border-bottom-color: #333333;
+	border-right-color: #333333;
+	font-family: trebuchet ms, arial, sans-serif;
 	font-size: 12px;
-	background-color: #A3D39C;
-	color: #FFFFFF;
+	background-color: #b6b40a;
+	color: #333333;
 }
 
 .form_label {
-	font-family: tahoma, arial, sans-serif;
+	font-family: trebuchet ms, arial, sans-serif;
 	font-size: 12px;
-	color: #003300;
+	color: #333333;
 }
 
 .value {
 	font-weight: bold;
-	font-family: tahoma, arial, sans-serif;
+	font-family: trebuchet ms, arial, sans-serif;
 	font-size: 11px;
-	color: #184E01;
+	color: #333333;
 }
 
 #searchFormTable {
@@ -151,14 +149,14 @@ table.results {
 
 table.results th {
 	background-color: #A3D39C;
-	background-image: url(../images/table-header-bg.png);
-	background-position: center;
+	background-image: url('../images/table-header-bg.png');
+	background-position:  center 50%;
 	background-repeat: repeat-x;
-	color: #184E01;
+	color: #333333;
 	font-size: 13px;
 	text-align: center;
-	font-family: tahoma, arial, sans-serif;
-	font-weight: bold;
+	font-family: trebuchet ms, arial, sans-serif;
+	font-weight: bold
 }
 
 table.results th a {
@@ -177,10 +175,10 @@ table.results th a {
 	background-image: url(../images/table-header-bg.png);
 	background-position: center;
 	background-repeat: repeat-x;
-	color: #184E01;
+	color: #333333;
 	font-size: 13px;
 	text-align: center;
-	font-family: tahoma, arial, sans-serif;
+	font-family: trebuchet ms, arial, sans-serif;
 	font-weight: bold;
 	padding: 0px;
 }
@@ -189,21 +187,21 @@ table.results th a {
 .resultsTableOddRow {
 	background-color: #F7F7F7;
 	font-size: 12px;
-	font-family: tahoma, arial, sans-serif;
-	color: #184E01;
+	font-family: trebuchet ms, arial, sans-serif;
+	color: #333333;
 }
 
 .resultsTableEvenRow {
-	background-color: #DEEFDC;
+	background-color: #E6E6E6;
 	font-size: 12px;
-	font-family: tahoma, arial, sans-serif;
-	color: #184E01;
+	font-family: trebuchet ms, arial, sans-serif;
+	color: #333333;
 }
 
 .resultsTableLink {
 	font-size: 12px;
-	font-family: tahoma, arial, sans-serif;
-	color: #007500;
+	font-family: trebuchet ms, arial, sans-serif;
+	color: #466E0A;
 	text-decoration: none;
 	font-weight: normal;
 }
@@ -214,8 +212,8 @@ table.results th a {
 
 .calendarUnselectedWeekLink {
 	font-size: 12px;
-	font-family: tahoma, arial, sans-serif;
-	color: #184E01;
+	font-family: trebuchet ms, arial, sans-serif;
+	color: #333333;
 	text-decoration: none;
 	font-weight: normal;
 }
@@ -234,15 +232,15 @@ table.results th a {
 
 .calendarSelectedWeekText {
 	font-size: 12px;
-	font-family: tahoma, arial, sans-serif;
-	color: #184E01;
+	font-family: trebuchet ms, arial, sans-serif;
+	color: #333333;
 	text-decoration: none;
 	font-weight: bold;	
 }
 
 .calendarWeekDayTableColumn {
 	text-align: center;
-	background-color: #DEEFDC;
+	background-color: #E6E6E6;
 }
 
 .calendarWeekDayTableRowSeparator {
@@ -252,9 +250,9 @@ table.results th a {
 
 .availableWeekDayLink {
 	font-size: 12px;
-	font-family: tahoma, arial, sans-serif;
+	font-family: trebuchet ms, arial, sans-serif;
 	text-decoration: none;
-	color: #184E01;
+	color: #333333;
 }
 
 .availableWeekDayLink:hover {
@@ -262,15 +260,15 @@ table.results th a {
 }
 
 .availableWeekDay {
-	background-color: #DEEFDC;
+	background-color: #E6E6E6;
 	text-align: center;
 }
 
 .selectedWeekDay {
-	background-color: #184E01;
+	background-color: #333333;
 	text-align: center;
 	font-size: 12px;
-	font-family: tahoma, arial, sans-serif;
+	font-family: trebuchet ms, arial, sans-serif;
 	font-weight: bold;
 	color: #FFFFFF;
 }
@@ -278,7 +276,7 @@ table.results th a {
 /* css for display tags */ 
 .pagebanner {
 	font-size: 12px;
-	font-family: tahoma, arial, sans-serif;
+	font-family: trebuchet ms, arial, sans-serif;
 	margin-top:5px;
 	padding-left:4px
 }
@@ -288,7 +286,7 @@ table.results th a {
 	margin-top:5px;
 	padding-right:4px;
 	font-size: 12px;
-	font-family: tahoma, arial, sans-serif;
+	font-family: trebuchet ms, arial, sans-serif;
 }
 
 .pagelinks a {
@@ -307,51 +305,51 @@ table.results th a {
 .editFormOddRow {
 	background-color: #F7F7F7;
 	font-size: 12px;
-	font-family: tahoma, arial, sans-serif;
+	font-family: trebuchet ms, arial, sans-serif;
 }
 
 .editFormEvenRow {
 	background-color: #FFFFFF;
 	font-size: 12px;
-	font-family: tahoma, arial, sans-serif;
+	font-family: trebuchet ms, arial, sans-serif;
 }
 
 .captionText {
 	color: #336600;
 	font-style: normal;
 	font-size: 11px;
-	font-family: tahoma, arial, sans-serif;
+	font-family: trebuchet ms, arial, sans-serif;
 }
 
 .infoMessage {
 	font-style: italic;
 	font-size: 11px;
-	font-family: tahoma, arial, sans-serif;
+	font-family: trebuchet ms, arial, sans-serif;
 }
 
 .errorSecurityTitle {
 	font-size: 15px;
 	font-weight: bold;
 	font-style: italic;
-	font-family: tahoma, arial, sans-serif;
+	font-family: trebuchet ms, arial, sans-serif;
 	color: red;
 }
 
 .errorSecurityMessage {
 	font-size: 11px;
-	font-family: tahoma, arial, sans-serif;
+	font-family: trebuchet ms, arial, sans-serif;
 	color: red;
 }
 
 .errorMessage {
 	font-size: 11px;
-	font-family: tahoma, arial, sans-serif;
+	font-family: trebuchet ms, arial, sans-serif;
 	color: red;
 }
 
 .actionMessage {
 	font-size: 11px;
-	font-family: tahoma, arial, sans-serif;
+	font-family: trebuchet ms, arial, sans-serif;
 	color: green;
 	font-weight: bold;	
 } 
@@ -361,26 +359,23 @@ table.results th a {
 }
 
 .availableMenuItem {
-	background-color: #184E01;
-	background-image: url(../images/avail-menu-item-bg.png);
-	background-position: top;
+	background-color: #666666;
+	background-image: url('../images/avail-menu-item-bg.png');
 	background-repeat: repeat-x;
 	text-align: center;
-	font-weight: bold;
+	font-weight: bold; background-position-y:50%
 }
 
 .availableMenuItemOver {
-	background-color: #DEEFDC;
-	background-image: url(../images/sel-menu-item-bg.png);
-	background-position: top;
+	background-color: #666666;
+	background-image: url('../images/sel-menu-item-bg.png');
 	background-repeat: repeat-x;
-	text-align: center;
+	text-align: center; background-position-y:50%
 }
 
 .selectedMenuItem {
-	background-color: #DEEFDC;
-	background-image: url(../images/sel-menu-item-bg.png);
-	background-position: top;
+	background-color: #666666;
+	background-image: url('../images/sel-menu-item-bg.png');
 	background-repeat: repeat-x;
 	padding-left: 12px;
 	padding-right: 12px;
@@ -388,14 +383,14 @@ table.results th a {
 	padding-top: 8px;
 	text-align: center;
 	font-size: 12px;
-	font-family: tahoma, arial, sans-serif;
+	font-family: trebuchet ms, arial, sans-serif;
 	font-weight: bold;
-	color: #184E01;
+	color: #333333; background-position-y:50%
 }
 
 a.availableMenuItemAnchor {
 	font-size: 12px;
-	font-family: tahoma, arial, sans-serif;
+	font-family: trebuchet ms, arial, sans-serif;
 	text-decoration: none;
 	display: block;
 	padding-left: 12px;
@@ -412,7 +407,7 @@ a.availableMenuItemAnchor:hover {
 	padding-right: 12px;
 	padding-bottom: 8px;
 	padding-top: 8px;
-	color: #184E01;
+	color: #333333;
 	font-weight: bold;
 }
 
@@ -427,8 +422,8 @@ a.availableMenuItemAnchor:hover {
 
 .subMenuItemAnchor {
 	font-size: 11px;
-	font-family: tahoma, arial, sans-serif;
-	color: #184E01;
+	font-family: trebuchet ms, arial, sans-serif;
+	color: #333333;
 	text-decoration: none;
 	font-weight: normal;
 }
@@ -438,35 +433,34 @@ a.availableMenuItemAnchor:hover {
 }
 
 img {
-	border: 0;
+	border: 0px none;
 }
 
 select {
 	font-size: 11px;
-	border: 1px solid #859D31;
+	border: 1px solid #466e0a;
 }
 
-input,textarea {
-	border: 1px solid #003300;
+input, textarea {
+	border: 1px solid #333333;
 	font-size: 11px;
-	border: 1px solid #859D31;
+	border: 1px solid #466e0a;
 }
 
 #actionsTable {
-	border: 1px solid #184E01;
+	border: 1px solid #333333;
 }
 
 .actionsTableHeader {
 	height: 19px;
 	width: 100%;
 	background-color: #A3D39C;
-	background-image: url(../images/title-bar-bg.png);
-	background-position: top;
+	background-image: url('../images/title-bar-bg.png');
 	background-repeat: repeat-x;
 	color: #FFFFFF;
 	padding-left: 7px;
 	font-size: 13px;
-	text-align: center;
+	text-align: center; background-position-y:50%
 }
 
 .actionsTableValue {
@@ -474,10 +468,10 @@ input,textarea {
 }
 
 .actionsLink {
-	font-family: tahoma, arial, sans-serif;
+	font-family: trebuchet ms, arial, sans-serif;
 	font-size: 11px;
 	font-weight: normal;
-	color: #184E01;
+	color: #333333;
 	text-decoration: none;	
 }
 
@@ -486,53 +480,52 @@ input,textarea {
 }
 
 .editorTableHeader {
-	background-color: #A3D39C;
-	background-image: url(../images/table-header-bg.png);
-	background-position: center;
+	background-color: #b6b40a;
+	background-image: url('../images/table-header-bg.png');
+	background-position:  center 50%;
 	background-repeat: repeat-x;
-	color: #184E01;
+	color: #333333;
 	font-size: 12px;
 	text-align: center;
-	font-family: tahoma, arial, sans-serif;
-	font-weight: bold;
+	font-family: trebuchet ms, arial, sans-serif;
+	font-weight: bold
 }
 
 .editorTableFirstColumn {
-	background-color: #DEEFDC;
-	color: #184E01;
+	background-color: #E6E6E6;
+	color: #333333;
 	font-size: 12px;
 	text-align: center;
-	font-family: tahoma, arial, sans-serif;
+	font-family: trebuchet ms, arial, sans-serif;
 	font-weight: bold;
 }
 
 .editorTableOddRow {
 	background-color: #F7F7F7;
 	font-size: 12px;
-	font-family: tahoma, arial, sans-serif;
-	color: #184E01;
+	font-family: trebuchet ms, arial, sans-serif;
+	color: #333333;
 	text-align: center;
 }
 
 .editorTableEvenRow {
-	background-color: #DEEFDC;
+	background-color: #E6E6E6;
 	font-size: 12px;
-	font-family: tahoma, arial, sans-serif;
-	color: #184E01;
+	font-family: trebuchet ms, arial, sans-serif;
+	color: #333333;
 	text-align: center;
 }
 
 #titleBar2 {
 	height: 22px;
 	width: 100%;
-	background-color: #A3D39C;
-	background-image: url(../images/title-bar-bg.png);
-	background-position: top;
+	background-color: #D6DE0A;
+	background-image: url('../images/title-bar-bg.png');
 	background-repeat: repeat-x;
 	color: #FFFFFF;
 	padding-left: 7px;
 	font-size: 20px;
-	text-align: left;
+	text-align: left; background-position-y:50%
 }
 
 #fullHeightTable {
@@ -540,32 +533,32 @@ input,textarea {
 }
 
 #windowTable {
-	border: 1px solid #A3D39C;
+	border: 1px solid #D6DE26;
 }
 
 .windowTableHeader {
-	background-color: #A3D39C;
-	background-image: url(../images/table-header-bg.png);
-	background-position: center;
+	background-color: #666666;
+	background-image: url('../images/table-header-bg.png');
+	background-position:  center 50%;
 	background-repeat: repeat-x;
-	color: #184E01;
+	color: #333333;
 	font-size: 12px;
 	text-align: center;
-	font-family: tahoma, arial, sans-serif;
-	font-weight: bold;	
+	font-family: trebuchet ms, arial, sans-serif;
+	font-weight: bold	
 }
 
 .windowTableLabel {
-	color: #A3D39C;
+	color: #666666;
 	text-align: center;
-	font-family: tahoma, arial, sans-serif;
+	font-family: trebuchet ms, arial, sans-serif;
 	font-weight: bold;	
 	font-size: 11px;	
 }
 
 .windowTableValue {
-	color: #184E01;
-	font-family: tahoma, arial, sans-serif;
+	color: #333333;
+	font-family: trebuchet ms, arial, sans-serif;
 	font-size: 11px;	
 	text-align: center;
 }

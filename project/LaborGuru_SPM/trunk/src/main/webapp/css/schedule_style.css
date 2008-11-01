@@ -1,184 +1,185 @@
 /*
 Colors:
-Table Borders: #184E01
+Table Borders: #333333
 
 Selected: #33CC33
-Break: #CCFF00
+Break: #D6DE26
 
 */
 #scheduleActionsTable {
 }
 
 #scheduleMainTable {
-	border: 2px solid #184E01;
+	border: 2px solid #333333;
 }
 
 
 .scheduleMainTableHeader {
-	background-color: #A3D39C;
-	color: #184E01;
+	background-color: #C8C8C8;
+	color: #333333;
 	font-size: 13px;
 	text-align: center;
-	font-family: tahoma, arial, sans-serif;
+	font-family: trebuchet ms, arial, sans-serif;
 	font-weight: bold;
 }
 
 .scheduleCellHeader {
-	border: 1px solid #184E01;
+	border: 1px solid #333333;
 }
 
 .scheduleActionMessage {
-	color: orange;
+	color: #82B41E;
 	font-size: 11px;
 	text-align: left;
-	font-family: tahoma, arial, sans-serif;
+	font-family: trebuchet ms, arial, sans-serif;
+	font-weight: bold;
 }
 
 .scheduleMainTableEmployeeRow {
 }
 
 .scheduleNameCell {
-	border: 1px solid #184E01;
-	background-color: #DEEFDC;
-	color: #184E01;
+	border: 1px solid #333333;
+	background-color: #E6E6E6;
+	color: #333333;
 	font-size: 12px;
 	text-align: left;
-	font-family: tahoma, arial, sans-serif;
+	font-family: trebuchet ms, arial, sans-serif;
 }
 
 .scheduleValueCell {
-	border: 1px solid #184E01;
-	background-color: #DEEFDC;
-	color: #184E01;
+	border: 1px solid #333333;
+	background-color: #E6E6E6;
+	color: #333333;
 	font-size: 12px;
 	text-align: center;
-	font-family: tahoma, arial, sans-serif;
+	font-family: trebuchet ms, arial, sans-serif;
 	font-weight: bold;
 }
 
 .scheduleEmployeeTotalHoursExceeded {
-	border: 1px solid #184E01;
+	border: 1px solid #333333;
 	background-color: #FFF337;
 	color: #FF1717;
 	font-size: 12px;
 	text-align: center;
-	font-family: tahoma, arial, sans-serif;
+	font-family: trebuchet ms, arial, sans-serif;
 	font-weight: bold;
 }
 
 .scheduleStaffingNameCell {
-	border: 1px solid #184E01;
+	border: 1px solid #333333;
 	background-color: #FFFFFF;
-	color: #184E01;
+	color: #333333;
 	font-size: 12px;
 	text-align: right;
-	font-family: tahoma, arial, sans-serif;	
+	font-family: trebuchet ms, arial, sans-serif;	
 }
 
 .scheduleStaffingValueCell {
-	border: 1px solid #184E01;
-	background-color: #DEEFDC;
-	color: #184E01;
+	border: 1px solid #333333;
+	background-color: #E6E6E6;
+	color: #333333;
 	font-size: 12px;
 	text-align: center;
-	font-family: tahoma, arial, sans-serif;
+	font-family: trebuchet ms, arial, sans-serif;
 }
 
 .scheduleTotalValueCell {
-	border: 1px solid #184E01;
+	border: 1px solid #333333;
 	background-color: #FFFFFF;
-	color: #184E01;
-	font-size: 12px;
+	color: #333333;
+	font-size: 10px;
 	text-align: center;
-	font-family: tahoma, arial, sans-serif;	
+	font-family: trebuchet ms, arial, sans-serif;	
 }
 
 .scheduleStaffingUnavailable {
 	background-color: #CACACA;
-	border: 1px solid #184E01;
+	border: 1px solid #333333;
 	width: 5px;	
 }
 
 .scheduleStaffingCalculated {
-	background-color: #FFFFF;
-	border: 1px solid #184E01;
-	width: 5px;
-	color: #184E01;
-	font-size: 12px;
+	background-color: #FFFFFF;
+	border: 1px solid #333333;
+	width: 6px;
+	color: #333333;
+	font-size: 10px;
 	text-align: center;	
 }
 
 .scheduleStaffingDifferenceNegative {
-	background-color: #FFF337;
-	border: 1px solid #184E01;
-	width: 5px;
-	color: #FF1717;
-	font-size: 12px;
+	background-color: #FFCC99;
+	border: 1px solid #333333;
+	width: 6px;
+	color: #990000;
+	font-size: 10px;
 	text-align: center;		
 }
 
 .scheduleStaffingDifferencePositive {
-	background-color: #F4D819;
-	border: 1px solid #184E01;
-	width: 5px;
-	color: #184E01;
-	font-size: 12px;
+	background-color: #FFFFFF;
+	border: 1px solid #333333;
+	width: 6px;
+	color: #333333;
+	font-size: 10px;
 	text-align: center;		
 }
 
 .scheduleStaffingDifferenceEqual {
-	background-color: #FFFFF;
-	border: 1px solid #184E01;
-	width: 5px;
-	color: #184E01;
-	font-size: 12px;
+	background-color: #FFFFFF;
+	border: 1px solid #333333;
+	width: 6px;
+	color: #999999;
+	font-size: 10px;
 	text-align: center;	
 }
 
 td.scheduleStartSelection {
-	background-color: #63B177;
-	border: 1px solid #184E01;
+	background-color: #466E0A;
+	border: 1px solid #333333;
 }
 
 td.scheduleSelected {
-	border-right: 1px hidden #33CC33;
-	border-left: 1px hidden #33CC33;
-	border-top:1px solid #184E01;
-	border-bottom: 1px solid #184E01;
-	background-color: #33CC33;
+	border-right: 1px hidden #82B41E;
+	border-left: 1px hidden #82B41E;
+	border-top:1px solid #333333;
+	border-bottom: 1px solid #333333;
+	background-color: #82B41E;
 	width: 7px;
 }
 
 td.scheduleSelectedCaption {
-	border:1px solid #184E01;
-	background-color: #33CC33;
+	border:1px solid #333333;
+	background-color: #82B41E;
 	width: 5px;
 }
 
 td.scheduleBreak {
-	border-right: 1px hidden #CCFF00;
-	border-left: 1px hidden #CCFF00;
-	border-top:1px solid #184E01;
-	border-bottom: 1px solid #184E01;
+	border-right: 1px hidden #D6DE26;
+	border-left: 1px hidden #D6DE26;
+	border-top:1px solid #333333;
+	border-bottom: 1px solid #333333;
 	width: 7px;
-	background-color: #CCFF00;
+	background-color: #D6DE26;
 }
 
 td.scheduleBreakCaption {
-	border:1px solid #184E01;
+	border:1px solid #333333;
 	width: 5px;
-	background-color: #CCFF00;
+	background-color: #D6DE26;
 }
 
 td.scheduleEmptyCaption {
-	border:1px solid #184E01;
+	border:1px solid #333333;
 	width: 5px;
 	background-color: #FFFFFF;
 }
 
 td.scheduleEmpty {
 	background-color: #FFFFFF;
-	border: 1px solid #184E01;
+	border: 1px solid #333333;
 	width: 5px;
 }
 
@@ -186,18 +187,18 @@ td.scheduleEmpty {
 
 td.scheduleUnavailable {
 	background-color: #CACACA;
-	border: 1px solid #184E01;
+	border: 1px solid #333333;
 	width: 5px;
 }
 
 td.scheduleEndSelection {
-	background-color: #63B177;
-	border: 1px solid #184E01;
+	background-color: #466E0A;
+	border: 1px solid #333333;
 }
 
 td.scheduleSelectingOver {
-	background-color: #63B177;
-	border: 1px solid #184E01;
+	background-color: #466E0A;
+	border: 1px solid #333333;
 }
 
 img.scheduleActionImageOff {
@@ -205,22 +206,22 @@ img.scheduleActionImageOff {
 }
 
 img.scheduleActionImageOn {
-	border: 1px solid #184E01;
+	border: 1px solid #333333;
 }
 
 .scheduleActionLabel {
-	font-family: tahoma, arial, sans-serif;
-	font-size: 11px;
+	font-family: trebuchet ms, arial, sans-serif;
+	font-size: 12px;
 	font-weight: normal;
-	color: #336600;
+	color: #466E0A;
 	text-decoration: none;	
 }
 	
 a.scheduleActionLink {
-	font-family: tahoma, arial, sans-serif;
-	font-size: 11px;
+	font-family: trebuchet ms, arial, sans-serif;
+	font-size: 12px;
 	font-weight: normal;
-	color: #336600;
+	color: #466E0A;
 	text-decoration: none;	
 }
 
