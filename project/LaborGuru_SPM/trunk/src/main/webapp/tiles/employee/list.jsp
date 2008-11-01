@@ -31,7 +31,7 @@
 		<td align="center">
 		<!-- Search Results -->	
  		<s:set name="employeesList" value="storeEmployees" scope="request"/>
-		<display:table name="employeesList" class="results" pagesize="5" requestURI="employee_list.action" sort="list" defaultsort="1">		    
+		<display:table name="employeesList" class="results" pagesize="15" requestURI="employee_list.action" sort="list" defaultsort="1">		    
 		    <display:column property="fullName" titleKey="employee.fullname.label" sortable="true" />
 		    <display:column property="email" titleKey="employee.email.label" />
 		    <display:column property="phone" titleKey="employee.phone.label" />
