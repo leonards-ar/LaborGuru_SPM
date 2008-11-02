@@ -34,7 +34,7 @@
  		<s:set name="employeesList" value="storeEmployees" scope="request"/>
 		<display:table name="employeesList" class="results" pagesize="15" requestURI="employeeStore_list.action" sort="list" defaultsort="1">		    
 		    <display:column property="fullName" titleKey="employee.fullname.label" sortable="true" />
-		    <display:column property="email" titleKey="employee.email.label" />
+		    <display:column property="email" titleKey="employee.email.label" autolink="true"/>
 		    <display:column property="phone" titleKey="employee.phone.label" />
 		    <display:column href="employeeStore_show.action" paramId="employeeId" paramProperty="id" class="resultsColumnCentered">
 		    	<img src="<s:url value="/images/view.png" includeParams="none"/>"/>
