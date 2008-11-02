@@ -188,4 +188,32 @@ public class CalendarUtils {
 		day.add(Calendar.DAY_OF_MONTH, -1 * daysTosubstract);
 		return day;
 	}
+	
+	/**
+	 * 
+	 * @param minutes
+	 * @return
+	 */
+	public static String minutesToTime(Integer minutes) {
+		if(minutes != null) {
+			int hs = (int) (minutes.intValue() / 60);
+			int mins = minutes.intValue() % 60;
+			return formatTimeComponent(hs) + ":" + formatTimeComponent(mins);
+		} else {
+			return "00:00";
+		}
+	}
+	
+	/**
+	 * 
+	 * @param n
+	 * @return
+	 */
+	private static String formatTimeComponent(int n) {
+		if(n >= 0 && n < 10) {
+			return "0" + n;
+		} else {
+			return String.valueOf(n);
+		}
+	}
 }

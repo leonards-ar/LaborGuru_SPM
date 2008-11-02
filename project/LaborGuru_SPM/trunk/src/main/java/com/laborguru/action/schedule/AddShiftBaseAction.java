@@ -5,6 +5,7 @@
  */
 package com.laborguru.action.schedule;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,6 +21,7 @@ import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.ScheduleHourLabelElement;
 import com.laborguru.frontend.model.ScheduleRow;
 import com.laborguru.frontend.model.WeekDaySelector;
+import com.laborguru.model.DailyProjection;
 import com.laborguru.model.DailyStaffing;
 import com.laborguru.model.Employee;
 import com.laborguru.model.EmployeeSchedule;
@@ -29,6 +31,7 @@ import com.laborguru.model.Shift;
 import com.laborguru.model.StoreDailyStaffing;
 import com.laborguru.model.StoreSchedule;
 import com.laborguru.service.employee.EmployeeService;
+import com.laborguru.service.projection.ProjectionService;
 import com.laborguru.service.schedule.ScheduleService;
 import com.laborguru.service.staffing.StaffingService;
 import com.laborguru.util.CalendarUtils;
@@ -55,6 +58,9 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	private ScheduleService scheduleService;
 	private EmployeeService employeeService;
 	private StaffingService staffingService;
+	private ProjectionService projectionService;
+	
+	private BigDecimal dailyVolume;
 	
 	public static final int MINUTES_INTERVAL = 15;
 	
@@ -179,6 +185,8 @@ public abstract class AddShiftBaseAction extends SpmAction {
 		
 		loadCalendarData();
 		
+		setDailyVolume(null);
+		
 		return SpmActionResult.INPUT.getResult();
 	}
 	
@@ -192,6 +200,8 @@ public abstract class AddShiftBaseAction extends SpmAction {
 		processChangeDay();
 		
 		loadCalendarData();
+
+		setDailyVolume(null);
 		
 		return SpmActionResult.INPUT.getResult();
 	}
@@ -1014,5 +1024,41 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	 */
 	public void setStaffingService(StaffingService staffingService) {
 		this.staffingService = staffingService;
+	}
+
+	/**
+	 * @return the dailyVolume
+	 */
+	public BigDecimal getDailyVolume() {
+		if(dailyVolume == null) {
+			DailyProjection dailyProjection = getProjectionService().getDailyProjection(getEmployeeStore(), getWeekDaySelector().getSelectedDay());
+			if(dailyProjection != null) {
+				setDailyVolume(dailyProjection.getDailyProjectionValue());
+			} else {
+				setDailyVolume(new BigDecimal("0"));
+			}
+		}
+		return dailyVolume;
+	}
+
+	/**
+	 * @param dailyVolume the dailyVolume to set
+	 */
+	public void setDailyVolume(BigDecimal dailyVolume) {
+		this.dailyVolume = dailyVolume;
+	}
+
+	/**
+	 * @return the projectionService
+	 */
+	public ProjectionService getProjectionService() {
+		return projectionService;
+	}
+
+	/**
+	 * @param projectionService the projectionService to set
+	 */
+	public void setProjectionService(ProjectionService projectionService) {
+		this.projectionService = projectionService;
 	}
 }

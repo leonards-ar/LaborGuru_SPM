@@ -5,6 +5,7 @@
 <s:form id="addshiftbyemployee_form" name="addshiftbyemployee_form" action="addshiftbyemployee_save" theme="simple">
 	<s:hidden id="selectedDate" name="selectedDate"/>
 	<s:hidden id="selectedWeekDay" name="selectedWeekDay"/>
+	<s:hidden id="dailyVolume" name="dailyVolume"/>
 	
 	<table border="0" cellspacing="0" align="center">
 		<tr>
@@ -26,8 +27,7 @@
 												<td colspan="6" class="windowTableHeader"><s:text name="schedule.addshift.projection"/></td>
 											</tr>
 											<tr>
-												<td class="windowTableLabel"><s:text name="schedule.addshift.sales"/></td>
-												<td class="windowTableLabel"><s:text name="schedule.addshift.checks"/></td>
+												<td class="windowTableLabel"><s:text name="schedule.addshift.daily_volume"/></td>
 												<td class="windowTableLabel"><s:text name="schedule.addshift.schedule"/></td>
 												<td class="windowTableLabel"><s:text name="schedule.addshift.target"/></td>
 												<td class="windowTableLabel"><s:text name="schedule.addshift.diff"/></td>
@@ -35,8 +35,7 @@
 											</tr>
 											
 											<tr>
-												<td class="windowTableValue">$2,500</td>
-												<td class="windowTableValue">800</td>
+												<td class="windowTableValue"><s:text name="currency"><s:param value="dailyVolume"/></s:text></td>
 												<td class="windowTableValue">80</td>
 												<td class="windowTableValue"><a href="#">74.2</a></td>
 												<td class="windowTableValue">5.8</td>
@@ -374,7 +373,7 @@
 				    
 				    <tr class="scheduleMainTableEmployeeRow">
 				    	<td colspan="4" class="scheduleStaffingNameCell"><s:text name="schedule.addshift.staffing.minimum_staffing"/>&nbsp;&nbsp;</td>
-				    	<td class="scheduleStaffingValueCell" id='total_staffing_cell'><s:text name='schedule.addshift.hourcell.dateformat'><s:param value='totalMinimutStaffingTime'/></s:text></td>
+				    	<td class="scheduleStaffingValueCell" id='total_staffing_cell'><s:property value='totalMinimutStaffingTime'/></td>
 							<s:iterator id="staffing" value="minimumStaffing" status="itStaffing">
 								<s:if test="#itStaffing.first">
 									<s:iterator id="startToIgnore" value="scheduleIndividualStartHoursToIgnore">
