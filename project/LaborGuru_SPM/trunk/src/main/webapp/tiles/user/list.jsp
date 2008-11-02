@@ -34,7 +34,7 @@
  		<s:set name="usersList" value="users" scope="request"/>
 		<display:table name="usersList" class="results" pagesize="5" requestURI="user_list.action" sort="list" defaultsort="1">		    
 		    <display:column property="fullName" titleKey="user.fullname.label" sortable="true" />
-		    <display:column property="email" titleKey="user.email.label" />
+		    <display:column property="email" titleKey="user.email.label" autolink="true"/>
 		    <display:column href="user_show.action" paramId="userId" paramProperty="id" class="resultsColumnCentered">
 		    	<img src="<s:url value="/images/view.png" includeParams="none"/>"/>
 		    </display:column>
