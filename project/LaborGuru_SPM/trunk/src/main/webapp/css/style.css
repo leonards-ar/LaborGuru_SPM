@@ -53,6 +53,17 @@ a.link:hover {
 	text-align: center;
 }
 
+a.footerLink {
+	font-weight: bold;
+	text-decoration: none;
+	color: #D6DE26;
+	font: 11px trebuchet ms, arial, sans-serif;	
+}
+
+a.footerLink:hover {
+	text-decoration: underline;
+}
+
 #headerTable {
 	height: 100%;
 }
