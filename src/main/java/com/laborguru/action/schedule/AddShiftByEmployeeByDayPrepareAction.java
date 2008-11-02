@@ -6,7 +6,6 @@
 package com.laborguru.action.schedule;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -86,13 +85,9 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	/**
 	 * 
 	 */
-	public Date getTotalMinimutStaffingTime() {
+	public String getTotalMinimutStaffingTime() {
 		Integer min = getTotalMinimutStaffingMinutes();
-		if(min != null && min.intValue() > 0) {
-			return new Date(60000L * min.intValue());
-		} else {
-			return CalendarUtils.removeTimeFromDate(new Date());
-		}
+		return CalendarUtils.minutesToTime(min);
 	}
 	
 	/**
