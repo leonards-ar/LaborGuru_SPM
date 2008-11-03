@@ -82,7 +82,7 @@
 								<tr>
 									<td class="windowTableValue"><s:property value="name"/></td>
 									<td class="windowTableValue" id="<s:property value="id"/>_position_schedule_total">&nbsp;</td>
-									<td class="windowTableValue" id="<s:property value="id"/>_position_target_total"><s:property value="getTotalPositionTarget(#pos)"/></td>
+									<td class="windowTableValue" id="<s:property value="id"/>_position_target_total"><s:property value="%{getTotalPositionTarget(#pos)}"/></td>
 									<td class="windowTableValue" id="<s:property value="id"/>_position_diff">&nbsp;</td>
 								</tr>
 								
@@ -259,7 +259,7 @@
 					    	</s:if>
 					    	<s:else>
 					    		<s:if test="%{position == null}">
-					    			<s:select id="scheduleposition_%{#itScheduleData.index}" onchange="refreshRows('');" name="scheduleData[%{#itScheduleData.index}].positionId" list="positions" listKey="id" listValue="name" theme="simple"/>
+					    			<s:select id="scheduleposition_%{#itScheduleData.index}" onchange="refreshRows(''); updatePositionTotals();" name="scheduleData[%{#itScheduleData.index}].positionId" list="positions" listKey="id" listValue="name" theme="simple"/>
 					    		</s:if>
 					    		<s:else>
 					    			<s:property value="position.name"/>
@@ -456,11 +456,12 @@
 
 
 <script language="javascript" type="text/javascript">
-initialize(<s:property value="totalIndividualHours"/>, <s:property value="scheduleRows"/>, '<s:property value="breakId"/>', '<s:text name="schedule.addshift.cannot_change_row_message"/>', '<s:text name="schedule.addshift.start_time_message"/>', '<s:text name="schedule.addshift.end_time_message"/>', <s:property value="positions.size()"/>);
+initialize(<s:property value="totalIndividualHours"/>, '<s:property value="breakId"/>', '<s:text name="schedule.addshift.cannot_change_row_message"/>', '<s:text name="schedule.addshift.start_time_message"/>', '<s:text name="schedule.addshift.end_time_message"/>', <s:property value="positions.size()"/>, 1);
 <s:iterator id="pos" value="positions" status="posStatus">
 	addPositionId(<s:property value="#posStatus.index"/>, '<s:property value="id"/>');
 </s:iterator>
+addScheduleTotalRows(0, <s:property value="scheduleRows"/>);
 refreshRows('');
 changeAction(1, '');
-updateProjectionScheduleTotal();
+updateSummaryTotals('');
 </script>
