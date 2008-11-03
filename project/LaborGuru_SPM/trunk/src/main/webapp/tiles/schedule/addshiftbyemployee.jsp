@@ -278,10 +278,13 @@
 								<s:url id="employeeList" action="scheduleemployeeautocomplete" includeParams="none"/>
 								<s:autocompleter id="scheduleEmployee_%{#itScheduleData.index}" onchange="reloadEmployeeMaxHoursDay('', %{#itScheduleData.index}); return true;" name="scheduleData[%{#itScheduleData.index}].employeeName" keyName="scheduleData[%{#itScheduleData.index}].employeeId" loadMinimumCount="3" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring"/>
 							</s:else> 
+							<s:hidden id="inHourInput_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].inHour"/>
+							<s:hidden id="outHourInput_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].outHour"/>
+							<s:hidden id="totalHoursInput_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].totalHours"/>
 							</td>    
-							<td class="scheduleValueCell" id="inHour_<s:property value="#itScheduleData.index"/>"><s:hidden id="inHourInput_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].inHour"/><s:property value="#data.inHour"/></td>    
-							<td class="scheduleValueCell" id="outHour_<s:property value="#itScheduleData.index"/>"><s:hidden id="outHourInput_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].outHour"/><s:property value="#data.outHour"/></td>
-							<td class="scheduleValueCell" id="totalHours_<s:property value="#itScheduleData.index"/>"><s:hidden id="totalHoursInput_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].totalHours"/><s:property value="#data.totalHours"/></td>            
+							<td class="scheduleValueCell" id="inHour_<s:property value="#itScheduleData.index"/>"><s:property value="#data.inHour"/></td>    
+							<td class="scheduleValueCell" id="outHour_<s:property value="#itScheduleData.index"/>"><s:property value="#data.outHour"/></td>
+							<td class="scheduleValueCell" id="totalHours_<s:property value="#itScheduleData.index"/>"><s:property value="#data.totalHours"/></td>            
 							<s:iterator id="hour" value="scheduleIndividualHours" status="itHour">
 								<s:if test="#itHour.first">
 									<s:iterator id="startToIgnore" value="scheduleIndividualStartHoursToIgnore">

@@ -252,7 +252,7 @@ function formatTimeNumber(n) {
 
 function refreshRows(scheduleId) {
 	for(var i=0; i < getTotalRows(scheduleId); i++) {
-		refreshRow(i, scheduleId);
+		refreshRowImpl(i, scheduleId, false);
 	}
 	initTotalHours(scheduleId);
 	refreshStaffing(scheduleId);
@@ -274,11 +274,8 @@ function updatePositionTotals() {
 	var totalSchedule = 0;
 	var totalTarget = 0;
 	var totalDiff = 0;
-	
-	var rowTotalObj = null;
-	var rowPositionId;
-	
-	var positionSchedule;
+
+	var positionSchedule = 0;
 	var positionTarget = 0;
 	var positionTargetObj;
 	var diff;
@@ -288,11 +285,11 @@ function updatePositionTotals() {
 		
 		for(var k=0; k < SCHEDULE_IDS.length; k++) {
 			for(var j=0; j < getTotalRows(SCHEDULE_IDS[k]); j++) {
-				rowPositionId = getPositionId(j, SCHEDULE_IDS[k]);
+				var rowPositionId = getPositionId(j, SCHEDULE_IDS[k]);
 				if(rowPositionId == POSITION_IDS[i]) {
-					rowTotalObj = getObjectByID(SCHEDULE_IDS[k] + 'totalHoursInput_' + j);
+					var rowTotalObj = getObjectByID(SCHEDULE_IDS[k] + 'totalHours_' + j);
 					if(rowTotalObj) {
-						positionSchedule += timeInMinutes(rowTotalObj.value);
+						positionSchedule += timeInMinutes(rowTotalObj.innerHTML);
 						totalSchedule += positionSchedule;
 					}
 				}
@@ -452,20 +449,26 @@ function initTotalHours(scheduleId) {
 
 function updateTotalHours(scheduleId, oldTotalRowHours, newTotalRowHours, rowNum, rowTotalObj) {
 	var totalHoursObj = getObjectByID(scheduleId + 'total_cell');
-	var currentTotal = 0;
-	if(totalHoursObj) {
-		currentTotal = timeInMinutes(totalHoursObj.innerHTML);
-		if(isNaN(currentTotal)) {
-			currentTotal = 0;
+	var totalHours = 0;
+	var rowTotalTimeInMins = 0;
+	
+	for(var i=0; i < getTotalRows(scheduleId); i++) {
+		var rowTotalObj = getObjectByID(scheduleId + 'totalHours_' + i);
+		if(rowTotalObj)	{
+			rowTotalTimeInMins = timeInMinutes(rowTotalObj.innerHTML);
+			totalHours += rowTotalTimeInMins;
 		}
-		totalHoursObj.innerHTML = minutesToTime(currentTotal - oldTotalRowHours + newTotalRowHours);
+	}	
+	
+	if(totalHoursObj) {
+		totalHoursObj.innerHTML = minutesToTime(totalHours);
 	}
+	
 	// :TODO: Improve performance?
 	refreshStaffing(scheduleId);
 	setDifferenceTotal(scheduleId);
 
 	checkEmployeeDayTotalHours(scheduleId, newTotalRowHours, rowNum, rowTotalObj);
-	updateSummaryTotals(scheduleId);
 }
 
 function getPositionId(rowNum, scheduleId) {
@@ -519,6 +522,10 @@ function refreshStaffing(scheduleId) {
 }
 
 function refreshRow(rowNum, scheduleId) {
+	refreshRowImpl(rowNum, scheduleId, true);
+}
+
+function refreshRowImpl(rowNum, scheduleId, refreshTotals) {
 	var inHour = null;
 	var outHour = null;
 	var totalHours = 0;
@@ -608,6 +615,9 @@ function refreshRow(rowNum, scheduleId) {
 	}		
 	
 	updateTotalHours(scheduleId, timeInMinutes(oldTotalRowHours), newTotalRowHours, rowNum, o6);
+	if(refreshTotals) {
+		updateSummaryTotals(scheduleId);
+	}
 }
 
 function trim(s) {
