@@ -60,6 +60,8 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	private StaffingService staffingService;
 	private ProjectionService projectionService;
 	
+	private StoreDailyStaffing dailyStaffing = null;
+	
 	private BigDecimal dailyVolume;
 	
 	public static final int MINUTES_INTERVAL = 15;
@@ -488,7 +490,7 @@ public abstract class AddShiftBaseAction extends SpmAction {
 		// :TODO: Improve performance. This will call getHalfHourStaffing every 15 minutes (2 times)
 		// This should be calculated only once
 		if(position == null) {
-			StoreDailyStaffing dailyStaffing = getStaffingService().getDailyStaffingByDate(getEmployeeStore(), getWeekDaySelector().getSelectedDay());
+			StoreDailyStaffing dailyStaffing = getDailyStaffing();
 			for(Date time : getScheduleIndividualHours()) {
 				minimumStaffing.add(new Integer(dailyStaffing.getHalfHourStaffing(time)));
 			}			
@@ -1060,5 +1062,50 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	 */
 	public void setProjectionService(ProjectionService projectionService) {
 		this.projectionService = projectionService;
+	}
+
+	/**
+	 * @return the dailyStaffing
+	 */
+	public StoreDailyStaffing getDailyStaffing() {
+		if(dailyStaffing == null) {
+			setDailyStaffing(getStaffingService().getDailyStaffingByDate(getEmployeeStore(), getWeekDaySelector().getSelectedDay()));
+		}
+		return dailyStaffing;
+	}
+
+	/**
+	 * @param dailyStaffing the dailyStaffing to set
+	 */
+	public void setDailyStaffing(StoreDailyStaffing dailyStaffing) {
+		this.dailyStaffing = dailyStaffing;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getTotalTarget() {
+		StoreDailyStaffing storeDailyStaffing = getDailyStaffing();
+		if(storeDailyStaffing != null) {
+			return CalendarUtils.hoursToTime(storeDailyStaffing.getTotalDailyStaffing());
+		} else {
+			return CalendarUtils.hoursToTime(new Double(0.0));
+		}
+	}
+	
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 */
+	public String getTotalPositionTarget(Position position) {
+		StoreDailyStaffing storeDailyStaffing = getDailyStaffing();
+		if(storeDailyStaffing != null) {
+			DailyStaffing dailyStaffing = storeDailyStaffing.getDailyStaffing(position);
+			return CalendarUtils.hoursToTime(dailyStaffing.getCalculatedDailyHours());
+		} else {
+			return CalendarUtils.hoursToTime(new Double(0.0));
+		}
 	}
 }

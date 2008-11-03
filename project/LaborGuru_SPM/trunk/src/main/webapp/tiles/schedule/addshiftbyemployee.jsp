@@ -36,10 +36,10 @@
 											
 											<tr>
 												<td class="windowTableValue"><s:text name="currency"><s:param value="dailyVolume"/></s:text></td>
-												<td class="windowTableValue">80</td>
-												<td class="windowTableValue"><a href="#">74.2</a></td>
-												<td class="windowTableValue">5.8</td>
-												<td class="windowTableValue">8%</td>
+												<td class="windowTableValue" id="projection_schedule_total">&nbsp;</td>
+												<td class="windowTableValue"><a href="#"><span id="projection_target_total"><s:property value="totalTarget"/></span></a></td>
+												<td class="windowTableValue" id="projection_diff">&nbsp;</td>
+												<td class="windowTableValue" id="projection_diff_percent">&nbsp;</td>
 											</tr>
 										</table>
 									</td>
@@ -78,19 +78,22 @@
 								</tr>
 								
 								<!--  For each position -->
+								<s:iterator value="positions" id="pos">
 								<tr>
-									<td class="windowTableValue">Cook</td>
-									<td class="windowTableValue">55</td>
-									<td class="windowTableValue">51.2</td>
-									<td class="windowTableValue">3.8</td>
+									<td class="windowTableValue"><s:property value="name"/></td>
+									<td class="windowTableValue" id="<s:property value="id"/>_position_schedule_total">&nbsp;</td>
+									<td class="windowTableValue" id="<s:property value="id"/>_position_target_total"><s:property value="getTotalPositionTarget(#pos)"/></td>
+									<td class="windowTableValue" id="<s:property value="id"/>_position_diff">&nbsp;</td>
 								</tr>
+								
+								</s:iterator>
 								<!-- For each position -->
 								
 								<tr>
 									<td class="windowTableValue"><b><s:text name="schedule.addshift.total"/></b></td>
-									<td class="windowTableValue"><b>55</b></td>
-									<td class="windowTableValue"><b>51.2</b></td>
-									<td class="windowTableValue"><b>3.8</b></td>
+									<td class="windowTableValue" id="position_schedule_total"><b>&nbsp;</b></td>
+									<td class="windowTableValue" id="position_target_total"><b>&nbsp;</b></td>
+									<td class="windowTableValue" id="position_diff"><b>&nbsp;</b></td>
 								</tr>
 								
 							</table>
@@ -449,8 +452,15 @@
 	</table>
 </s:form>
 
+
+
+
 <script language="javascript" type="text/javascript">
-initialize(<s:property value="totalIndividualHours"/>, <s:property value="scheduleRows"/>, '<s:property value="breakId"/>', '<s:text name="schedule.addshift.cannot_change_row_message"/>', '<s:text name="schedule.addshift.start_time_message"/>', '<s:text name="schedule.addshift.end_time_message"/>');
+initialize(<s:property value="totalIndividualHours"/>, <s:property value="scheduleRows"/>, '<s:property value="breakId"/>', '<s:text name="schedule.addshift.cannot_change_row_message"/>', '<s:text name="schedule.addshift.start_time_message"/>', '<s:text name="schedule.addshift.end_time_message"/>', <s:property value="positions.size()"/>);
+<s:iterator id="pos" value="positions" status="posStatus">
+	addPositionId(<s:property value="#posStatus.index"/>, '<s:property value="id"/>');
+</s:iterator>
 refreshRows('');
 changeAction(1, '');
+updateProjectionScheduleTotal();
 </script>

@@ -31,6 +31,8 @@ public class DailyStaffing extends SpmObject {
 	private Date startingTime;
 	
 	private Position position;
+	
+	private Double calculatedDailyHours = new Double(0);
 	private List<HalfHourStaffing> halfHourStaffing;
 	
 	
@@ -245,5 +247,19 @@ public class DailyStaffing extends SpmObject {
 		}
 		
 		// :TODO: Update indexes
+	}
+
+	/**
+	 * @return the calculatedDailyHours
+	 */
+	public Double getCalculatedDailyHours() {
+		return calculatedDailyHours;
+	}
+
+	/**
+	 * @param calculatedDailyHours the calculatedDailyHours to set
+	 */
+	public void setCalculatedDailyHours(Double calculatedDailyHours) {
+		this.calculatedDailyHours = calculatedDailyHours;
 	}	
 }
