@@ -206,6 +206,21 @@ public class CalendarUtils {
 	
 	/**
 	 * 
+	 * @param hours
+	 * @return
+	 */
+	public static String hoursToTime(Double hours) {
+		Integer minutes;
+		if(hours != null) {
+			minutes = new Integer((int)(hours.doubleValue() * 60));
+		} else {
+			minutes = new Integer(0); 
+		}
+		return minutesToTime(minutes);
+	}
+	
+	/**
+	 * 
 	 * @param n
 	 * @return
 	 */

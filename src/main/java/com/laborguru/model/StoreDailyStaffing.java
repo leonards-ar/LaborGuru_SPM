@@ -151,4 +151,17 @@ public class StoreDailyStaffing extends SpmObject {
 		this.date = date;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getTotalDailyStaffing() {
+		double total = 0.0;
+		Double positionTotal;
+		for(DailyStaffing dailyStaffing : getStoreDailyStaffing()) {
+			positionTotal = dailyStaffing.getCalculatedDailyHours();
+			total += positionTotal != null ? positionTotal.doubleValue() : 0.0;
+		}
+		return new Double(total);
+	}
 }

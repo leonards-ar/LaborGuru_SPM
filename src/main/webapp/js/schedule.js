@@ -32,16 +32,22 @@ var BREAK = null;
 var CANNOT_CHANGE_ROW_MSG = null;
 var END_TIME_MSG = null;
 var START_TIME_MSG = null;
+var SCHEDULE_IDS = [''];
+var POSITION_IDS;
 
-function initialize(totalCols, totalRows, breakTxt, cannotChangeRowMsg, startTimeMsg, endTimeMsg) {
+function initialize(totalCols, totalRows, breakTxt, cannotChangeRowMsg, startTimeMsg, endTimeMsg, positionsQty) {
 	TOTAL_COLS = totalCols;
 	TOTAL_ROWS = totalRows;
 	BREAK = breakTxt;
 	CANNOT_CHANGE_ROW_MSG = cannotChangeRowMsg;
 	START_TIME_MSG = startTimeMsg;
 	END_TIME_MSG = endTimeMsg;
+	POSITION_IDS = new Array(positionsQty);
 }
 
+function addPositionId(index, positionId) {
+	POSITION_IDS[index] = positionId;
+}
 function getObjectByID(objectId) {
 	if(document.getElementById) {
 		return document.getElementById(objectId);
@@ -201,6 +207,7 @@ function integerDivision(numerator, denominator) {
 
 
 function timeInMinutes(time) {
+	time = trim(time);
 	if(time != null && time != '' && time != '-') {
 		return parseInt(getHours(time)) * 60 + parseInt(getMinutes(time));
 	} else {
@@ -241,6 +248,49 @@ function setTotalHours(scheduleId, totalHours) {
 	var totalHoursObj = getObjectByID(scheduleId + 'total_cell');
 	if(totalHoursObj) {
 		totalHoursObj.innerHTML = minutesToTime(totalHours);
+	}
+}
+
+function updateProjectionScheduleTotal() {
+	var totalHours = 0;
+	var target = 0;
+	var diff = 0;
+	var diffPercent = 0;
+
+	for(var i = 0; i < SCHEDULE_IDS.length; i++) {
+		var totalHoursObj = getObjectByID(SCHEDULE_IDS[i] + 'total_cell');
+		if(totalHoursObj) {
+			totalHours += timeInMinutes(totalHoursObj.innerHTML);
+		}
+	}
+	var totalObj = getObjectByID('projection_schedule_total');
+	if(totalObj) {
+		totalObj.innerHTML = minutesToTime(totalHours);
+	}
+	
+	var targetObj = getObjectByID('projection_target_total');
+	if(targetObj) {
+		target = timeInMinutes(targetObj.innerHTML);
+	}
+
+	diff = totalHours - target;
+	
+	var diffObj = getObjectByID('projection_diff');
+	if(diffObj) {
+		if(diff < 0) {
+			diffObj.innerHTML = '-' + minutesToTime(-1 * diff);
+		} else {
+			diffObj.innerHTML = minutesToTime(diff);
+		}
+	}
+	
+	var diffPercentObj = getObjectByID('projection_diff_percent');
+	if(diffPercentObj) {
+		if(target != 0) {
+			diffPercentObj.innerHTML = ((diff) / target * 100).toFixed(2) + '%';
+		} else {
+			diffPercentObj.innerHTML = '0%';
+		}
 	}
 }
 
@@ -323,6 +373,7 @@ function updateTotalHours(scheduleId, oldTotalRowHours, newTotalRowHours, rowNum
 	setDifferenceTotal(scheduleId);
 
 	checkEmployeeDayTotalHours(scheduleId, newTotalRowHours, rowNum, rowTotalObj);
+	updateProjectionScheduleTotal();
 }
 
 function getPositionId(rowNum, scheduleId) {
