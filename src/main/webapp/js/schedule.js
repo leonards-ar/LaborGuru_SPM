@@ -26,7 +26,7 @@ var previousClassName;
 var onMouseOutEnabled = true;
 
 var TOTAL_COLS = 0;
-var TOTAL_ROWS = 0;
+var TOTAL_ROWS = [0];
 var TIME_INTERVAL = 15;
 var BREAK = null;
 var CANNOT_CHANGE_ROW_MSG = null;
@@ -35,9 +35,9 @@ var START_TIME_MSG = null;
 var SCHEDULE_IDS = [''];
 var POSITION_IDS;
 
-function initialize(totalCols, totalRows, breakTxt, cannotChangeRowMsg, startTimeMsg, endTimeMsg, positionsQty) {
+function initialize(totalCols, breakTxt, cannotChangeRowMsg, startTimeMsg, endTimeMsg, positionsQty, schedulesQty) {
 	TOTAL_COLS = totalCols;
-	TOTAL_ROWS = totalRows;
+	TOTAL_ROWS = new Array(schedulesQty);
 	BREAK = breakTxt;
 	CANNOT_CHANGE_ROW_MSG = cannotChangeRowMsg;
 	START_TIME_MSG = startTimeMsg;
@@ -45,9 +45,23 @@ function initialize(totalCols, totalRows, breakTxt, cannotChangeRowMsg, startTim
 	POSITION_IDS = new Array(positionsQty);
 }
 
+function addScheduleTotalRows(index, totalRows) {
+	TOTAL_ROWS[index] = totalRows;
+}
+
+function getTotalRows(scheduleId) {
+	if(scheduleId == '' || isNaN(scheduleId)) {
+		return TOTAL_ROWS[0];
+	} else {
+		scheduleId = parseInt(scheduleId);
+		return TOTAL_ROWS[scheduleId];
+	}
+}
+
 function addPositionId(index, positionId) {
 	POSITION_IDS[index] = positionId;
 }
+
 function getObjectByID(objectId) {
 	if(document.getElementById) {
 		return document.getElementById(objectId);
@@ -237,7 +251,7 @@ function formatTimeNumber(n) {
 }
 
 function refreshRows(scheduleId) {
-	for(var i=0; i < TOTAL_ROWS; i++) {
+	for(var i=0; i < getTotalRows(scheduleId); i++) {
 		refreshRow(i, scheduleId);
 	}
 	initTotalHours(scheduleId);
@@ -251,7 +265,85 @@ function setTotalHours(scheduleId, totalHours) {
 	}
 }
 
-function updateProjectionScheduleTotal() {
+function updateSummaryTotals(scheduleId) {
+	updateProjectionTotals();
+	updatePositionTotals();
+}
+
+function updatePositionTotals() {
+	var totalSchedule = 0;
+	var totalTarget = 0;
+	var totalDiff = 0;
+	
+	var rowTotalObj = null;
+	var rowPositionId;
+	
+	var positionSchedule;
+	var positionTarget = 0;
+	var positionTargetObj;
+	var diff;
+	
+	for(var i=0; i < POSITION_IDS.length; i++) {
+		positionSchedule = 0;
+		
+		for(var k=0; k < SCHEDULE_IDS.length; k++) {
+			for(var j=0; j < getTotalRows(SCHEDULE_IDS[k]); j++) {
+				rowPositionId = getPositionId(j, SCHEDULE_IDS[k]);
+				if(rowPositionId == POSITION_IDS[i]) {
+					rowTotalObj = getObjectByID(SCHEDULE_IDS[k] + 'totalHoursInput_' + j);
+					if(rowTotalObj) {
+						positionSchedule += timeInMinutes(rowTotalObj.value);
+						totalSchedule += positionSchedule;
+					}
+				}
+			}
+		}
+		
+		positionTargetObj = getObjectByID(POSITION_IDS[i] + '_position_target_total');
+		if(positionTargetObj) {
+			positionTarget = timeInMinutes(positionTargetObj.innerHTML);
+			totalTarget += positionTarget;
+		}
+
+		diff = positionSchedule - positionTarget;
+		
+		var diffObj = getObjectByID(POSITION_IDS[i] + '_position_diff');
+		if(diffObj) {
+			if(diff < 0) {
+				diffObj.innerHTML = '-' + minutesToTime(-1 * diff);
+			} else {
+				diffObj.innerHTML = minutesToTime(diff);
+			}
+		}		
+		
+		var positionScheduleObj = getObjectByID(POSITION_IDS[i] + '_position_schedule_total');
+		if(positionScheduleObj) {
+			positionScheduleObj.innerHTML = minutesToTime(positionSchedule);
+		}
+	}
+	
+	var totalScheduleObj = getObjectByID('position_schedule_total');
+	if(totalScheduleObj) {
+		totalScheduleObj.innerHTML = minutesToTime(totalSchedule);
+	}
+	
+	var totalTargetObj = getObjectByID('position_target_total');
+	if(totalTargetObj) {
+		totalTargetObj.innerHTML = minutesToTime(totalTarget);
+	}		
+	
+	totalDiff = totalSchedule - totalTarget;
+	var totalDiffObj = getObjectByID('position_diff');
+	if(totalDiffObj) {
+		if(totalDiff < 0) {
+			totalDiffObj.innerHTML = '-' + minutesToTime(-1 * totalDiff);
+		} else {
+			totalDiffObj.innerHTML = minutesToTime(totalDiff);
+		}
+	}	
+}
+
+function updateProjectionTotals() {
 	var totalHours = 0;
 	var target = 0;
 	var diff = 0;
@@ -341,7 +433,7 @@ function checkEmployeeDayTotalHours(scheduleId, totalTimeInMinutes, rowNum, rowT
 function initTotalHours(scheduleId) {
 	var totalHours = 0;
 	var rowTotalTimeInMins = 24 * 60;
-	for(var i=0; i < TOTAL_ROWS; i++) {
+	for(var i=0; i < getTotalRows(scheduleId); i++) {
 		var rowTotalObj = getObjectByID(scheduleId + 'totalHours_' + i);
 		if(rowTotalObj)	{
 			rowTotalTimeInMins = timeInMinutes(rowTotalObj.innerHTML);
@@ -373,7 +465,7 @@ function updateTotalHours(scheduleId, oldTotalRowHours, newTotalRowHours, rowNum
 	setDifferenceTotal(scheduleId);
 
 	checkEmployeeDayTotalHours(scheduleId, newTotalRowHours, rowNum, rowTotalObj);
-	updateProjectionScheduleTotal();
+	updateSummaryTotals(scheduleId);
 }
 
 function getPositionId(rowNum, scheduleId) {
@@ -390,7 +482,7 @@ function refreshStaffing(scheduleId) {
 	
 	for(var j=0; j < TOTAL_COLS; j++) {
 		rowTotal = 0;
-		for(var i=0; i < TOTAL_ROWS; i++) {
+		for(var i=0; i < getTotalRows(scheduleId); i++) {
 			var inputObj = getObjectByID(scheduleId + 'schedule_' + i + '_' + j);
 			if(inputObj) {
 				value = inputObj.value;
