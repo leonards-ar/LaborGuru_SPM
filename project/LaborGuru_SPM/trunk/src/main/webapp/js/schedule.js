@@ -49,11 +49,19 @@ function addScheduleTotalRows(index, totalRows) {
 	TOTAL_ROWS[index] = totalRows;
 }
 
+function toInt(n) {
+	if(isNaN(n)) {
+		return 0;
+	} else {
+		return parseInt(n, 10);
+	}
+}
+
 function getTotalRows(scheduleId) {
 	if(scheduleId == '' || isNaN(scheduleId)) {
 		return TOTAL_ROWS[0];
 	} else {
-		scheduleId = parseInt(scheduleId);
+		scheduleId = toInt(scheduleId);
 		return TOTAL_ROWS[scheduleId];
 	}
 }
@@ -223,7 +231,7 @@ function integerDivision(numerator, denominator) {
 function timeInMinutes(time) {
 	time = trim(time);
 	if(time != null && time != '' && time != '-') {
-		return parseInt(getHours(time)) * 60 + parseInt(getMinutes(time));
+		return toInt(getHours(time)) * 60 + toInt(getMinutes(time));
 	} else {
 		return 0;
 	}
@@ -288,9 +296,11 @@ function updatePositionTotals() {
 				var rowPositionId = getPositionId(j, SCHEDULE_IDS[k]);
 				if(rowPositionId == POSITION_IDS[i]) {
 					var rowTotalObj = getObjectByID(SCHEDULE_IDS[k] + 'totalHours_' + j);
+					
 					if(rowTotalObj) {
-						positionSchedule += timeInMinutes(rowTotalObj.innerHTML);
-						totalSchedule += positionSchedule;
+						var posRowTotal = timeInMinutes(rowTotalObj.innerHTML);
+						positionSchedule += posRowTotal;
+						totalSchedule += posRowTotal;
 					}
 				}
 			}
@@ -415,7 +425,7 @@ function checkEmployeeDayTotalHours(scheduleId, totalTimeInMinutes, rowNum, rowT
 	var maxDayHoursObj = getObjectByID(scheduleId + 'scheduleEmployeeMaxWeekHours_' + rowNum);
 	var value = null;
 	if(maxDayHoursObj) {
-		value = maxDayHoursObj.value * 60;
+		value = toInt(maxDayHoursObj.value) * 60;
 	}
 
 	if(value != null && value != '' && value > 0) {
@@ -453,9 +463,9 @@ function updateTotalHours(scheduleId, oldTotalRowHours, newTotalRowHours, rowNum
 	var rowTotalTimeInMins = 0;
 	
 	for(var i=0; i < getTotalRows(scheduleId); i++) {
-		var rowTotalObj = getObjectByID(scheduleId + 'totalHours_' + i);
-		if(rowTotalObj)	{
-			rowTotalTimeInMins = timeInMinutes(rowTotalObj.innerHTML);
+		var rowTotObj = getObjectByID(scheduleId + 'totalHours_' + i);
+		if(rowTotObj)	{
+			rowTotalTimeInMins = timeInMinutes(rowTotObj.innerHTML);
 			totalHours += rowTotalTimeInMins;
 		}
 	}	
