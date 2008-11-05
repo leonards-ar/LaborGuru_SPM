@@ -51,10 +51,13 @@
 				<tr>
 					<td align="center">
 					<table border="0" cellpadding="3" cellspacing="1" colspan="0" cellspan="0" align="center">
+					<thead>
 						<tr class="editorTableHeader">
-							<td colspan="2"><s:text name="customer.region.label" /></td>
+							<th><s:text name="customer.region.label" /></th>
+                           <th></th><th></th><th></th><th></th>
 						</tr>
-		
+					</thead>
+					<tbody>
 						<s:iterator id="region" value="regions" status="itRegion">
 							<tr class="editorTable<s:if test="#itRegion.even">Even</s:if><s:else>Odd</s:else>Row">
 								<td class="value">
@@ -62,33 +65,24 @@
 									<s:textfield name="regions[%{#itRegion.index}].name" value="%{name}" size="30" maxlength="150" theme="simple" />
 								</td>
 								<td>
-									<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
-										<tr>
-											<td>
-												<a href="<s:url value="#" includeParams="none"/>" onclick="customer_form.action='customer_removeRegion.action?index=<s:property value='#itRegion.index'/>'; customer_form.submit();">
-													<img src="<s:url value="/images/delete.png" includeParams="none"/>" />
-												</a>
-											</td>
-											<td>
-											<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>" />
-											</td>
-											<td>
-												<a href="<s:url value="#" includeParams="none"/>" onclick="customer_form.action='customerRegion_edit.action?regionId=<s:property value='id'/>'; customer_form.submit();">
-													<img src="<s:url value="/images/edit.png" includeParams="none"/>" />
-												</a>
-											</td>
-											<td>
-												<a href="<s:url value="#" includeParams="none"/>" onclick="customer_form.action='regionalUser_add.action?paramId=<s:property value='id'/>'; customer_form.submit();">
-													<img src="<s:url value="/images/user_add.png" includeParams="none"/>" />
-												</a>
-											</td>
-											<td>
-												<a href="<s:url value="#" includeParams="none"/>" onclick="customer_form.action='regionalUser_list.action?paramId=<s:property value='id'/>'; customer_form.submit();">
-													<img src="<s:url value="/images/user_group.png" includeParams="none"/>" />
-												</a>
-											</td>
-										</tr>
-									</table>
+									<a href="<s:url value="#" includeParams="none"/>" onclick="customer_form.action='customer_removeRegion.action?index=<s:property value='#itRegion.index'/>'; customer_form.submit();">
+										<img src="<s:url value="/images/delete.png" includeParams="none"/>" />
+									</a>
+								</td>
+								<td>
+									<a href="<s:url value="#" includeParams="none"/>" onclick="customer_form.action='customerRegion_edit.action?regionId=<s:property value='id'/>'; customer_form.submit();">
+										<img src="<s:url value="/images/edit.png" includeParams="none"/>" />
+									</a>
+								</td>
+								<td>
+									<a href="<s:url value="#" includeParams="none"/>" onclick="customer_form.action='regionalUser_add.action?paramId=<s:property value='id'/>'; customer_form.submit();">
+										<img src="<s:url value="/images/user_add.png" includeParams="none"/>" />
+									</a>
+								</td>
+								<td>
+									<a href="<s:url value="#" includeParams="none"/>" onclick="customer_form.action='regionalUser_list.action?paramId=<s:property value='id'/>'; customer_form.submit();">
+										<img src="<s:url value="/images/user_group.png" includeParams="none"/>" />
+									</a>
 								</td>
 							</tr>
 						</s:iterator>
@@ -97,17 +91,20 @@
 									<s:textfield name="newRegionName" size="30" maxlength="150" theme="simple" />
 								</td>
 								<td>
-									<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
-										<tr>
-											<td>
-												<a href="<s:url value="#" includeParams="none"/>" onclick="customer_form.action='customer_addRegion.action'; customer_form.submit();"><img
-												src="<s:url value="/images/add.png" includeParams="none"/>" /></a>
-											</td>
-											<td>&nbsp;</td>
-										</tr>
-									</table>
+								  <a href="<s:url value="#" includeParams="none"/>" onclick="customer_form.action='customer_addRegion.action'; customer_form.submit();"><img
+  								  src="<s:url value="/images/add.png" includeParams="none"/>" /></a>
 								</td>
+								<td>
+									<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>" />
+								</td>
+                                <td>
+									<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>" />
+								</td>
+								<td>
+									<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>" />
+								</td>								
 							</tr>
+                         </tbody>
 						</table>
 					</td>
 				</tr>

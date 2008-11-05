@@ -45,10 +45,13 @@
 							<tr>
 								<td align="center">
 								<table border="0" cellpadding="3" cellspacing="1" colspan="0" cellspan="0" align="center">
+                                   <thead>
 									<tr class="editorTableHeader">
-										<td colspan="2"><s:text name="customer.region.area.label" /></td>
+										<th><s:text name="customer.region.area.label" /></th>
+                                        <th></th><th></th><th></th>
 									</tr>
-					
+									</thead>
+                                    <tbody>
 									<s:iterator id="area" value="areas" status="itArea">
 										<tr class="editorTable<s:if test="#itArea.even">Even</s:if><s:else>Odd</s:else>Row">
 											<td class="value">
@@ -56,12 +59,9 @@
 												<s:textfield name="areas[%{#itArea.index}].name" value="%{name}" size="30" maxlength="150" theme="simple" />
 											</td>
 											<td>
-												<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
-													<tr>
-														<td>
-															<a href="<s:url value="#" includeParams="none"/>" onclick="customerRegion_form.action='customerRegion_removeArea.action?index=<s:property value='#itArea.index'/>'; customerRegion_form.submit();">
-																<img src="<s:url value="/images/delete.png" includeParams="none"/>" />
-															</a>
+												<a href="<s:url value="#" includeParams="none"/>" onclick="customerRegion_form.action='customerRegion_removeArea.action?index=<s:property value='#itArea.index'/>'; customerRegion_form.submit();">
+													<img src="<s:url value="/images/delete.png" includeParams="none"/>" />
+												</a>
 														</td>
 											<td>
 												<a href="<s:url value="#" includeParams="none"/>" onclick="customerRegion_form.action='areaUser_add.action?paramId=<s:property value='id'/>'; customerRegion_form.submit();">
@@ -73,10 +73,6 @@
 													<img src="<s:url value="/images/user_group.png" includeParams="none"/>" />
 												</a>
 											</td>
-
-													</tr>
-												</table>
-											</td>
 										</tr>
 									</s:iterator>
 										<tr class="editorTableEvenRow">
@@ -84,16 +80,16 @@
 												<s:textfield name="newAreaName" size="30" maxlength="150" theme="simple" />
 											</td>
 											<td>
-												<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
-													<tr>
-														<td>
-															<a href="<s:url value="#" includeParams="none"/>" onclick="customerRegion_form.action='customerRegion_addArea.action'; customerRegion_form.submit();"><img
-															src="<s:url value="/images/add.png" includeParams="none"/>" /></a>
-														</td>
-													</tr>
-												</table>
+  											  <a href="<s:url value="#" includeParams="none"/>" onclick="customerRegion_form.action='customerRegion_addArea.action'; customerRegion_form.submit();"><img
+												src="<s:url value="/images/add.png" includeParams="none"/>" /></a>
+											</td>
+                                            <td>
+											<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>" />
+											</td><td>
+											<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>" />
 											</td>
 										</tr>
+                                       </tbody>
 									</table>
 								</td>
 							</tr>
