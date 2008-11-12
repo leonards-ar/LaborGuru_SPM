@@ -61,7 +61,7 @@ public class DailyProjectionsSaveAction extends DailyProjectionsPrepareAction {
 		int i=0;
 		List<Date> weekDates = getWeekDaySelector().getWeekDays();
 		for (DailyProjectionElement dailyProjection: getDailyProjections()){
-			getProjectionService().saveDailyProjection(this.getEmployeeStore(), dailyProjection.getAdjustedProjection(),weekDates.get(i), getWeekDaySelector().getFirstDayOfWeek(CalendarUtils.todayWithoutTime()));
+			getProjectionService().saveDailyProjection(this.getEmployeeStore(), dailyProjection.getAdjustedProjection(),weekDates.get(i), CalendarUtils.getDayOfThisWeek(weekDates.get(i)).getTime());
 			i++;
 		}
 		

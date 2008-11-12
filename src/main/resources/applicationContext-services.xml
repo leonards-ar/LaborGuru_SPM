@@ -4,7 +4,62 @@
     xsi:schemaLocation="
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
-	<!--  Services's declarations -->
+	<!-- Bean's wiring declaration -->
+	<bean id="salesFileParser" class="com.laborguru.service.dataimport.file.SalesCSVFileParserBean">
+  	  <property name="storeService" ref="storeService"/>
+	</bean>
+
+
+	<!--  Transactional Services's declarations -->
+	<bean id="salesFileProcessorServiceTarget" class="com.laborguru.service.dataimport.file.SalesCSVFileProcessorBean">
+	  <property name="fileParser" ref="salesFileParser"/>
+  	  <property name="historicSalesDao" ref="historicSalesDao"/>
+	  <property name="uploadFileDao" ref="uploadFileDao"/>
+  	  <property name="spmDaoUtils" ref="spmDaoUtils"/>  	  	  
+	</bean>
+
+	<bean id="salesFileProcessorService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.laborguru.service.dataimport.file.SalesFileProcessorService</value>
+			</list>
+		</property>	
+	
+		<property name="target">
+			<ref bean="salesFileProcessorServiceTarget"/>
+		</property>		
+		
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>	
+		
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributeSourceDefault"/>
+		</property>			
+	</bean>
+
+	<bean id="historicSalesServiceTarget" class="com.laborguru.service.historicsales.HistoricSalesServiceBean" autowire="byType"/>
+
+	<bean id="historicSalesService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.laborguru.service.historicsales.HistoricSalesService</value>
+			</list>
+		</property>	
+	
+		<property name="target">
+			<ref bean="historicSalesServiceTarget"/>
+		</property>		
+		
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>	
+		
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributeSourceDefault"/>
+		</property>			
+	</bean>
+
 	<bean id="projectionServiceTarget" class="com.laborguru.service.projection.ProjectionServiceBean" autowire="byType"/>
 
 	<bean id="projectionService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">

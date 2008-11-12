@@ -2,6 +2,8 @@ package com.laborguru.service.dao.hibernate;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import com.laborguru.service.dao.SpmDaoUtils;
+
 /**
  * Hibernate DAO Supperclass
  * @author <a href="mcapurro@gmail.com">Mariano Capurro</a>
@@ -9,7 +11,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  * @since SPM 1.0
  *
  */
-public class SpmHibernateDao extends HibernateDaoSupport {
+public class SpmHibernateDao extends HibernateDaoSupport implements SpmDaoUtils {
 
 	/**
 	 * 
@@ -45,6 +47,19 @@ public class SpmHibernateDao extends HibernateDaoSupport {
 	 */
 	protected boolean includeInFilter(Integer value) {
 		return includeInFilter((Object)value) && value.intValue() >= 0;
-	}		
+	}	
+	
+	/**
+	 *  This methods clear the session. Empty the complete first level of hibernate cache.
+	 */
+	public void clearSession(){
+		getHibernateTemplate().clear();
+	}
 
+	/**
+	 *  This methods flush the session to the database.
+	 */
+	public void flushSession(){
+		getHibernateTemplate().flush();
+	}
 }

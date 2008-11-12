@@ -30,6 +30,12 @@
 	<bean id="staffingDao" class="com.laborguru.service.staffing.dao.StaffingDaoHibernate" autowire="byType"/>
 	
 	<bean id="managerDao" class="com.laborguru.service.manager.dao.ManagerDaoHibernate" autowire="byType"/>
+
+	<bean id="uploadFileDao" class="com.laborguru.service.uploadfile.dao.UploadFileDaoHibernate" autowire="byType"/>
+
+	<bean id="historicSalesDao" class="com.laborguru.service.historicsales.dao.HistoricSalesDaoHibernate" autowire="byType"/>
+
+	<bean id="spmDaoUtils" class="com.laborguru.service.dao.hibernate.SpmHibernateDao" autowire="byType"/>
 						
 	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
 		<property name="sessionFactory">
@@ -65,6 +71,7 @@
 				<value>com/laborguru/model/Shift.hbm.xml</value>
 				<value>com/laborguru/model/HalfHourStaffing.hbm.xml</value>
 				<value>com/laborguru/model/DailyStaffing.hbm.xml</value>
+				<value>com/laborguru/model/UploadFile.hbm.xml</value>				
 			</list>
 		</property>
 		<property name="hibernateProperties">

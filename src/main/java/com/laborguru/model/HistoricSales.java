@@ -23,12 +23,13 @@ public class HistoricSales extends SpmObject {
 	
 	private Date dateTime;
 	private Integer dayOfWeek;
-	private BigDecimal salesValue;
+	private BigDecimal mainValue;
 	
-	private Integer checksNumber;
-	private Integer guestsNumber;
-	private String product;
+	private BigDecimal secondValue;
+	private BigDecimal thirdValue;
+	private BigDecimal fourthValue;
 	
+	private UploadFile uploadFile;
 	private Store store;
 	
 	
@@ -78,7 +79,7 @@ public class HistoricSales extends SpmObject {
 	   	.append("id" , getId())
 	   	.append("dateTime",getDateTime())
 	   	.append("dow",getDayOfWeek())	   	
-	   	.append("salesValue",getSalesValue())
+	   	.append("mainValue",getMainValue())
 	   	.toString();	
 	}
 
@@ -125,60 +126,19 @@ public class HistoricSales extends SpmObject {
 	}
 
 	/**
-	 * @return the salesValue
+	 * @return the mainValue
 	 */
-	public BigDecimal getSalesValue() {
-		return salesValue;
+	public BigDecimal getMainValue() {
+		return mainValue;
 	}
 
 	/**
-	 * @param salesValue the salesValue to set
+	 * @param mainValue the mainValue to set
 	 */
-	public void setSalesValue(BigDecimal salesValue) {
-		this.salesValue = salesValue;
+	public void setMainValue(BigDecimal mainValue) {
+		this.mainValue = mainValue;
 	}
 
-	/**
-	 * @return the checksNumber
-	 */
-	public Integer getChecksNumber() {
-		return checksNumber;
-	}
-
-	/**
-	 * @param checksNumber the checksNumber to set
-	 */
-	public void setChecksNumber(Integer checksNumber) {
-		this.checksNumber = checksNumber;
-	}
-
-	/**
-	 * @return the guestsNumber
-	 */
-	public Integer getGuestsNumber() {
-		return guestsNumber;
-	}
-
-	/**
-	 * @param guestsNumber the guestsNumber to set
-	 */
-	public void setGuestsNumber(Integer guestsNumber) {
-		this.guestsNumber = guestsNumber;
-	}
-
-	/**
-	 * @return the product
-	 */
-	public String getProduct() {
-		return product;
-	}
-
-	/**
-	 * @param product the product to set
-	 */
-	public void setProduct(String product) {
-		this.product = product;
-	}
 
 	/**
 	 * @return the store
@@ -192,6 +152,62 @@ public class HistoricSales extends SpmObject {
 	 */
 	public void setStore(Store store) {
 		this.store = store;
+	}
+
+	/**
+	 * @return the uploadFile
+	 */
+	public UploadFile getUploadFile() {
+		return uploadFile;
+	}
+
+	/**
+	 * @param uploadFile the uploadFile to set
+	 */
+	public void setUploadFile(UploadFile uploadFile) {
+		this.uploadFile = uploadFile;
+	}
+
+	/**
+	 * @return the secondValue
+	 */
+	public BigDecimal getSecondValue() {
+		return secondValue;
+	}
+
+	/**
+	 * @param secondValue the secondValue to set
+	 */
+	public void setSecondValue(BigDecimal secondValue) {
+		this.secondValue = secondValue;
+	}
+
+	/**
+	 * @return the thirdValue
+	 */
+	public BigDecimal getThirdValue() {
+		return thirdValue;
+	}
+
+	/**
+	 * @param thirdValue the thirdValue to set
+	 */
+	public void setThirdValue(BigDecimal thirdValue) {
+		this.thirdValue = thirdValue;
+	}
+
+	/**
+	 * @return the fourthValue
+	 */
+	public BigDecimal getFourthValue() {
+		return fourthValue;
+	}
+
+	/**
+	 * @param fourthValue the fourthValue to set
+	 */
+	public void setFourthValue(BigDecimal fourthValue) {
+		this.fourthValue = fourthValue;
 	}
 
 }

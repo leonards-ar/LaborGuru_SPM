@@ -314,5 +314,10 @@
 	
 	<definition name="editAreaUserPage" extends="areaUsersData">
 		<put-attribute name="objectExtDataBody" value="/tiles/customer/user_edit.jsp" />
-	</definition>	
+	</definition>
+	
+	<!-- Sales upload pages -->
+	<definition name="salesUploadPage" extends="baseLayoutWithMenu">
+		<put-attribute name="body" value="/tiles/sales/upload.jsp" />
+	</definition>			
 </tiles-definitions>
