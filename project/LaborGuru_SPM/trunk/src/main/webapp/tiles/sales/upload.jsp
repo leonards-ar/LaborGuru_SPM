@@ -39,8 +39,8 @@
 						<td>&nbsp;</td>
 	                    <td class="form_label" nowrap>
 	                    	<s:text name="sales.upload.success.message">
-	                    		<s:param>${#salesFileFileName}</s:param>
-	                    		<s:param>${#numberOfRecordsAdded}</s:param>
+	                    		<s:param value ="salesFileFileName"/>
+	                    		<s:param value ="numberOfRecordsAdded"/>
 	                    	</s:text>
 						</td>
 					</tr>
