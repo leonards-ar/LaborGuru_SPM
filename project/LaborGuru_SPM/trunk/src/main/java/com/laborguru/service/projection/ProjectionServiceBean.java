@@ -103,10 +103,15 @@ public class ProjectionServiceBean implements ProjectionService {
 	
 	
 	
+
 	/**
-	 * @param store
-	 * @param selectedDate
-	 * @return
+	 * This method calculate and saves the set of half hour projections for a day.
+	 * 
+	 * @param store the store
+	 * @param projectionAmount total amount for the day
+	 * @param selectedDate save projection date
+	 * @param dateForCalculation date in which we based the avg calculation for the projection
+	 * @see com.laborguru.service.projection.ProjectionService#saveDailyProjection(com.laborguru.model.Store, java.math.BigDecimal, java.util.Date, java.util.Date)
 	 */
 	public void saveDailyProjection(Store store, BigDecimal projectionAmount, Date selectedDate, Date dateForCalculation) {
 		List<HalfHourProjection> calculatedHalfHourList = calculateDailyHalfHourProjection(store, projectionAmount, dateForCalculation, store.getHalfHourProjectionsWeeksDefault());		

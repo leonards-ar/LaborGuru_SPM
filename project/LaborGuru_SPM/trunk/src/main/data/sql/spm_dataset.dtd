@@ -17,6 +17,7 @@
     tbl_day_parts*,
 	tbl_operation_times*,
     tbl_users_profiles*,
+    tbl_upload_files*,
     tbl_historic_sales*,
     tbl_projections*,
     tbl_halfhour_projections*)>
@@ -178,16 +179,24 @@
     profile_id CDATA #REQUIRED
 >
 
+<!ELEMENT tbl_upload_files EMPTY>
+<!ATTLIST tbl_upload_files
+	upload_file_id CDATA #REQUIRED
+	upload_date CDATA #IMPLIED
+	filename CDATA #IMPLIED
+>
+
 <!ELEMENT tbl_historic_sales EMPTY>
 <!ATTLIST tbl_historic_sales
     historic_sales_id CDATA #REQUIRED
     date_time CDATA #REQUIRED
     day_of_week CDATA #REQUIRED
-    sales_value CDATA #IMPLIED
-    checks_number CDATA #IMPLIED
-    guests_number CDATA #IMPLIED
-    product CDATA #IMPLIED    
+    main_value CDATA #IMPLIED
+    second_value CDATA #IMPLIED
+    third_value CDATA #IMPLIED
+    fourth_value CDATA #IMPLIED    
     store_id CDATA #REQUIRED
+    upload_file_id CDATA #REQUIRED
 >
 
 <!ELEMENT tbl_projections EMPTY>

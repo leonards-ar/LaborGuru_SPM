@@ -106,7 +106,7 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 			log.debug("Before getting avg daily projections - Parameters: Store Id:"+ store.getId()+" startDate:"+startTime.toString()+" endDate:"+endTime.toString());
 		}
 		
-		List<Object[]> avgSalesList = getHibernateTemplate().findByNamedParam("select distinct sum(hs.salesValue), hs.dayOfWeek from HistoricSales hs " +
+		List<Object[]> avgSalesList = getHibernateTemplate().findByNamedParam("select distinct sum(hs.mainValue), hs.dayOfWeek from HistoricSales hs " +
 				"where hs.store.id=:storeId AND hs.dateTime >= :startDate AND hs.dateTime <= :endDate group by hs.dayOfWeek",
 				new String[] {"storeId", "startDate", "endDate"}, new Object[] {store.getId(), startTime.toDate(), endTime.toDate()} );
 
