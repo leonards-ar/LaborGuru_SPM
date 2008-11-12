@@ -19,7 +19,7 @@ import com.laborguru.service.store.StoreService;
  */
 public class SalesCSVFileParserBean implements SalesFileParser {
 
-	private static final int TEST_MAX = 100;
+	private static final int TEST_MAX = 1000;
 	private StoreService storeService;
 	private Store store;
 	private int count;
@@ -49,8 +49,12 @@ public class SalesCSVFileParserBean implements SalesFileParser {
 		
 		if (count < TEST_MAX){		
 			test = new HistoricSales();
+			
 			Calendar today = Calendar.getInstance();
+			today.add(Calendar.DAY_OF_YEAR, (0-(RandomUtils.nextInt()%40)));
 			today.add(Calendar.HOUR_OF_DAY, (0-(RandomUtils.nextInt()%24)));
+			today.add(Calendar.MINUTE, (0-(RandomUtils.nextInt()%60)));
+
 			
 			test.setDateTime(today.getTime());
 			
