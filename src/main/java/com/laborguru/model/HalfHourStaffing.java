@@ -26,6 +26,7 @@ public class HalfHourStaffing extends SpmObject {
 	
 	private Long id;
 	private Integer calculatedStaff = new Integer(0);
+	private Double workContent = new Double(0.0);
 	private Integer index;
 	private DailyStaffing dailyStaffing;
 	private Date time;
@@ -153,6 +154,20 @@ public class HalfHourStaffing extends SpmObject {
 	 */
 	public void setTime(Date time) {
 		this.time = time;
+	}
+
+	/**
+	 * @return the workContent
+	 */
+	public Double getWorkContent() {
+		return workContent;
+	}
+
+	/**
+	 * @param workContent the workContent to set
+	 */
+	public void setWorkContent(Double workContent) {
+		this.workContent = workContent;
 	}
 
 }
