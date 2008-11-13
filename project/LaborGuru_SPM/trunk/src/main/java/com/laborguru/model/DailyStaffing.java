@@ -32,7 +32,11 @@ public class DailyStaffing extends SpmObject {
 	
 	private Position position;
 	
-	private Double calculatedDailyHours = new Double(0);
+	private Double calculatedDailyHours = new Double(0.0);
+	
+	private Double totalWorkContent = new Double(0.0);
+	private Integer totalMinimumStaffing = new Integer(0);
+	
 	private List<HalfHourStaffing> halfHourStaffing;
 	
 	
@@ -261,5 +265,33 @@ public class DailyStaffing extends SpmObject {
 	 */
 	public void setCalculatedDailyHours(Double calculatedDailyHours) {
 		this.calculatedDailyHours = calculatedDailyHours;
+	}
+
+	/**
+	 * @return the totalWorkContent
+	 */
+	public Double getTotalWorkContent() {
+		return totalWorkContent;
+	}
+
+	/**
+	 * @param totalWorkContent the totalWorkContent to set
+	 */
+	public void setTotalWorkContent(Double totalWorkContent) {
+		this.totalWorkContent = totalWorkContent;
+	}
+
+	/**
+	 * @return the totalMinimumStaffing
+	 */
+	public Integer getTotalMinimumStaffing() {
+		return totalMinimumStaffing;
+	}
+
+	/**
+	 * @param totalMinimumStaffing the totalMinimumStaffing to set
+	 */
+	public void setTotalMinimumStaffing(Integer totalMinimumStaffing) {
+		this.totalMinimumStaffing = totalMinimumStaffing;
 	}	
 }

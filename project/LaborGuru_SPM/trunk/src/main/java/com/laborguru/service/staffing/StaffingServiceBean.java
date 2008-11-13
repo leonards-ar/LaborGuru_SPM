@@ -26,6 +26,7 @@ import com.laborguru.service.position.dao.PositionDao;
 import com.laborguru.service.projection.dao.ProjectionDao;
 import com.laborguru.service.staffing.dao.StaffingDao;
 import com.laborguru.service.staffing.model.HalfHourStaffingPositionData;
+import com.laborguru.service.staffing.model.DailyStaffingPositionData;
 import com.laborguru.service.staffing.model.HalfHourStaffingPositionDataComparator;
 import com.laborguru.service.store.dao.StoreDao;
 import com.laborguru.util.CalendarUtils;
@@ -60,6 +61,8 @@ public class StaffingServiceBean implements StaffingService {
 	 */
 	public StoreDailyStaffing getDailyStaffingByDate(Store store, Date date) {
 		store = getStoreDao().getStoreById(store);
+		DailyProjection dailyProjection = getProjectionDao().getDailyProjection(store, date);
+		
 		StoreDailyStaffing storeDailyStaffing = new StoreDailyStaffing(store);
 		storeDailyStaffing.setDate(date);
 		
@@ -67,7 +70,6 @@ public class StaffingServiceBean implements StaffingService {
 		for(Position position : store.getPositions()) {
 			DailyStaffing dailyStaffing = getStaffingDao().getDailyStaffingByDate(position, date);
 			if(dailyStaffing == null) {
-				DailyProjection dailyProjection = getProjectionDao().getDailyProjection(position.getStore(), date);
 				dailyStaffing = calculateDailyStaffing(position, date, dailyProjection);
 			}
 
@@ -91,6 +93,7 @@ public class StaffingServiceBean implements StaffingService {
 		if(dailyStaffing == null) {
 			position = getPositionDao().getPositionById(position);
 			DailyProjection dailyProjection = getProjectionDao().getDailyProjection(position.getStore(), date);
+			
 			dailyStaffing = calculateDailyStaffing(position, date, dailyProjection);
 		}
 		
@@ -102,6 +105,7 @@ public class StaffingServiceBean implements StaffingService {
 	 * @param position
 	 * @param date
 	 * @param dailyProjection
+	 * @param dailyStaffingData
 	 * @return
 	 */
 	private DailyStaffing calculateDailyStaffing(Position position, Date date, DailyProjection dailyProjection) {
@@ -112,18 +116,66 @@ public class StaffingServiceBean implements StaffingService {
 			dailyStaffing.setStartingTime(position.getStore().getOperationTime(CalendarUtils.getDayOfWeek(date)).getOpenHour());
 			
 			int size = dailyProjection.getHalfHourProjections().size();
+			double totalWorkContent = 0.0;
+			int totalMinimumStaffing = 0;
 			
 			HalfHourStaffing aHalfHourStaffing;
 			for(int i = 0; i < size; i++) {
 				aHalfHourStaffing = calculateHalfHourStaffing(position, date, dailyProjection.getHalfHourProjections().get(i), initializeHalfHourStaffingData(position.getStore(), date, dailyProjection.getHalfHourProjections().get(i)));
+				totalWorkContent += aHalfHourStaffing.getWorkContent().doubleValue();
+				totalMinimumStaffing += aHalfHourStaffing.getCalculatedStaff().intValue();
 				
 				dailyStaffing.addHalfHourProjection(aHalfHourStaffing);
 			}
+			
+			dailyStaffing.setTotalMinimumStaffing(totalMinimumStaffing);
+			dailyStaffing.setTotalWorkContent(totalWorkContent);
+			
+			calculateDailyStaffingHours(dailyStaffing, position, date, dailyProjection, initializeDailyStaffingData(position, date, dailyProjection));
 			
 			return dailyStaffing;
 		} else {
 			return null;
 		}
+	}
+
+	/**
+	 * 
+	 * @param dailyStaffing
+	 * @param position
+	 * @param date
+	 * @param dailyProjection
+	 * @param dailyStaffingData
+	 */
+	private void calculateDailyStaffingHours(DailyStaffing dailyStaffing, Position position, Date date, DailyProjection dailyProjection, Map<DayPart, DailyStaffingPositionData> dailyStaffingData) {
+		
+	}
+
+	/**
+	 * 
+	 * @param position
+	 * @param date
+	 * @param dailyProjection
+	 * @return
+	 */
+	private Map<DayPart, DailyStaffingPositionData> initializeDailyStaffingData(Position position, Date date, DailyProjection dailyProjection) {
+		Map<DayPart, DailyStaffingPositionData> data = new HashMap<DayPart, DailyStaffingPositionData>();
+
+		DayPart aDayPart;
+		DailyStaffingPositionData aDailyData;
+		
+		for(HalfHourProjection aHalfHourProjection : dailyProjection.getHalfHourProjections()) {
+			aDayPart = getDayPartFor(position, aHalfHourProjection.getTime());
+			aDailyData = data.get(aDayPart);
+			if(aDailyData == null) {
+				aDailyData = new DailyStaffingPositionData();
+				aDailyData.setDayPartData(getDayPartDataFor(position, aDayPart));
+				data.put(aDayPart, aDailyData);
+			}
+			aDailyData.addHalfHourProjection(aHalfHourProjection.getAdjustedValue());
+		}
+		
+		return data;
 	}
 	
 	/**
@@ -239,6 +291,7 @@ public class StaffingServiceBean implements StaffingService {
 		HalfHourStaffingPositionData staffingData = getHalfHourStaffingPositionData(data, position);
 		if(data != null) {
 			halfHourStaffing.setCalculatedStaff(staffingData.getMinimunStaffing());
+			halfHourStaffing.setWorkContent(new Double(staffingData.getWorkContent()));
 		}
 		
 		return halfHourStaffing;
@@ -320,8 +373,27 @@ public class StaffingServiceBean implements StaffingService {
 	 * @param time
 	 * @return
 	 */
+	private DayPart getDayPartFor(Position position, Date time) {
+		return position.getStore() != null ? position.getStore().getDayPartFor(time) : null;
+	}
+	
+	/**
+	 * 
+	 * @param position
+	 * @param time
+	 * @return
+	 */
 	private DayPartData getDayPartDataFor(Position position, Date time) {
-		DayPart dayPart = position.getStore() != null ? position.getStore().getDayPartFor(time) : null;
+		return position.getDayPartDataFor(getDayPartFor(position, time));
+	}
+	
+	/**
+	 * 
+	 * @param position
+	 * @param dayPart
+	 * @return
+	 */
+	private DayPartData getDayPartDataFor(Position position, DayPart dayPart) {
 		return position.getDayPartDataFor(dayPart);
 	}
 	
