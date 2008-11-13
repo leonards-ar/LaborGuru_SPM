@@ -30,7 +30,11 @@ public class UploadPrepareAction extends SpmAction {
 	
 	public String upload(){
 		
-		UploadFile retSales = salesFileProcessorService.processAndSaveFile(salesFile);
+		UploadFile auxUpload = new UploadFile();
+		auxUpload.setFilename(salesFileFileName);
+		
+		UploadFile retSales = salesFileProcessorService.processAndSaveFile(salesFile, auxUpload);
+		
 		setNumberOfRecordsAdded(retSales.getSalesRecords().size());
 		
 		return SpmActionResult.SUCCESS.getResult();

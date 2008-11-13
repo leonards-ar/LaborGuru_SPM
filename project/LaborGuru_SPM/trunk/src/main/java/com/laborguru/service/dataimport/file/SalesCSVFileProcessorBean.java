@@ -33,29 +33,46 @@ public class SalesCSVFileProcessorBean implements SalesFileProcessorService {
 	/**
 	 * This method process the file passed as parameter, creates and persist an Upload File entity and the sales records contained in the file.
 	 * @param file
-	 * @return
+	 * @param uploadFile: Optional helper object used to pass information to the method. The values defined in the object are going to be used. 
+	 * If null method defaults are used. 
+	 * @return The persisted upload file 
 	 * @see com.laborguru.service.dataimport.file.SalesFileProcessorService#processAndSaveFile(java.io.File)
 	 */
-	public UploadFile processAndSaveFile(File file) {
+	public UploadFile processAndSaveFile(File file, UploadFile uploadFile) {
 								
 		fileParser.assembleSalesFileParser(file);
 		
+		//Setting default values for Upload File
 		String filename = file.getName();
-
+		Date uploadDate = new Date();
+		
+		UploadFile uploadToSave = new UploadFile();
+		
+		uploadToSave.setFilename(filename);
+		uploadToSave.setUploadDate(uploadDate);
+		
+		//Setting the uploadFile parameter values if present
+		if (uploadFile != null){
+			
+			if (uploadFile.getFilename() != null){
+				uploadToSave.setFilename(uploadFile.getFilename());
+			}
+			
+			if (uploadFile.getUploadDate() != null){
+				uploadToSave.setUploadDate(uploadFile.getUploadDate());
+			}
+			
+		}
+		
 		if (!fileParser.isFileValid()){
-			String msg = "The file " + filename +" passed in as parameter is not valid.";
+			String msg = "The file " + uploadToSave.getFilename() +" passed in as parameter is not valid.";
 			log.error(msg);
 			throw new InvalidUploadFileException(msg);
 		}
 		
-		Date uploadDate = new Date();
 
-		//We persist the upload File instance first, so the historic sales are associated with the upload file
-		UploadFile uploadFile = new UploadFile();
-		uploadFile.setFilename(filename);
-		uploadFile.setUploadDate(uploadDate);
-		
-		uploadFileDao.saveOrUpdate(uploadFile);
+		//We persist the upload File instance first, so the historic sales are associated with the upload file		
+		uploadFileDao.saveOrUpdate(uploadToSave);
 		
 		//We persist the historic sales. To keep a light session and to improve the performace of the operation
 		//every 20 records we flush the session.
@@ -66,7 +83,7 @@ public class SalesCSVFileProcessorBean implements SalesFileProcessorService {
 		historicSales = fileParser.getNextRecord();
 		
 		while(historicSales != null){						
-			historicSales.setUploadFile(uploadFile);			
+			historicSales.setUploadFile(uploadToSave);			
 			historicSalesDao.saveOrUpdate(historicSales);			
 			recordsCounter++;
 			
@@ -79,7 +96,7 @@ public class SalesCSVFileProcessorBean implements SalesFileProcessorService {
 		}
 		
 		//Refreshing the uploadFile into the hibernate session
-		UploadFile retUploadFile = uploadFileDao.getUploadFileById(uploadFile);
+		UploadFile retUploadFile = uploadFileDao.getUploadFileById(uploadToSave);
 		
 		return retUploadFile;
 	}
