@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import com.laborguru.model.DayPartData;
+import com.laborguru.model.Position;
+import com.laborguru.model.Store;
 
 /**
  *
@@ -24,6 +26,8 @@ public class DailyStaffingPositionData implements Serializable {
 	private static final long serialVersionUID = -2629969275009440055L;
 	private BigDecimal dayPartTotalProjection = new BigDecimal(0.0);
 	private DayPartData dayPartData = null;
+	private Position position = null;
+	private Store store = null;
 	
 	/**
 	 * 
@@ -67,4 +71,48 @@ public class DailyStaffingPositionData implements Serializable {
 		this.dayPartData = dayPartData;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public double getVariableFlexible() {
+		return getDayPartTotalProjection().doubleValue() * getDayPartData().getVariableFlexible().doubleValue() * getStore().getAllPositionsUtilization().doubleValue() / 100;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public double getVariableOpening() {
+		return getDayPartTotalProjection().doubleValue() * getDayPartData().getVariableOpening().doubleValue() * getStore().getAllPositionsUtilization().doubleValue() / 100;
+	}
+
+	
+	/**
+	 * @return the position
+	 */
+	public Position getPosition() {
+		return position;
+	}
+
+	/**
+	 * @param position the position to set
+	 */
+	public void setPosition(Position position) {
+		this.position = position;
+	}
+
+	/**
+	 * @return the store
+	 */
+	public Store getStore() {
+		return store;
+	}
+
+	/**
+	 * @param store the store to set
+	 */
+	public void setStore(Store store) {
+		this.store = store;
+	}
 }
