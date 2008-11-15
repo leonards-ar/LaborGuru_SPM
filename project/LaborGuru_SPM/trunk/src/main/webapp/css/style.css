@@ -452,7 +452,7 @@ select {
 	border: 1px solid #466e0a;
 }
 
-input, textarea {
+input.text, input.password, textarea {
 	border: 1px solid #333333;
 	font-size: 11px;
 	border: 1px solid #466e0a;

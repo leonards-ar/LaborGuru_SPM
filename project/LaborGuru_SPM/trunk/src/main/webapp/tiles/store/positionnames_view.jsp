@@ -17,10 +17,19 @@
 						<table border="0" cellpadding="3" cellspacing="1" align="center">
 							<tr class="editorTableHeader">
 								<td><s:text name="store.storeoperations.positionnames.label" /></td>
+								<td><s:text name="store.storeoperations.position.ismanager.label" /></td>
 							</tr>
 							<s:iterator id="position" value="positions" status="stat">
 								<tr class="editorTable<s:if test="#itPosition.even">Even</s:if><s:else>Odd</s:else>Row">
 									<td class="value"><s:property value="%{name}"/></td>
+									<td class="value">
+									<s:if test="%{manager}">
+										<img src="<s:url value="/images/check.png" includeParams="none"/>"/>
+									</s:if>
+									<s:else>
+										<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>
+									</s:else>
+									</td>
 								</tr>
 							</s:iterator>
 						</table>						

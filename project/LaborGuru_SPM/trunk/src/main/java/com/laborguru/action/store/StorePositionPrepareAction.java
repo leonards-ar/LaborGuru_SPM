@@ -28,6 +28,7 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 	private List<Position> removePositions;
 
 	private String newPositionName;
+	private boolean newPositionManager;
 	
 	/**
 	 * This property holds an empty position set by Spring containing
@@ -110,6 +111,7 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 			Position storePosition = getPositionById(position.getId());
 			if (storePosition != null) {
 				storePosition.setName(position.getName());
+				storePosition.setManager(position.isManager());
 				storePosition.setPositionIndex(position.getPositionIndex());
 			} else {
 				getStore().addPosition(position);
@@ -167,6 +169,7 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 		Position newPosition = getPosition();
 		newPosition.setName(getNewPositionName());
 		newPosition.setPositionIndex(getPositions().size());
+		newPosition.setManager(isNewPositionManager());
 		getPositions().add(newPosition);
 	}
 	
@@ -181,6 +184,7 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 		if(!"".equals(getNewPositionName().trim())){
 			addNewPosition();
 			setNewPositionName(null);
+			setNewPositionManager(false);
 		}
 		return SpmActionResult.EDIT.getResult();
 	}
@@ -344,6 +348,20 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 	 */
 	public void setPosition(Position position) {
 		this.position = position;
+	}
+
+	/**
+	 * @return the newPositionManager
+	 */
+	public boolean isNewPositionManager() {
+		return newPositionManager;
+	}
+
+	/**
+	 * @param newPositionManager the newPositionManager to set
+	 */
+	public void setNewPositionManager(boolean newPositionManager) {
+		this.newPositionManager = newPositionManager;
 	}
 	
 }

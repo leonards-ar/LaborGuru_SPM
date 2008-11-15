@@ -36,6 +36,7 @@ public class Position extends SpmObject implements ComparableObject{
 	private Double utilizationTop;
 	private Integer utilizationMinimum;
 	private Integer utilizationMaximum;
+	private boolean manager;
 	
 	private Integer positionIndex;
 	
@@ -162,6 +163,19 @@ public class Position extends SpmObject implements ComparableObject{
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * 
+	 * @param dayOfWeek
+	 * @return
+	 */
+	public DayOfWeekData getDayOfWeekDataFor(DayOfWeek dayOfWeek) {
+		if(dayOfWeek != null && dayOfWeek.ordinal() >= 0 && dayOfWeek.ordinal() < getDayOfWeekData().size()) {
+			return getDayOfWeekData().get(dayOfWeek.ordinal());
+		} else {
+			return null;
+		}
 	}
 	
 	/**
@@ -298,5 +312,19 @@ public class Position extends SpmObject implements ComparableObject{
 	 */
 	public void setPositionGroup(PositionGroup positionGroup) {
 		this.positionGroup = positionGroup;
+	}
+
+	/**
+	 * @return the manager
+	 */
+	public boolean isManager() {
+		return manager;
+	}
+
+	/**
+	 * @param manager the manager to set
+	 */
+	public void setManager(boolean manager) {
+		this.manager = manager;
 	}
 }

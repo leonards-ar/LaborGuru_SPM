@@ -71,7 +71,14 @@
                 </tr>
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.ismanager.label" /></td>
-                    <td width="35%" align="left" class="value"><s:property value="employee.manager"/></td>
+                    <td width="35%" align="left" class="value">
+						<s:if test="%{employee.manager}">
+							<img src="<s:url value="/images/check.png" includeParams="none"/>"/>
+						</s:if>
+						<s:else>
+							<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>
+						</s:else>
+                    </td>
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.hiredate.label" /></td>
                     <td width="35%" align="left" class="value"><s:if test="employee.hireDate !=  null"><s:text name="shortdate"><s:param value="employee.hireDate"/></s:text></s:if><s:else>&nbsp;</s:else></td>
                 </tr>

@@ -32,10 +32,23 @@ public class DailyStaffing extends SpmObject {
 	
 	private Position position;
 	
-	private Double calculatedDailyHours = new Double(0.0);
+	private Double totalWorkContent = null;
+	private Integer totalMinimumStaffing = null;
 	
-	private Double totalWorkContent = new Double(0.0);
-	private Integer totalMinimumStaffing = new Integer(0);
+	private Double totalVariableFlexible = null;
+	private Double totalVariableOpening = null;
+	private Double fixedFlexible = null;
+	private Double fixedOpening = null;
+	
+	private Double totalServiceHours = null;
+
+	private Double totalFlexible = new Double(0.0);
+	private Double totalOpening = new Double(0.0);
+	
+	private Double fixedPostRush = new Double(0.0);
+	private Double fixedClosing = new Double(0.0);
+	
+	private Double totalDailyTarget = new Double(0.0);
 	
 	private List<HalfHourStaffing> halfHourStaffing;
 	
@@ -169,6 +182,24 @@ public class DailyStaffing extends SpmObject {
 		this.halfHourStaffing = halfHourStaffing;
 	}
 
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Integer getTotalHourStaffing() {
+		return new Integer(getTotalMinimumStaffing().intValue() / 2);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getTotalHourWorkContent() {
+		return new Double(getTotalWorkContent().doubleValue() / 2);
+	}
+	
+	
 	/**
 	 * 
 	 * @return
@@ -254,23 +285,18 @@ public class DailyStaffing extends SpmObject {
 	}
 
 	/**
-	 * @return the calculatedDailyHours
-	 */
-	public Double getCalculatedDailyHours() {
-		return calculatedDailyHours;
-	}
-
-	/**
-	 * @param calculatedDailyHours the calculatedDailyHours to set
-	 */
-	public void setCalculatedDailyHours(Double calculatedDailyHours) {
-		this.calculatedDailyHours = calculatedDailyHours;
-	}
-
-	/**
 	 * @return the totalWorkContent
 	 */
 	public Double getTotalWorkContent() {
+		if(totalWorkContent == null) {
+			double total = 0.0;
+			
+			for(HalfHourStaffing aHalfHourStaffing : getHalfHourStaffing()) {
+				total += aHalfHourStaffing.getWorkContent().doubleValue();
+			}
+			
+			totalWorkContent = new Double(total);			
+		}
 		return totalWorkContent;
 	}
 
@@ -282,9 +308,119 @@ public class DailyStaffing extends SpmObject {
 	}
 
 	/**
+	 * 
+	 * @return
+	 */
+	public Double getBaseDailyTarget() {
+		return new Double(getTotalServiceHours().doubleValue() + getTotalFlexible().doubleValue() + getTotalOpening().doubleValue() + getFixedClosing().doubleValue() + getFixedPostRush().doubleValue());
+	}
+
+	/**
+	 * @return the totalVariableFlexible
+	 */
+	public Double getTotalVariableFlexible() {
+		if(totalVariableFlexible == null) {
+			setTotalVariableFlexible(new Double(0.0));
+		}
+		return totalVariableFlexible;
+	}
+
+	/**
+	 * @param totalVariableFlexible the totalVariableFlexible to set
+	 */
+	public void setTotalVariableFlexible(Double totalVariableFlexible) {
+		this.totalVariableFlexible = totalVariableFlexible;
+	}
+
+	/**
+	 * @return the totalVariableOpening
+	 */
+	public Double getTotalVariableOpening() {
+		if(totalVariableOpening == null) {
+			setTotalVariableOpening(new Double(0.0));
+		}
+		return totalVariableOpening;
+	}
+
+	/**
+	 * @param totalVariableOpening the totalVariableOpening to set
+	 */
+	public void setTotalVariableOpening(Double totalVariableOpening) {
+		this.totalVariableOpening = totalVariableOpening;
+	}
+
+	/**
+	 * @return the totalServiceHours
+	 */
+	public Double getTotalServiceHours() {
+		if(totalServiceHours == null) {
+			setTotalServiceHours(new Double(0.0));
+		}
+		return totalServiceHours;
+	}
+
+	/**
+	 * @param totalServiceHours the totalServiceHours to set
+	 */
+	public void setTotalServiceHours(Double totalServiceHours) {
+		this.totalServiceHours = totalServiceHours;
+	}
+
+	/**
+	 * @return the totalFlexible
+	 */
+	public Double getTotalFlexible() {
+		return totalFlexible;
+	}
+
+	/**
+	 * @param totalFlexible the totalFlexible to set
+	 */
+	public void setTotalFlexible(Double totalFlexible) {
+		this.totalFlexible = totalFlexible;
+	}
+
+	/**
+	 * @return the totalOpening
+	 */
+	public Double getTotalOpening() {
+		return totalOpening;
+	}
+
+	/**
+	 * @param totalOpening the totalOpening to set
+	 */
+	public void setTotalOpening(Double totalOpening) {
+		this.totalOpening = totalOpening;
+	}
+
+	/**
+	 * @return the totalDailyTarget
+	 */
+	public Double getTotalDailyTarget() {
+		return totalDailyTarget;
+	}
+
+	/**
+	 * @param totalDailyTarget the totalDailyTarget to set
+	 */
+	public void setTotalDailyTarget(Double totalDailyTarget) {
+		this.totalDailyTarget = totalDailyTarget;
+	}
+
+	/**
 	 * @return the totalMinimumStaffing
 	 */
 	public Integer getTotalMinimumStaffing() {
+		if(totalMinimumStaffing == null) {
+			int total = 0;
+			
+			for(HalfHourStaffing aHalfHourStaffing : getHalfHourStaffing()) {
+				total += aHalfHourStaffing.getCalculatedStaff().intValue();
+			}
+			
+			totalMinimumStaffing = new Integer(total);			
+		}
 		return totalMinimumStaffing;
 	}
 
@@ -293,5 +429,61 @@ public class DailyStaffing extends SpmObject {
 	 */
 	public void setTotalMinimumStaffing(Integer totalMinimumStaffing) {
 		this.totalMinimumStaffing = totalMinimumStaffing;
-	}	
+	}
+
+	/**
+	 * @return the fixedFlexible
+	 */
+	public Double getFixedFlexible() {
+		return fixedFlexible;
+	}
+
+	/**
+	 * @param fixedFlexible the fixedFlexible to set
+	 */
+	public void setFixedFlexible(Double fixedFlexible) {
+		this.fixedFlexible = fixedFlexible;
+	}
+
+	/**
+	 * @return the fixedOpening
+	 */
+	public Double getFixedOpening() {
+		return fixedOpening;
+	}
+
+	/**
+	 * @param fixedOpening the fixedOpening to set
+	 */
+	public void setFixedOpening(Double fixedOpening) {
+		this.fixedOpening = fixedOpening;
+	}
+
+	/**
+	 * @return the fixedPostRush
+	 */
+	public Double getFixedPostRush() {
+		return fixedPostRush;
+	}
+
+	/**
+	 * @param fixedPostRush the fixedPostRush to set
+	 */
+	public void setFixedPostRush(Double fixedPostRush) {
+		this.fixedPostRush = fixedPostRush;
+	}
+
+	/**
+	 * @return the fixedClosing
+	 */
+	public Double getFixedClosing() {
+		return fixedClosing;
+	}
+
+	/**
+	 * @param fixedClosing the fixedClosing to set
+	 */
+	public void setFixedClosing(Double fixedClosing) {
+		this.fixedClosing = fixedClosing;
+	}
 }

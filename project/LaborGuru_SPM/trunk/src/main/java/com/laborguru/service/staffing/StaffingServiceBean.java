@@ -15,6 +15,7 @@ import java.util.Map;
 
 import com.laborguru.model.DailyProjection;
 import com.laborguru.model.DailyStaffing;
+import com.laborguru.model.DayOfWeekData;
 import com.laborguru.model.DayPart;
 import com.laborguru.model.DayPartData;
 import com.laborguru.model.HalfHourProjection;
@@ -60,6 +61,9 @@ public class StaffingServiceBean implements StaffingService {
 	 * @return
 	 */
 	public StoreDailyStaffing getDailyStaffingByDate(Store store, Date date) {
+		List<DailyStaffing> managerDailyStaffings = new ArrayList<DailyStaffing>();
+		double nonManagerTargetAddition = 0.0;
+		
 		store = getStoreDao().getStoreById(store);
 		DailyProjection dailyProjection = getProjectionDao().getDailyProjection(store, date);
 		
@@ -72,12 +76,47 @@ public class StaffingServiceBean implements StaffingService {
 			if(dailyStaffing == null) {
 				dailyStaffing = calculateDailyStaffing(position, date, dailyProjection);
 			}
-
 			storeDailyStaffing.addDailyStaffing(dailyStaffing);
+			
+			//:TODO: Just 1 manager position? Use base or use total target????
+			if(isManagerDailyStaffing(dailyStaffing)) {
+				managerDailyStaffings.add(dailyStaffing);
+			} else {
+				nonManagerTargetAddition += getDoubleValue(dailyStaffing.getTotalDailyTarget());
+			}
 		}
+		
+		applyOtherFactorsToManagerPositions(managerDailyStaffings, store, nonManagerTargetAddition);
 		
 		return storeDailyStaffing;
 		
+	}
+	
+	/**
+	 * 
+	 * @param managerDailyStaffing
+	 * @param position
+	 * @param nonManagerTargetAddition
+	 */
+	private void applyOtherFactorsToManagerPositions(List<DailyStaffing> managerDailyStaffings, Store store, double nonManagerTargetAddition) {
+		if(managerDailyStaffings != null) {
+			for(DailyStaffing managerDailyStaffing : managerDailyStaffings) {
+				double floorMgmtFactor = nonManagerTargetAddition * getDoubleValue(store.getFloorManagementFactor()) / 100;
+				int minFloorMgmt = getIntegerValue(store.getMinimumFloorManagementHours());
+				floorMgmtFactor = Math.max(floorMgmtFactor, (double) minFloorMgmt);
+				
+				managerDailyStaffing.setTotalDailyTarget(new Double(getDoubleValue(managerDailyStaffing.getBaseDailyTarget()) + floorMgmtFactor));
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 * @param dailyStaffing
+	 * @return
+	 */
+	private boolean isManagerDailyStaffing(DailyStaffing dailyStaffing) {
+		return dailyStaffing != null && dailyStaffing.getPosition() != null && dailyStaffing.getPosition().isManager();
 	}
 	
 	/**
@@ -122,8 +161,8 @@ public class StaffingServiceBean implements StaffingService {
 			HalfHourStaffing aHalfHourStaffing;
 			for(int i = 0; i < size; i++) {
 				aHalfHourStaffing = calculateHalfHourStaffing(position, date, dailyProjection.getHalfHourProjections().get(i), initializeHalfHourStaffingData(position.getStore(), date, dailyProjection.getHalfHourProjections().get(i)));
-				totalWorkContent += aHalfHourStaffing.getWorkContent().doubleValue();
-				totalMinimumStaffing += aHalfHourStaffing.getCalculatedStaff().intValue();
+				totalWorkContent += getDoubleValue(aHalfHourStaffing.getWorkContent());
+				totalMinimumStaffing += getIntegerValue(aHalfHourStaffing.getCalculatedStaff());
 				
 				dailyStaffing.addHalfHourProjection(aHalfHourStaffing);
 			}
@@ -131,7 +170,7 @@ public class StaffingServiceBean implements StaffingService {
 			dailyStaffing.setTotalMinimumStaffing(totalMinimumStaffing);
 			dailyStaffing.setTotalWorkContent(totalWorkContent);
 			
-			calculateDailyStaffingHours(dailyStaffing, position, date, dailyProjection, initializeDailyStaffingData(position, date, dailyProjection));
+			calculateDailyTarget(dailyStaffing, position, date, dailyProjection, initializeDailyStaffingData(position, date, dailyProjection));
 			
 			return dailyStaffing;
 		} else {
@@ -143,14 +182,109 @@ public class StaffingServiceBean implements StaffingService {
 	 * 
 	 * @param dailyStaffing
 	 * @param position
+	 */
+	private void setTotalServiceHours(DailyStaffing dailyStaffing, Position position) {
+		int totalTarget = getIntegerValue(dailyStaffing.getTotalHourStaffing());
+		double scheduleInefficiency = (position.getStore() != null ? getDoubleValue(position.getStore().getScheduleInefficiency()) : 0.0) / 100;
+
+		dailyStaffing.setTotalServiceHours(totalTarget * (1 + scheduleInefficiency));
+	}
+	
+	/**
+	 * 
+	 * @param dailyStaffing
+	 * @param position
 	 * @param date
 	 * @param dailyProjection
 	 * @param dailyStaffingData
 	 */
-	private void calculateDailyStaffingHours(DailyStaffing dailyStaffing, Position position, Date date, DailyProjection dailyProjection, Map<DayPart, DailyStaffingPositionData> dailyStaffingData) {
+	private void calculateDailyTarget(DailyStaffing dailyStaffing, Position position, Date date, DailyProjection dailyProjection, Map<DayPart, DailyStaffingPositionData> dailyStaffingData) {
+		setTotalServiceHours(dailyStaffing, position);
 		
+		setVariableTotals(dailyStaffing, dailyStaffingData);
+		setFixedValues(dailyStaffing, position, date);
+		setTotalFlexible(dailyStaffing, position);
+		setTotalOpening(dailyStaffing, position);
+		
+		applyOtherFactorsToPositionDailyTarget(dailyStaffing, position);
 	}
 
+	/**
+	 * 
+	 * @param dailyStaffing
+	 * @param position
+	 */
+	private void applyOtherFactorsToPositionDailyTarget(DailyStaffing dailyStaffing, Position position) {
+		// Managers Other Factors are tied to store totals
+		if(!position.isManager() && position != null && position.getStore() != null) {
+			double baseTarget = getDoubleValue(dailyStaffing.getBaseDailyTarget());
+			double trainingFactor = baseTarget * getDoubleValue(position.getStore().getTrainingFactor()) / 100;
+			double breakFactor = baseTarget * getDoubleValue(position.getStore().getEarnedBreakFactor()) / 100;
+			
+			dailyStaffing.setTotalDailyTarget(new Double(baseTarget + trainingFactor + breakFactor));
+		}
+	}
+
+	/**
+	 * 
+	 * @param dailyStaffing
+	 * @param position
+	 */
+	private void setTotalOpening(DailyStaffing dailyStaffing, Position position) {
+		double totalOpening = getDoubleValue(dailyStaffing.getTotalVariableOpening()) + getDoubleValue(dailyStaffing.getFixedOpening());
+		
+		dailyStaffing.setTotalFlexible(new Double(totalOpening));
+		
+	}
+	
+	/**
+	 * 
+	 * @param dailyStaffing
+	 * @param position
+	 */
+	private void setTotalFlexible(DailyStaffing dailyStaffing, Position position) {
+		double diffWorkContentService = getDoubleValue(dailyStaffing.getTotalServiceHours()) - getDoubleValue(dailyStaffing.getTotalWorkContent());
+		double available = diffWorkContentService * getDoubleValue(position.getStore().getFillInefficiency()) / 100;
+		double totalFlexible = getDoubleValue(dailyStaffing.getTotalVariableFlexible()) + getDoubleValue(dailyStaffing.getFixedFlexible());
+		double diff = totalFlexible - available;
+		
+		dailyStaffing.setTotalFlexible(new Double(diff >= 0.0 ? diff : 0.0));
+	}
+	
+	/**
+	 * 
+	 * @param dailyStaffing
+	 * @param position
+	 * @param date
+	 */
+	private void setFixedValues(DailyStaffing dailyStaffing, Position position, Date date) {
+		DayOfWeekData dofData = getDayOfWeekDataFor(position, date);
+		if(dofData != null) {
+			dailyStaffing.setFixedFlexible(dofData.getFixedFlexible());
+			dailyStaffing.setFixedOpening(dofData.getFixedOpening());
+			dailyStaffing.setFixedPostRush(dofData.getFixedPostRush());
+			dailyStaffing.setFixedClosing(dofData.getFixedClosing());
+		}
+	}
+
+	/**
+	 * 
+	 * @param dailyStaffing
+	 * @param dailyStaffingData
+	 */
+	private void setVariableTotals(DailyStaffing dailyStaffing, Map<DayPart, DailyStaffingPositionData> dailyStaffingData) {
+		double totalVariableFlexible = 0.0;
+		double totalVariableOpening = 0.0;
+		for(DailyStaffingPositionData dailyData : dailyStaffingData.values()) {
+			totalVariableFlexible += dailyData.getVariableFlexible();
+			totalVariableOpening += dailyData.getVariableOpening();
+		}
+		dailyStaffing.setTotalVariableFlexible(new Double(totalVariableFlexible));
+		dailyStaffing.setTotalVariableOpening(new Double(totalVariableOpening));
+		
+		
+	}
+	
 	/**
 	 * 
 	 * @param position
@@ -170,6 +304,9 @@ public class StaffingServiceBean implements StaffingService {
 			if(aDailyData == null) {
 				aDailyData = new DailyStaffingPositionData();
 				aDailyData.setDayPartData(getDayPartDataFor(position, aDayPart));
+				aDailyData.setStore(position.getStore());
+				aDailyData.setPosition(position);
+				
 				data.put(aDayPart, aDailyData);
 			}
 			aDailyData.addHalfHourProjection(aHalfHourProjection.getAdjustedValue());
@@ -385,6 +522,16 @@ public class StaffingServiceBean implements StaffingService {
 	 */
 	private DayPartData getDayPartDataFor(Position position, Date time) {
 		return position.getDayPartDataFor(getDayPartFor(position, time));
+	}
+	
+	/**
+	 * 
+	 * @param posisiton
+	 * @param date
+	 * @return
+	 */
+	private DayOfWeekData getDayOfWeekDataFor(Position position, Date date) {
+		return position.getDayOfWeekDataFor(CalendarUtils.getDayOfWeek(date));
 	}
 	
 	/**

@@ -105,6 +105,7 @@
 <!ATTLIST tbl_positions
     position_id CDATA #REQUIRED
     name CDATA #IMPLIED
+    manager CDATA #IMPLIED
     position_index CDATA #IMPLIED
     store_id CDATA #IMPLIED
 >
