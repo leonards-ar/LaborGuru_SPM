@@ -104,6 +104,9 @@ public class HalfHourStaffing extends SpmObject {
 	 * @return the calculatedStaff
 	 */
 	public Integer getCalculatedStaff() {
+		if(calculatedStaff == null) {
+			calculatedStaff = new Integer(0);
+		}
 		return calculatedStaff;
 	}
 

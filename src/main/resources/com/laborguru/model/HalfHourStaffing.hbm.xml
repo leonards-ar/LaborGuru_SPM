@@ -10,6 +10,7 @@
 			<generator class="identity" />
 		</id>
 		<property name="calculatedStaff" column="calculated_staff" type="int"/>
+		<property name="workContent" column="work_content" type="double"/>
 		<property name="index" column="half_hour_index" type="int" />
 		<property name="time" column="time" type="timestamp" />
 		

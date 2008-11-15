@@ -62,11 +62,11 @@
   <tbl_menu_items menu_item_id="19" label_key="user.submenu.create" help_key="USER_ADD_HELP" target="/user/user_add.action" position="0" parent_id="17" permission_id="18"/>
   
   <tbl_stores store_id="1" name="microcentro" area_id="1" half_hour_projections_weeks_default="4" daily_projections_weeks_default="4"/>
-  <tbl_positions position_id="1" name="chef" position_index="0" store_id="1"/>
-  <tbl_positions position_id="2" name="waiter" position_index="1" store_id="1"/>
-  <tbl_positions position_id="3" name="cook" position_index="2" store_id="1"/>
-  <tbl_positions position_id="4" name="porter" position_index="3" store_id="1"/>
-  <tbl_positions position_id="5" name="manager" position_index="4" store_id="1"/>
+  <tbl_positions position_id="1" name="chef" manager="0" position_index="0" store_id="1"/>
+  <tbl_positions position_id="2" name="waiter" manager="0" position_index="1" store_id="1"/>
+  <tbl_positions position_id="3" name="cook" manager="0" position_index="2" store_id="1"/>
+  <tbl_positions position_id="4" name="porter" manager="0" position_index="3" store_id="1"/>
+  <tbl_positions position_id="5" name="manager" manager="1" position_index="4" store_id="1"/>
   
   <tbl_profiles profile_id="1" name="Administrator" description="Administrator of the application"/>
   <tbl_profiles profile_id="2" name="Store_Manager" description="Manager of a Store"/>

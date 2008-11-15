@@ -155,11 +155,11 @@ public class StoreDailyStaffing extends SpmObject {
 	 * 
 	 * @return
 	 */
-	public Double getTotalDailyStaffing() {
+	public Double getTotalDailyTarget() {
 		double total = 0.0;
 		Double positionTotal;
 		for(DailyStaffing dailyStaffing : getStoreDailyStaffing()) {
-			positionTotal = dailyStaffing.getCalculatedDailyHours();
+			positionTotal = dailyStaffing.getTotalDailyTarget();
 			total += positionTotal != null ? positionTotal.doubleValue() : 0.0;
 		}
 		return new Double(total);

@@ -455,9 +455,6 @@
 	</table>
 </s:form>
 
-
-
-
 <script language="javascript" type="text/javascript">
 initialize(<s:property value="totalIndividualHours"/>, '<s:property value="breakId"/>', '<s:text name="schedule.addshift.cannot_change_row_message"/>', '<s:text name="schedule.addshift.start_time_message"/>', '<s:text name="schedule.addshift.end_time_message"/>', <s:property value="positions.size()"/>, 1);
 <s:iterator id="pos" value="positions" status="posStatus">

@@ -1088,7 +1088,7 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	public String getTotalTarget() {
 		StoreDailyStaffing storeDailyStaffing = getDailyStaffing();
 		if(storeDailyStaffing != null) {
-			return CalendarUtils.hoursToTime(storeDailyStaffing.getTotalDailyStaffing());
+			return CalendarUtils.hoursToTime(storeDailyStaffing.getTotalDailyTarget());
 		} else {
 			return CalendarUtils.hoursToTime(new Double(0.0));
 		}
@@ -1103,7 +1103,7 @@ public abstract class AddShiftBaseAction extends SpmAction {
 		StoreDailyStaffing storeDailyStaffing = getDailyStaffing();
 		if(storeDailyStaffing != null) {
 			DailyStaffing dailyStaffing = storeDailyStaffing.getDailyStaffing(position);
-			return CalendarUtils.hoursToTime(dailyStaffing != null ? dailyStaffing.getCalculatedDailyHours() : new Double(0.0));
+			return CalendarUtils.hoursToTime(dailyStaffing != null ? dailyStaffing.getTotalDailyTarget() : new Double(0.0));
 		} else {
 			return CalendarUtils.hoursToTime(new Double(0.0));
 		}
