@@ -5,7 +5,6 @@
  */
 package com.laborguru.service.staffing;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -26,11 +25,12 @@ import com.laborguru.model.StoreDailyStaffing;
 import com.laborguru.service.position.dao.PositionDao;
 import com.laborguru.service.projection.dao.ProjectionDao;
 import com.laborguru.service.staffing.dao.StaffingDao;
-import com.laborguru.service.staffing.model.HalfHourStaffingPositionData;
 import com.laborguru.service.staffing.model.DailyStaffingPositionData;
+import com.laborguru.service.staffing.model.HalfHourStaffingPositionData;
 import com.laborguru.service.staffing.model.HalfHourStaffingPositionDataComparator;
 import com.laborguru.service.store.dao.StoreDao;
 import com.laborguru.util.CalendarUtils;
+import com.laborguru.util.NumberUtils;
 
 /**
  *
@@ -65,7 +65,7 @@ public class StaffingServiceBean implements StaffingService {
 		double nonManagerTargetAddition = 0.0;
 		
 		store = getStoreDao().getStoreById(store);
-		DailyProjection dailyProjection = getProjectionDao().getDailyProjection(store, date);
+		DailyProjection dailyProjection = getDailyProjection(store, date);
 		
 		StoreDailyStaffing storeDailyStaffing = new StoreDailyStaffing(store);
 		storeDailyStaffing.setDate(date);
@@ -76,12 +76,14 @@ public class StaffingServiceBean implements StaffingService {
 			if(dailyStaffing == null) {
 				dailyStaffing = calculateDailyStaffing(position, date, dailyProjection);
 			}
-			storeDailyStaffing.addDailyStaffing(dailyStaffing);
-			
-			if(isManagerDailyStaffing(dailyStaffing)) {
-				managerDailyStaffings.add(dailyStaffing);
-			} else {
-				nonManagerTargetAddition += getDoubleValue(dailyStaffing.getTotalDailyTarget());
+			if(dailyStaffing != null) {
+				storeDailyStaffing.addDailyStaffing(dailyStaffing);
+				
+				if(isManagerDailyStaffing(dailyStaffing)) {
+					managerDailyStaffings.add(dailyStaffing);
+				} else {
+					nonManagerTargetAddition += NumberUtils.getDoubleValue(dailyStaffing.getTotalDailyTarget());
+				}
 			}
 		}
 		
@@ -100,11 +102,11 @@ public class StaffingServiceBean implements StaffingService {
 	private void applyOtherFactorsToManagerPositions(List<DailyStaffing> managerDailyStaffings, Store store, double nonManagerTargetAddition) {
 		if(managerDailyStaffings != null) {
 			for(DailyStaffing managerDailyStaffing : managerDailyStaffings) {
-				double floorMgmtFactor = nonManagerTargetAddition * getDoubleValue(store.getFloorManagementFactor()) / 100;
-				int minFloorMgmt = getIntegerValue(store.getMinimumFloorManagementHours());
+				double floorMgmtFactor = nonManagerTargetAddition * NumberUtils.getDoubleValue(store.getFloorManagementFactor()) / 100;
+				int minFloorMgmt = NumberUtils.getIntegerValue(store.getMinimumFloorManagementHours());
 				floorMgmtFactor = Math.max(floorMgmtFactor, (double) minFloorMgmt);
 				
-				managerDailyStaffing.setTotalDailyTarget(new Double(getDoubleValue(managerDailyStaffing.getBaseDailyTarget()) + floorMgmtFactor));
+				managerDailyStaffing.setTotalDailyTarget(new Double(NumberUtils.getDoubleValue(managerDailyStaffing.getBaseDailyTarget()) + floorMgmtFactor));
 			}
 		}
 	}
@@ -130,7 +132,7 @@ public class StaffingServiceBean implements StaffingService {
 		
 		if(dailyStaffing == null) {
 			position = getPositionDao().getPositionById(position);
-			DailyProjection dailyProjection = getProjectionDao().getDailyProjection(position.getStore(), date);
+			DailyProjection dailyProjection = getDailyProjection(position.getStore(), date);
 			
 			dailyStaffing = calculateDailyStaffing(position, date, dailyProjection);
 		}
@@ -138,6 +140,20 @@ public class StaffingServiceBean implements StaffingService {
 		return dailyStaffing;
 	}
 
+	/**
+	 * 
+	 * @param store
+	 * @param date
+	 * @return
+	 */
+	private DailyProjection getDailyProjection(Store store, Date date) {
+		DailyProjection dailyProjection = getProjectionDao().getDailyProjection(store, date);
+		if(dailyProjection == null) {
+			dailyProjection = DailyProjection.getEmptyDailyProjectionInstance(store, date);
+		}
+		return dailyProjection;
+	}
+	
 	/**
 	 * 
 	 * @param position
@@ -160,10 +176,10 @@ public class StaffingServiceBean implements StaffingService {
 			HalfHourStaffing aHalfHourStaffing;
 			for(int i = 0; i < size; i++) {
 				aHalfHourStaffing = calculateHalfHourStaffing(position, date, dailyProjection.getHalfHourProjections().get(i), initializeHalfHourStaffingData(position.getStore(), date, dailyProjection.getHalfHourProjections().get(i)));
-				totalWorkContent += getDoubleValue(aHalfHourStaffing.getWorkContent());
-				totalMinimumStaffing += getIntegerValue(aHalfHourStaffing.getCalculatedStaff());
+				totalWorkContent += NumberUtils.getDoubleValue(aHalfHourStaffing.getWorkContent());
+				totalMinimumStaffing += NumberUtils.getIntegerValue(aHalfHourStaffing.getCalculatedStaff());
 				
-				dailyStaffing.addHalfHourProjection(aHalfHourStaffing);
+				dailyStaffing.addHalfHourStaffing(aHalfHourStaffing);
 			}
 			
 			dailyStaffing.setTotalMinimumStaffing(totalMinimumStaffing);
@@ -183,8 +199,8 @@ public class StaffingServiceBean implements StaffingService {
 	 * @param position
 	 */
 	private void setTotalServiceHours(DailyStaffing dailyStaffing, Position position) {
-		int totalTarget = getIntegerValue(dailyStaffing.getTotalHourStaffing());
-		double scheduleInefficiency = (position.getStore() != null ? getDoubleValue(position.getStore().getScheduleInefficiency()) : 0.0) / 100;
+		int totalTarget = NumberUtils.getIntegerValue(dailyStaffing.getTotalHourStaffing());
+		double scheduleInefficiency = (position.getStore() != null ? NumberUtils.getDoubleValue(position.getStore().getScheduleInefficiency()) : 0.0) / 100;
 
 		dailyStaffing.setTotalServiceHours(totalTarget * (1 + scheduleInefficiency));
 	}
@@ -216,9 +232,9 @@ public class StaffingServiceBean implements StaffingService {
 	private void applyOtherFactorsToPositionDailyTarget(DailyStaffing dailyStaffing, Position position) {
 		// Managers Other Factors are tied to store totals
 		if(!position.isManager() && position != null && position.getStore() != null) {
-			double baseTarget = getDoubleValue(dailyStaffing.getBaseDailyTarget());
-			double trainingFactor = baseTarget * getDoubleValue(position.getStore().getTrainingFactor()) / 100;
-			double breakFactor = baseTarget * getDoubleValue(position.getStore().getEarnedBreakFactor()) / 100;
+			double baseTarget = NumberUtils.getDoubleValue(dailyStaffing.getBaseDailyTarget());
+			double trainingFactor = baseTarget * NumberUtils.getDoubleValue(position.getStore().getTrainingFactor()) / 100;
+			double breakFactor = baseTarget * NumberUtils.getDoubleValue(position.getStore().getEarnedBreakFactor()) / 100;
 			
 			dailyStaffing.setTotalDailyTarget(new Double(baseTarget + trainingFactor + breakFactor));
 		}
@@ -230,7 +246,7 @@ public class StaffingServiceBean implements StaffingService {
 	 * @param position
 	 */
 	private void setTotalOpening(DailyStaffing dailyStaffing, Position position) {
-		double totalOpening = getDoubleValue(dailyStaffing.getTotalVariableOpening()) + getDoubleValue(dailyStaffing.getFixedOpening());
+		double totalOpening = NumberUtils.getDoubleValue(dailyStaffing.getTotalVariableOpening()) + NumberUtils.getDoubleValue(dailyStaffing.getFixedOpening());
 		
 		dailyStaffing.setTotalFlexible(new Double(totalOpening));
 		
@@ -242,9 +258,9 @@ public class StaffingServiceBean implements StaffingService {
 	 * @param position
 	 */
 	private void setTotalFlexible(DailyStaffing dailyStaffing, Position position) {
-		double diffWorkContentService = getDoubleValue(dailyStaffing.getTotalServiceHours()) - getDoubleValue(dailyStaffing.getTotalWorkContent());
-		double available = diffWorkContentService * getDoubleValue(position.getStore().getFillInefficiency()) / 100;
-		double totalFlexible = getDoubleValue(dailyStaffing.getTotalVariableFlexible()) + getDoubleValue(dailyStaffing.getFixedFlexible());
+		double diffWorkContentService = NumberUtils.getDoubleValue(dailyStaffing.getTotalServiceHours()) - NumberUtils.getDoubleValue(dailyStaffing.getTotalWorkContent());
+		double available = diffWorkContentService * NumberUtils.getDoubleValue(position.getStore().getFillInefficiency()) / 100;
+		double totalFlexible = NumberUtils.getDoubleValue(dailyStaffing.getTotalVariableFlexible()) + NumberUtils.getDoubleValue(dailyStaffing.getFixedFlexible());
 		double diff = totalFlexible - available;
 		
 		dailyStaffing.setTotalFlexible(new Double(diff >= 0.0 ? diff : 0.0));
@@ -302,7 +318,9 @@ public class StaffingServiceBean implements StaffingService {
 			aDailyData = data.get(aDayPart);
 			if(aDailyData == null) {
 				aDailyData = new DailyStaffingPositionData();
-				aDailyData.setDayPartData(getDayPartDataFor(position, aDayPart));
+				DayPartData dayPartData = getDayPartDataFor(position, aDayPart);
+				//:TODO: What if dayPartData is null???
+				aDailyData.setDayPartData(dayPartData);
 				aDailyData.setStore(position.getStore());
 				aDailyData.setPosition(position);
 				
@@ -334,10 +352,11 @@ public class StaffingServiceBean implements StaffingService {
 				groupStaffingData = data.get(key);
 
 				staffingData = new HalfHourStaffingPositionData(position);
-				staffingData.setProjection(getDoubleValue(halfHourProjection.getAdjustedValue()));
+				staffingData.setProjection(NumberUtils.getDoubleValue(halfHourProjection.getAdjustedValue()));
 				staffingData.setUtilization(getUtilization(position, staffingData.getProjection()));
 				staffingData.setWorkContent(getWorkContent(position, halfHourProjection, date, halfHourProjection.getTime(), staffingData.getProjection(), staffingData.getUtilization()));
-
+				staffingData.setPositionMinimumStaffing(getPositionMinimumStaffing(position, halfHourProjection.getTime()));
+				
 				if(groupStaffingData == null) {
 					groupStaffingData = new ArrayList<HalfHourStaffingPositionData>();
 					groupStaffingData.add(staffingData);
@@ -354,6 +373,17 @@ public class StaffingServiceBean implements StaffingService {
 		}
 		
 		return data;
+	}
+	
+	/**
+	 * 
+	 * @param position
+	 * @param time
+	 * @return
+	 */
+	private int getPositionMinimumStaffing(Position position, Date time) {
+		DayPartData dayPartData = getDayPartDataFor(position, time);
+		return dayPartData != null ? NumberUtils.getIntegerValue(dayPartData.getMinimunStaffing()) : 0;
 	}
 	
 	/**
@@ -426,7 +456,7 @@ public class StaffingServiceBean implements StaffingService {
 	
 		HalfHourStaffingPositionData staffingData = getHalfHourStaffingPositionData(data, position);
 		if(data != null) {
-			halfHourStaffing.setCalculatedStaff(staffingData.getMinimunStaffing());
+			halfHourStaffing.setCalculatedStaff(new Integer(staffingData.getMinimumStaffing()));
 			halfHourStaffing.setWorkContent(new Double(staffingData.getWorkContent()));
 		}
 		
@@ -441,10 +471,10 @@ public class StaffingServiceBean implements StaffingService {
 	 * @return
 	 */
 	private double getUtilization(Position position, double projection) {
-		double minPercent = getDoubleValue(position.getUtilizationBottom());
-		double maxPercent = getDoubleValue(position.getUtilizationTop());
-		int min = getIntegerValue(position.getUtilizationMinimum());
-		int max = getIntegerValue(position.getUtilizationMaximum());
+		double minPercent = NumberUtils.getDoubleValue(position.getUtilizationBottom());
+		double maxPercent = NumberUtils.getDoubleValue(position.getUtilizationTop());
+		int min = NumberUtils.getIntegerValue(position.getUtilizationMinimum());
+		int max = NumberUtils.getIntegerValue(position.getUtilizationMaximum());
 
 		if(projection <= min) {
 			return minPercent;
@@ -481,9 +511,9 @@ public class StaffingServiceBean implements StaffingService {
 		if(dayPartData == null) {
 			return 0.0;
 		} else if(CalendarUtils.isWeekendDay(date)) {
-			return getDoubleValue(dayPartData.getWeekendGuestService());
+			return NumberUtils.getDoubleValue(dayPartData.getWeekendGuestService());
 		} else {
-			return getDoubleValue(dayPartData.getWeekdayGuestService());
+			return NumberUtils.getDoubleValue(dayPartData.getWeekdayGuestService());
 		}
 	}
 	
@@ -499,7 +529,7 @@ public class StaffingServiceBean implements StaffingService {
 		if(dayPartData == null) {
 			return 0.0;
 		} else {
-			return getDoubleValue(dayPartData.getFixedGuestService());
+			return NumberUtils.getDoubleValue(dayPartData.getFixedGuestService());
 		}
 	}
 	
@@ -541,33 +571,6 @@ public class StaffingServiceBean implements StaffingService {
 	 */
 	private DayPartData getDayPartDataFor(Position position, DayPart dayPart) {
 		return position.getDayPartDataFor(dayPart);
-	}
-	
-	/**
-	 * 
-	 * @param d
-	 * @return
-	 */
-	private double getDoubleValue(Double d) {
-		return d != null ? d.doubleValue() : 0.0;
-	}
-	
-	/**
-	 * 
-	 * @param d
-	 * @return
-	 */
-	private double getDoubleValue(BigDecimal bd) {
-		return bd != null ? bd.doubleValue() : 0.0;
-	}
-	
-	/**
-	 * 
-	 * @param i
-	 * @return
-	 */
-	private int getIntegerValue(Integer i) {
-		return i != null ? i.intValue() : 0;
 	}
 	
 	/**

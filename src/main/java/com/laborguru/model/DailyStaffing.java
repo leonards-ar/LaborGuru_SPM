@@ -253,7 +253,7 @@ public class DailyStaffing extends SpmObject {
 	 * relation.
 	 * @param halfHourStaffing The HalfHourStaffing to add
 	 */
-	public void addHalfHourProjection(HalfHourStaffing halfHourStaffing){
+	public void addHalfHourStaffing(HalfHourStaffing halfHourStaffing){
 		
 		if (halfHourStaffing == null){
 			throw new IllegalArgumentException("Null halfHourStaffing passed in as parameter");
@@ -269,7 +269,7 @@ public class DailyStaffing extends SpmObject {
 	 * relation.
 	 * @param halfHourStaffing The halfHourCalculatedPositionStaff to remove
 	 */
-	public void removeHalfHourProjection(HalfHourStaffing halfHourStaffing){
+	public void removeHalfHourStaffing(HalfHourStaffing halfHourStaffing){
 		
 		if (halfHourStaffing == null){
 			throw new IllegalArgumentException("Null halfHourStaffing passed in as parameter");

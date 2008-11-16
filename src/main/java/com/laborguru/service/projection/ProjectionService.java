@@ -43,5 +43,4 @@ public interface ProjectionService extends Service{
 	void saveProjection(Store store, List<HalfHourProjection> halfHourProjectionList, Date selectedDate);
 
 	void setProjectionDao(ProjectionDao projectionDao);
-	
 }
