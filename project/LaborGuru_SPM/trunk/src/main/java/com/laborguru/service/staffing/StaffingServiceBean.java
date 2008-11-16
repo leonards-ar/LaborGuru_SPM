@@ -78,7 +78,6 @@ public class StaffingServiceBean implements StaffingService {
 			}
 			storeDailyStaffing.addDailyStaffing(dailyStaffing);
 			
-			//:TODO: Just 1 manager position? Use base or use total target????
 			if(isManagerDailyStaffing(dailyStaffing)) {
 				managerDailyStaffings.add(dailyStaffing);
 			} else {
