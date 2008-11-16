@@ -29,6 +29,7 @@ public class HalfHourStaffingPositionData implements Serializable {
 	private int workContentIntegerPart;
 	private double workContentDecimalPart;
 	private boolean additionalEmployee;
+	private int positionMinimumStaffing;
 
 	/**
 	 * 
@@ -117,8 +118,9 @@ public class HalfHourStaffingPositionData implements Serializable {
 	 * 
 	 * @return
 	 */
-	public int getMinimunStaffing() {
-		return isAdditionalEmployee() ? getWorkContentIntegerPart() + 1 : getWorkContentIntegerPart();
+	public int getMinimumStaffing() {
+		int calculatedMinimumStaffing = isAdditionalEmployee() ? getWorkContentIntegerPart() + 1 : getWorkContentIntegerPart();
+		return Math.max(calculatedMinimumStaffing, getPositionMinimumStaffing()); 
 	}
 
 	/**
@@ -164,4 +166,19 @@ public class HalfHourStaffingPositionData implements Serializable {
 	public int hashCode() {
 		return getPosition() != null ? getPosition().hashCode() : super.hashCode();
 	}
+
+	/**
+	 * @return the positionMinimumStaffing
+	 */
+	public int getPositionMinimumStaffing() {
+		return positionMinimumStaffing;
+	}
+
+	/**
+	 * @param positionMinimumStaffing the positionMinimumStaffing to set
+	 */
+	public void setPositionMinimumStaffing(int positionMinimumStaffing) {
+		this.positionMinimumStaffing = positionMinimumStaffing;
+	}
+
 }

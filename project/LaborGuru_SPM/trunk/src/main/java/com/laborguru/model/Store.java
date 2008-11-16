@@ -13,6 +13,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.laborguru.model.comparator.SpmComparator;
+import com.laborguru.util.CalendarUtils;
 
 public class Store extends SpmObject {
 
@@ -531,7 +532,7 @@ public class Store extends SpmObject {
 	public DayPart getDayPartFor(Date time) {
 		if(time != null) {
 			for(DayPart dayPart : getDayParts()) {
-				if(dayPart.getStartHour() != null && time.getTime() >= dayPart.getStartHour().getTime()) {
+				if(CalendarUtils.equalsOrGreaterTime(time, dayPart.getStartHour())) {
 					return dayPart;
 				}
 			}

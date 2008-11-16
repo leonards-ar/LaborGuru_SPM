@@ -10,7 +10,9 @@ import java.util.Locale;
 public class SpmConstants {
 
 	public static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
+	public static final SimpleDateFormat TIME_NUMBER_FORMAT = new SimpleDateFormat("HHmmss");
 	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+	public static final SimpleDateFormat REMOVE_TIME_FORMAT = new SimpleDateFormat("yyyyMMdd");
 	
 	public static final String WEEKDAY_SELECTOR_DATEFORMAT= "yyyyMMdd";
 	
@@ -24,5 +26,8 @@ public class SpmConstants {
 	public static final int DECIMAL_SCALE = 16;
 	public static final RoundingMode ROUNDING_MODE = RoundingMode.HALF_EVEN;
 	public static final int DAILY_PROJECTION_PERIOD_DAYS = 7;
+	public static final int HALF_HOUR = 30;
+	public static final int HALF_HOURS_IN_A_DAY=48;
+	
 	public static final BigDecimal BD_ZERO_VALUE = new BigDecimal(INIT_VALUE_ZERO);
 }

@@ -11,6 +11,8 @@ import java.math.BigDecimal;
 import com.laborguru.model.DayPartData;
 import com.laborguru.model.Position;
 import com.laborguru.model.Store;
+import com.laborguru.util.NumberUtils;
+import com.laborguru.util.SpmConstants;
 
 /**
  *
@@ -24,7 +26,7 @@ public class DailyStaffingPositionData implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -2629969275009440055L;
-	private BigDecimal dayPartTotalProjection = new BigDecimal(0.0);
+	private BigDecimal dayPartTotalProjection = SpmConstants.BD_ZERO_VALUE;
 	private DayPartData dayPartData = null;
 	private Position position = null;
 	private Store store = null;
@@ -61,6 +63,9 @@ public class DailyStaffingPositionData implements Serializable {
 	 * @return the dayPartData
 	 */
 	public DayPartData getDayPartData() {
+		if(dayPartData == null) {
+			setDayPartData(new DayPartData());
+		}
 		return dayPartData;
 	}
 
@@ -77,9 +82,9 @@ public class DailyStaffingPositionData implements Serializable {
 	 */
 	public double getVariableFlexible() {
 		if(getStore() != null) {
-			return getDayPartTotalProjection().doubleValue() * getDayPartData().getVariableFlexible().doubleValue() * getStore().getAllPositionsUtilization().doubleValue() / 100;
+			return NumberUtils.getDoubleValue(getDayPartTotalProjection()) * NumberUtils.getDoubleValue(getDayPartData().getVariableFlexible()) * NumberUtils.getDoubleValue(getStore().getAllPositionsUtilization()) / 100;
 		} else {
-			return getDayPartTotalProjection().doubleValue() * getDayPartData().getVariableFlexible().doubleValue();
+			return NumberUtils.getDoubleValue(getDayPartTotalProjection()) * NumberUtils.getDoubleValue(getDayPartData().getVariableFlexible());
 		}
 	}
 
@@ -89,9 +94,9 @@ public class DailyStaffingPositionData implements Serializable {
 	 */
 	public double getVariableOpening() {
 		if(getStore() != null) {
-			return getDayPartTotalProjection().doubleValue() * getDayPartData().getVariableOpening().doubleValue() * getStore().getAllPositionsUtilization().doubleValue() / 100;
+			return NumberUtils.getDoubleValue(getDayPartTotalProjection()) * NumberUtils.getDoubleValue(getDayPartData().getVariableOpening()) * NumberUtils.getDoubleValue(getStore().getAllPositionsUtilization()) / 100;
 		} else {
-			return getDayPartTotalProjection().doubleValue() * getDayPartData().getVariableOpening().doubleValue();
+			return NumberUtils.getDoubleValue(getDayPartTotalProjection()) * NumberUtils.getDoubleValue(getDayPartData().getVariableOpening());
 		}
 	}
 

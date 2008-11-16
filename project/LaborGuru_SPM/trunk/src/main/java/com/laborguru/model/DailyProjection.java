@@ -8,6 +8,9 @@ import java.util.List;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.joda.time.DateTime;
+
+import com.laborguru.util.SpmConstants;
 
 /**
  * Deals with the Daily projection behaviour.
@@ -199,5 +202,34 @@ public class DailyProjection extends SpmObject {
 		if (halfHourProjection.getProjection() != null){
 			halfHourProjection.setProjection(null);
 		}
+	}
+
+	/**
+	 * Returns an empty instance of this class.
+	 * :TODO: Move to another class and/or package? Too many logic for a model class??
+	 * @param store
+	 * @param date
+	 * @return
+	 */
+	public static DailyProjection getEmptyDailyProjectionInstance(Store store, Date date) {
+		DailyProjection dailyProjection = new DailyProjection();
+		dailyProjection.setProjectionDate(date);
+		dailyProjection.setStore(store);
+		dailyProjection.setStartingTime(store.getStoreOperationTimeByDate(date).getOpenHour());
+		
+		HalfHourProjection aHalfHourProjection;
+		DateTime nextTime = new DateTime().withDate(1970, 1, 1).withTime(0,30,0,0);
+		
+		for(int i = 0; i < SpmConstants.HALF_HOURS_IN_A_DAY; i++) {
+			aHalfHourProjection = new HalfHourProjection();
+			aHalfHourProjection.setTime(nextTime.toDate());
+			aHalfHourProjection.setAdjustedValue(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
+			aHalfHourProjection.setIndex(i);
+			dailyProjection.addHalfHourProjection(aHalfHourProjection);
+			
+			nextTime = nextTime.plusMinutes(SpmConstants.HALF_HOUR);
+		}
+		
+		return dailyProjection;
 	}	
 }

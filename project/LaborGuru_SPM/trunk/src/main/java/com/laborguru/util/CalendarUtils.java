@@ -25,7 +25,7 @@ public class CalendarUtils {
 	/**
 	 * 
 	 */
-	public CalendarUtils() {
+	private CalendarUtils() {
 	}
 
 	/**
@@ -107,9 +107,8 @@ public class CalendarUtils {
 	 */
 	public static Date removeTimeFromDate(Date d) {
 		try {
-			final SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
-			String str = df.format(d);
-			return df.parse(str);
+			String str = SpmConstants.REMOVE_TIME_FORMAT.format(d);
+			return SpmConstants.REMOVE_TIME_FORMAT.parse(str);
 		} catch(ParseException ex) {
 			// Should never happen
 			return null;
@@ -161,6 +160,40 @@ public class CalendarUtils {
 	 */
 	public static String dateToString(Date time, String format) {
 			return new SimpleDateFormat(format).format(time);
+	}
+	
+	/**
+	 * Returns if time1 is greater or equal than time2
+	 * @param time1
+	 * @param time2
+	 * @return
+	 */
+	public static boolean equalsOrGreaterTime(Date time1, Date time2) {
+		try {
+			long t1 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(time1));
+			long t2 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(time2));
+			
+			return t1 >= t2;
+		} catch(Throwable ex) {
+			return false;
+		}
+	}
+
+	/**
+	 * Returns if time1 is smaller or equal than time2
+	 * @param time1
+	 * @param time2
+	 * @return
+	 */
+	public static boolean equalsOrSmallerTime(Date time1, Date time2) {
+		try {
+			long t1 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(time1));
+			long t2 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(time2));
+			
+			return t1 <= t2;
+		} catch(Throwable ex) {
+			return false;
+		}
 	}
 	
 	/**
