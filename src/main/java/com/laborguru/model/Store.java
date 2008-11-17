@@ -536,6 +536,8 @@ public class Store extends SpmObject {
 					return dayPart;
 				}
 			}
+			// For sure time is before the first day part
+			return getDayParts().size() > 0 ? getDayParts().get(0) : null;
 		}
 		return null;
 	}
