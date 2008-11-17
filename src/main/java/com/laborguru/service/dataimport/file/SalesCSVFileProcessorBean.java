@@ -39,62 +39,67 @@ public class SalesCSVFileProcessorBean implements SalesFileProcessorService {
 	 * @see com.laborguru.service.dataimport.file.SalesFileProcessorService#processAndSaveFile(java.io.File)
 	 */
 	public UploadFile processAndSaveFile(File file, UploadFile uploadFile) {
-								
-		fileParser.assembleSalesFileParser(file);
-		
-		//Setting default values for Upload File
-		String filename = file.getName();
-		Date uploadDate = new Date();
-		
-		UploadFile uploadToSave = new UploadFile();
-		
-		uploadToSave.setFilename(filename);
-		uploadToSave.setUploadDate(uploadDate);
-		
-		//Setting the uploadFile parameter values if present
-		if (uploadFile != null){
-			
-			if (uploadFile.getFilename() != null){
-				uploadToSave.setFilename(uploadFile.getFilename());
-			}
-			
-			if (uploadFile.getUploadDate() != null){
-				uploadToSave.setUploadDate(uploadFile.getUploadDate());
-			}
-			
-		}
-		
-		if (!fileParser.isFileValid()){
-			String msg = "The file " + uploadToSave.getFilename() +" passed in as parameter is not valid.";
-			log.error(msg);
-			throw new InvalidUploadFileException(msg);
-		}
-		
 
-		//We persist the upload File instance first, so the historic sales are associated with the upload file		
-		uploadFileDao.saveOrUpdate(uploadToSave);
-		
-		//We persist the historic sales. To keep a light session and to improve the performace of the operation
-		//every 20 records we flush the session.
-		int recordsCounter = 0;
+		UploadFile uploadToSave = null;
 
-		HistoricSales historicSales = null;
-		
-		historicSales = fileParser.getNextRecord();
-		
-		while(historicSales != null){						
-			historicSales.setUploadFile(uploadToSave);			
-			historicSalesDao.saveOrUpdate(historicSales);			
-			recordsCounter++;
+		try{
+			fileParser.assembleSalesFileParser(file, 1);
 			
-			if (recordsCounter % 20 == 0){
-				spmDaoUtils.flushSession();
-				spmDaoUtils.clearSession();
+			//Setting default values for Upload File
+			String filename = file.getName();
+			Date uploadDate = new Date();
+			
+			uploadToSave = new UploadFile(); 
+			
+			uploadToSave.setFilename(filename);
+			uploadToSave.setUploadDate(uploadDate);
+			
+			//Setting the uploadFile parameter values if present
+			if (uploadFile != null){
+				
+				if (uploadFile.getFilename() != null){
+					uploadToSave.setFilename(uploadFile.getFilename());
+				}
+				
+				if (uploadFile.getUploadDate() != null){
+					uploadToSave.setUploadDate(uploadFile.getUploadDate());
+				}
+				
 			}
-						
-			historicSales = fileParser.getNextRecord();			
+			
+			if (!fileParser.isFileValid()){
+				String msg = "The file " + uploadToSave.getFilename() +" passed in as parameter is not valid.";
+				log.error(msg);
+				throw new InvalidUploadFileException(msg);
+			}
+			
+	
+			//We persist the upload File instance first, so the historic sales are associated with the upload file		
+			uploadFileDao.saveOrUpdate(uploadToSave);
+			
+			//We persist the historic sales. To keep a light session and to improve the performace of the operation
+			//every 20 records we flush the session.
+			int recordsCounter = 0;
+	
+			HistoricSales historicSales = null;
+			
+			historicSales = fileParser.getNextRecord();
+			
+			while(historicSales != null){						
+				historicSales.setUploadFile(uploadToSave);			
+				historicSalesDao.saveOrUpdate(historicSales);			
+				recordsCounter++;
+				
+				if (recordsCounter % 20 == 0){
+					spmDaoUtils.flushSession();
+					spmDaoUtils.clearSession();
+				}
+							
+				historicSales = fileParser.getNextRecord();			
+			}
+		} finally {
+			fileParser.close();
 		}
-		
 		//Refreshing the uploadFile into the hibernate session
 		UploadFile retUploadFile = uploadFileDao.getUploadFileById(uploadToSave);
 		

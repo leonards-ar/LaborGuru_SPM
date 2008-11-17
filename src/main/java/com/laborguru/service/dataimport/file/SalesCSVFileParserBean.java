@@ -1,13 +1,19 @@
 package com.laborguru.service.dataimport.file;
 
 import java.io.File;
-import java.math.BigDecimal;
-import java.util.Calendar;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.List;
 
-import org.apache.commons.lang.math.RandomUtils;
+import org.apache.log4j.Logger;
 
+import au.com.bytecode.opencsv.CSVReader;
+
+import com.laborguru.exception.FileParserException;
 import com.laborguru.model.HistoricSales;
 import com.laborguru.model.Store;
+import com.laborguru.model.filter.SearchStoreFilter;
 import com.laborguru.service.store.StoreService;
 
 /**
@@ -19,54 +25,145 @@ import com.laborguru.service.store.StoreService;
  */
 public class SalesCSVFileParserBean implements SalesFileParser {
 
-	private static final int TEST_MAX = 1000;
+	private static final Logger log = Logger.getLogger(SalesCSVFileProcessorBean.class);
+
+	private int allLinesCounter;
+	private int validLinesCounter;
 	private StoreService storeService;
 	private Store store;
-	private int count;
-	
+	private CSVReader csvReader;
+	private String filename;
 	
 	public SalesCSVFileParserBean(){
 		
 	}	
 	
-	public SalesFileParser assembleSalesFileParser(File fileToParse) {
+	/**
+	 * This method initializes the parser with file we are going to process.
+	 * @param fileToParse
+	 * @return
+	 * @see com.laborguru.service.dataimport.file.SalesFileParser#assembleSalesFileParser(java.io.File)
+	 */
+	public SalesFileParser assembleSalesFileParser(File fileToParse, int ignoreLines) {
+
+		FileReader inReader;
+
+		try {
+			inReader = new FileReader(fileToParse);
+		} catch (FileNotFoundException e) {
+			String message = "File to parse:"+fileToParse.getName()+ "is not found";
+			log.debug(message);
+			throw new IllegalArgumentException(message, e);			
+		}
+		
+		this.filename = fileToParse.getName();
+		this.csvReader = new CSVReader(inReader);
+		
+		if (ignoreLines > 0){
+			for (int i=0; i < ignoreLines; i++){
+				try {
+					
+					csvReader.readNext();
+					allLinesCounter++;
+					
+				} catch (IOException e) {
+					String message = "Error reading the line:"+allLinesCounter+ " on the file:"+this.filename;
+					log.debug(message);
+					throw new FileParserException(e, message);			
+				}
+			}
+		}
 		
 		return this;
 	}
 
-	public String getFilename() {
-		return "testFilename1";
-	}
+	/**
+	 * Close underlying reading and release reources.
+	 * Don't forget to call this method before you finish to preocess the upload.
+	 * @throws IOException 
+	 * @see com.laborguru.service.dataimport.file.SalesFileParser#close()
+	 */
+	public void close() {
+		try {
+			this.csvReader.close();
+		} catch (IOException e) {
+			String message = "Error - Trying to close csv reader:"+this.csvReader+ " - IO reader for the file:"+this.filename+"could not be closed";
+			log.debug(message);
+			throw new FileParserException(e, message);			
+		}
+	}	
+	
+	/**
+	 * @return
+	 * @see com.laborguru.service.dataimport.file.SalesFileParser#getNextRecord()
+	 */
+	public HistoricSales getNextRecord() {		
+		HistoricSales aHistoricSales = null;
+		String nextLine[] = null;
+		boolean getNext = true;
 
-	public HistoricSales getNextRecord() {
-		HistoricSales test = null;
-		
-		if (this.store == null){
-			Store auxStore = new Store();
-			auxStore.setId(1);			
-			this.store = storeService.getStoreById(auxStore);
+		while (getNext){
+			try {
+				nextLine = csvReader.readNext();			
+			} catch (IOException e) {
+				String message = "Error reading the line:"+allLinesCounter+ " on the file:"+this.filename;
+				log.debug(message);
+				throw new FileParserException(e, message);			
+			}
+			
+			if (nextLine != null){
+				allLinesCounter++;
+				try {
+					aHistoricSales = HistoricSalesAssembler.getHistoricSales(nextLine);					
+					Store store = getCurrentStore(aHistoricSales.getStore());				
+					aHistoricSales.setStore(store);
+					validLinesCounter++;
+					getNext = false;
+				} catch(FileParserException e) {
+				    String message = "Invalid line - Line number:"+allLinesCounter + " - See above log.";
+					log.error(message);
+					continue;
+				}
+			} else{
+				//End of file
+				return null;
+			}
 		}
 		
-		if (count < TEST_MAX){		
-			test = new HistoricSales();
-			
-			Calendar today = Calendar.getInstance();
-			today.add(Calendar.DAY_OF_YEAR, (0-(RandomUtils.nextInt()%40)));
-			today.add(Calendar.HOUR_OF_DAY, (0-(RandomUtils.nextInt()%24)));
-			today.add(Calendar.MINUTE, (0-(RandomUtils.nextInt()%60)));
-
-			
-			test.setDateTime(today.getTime());
-			
-			test.setDayOfWeek(today.get(Calendar.DAY_OF_WEEK));
-			test.setMainValue(BigDecimal.valueOf(RandomUtils.nextDouble() * 1000));
-			test.setStore(store);
-			count++;
-		}
+		return aHistoricSales;
+	}	
+	
+	
+	/**
+	 * Get the current store instance for the line we are processing.
+	 * 
+	 * @param historicSales
+	 * @return
+	 */
+	private Store getCurrentStore(Store hsStore) {
 		
-		return test;
+		if (this.store == null || !this.store.getCode().equals(hsStore.getCode())){
+			SearchStoreFilter storeFilter = new SearchStoreFilter();
+			
+			storeFilter.setCode(hsStore.getCode());
+
+			List<Store> storeList = storeService.filterStore(storeFilter);
+			
+			if (storeList != null && storeList.size() > 0){
+				this.store = storeList.get(0);
+			} else {				
+			    String message = "The store with code:"+ hsStore.getCode()+" does not exist";
+				log.error(message);
+				throw new FileParserException(message);
+			}
+		}
+		return this.store;
 	}
 
+	/**
+	 * @param storeService
+	 * @see com.laborguru.service.dataimport.file.SalesFileParser#setStoreService(com.laborguru.service.store.StoreService)
+	 */
 	public void setStoreService(StoreService storeService) {
 		this.storeService = storeService;
 	}
@@ -78,8 +175,25 @@ public class SalesCSVFileParserBean implements SalesFileParser {
 		return storeService;
 	}
 
+	/**
+	 * @return
+	 * @see com.laborguru.service.dataimport.file.SalesFileParser#isFileValid()
+	 */
 	public boolean isFileValid() {
 		return true;
 	}
 
+	/**
+	 * @return the allLinesCounter
+	 */
+	public int getAllLinesCounter() {
+		return allLinesCounter;
+	}
+
+	/**
+	 * @return the validLinesCounter
+	 */
+	public int getValidLinesCounter() {
+		return validLinesCounter;
+	}
 }

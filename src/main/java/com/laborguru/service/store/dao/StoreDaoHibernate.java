@@ -23,6 +23,7 @@ public class StoreDaoHibernate extends SpmHibernateDao implements StoreDao {
 	private static final String STORE_ID_NULL = "the store id passed in as parameter is null";
 	private static final String STORE_NULL = "the store passed in as parameter is null";
 	
+	
 	/**
 	 * @param store
 	 * @see com.laborguru.service.store.dao.StoreDao#delete(com.laborguru.model.Store)

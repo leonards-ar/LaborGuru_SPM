@@ -32,7 +32,6 @@ public class HistoricSales extends SpmObject {
 	private UploadFile uploadFile;
 	private Store store;
 	
-	
 	/**
 	 * @param obj
 	 * @return
@@ -53,7 +52,7 @@ public class HistoricSales extends SpmObject {
 		
 		return new EqualsBuilder()
 		.append(getDateTime(), other.getDateTime())
-		.append(getDayOfWeek(), other.getDayOfWeek())
+		.append(getMainValue(), other.getMainValue())
 		.isEquals();	
 	}
 
@@ -65,7 +64,7 @@ public class HistoricSales extends SpmObject {
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37)
 		.append(getDateTime())
-		.append(getDayOfWeek())
+		.append(getMainValue())
 		.toHashCode();	
 	}
 
