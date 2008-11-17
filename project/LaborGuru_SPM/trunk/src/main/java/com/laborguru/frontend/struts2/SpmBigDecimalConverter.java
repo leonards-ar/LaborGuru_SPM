@@ -1,13 +1,12 @@
 package com.laborguru.frontend.struts2;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.apache.struts2.util.StrutsTypeConverter;
 
+import com.laborguru.util.NumberUtils;
 import com.opensymphony.xwork2.util.TypeConversionException;
 
 /**
@@ -21,9 +20,7 @@ import com.opensymphony.xwork2.util.TypeConversionException;
  */
 public class SpmBigDecimalConverter extends StrutsTypeConverter {
 
-	static Logger log = Logger.getLogger(SpmBigDecimalConverter.class);
-
-	private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#,##0");
+	private final static Logger log = Logger.getLogger(SpmBigDecimalConverter.class);
 
 	/**
 	 * @see org.apache.struts2.util.StrutsTypeConverter#convertFromString(java.util.Map, java.lang.String[], java.lang.Class)
@@ -35,14 +32,13 @@ public class SpmBigDecimalConverter extends StrutsTypeConverter {
 			return value;
 		}
 					
-		try {
-			Number auxValue = DECIMAL_FORMAT.parse(value.trim());
+		Number auxValue = NumberUtils.stringToNumber(value.trim(), NumberUtils.DECIMAL_FORMAT);
+		
+		if (auxValue != null)
 			return  new BigDecimal(auxValue.toString());
-			
-		} catch (ParseException e) {
-			log.error("Not number valid expression [" + value + "]");
-			throw new TypeConversionException("Not number valid expression [" + value + "]", e);	
-		}		
+		
+		log.error("Not number valid expression [" + value + "]");
+		throw new TypeConversionException("Not number valid expression [" + value + "]");					
 	}
 
 
@@ -50,6 +46,6 @@ public class SpmBigDecimalConverter extends StrutsTypeConverter {
 	 * @see org.apache.struts2.util.StrutsTypeConverter#convertToString(java.util.Map, java.lang.Object)
 	 */
 	public String convertToString(Map context, Object arg1) {
-		return DECIMAL_FORMAT.format((BigDecimal)arg1);
+		return NumberUtils.numberToString((BigDecimal)arg1, NumberUtils.DECIMAL_FORMAT);
 	}	
 }

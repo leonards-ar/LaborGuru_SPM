@@ -47,4 +47,5 @@ public interface StoreDao {
 	 * @return a list of stores
 	 */
 	List<Store> findAll();
+
 }

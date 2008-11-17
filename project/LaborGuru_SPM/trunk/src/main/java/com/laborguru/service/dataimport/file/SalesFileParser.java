@@ -18,11 +18,12 @@ import com.laborguru.service.store.StoreService;
 public interface SalesFileParser {
 	
 	/**
-	 * Factory method that initalizes a SalesFileParser instance.
-	 * 
+	 * Initalizes a SalesFileParser instance.
+	 * @param the file to parse
+	 * @param the number of lines to ignore at the begining of the file
 	 * @return A salesFileParser initialized with the file passed in as parameter.
 	 */ 
-	SalesFileParser assembleSalesFileParser(File fileToParse);
+	SalesFileParser assembleSalesFileParser(File fileToParse, int ignoreLines);
 	
 	/**
 	 * Returns the next Historic Sales Record from the file. When the end of file is reached or if there is no more valid records to return.
@@ -30,12 +31,6 @@ public interface SalesFileParser {
 	 * @return HistoricSales a HistoricSales instance;
 	 */
 	HistoricSales getNextRecord();
-	
-	/**
-	 * Returns the filename for the file that set
-	 * @return
-	 */
-	String getFilename();
 	
 	/**
 	 * Set the store service to be used when creating the HistoricSales.
@@ -48,4 +43,12 @@ public interface SalesFileParser {
 	 * @return whether the file is valid
 	 */
 	boolean isFileValid();
+	
+	
+	/**
+	 * Close underlying reading and release reources.
+	 * Don't forget to call this method before you finish to preocess the upload.
+	 */
+	void close();
+	
 }
