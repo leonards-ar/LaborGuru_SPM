@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -1083,14 +1084,53 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	
 	/**
 	 * 
+	 * @param position
+	 * @return
+	 */
+	private int getTotalPositionTargetInMinutes(Position position) {
+		StoreDailyStaffing storeDailyStaffing = getDailyStaffing();
+		if(storeDailyStaffing != null) {
+			DailyStaffing dailyStaffing = storeDailyStaffing.getDailyStaffing(position);
+			return getTotalDailyStaffingInMinutes(dailyStaffing);
+		} else {
+			return 0;
+		}		
+	}
+	
+	/**
+	 * 
+	 * @param dailyStaffing
+	 * @return
+	 */
+	private int getTotalDailyStaffingInMinutes(DailyStaffing dailyStaffing) {
+		Integer mins = CalendarUtils.hoursToMinutes(dailyStaffing != null ? dailyStaffing.getTotalDailyTarget() : new Double(0.0));
+		return mins != null ? mins.intValue() : 0;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	private int getTotalTargetInMinutes(Collection<DailyStaffing> storeDailyStaffing) {
+		int total = 0;
+		
+		for(DailyStaffing dailyStaffing : storeDailyStaffing) {
+			total += getTotalDailyStaffingInMinutes(dailyStaffing);
+		}
+		
+		return total;
+	}
+	
+	/**
+	 * 
 	 * @return
 	 */
 	public String getTotalTarget() {
 		StoreDailyStaffing storeDailyStaffing = getDailyStaffing();
 		if(storeDailyStaffing != null) {
-			return CalendarUtils.hoursToTime(storeDailyStaffing.getTotalDailyTarget());
+			return CalendarUtils.minutesToTime(new Integer(getTotalTargetInMinutes(storeDailyStaffing.getStoreDailyStaffing())));
 		} else {
-			return CalendarUtils.hoursToTime(new Double(0.0));
+			return CalendarUtils.minutesToTime(new Integer(0));
 		}
 	}
 	
@@ -1100,12 +1140,6 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	 * @return
 	 */
 	public String getTotalPositionTarget(Position position) {
-		StoreDailyStaffing storeDailyStaffing = getDailyStaffing();
-		if(storeDailyStaffing != null) {
-			DailyStaffing dailyStaffing = storeDailyStaffing.getDailyStaffing(position);
-			return CalendarUtils.hoursToTime(dailyStaffing != null ? dailyStaffing.getTotalDailyTarget() : new Double(0.0));
-		} else {
-			return CalendarUtils.hoursToTime(new Double(0.0));
-		}
+		return CalendarUtils.minutesToTime(new Integer(getTotalPositionTargetInMinutes(position)));
 	}
 }
