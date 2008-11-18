@@ -197,6 +197,59 @@ public class CalendarUtils {
 	}
 	
 	/**
+	 * Returns if time is greater or equal than startTime and less than endTime
+	 * @param time
+	 * @param startTime
+	 * @param endTime
+	 * @return
+	 */
+	public static boolean inRange(Date time, Date startTime, Date endTime) {
+		try {
+			long t = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(time));
+			long t1 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(startTime));
+			long t2 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(endTime));
+			
+			return t >= t1 && t < t2;
+		} catch(Throwable ex) {
+			return false;
+		}		
+	}
+	
+	/**
+	 * Returns if time1 is smaller than time2
+	 * @param time1
+	 * @param time2
+	 * @return
+	 */
+	public static boolean smallerTime(Date time1, Date time2) {
+		try {
+			long t1 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(time1));
+			long t2 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(time2));
+			
+			return t1 < t2;
+		} catch(Throwable ex) {
+			return false;
+		}
+	}
+	
+	/**
+	 * Returns if time1 is smaller than time2
+	 * @param time1
+	 * @param time2
+	 * @return
+	 */
+	public static boolean greaterTime(Date time1, Date time2) {
+		try {
+			long t1 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(time1));
+			long t2 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(time2));
+			
+			return t1 > t2;
+		} catch(Throwable ex) {
+			return false;
+		}
+	}
+	
+	/**
 	 * This method returns a Calendar that represents this week's weekday taking as example the date's weekday passed as parameter.
 	 * For example: If we passed Monday 20/10/2008 as parameter, the method returns this week monday.
 	 * 

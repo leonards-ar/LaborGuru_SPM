@@ -345,17 +345,19 @@ public class StaffingServiceBean implements StaffingService {
 		HalfHourStaffingPositionData staffingData;
 		String key;
 		List<HalfHourStaffingPositionData> groupStaffingData;
+		DayPartData dayPartData;
 		
 		for(Position position : store.getPositions()) {
 			key = buildStaffingDataKey(position);
 			if(key != null) {
 				groupStaffingData = data.get(key);
-
+				dayPartData = getDayPartDataFor(position, halfHourProjection.getTime());
+				
 				staffingData = new HalfHourStaffingPositionData(position);
 				staffingData.setProjection(NumberUtils.getDoubleValue(halfHourProjection.getAdjustedValue()));
 				staffingData.setUtilization(getUtilization(position, staffingData.getProjection()));
-				staffingData.setWorkContent(getWorkContent(position, halfHourProjection, date, halfHourProjection.getTime(), staffingData.getProjection(), staffingData.getUtilization()));
-				staffingData.setPositionMinimumStaffing(getPositionMinimumStaffing(position, halfHourProjection.getTime()));
+				staffingData.setWorkContent(getWorkContent(dayPartData, date, staffingData.getProjection(), staffingData.getUtilization()));
+				staffingData.setPositionMinimumStaffing(getPositionMinimumStaffing(dayPartData));
 				
 				if(groupStaffingData == null) {
 					groupStaffingData = new ArrayList<HalfHourStaffingPositionData>();
@@ -377,12 +379,10 @@ public class StaffingServiceBean implements StaffingService {
 	
 	/**
 	 * 
-	 * @param position
-	 * @param time
+	 * @param dayPartData
 	 * @return
 	 */
-	private int getPositionMinimumStaffing(Position position, Date time) {
-		DayPartData dayPartData = getDayPartDataFor(position, time);
+	private int getPositionMinimumStaffing(DayPartData dayPartData) {
 		return dayPartData != null ? NumberUtils.getIntegerValue(dayPartData.getMinimunStaffing()) : 0;
 	}
 	
@@ -487,27 +487,25 @@ public class StaffingServiceBean implements StaffingService {
 	
 	/**
 	 * 
-	 * @param position
-	 * @param halfHourProjection
+	 * @param dayPartData
 	 * @param date
-	 * @param time
+	 * @param projection
+	 * @param utilization
 	 * @return
 	 */
-	private double getWorkContent(Position position, HalfHourProjection halfHourProjection, Date date, Date time, double projection, double utilization) {
-		double variableService = getVariableService(position, date, time);
-		double fixedService = getFixedService(position, date, time);
+	private double getWorkContent(DayPartData dayPartData, Date date, double projection, double utilization) {
+		double variableService = getVariableService(dayPartData, date);
+		double fixedService = getFixedService(dayPartData, date);
 		return ((projection * variableService) + fixedService) / utilization;
 	}
-	
+
 	/**
 	 * 
-	 * @param position
+	 * @param dayPartData
 	 * @param date
-	 * @param time
 	 * @return
 	 */
-	private double getVariableService(Position position, Date date, Date time) {
-		DayPartData dayPartData = getDayPartDataFor(position, time);
+	private double getVariableService(DayPartData dayPartData, Date date) {
 		if(dayPartData == null) {
 			return 0.0;
 		} else if(CalendarUtils.isWeekendDay(date)) {
@@ -519,13 +517,11 @@ public class StaffingServiceBean implements StaffingService {
 	
 	/**
 	 * 
-	 * @param position
+	 * @param dayPartData
 	 * @param date
-	 * @param time
 	 * @return
 	 */
-	private double getFixedService(Position position, Date date, Date time) {
-		DayPartData dayPartData = getDayPartDataFor(position, time);
+	private double getFixedService(DayPartData dayPartData, Date date) {
 		if(dayPartData == null) {
 			return 0.0;
 		} else {

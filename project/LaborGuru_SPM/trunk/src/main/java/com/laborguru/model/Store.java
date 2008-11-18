@@ -372,7 +372,7 @@ public class Store extends SpmObject {
 	 */
 	public Set<PositionGroup> getPositionGroups() {
 		if(positionGroups == null) {
-			positionGroups = new HashSet<PositionGroup>();
+			setPositionGroups(new HashSet<PositionGroup>());
 		}
 		return positionGroups;
 	}
@@ -531,13 +531,16 @@ public class Store extends SpmObject {
 	 */
 	public DayPart getDayPartFor(Date time) {
 		if(time != null) {
-			for(DayPart dayPart : getDayParts()) {
+			DayPart dayPart;
+			for(int i = getDayParts().size() - 1; i >= 0; i--) {
+				dayPart = getDayParts().get(i);
 				if(CalendarUtils.equalsOrGreaterTime(time, dayPart.getStartHour())) {
 					return dayPart;
 				}
 			}
 			// For sure time is before the first day part
-			return getDayParts().size() > 0 ? getDayParts().get(0) : null;
+			dayPart = getDayParts().size() > 0 ? getDayParts().get(0) : null;
+			return dayPart != null && dayPart.getStartHour() != null ? dayPart : null;
 		}
 		return null;
 	}
