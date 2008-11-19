@@ -119,4 +119,13 @@ public class ReferenceDataServiceBean implements ReferenceDataService {
 		this.referenceData = referenceData;
 	}
 
+	/**
+	 * 
+	 * @return
+	 * @see com.laborguru.service.data.ReferenceDataService#getScheduleViews()
+	 */
+	public Map<String, String> getScheduleViews() {
+		return (Map<String, String>) getReferenceData().get("scheduleViews");
+	}
+
 }

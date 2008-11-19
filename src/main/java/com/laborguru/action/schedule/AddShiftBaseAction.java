@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -31,6 +32,7 @@ import com.laborguru.model.Position;
 import com.laborguru.model.Shift;
 import com.laborguru.model.StoreDailyStaffing;
 import com.laborguru.model.StoreSchedule;
+import com.laborguru.service.data.ReferenceDataService;
 import com.laborguru.service.employee.EmployeeService;
 import com.laborguru.service.projection.ProjectionService;
 import com.laborguru.service.schedule.ScheduleService;
@@ -48,11 +50,14 @@ import com.laborguru.util.SpmConstants;
 public abstract class AddShiftBaseAction extends SpmAction {
 	private static final Logger log = Logger.getLogger(AddShiftBaseAction.class);
 	
+	private Map<String, String> scheduleViewsMap = null;
+
 	private WeekDaySelector weekDaySelector;
 	private String selectedDate;
 	private String selectedWeekDay;
 	private List<ScheduleHourLabelElement> scheduleLabelHours;
 	private List<Date> scheduleIndividualHours;
+	private String selectView;
 	
 	private StoreSchedule storeSchedule;
 	
@@ -60,7 +65,8 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	private EmployeeService employeeService;
 	private StaffingService staffingService;
 	private ProjectionService projectionService;
-	
+	private ReferenceDataService referenceDataService;
+
 	private StoreDailyStaffing dailyStaffing = null;
 	
 	private BigDecimal dailyVolume;
@@ -1132,6 +1138,51 @@ public abstract class AddShiftBaseAction extends SpmAction {
 		} else {
 			return CalendarUtils.minutesToTime(new Integer(0));
 		}
+	}
+
+	/**
+	 * @return the scheduleViewsMap
+	 */
+	public Map<String, String> getScheduleViewsMap() {
+		if(scheduleViewsMap == null) {
+			setScheduleViewsMap(getReferenceDataService().getScheduleViews());
+		}
+		return scheduleViewsMap;
+	}
+
+	/**
+	 * @param scheduleViewsMap the scheduleViewsMap to set
+	 */
+	public void setScheduleViewsMap(Map<String, String> scheduleViewsMap) {
+		this.scheduleViewsMap = scheduleViewsMap;
+	}
+
+	/**
+	 * @return the referenceDataService
+	 */
+	public ReferenceDataService getReferenceDataService() {
+		return referenceDataService;
+	}
+
+	/**
+	 * @param referenceDataService the referenceDataService to set
+	 */
+	public void setReferenceDataService(ReferenceDataService referenceDataService) {
+		this.referenceDataService = referenceDataService;
+	}
+
+	/**
+	 * @return the selectView
+	 */
+	public String getSelectView() {
+		return selectView;
+	}
+
+	/**
+	 * @param selectView the selectView to set
+	 */
+	public void setSelectView(String selectView) {
+		this.selectView = selectView;
 	}
 	
 	/**

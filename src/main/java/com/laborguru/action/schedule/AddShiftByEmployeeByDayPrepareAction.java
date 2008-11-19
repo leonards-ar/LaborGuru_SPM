@@ -183,6 +183,25 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	
 	/**
 	 * 
+	 */
+	public void prepareSelectView() {
+		loadPageData();
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String selectView() {
+		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
+
+		setScheduleData();
+		
+		return SpmActionResult.EDIT.getResult();
+	}
+	
+	/**
+	 * 
 	 * @return
 	 */
 	public String edit() {
