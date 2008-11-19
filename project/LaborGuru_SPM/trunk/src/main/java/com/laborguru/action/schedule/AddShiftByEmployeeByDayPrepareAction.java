@@ -14,7 +14,6 @@ import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.ScheduleRow;
 import com.laborguru.model.Employee;
 import com.laborguru.model.Position;
-import com.laborguru.service.position.PositionService;
 import com.laborguru.util.CalendarUtils;
 import com.opensymphony.xwork2.Preparable;
 
@@ -25,7 +24,7 @@ import com.opensymphony.xwork2.Preparable;
  * @since SPM 1.0
  *
  */
-public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  implements Preparable {
+public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction implements Preparable {
 	private static final Logger log = Logger.getLogger(AddShiftByEmployeeByDayPrepareAction.class);
 	
 	private List<ScheduleRow> scheduleData;
@@ -34,13 +33,13 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	private Position position;
 	
 	private List<Position> positions;
-	private PositionService positionService;
+	
 	
 	private Integer newEmployeeId;
 	private String newEmployeeName;
 	private Integer newEmployeePositionId;
 	
-	private String saveEmployee;
+	
 	
 	/**
 	 * 
@@ -238,21 +237,6 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	 * 
 	 * @return
 	 */
-	private String getPositionName(Integer positionId) {
-		if(positionId != null) {
-			Position position = new Position();
-			position.setId(positionId);
-			position = getPositionService().getPositionById(position);
-			return position != null ? position.getName() : null;
-		} else {
-			return null;
-		}
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
 	public String addEmployee() {
 		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
 		
@@ -304,6 +288,7 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 		}
 	
 		getScheduleService().save(getStoreSchedule());
+		getStaffingService().save(getDailyStaffing());
 
 		resetScheduleData();
 		setScheduleData();
@@ -390,20 +375,6 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	}
 
 	/**
-	 * @return the positionService
-	 */
-	public PositionService getPositionService() {
-		return positionService;
-	}
-
-	/**
-	 * @param positionService the positionService to set
-	 */
-	public void setPositionService(PositionService positionService) {
-		this.positionService = positionService;
-	}
-
-	/**
 	 * @return the newEmployeeId
 	 */
 	public Integer getNewEmployeeId() {
@@ -451,7 +422,7 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	 */
 	@Override
 	public void validate() {
-		if(getSaveEmployee() != null) {
+		if(getSaveSchedule() != null) {
 			initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
 			
 			validateSchedule(getScheduleData());
@@ -474,19 +445,4 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction  im
 	public void setMinimumStaffing(List<Integer> minimumStaffing) {
 		this.minimumStaffing = minimumStaffing;
 	}
-
-	/**
-	 * @return the saveEmployee
-	 */
-	public String getSaveEmployee() {
-		return saveEmployee;
-	}
-
-	/**
-	 * @param saveEmployee the saveEmployee to set
-	 */
-	public void setSaveEmployee(String saveEmployee) {
-		this.saveEmployee = saveEmployee;
-	}
-
 }

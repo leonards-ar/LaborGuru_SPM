@@ -51,10 +51,7 @@
 											<tr>
 												<td align="right" class="form_label"><s:text name="schedule.addshift.view"/></td>
 												<td align="left">
-													<select name="selectView">
-														<option>--- Select a Weekly ---</option>
-													</select>
-												</td>
+													<s:select id="selectView" name="selectView" onchange="addshiftbyemployee_form.action=addshiftbyemployee_form.selectView.value; addshiftbyemployee_form.submit();" theme="simple" list="scheduleViewsMap" listKey="key" listValue="%{getText(value)}"/>												</td>
 												<td align="right" class="form_label"><s:text name="schedule.addshift.positions"/></td>
 												<td align="left">
 													<s:select onchange="addshiftbyemployee_form.action='addshiftbyemployee_selectPosition.action'; addshiftbyemployee_form.submit();" name="position.id" list="positions" listKey="id" listValue="name" theme="simple" headerKey="" headerValue="%{getText('schedule.addshift.positions.header.label')}"/>					
@@ -201,6 +198,11 @@
 			</td>
 		</tr>		
 		
+<!-- Start of schedule -->		
+		<s:iterator id="aSchedule" value="scheduleData" status="itSchedule">
+		<tr>
+			<td align="left" class="windowTableHeader"><s:property value="position.name"/></td>
+		</tr>
 		<s:if test="%{!weekDaySelector.isSelectedDateBeforeToday()}">
 		<tr>
 			<td align="center" width="100%">
@@ -210,17 +212,17 @@
 							<!-- Schedule selection action table -->
 							<table id="scheduleActionsTable" border="0" cellpadding="0" cellspacing="0">
 								<tr>
-							    	<td nowrap><a href="#" onclick="changeAction(1, '');"><img title="<s:text name="schedule.addshift.shift.alt"/>" alt="<s:text name="schedule.addshift.shift.alt"/>" id="scheduleShiftImage" class="scheduleActionImageOff" border="0" src="<s:url value="/images/add_shift.gif" includeParams="none"/>"/></a></td>
+							    	<td nowrap><a href="#" onclick="changeAction(1, '<s:property value="#itSchedule.index"/>');"><img title="<s:text name="schedule.addshift.shift.alt"/>" alt="<s:text name="schedule.addshift.shift.alt"/>" id="scheduleShiftImage" class="scheduleActionImageOff" border="0" src="<s:url value="/images/add_shift.gif" includeParams="none"/>"/></a></td>
 							    	<td class="scheduleActionLabel" valign="middle">&nbsp;</td>
-							    	<td class="scheduleActionLabel" valign="middle"><a href="#" class="scheduleActionLink" onclick="changeAction(1, '');"><s:text name="schedule.addshift.shift.alt"/></a></td>
+							    	<td class="scheduleActionLabel" valign="middle"><a href="#" class="scheduleActionLink" onclick="changeAction(1, '<s:property value="#itSchedule.index"/>');"><s:text name="schedule.addshift.shift.alt"/></a></td>
 							        <td class="scheduleActionLabel" valign="middle">&nbsp;|&nbsp;</td>
-							    	<td nowrap><a href="#" onclick="changeAction(3, '');"><img title="<s:text name="schedule.addshift.break.alt"/>" alt="<s:text name="schedule.addshift.break.alt"/>" id="scheduleBreakImage" class="scheduleActionImageOff" border="0" src="<s:url value="/images/add_break.gif" includeParams="none"/>"/></a></td>
+							    	<td nowrap><a href="#" onclick="changeAction(3, '<s:property value="#itSchedule.index"/>');"><img title="<s:text name="schedule.addshift.break.alt"/>" alt="<s:text name="schedule.addshift.break.alt"/>" id="scheduleBreakImage" class="scheduleActionImageOff" border="0" src="<s:url value="/images/add_break.gif" includeParams="none"/>"/></a></td>
 							    	<td class="scheduleActionLabel" valign="middle">&nbsp;</td>
-							    	<td class="scheduleActionLabel" valign="middle"><a href="#" class="scheduleActionLink" onclick="changeAction(3, '');"><s:text name="schedule.addshift.break.alt"/></a></td>
+							    	<td class="scheduleActionLabel" valign="middle"><a href="#" class="scheduleActionLink" onclick="changeAction(3, '<s:property value="#itSchedule.index"/>');"><s:text name="schedule.addshift.break.alt"/></a></td>
 							        <td class="scheduleActionLabel" valign="middle">&nbsp;|&nbsp;</td>
-							    	<td nowrap><a href="#" onclick="changeAction(5, '');"><img title="<s:text name="schedule.addshift.free.alt"/>" alt="<s:text name="schedule.addshift.free.alt"/>" id="scheduleDeleteImage" class="scheduleActionImageOff" border="0" src="<s:url value="/images/del_shift.gif" includeParams="none"/>"/></a></td>
+							    	<td nowrap><a href="#" onclick="changeAction(5, '<s:property value="#itSchedule.index"/>');"><img title="<s:text name="schedule.addshift.free.alt"/>" alt="<s:text name="schedule.addshift.free.alt"/>" id="scheduleDeleteImage" class="scheduleActionImageOff" border="0" src="<s:url value="/images/del_shift.gif" includeParams="none"/>"/></a></td>
 							    	<td class="scheduleActionLabel" valign="middle">&nbsp;</td>
-							    	<td class="scheduleActionLabel" valign="middle"><a href="#" class="scheduleActionLink" onclick="changeAction(5, '');"><s:text name="schedule.addshift.free.alt"/></a></td>
+							    	<td class="scheduleActionLabel" valign="middle"><a href="#" class="scheduleActionLink" onclick="changeAction(5, '<s:property value="#itSchedule.index"/>');"><s:text name="schedule.addshift.free.alt"/></a></td>
 							        <td class="scheduleActionMessage">&nbsp;&nbsp;</td>
 									<td id="actionMessage" class="scheduleActionMessage"></td>							    
 							    </tr>
@@ -239,12 +241,11 @@
 				<table class="scheduleMainTable" id="scheduleMainTable" cellpadding="0" cellspacing="0">
 				    <!-- Header -->
 				    <tr class="scheduleMainTableHeader">
-						<td class="scheduleCellHeader"><s:text name="schedule.addshift.position"/></td>    
 						<td class="scheduleCellHeader"><s:text name="schedule.addshift.employee"/></td>    
 						<td class="scheduleCellHeader" width="45px"><s:text name="schedule.addshift.in_hour"/></td>    
 						<td class="scheduleCellHeader" width="45px"><s:text name="schedule.addshift.out_hour"/></td>
 						<td class="scheduleCellHeader" width="45px"><s:text name="schedule.addshift.total_hours"/></td>
-						<s:iterator id="hourLabel" value="scheduleLabelHours" status="#itHourLabel">     
+						<s:iterator id="hourLabel" value="scheduleLabelHours" status="itHourLabel">     
 							<td class="scheduleCellHeader" colspan="<s:property value="colspan"/>"><s:text name='schedule.addshift.hour.dateformat'><s:param value='hour'/></s:text></td>
 						</s:iterator>         
 				    </tr>
@@ -253,21 +254,8 @@
 				    <!-- Employees -->
 				    <s:iterator id="data" value="scheduleData" status="itScheduleData">
 					    <tr class="scheduleMainTableEmployeeRow">
-					    	<td class="scheduleNameCell">
-					    	<s:if test="%{weekDaySelector.isSelectedDateBeforeToday()}">
-					    		<s:property value="#data.positionName"/>
-					    	</s:if>
-					    	<s:else>
-					    		<s:if test="%{position == null}">
-					    			<s:select id="scheduleposition_%{#itScheduleData.index}" onchange="refreshRows(''); updatePositionTotals();" name="scheduleData[%{#itScheduleData.index}].positionId" list="positions" listKey="id" listValue="name" theme="simple"/>
-					    		</s:if>
-					    		<s:else>
-					    			<s:property value="position.name"/>
-					    			<s:hidden id="scheduleposition_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].positionId" value="%{position.id}"/>
-					    		</s:else>
-					    		<s:hidden name="scheduleData[%{#itScheduleData.index}].positionName"/>
-					    	</s:else>
-					    	</td>
+			    			<s:hidden id="scheduleposition_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].positionId" value="%{position.id}"/>
+				    		<s:hidden name="scheduleData[%{#itScheduleData.index}].positionName"/>
 							<td class="scheduleNameCell">
 							<s:if test="%{weekDaySelector.isSelectedDateBeforeToday()}">
 					    		<s:property value="#data.employeeName"/>
@@ -276,7 +264,7 @@
 								<s:hidden id="scheduleOriginalEmployeeId_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].originalEmployeeId"/>
 								<s:hidden id="scheduleEmployeeMaxWeekHours_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].employeeMaxHoursDay"/>
 								<s:url id="employeeList" action="scheduleemployeeautocomplete" includeParams="none"/>
-								<s:autocompleter id="scheduleEmployee_%{#itScheduleData.index}" onchange="reloadEmployeeMaxHoursDay('', %{#itScheduleData.index}); return true;" name="scheduleData[%{#itScheduleData.index}].employeeName" keyName="scheduleData[%{#itScheduleData.index}].employeeId" loadMinimumCount="3" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring"/>
+								<s:autocompleter id="scheduleEmployee_%{#itScheduleData.index}" onchange="reloadEmployeeMaxHoursDay('%{#itSchedule.index}', %{#itScheduleData.index}); return true;" name="scheduleData[%{#itScheduleData.index}].employeeName" keyName="scheduleData[%{#itScheduleData.index}].employeeId" loadMinimumCount="3" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring"/>
 							</s:else> 
 							<s:hidden id="inHourInput_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].inHour"/>
 							<s:hidden id="outHourInput_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].outHour"/>
@@ -295,7 +283,7 @@
 										</td>
 									</s:iterator>
 								</s:if>  
-								<td id='cell_<s:property value="#itScheduleData.index"/>_<s:property value="#itHour.index"/>' <s:if test="%{!weekDaySelector.isSelectedDateBeforeToday()}">onclick="scheduleClick(this, <s:property value="#itScheduleData.index"/>,<s:property value="#itHour.index"/>,'<s:property value="#data.positionId"/>', '');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);"</s:if> class='<s:if test="%{#data.isBreakShift(#itHour.index)}">scheduleBreak</s:if><s:else><s:if test="%{#data.isFreeShift(#itHour.index)}">scheduleEmpty</s:if><s:else>scheduleSelected</s:else></s:else>'><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>
+								<td id='cell_<s:property value="#itScheduleData.index"/>_<s:property value="#itHour.index"/>' <s:if test="%{!weekDaySelector.isSelectedDateBeforeToday()}">onclick="scheduleClick(this, <s:property value="#itScheduleData.index"/>,<s:property value="#itHour.index"/>,'<s:property value="#data.positionId"/>', '<s:property value="#itSchedule.index"/>');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);"</s:if> class='<s:if test="%{#data.isBreakShift(#itHour.index)}">scheduleBreak</s:if><s:else><s:if test="%{#data.isFreeShift(#itHour.index)}">scheduleEmpty</s:if><s:else>scheduleSelected</s:else></s:else>'><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>
 									<s:hidden id="schedulehour_%{#itScheduleData.index}_%{#itHour.index}" name="scheduleData[%{#itScheduleData.index}].hours[%{#itHour.index}]"/>
 									<s:hidden id="schedule_%{#itScheduleData.index}_%{#itHour.index}" name="scheduleData[%{#itScheduleData.index}].schedule[%{#itHour.index}]"/>
 								</td>            
@@ -315,15 +303,7 @@
 					<s:if test="%{!weekDaySelector.isSelectedDateBeforeToday()}">
 					<!-- Add new employee to schedule -->
 				    <tr class="scheduleMainTableEmployeeRow">
-				    	<td class="scheduleNameCell">
-					    		<s:if test="%{position == null}">
-									<s:select name="newEmployeePositionId" list="positions" listKey="id" listValue="name" theme="simple"/>
-					    		</s:if>
-					    		<s:else>
-					    			<s:property value="position.name"/>
-					    			<s:hidden name="newEmployeePositionId" value="%{position.id}"/>
-					    		</s:else>
-				    	</td>
+		    			<s:hidden name="newEmployeePositionId" value="%{position.id}"/>
 						<td class="scheduleNameCell">
 							<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 								<tr>
@@ -420,6 +400,7 @@
 			<!-- Schedule selection table -->
 			</td>
 		</tr>
+				
 		
 		<tr>
 			<td width="100%" align="left">
@@ -439,13 +420,15 @@
 				<!-- Caption -->			
 			</td>
 		</tr>
+		</s:iterator>
+		<!-- End of schedule -->
 				
 		<s:if test="%{!weekDaySelector.isSelectedDateBeforeToday()}">
 		<tr>
 			<td width="100%" align="right">
 				<table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
 					<tr>
-						<td><s:submit id="saveButton" name="saveEmployee" key="save.button" theme="simple" cssClass="button"/></td>
+						<td><s:submit id="saveButton" name="saveSchedule" key="save.button" theme="simple" cssClass="button"/></td>
 						<td><s:submit id="cancelButton" key="cancel.button" action="addshiftbyemployee_cancel" theme="simple" cssClass="button"/></td>		                    
       				</tr>
      			</table>                    

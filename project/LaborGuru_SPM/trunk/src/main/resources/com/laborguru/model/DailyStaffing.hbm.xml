@@ -14,7 +14,7 @@
 		<property name="startingTime" column="starting_time" type="timestamp" />
 		
 		<property name="totalWorkContent" column="total_work_content" type="double" />
-		<property name="totalMinimumStaffing" column="total_minimum_staffing" type="double" />
+		<property name="totalMinimumStaffing" column="total_minimum_staffing" type="int" />
 		<property name="totalVariableFlexible" column="total_variable_flexible" type="double" />
 		<property name="totalVariableOpening" column="total_variable_opening" type="double" />
 		<property name="fixedFlexible" column="fixed_flexible" type="double" />
