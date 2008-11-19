@@ -38,4 +38,11 @@ public interface StaffingService extends Service {
 	 */
 	StoreDailyStaffing getDailyStaffingByDate(Store store, Date date);
 	
+	/**
+	 * 
+	 * @param dailyStaffing
+	 * @return
+	 */
+	StoreDailyStaffing save(StoreDailyStaffing dailyStaffing);
+	
 }

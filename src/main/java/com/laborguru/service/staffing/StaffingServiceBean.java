@@ -625,5 +625,19 @@ public class StaffingServiceBean implements StaffingService {
 		this.storeDao = storeDao;
 	}
 
+	/**
+	 * 
+	 * @param dailyStaffing
+	 * @return
+	 * @see com.laborguru.service.staffing.StaffingService#save(com.laborguru.model.StoreDailyStaffing)
+	 */
+	public StoreDailyStaffing save(StoreDailyStaffing dailyStaffing) {
+		// Transactional behaviour given by Spring
+		for(DailyStaffing ds : dailyStaffing.getStoreDailyStaffing()) {
+			getStaffingDao().save(ds);
+		}
+		return dailyStaffing;
+	}
+
 
 }

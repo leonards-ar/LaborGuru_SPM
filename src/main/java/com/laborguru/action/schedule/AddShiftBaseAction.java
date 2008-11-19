@@ -34,6 +34,7 @@ import com.laborguru.model.StoreDailyStaffing;
 import com.laborguru.model.StoreSchedule;
 import com.laborguru.service.data.ReferenceDataService;
 import com.laborguru.service.employee.EmployeeService;
+import com.laborguru.service.position.PositionService;
 import com.laborguru.service.projection.ProjectionService;
 import com.laborguru.service.schedule.ScheduleService;
 import com.laborguru.service.staffing.StaffingService;
@@ -66,13 +67,15 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	private StaffingService staffingService;
 	private ProjectionService projectionService;
 	private ReferenceDataService referenceDataService;
-
+	private PositionService positionService;
+	
 	private StoreDailyStaffing dailyStaffing = null;
 	
 	private BigDecimal dailyVolume;
 	
 	public static final int MINUTES_INTERVAL = 15;
 	
+	private String saveSchedule;
 
 	
 	/**
@@ -181,6 +184,21 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	protected void loadCalendarData() {
 		setSelectedDate(getWeekDaySelector().getStringStartingWeekDay());
 		setSelectedWeekDay(getWeekDaySelector().getStringSelectedDay());
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	protected String getPositionName(Integer positionId) {
+		if(positionId != null) {
+			Position position = new Position();
+			position.setId(positionId);
+			position = getPositionService().getPositionById(position);
+			return position != null ? position.getName() : null;
+		} else {
+			return null;
+		}
 	}
 	
 	/**
@@ -1192,4 +1210,33 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	public String getTotalPositionTarget(Position position) {
 		return CalendarUtils.minutesToTime(new Integer(getTotalPositionTargetInMinutes(position)));
 	}
+	
+	/**
+	 * @return the saveSchedule
+	 */
+	public String getSaveSchedule() {
+		return saveSchedule;
+	}
+
+	/**
+	 * @param saveSchedule the saveSchedule to set
+	 */
+	public void setSaveSchedule(String saveSchedule) {
+		this.saveSchedule = saveSchedule;
+	}	
+	
+
+	/**
+	 * @return the positionService
+	 */
+	public PositionService getPositionService() {
+		return positionService;
+	}
+
+	/**
+	 * @param positionService the positionService to set
+	 */
+	public void setPositionService(PositionService positionService) {
+		this.positionService = positionService;
+	}	
 }

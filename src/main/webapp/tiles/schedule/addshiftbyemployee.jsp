@@ -242,7 +242,7 @@
 						<td class="scheduleCellHeader" width="45px"><s:text name="schedule.addshift.in_hour"/></td>    
 						<td class="scheduleCellHeader" width="45px"><s:text name="schedule.addshift.out_hour"/></td>
 						<td class="scheduleCellHeader" width="45px"><s:text name="schedule.addshift.total_hours"/></td>
-						<s:iterator id="hourLabel" value="scheduleLabelHours" status="#itHourLabel">     
+						<s:iterator id="hourLabel" value="scheduleLabelHours" status="itHourLabel">     
 							<td class="scheduleCellHeader" colspan="<s:property value="colspan"/>"><s:text name='schedule.addshift.hour.dateformat'><s:param value='hour'/></s:text></td>
 						</s:iterator>         
 				    </tr>
@@ -443,7 +443,7 @@
 			<td width="100%" align="right">
 				<table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
 					<tr>
-						<td><s:submit id="saveButton" name="saveEmployee" key="save.button" theme="simple" cssClass="button"/></td>
+						<td><s:submit id="saveButton" name="saveSchedule" key="save.button" theme="simple" cssClass="button"/></td>
 						<td><s:submit id="cancelButton" key="cancel.button" action="addshiftbyemployee_cancel" theme="simple" cssClass="button"/></td>		                    
       				</tr>
      			</table>                    
