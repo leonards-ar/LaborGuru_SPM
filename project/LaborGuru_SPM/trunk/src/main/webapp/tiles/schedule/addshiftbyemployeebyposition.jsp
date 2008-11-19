@@ -2,14 +2,14 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <br />
-<s:form id="addshiftbyemployee_form" name="addshiftbyemployee_form" action="addshiftbyemployee_save" theme="simple">
+<s:form id="addshiftbyemployeebyposition_form" name="addshiftbyemployeebyposition_form" action="addshiftbyemployeebyposition_save" theme="simple">
 	<s:hidden id="selectedDate" name="selectedDate"/>
 	<s:hidden id="selectedWeekDay" name="selectedWeekDay"/>
 	<s:hidden id="dailyVolume" name="dailyVolume"/>
 	
 	<table border="0" cellspacing="0" align="center">
 		<tr>
-			<td id="titleBar"><s:text name="schedule.addshift.byemployee.title" /></td>
+			<td id="titleBar"><s:text name="schedule.addshift.byemployeebyposition.title" /></td>
 		</tr>
 
 		<tr>
@@ -51,7 +51,9 @@
 											<tr>
 												<td align="right" class="form_label"><s:text name="schedule.addshift.view"/></td>
 												<td align="left">
-													<s:select id="selectView" name="selectView" onchange="addshiftbyemployee_form.action=addshiftbyemployee_form.selectView.value; addshiftbyemployee_form.submit();" theme="simple" list="scheduleViewsMap" listKey="key" listValue="%{getText(value)}"/>
+													<select name="selectView">
+														<option>--- Select a Weekly ---</option>
+													</select>
 												</td>
 												<td align="right" class="form_label"><s:text name="schedule.addshift.positions"/></td>
 												<td align="left">

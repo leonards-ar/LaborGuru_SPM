@@ -13,6 +13,9 @@
 				<entry key="status">
 					<ref bean="status"/>
 				</entry>
+				<entry key="scheduleViews">
+					<ref bean="scheduleViews"/>
+				</entry>
 				<entry key="usedWeeks">
 					<ref bean="usedWeeks"/>
 				</entry>
@@ -162,5 +165,17 @@
 	  <property name="id" value="6"/>
 	</bean>
 	
-
+	<bean id="scheduleViews" class="java.util.HashMap" singleton="true">
+		<description>Different schedule Views</description>
+		<constructor-arg>
+			<map>
+				<entry key="addshiftbyemployee_selectView.action">
+					<value>schedule.addshift.view.weekly</value>
+				</entry>
+				<entry key="addshiftbyemployeebyposition_selectView.action">
+					<value>schedule.addshift.view.position</value>
+				</entry>
+			</map>
+		</constructor-arg>
+	</bean>
 </beans>
