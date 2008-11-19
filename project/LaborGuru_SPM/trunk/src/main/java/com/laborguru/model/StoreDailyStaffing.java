@@ -86,13 +86,29 @@ public class StoreDailyStaffing extends SpmObject {
 	 * @return
 	 */
 	public int getHalfHourStaffing(Position position, Date time) {
-		DailyStaffing dailyStaffing = this.storeDailyStaffing.get(position);
+		DailyStaffing dailyStaffing = getDailyStaffingFor(position);
 		if(dailyStaffing != null) {
 			int halfHourIndex = dailyStaffing.getHalfHourIndex(time);
 			return dailyStaffing.getHalfHourStaffing().get(halfHourIndex).getCalculatedStaff().intValue();
 		} else {
 			return 0;
 		}
+	}
+	
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 */
+	private DailyStaffing getDailyStaffingFor(Position position) {
+		if(position != null && position.getId() != null) {
+			for(Position key : this.storeDailyStaffing.keySet()) {
+				if(position.getId().equals(key.getId())) {
+					return this.storeDailyStaffing.get(key);
+				}
+			}
+		}
+		return null;
 	}
 	
 	/**

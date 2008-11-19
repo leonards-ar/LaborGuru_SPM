@@ -496,15 +496,14 @@ public abstract class AddShiftBaseAction extends SpmAction {
 
 		// :TODO: Improve performance. This will call getHalfHourStaffing every 15 minutes (2 times)
 		// This should be calculated only once
+		StoreDailyStaffing dailyStaffing = getDailyStaffing();
 		if(position == null) {
-			StoreDailyStaffing dailyStaffing = getDailyStaffing();
 			for(Date time : getScheduleIndividualHours()) {
 				minimumStaffing.add(new Integer(dailyStaffing.getHalfHourStaffing(time)));
 			}			
 		} else {
-			DailyStaffing dailyStaffing = getStaffingService().getDailyStaffingByDate(position, getWeekDaySelector().getSelectedDay());
 			for(Date time : getScheduleIndividualHours()) {
-				minimumStaffing.add(new Integer(dailyStaffing.getHalfHourStaffing(time)));
+				minimumStaffing.add(new Integer(dailyStaffing.getHalfHourStaffing(position, time)));
 			}			
 		}
 		
