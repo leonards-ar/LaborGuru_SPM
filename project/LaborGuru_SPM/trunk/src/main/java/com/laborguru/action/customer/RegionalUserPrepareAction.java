@@ -2,8 +2,6 @@ package com.laborguru.action.customer;
 
 import java.util.List;
 
-import com.laborguru.model.Customer;
-import com.laborguru.model.CustomerUser;
 import com.laborguru.model.Manager;
 import com.laborguru.model.Region;
 import com.laborguru.model.RegionalUser;

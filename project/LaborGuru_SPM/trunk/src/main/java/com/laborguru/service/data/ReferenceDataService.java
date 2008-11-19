@@ -37,6 +37,15 @@ public interface ReferenceDataService extends Service {
 	 * @return Status map.
 	 */
 	Map<String, String> getStatus();
+
+	/**
+	 * Retrieves the different schedule views. The map key is the
+	 * name of the action and the map value is the message bundle key to the
+	 * label
+	 * @return Schedule views map.
+	 */
+	Map<String, String> getScheduleViews();
+
 	
 	/**
 	 * Retrieves the different values for weeks used. The map key is the
