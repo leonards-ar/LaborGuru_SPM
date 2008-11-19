@@ -10,9 +10,8 @@
 			<result name="input" type="tiles">salesUploadPage</result>
 			<result name="success" type="tiles">salesUploadPage</result>
 			<result name="cancelEdit" type="redirectAction">
-				<param name="actionName">store_edit</param>
+				<param name="actionName">store_list</param>
 				<param name="namespace">/store</param>
-				<param name="storeId">${storeId}</param>			
 			</result>			
 		</action>			
 					

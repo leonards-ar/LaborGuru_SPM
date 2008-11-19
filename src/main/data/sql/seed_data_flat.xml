@@ -60,8 +60,9 @@
   <tbl_menu_items menu_item_id="17" label_key="user.menu.label" help_key="USER_MENU_HELP" target="/user/user_list.action" position="2" permission_id="16"/>
   <tbl_menu_items menu_item_id="18" label_key="user.submenu.list" help_key="USER_LIST_HELP" target="/user/user_list.action" position="1" parent_id="17" permission_id="17"/>
   <tbl_menu_items menu_item_id="19" label_key="user.submenu.create" help_key="USER_ADD_HELP" target="/user/user_add.action" position="0" parent_id="17" permission_id="18"/>
+  <tbl_menu_items menu_item_id="20" label_key="store.submenu.uploadsales" help_key="STORE_UPLOAD_SALES_HELP" target="/sales/sales_edit.action" position="2" parent_id="5" permission_id="6"/>
   
-  <tbl_stores store_id="1" name="microcentro" area_id="1" half_hour_projections_weeks_default="4" daily_projections_weeks_default="4"/>
+  <tbl_stores store_id="1" name="microcentro" area_id="1" half_hour_projections_weeks_default="4" daily_projections_weeks_default="4" code="MD0001"/>
   <tbl_positions position_id="1" name="chef" manager="0" position_index="0" store_id="1"/>
   <tbl_positions position_id="2" name="waiter" manager="0" position_index="1" store_id="1"/>
   <tbl_positions position_id="3" name="cook" manager="0" position_index="2" store_id="1"/>
@@ -154,52 +155,5 @@
   <tbl_region_users user_id="7" region_id="1"/>
   
   <tbl_area_users user_id="8" area_id="1"/>
-  
-  <tbl_upload_files upload_file_id="1" filename="testFile1.csv" upload_date="2008-11-09 20:00:00" />
-  
-  <tbl_historic_sales historic_sales_id="1" date_time="2008-10-20 20:03:50" day_of_week="4" main_value="278.91" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="2" date_time="2008-10-20 21:36:17" day_of_week="4" main_value="27.33" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="3" date_time="2008-10-20 11:51:09" day_of_week="4" main_value="329.19" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="4" date_time="2008-10-20 14:15:53" day_of_week="4" main_value="399.20" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="5" date_time="2008-10-20 21:13:44" day_of_week="4" main_value="35.29" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="6" date_time="2008-10-20 17:41:34" day_of_week="4" main_value="451.05" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="7" date_time="2008-10-20 17:51:14" day_of_week="4" main_value="123.87" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="8" date_time="2008-10-20 09:51:36" day_of_week="4" main_value="31.63" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="9" date_time="2008-10-20 14:04:04" day_of_week="4" main_value="76.65" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="10" date_time="2008-10-20 13:28:40" day_of_week="4" main_value="70.68" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="11" date_time="2008-10-20 12:05:06" day_of_week="4" main_value="477.43" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="12" date_time="2008-10-20 19:12:19" day_of_week="4" main_value="308.60" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="13" date_time="2008-10-20 12:53:48" day_of_week="4" main_value="143.07" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="14" date_time="2008-10-20 16:01:21" day_of_week="4" main_value="264.47" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="15" date_time="2008-10-20 10:57:41" day_of_week="4" main_value="133.94" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="16" date_time="2008-10-20 20:04:25" day_of_week="4" main_value="387.17" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="17" date_time="2008-10-20 20:11:21" day_of_week="4" main_value="254.83" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="18" date_time="2008-10-20 19:47:00" day_of_week="4" main_value="105.65" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="19" date_time="2008-10-20 21:13:49" day_of_week="4" main_value="485.03" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="20" date_time="2008-10-20 15:32:55" day_of_week="4" main_value="484.80" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="21" date_time="2008-10-20 11:52:23" day_of_week="4" main_value="130.52" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="22" date_time="2008-10-20 09:05:37" day_of_week="4" main_value="58.10" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="23" date_time="2008-10-20 15:12:29" day_of_week="4" main_value="373.30" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="24" date_time="2008-10-20 21:45:33" day_of_week="4" main_value="152.86" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="25" date_time="2008-10-20 18:50:29" day_of_week="4" main_value="220.86" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="26" date_time="2008-10-20 17:47:48" day_of_week="4" main_value="131.88" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="27" date_time="2008-10-20 15:42:17" day_of_week="4" main_value="86.14" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="28" date_time="2008-10-20 14:58:00" day_of_week="4" main_value="31.03" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="29" date_time="2008-10-20 12:16:40" day_of_week="4" main_value="477.06" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="30" date_time="2008-10-20 11:15:36" day_of_week="4" main_value="386.43" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="31" date_time="2008-10-20 16:00:24" day_of_week="4" main_value="451.29" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="32" date_time="2008-10-20 11:13:48" day_of_week="4" main_value="280.64" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="33" date_time="2008-10-20 16:23:01" day_of_week="4" main_value="420.74" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="34" date_time="2008-10-20 14:59:16" day_of_week="4" main_value="433.48" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="35" date_time="2008-10-20 16:29:28" day_of_week="4" main_value="432.35" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="36" date_time="2008-10-20 18:15:23" day_of_week="4" main_value="259.90" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="37" date_time="2008-10-20 18:30:58" day_of_week="4" main_value="233.02" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="38" date_time="2008-10-20 18:48:05" day_of_week="4" main_value="183.72" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="39" date_time="2008-10-20 09:33:03" day_of_week="4" main_value="62.23" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="40" date_time="2008-10-20 21:45:12" day_of_week="4" main_value="448.36" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="41" date_time="2008-10-20 14:15:12" day_of_week="4" main_value="434.68" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="42" date_time="2008-10-20 09:07:26" day_of_week="4" main_value="2.01" store_id="1" upload_file_id="1"/>
-  <tbl_historic_sales historic_sales_id="43" date_time="2008-10-20 09:58:13" day_of_week="4" main_value="445.78" store_id="1" upload_file_id="1"/>
  
-
 </dataset>

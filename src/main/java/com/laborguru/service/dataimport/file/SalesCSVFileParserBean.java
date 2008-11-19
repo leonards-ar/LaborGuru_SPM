@@ -120,7 +120,7 @@ public class SalesCSVFileParserBean implements SalesFileParser {
 					validLinesCounter++;
 					getNext = false;
 				} catch(FileParserException e) {
-				    String message = "Invalid line - Line number:"+allLinesCounter + " - See above log.";
+				    String message = "Invalid line - Line number:"+allLinesCounter + " - See above log message.";
 					log.error(message);
 					continue;
 				}
