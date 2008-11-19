@@ -1,6 +1,7 @@
 package com.laborguru.model;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -172,6 +173,9 @@ public class UploadFile extends SpmObject {
 	 * @return the salesRecords
 	 */
 	public Set<HistoricSales> getSalesRecords() {
+		if (salesRecords == null){
+			salesRecords = new HashSet<HistoricSales>();
+		}
 		return salesRecords;
 	}
 
