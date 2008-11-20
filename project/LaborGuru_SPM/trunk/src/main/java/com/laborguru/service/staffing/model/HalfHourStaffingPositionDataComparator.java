@@ -31,9 +31,9 @@ public class HalfHourStaffingPositionDataComparator implements Comparator<HalfHo
 	 */
 	public int compare(HalfHourStaffingPositionData o1, HalfHourStaffingPositionData o2) {
 		if(o1.getWorkContentDecimalPart() > o2.getWorkContentDecimalPart()) {
-			return 1;
-		} else if(o1.getWorkContentDecimalPart() < o2.getWorkContentDecimalPart()) {
 			return -1;
+		} else if(o1.getWorkContentDecimalPart() < o2.getWorkContentDecimalPart()) {
+			return 1;
 		} else {
 			return 0;
 		}

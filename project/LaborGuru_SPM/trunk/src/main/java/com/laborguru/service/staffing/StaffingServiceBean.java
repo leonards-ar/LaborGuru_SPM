@@ -70,11 +70,13 @@ public class StaffingServiceBean implements StaffingService {
 		StoreDailyStaffing storeDailyStaffing = new StoreDailyStaffing(store);
 		storeDailyStaffing.setDate(date);
 		
+		List<Map<String, List<HalfHourStaffingPositionData>>> staffingData = initializeHalfHourStaffingData(store, date, dailyProjection);
+		
 		//:TODO: Improve performance? Or complicate coding?
 		for(Position position : store.getPositions()) {
 			DailyStaffing dailyStaffing = getStaffingDao().getDailyStaffingByDate(position, date);
 			if(dailyStaffing == null) {
-				dailyStaffing = calculateDailyStaffing(position, date, dailyProjection);
+				dailyStaffing = calculateDailyStaffing(position, date, dailyProjection, staffingData);
 			}
 			if(dailyStaffing != null) {
 				storeDailyStaffing.addDailyStaffing(dailyStaffing);
@@ -132,9 +134,10 @@ public class StaffingServiceBean implements StaffingService {
 		
 		if(dailyStaffing == null) {
 			position = getPositionDao().getPositionById(position);
-			DailyProjection dailyProjection = getDailyProjection(position.getStore(), date);
+			Store store = position.getStore();
+			DailyProjection dailyProjection = getDailyProjection(store, date);
 			
-			dailyStaffing = calculateDailyStaffing(position, date, dailyProjection);
+			dailyStaffing = calculateDailyStaffing(position, date, dailyProjection, initializeHalfHourStaffingData(store, date, dailyProjection));
 		}
 		
 		return dailyStaffing;
@@ -156,13 +159,32 @@ public class StaffingServiceBean implements StaffingService {
 	
 	/**
 	 * 
+	 * @param store
+	 * @param date
+	 * @return
+	 */
+	private List<Map<String, List<HalfHourStaffingPositionData>>> initializeHalfHourStaffingData(Store store, Date date, DailyProjection dailyProjection) {
+		int size = dailyProjection.getHalfHourProjections().size();
+		List<Map<String, List<HalfHourStaffingPositionData>>> data = new ArrayList<Map<String,List<HalfHourStaffingPositionData>>>(size);
+		
+		for(int i = 0; i < size; i++) {
+			data.add(initializeHalfHourStaffingData(store, date, dailyProjection.getHalfHourProjections().get(i)));
+		}
+		
+		return data;
+	}
+	
+	
+
+	/**
+	 * 
 	 * @param position
 	 * @param date
 	 * @param dailyProjection
-	 * @param dailyStaffingData
+	 * @param staffingData
 	 * @return
 	 */
-	private DailyStaffing calculateDailyStaffing(Position position, Date date, DailyProjection dailyProjection) {
+	private DailyStaffing calculateDailyStaffing(Position position, Date date, DailyProjection dailyProjection, List<Map<String, List<HalfHourStaffingPositionData>>> staffingData) {
 		if(dailyProjection != null) {
 			DailyStaffing dailyStaffing = new DailyStaffing();
 			dailyStaffing.setDate(date);
@@ -175,7 +197,8 @@ public class StaffingServiceBean implements StaffingService {
 			
 			HalfHourStaffing aHalfHourStaffing;
 			for(int i = 0; i < size; i++) {
-				aHalfHourStaffing = calculateHalfHourStaffing(position, date, dailyProjection.getHalfHourProjections().get(i), initializeHalfHourStaffingData(position.getStore(), date, dailyProjection.getHalfHourProjections().get(i)));
+				aHalfHourStaffing = calculateHalfHourStaffing(position, date, dailyProjection.getHalfHourProjections().get(i), staffingData.get(i));
+				//:TODO: Round up Work Content to 2 decimals????
 				totalWorkContent += NumberUtils.getDoubleValue(aHalfHourStaffing.getWorkContent());
 				totalMinimumStaffing += NumberUtils.getIntegerValue(aHalfHourStaffing.getCalculatedStaff());
 				
@@ -475,14 +498,16 @@ public class StaffingServiceBean implements StaffingService {
 		double maxPercent = NumberUtils.getDoubleValue(position.getUtilizationTop());
 		int min = NumberUtils.getIntegerValue(position.getUtilizationMinimum());
 		int max = NumberUtils.getIntegerValue(position.getUtilizationMaximum());
-
+		double utilization;
+		
 		if(projection <= min) {
-			return minPercent;
+			utilization = minPercent;
 		} else if(projection >= max) {
-			return maxPercent;
+			utilization = maxPercent;
 		} else {
-			return minPercent + ((projection - min) * (maxPercent - minPercent) / (max - min));
+			utilization = minPercent + ((projection - min) * (maxPercent - minPercent) / (max - min));
 		}
+		return utilization / 100;
 	}
 	
 	/**
