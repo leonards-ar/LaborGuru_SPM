@@ -32,7 +32,7 @@ POR CADA POSICION y según corresponda el DAY PART hacer
    d. S: Por cada posición, se suman los WCD del grupo (Activity Sharing) al cual pertenece
    e. SR: Se redondea para arriba el valor de S obtenido en el punto 4d
    f. Distribución de los restos entre las posiciones que tuvieron parte entera. Valor WCA (WC Adicional)
-      Si WCE = 0, entonces WCA = 0
+      Si WCD = 0, entonces WCA = 0
       Si WCD != 0, entonces WCA de asigna de acuerdo al RANK, sumando 1 a las posiciones con mejor RANK 
       hasta agotar el valor de SR. 
    g. Finalmente se obtiene el staff (cantidad de empleados) por cada posición:
