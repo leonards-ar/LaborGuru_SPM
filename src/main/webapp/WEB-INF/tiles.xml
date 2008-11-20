@@ -238,6 +238,11 @@
 		<put-attribute name="body" value="/tiles/schedule/addshiftbyemployee.jsp"/>
 	</definition>
 	
+	<definition name="editShiftByEmployeeByPositionByDatePage" extends="baseLayoutWithMenu">
+		<put-attribute name="htmlExtHeader" value="/tiles/scheduleHtmlExtHeader.jsp" />
+		<put-attribute name="body" value="/tiles/schedule/addshiftbyemployeebyposition.jsp"/>
+	</definition>	
+	
 	<!-- User tiles definition -->
 	<definition name="listUserPage" extends="baseLayoutWithMenu">
 		<put-attribute name="body" value="/tiles/user/list.jsp" />

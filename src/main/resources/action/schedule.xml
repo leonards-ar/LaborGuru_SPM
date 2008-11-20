@@ -10,6 +10,14 @@
 			<result name="input" type="tiles">editShiftByEmployeeByDatePage</result>
 			<result name="success" type="redirectAction"><param name="actionName">addshiftbyemployee_edit</param></result>
 		</action>
+		
+		<action name="addshiftbyemployeebyposition_*" method="{1}"
+			class="com.laborguru.action.schedule.AddShiftByEmployeeByPositionByDayPrepareAction">
+			<result name="edit" type="tiles">editShiftByEmployeeByPositionByDatePage</result>
+			<result name="input" type="tiles">editShiftByEmployeeByPositionByDatePage</result>
+			<result name="success" type="redirectAction"><param name="actionName">addshiftbyemployeebyposition_edit</param></result>
+		</action>
+		
 	</package>
 
 	<package name="schedule_ajax" namespace="/schedule" extends="json-default">

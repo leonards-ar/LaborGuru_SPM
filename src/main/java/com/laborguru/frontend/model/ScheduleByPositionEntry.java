@@ -129,4 +129,11 @@ public class ScheduleByPositionEntry implements Serializable {
 		this.position = position;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public Integer getScheduleRows() {
+		return new Integer(getScheduleData().size());
+	}	
 }
