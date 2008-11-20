@@ -132,6 +132,7 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction imp
 	protected void processChangeDay() {
 		setStoreSchedule(null);
 		resetScheduleData();
+		resetStaffingData();
 		setScheduleData();
 	}
 
@@ -143,6 +144,7 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction imp
 	protected void processChangeWeek() {
 		setStoreSchedule(null);
 		resetScheduleData();
+		resetStaffingData();
 		setScheduleData();
 	}
 
