@@ -15,7 +15,7 @@
 		<tr>
 			<td>
 				<!-- Header tables -->
-				<table border="0" cellpadding="2" cellspacing="2">
+				<table border="0" cellpadding="2" cellspacing="2" width="100%">
 					<tr>
 						<td valign="top">
 							<!-- Left column -->
@@ -65,7 +65,7 @@
 							<!-- Left column -->
 						</td>
 						
-						<td valign="top">
+						<td valign="top" align="right">
 							<!-- Right column -->
 							<table id="windowTable">
 								<tr>

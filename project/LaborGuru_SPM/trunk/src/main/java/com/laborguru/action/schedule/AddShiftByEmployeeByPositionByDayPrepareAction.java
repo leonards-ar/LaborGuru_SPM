@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.ScheduleByPositionEntry;
+import com.laborguru.frontend.model.ScheduleRow;
 import com.laborguru.model.Employee;
 import com.laborguru.model.Position;
 import com.laborguru.service.position.PositionService;
@@ -33,11 +34,12 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftBase
 	private static final Logger log = Logger.getLogger(AddShiftByEmployeeByPositionByDayPrepareAction.class);
 	
 	private Position position;
+	private Integer scheduleDataIndex;
 	
 	private List<Position> positions;
 	private PositionService positionService;
 	
-	private List<ScheduleByPositionEntry> scheduleData;
+	private List<ScheduleByPositionEntry> positionScheduleData;
 	
 	/**
 	 * 
@@ -107,7 +109,7 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftBase
 	 * 
 	 */
 	private void resetScheduleData() {
-		setScheduleData(null);
+		setPositionScheduleData(null);
 	}	
 
 	/**
@@ -151,7 +153,8 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftBase
 	 */
 	public String selectView() {
 		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
-
+		
+		resetScheduleData();
 		setScheduleData();
 		
 		return SpmActionResult.EDIT.getResult();
@@ -198,33 +201,37 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftBase
 		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
 		
 		Employee newEmployee = null;
-		/*
-		if(getNewEmployeeId() != null) {
-			newEmployee = getEmployeeService().getEmployeeById(new Employee(getNewEmployeeId()));
-
+		
+		if(getScheduleDataIndex() != null && getScheduleDataIndex().intValue() >= 0 && getScheduleDataIndex().intValue() < getPositionScheduleData().size()) {
+			ScheduleByPositionEntry entry = getPositionScheduleData().get(getScheduleDataIndex().intValue());
+			
+			if(entry.getNewEmployeeId() != null) {
+				newEmployee = getEmployeeService().getEmployeeById(new Employee(entry.getNewEmployeeId()));
+	
+			}
+			
+			ScheduleRow newRow = new ScheduleRow();
+			newRow.setEmployeeId(entry.getNewEmployeeId());
+			newRow.setOriginalEmployeeId(entry.getNewEmployeeId());
+			newRow.setPositionId(entry.getNewEmployeePositionId());
+			newRow.setPositionName(getPositionName(entry.getNewEmployeePositionId()));
+			newRow.setEmployeeName(entry.getNewEmployeeName());
+			newRow.setSchedule(initializeScheduleRow());
+			newRow.setHours(initializeScheduleHoursRow());
+	
+			if(newEmployee != null) {
+				newRow.setEmployeeMaxDaysWeek(newEmployee.getMaxDaysWeek());
+				newRow.setEmployeeMaxHoursDay(newEmployee.getMaxHoursDay());
+				newRow.setEmployeeMaxHoursWeek(newEmployee.getMaxHoursWeek());		
+			}
+			
+			entry.getScheduleData().add(newRow);
+			
+			entry.setNewEmployeeId(null);
+			entry.setNewEmployeeName(null);
+			entry.setNewEmployeePositionId(null);
 		}
-		
-		ScheduleRow newRow = new ScheduleRow();
-		newRow.setEmployeeId(getNewEmployeeId());
-		newRow.setOriginalEmployeeId(getNewEmployeeId());
-		newRow.setPositionId(getNewEmployeePositionId());
-		newRow.setPositionName(getPositionName(getNewEmployeePositionId()));
-		newRow.setEmployeeName(getNewEmployeeName());
-		newRow.setSchedule(initializeScheduleRow());
-		newRow.setHours(initializeScheduleHoursRow());
 
-		if(newEmployee != null) {
-			newRow.setEmployeeMaxDaysWeek(newEmployee.getMaxDaysWeek());
-			newRow.setEmployeeMaxHoursDay(newEmployee.getMaxHoursDay());
-			newRow.setEmployeeMaxHoursWeek(newEmployee.getMaxHoursWeek());		
-		}
-		
-		getScheduleData().add(newRow);
-		
-		setNewEmployeeId(null);
-		setNewEmployeeName(null);
-		setNewEmployeePositionId(null);
-		*/
 		return SpmActionResult.EDIT.getResult();
 	}
 	
@@ -236,7 +243,7 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftBase
 		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
 		
 		if(log.isDebugEnabled()) {
-			log.debug("About to save schedule data" + getScheduleData());
+			log.debug("About to save schedule data" + getPositionScheduleData());
 		}
 		
 		setSchedule();
@@ -319,30 +326,35 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftBase
 	}
 
 	/**
-	 * @return the scheduleData
+	 * @return the positionScheduleData
 	 */
-	public List<ScheduleByPositionEntry> getScheduleData() {
-		return scheduleData;
+	public List<ScheduleByPositionEntry> getPositionScheduleData() {
+		if(positionScheduleData == null) {
+			setPositionScheduleData(new ArrayList<ScheduleByPositionEntry>());
+		}
+		return positionScheduleData;
 	}
 
 	/**
-	 * @param scheduleData the scheduleData to set
+	 * @param positionScheduleData the scheduleData to set
 	 */
-	public void setScheduleData(List<ScheduleByPositionEntry> scheduleData) {
-		this.scheduleData = scheduleData;
+	public void setPositionScheduleData(List<ScheduleByPositionEntry> positionScheduleData) {
+		this.positionScheduleData = positionScheduleData;
 	}
 
 	/**
 	 * 
 	 */
 	private void setScheduleData() {
-		if(scheduleData == null || scheduleData.isEmpty()) {
+		if(positionScheduleData == null || positionScheduleData.isEmpty()) {
 			ScheduleByPositionEntry scheduleEntry;
 			for(Position aPosition : getPositions()) {
 				scheduleEntry = new ScheduleByPositionEntry();
 				scheduleEntry.setScheduleData(buildScheduleFor(aPosition));
 				scheduleEntry.setMinimumStaffing(buildMinimumStaffingFor(aPosition));
 				scheduleEntry.setPosition(aPosition);
+				
+				getPositionScheduleData().add(scheduleEntry);
 			}
 		}
 	}	
@@ -351,8 +363,22 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftBase
 	 * 
 	 */
 	private void setSchedule() {
-		for(ScheduleByPositionEntry anEntry : getScheduleData()) {
+		for(ScheduleByPositionEntry anEntry : getPositionScheduleData()) {
 			setSchedule(anEntry.getScheduleData(), anEntry.getPosition());	
 		}
+	}
+
+	/**
+	 * @return the scheduleDataIndex
+	 */
+	public Integer getScheduleDataIndex() {
+		return scheduleDataIndex;
+	}
+
+	/**
+	 * @param scheduleDataIndex the scheduleDataIndex to set
+	 */
+	public void setScheduleDataIndex(Integer scheduleDataIndex) {
+		this.scheduleDataIndex = scheduleDataIndex;
 	}
 }
