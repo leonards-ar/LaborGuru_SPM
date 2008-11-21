@@ -52,7 +52,7 @@
 											<tr>
 												<td align="right" class="form_label"><s:text name="schedule.addshift.view"/></td>
 												<td align="left">
-													<s:select id="selectView" name="selectView" onchange="addshiftbyemployeebyposition_form.action=addshiftbyemployeebyposition_form.selectView.value; addshiftbyemployeebyposition_form.submit();" theme="simple" list="scheduleViewsMap" listKey="key" listValue="%{getText(value)}"/>												</td>
+													<s:select id="selectView" name="selectView" onchange="addshiftbyemployeebyposition_form.action=addshiftbyemployeebyposition_form.selectView.value; addshiftbyemployeebyposition_form.submit();" theme="simple" list="scheduleViewsMap" listKey="key" listValue="%{getText(value)}"/></td>
 												<td align="right" class="form_label"><s:text name="schedule.addshift.positions"/></td>
 												<td align="left">
 													<s:select onchange="addshiftbyemployeebyposition_form.action='addshiftbyemployeebyposition_selectPosition.action'; addshiftbyemployeebyposition_form.submit();" name="position.id" list="positions" listKey="id" listValue="name" theme="simple" headerKey="" headerValue="%{getText('schedule.addshift.positions.header.label')}"/>					
@@ -256,7 +256,7 @@
 				    <!-- Header -->
 				    
 				    <!-- Employees -->
-				    <s:iterator id="data" value="positionScheduleData[%{#itSchedule.index}].scheduleData" status="itScheduleData">
+				    <s:iterator id="data" value="scheduleData" status="itScheduleData">
 					    <tr class="scheduleMainTableEmployeeRow">
 			    			<s:hidden id="%{#itSchedule.index}scheduleposition_%{#itScheduleData.index}" name="positionScheduleData[%{#itSchedule.index}].scheduleData[%{#itScheduleData.index}].positionId" value="%{position.id}"/>
 				    		<s:hidden name="positionScheduleData[%{#itSchedule.index}].scheduleData[%{#itScheduleData.index}].positionName"/>
@@ -346,7 +346,7 @@
 				    <tr class="scheduleMainTableEmployeeRow">
 				    	<td colspan="3" class="scheduleStaffingNameCell"><s:text name="schedule.addshift.staffing.total"/>&nbsp;&nbsp;</td>
 				    	<td class="scheduleStaffingValueCell" id='<s:property value="#itSchedule.index"/>total_cell'>&nbsp;</td>
-							<s:iterator id="staffing" value="positionScheduleData[%{#itSchedule.index}].minimumStaffing" status="itStaffing">
+							<s:iterator id="staffing" value="minimumStaffing" status="itStaffing">
 								<s:if test="#itStaffing.first">
 									<s:iterator id="startToIgnore" value="scheduleIndividualStartHoursToIgnore">
 										<td id='<s:property value="#itSchedule.index"/>total_cell_<s:property value="#itStaffing.index"/>' class="scheduleStaffingUnavailable"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
@@ -364,13 +364,13 @@
 				    <tr class="scheduleMainTableEmployeeRow">
 				    	<td colspan="3" class="scheduleStaffingNameCell"><s:text name="schedule.addshift.staffing.minimum_staffing"/>&nbsp;&nbsp;</td>
 				    	<td class="scheduleStaffingValueCell" id='<s:property value="#itSchedule.index"/>total_staffing_cell'><s:property value='totalMinimutStaffingTime'/></td>
-							<s:iterator id="staffing" value="positionScheduleData[%{#itSchedule.index}].minimumStaffing" status="itStaffing">
+							<s:iterator id="staffing" value="minimumStaffing" status="itStaffing">
 								<s:if test="#itStaffing.first">
 									<s:iterator id="startToIgnore" value="scheduleIndividualStartHoursToIgnore">
 										<td id='<s:property value="#itSchedule.index"/>staffing_cell_<s:property value="#itStaffing.index"/>' class="scheduleStaffingUnavailable"><s:hidden name="positionScheduleData[%{#itSchedule.index}].minimumStaffing[%{#itStaffing.index}]" value="0"/><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
 									</s:iterator>
 								</s:if>
-								<td id='staffing_cell_<s:property value="#itStaffing.index"/>' class="scheduleStaffingCalculated">
+								<td id='<s:property value="#itSchedule.index"/>staffing_cell_<s:property value="#itStaffing.index"/>' class="scheduleStaffingCalculated">
 									<div id='<s:property value="#itSchedule.index"/>staffing_div_<s:property value="#itStaffing.index"/>'><s:property/></div>
 									<s:hidden name="positionScheduleData[%{#itSchedule.index}].minimumStaffing[%{#itStaffing.index}]"/>
 								</td>
@@ -385,7 +385,7 @@
 				    <tr class="scheduleMainTableEmployeeRow">
 				    	<td colspan="3" class="scheduleStaffingNameCell"><s:text name="schedule.addshift.staffing.difference"/>&nbsp;&nbsp;</td>
 				    	<td class="scheduleStaffingValueCell" id='<s:property value="#itSchedule.index"/>total_difference_cell'>&nbsp;</td>
-							<s:iterator id="staffing" value="positionScheduleData[%{#itSchedule.index}].minimumStaffing" status="itStaffing">
+							<s:iterator id="staffing" value="minimumStaffing" status="itStaffing">
 								<s:if test="#itStaffing.first">
 									<s:iterator id="startToIgnore" value="scheduleIndividualStartHoursToIgnore">
 										<td id='<s:property value="#itSchedule.index"/>difference_cell_<s:property value="#itStaffing.index"/>' class="scheduleStaffingUnavailable"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
@@ -444,6 +444,7 @@
 
 <script language="javascript" type="text/javascript">
 initialize(<s:property value="totalIndividualHours"/>, '<s:property value="breakId"/>', '<s:text name="schedule.addshift.cannot_change_row_message"/>', '<s:text name="schedule.addshift.start_time_message"/>', '<s:text name="schedule.addshift.end_time_message"/>', <s:property value="positions.size()"/>, <s:property value="positionScheduleData.size()"/>);
+initializeMultiSchedule(<s:property value="positionScheduleData.size()"/>);
 <s:iterator id="pos" value="positions" status="posStatus">
 	addPositionId(<s:property value="#posStatus.index"/>, '<s:property value="id"/>');
 </s:iterator>

@@ -15,6 +15,7 @@ import com.laborguru.frontend.model.ScheduleRow;
 import com.laborguru.model.Employee;
 import com.laborguru.model.Position;
 import com.laborguru.util.CalendarUtils;
+import com.laborguru.util.SpmConstants;
 import com.opensymphony.xwork2.Preparable;
 
 /**
@@ -78,7 +79,7 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction imp
 			total += i != null ? i.intValue() : 0;
 		}
 		
-		return new Integer(MINUTES_INTERVAL * total);
+		return new Integer(SpmConstants.MINUTES_INTERVAL * total);
 	}
 	
 	/**

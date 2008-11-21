@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.laborguru.model.Position;
+import com.laborguru.util.CalendarUtils;
+import com.laborguru.util.SpmConstants;
 
 /**
  *
@@ -136,4 +138,25 @@ public class ScheduleByPositionEntry implements Serializable {
 	public Integer getScheduleRows() {
 		return new Integer(getScheduleData().size());
 	}	
+	
+	/**
+	 * 
+	 */
+	public String getTotalMinimutStaffingTime() {
+		Integer min = getTotalMinimutStaffingMinutes();
+		return CalendarUtils.minutesToTime(min);
+	}
+	
+	/**
+	 * 
+	 */
+	public Integer getTotalMinimutStaffingMinutes() {
+		int total = 0;
+		
+		for(Integer i : getMinimumStaffing()) {
+			total += i != null ? i.intValue() : 0;
+		}
+		
+		return new Integer(SpmConstants.MINUTES_INTERVAL * total);
+	}		
 }
