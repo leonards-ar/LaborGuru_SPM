@@ -73,8 +73,6 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	
 	private BigDecimal dailyVolume;
 	
-	public static final int MINUTES_INTERVAL = 15;
-	
 	private String saveSchedule;
 
 	
@@ -275,7 +273,7 @@ public abstract class AddShiftBaseAction extends SpmAction {
 				List<Date> hours = new ArrayList<Date>();
 				while(d != null && d.getTime() < closeHour.getTime()) {
 					hours.add(d);
-					d = new Date(d.getTime() + MINUTES_INTERVAL * 60000L);
+					d = new Date(d.getTime() + SpmConstants.MINUTES_INTERVAL * 60000L);
 				}
 				this.scheduleIndividualHours = hours;
 			} else {
@@ -291,7 +289,7 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	 */
 	public Date getLastScheduleIndividualHour() {
 		Date d = getScheduleIndividualHours().get(getScheduleIndividualHours().size() - 1);
-		return new Date(d.getTime() + MINUTES_INTERVAL * 60000L);
+		return new Date(d.getTime() + SpmConstants.MINUTES_INTERVAL * 60000L);
 	}
 	
 	/**
@@ -338,7 +336,7 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	 * @return
 	 */
 	public List<Integer> getScheduleIndividualStartHoursToIgnore() {
-		Integer total = new Integer(60 / MINUTES_INTERVAL);
+		Integer total = new Integer(60 / SpmConstants.MINUTES_INTERVAL);
 		List<Integer> toIgnore = new ArrayList<Integer>();
 		Integer start = getScheduleLabelHours() != null && getScheduleLabelHours().size() > 0 ?  getScheduleLabelHours().get(0).getSelectableCount() : null;
 
@@ -356,7 +354,7 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	 * @return
 	 */
 	public List<Integer> getScheduleIndividualEndHoursToIgnore() {
-		Integer total = new Integer(60 / MINUTES_INTERVAL);
+		Integer total = new Integer(60 / SpmConstants.MINUTES_INTERVAL);
 		List<Integer> toIgnore = new ArrayList<Integer>();
 		Integer start = getScheduleLabelHours() != null && getScheduleLabelHours().size() > 1 ?  getScheduleLabelHours().get(getScheduleLabelHours().size() - 1).getSelectableCount() : null;
 
@@ -378,9 +376,9 @@ public abstract class AddShiftBaseAction extends SpmAction {
 		if(storeOpenHour != null) {
 			Calendar cal = CalendarUtils.getCalendar(storeOpenHour);
 			int minutes = cal.get(Calendar.MINUTE);
-			for(int i = 0; MINUTES_INTERVAL * i <= 60 ;i++ ) {
-				if(minutes <= MINUTES_INTERVAL * i) {
-					cal.set(Calendar.MINUTE, MINUTES_INTERVAL * i);
+			for(int i = 0; SpmConstants.MINUTES_INTERVAL * i <= 60 ;i++ ) {
+				if(minutes <= SpmConstants.MINUTES_INTERVAL * i) {
+					cal.set(Calendar.MINUTE, SpmConstants.MINUTES_INTERVAL * i);
 					return cal.getTime();
 				}
 			}
@@ -401,9 +399,9 @@ public abstract class AddShiftBaseAction extends SpmAction {
 			Calendar cal = CalendarUtils.getCalendar(storeCloseHour);
 			int minutes = cal.get(Calendar.MINUTE);
 
-			for(int i = 0; minutes > 0 && MINUTES_INTERVAL * i <= 60 ;i++ ) {
-				if(minutes <= MINUTES_INTERVAL * i) {
-					cal.set(Calendar.MINUTE, MINUTES_INTERVAL * i);
+			for(int i = 0; minutes > 0 && SpmConstants.MINUTES_INTERVAL * i <= 60 ;i++ ) {
+				if(minutes <= SpmConstants.MINUTES_INTERVAL * i) {
+					cal.set(Calendar.MINUTE, SpmConstants.MINUTES_INTERVAL * i);
 					return cal.getTime();
 				}
 			}
@@ -431,14 +429,14 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	
 	/**
 	 * 
-	 * @param hour Hour that must be normalized according to MINUTES_INTERVAL
+	 * @param hour Hour that must be normalized according to SpmConstants.MINUTES_INTERVAL
 	 * @return
 	 */
 	private Integer getCloseHourSelectable(Date hour) {
 		Calendar cal = CalendarUtils.getCalendar(hour);
 		int minutes = cal.get(Calendar.MINUTE);
-		for(int i = 0; MINUTES_INTERVAL * i <= 60 ;i++ ) {
-			if(minutes <= MINUTES_INTERVAL * i) {
+		for(int i = 0; SpmConstants.MINUTES_INTERVAL * i <= 60 ;i++ ) {
+			if(minutes <= SpmConstants.MINUTES_INTERVAL * i) {
 				return new Integer(i);
 			}
 		}
@@ -452,20 +450,20 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	 * @return
 	 */
 	private Integer getHourColspan(Date hour) {
-		return new Integer(60 / MINUTES_INTERVAL);
+		return new Integer(60 / SpmConstants.MINUTES_INTERVAL);
 	}
 	
 	/**
 	 * 
-	 * @param hour Hour that must be normalized according to MINUTES_INTERVAL
+	 * @param hour Hour that must be normalized according to SpmConstants.MINUTES_INTERVAL
 	 * @return
 	 */
 	private Integer getOpenHourSelectable(Date hour) {
 		Calendar cal = CalendarUtils.getCalendar(hour);
 		int minutes = cal.get(Calendar.MINUTE);
-		for(int i = 0; MINUTES_INTERVAL * i <= 60 ;i++ ) {
-			if(minutes <= MINUTES_INTERVAL * i) {
-				return new Integer((60/MINUTES_INTERVAL) - i);
+		for(int i = 0; SpmConstants.MINUTES_INTERVAL * i <= 60 ;i++ ) {
+			if(minutes <= SpmConstants.MINUTES_INTERVAL * i) {
+				return new Integer((60/SpmConstants.MINUTES_INTERVAL) - i);
 			}
 		}
 		// This should never happend as minutes should always be less than 60

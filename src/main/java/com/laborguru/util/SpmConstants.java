@@ -8,7 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 public class SpmConstants {
-
+	public static final int MINUTES_INTERVAL = 15;
+	
 	public static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
 	public static final SimpleDateFormat TIME_NUMBER_FORMAT = new SimpleDateFormat("HHmm");
 	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");

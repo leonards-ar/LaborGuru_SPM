@@ -45,6 +45,13 @@ function initialize(totalCols, breakTxt, cannotChangeRowMsg, startTimeMsg, endTi
 	POSITION_IDS = new Array(positionsQty);
 }
 
+function initializeMultiSchedule(schedulesQty) {
+	SCHEDULE_IDS = new Array(schedulesQty);
+	for(var i=0; i < schedulesQty; i++) {
+		SCHEDULE_IDS[i] = i;
+	}
+}
+
 function addScheduleTotalRows(index, totalRows) {
 	TOTAL_ROWS[index] = totalRows;
 }
