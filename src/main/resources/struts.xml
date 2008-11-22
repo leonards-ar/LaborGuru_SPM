@@ -62,6 +62,7 @@
 	</package>
 
 	<include file="action/login.xml" />
+	<include file="action/security.xml" />
 	<include file="action/home.xml" />
 	<include file="action/employee.xml" />
 	<include file="action/store.xml" />

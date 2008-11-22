@@ -51,10 +51,18 @@ public class MenuItem extends SpmObject {
 	   	.toString();		
 	}		
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public Integer getId() {
 		return id;
 	}
 
+	/**
+	 * 
+	 * @param id
+	 */
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -151,6 +159,10 @@ public class MenuItem extends SpmObject {
 		return this.childMenuItems;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<MenuItem> getOrderedChildMenuItems() {
 		if(this.childMenuItems != null && this.childMenuItems.size() > 0) {
 			List<MenuItem> ordered = new ArrayList<MenuItem>(childMenuItems);
