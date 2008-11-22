@@ -53,7 +53,7 @@
 		</property>
 		<property name="accessDeniedHandler">
 			<bean class="org.acegisecurity.ui.AccessDeniedHandlerImpl">
-				<property name="errorPage" value="/login/accessdenied.action"/>
+				<property name="errorPage" value="/security/accessdenied.action"/>
 			</bean>
 		</property>
 	</bean>
@@ -78,10 +78,12 @@
 				CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
 				PATTERN_TYPE_APACHE_ANT
 				/home/home.action=Administrator,Store_Manager,Employee,Customer_Manager,Regional_Manager,Area_Manager
+				/login/accessdenied.jsp=REOLE_ANONYMOUS
 				**/logout.action=ROLE_ANONYMOUS,ROLE_USER
 				**/login.action=ROLE_ANONYMOUS,ROLE_USER
 				/employee/employee_list.action=VIEW_EMPLOYEE,EDIT_EMPLOYEE
-				/employee/employee_add.action=CREATE_EMPLOYEE				
+				/employee/employee_add.action=CREATE_EMPLOYEE
+				/store/store_edit.action=EDIT_STORE				
 				/**=IS_AUTHENTICATED_ANONYMOUSLY
 			]]></value>
 		</property>
