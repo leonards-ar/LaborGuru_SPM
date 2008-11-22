@@ -19,6 +19,11 @@ public class NumberUtils {
 
 	public static final String DECIMAL_FORMAT = "#,##0";
 
+	/**
+	 *
+	 */
+	private NumberUtils() {
+	}
 	
 	/**
 	 * Parse a number with a specific format passed as parameter.
@@ -30,7 +35,7 @@ public class NumberUtils {
 		try {
 			return new DecimalFormat(format).parse(number);
 		} catch (ParseException ex) {
-			log.error("Cannot parse time [" + number + "]", ex);
+			log.error("Cannot parse number:" + number, ex);
 			return null;
 		}
 	}
@@ -42,12 +47,6 @@ public class NumberUtils {
 	 */
 	public static String numberToString(Number number, String format) {
 			return new DecimalFormat(format).format(number);
-	}
-	
-	/**
-	 * 
-	 */
-	private NumberUtils() {
 	}
 
 	/**
