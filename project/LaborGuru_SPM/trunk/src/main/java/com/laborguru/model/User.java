@@ -2,7 +2,6 @@ package com.laborguru.model;
 
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -288,9 +287,16 @@ public class User extends SpmObject {
 		getProfiles().add(profile);
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public Profile getProfile() {
-		Iterator<Profile> it = getProfiles().iterator();
-		return it.next();
+		if(getProfiles() != null && !getProfiles().isEmpty()) {
+			return getProfiles().iterator().next();
+		} else {
+			return null;
+		}
 	}
 	
 	/**

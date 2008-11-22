@@ -1,5 +1,5 @@
 /*
- * File name: EmployeeHomeAction.java
+ * File name: HomeAction.java
  * Creation date: 22/11/2008 12:48:27
  * Copyright Mindpool
  */
@@ -11,6 +11,7 @@ import java.util.List;
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.model.Position;
+import com.laborguru.model.Profile;
 import com.laborguru.service.position.PositionService;
 import com.opensymphony.xwork2.Preparable;
 
@@ -21,7 +22,7 @@ import com.opensymphony.xwork2.Preparable;
  * @since SPM 1.0
  *
  */
-public class EmployeeHomeAction extends SpmAction implements Preparable {
+public class HomeAction extends SpmAction implements Preparable {
 
 	/**
 	 * 
@@ -33,7 +34,7 @@ public class EmployeeHomeAction extends SpmAction implements Preparable {
 	/**
 	 * 
 	 */
-	public EmployeeHomeAction() {
+	public HomeAction() {
 	}
 	
 	/**
@@ -51,7 +52,13 @@ public class EmployeeHomeAction extends SpmAction implements Preparable {
 	 */
 	@Override
 	public String execute() throws Exception {
-		return SpmActionResult.SUCCESS.getResult();
+		Profile loggedUserProfile = getLoggedUser().getProfile();
+		String result = loggedUserProfile != null ? loggedUserProfile.getHomeResult() : null;
+		if(result != null) {
+			return result;
+		} else {
+			return SpmActionResult.SUCCESS.getResult();
+		}
 	}
 
 	/**
