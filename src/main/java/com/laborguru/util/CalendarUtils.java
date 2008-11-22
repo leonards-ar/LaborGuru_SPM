@@ -11,6 +11,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.apache.log4j.Logger;
+
 import com.laborguru.model.DayOfWeek;
 
 /**
@@ -21,6 +23,8 @@ import com.laborguru.model.DayOfWeek;
  *
  */
 public class CalendarUtils {
+
+	private final static Logger log = Logger.getLogger(CalendarUtils.class);
 
 	/**
 	 * 
@@ -125,7 +129,7 @@ public class CalendarUtils {
 		try {
 			return SpmConstants.TIME_FORMAT.parse(time);
 		} catch (ParseException ex) {
-			//TODO: log.error("Cannot parse time [" + time + "]", ex);
+			log.error("Cannot parse date/time [" + time + "]", ex);
 			return null;
 		}
 	}
@@ -148,7 +152,7 @@ public class CalendarUtils {
 		try {
 			return new SimpleDateFormat(format).parse(time);
 		} catch (ParseException ex) {
-			//TODO: log.error("Cannot parse time [" + time + "]", ex);
+			log.error("Cannot parse date/time [" + time + "]", ex);
 			return null;
 		}
 	}

@@ -40,12 +40,12 @@ public class HistoricSalesAssembler {
 		//Setting store code
 		String storeCode = line[0];
 		
-		if (storeCode != null){
+		if (storeCode != null && !("".equals(storeCode.trim()))){
 			Store store = new Store();		
-			store.setCode(line[0]);		
+			store.setCode(storeCode.trim());		
 			historicSale.setStore(store);
 		} else {
-			String message = "Parsing error: store code is null";
+			String message = "Parsing error: store code is:"+storeCode;
 			log.debug(message);
 			throw new FileParserException(message);
 		}
@@ -60,7 +60,7 @@ public class HistoricSalesAssembler {
 			if (time != null){
 				Calendar calendarTime = CalendarUtils.getCalendar(time);		
 
-				calendarDate.add(Calendar.HOUR, calendarTime.get(Calendar.HOUR));
+				calendarDate.add(Calendar.HOUR, calendarTime.get(Calendar.HOUR_OF_DAY));
 				calendarDate.add(Calendar.MINUTE, calendarTime.get(Calendar.MINUTE));
 			
 				historicSale.setDateTime(calendarDate.getTime());
@@ -88,45 +88,51 @@ public class HistoricSalesAssembler {
 			throw new FileParserException(message);
 		}
 		
+		//Setting optional fields
 		if (line.length > 5){
-			//Setting Main Value
-			Number secondValue = NumberUtils.stringToNumber(line[5], NumberUtils.DECIMAL_FORMAT);
-			
-			if (secondValue != null){
-				BigDecimal secondBD = new BigDecimal(secondValue.toString());
-				historicSale.setSecondValue(secondBD);
-			} else {
-				String message = "Parsing error: second value "+line[5]+" is not valid";
-				log.debug(message);
-			}
-			
+			//Setting Second Value
+			BigDecimal secondValue = processNumber(line[5], 5);			
+			historicSale.setSecondValue(secondValue);
+						
 			if (line.length > 6){
-				//Setting Main Value
-				Number thirdValue = NumberUtils.stringToNumber(line[6], NumberUtils.DECIMAL_FORMAT);
-				
-				if (thirdValue != null){
-					BigDecimal thirdBD = new BigDecimal(thirdValue.toString());
-					historicSale.setThirdValue(thirdBD);	
-				} else {
-					String message = "Parsing error: third value "+line[6]+" is not valid";
-					log.debug(message);
-				}
+				//Setting Third Value
+				BigDecimal thirdValue = processNumber(line[6], 6);
+				historicSale.setThirdValue(thirdValue);					
 				
 				if (line.length > 7){
-					//Setting Main Value
-					Number fourthValue = NumberUtils.stringToNumber(line[7], NumberUtils.DECIMAL_FORMAT);
-					if (fourthValue != null){
-						BigDecimal fourthBD = new BigDecimal(fourthValue.toString());
-						historicSale.setFourthValue(fourthBD);					
-					} else {
-						String message = "Parsing error: fourth value "+line[7]+" is not valid";
-						log.debug(message);
-					}
-				}				
-				
-			}
+					//Setting fourth Value
+					BigDecimal fourthValue = processNumber(line[7], 7);
+					historicSale.setFourthValue(fourthValue);
+				}
+			}	
 		}
 		
 		return historicSale;
 	}
+		
+	
+	/**
+	 * @param line
+	 * @param historicSale
+	 */
+	private static BigDecimal processNumber(String valueString, int column){
+		
+		if ((valueString != null) && !("".equals(valueString.trim()))){
+			String valueStringAux = valueString.trim();
+			Number aValue = NumberUtils.stringToNumber(valueStringAux, NumberUtils.DECIMAL_FORMAT);
+			
+			if (aValue != null){
+				return new BigDecimal(aValue.toString());
+			} 
+			
+			String message = "Parsing error - Column: "+column+ " - Error: number "+valueStringAux+" is not valid";
+			log.debug(message);			
+		}
+		
+		return null;
+	}
+	
+	
+
+	
 }
