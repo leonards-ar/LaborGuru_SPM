@@ -570,7 +570,14 @@ input.text, input.password, textarea {
 	font-family: trebuchet ms, arial, sans-serif;
 	font-weight: bold	
 }
-
+.windowTableTitle {
+	color: #333333;
+	text-align: left;
+	font-family: trebuchet ms, arial, sans-serif;
+	font-weight: bold;	
+	font-size: 12px;	
+}
+	
 .windowTableLabel {
 	color: #666666;
 	text-align: center;

@@ -4,8 +4,8 @@
         "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
 	<package name="home" namespace="/home" extends="spm-default">
-		<action name="home">
-			<result type="tiles">homePage</result>
-		</action>
+		<action name="home" class="com.laborguru.action.home.EmployeeHomeAction">
+			<result name="success" type="tiles">homePage</result>			
+		</action>		
 	</package>
 </struts>
