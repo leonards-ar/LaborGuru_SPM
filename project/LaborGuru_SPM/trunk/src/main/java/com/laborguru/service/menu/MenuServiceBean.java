@@ -4,6 +4,7 @@
 package com.laborguru.service.menu;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,7 +67,7 @@ public class MenuServiceBean implements MenuService {
 	 * 
 	 * @param menuItems
 	 */
-	private void removeNotAllowedMenuItems(List<MenuItem> menuItems, Set<Profile> userProfiles) {
+	private void removeNotAllowedMenuItems(Collection<MenuItem> menuItems, Set<Profile> userProfiles) {
 		if(menuItems != null) {
 			List<MenuItem> itemsToRemove = new ArrayList<MenuItem>();
 			
@@ -81,7 +82,7 @@ public class MenuServiceBean implements MenuService {
 				if(!hasPermission) {
 					itemsToRemove.add(item);
 				}
-				removeNotAllowedMenuItems(item.getOrderedChildMenuItems(), userProfiles);
+				removeNotAllowedMenuItems(item.getChildMenuItems(), userProfiles);
 			}
 			menuItems.removeAll(itemsToRemove);
 		}
