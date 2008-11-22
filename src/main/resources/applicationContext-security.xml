@@ -83,6 +83,7 @@
 				/employee/employee_list.action=VIEW_EMPLOYEE,EDIT_EMPLOYEE
 				/employee/employee_add.action=CREATE_EMPLOYEE
 				/store/store_edit.action=EDIT_STORE
+				/security/accessdenied.action=HOME_ACCESS
 				/**=IS_AUTHENTICATED_ANONYMOUSLY
 			]]></value>
 		</property>
