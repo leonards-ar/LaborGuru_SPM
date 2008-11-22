@@ -73,12 +73,12 @@
   <tbl_positions position_id="4" name="porter" manager="0" position_index="3" store_id="1"/>
   <tbl_positions position_id="5" name="manager" manager="1" position_index="4" store_id="1"/>
   
-  <tbl_profiles profile_id="1" name="Administrator" description="Administrator of the application"/>
-  <tbl_profiles profile_id="2" name="Store_Manager" description="Manager of a Store"/>
-  <tbl_profiles profile_id="3" name="Employee" description="Employee of a Store"/>
-  <tbl_profiles profile_id="4" name="Customer_Manager" description="User with a Client associated"/>
-  <tbl_profiles profile_id="5" name="Regional_Manager" description="User with a Region associated"/>
-  <tbl_profiles profile_id="6" name="Area_Manager" description="User with an Area associated"/>
+  <tbl_profiles profile_id="1" name="Administrator" description="Administrator of the application" homeResult="success"/>
+  <tbl_profiles profile_id="2" name="Store_Manager" description="Manager of a Store" homeResult="success"/>
+  <tbl_profiles profile_id="3" name="Employee" description="Employee of a Store" homeResult="success"/>
+  <tbl_profiles profile_id="4" name="Customer_Manager" description="User with a Client associated" homeResult="success"/>
+  <tbl_profiles profile_id="5" name="Regional_Manager" description="User with a Region associated" homeResult="success"/>
+  <tbl_profiles profile_id="6" name="Area_Manager" description="User with an Area associated" homeResult="success"/>
 
 <!-- Admin Permissions -->  
   <tbl_profiles_permissions profile_id="1" permission_id="1"/><!-- Home -->

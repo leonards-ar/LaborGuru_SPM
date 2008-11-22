@@ -12,6 +12,7 @@
 
         <property name="name" column="name" type="string" length="50" not-null="true"/>       
         <property name="description" column="description" type="string" length="50" />        
+        <property name="homeResult" column="home_result" type="string" length="100" />        
 
 	    <set name="permissions" table="tbl_profiles_permissions" lazy="true">
 	        <key column="profile_id" foreign-key="fk_profiles_permissions"/>

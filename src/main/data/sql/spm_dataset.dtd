@@ -115,6 +115,7 @@
     profile_id CDATA #REQUIRED
     name CDATA #REQUIRED
     description CDATA #IMPLIED
+    homeResult CDATA #IMPLIED
 >
 
 <!ELEMENT tbl_profiles_permissions EMPTY>

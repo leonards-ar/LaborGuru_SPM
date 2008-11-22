@@ -21,7 +21,8 @@ public class Profile extends SpmObject {
 	private Integer id;
 	private String name;
 	private String description;
-
+	private String homeResult;
+	
 	/**
 	 * Profile toString
 	 * @return string version of the object 
@@ -130,4 +131,20 @@ public class Profile extends SpmObject {
 		
 		return new EqualsBuilder().append(this.name, other.name).isEquals();
 	}
+
+	/**
+	 * @return the homeResult
+	 */
+	public String getHomeResult() {
+		return homeResult;
+	}
+
+	/**
+	 * @param homeResult the homeResult to set
+	 */
+	public void setHomeResult(String homeResult) {
+		this.homeResult = homeResult;
+	}
+
+
 }
