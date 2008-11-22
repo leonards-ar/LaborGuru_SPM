@@ -23,8 +23,8 @@
 		<put-attribute name="body" value="/tiles/home/home.jsp" />
 	</definition>
 	
-	<definition name="accessdeniedPage" extends="baseLayout">
-		<put-attribute name="body" value="/tiles/login/accessdenied.jsp" />
+	<definition name="accessDeniedPage" extends="baseLayout">
+		<put-attribute name="body" value="/tiles/security/accessdenied.jsp" />
 	</definition>
 	
 	<!-- Employee tiles definition -->
