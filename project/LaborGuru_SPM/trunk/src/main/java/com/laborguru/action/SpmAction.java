@@ -3,6 +3,7 @@ package com.laborguru.action;
 import java.util.Map;
 
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.laborguru.exception.ErrorMessage;
@@ -21,8 +22,9 @@ import com.opensymphony.xwork2.ActionSupport;
  *
  */
 @SuppressWarnings("serial")
-public class SpmAction extends ActionSupport implements SessionAware {
+public class SpmAction extends ActionSupport implements SessionAware,RequestAware{
 	private Map session;
+	private Map request;
 
 	/**
 	 * Returns the logged user from session scope
@@ -97,6 +99,20 @@ public class SpmAction extends ActionSupport implements SessionAware {
 			}
 		}
 		return store;
+	}
+
+	/**
+	 * @return the request
+	 */
+	public Map getRequest() {
+		return request;
+	}
+
+	/**
+	 * @param request the request to set
+	 */
+	public void setRequest(Map request) {
+		this.request = request;
 	}   
 	
 }
