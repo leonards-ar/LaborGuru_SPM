@@ -23,7 +23,7 @@
 		<put-attribute name="body" value="/tiles/home/home.jsp" />
 	</definition>
 	
-	<definition name="accessDeniedPage" extends="baseLayout">
+	<definition name="accessDeniedPage" extends="baseLayoutWithMenu">
 		<put-attribute name="body" value="/tiles/security/accessdenied.jsp" />
 	</definition>
 	

@@ -9,6 +9,5 @@
 		<action name="accessdenied" class="com.laborguru.action.security.AccessDeniedAction">
 			<result name="success" type="tiles">accessDeniedPage</result>
 		</action>
-			
 	</package>
 </struts>
