@@ -29,7 +29,7 @@
 
 	<tr>
 		<td align="center">
-			<a class="link" href="javascript:document.history.back(-1);"><s:text name="error.security.back.label" /></a>
+			<a class="link" href="javascript:history.back(1);"><s:text name="error.security.back.label" /></a>
 		</td>
 	</tr>
 </table>
