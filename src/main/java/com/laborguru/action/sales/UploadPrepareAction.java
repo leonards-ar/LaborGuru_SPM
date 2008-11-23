@@ -3,28 +3,40 @@ package com.laborguru.action.sales;
 
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.model.UploadFile;
 import com.laborguru.service.dataimport.file.SalesFileProcessorService;
+import com.laborguru.service.uploadfile.UploadFileService;
 
 public class UploadPrepareAction extends SpmAction {
 
 	private static final long serialVersionUID = 1L;
 
-	private Integer storeId;
-
+	//The 3 variables below, are declared following the convention defined by UploadFileInterceptor (Strust2 object that handles a file upload).
+	//Don't change the names without look the documentation in struts2 for File Uploads.
 	private File salesFile;
 	private String salesFileContentType;
 	private String salesFileFileName;
-	private Integer numberOfRecordsAdded;
 	
-
+	private Integer storeId;	
+	private Integer numberOfRecordsAdded;
+	private Long uploadFileId;
+	private boolean uploadFileRemoved;
+	private String salesFileRemovedName;
+	
+	private List<UploadFile> uploadFileList;
+	
 	private SalesFileProcessorService salesFileProcessorService;
+	private UploadFileService uploadFileService;
 	
 	
 	public String edit(){
+		List<UploadFile> auxSet = uploadFileService.findAllUploadFiles();
+		setUploadFileList(auxSet);
 		return SpmActionResult.EDIT.getResult();
 	}
 	
@@ -37,13 +49,24 @@ public class UploadPrepareAction extends SpmAction {
 		
 		setNumberOfRecordsAdded(retSales.getSalesRecords().size());
 		
-		return SpmActionResult.SUCCESS.getResult();
+		return edit();
 	}
 	
 	
 	public String cancel(){
 		return SpmActionResult.CANCEL_EDIT.getResult();
 	}
+
+	public String remove(){
+		
+		UploadFile auxUpload = new UploadFile();
+		auxUpload.setId(getUploadFileId());
+		UploadFile uploadFileRemoved =  uploadFileService.delete(auxUpload);
+		setUploadFileRemoved(true);
+		setSalesFileRemovedName(uploadFileRemoved.getFilename());
+		
+		return edit();
+	}	
 	
 	/**
 	 * @return the storeId
@@ -120,6 +143,79 @@ public class UploadPrepareAction extends SpmAction {
 	 */
 	public void setSalesFileProcessorService(SalesFileProcessorService salesFileProcessor) {
 		this.salesFileProcessorService = salesFileProcessor;
+	}
+
+	/**
+	 * @return the uploadFileService
+	 */
+	public UploadFileService getUploadFileService() {
+		return uploadFileService;
+	}
+
+	/**
+	 * @param uploadFileService the uploadFileService to set
+	 */
+	public void setUploadFileService(UploadFileService uploadFileService) {
+		this.uploadFileService = uploadFileService;
+	}
+
+	/**
+	 * @return the uploadFileList
+	 */
+	public List<UploadFile> getUploadFileList() {
+		if (uploadFileList == null){
+			uploadFileList = new ArrayList<UploadFile>();
+		}
+		return uploadFileList;
+	}
+
+	/**
+	 * @param uploadFileList the uploadFileList to set
+	 */
+	public void setUploadFileList(List<UploadFile> uploadFileList) {
+		this.uploadFileList = uploadFileList;
+	}
+
+	/**
+	 * @return the uploadFileId
+	 */
+	public Long getUploadFileId() {
+		return uploadFileId;
+	}
+
+	/**
+	 * @param uploadFileId the uploadFileId to set
+	 */
+	public void setUploadFileId(Long uploadFileId) {
+		this.uploadFileId = uploadFileId;
+	}
+
+	/**
+	 * @return the uploadFileRemoved
+	 */
+	public boolean isUploadFileRemoved() {
+		return uploadFileRemoved;
+	}
+
+	/**
+	 * @param uploadFileRemoved the uploadFileRemoved to set
+	 */
+	public void setUploadFileRemoved(boolean uploadFileRemoved) {
+		this.uploadFileRemoved = uploadFileRemoved;
+	}
+
+	/**
+	 * @return the salesFileRemovedName
+	 */
+	public String getSalesFileRemovedName() {
+		return salesFileRemovedName;
+	}
+
+	/**
+	 * @param salesFileRemovedName the salesFileRemovedName to set
+	 */
+	public void setSalesFileRemovedName(String salesFileRemovedName) {
+		this.salesFileRemovedName = salesFileRemovedName;
 	}
 	
 }

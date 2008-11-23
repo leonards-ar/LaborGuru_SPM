@@ -1,5 +1,7 @@
 package com.laborguru.service.uploadfile.dao;
 
+import java.util.List;
+
 import com.laborguru.model.UploadFile;
 
 /**
@@ -24,4 +26,16 @@ public interface UploadFileDao {
 	 * @return The full instance associated with the id or null
 	 */
 	UploadFile getUploadFileById(UploadFile uploadFile);
+
+	/**
+	 * Returns all the upload instances stored in the DB
+	 * @return a list of UploadFiles
+	 */
+	List<UploadFile> findAll();
+
+	/**
+	 * Removes an uploadFile from the system. It also removes all the historic sales associated with the upload file.
+	 * @param uploadFile an attached instance of uploadFile.
+	 */
+	void delete(UploadFile uploadFile);
 }
