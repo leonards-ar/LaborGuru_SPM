@@ -5,6 +5,8 @@
  */
 package com.laborguru.service.email;
 
+import java.util.Date;
+
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
@@ -33,13 +35,14 @@ public class EmailServiceBean implements EmailService {
 	 * @see com.laborguru.service.email.EmailService#sendEmail(java.lang.String[], java.lang.String[], java.lang.String, java.lang.String)
 	 */
 	public void sendEmail(String[] to, String[] cc, String subject, String body) {
-		SimpleMailMessage msg = getMailMessage();
+		SimpleMailMessage msg = new SimpleMailMessage(getMailMessage());
 		msg.setTo(to);
 		if(cc != null) {
 			msg.setCc(cc);
 		}
 		msg.setSubject(subject);
 		msg.setText(body);
+		msg.setSentDate(new Date());
 		
 		getMailSender().send(msg);
 	}
