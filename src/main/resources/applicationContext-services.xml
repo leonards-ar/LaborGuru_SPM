@@ -296,5 +296,31 @@
 
 	<bean id="transactionAttributeSourceDefault" class="org.springframework.transaction.interceptor.MatchAlwaysTransactionAttributeSource"/>	
 	
+	<!-- Mail service -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${email.smpt.host}" />
+		<property name="port" value="${email.smpt.port}" />
+		<property name="username" value="${email.smpt.username}" />
+		<property name="password" value="${email.smpt.password}" />
+		<property name="javaMailProperties">
+			<props>
+				<!-- Use SMTP-AUTH to authenticate to SMTP server -->
+				<prop key="mail.smtp.auth">true</prop>
+				<!-- Use TLS to encrypt communication with SMTP server -->
+				<prop key="mail.smtp.starttls.enable">false</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- Mail message -->
+	<bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage">
+	    <property name="from" value="${email.from}"/>
+	</bean>
+
+ 	<bean id="emailService" class="com.laborguru.service.email.EmailServiceBean" autowire="byType">
+ 		<property name="mailSender" ref="mailSender"/>
+ 		<property name="mailMessage" ref="mailMessage"/>
+ 	</bean>
+	
 </beans>
 
