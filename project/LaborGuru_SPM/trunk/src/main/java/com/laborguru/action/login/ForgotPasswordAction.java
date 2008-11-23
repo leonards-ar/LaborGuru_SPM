@@ -72,7 +72,7 @@ public class ForgotPasswordAction extends SpmAction {
 		String to = user.getEmail();
 		String subject = getText("login.forgot_password.email.subject", new String[] {user.getFullName(), user.getUserName()});
 		String body = getText("login.forgot_password.email.body", new String[] {user.getFullName(), user.getUserName(), user.getPassword(), getRemoteAddress()});
-		//:TODO: Uncomment and test :)
+		//:TODO: Uncomment and test :). Set correct parameters in spm.properties
 		//getEmailService().sendEmail(new String[]{to}, null, subject, body);
 	}
 	
