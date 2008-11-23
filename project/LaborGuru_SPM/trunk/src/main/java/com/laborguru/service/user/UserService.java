@@ -25,6 +25,14 @@ public interface UserService extends Service {
 	 * @return user Saved.
 	 */
 	User save(User user) throws SpmCheckedException;
+
+	/**
+	 * Update a user password
+	 * @param user object that will contain the new password to save
+	 * @return user Saved.
+	 */
+	User resetPassword(User user) throws SpmCheckedException;
+	
 	/**
 	 * Retrieves  a user by userName
 	 * @param A User object containing a username.

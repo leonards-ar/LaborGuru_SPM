@@ -2,6 +2,7 @@ package com.laborguru.service.user;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.log4j.Logger;
 
@@ -22,6 +23,8 @@ public class UserServiceBean implements UserService {
 	
 	public static final String USER_NULL = "The user passed as parameter cannot be can not be null";
 	public static final String USER_NAME_NULL = "The user passed as parameter cannot have null username";
+	
+	private static final int PASSWORD_LENGTH = 8;
 	
 	private UserDao userDao;
 	
@@ -71,7 +74,12 @@ public class UserServiceBean implements UserService {
 		return userDao.findUsersByProfile(profile);
 	}
 
-	
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 * @see com.laborguru.service.user.UserService#getUserById(com.laborguru.model.User)
+	 */
 	public User getUserById(User user) {
 		return this.userDao.getUserById(user);
 	}
@@ -103,7 +111,7 @@ public class UserServiceBean implements UserService {
 		
 		if ((auxUser != null) && !auxUser.getId().equals(user.getId()))
 		{
-			String exMgs = "username: "+ user.getUserName()+" already exist in the database";
+			String exMgs = "username: "+ user.getUserName()+" already exists in the database";
 			log.error(exMgs);
 			throw new SpmCheckedException(exMgs, ErrorEnum.USERNAME_ALREADY_EXIST_ERROR, new String[]{user.getUserName()});
 			
@@ -139,16 +147,52 @@ public class UserServiceBean implements UserService {
 		
 		return userDao.applyFilters(searchUserFilter);
 	}
-	
-	/* (non-Javadoc)
+
+	/**
+	 * 
+	 * @param userDao
 	 * @see com.laborguru.service.user.UserService#setUserDao(com.laborguru.service.user.dao.UserDao)
 	 */
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public UserDao getUserDao() {
 		return userDao;
 	}
 
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 * @throws SpmCheckedException
+	 * @see com.laborguru.service.user.UserService#resetPassword(com.laborguru.model.User)
+	 */
+	public User resetPassword(User user) throws SpmCheckedException {
+		user.setPassword(generatePassword(user));
+		update(user);
+		return user;
+	}
+
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 */
+	private String generatePassword(User user) {
+		final String characters = "qw37er#!tyu2ioplk84jhgfds$%azxcv+bnm01956*_";
+		StringBuffer newPassword = new StringBuffer();
+		
+		Random rand = new Random();
+		
+		for(int i = 0; i < PASSWORD_LENGTH; i++) {
+			newPassword.append(characters.charAt(Math.abs(rand.nextInt() % characters.length())));
+		}
+		
+		return newPassword.toString();
+	}
 }
