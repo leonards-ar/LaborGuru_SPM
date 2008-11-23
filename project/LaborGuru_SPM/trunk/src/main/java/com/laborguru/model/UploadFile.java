@@ -38,6 +38,14 @@ public class UploadFile extends SpmObject {
 		this.filename = filename;
 	}
 	
+	/**
+	 * Returns sales records list size
+	 * @return
+	 */
+	public int getSalesRecordsSize(){
+		return getSalesRecords().size();
+	}
+	
 	
 	/**
 	 * Equals
@@ -186,7 +194,6 @@ public class UploadFile extends SpmObject {
 	private void setSalesRecords(Set<HistoricSales> salesRecords) {
 		this.salesRecords = salesRecords;
 	}
-
 
 
 }

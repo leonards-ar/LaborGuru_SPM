@@ -9,8 +9,29 @@
   	  <property name="storeService" ref="storeService"/>
 	</bean>
 
-
 	<!--  Transactional Services's declarations -->
+	<bean id="uploadFileServiceTarget" class="com.laborguru.service.uploadfile.UploadFileServiceBean" autowire="byType"/>
+	
+	<bean id="uploadFileService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.laborguru.service.uploadfile.UploadFileService</value>
+			</list>
+		</property>	
+	
+		<property name="target">
+			<ref bean="uploadFileServiceTarget"/>
+		</property>		
+		
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>	
+		
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributeSourceDefault"/>
+		</property>			
+	</bean>	
+	
 	<bean id="salesFileProcessorServiceTarget" class="com.laborguru.service.dataimport.file.SalesCSVFileProcessorBean">
 	  <property name="fileParser" ref="salesFileParser"/>
   	  <property name="historicSalesDao" ref="historicSalesDao"/>

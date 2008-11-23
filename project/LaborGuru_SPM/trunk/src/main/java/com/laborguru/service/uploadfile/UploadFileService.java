@@ -1,5 +1,7 @@
 package com.laborguru.service.uploadfile;
 
+import java.util.List;
+
 import com.laborguru.model.UploadFile;
 
 /**
@@ -11,12 +13,6 @@ import com.laborguru.model.UploadFile;
  *
  */
 public interface UploadFileService {
-	
-	/**
-	 * It creates or updates an uploadFile instance
-	 * @param uploadFile the object to persist
-	 */
-	void saveOrUpdate(UploadFile uploadFile);
 
 	/**
 	 * Retrieves an upload file instance by id
@@ -25,4 +21,16 @@ public interface UploadFileService {
 	 */
 	UploadFile getUploadFileById(Long id);
 
+	/**
+	 * Retrieves a list with all upload files in the system
+	 * @return
+	 */
+	List<UploadFile> findAllUploadFiles();
+	
+	/**
+	 * Deletes an upload file from the spm
+	 * @param uploadFile The upload file with id not null
+	 * @return the UploadFile removed
+	 */
+	UploadFile delete(UploadFile uploadFile);
 }

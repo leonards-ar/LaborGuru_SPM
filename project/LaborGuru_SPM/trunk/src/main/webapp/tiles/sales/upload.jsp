@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
 <br/>
 <table border="0" cellspacing="0" align="center">
     <s:form name="salesUpload_form" id="salesUpload_form" action="sales_upload" theme="simple" method="post" enctype="multipart/form-data">
@@ -71,4 +72,39 @@
 		</td>
 	</tr>
 	</s:form>
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	<!-- Search and results separator -->
+	<tr>
+		<td><br/></td>
+	</tr>
+	<s:if test="uploadFileRemoved">
+		<tr class="editorTableOddRow">
+            <td class="form_label" nowrap>
+                <s:text name="sales.removed.success.message">
+                	<s:param value ="salesFileRemovedName"/>
+                </s:text>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+	</s:if>
+	<tr>
+		<td align="center">
+		<!-- Search Results -->	
+ 		<s:set name="uploadFileListDisplayTagsAux" value="uploadFileList" scope="request"/>
+		<display:table name="uploadFileListDisplayTagsAux" class="results" pagesize="2" requestURI="sales_edit.action" sort="list" defaultsort="1" defaultorder="descending">		    
+		    <display:column property="uploadDate" titleKey="uploadFile.uploadDate.label" sortable="true" format="{0,date,MM/dd/yyyy h:mm:ss a}"/>
+		    <display:column property="filename" titleKey="uploadFile.filename.label"/>
+			<display:column property="salesRecordsSize" titleKey="uploadFile.SalesRecordsSize.label" class="resultsColumnCentered"/>
+		    <display:column href="sales_remove.action" paramId="uploadFileId" paramProperty="id" class="resultsColumnCentered"> 
+		    	<img src="<s:url value="/images/delete.png" includeParams="none"/>"/>
+		    </display:column>
+			<display:setProperty name="basic.empty.showtable" value="true"/>
+		</display:table>			
+		<!-- Search Results -->
+		</td>
+	</tr>
 </table>

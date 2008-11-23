@@ -1,5 +1,7 @@
 package com.laborguru.service.uploadfile.dao;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 import com.laborguru.model.UploadFile;
@@ -52,6 +54,40 @@ public class UploadFileDaoHibernate extends SpmHibernateDao implements UploadFil
 		}
 		
 		getHibernateTemplate().saveOrUpdate(uploadFile);
+	}
+
+
+	/**
+	 * Returns all the upload instances stored in the DB
+	 * @return a list of UploadFiles
+	 * @see com.laborguru.service.uploadfile.dao.UploadFileDao#findAll()
+	 */
+	public List<UploadFile> findAll() {
+		List<UploadFile> uploadFileList = (List<UploadFile>)getHibernateTemplate().find("from UploadFile");
+		log.debug("find all - Found "+uploadFileList.size()+" Upload File instances");
+		return uploadFileList;
+	}
+
+
+	/**
+	 * Deletes an UploadFile
+	 * @param uploadFile
+	 * @return
+	 * @see com.laborguru.service.uploadfile.dao.UploadFileDao#delete(com.laborguru.model.UploadFile)
+	 */
+	public void delete(UploadFile uploadFile) {
+		
+		if (uploadFile == null){
+			log.error(UPLOAD_FILE_NULL);
+			throw new IllegalArgumentException(UPLOAD_FILE_NULL);
+		}
+		
+		if (uploadFile.getId() == null){
+			log.error(UPLOAD_FILE_ID_NULL);
+			throw new IllegalArgumentException(UPLOAD_FILE_ID_NULL);
+		}
+		
+		getHibernateTemplate().delete(uploadFile);		
 	}	
 
 }
