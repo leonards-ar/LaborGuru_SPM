@@ -17,7 +17,7 @@
 				<!-- Header tables -->
 				<table border="0" cellpadding="2" cellspacing="2" width="100%">
 					<tr>
-						<td valign="top">
+						<td valign="top" width="50%">
 							<!-- Left column -->
 							<table id="fullHeightTable" border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 								<tr valign="top">
@@ -61,11 +61,23 @@
 										</table>
 									</td>
 								</tr>
+
+								<tr valign="bottom">
+									<td>
+										<table border="0" cellpadding="1" cellspacing="2">
+											<tr>
+												<td align="right" class="form_label"><s:text name="schedule.addshift.copy.label"/></td>
+												<td align="left"><s:datetimepicker displayFormat="MM/dd/yyyy" disabled="true" name="copyTargetDay" theme="simple"/></td>
+												<td align="right"><s:submit id="copyButton" key="schedule.addshift.copy.button" action="addshiftbyemployee_copySchedule" theme="simple" cssClass="button"/></td>
+											</tr>
+										</table>
+									</td>
+								</tr>								
 							</table>
 							<!-- Left column -->
 						</td>
 						
-						<td valign="top" align="right">
+						<td valign="top" width="50%" align="right">
 							<!-- Right column -->
 							<table id="windowTable">
 								<tr>
@@ -287,20 +299,21 @@
 								<s:if test="#itHour.first">
 									<s:iterator id="startToIgnore" value="scheduleIndividualStartHoursToIgnore">
 										<td class="scheduleUnavailable">
-											<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>
+											&nbsp;
 											<s:hidden id="schedulehour_%{#itScheduleData.index}_%{#itHour.index}" name="scheduleData[%{#itScheduleData.index}].hours[%{#itHour.index}]"/>
 											<s:hidden id="schedule_%{#itScheduleData.index}_%{#itHour.index}" name="scheduleData[%{#itScheduleData.index}].schedule[%{#itHour.index}]"/>
 										</td>
 									</s:iterator>
 								</s:if>  
-								<td id='cell_<s:property value="#itScheduleData.index"/>_<s:property value="#itHour.index"/>' <s:if test="%{!weekDaySelector.isSelectedDateBeforeToday()}">onclick="scheduleClick(this, <s:property value="#itScheduleData.index"/>,<s:property value="#itHour.index"/>,'<s:property value="#data.positionId"/>', '');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);"</s:if> class='<s:if test="%{#data.isBreakShift(#itHour.index)}">scheduleBreak</s:if><s:else><s:if test="%{#data.isFreeShift(#itHour.index)}">scheduleEmpty</s:if><s:else>scheduleSelected</s:else></s:else>'><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>
+								<td id='cell_<s:property value="#itScheduleData.index"/>_<s:property value="#itHour.index"/>' <s:if test="%{!weekDaySelector.isSelectedDateBeforeToday()}">onclick="scheduleClick(this, <s:property value="#itScheduleData.index"/>,<s:property value="#itHour.index"/>,'<s:property value="#data.positionId"/>', '');" onMouseOver="scheduleOnMouseOver(this);" onMouseOut="scheduleOnMouseOut(this);"</s:if> class='<s:if test="%{#data.isBreakShift(#itHour.index)}">scheduleBreak</s:if><s:else><s:if test="%{#data.isFreeShift(#itHour.index)}">scheduleEmpty</s:if><s:else>scheduleSelected</s:else></s:else>'>
+									&nbsp;
 									<s:hidden id="schedulehour_%{#itScheduleData.index}_%{#itHour.index}" name="scheduleData[%{#itScheduleData.index}].hours[%{#itHour.index}]"/>
 									<s:hidden id="schedule_%{#itScheduleData.index}_%{#itHour.index}" name="scheduleData[%{#itScheduleData.index}].schedule[%{#itHour.index}]"/>
 								</td>            
 								<s:if test="#itHour.last">
 									<s:iterator id="startToIgnore" value="scheduleIndividualEndHoursToIgnore">
 										<td class="scheduleUnavailable">
-											<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>
+											&nbsp;
 											<s:hidden id="schedulehour_%{#itScheduleData.index}_%{#itHour.index}" name="scheduleData[%{#itScheduleData.index}].hours[%{#itHour.index}]"/>
 											<s:hidden id="schedule_%{#itScheduleData.index}_%{#itHour.index}" name="scheduleData[%{#itScheduleData.index}].schedule[%{#itHour.index}]"/>
 										</td>
@@ -330,25 +343,25 @@
 										<s:autocompleter name="newEmployeeName" loadMinimumCount="3" keyName="newEmployeeId" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring" />
 									</td>
 									<td>
-										<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>
+										&nbsp;
 									</td>
 									<td><a href="<s:url value="#" includeParams="none"/>" onclick="addshiftbyemployee_form.action='addshiftbyemployee_addEmployee.action'; addshiftbyemployee_form.submit();"><img src="<s:url value="/images/add.png" includeParams="none"/>" /></a></td>
 								</tr>
 							</table>
 						</td>    
-						<td class="scheduleValueCell"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>    
-						<td class="scheduleValueCell"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-						<td class="scheduleValueCell"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>            
+						<td class="scheduleValueCell">&nbsp;</td>    
+						<td class="scheduleValueCell">&nbsp;</td>
+						<td class="scheduleValueCell">&nbsp;</td>            
 						<s:iterator id="hour" value="scheduleIndividualHours" status="itHour">
 							<s:if test="#itHour.first">
 								<s:iterator id="startToIgnore" value="scheduleIndividualStartHoursToIgnore">
-									<td class="scheduleUnavailable"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+									<td class="scheduleUnavailable">&nbsp;</td>
 								</s:iterator>
 							</s:if>  
-							<td class="scheduleUnavailable"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+							<td class="scheduleUnavailable">&nbsp;</td>
 							<s:if test="#itHour.last">
 								<s:iterator id="startToIgnore" value="scheduleIndividualEndHoursToIgnore">
-									<td class="scheduleUnavailable"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+									<td class="scheduleUnavailable">&nbsp;</td>
 								</s:iterator>
 							</s:if> 
 						</s:iterator>
@@ -363,13 +376,13 @@
 							<s:iterator id="staffing" value="minimumStaffing" status="itStaffing">
 								<s:if test="#itStaffing.first">
 									<s:iterator id="startToIgnore" value="scheduleIndividualStartHoursToIgnore">
-										<td id='total_cell_<s:property value="#itStaffing.index"/>' class="scheduleStaffingUnavailable"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+										<td id='total_cell_<s:property value="#itStaffing.index"/>' class="scheduleStaffingUnavailable">&nbsp;</td>
 									</s:iterator>
 								</s:if>
-								<td id='total_cell_<s:property value="#itStaffing.index"/>' class="scheduleTotalValueCell"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+								<td id='total_cell_<s:property value="#itStaffing.index"/>' class="scheduleTotalValueCell">&nbsp;</td>
 								<s:if test="#itStaffing.last">
 									<s:iterator id="startToIgnore" value="scheduleIndividualEndHoursToIgnore">
-										<td id='total_cell_<s:property value="#itStaffing.index"/>' class="scheduleStaffingUnavailable"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+										<td id='total_cell_<s:property value="#itStaffing.index"/>' class="scheduleStaffingUnavailable">&nbsp;</td>
 									</s:iterator>
 								</s:if> 
 							</s:iterator>				    	
@@ -381,7 +394,7 @@
 							<s:iterator id="staffing" value="minimumStaffing" status="itStaffing">
 								<s:if test="#itStaffing.first">
 									<s:iterator id="startToIgnore" value="scheduleIndividualStartHoursToIgnore">
-										<td id='staffing_cell_<s:property value="#itStaffing.index"/>' class="scheduleStaffingUnavailable"><s:hidden name="minimumStaffing[%{#itStaffing.index}]" value="0"/><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+										<td id='staffing_cell_<s:property value="#itStaffing.index"/>' class="scheduleStaffingUnavailable"><s:hidden name="minimumStaffing[%{#itStaffing.index}]" value="0"/>&nbsp;</td>
 									</s:iterator>
 								</s:if>
 								<td id='staffing_cell_<s:property value="#itStaffing.index"/>' class="scheduleStaffingCalculated">
@@ -390,7 +403,7 @@
 								</td>
 								<s:if test="#itStaffing.last">
 									<s:iterator id="startToIgnore" value="scheduleIndividualEndHoursToIgnore">
-										<td id='staffing_cell_<s:property value="#itStaffing.index"/>' class="scheduleStaffingUnavailable"><s:hidden name="minimumStaffing[%{#itStaffing.index}]" value="0"/><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+										<td id='staffing_cell_<s:property value="#itStaffing.index"/>' class="scheduleStaffingUnavailable"><s:hidden name="minimumStaffing[%{#itStaffing.index}]" value="0"/>&nbsp;</td>
 									</s:iterator>
 								</s:if> 
 							</s:iterator>				    	
@@ -402,13 +415,13 @@
 							<s:iterator id="staffing" value="minimumStaffing" status="itStaffing">
 								<s:if test="#itStaffing.first">
 									<s:iterator id="startToIgnore" value="scheduleIndividualStartHoursToIgnore">
-										<td id='difference_cell_<s:property value="#itStaffing.index"/>' class="scheduleStaffingUnavailable"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+										<td id='difference_cell_<s:property value="#itStaffing.index"/>' class="scheduleStaffingUnavailable">&nbsp;</td>
 									</s:iterator>
 								</s:if>
-								<td id='difference_cell_<s:property value="#itStaffing.index"/>' class="scheduleStaffingDifferenceEqual"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+								<td id='difference_cell_<s:property value="#itStaffing.index"/>' class="scheduleStaffingDifferenceEqual">&nbsp;</td>
 								<s:if test="#itStaffing.last">
 									<s:iterator id="startToIgnore" value="scheduleIndividualEndHoursToIgnore">
-										<td id='difference_cell_<s:property value="#itStaffing.index"/>' class="scheduleStaffingUnavailable"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+										<td id='difference_cell_<s:property value="#itStaffing.index"/>' class="scheduleStaffingUnavailable">&nbsp;</td>
 									</s:iterator>
 								</s:if> 
 							</s:iterator>				    	

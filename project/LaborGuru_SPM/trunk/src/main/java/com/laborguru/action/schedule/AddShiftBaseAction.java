@@ -75,6 +75,7 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	
 	private String saveSchedule;
 
+	private Date copyTargetDay;
 	
 	/**
 	 * 
@@ -96,6 +97,13 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	 */
 	public String getBreakId() {
 		return SpmConstants.SCHEDULE_BREAK;
+	}
+	
+	/**
+	 * 
+	 */
+	protected void loadCopyTargetDay() {
+		setCopyTargetDay(CalendarUtils.addOrSubstractDays(getWeekDaySelector().getSelectedDay(), 1));
 	}
 	
 	/**
@@ -525,11 +533,12 @@ public abstract class AddShiftBaseAction extends SpmAction {
 		
 		return minimumStaffing;
 	}
-	
+
 	/**
 	 * 
 	 * @param schedule
 	 * @param position
+	 * @param day
 	 */
 	protected void setSchedule(List<ScheduleRow> schedule, Position position) {
 		getStoreSchedule().setDay(getWeekDaySelector().getSelectedDay());
@@ -1236,5 +1245,19 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	 */
 	public void setPositionService(PositionService positionService) {
 		this.positionService = positionService;
+	}
+
+	/**
+	 * @return the copyTargetDay
+	 */
+	public Date getCopyTargetDay() {
+		return copyTargetDay;
+	}
+
+	/**
+	 * @param copyTargetDay the copyTargetDay to set
+	 */
+	public void setCopyTargetDay(Date copyTargetDay) {
+		this.copyTargetDay = copyTargetDay;
 	}	
 }

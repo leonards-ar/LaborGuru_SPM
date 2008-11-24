@@ -6,9 +6,11 @@
 package com.laborguru.service.staffing.dao;
 
 import java.util.Date;
+import java.util.List;
 
 import com.laborguru.model.DailyStaffing;
 import com.laborguru.model.Position;
+import com.laborguru.model.Store;
 
 /**
  *
@@ -33,4 +35,26 @@ public interface StaffingDao {
 	 * @return
 	 */
 	DailyStaffing save(DailyStaffing dailyStaffing);	
+	
+	/**
+	 * 
+	 * @param storeDailyStaffing
+	 */
+	void deleteAll(List<DailyStaffing> storeDailyStaffing);	
+	
+	/**
+	 * 
+	 * @param store
+	 * @param date
+	 * @return
+	 */
+	List<DailyStaffing> getStoreDailyStaffingByDate(Store store, Date date);
+	
+	/**
+	 * 
+	 * @param store
+	 * @param date
+	 * @return
+	 */
+	List<DailyStaffing> getStoreDailyStaffingFromDate(Store store, Date date);
 }
