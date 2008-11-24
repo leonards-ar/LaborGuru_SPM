@@ -16,10 +16,10 @@ public interface UploadFileService {
 
 	/**
 	 * Retrieves an upload file instance by id
-	 * @param id The object id
+	 * @param uploadFile The upload file with id not null
 	 * @return The instance associated or null
 	 */
-	UploadFile getUploadFileById(Long id);
+	UploadFile getUploadFileById(UploadFile uploadFile);
 
 	/**
 	 * Retrieves a list with all upload files in the system

@@ -324,5 +324,9 @@
 	<!-- Sales upload pages -->
 	<definition name="salesUploadPage" extends="baseLayoutWithMenu">
 		<put-attribute name="body" value="/tiles/sales/upload.jsp" />
-	</definition>			
+	</definition>
+	
+	<definition name="uploadRemovePage" extends="baseLayoutWithMenu">
+		<put-attribute name="body" value="/tiles/sales/remove.jsp" />
+	</definition>				
 </tiles-definitions>

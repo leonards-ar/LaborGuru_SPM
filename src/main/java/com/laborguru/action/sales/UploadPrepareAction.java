@@ -27,6 +27,7 @@ public class UploadPrepareAction extends SpmAction {
 	private Long uploadFileId;
 	private boolean uploadFileRemoved;
 	private String salesFileRemovedName;
+	private UploadFile uploadFileSelected;
 	
 	private List<UploadFile> uploadFileList;
 	
@@ -58,6 +59,16 @@ public class UploadPrepareAction extends SpmAction {
 	}
 
 	public String remove(){
+		
+		UploadFile auxUpload = new UploadFile();
+		auxUpload.setId(getUploadFileId());
+		UploadFile uploadFileToRemove =  uploadFileService.getUploadFileById(auxUpload);
+		setUploadFileSelected(uploadFileToRemove);
+		
+		return SpmActionResult.REMOVE.getResult();
+	}	
+
+	public String delete(){
 		
 		UploadFile auxUpload = new UploadFile();
 		auxUpload.setId(getUploadFileId());
@@ -216,6 +227,20 @@ public class UploadPrepareAction extends SpmAction {
 	 */
 	public void setSalesFileRemovedName(String salesFileRemovedName) {
 		this.salesFileRemovedName = salesFileRemovedName;
+	}
+
+	/**
+	 * @return the uploadFileSelected
+	 */
+	public UploadFile getUploadFileSelected() {
+		return uploadFileSelected;
+	}
+
+	/**
+	 * @param uploadFileSelected the uploadFileSelected to set
+	 */
+	public void setUploadFileSelected(UploadFile uploadFileSelected) {
+		this.uploadFileSelected = uploadFileSelected;
 	}
 	
 }

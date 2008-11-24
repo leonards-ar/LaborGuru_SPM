@@ -8,7 +8,7 @@
 		<action name="sales_*" method="{1}" class="com.laborguru.action.sales.UploadPrepareAction">
 			<result name="edit" type="tiles">salesUploadPage</result>
 			<result name="input" type="tiles">salesUploadPage</result>
-			<result name="success" type="tiles">salesUploadPage</result>
+			<result name="remove" type="tiles">uploadRemovePage</result>
 			<result name="cancelEdit" type="redirectAction">
 				<param name="actionName">store_list</param>
 				<param name="namespace">/store</param>
