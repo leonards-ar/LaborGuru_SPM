@@ -13,6 +13,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.laborguru.model.DailyStaffing;
 import com.laborguru.model.Position;
+import com.laborguru.model.Store;
 
 
 /**
@@ -53,6 +54,48 @@ public class StaffingDaoHibernate extends HibernateDaoSupport implements Staffin
 
 	/**
 	 * 
+	 * @param store
+	 * @param date
+	 * @return
+	 * @see com.laborguru.service.staffing.dao.StaffingDao#getStoreDailyStaffingByDate(com.laborguru.model.Store, java.util.Date)
+	 */
+	public List<DailyStaffing> getStoreDailyStaffingByDate(Store store, Date date) {
+		if(log.isDebugEnabled()) {
+			log.debug("Searching staffing for day [" + date + "] and for store [" + store + "]");
+		}
+		
+		List<DailyStaffing> staffing = (List<DailyStaffing>) getHibernateTemplate().findByNamedParam("from DailyStaffing staff where staff.position.store.id = :storeId and staff.date = :date", new String[]{"storeId", "date"}, new Object[] {store.getId(),date});
+		
+		if(log.isDebugEnabled()) {
+			log.debug("Found [" + (staffing != null ? staffing.size() : "null") + "] staffing for day [" + date + "] and store [" + store + "]");
+		}
+		
+		return staffing;
+	}
+	
+	/**
+	 * 
+	 * @param store
+	 * @param date
+	 * @return
+	 * @see com.laborguru.service.staffing.dao.StaffingDao#getStoreDailyStaffingFromDate(com.laborguru.model.Store, java.util.Date)
+	 */
+	public List<DailyStaffing> getStoreDailyStaffingFromDate(Store store, Date date) {
+		if(log.isDebugEnabled()) {
+			log.debug("Searching staffing starting from day [" + date + "] and for store [" + store + "]");
+		}
+		
+		List<DailyStaffing> staffing = (List<DailyStaffing>) getHibernateTemplate().findByNamedParam("from DailyStaffing staff where staff.position.store.id = :storeId and staff.date >= :date", new String[]{"storeId", "date"}, new Object[] {store.getId(),date});
+		
+		if(log.isDebugEnabled()) {
+			log.debug("Found [" + (staffing != null ? staffing.size() : "null") + "] staffing starting from day [" + date + "] and store [" + store + "]");
+		}
+		
+		return staffing;
+	}
+	
+	/**
+	 * 
 	 * @param dailyStaffing
 	 * @return
 	 * @see com.laborguru.service.staffing.dao.StaffingDao#save(com.laborguru.model.DailyStaffing)
@@ -67,4 +110,12 @@ public class StaffingDaoHibernate extends HibernateDaoSupport implements Staffin
 		return dailyStaffing;
 	}
 
+	/**
+	 * 
+	 * @param dailyStaffing
+	 * @see com.laborguru.service.staffing.dao.StaffingDao#delete(com.laborguru.model.StoreDailyStaffing)
+	 */
+	public void deleteAll(List<DailyStaffing> storeDailyStaffing) {
+		getHibernateTemplate().deleteAll(storeDailyStaffing);
+	}
 }

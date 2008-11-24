@@ -6,6 +6,7 @@
 package com.laborguru.action.schedule;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -40,7 +41,7 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftBase
 	private PositionService positionService;
 	
 	private List<ScheduleByPositionEntry> positionScheduleData;
-	
+
 	/**
 	 * 
 	 */
@@ -63,7 +64,9 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftBase
 	private void loadPageData() {
 		this.setPositions(getPositionService().getPositionsByStore(getEmployeeStore()));
 		loadCalendarData();
+		loadCopyTargetDay();
 	}
+
 	
 	/**
 	 * 
@@ -91,7 +94,8 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftBase
 	protected void processChangeDay() {
 		setStoreSchedule(null);
 		resetScheduleData();
-		setScheduleData();		
+		setScheduleData();
+		loadCopyTargetDay();
 	}
 
 	/**
@@ -102,7 +106,8 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftBase
 	protected void processChangeWeek() {
 		setStoreSchedule(null);
 		resetScheduleData();
-		setScheduleData();		
+		setScheduleData();
+		loadCopyTargetDay();
 	}
 	
 	/**
@@ -123,6 +128,13 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftBase
 	 * Prepare the data to be used on the edit page
 	 */
 	public void prepareEdit() {
+		loadPageData();
+	}
+
+	/**
+	 * 
+	 */
+	public void prepareCopySchedule() {
 		loadPageData();
 	}
 	
@@ -239,6 +251,52 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftBase
 	 * 
 	 * @return
 	 */
+	public String copySchedule() {
+		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
+
+		if(log.isDebugEnabled()) {
+			log.debug("About to copy schedule data " + getPositionScheduleData() + " to date " + getCopyTargetDay());
+		}
+
+		Date currentDay = getWeekDaySelector().getSelectedDay();
+		List<Object> params = new ArrayList<Object>();
+		params.add(getCopyTargetDay());
+		params.add(currentDay);
+		params.add(new Date());
+
+		if(getCopyTargetDay() != null && getCopyTargetDay().after(new Date())) {
+			/*
+			 * Force selected date to the target date.
+			 */
+			setStoreSchedule(null);
+			getWeekDaySelector().setSelectedDay(getCopyTargetDay());
+			
+			setSchedule();
+
+			if(log.isDebugEnabled()) {
+				log.debug("About to copy schedule " + getStoreSchedule());
+			}
+		
+			getScheduleService().save(getStoreSchedule());
+
+			/*
+			 * Set selected day back again
+			 */
+			getWeekDaySelector().setSelectedDay(currentDay);
+			setStoreSchedule(null);
+			
+			addActionMessage(getText("schedule.addshift.copy_success", params));
+		} else {
+			addActionError(getText("error.schedule.addshift.invalid_target_day", params));
+		}
+		
+		return SpmActionResult.EDIT.getResult();
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public String save() {
 		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
 		
@@ -253,7 +311,6 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftBase
 		}
 	
 		getScheduleService().save(getStoreSchedule());
-		getStaffingService().save(getDailyStaffing());
 
 		resetScheduleData();
 		setScheduleData();

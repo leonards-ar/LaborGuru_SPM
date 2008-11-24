@@ -90,9 +90,11 @@ public class StaffingServiceBean implements StaffingService {
 		}
 		
 		applyOtherFactorsToManagerPositions(managerDailyStaffings, store, nonManagerTargetAddition);
+
+		// :TODO: Detect only when there are changes
+		save(storeDailyStaffing);
 		
 		return storeDailyStaffing;
-		
 	}
 	
 	/**
@@ -122,27 +124,6 @@ public class StaffingServiceBean implements StaffingService {
 		return dailyStaffing != null && dailyStaffing.getPosition() != null && dailyStaffing.getPosition().isManager();
 	}
 	
-	/**
-	 * 
-	 * @param position
-	 * @param date
-	 * @return
-	 * @see com.laborguru.service.staffing.StaffingService#getDailyStaffingByDate(com.laborguru.model.Position, java.util.Date)
-	 */
-	public DailyStaffing getDailyStaffingByDate(Position position, Date date) {
-		DailyStaffing dailyStaffing = getStaffingDao().getDailyStaffingByDate(position, date);
-		
-		if(dailyStaffing == null) {
-			position = getPositionDao().getPositionById(position);
-			Store store = position.getStore();
-			DailyProjection dailyProjection = getDailyProjection(store, date);
-			
-			dailyStaffing = calculateDailyStaffing(position, date, dailyProjection, initializeHalfHourStaffingData(store, date, dailyProjection));
-		}
-		
-		return dailyStaffing;
-	}
-
 	/**
 	 * 
 	 * @param store
@@ -664,5 +645,29 @@ public class StaffingServiceBean implements StaffingService {
 		return dailyStaffing;
 	}
 
+	/**
+	 * 
+	 * @param store
+	 * @param date
+	 * @see com.laborguru.service.staffing.StaffingService#deleteDailyStaffingForDate(com.laborguru.model.Store, java.util.Date)
+	 */
+	public void deleteDailyStaffingForDate(Store store, Date date) {
+		List<DailyStaffing> storeDailyStaffing = getStaffingDao().getStoreDailyStaffingByDate(store, date);
+		if(storeDailyStaffing != null && !storeDailyStaffing.isEmpty()) {
+			getStaffingDao().deleteAll(storeDailyStaffing);
+		}
+	}
 
+	/**
+	 * 
+	 * @param store
+	 * @param date
+	 * @see com.laborguru.service.staffing.StaffingService#deleteDailyStaffingFromDate(com.laborguru.model.Store, java.util.Date)
+	 */
+	public void deleteDailyStaffingFromDate(Store store, Date date) {
+		List<DailyStaffing> storeDailyStaffing = getStaffingDao().getStoreDailyStaffingFromDate(store, date);
+		if(storeDailyStaffing != null && !storeDailyStaffing.isEmpty()) {
+			getStaffingDao().deleteAll(storeDailyStaffing);
+		}
+	}	
 }
