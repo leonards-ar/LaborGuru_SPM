@@ -21,8 +21,13 @@ public class UploadFileServiceBean implements UploadFileService {
 	
 	private static final Logger log = Logger.getLogger(UploadFileServiceBean.class);
 	
-	public UploadFile getUploadFileById(Long id) {
-		return null;
+	/**
+	 * @param uploadFile
+	 * @return
+	 * @see com.laborguru.service.uploadfile.UploadFileService#getUploadFileById(com.laborguru.model.UploadFile)
+	 */
+	public UploadFile getUploadFileById(UploadFile uploadFile) {
+		return uploadFileDao.getUploadFileById(uploadFile);
 	}
 
 

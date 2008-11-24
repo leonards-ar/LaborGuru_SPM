@@ -98,7 +98,7 @@
 		<display:table name="uploadFileListDisplayTagsAux" class="results" pagesize="2" requestURI="sales_edit.action" sort="list" defaultsort="1" defaultorder="descending">		    
 		    <display:column property="uploadDate" titleKey="uploadFile.uploadDate.label" sortable="true" format="{0,date,MM/dd/yyyy h:mm:ss a}"/>
 		    <display:column property="filename" titleKey="uploadFile.filename.label"/>
-			<display:column property="salesRecordsSize" titleKey="uploadFile.SalesRecordsSize.label" class="resultsColumnCentered"/>
+			<display:column property="salesRecordsSize" titleKey="uploadFile.salesRecordsSize.label" class="resultsColumnCentered"/>
 		    <display:column href="sales_remove.action" paramId="uploadFileId" paramProperty="id" class="resultsColumnCentered"> 
 		    	<img src="<s:url value="/images/delete.png" includeParams="none"/>"/>
 		    </display:column>
