@@ -89,4 +89,10 @@ public interface ReferenceDataService extends Service {
 	 * Retrieves the default Area Manager role id
 	 */
 	Profile getAreaRole();
+	
+	/**
+	 * Retrieves different views for a report
+	 * @return
+	 */
+	Map<String, String> getReportViews();
 }

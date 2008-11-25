@@ -80,10 +80,65 @@
 				/home/home.action=Administrator,Store_Manager,Employee,Customer_Manager,Regional_Manager,Area_Manager
 				**/logout.action=ROLE_ANONYMOUS,ROLE_USER
 				**/login.action=ROLE_ANONYMOUS,ROLE_USER
-				/employee/employee_list.action=VIEW_EMPLOYEE,EDIT_EMPLOYEE
+
+				/customer/areauser_list.action=ADD_AREA_CUSTOMER,VIEW_AREA_CUSTOMER,EDIT_AREA_CUSTOMER,REMOVE_AREA_CUSTOMER
+				/customer/areauser_add.action=ADD_AREA_CUSTOMER
+				/customer/areauser_show.action=VIEW_AREA_CUSTOMER
+				/customer/areauser_edit.action=EDIT_AREA_CUSTOMER
+				/customer/areauser_remove.action=REMOVE_AREA_CUSTOMER
+				/customer/customer_list.action=VIEW_CUSTOMER,EDIT_CUSTOMER,REMOVE_CUSTOMER,CREATE_CUSTOMER,ADD_MANAGER_CUSTOMER
+				/customer/customer_add.action=CREATE_CUSTOMER
+				/customer/customer_edit.action=EDIT_CUSTOMER
+				/customer/customer_show.action=VIEW_CUSTOMER
+				/customer/customer_remove.action=REMOVE_CUSTOMER
+				/customer/customer_removeregion=EDIT_CUSTOMER
+				/customer/customeruser_add.action=ADD_MANAGER_CUSTOMER
+				/customer/customeruser_list.action=ADD_MANAGER_CUSTOMER,VIEW_MANAGER_CUSTOMER,EDIT_MANAGER_CUSTOMER,REMOVE_MANAGER_CUSTOMER
+				/customer/customeruser_show.action=VIEW_MANAGER_CUSTOMER
+				/customer/customeruser_edit.action=EDIT_MANAGER_CUSTOMER
+				/customer/customeruser_remove.action=REMOVE_MANAGER_CUSTOMER
+				/customer/customerregion_edit=EDIT_CUSTOMER
+				/customer/customerregion_removearea.action=EDIT_CUSTOMER
+				/customer/customerregion_addarea.action=EDIT_CUSTOMER
+				/customer/regionaluser_list.action=ADD_REGIONAL_CUSTOMER,VIEW_REGIONAL_CUSTOMER,EDIT_REGIONAL_CUSTOMER,REMOVE_REGIONAL_CUSTOMER
+				/customer/regionaluser_add.action=ADD_REGIONAL_CUSTOMER
+				/customer/regionaluser_show.action=VIEW_REGIONAL_CUSTOMER
+				/customer/regionaluser_edit.action=EDIT_REGIONAL_CUSTOMER
+				/customer/regionaluser_remove.action=REMOVE_REGIONAL_CUSTOMER
+
+				
+				/employee/employee_list.action=VIEW_EMPLOYEE,EDIT_EMPLOYEE,REMOVE_EMPLOYEE
 				/employee/employee_add.action=CREATE_EMPLOYEE
-				/store/store_edit.action=EDIT_STORE
+				/employee/employee_show.action=VIEW_EMPLOYEE
+				/employee/employee_edit.action=EDIT_EMPLOYEE
+				/employee/employee_remove.action=REMOVE_EMPLOYEE
+				
+				/projection/*.action=MANAGER_PROJECTIONS
+				
+				/report/totalhoursreport_weeklyreport.action=REPORTS
+				
+				/sales/sales_edit.action=EDIT_STORE
+				
 				/security/accessdenied.action=HOME_ACCESS
+				
+				/schedule/addshiftbyemployee_edit.action=ADD_SHIFT
+				
+				/store/store_list.action=VIEW_STORE,EDIT_STORE,CREATE_STORE,REMOVE_STORE,ADD_EMPLOYEE_STORE,LIST_EMPLOYEE_STORE
+				/store/store_add.action=CREATE_STORE
+				/store/store_edit.action=EDIT_STORE
+				/store/store_remove.action=REMOVE_STORE
+				/store/employeestore_add.action=ADD_EMPLOYEE_STORE
+				/store/employeestore_list.action=LIST_EMPLOYEE_STORE
+				/store/employeestore_show.action=VIEW_EMPLOYEE_STORE
+				/store/employeestore_edit.action=EDIT_EMPLOYEE_STORE
+				/store/employeestore_remove.action=REMOVE_EMPLOYEE_STORE
+				
+				/user/user_show.action=VIEW_USER
+				/user/user_add.action=EDIT_USER
+				/user/user_edit.action=CREATE_USER
+				/user/user_remove.action=REMOVE_USER
+				
+				
 				/**=IS_AUTHENTICATED_ANONYMOUSLY
 			]]></value>
 		</property>

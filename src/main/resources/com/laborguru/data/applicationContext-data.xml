@@ -36,6 +36,9 @@
 				</entry>				
 				<entry key="areaRole">
 					<ref bean="areaManagerRole"/>
+				</entry>
+				<entry key="reportViews">
+					<ref bean="reportViews"/>
 				</entry>				
 								
 			</map>
@@ -178,4 +181,22 @@
 			</map>
 		</constructor-arg>
 	</bean>
+	
+	<bean id="reportViews" class="java.util.HashMap" singleton="true">
+		<description>Different Display Types</description>
+		<constructor-arg>
+			<map>
+				<entry key="total">
+					<value>report.displayType.view.total</value>
+				</entry>
+				<entry key="position">
+					<value>report.diplayType.view.position</value>
+				</entry>
+				<entry key="service">
+					<value>report.displayType.view.service</value>
+				</entry>
+			</map>
+		</constructor-arg>
+	</bean>
+	
 </beans>
