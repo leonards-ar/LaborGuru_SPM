@@ -10,6 +10,7 @@ import org.joda.time.DateTime;
 import com.laborguru.frontend.model.HalfHourElement;
 import com.laborguru.model.DailyProjection;
 import com.laborguru.model.HalfHourProjection;
+import com.laborguru.model.OperationTime;
 import com.laborguru.model.Store;
 import com.laborguru.service.projection.dao.ProjectionDao;
 import com.laborguru.util.SpmConstants;
@@ -130,12 +131,30 @@ public class ProjectionServiceBean implements ProjectionService {
 		}		
 				
 		//Calculating the weight of each half hour (the distribution) and getting the value for the projection.
-		//If total avg projections is zero, set all the values to zero.
+		//If total avg projections is zero, set all the values with constant distribution.
 		if (totalAvgProjections.doubleValue() > 0.0){
 			for(HalfHourProjection halfHour: avgCalculatedHalfHourList){
 				halfHour.setAdjustedValue(projectionAmount.multiply(halfHour.getAdjustedValue().divide(totalAvgProjections, SpmConstants.DECIMAL_SCALE, SpmConstants.ROUNDING_MODE)));			
 			}
-		} 
+		}else{
+			//If the avg total is zero we distribute the projection constantly between the store open and close hours.
+			OperationTime operationTime = store.getStoreOperationTimeByDate(selectedDate);
+			DateTime openTime = new DateTime(operationTime.getOpenHour());
+			DateTime closeTime = new DateTime(operationTime.getCloseHour());
+			
+			int sizeListOfHalfHours = ((closeTime.getMinuteOfDay() - openTime.getMinuteOfDay())/SpmConstants.HALF_HOUR);			
+			
+			BigDecimal numberOfHalfHours = new BigDecimal(sizeListOfHalfHours);
+			BigDecimal valueToSet = projectionAmount.divide(numberOfHalfHours, SpmConstants.DECIMAL_SCALE, SpmConstants.ROUNDING_MODE);
+			
+			Date openTimeMinusOneDate = openTime.minusMinutes(1).toDate();
+			Date closeTimeDate = closeTime.toDate();
+			
+			for(HalfHourProjection halfHour: avgCalculatedHalfHourList){
+				if (halfHour.getTime().after(openTimeMinusOneDate) && halfHour.getTime().before(closeTimeDate))
+				halfHour.setAdjustedValue(new BigDecimal(valueToSet.toString()));			
+			}			
+		}
 				
 		//TODO:Put an assertion to check that the total is the same to projection amount.
 		return avgCalculatedHalfHourList;

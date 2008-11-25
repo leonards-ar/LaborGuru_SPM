@@ -221,8 +221,10 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 		Date auxSelectedDate = getWeekDaySelector().getSelectedDay();
 		
 		Calendar day = CalendarUtils.getDayOfThisWeek(auxSelectedDate);
-		
-		Date calculatedDate = CalendarUtils.addOrSubstractDays(day.getTime(), -7);		
+
+		//TODO: confirm that there is no need of substracting the week
+		//Date calculatedDate = CalendarUtils.addOrSubstractDays(day.getTime(), -7);		
+		Date calculatedDate = day.getTime(); 
 		
 		BigDecimal auxTotal = getTotalProjectedValues();
 		

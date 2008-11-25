@@ -142,7 +142,7 @@
 												</tr>
 												<!-- Iterate for each half hour from open to close hour -->
 												<s:iterator id="halfhourElement" value="projectionElements" status="itHalfHourProjection">
-												<s:if test="%{!weekDaySelector.isSelectedDateBeforeToday()}">
+												<s:if test="%{isEditable()}">
 													<s:if test="%{isHalfHourVisible(#halfhourElement)}">
 														<tr>
 															<s:hidden name="projectionElements[%{#itHalfHourProjection.index}].id"/>
@@ -178,30 +178,30 @@
 											</table>                    			
 			                    			<!-- End Half Hour Projection -->
                     					</td>
-										<s:if test="%{isEditable() && !hasErrors()}">
 	                    					<td valign="top">
 				                    			<!-- Action buttons -->
 				                    			<br/>
 				                    			<br/>
 							                    <table border="0" cellpadding="5" cellspacing="5" colspan="0" cellspan="0">
-								                    <tr>
-								                		<td align="center"><s:submit id="reviseButton" key="projection.halfhour.revise.button" theme="simple" cssClass="button" action="halfhour_reviseProjections"/></td>
-								                	</tr>
-													<s:if test="%{isTotalRevisedValuesGreaterThanZero()}">
-								                    <tr>
-								                		<td align="center"><s:submit id="saveButton" key="save.button" theme="simple" cssClass="button"/></td>
-								                	</tr>
+													<s:if test="%{isEditable() && !hasErrors()}">
+									                    <tr>
+									                		<td align="center"><s:submit id="reviseButton" key="projection.halfhour.revise.button" theme="simple" cssClass="button" action="halfhour_reviseProjections"/></td>
+									                	</tr>
+														<s:if test="%{isTotalRevisedValuesGreaterThanZero()}">
+									                    <tr>
+									                		<td align="center"><s:submit id="saveButton" key="save.button" theme="simple" cssClass="button"/></td>
+									                	</tr>
+														</s:if>
+									                	<tr>
+									                    	<td align="center"><s:reset id="resetButton" key="reset.button" theme="simple" cssClass="button"/></td>
+									                    </tr>
 													</s:if>
-								                	<tr>
-								                    	<td align="center"><s:reset id="resetButton" key="reset.button" theme="simple" cssClass="button"/></td>
-								                    </tr>
 								                    <tr>
 								                		<td align="center"><s:submit id="backDailyButton" key="projection.halfhour.backDaily.button" theme="simple" cssClass="button" action="daily_edit"/></td>
 								                    </tr>
 							                    </table>                    
 				                    			<!-- End Action buttons -->
 	                    					</td>
-										</s:if>
                     				</tr>
                     			</table>
                     		</td>
