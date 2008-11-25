@@ -10,7 +10,7 @@
 		<tr>
 			<td id="titleBar">&nbsp;</td>
 		</tr>
-
+[
 		<tr>
 			<td align="center"><!-- Start week table -->
 			<table align="center" id="calendarTable" width="100%" border="0"
@@ -21,11 +21,11 @@
 						colspan="0" cellspan="0">
 						<tr>
 							<s:iterator id="prevDate"
-								value="%{getText(actionName)}.previousStartingWeekDays"
+								value="weekDaySelector.previousStartingWeekDays"
 								status="itPrevDate">
 								<td class="calendarTableColumn" width="10%" nowrap="nowrap">
 								<a href="<s:url value="#" includeParams="none"/>"
-									onclick="report_form.action='%{getText(actionName)}_changeWeek.action'; report_form.selectedDate.value='<s:text name='report.weekdayselector.availableweek.dateformat'><s:param value='prevDate'/></s:text>'; report_form.submit();"
+									onclick="report_form.action='<s:property value='actionName'/>_changeWeek.action'; report_form.selectedDate.value='<s:text name='report.weekdayselector.availableweek.dateformat'><s:param value='prevDate'/></s:text>'; report_form.submit();"
 									class="calendarUnselectedWeekLink"> <s:text
 									name='report.weekdayselector.availableweek.dateformat'>
 									<s:param value='prevDate' />
@@ -46,7 +46,7 @@
 									<td><img
 										src="<s:url value="/images/transp2x1.gif" includeParams="none"/>" /></td>
 									<td><a href="<s:url value="#" includeParams="none"/>"
-										onclick="report_form.action='%{getText(actionName)}_changeWeek.action'; report_form.selectedDate.value='<s:text name='report.weekdayselector.availableweek.dateformat'><s:param value='weekDaySelector.previousStartingWeekDay'/></s:text>'; report_form.submit();"><img
+										onclick="report_form.action='<s:property value='actionName'/>_changeWeek.action'; report_form.selectedDate.value='<s:text name='report.weekdayselector.availableweek.dateformat'><s:param value='weekDaySelector.previousStartingWeekDay'/></s:text>'; report_form.submit();"><img
 										src="<s:url value="/images/cal_prev.png" includeParams="none"/>"
 										border="0" /></a></td>
 									<td><img
@@ -58,7 +58,7 @@
 									<td><img
 										src="<s:url value="/images/transp2x1.gif" includeParams="none"/>" /></td>
 									<td><a href="<s:url value="#" includeParams="none"/>"
-										onclick="report_form.action='%{getText(actionName)}_changeWeek.action'; report_form.selectedDate.value='<s:text name='report.weekdayselector.availableweek.dateformat'><s:param value='weekDaySelector.nextStartingWeekDay'/></s:text>'; report_form.submit();"><img
+										onclick="report_form.action='<s:property value='actionName'/>_changeWeek.action'; report_form.selectedDate.value='<s:text name='report.weekdayselector.availableweek.dateformat'><s:param value='weekDaySelector.nextStartingWeekDay'/></s:text>'; report_form.submit();"><img
 										src="<s:url value="/images/cal_next.png" includeParams="none"/>"
 										border="0" /></a></td>
 									<td><img
@@ -72,7 +72,7 @@
 								value="weekDaySelector.nextStartingWeekDays" status="itNextDate">
 								<td class="calendarTableColumn" width="10%" nowrap="nowrap">
 								<a href="<s:url value="#" includeParams="none"/>"
-									onclick="report_form.action='%{getText(actionName)}_changeWeek.action'; report_form.selectedDate.value='<s:text name='report.weekdayselector.availableweek.dateformat'><s:param value='nextDate'/></s:text>'; report_form.submit();"
+									onclick="report_form.action=<s:property value='actionName'/>_changeWeek.action'; report_form.selectedDate.value='<s:text name='report.weekdayselector.availableweek.dateformat'><s:param value='nextDate'/></s:text>'; report_form.submit();"
 									class="calendarUnselectedWeekLink"> <s:text
 									name='report.weekdayselector.availableweek.dateformat'>
 									<s:param value='nextDate' />
@@ -98,9 +98,9 @@
 		<!-- End week table -->
 	</table>
 
-    <br/><br/>
+    <br/>
 
-    <table border="0" cellspacing="0" align="center">>
+    <table border="0" cellspacing="0" align="center">
 	 <td align="right" class="form_label"><s:text name="report.displaytype.label"/></td>
      <td align="left"><s:select name="displayType" list="displayMap" listKey="key" listValue="%{getText(value)}" theme="simple"/></td>
      <td align="right" class="form_label"><s:text name="report.period.label"/></td>
