@@ -42,7 +42,30 @@
   <tbl_permissions permission_id="17" name="EDIT_USER" description="Edit existing admin users"/>
   <tbl_permissions permission_id="18" name="CREATE_USER" description="Create new admin users"/>
   <tbl_permissions permission_id="19" name="REPORTS" description="Reports for each store" />
-    
+  <tbl_permissions permission_id="20" name="REMOVE_STORE" description="Remove stores"/>
+  <tbl_permissions permission_id="21" name="ADD_EMPLOYEE_STORE" description="Create an Employee from a Store"/>
+  <tbl_permissions permission_id="22" name="LIST_EMPLOYEE_STORE" description="List Employees from a Store"/>
+  <tbl_permissions permission_id="23" name="VIEW_EMPLOYEE_STORE" description="VIEW Employees from a Store"/>
+  <tbl_permissions permission_id="24" name="EDIT_EMPLOYEE_STORE" description="VIEW Employees from a Store"/>
+  <tbl_permissions permission_id="25" name="REMOVE_EMPLOYEE_STORE" description="VIEW Employees from a Store"/>`
+  <tbl_permissions permission_id="26" name="REMOVE_CUSTOMER" description="Remove a Customer"/>
+  <tbl_permissions permission_id="27" name="ADD_MANAGER_CUSTOMER" description="Create an Office Manager"/>
+  <tbl_permissions permission_id="28" name="VIEW_MANAGER_CUSTOMER" description="View an Office Manager"/>
+  <tbl_permissions permission_id="29" name="EDIT_MANAGER_CUSTOMER" description="Edit an Office Manager"/>
+  <tbl_permissions permission_id="30" name="REMOVE_MANAGER_CUSTOMER" description="Remove an Office Manager"/>
+  <tbl_permissions permission_id="31" name="ADD_REGIONAL_CUSTOMER" description="Create Regional Manager"/>
+  <tbl_permissions permission_id="32" name="VIEW_REGIONAL_CUSTOMER" description="View Regional Manager"/>
+  <tbl_permissions permission_id="33" name="EDIT_REGIONAL_CUSTOMER" description="Edit Regional Manager"/>
+  <tbl_permissions permission_id="34" name="REMOVE_REGIONAL_CUSTOMER" description="Remove Regional Manager"/>
+  <tbl_permissions permission_id="35" name="ADD_AREA_CUSTOMER" description="Create Area Manager"/>
+  <tbl_permissions permission_id="36" name="VIEW_AREA_CUSTOMER" description="View Area Manager"/>
+  <tbl_permissions permission_id="37" name="EDIT_AREA_CUSTOMER" description="Edit Area Manager"/>
+  <tbl_permissions permission_id="38" name="REMOVE_AREA_CUSTOMER" description="Remove Area Manager"/>
+  <tbl_permissions permission_id="39" name="REMOVE_USER" description="Remove admin users"/>
+  <tbl_permissions permission_id="40" name="REMOVE_EMPLOYEE" description="Remove an Employee"/>
+
+  
+      
   <tbl_menu_items menu_item_id="1" label_key="home.menu.label" help_key="HOME_MENU_HELP" target="/home/home.action" position="0" permission_id="1"/>
   <tbl_menu_items menu_item_id="2" label_key="employee.menu.label" help_key="EMPLOYEE_MENU_HELP" target="/employee/employee_list.action" position="1" permission_id="2"/>
   <tbl_menu_items menu_item_id="3" label_key="employee.submenu.list" help_key="EMPLOYEE_LIST_HELP" target="/employee/employee_list.action" position="1" parent_id="2" permission_id="3"/>
@@ -63,7 +86,7 @@
   <tbl_menu_items menu_item_id="18" label_key="user.submenu.list" help_key="USER_LIST_HELP" target="/user/user_list.action" position="1" parent_id="17" permission_id="17"/>
   <tbl_menu_items menu_item_id="19" label_key="user.submenu.create" help_key="USER_ADD_HELP" target="/user/user_add.action" position="0" parent_id="17" permission_id="18"/>
   <tbl_menu_items menu_item_id="20" label_key="store.submenu.uploadsales" help_key="STORE_UPLOAD_SALES_HELP" target="/sales/sales_edit.action" position="2" parent_id="5" permission_id="6"/>
-  <tbl_menu_items menu_item_id="21" label_key="report.menu.label" help_key="REPORT_MENU_HELP" target="#" position="7" permission_id="19"/>
+  <tbl_menu_items menu_item_id="21" label_key="report.menu.label" help_key="REPORT_MENU_HELP" target="/report/totalHoursReport_weeklyReport.action" position="7" permission_id="19"/>
 
   
   <tbl_stores store_id="1" name="microcentro" area_id="1" half_hour_projections_weeks_default="4" daily_projections_weeks_default="4" code="MD0001"/>
@@ -85,17 +108,40 @@
   <tbl_profiles_permissions profile_id="1" permission_id="5"/><!-- View Store -->
   <tbl_profiles_permissions profile_id="1" permission_id="6"/><!-- Edit Store -->
   <tbl_profiles_permissions profile_id="1" permission_id="7"/><!-- Create Store -->
+  <tbl_profiles_permissions profile_id="1" permission_id="20"/><!-- Remove Store -->
   <tbl_profiles_permissions profile_id="1" permission_id="8"/><!-- View Customer -->
   <tbl_profiles_permissions profile_id="1" permission_id="9"/><!-- Edit Customer -->
   <tbl_profiles_permissions profile_id="1" permission_id="10"/><!-- Create Customer -->
   <tbl_profiles_permissions profile_id="1" permission_id="16"/><!-- View User -->
   <tbl_profiles_permissions profile_id="1" permission_id="17"/><!-- Edit User -->
   <tbl_profiles_permissions profile_id="1" permission_id="18"/><!-- Create User -->
+  <tbl_profiles_permissions profile_id="1" permission_id="39"/><!-- Remove User -->
+  <tbl_profiles_permissions profile_id="1" permission_id="21"/><!-- Create a Employee from Store -->
+  <tbl_profiles_permissions profile_id="1" permission_id="22"/><!-- List Employees from Store -->
+  <tbl_profiles_permissions profile_id="1" permission_id="23"/><!-- View an Employee from Store -->
+  <tbl_profiles_permissions profile_id="1" permission_id="24"/><!-- Edit an Employee from Store -->
+  <tbl_profiles_permissions profile_id="1" permission_id="25"/><!-- Remove an Employee from Store -->
+  <tbl_profiles_permissions profile_id="1" permission_id="26"/><!-- Remove Customer -->
+  <tbl_profiles_permissions profile_id="1" permission_id="27"/><!-- Create an Office Manager -->
+  <tbl_profiles_permissions profile_id="1" permission_id="28"/><!-- View an Office Manager -->
+  <tbl_profiles_permissions profile_id="1" permission_id="29"/><!-- Edit an Office Manager -->
+  <tbl_profiles_permissions profile_id="1" permission_id="30"/><!-- Remove an Office Manager -->
+  <tbl_profiles_permissions profile_id="1" permission_id="31"/><!-- Create a Regional Manager -->
+  <tbl_profiles_permissions profile_id="1" permission_id="32"/><!-- View a Regional Manager -->
+  <tbl_profiles_permissions profile_id="1" permission_id="33"/><!-- Edit a Regional Manager -->
+  <tbl_profiles_permissions profile_id="1" permission_id="34"/><!-- Remove a Regional Manager -->
+  <tbl_profiles_permissions profile_id="1" permission_id="35"/><!-- Create an Area Manager -->
+  <tbl_profiles_permissions profile_id="1" permission_id="36"/><!-- View an Area Manager -->
+  <tbl_profiles_permissions profile_id="1" permission_id="37"/><!-- Edit an Area Manager -->
+  <tbl_profiles_permissions profile_id="1" permission_id="38"/><!-- Remove an Area Manager -->
+  
+  
 <!-- Store Manager Permissions -->
   <tbl_profiles_permissions profile_id="2" permission_id="1"/><!-- Home -->
   <tbl_profiles_permissions profile_id="2" permission_id="2"/><!-- View Employee -->
   <tbl_profiles_permissions profile_id="2" permission_id="3"/><!-- Edit Employee -->
   <tbl_profiles_permissions profile_id="2" permission_id="4"/><!-- Create Employee -->
+  <tbl_profiles_permissions profile_id="2" permission_id="40"/><!-- Delete Employee -->
   <tbl_profiles_permissions profile_id="2" permission_id="5"/><!-- View Store -->
   <!--tbl_profiles_permissions profile_id="2" permission_id="6"/--><!-- Edit Store -->
   <!--tbl_profiles_permissions profile_id="2" permission_id="7"/--><!-- Create Store -->
@@ -105,6 +151,7 @@
   <tbl_profiles_permissions profile_id="2" permission_id="14"/><!-- Edit Projections Settings-->
   <tbl_profiles_permissions profile_id="2" permission_id="15"/><!-- Add shift (TODO only see projections) -->
   <tbl_profiles_permissions profile_id="2" permission_id="19"/><!-- Reports -->
+  
 <!-- Employee Permissions -->
   <tbl_profiles_permissions profile_id="3" permission_id="15"/><!-- Add shift (TODO only see projections) -->
 <!-- Customer Manager Permissions -->  

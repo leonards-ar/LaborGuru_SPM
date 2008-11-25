@@ -238,11 +238,6 @@
 		<put-attribute name="body" value="/tiles/schedule/addshiftbyemployee.jsp"/>
 	</definition>
 	
-	<definition name="editShiftByEmployeeByPositionByDatePage" extends="baseLayoutWithMenu">
-		<put-attribute name="htmlExtHeader" value="/tiles/scheduleHtmlExtHeader.jsp" />
-		<put-attribute name="body" value="/tiles/schedule/addshiftbyemployeebyposition.jsp"/>
-	</definition>	
-	
 	<!-- User tiles definition -->
 	<definition name="listUserPage" extends="baseLayoutWithMenu">
 		<put-attribute name="body" value="/tiles/user/list.jsp" />
@@ -324,9 +319,19 @@
 	<!-- Sales upload pages -->
 	<definition name="salesUploadPage" extends="baseLayoutWithMenu">
 		<put-attribute name="body" value="/tiles/sales/upload.jsp" />
-	</definition>
-	
+	</definition>	
+
 	<definition name="uploadRemovePage" extends="baseLayoutWithMenu">
 		<put-attribute name="body" value="/tiles/sales/remove.jsp" />
 	</definition>				
+	
+	<!-- TotalHours page -->
+	<definition name="reportBaseLayout" template="/layouts/report/reports_base.jsp" extends="baseLayoutWithMenu">
+	  <put-attribute name="weekSelector" value="/tiles/report/week_selector.jsp"/>
+	</definition>
+	
+	<definition name="showWeeklyTotalHours" extends="reportBaseLayout">
+	  <put-attribute name="reportData" value="/tiles/report/weekly_totalHours_report.jsp" />
+	</definition>		
+
 </tiles-definitions>
