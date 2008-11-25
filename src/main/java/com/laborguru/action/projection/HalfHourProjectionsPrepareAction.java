@@ -275,9 +275,11 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 			setProjectionElements(getHalfHourElementList(dailyProjection.getHalfHourProjections()));
 			
 			//Setting total value
+			BigDecimal auxTotal = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
 			for (HalfHourElement element: getProjectionElements()){
-				setTotalProjectedValues(getTotalProjectedValues().add(element.getProjectedValue()));
+				auxTotal = auxTotal.add(element.getProjectedValue());
 			}			
+			setTotalProjectedValues(auxTotal);
 		}else {
 			addActionError(new ErrorMessage(ErrorEnum.PROJECTION_DOES_NOT_EXIST.name()));
 			//TODO: CN - This flag should be removed when we found the way to ask from the front if actionErrors is empty.
