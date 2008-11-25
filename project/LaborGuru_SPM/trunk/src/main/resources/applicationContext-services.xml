@@ -6,7 +6,7 @@
 
 	<!-- Bean's wiring declaration -->
 	<bean id="salesFileParser" class="com.laborguru.service.dataimport.file.SalesCSVFileParserBean">
-  	  <property name="storeService" ref="storeService"/>
+		<property name="storeService" ref="storeService"/>
 	</bean>
 
 	<!--  Transactional Services's declarations -->
@@ -81,7 +81,10 @@
 		</property>			
 	</bean>
 
-	<bean id="projectionServiceTarget" class="com.laborguru.service.projection.ProjectionServiceBean" autowire="byType"/>
+	<bean id="projectionServiceTarget" class="com.laborguru.service.projection.ProjectionServiceBean">
+		<property name="staffingService" ref="staffingService"/>
+		<property name="projectionDao" ref="projectionDao"/>		
+	</bean>
 
 	<bean id="projectionService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		<property name="proxyInterfaces">

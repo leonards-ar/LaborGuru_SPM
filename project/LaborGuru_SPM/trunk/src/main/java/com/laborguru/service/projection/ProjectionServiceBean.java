@@ -13,6 +13,7 @@ import com.laborguru.model.HalfHourProjection;
 import com.laborguru.model.OperationTime;
 import com.laborguru.model.Store;
 import com.laborguru.service.projection.dao.ProjectionDao;
+import com.laborguru.service.staffing.StaffingService;
 import com.laborguru.util.SpmConstants;
 
 /**
@@ -25,6 +26,7 @@ import com.laborguru.util.SpmConstants;
 public class ProjectionServiceBean implements ProjectionService {
 
 	private ProjectionDao projectionDao;
+	private StaffingService staffingService;
 	
 	/**
 	 * This method returns a list with the historic average sales value for a week, starting since the "startWeekDate" and using "numberOfWeeks" weeks as source for the
@@ -93,7 +95,10 @@ public class ProjectionServiceBean implements ProjectionService {
 		
 		projection.setStartingTime(store.getStoreOperationTimeByDate(selectedDate).getOpenHour());
 
-		projectionDao.save(projection);		
+		projectionDao.save(projection);
+		
+		//Delete staffing calculations associated with the projection saved.
+		staffingService.deleteDailyStaffingForDate(store,selectedDate);
 	}
 	
 	
@@ -275,5 +280,21 @@ public class ProjectionServiceBean implements ProjectionService {
 	 */
 	public void setProjectionDao(ProjectionDao projectionDao) {
 		this.projectionDao = projectionDao;
+	}
+
+
+	/**
+	 * @return the staffingService
+	 */
+	public StaffingService getStaffingService() {
+		return staffingService;
+	}
+
+
+	/**
+	 * @param staffingService the staffingService to set
+	 */
+	public void setStaffingService(StaffingService staffingService) {
+		this.staffingService = staffingService;
 	}
 }

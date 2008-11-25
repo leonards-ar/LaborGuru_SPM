@@ -10,6 +10,7 @@ import com.laborguru.model.HalfHourProjection;
 import com.laborguru.model.Store;
 import com.laborguru.service.Service;
 import com.laborguru.service.projection.dao.ProjectionDao;
+import com.laborguru.service.staffing.StaffingService;
 
 /**
  * Deals with the projection behaviour
@@ -43,4 +44,6 @@ public interface ProjectionService extends Service{
 	void saveProjection(Store store, List<HalfHourProjection> halfHourProjectionList, Date selectedDate);
 
 	void setProjectionDao(ProjectionDao projectionDao);
+	
+	void setStaffingService(StaffingService staffingService);
 }

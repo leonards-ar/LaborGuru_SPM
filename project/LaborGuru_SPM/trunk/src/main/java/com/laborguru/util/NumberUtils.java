@@ -17,7 +17,7 @@ public class NumberUtils {
 
 	private final static Logger log = Logger.getLogger(NumberUtils.class);
 
-	public static final String DECIMAL_FORMAT = "#,##0";
+	public static final String DECIMAL_FORMAT = "#,##0.###";
 
 	/**
 	 *
