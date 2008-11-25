@@ -49,7 +49,7 @@ public class DailyProjectionElement {
 	}
 	
 	public Boolean getEditable(){
-		return (CalendarUtils.todayWithoutTime().compareTo(getProjectionDate()) <= 0);
+		return (CalendarUtils.todayWithoutTime().compareTo(getProjectionDate()) < 0);
 	}
 
 }

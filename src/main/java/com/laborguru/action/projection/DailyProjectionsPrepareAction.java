@@ -99,7 +99,8 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 			calculatedDate = firstDayThisWeek;			
 		} 
 		
-		calculatedDate = CalendarUtils.addOrSubstractDays(calculatedDate, -7);			
+		//TODO: confirm that there is no need of substracting the week
+		//calculatedDate = CalendarUtils.addOrSubstractDays(calculatedDate, -7);			
 		
 		
 		// Get calculated projections		
