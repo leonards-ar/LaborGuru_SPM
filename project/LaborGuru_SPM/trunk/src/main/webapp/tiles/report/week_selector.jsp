@@ -10,7 +10,7 @@
 		<tr>
 			<td id="titleBar">&nbsp;</td>
 		</tr>
-[
+
 		<tr>
 			<td align="center"><!-- Start week table -->
 			<table align="center" id="calendarTable" width="100%" border="0"
@@ -72,7 +72,7 @@
 								value="weekDaySelector.nextStartingWeekDays" status="itNextDate">
 								<td class="calendarTableColumn" width="10%" nowrap="nowrap">
 								<a href="<s:url value="#" includeParams="none"/>"
-									onclick="report_form.action=<s:property value='actionName'/>_changeWeek.action'; report_form.selectedDate.value='<s:text name='report.weekdayselector.availableweek.dateformat'><s:param value='nextDate'/></s:text>'; report_form.submit();"
+									onclick="report_form.action='<s:property value='actionName'/>_changeWeek.action'; report_form.selectedDate.value='<s:text name='report.weekdayselector.availableweek.dateformat'><s:param value='nextDate'/></s:text>'; report_form.submit();"
 									class="calendarUnselectedWeekLink"> <s:text
 									name='report.weekdayselector.availableweek.dateformat'>
 									<s:param value='nextDate' />
@@ -101,10 +101,12 @@
     <br/>
 
     <table border="0" cellspacing="0" align="center">
-	 <td align="right" class="form_label"><s:text name="report.displaytype.label"/></td>
-     <td align="left"><s:select name="displayType" list="displayMap" listKey="key" listValue="%{getText(value)}" theme="simple"/></td>
      <td align="right" class="form_label"><s:text name="report.period.label"/></td>
      <td align="left">Weekly</td>
+     <td>&nbsp;</td>
+	 <td align="right" class="form_label"><s:text name="report.displaytype.label"/></td>
+     <td align="left"><s:select name="displayType" list="displayMap" listKey="key" listValue="%{getText(value)}" theme="simple"/></td>
+    
     </table>
    
 

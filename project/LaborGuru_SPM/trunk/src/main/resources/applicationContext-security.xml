@@ -133,6 +133,7 @@
 				/store/employeestore_edit.action=EDIT_EMPLOYEE_STORE
 				/store/employeestore_remove.action=REMOVE_EMPLOYEE_STORE
 				
+				/user/user_list.action=VIEW_USER,EDIT_USER,CREATE_USER,REMOVE_USER
 				/user/user_show.action=VIEW_USER
 				/user/user_add.action=EDIT_USER
 				/user/user_edit.action=CREATE_USER

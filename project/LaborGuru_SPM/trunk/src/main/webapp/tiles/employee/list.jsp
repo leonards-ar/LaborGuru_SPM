@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+<%@ taglib uri="http://acegisecurity.org/authz" prefix="authz" %>
+
 <br />
 <br />
 <table border="0" cellspacing="0" align="center">
@@ -35,15 +37,21 @@
 		    <display:column property="fullName" titleKey="employee.fullname.label" sortable="true" />
 		    <display:column property="email" titleKey="employee.email.label" autolink="true"/>
 		    <display:column property="phone" titleKey="employee.phone.label" />
-		    <display:column href="employee_show.action" paramId="employeeId" paramProperty="id" class="resultsColumnCentered">
-		    	<img src="<s:url value="/images/view.png" includeParams="none"/>"/>
-		    </display:column>
-		    <display:column href="employee_edit.action" paramId="employeeId" paramProperty="id" class="resultsColumnCentered">
-		    	<img src="<s:url value="/images/edit.png" includeParams="none"/>"/>
-		    </display:column>		    
-		    <display:column href="employee_remove.action" paramId="employeeId" paramProperty="id" class="resultsColumnCentered"> 
-		    	<img src="<s:url value="/images/delete.png" includeParams="none"/>"/>
-		    </display:column>
+            <authz:authorize ifAllGranted="VIEW_EMPLOYEE">
+			    <display:column href="employee_show.action" paramId="employeeId" paramProperty="id" class="resultsColumnCentered">
+			    	<img src="<s:url value="/images/view.png" includeParams="none"/>"/>
+			    </display:column>
+			</authz:authorize>
+			<authz:authorize ifAllGranted="EDIT_EMPLOYEE">
+			    <display:column href="employee_edit.action" paramId="employeeId" paramProperty="id" class="resultsColumnCentered">
+			    	<img src="<s:url value="/images/edit.png" includeParams="none"/>"/>
+			    </display:column>
+			</authz:authorize>		    
+			<authz:authorize ifAllGranted="REMOVE_EMPLOYEE">
+			    <display:column href="employee_remove.action" paramId="employeeId" paramProperty="id" class="resultsColumnCentered"> 
+			    	<img src="<s:url value="/images/delete.png" includeParams="none"/>"/>
+			    </display:column>
+			</authz:authorize>
 		</display:table>			
 		<!-- Search Results -->
 		</td>
