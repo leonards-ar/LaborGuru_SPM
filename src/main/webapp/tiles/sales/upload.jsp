@@ -95,7 +95,7 @@
 		<td align="center">
 		<!-- Search Results -->	
  		<s:set name="uploadFileListDisplayTagsAux" value="uploadFileList" scope="request"/>
-		<display:table name="uploadFileListDisplayTagsAux" class="results" pagesize="2" requestURI="sales_edit.action" sort="list" defaultsort="1" defaultorder="descending">		    
+		<display:table name="uploadFileListDisplayTagsAux" class="results" pagesize="20" requestURI="sales_edit.action" sort="list" defaultsort="1" defaultorder="descending">		    
 		    <display:column property="uploadDate" titleKey="uploadFile.uploadDate.label" sortable="true" format="{0,date,MM/dd/yyyy h:mm:ss a}"/>
 		    <display:column property="filename" titleKey="uploadFile.filename.label"/>
 			<display:column property="salesRecordsSize" titleKey="uploadFile.salesRecordsSize.label" class="resultsColumnCentered"/>
