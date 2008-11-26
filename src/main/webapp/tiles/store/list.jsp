@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+<%@ taglib uri="http://acegisecurity.org/authz" prefix="authz" %>
 
 <br />
 <br />
@@ -43,22 +44,31 @@
 			<display:column property="area.region.customer.name" titleKey="store.customer.label" sortable="true"/>
 			<display:column property="code" titleKey="store.code.label" sortable="true" />
 		    <display:column property="name" titleKey="store.name.label" sortable="true"/>
-		    
-		    <display:column href="store_show.action" paramId="storeId" paramProperty="id" class="resultsColumnCentered">
-		    	<img src="<s:url value="/images/view.png" includeParams="none"/>"/>
-		    </display:column>
-		    <display:column href="store_edit.action" paramId="storeId" paramProperty="id" class="resultsColumnCentered">
-		    	<img src="<s:url value="/images/edit.png" includeParams="none"/>"/>
-		    </display:column>		    
-		    <display:column href="store_remove.action" paramId="storeId" paramProperty="id" class="resultsColumnCentered"> 
-		    	<img src="<s:url value="/images/delete.png" includeParams="none"/>"/>
-		    </display:column>
-		    <display:column href="employeeStore_add.action" paramId="storeId" paramProperty="id" class="resultsColumnCentered"> 
-		    	<img src="<s:url value="/images/user_add.png" includeParams="none"/>"/>
-		    </display:column>
-		    <display:column href="employeeStore_list.action" paramId="storeId" paramProperty="id" class="resultsColumnCentered"> 
-		    	<img src="<s:url value="/images/user_group.png" includeParams="none"/>"/>
-		    </display:column>
+		    <authz:authorize ifAllGranted="VIEW_STORE">
+			    <display:column href="store_show.action" paramId="storeId" paramProperty="id" class="resultsColumnCentered">
+			    	<img src="<s:url value="/images/view.png" includeParams="none"/>"/>
+			    </display:column>
+			</authz:authorize>
+			<authz:authorize ifAllGranted="EDIT_STORE">
+			    <display:column href="store_edit.action" paramId="storeId" paramProperty="id" class="resultsColumnCentered">
+			    	<img src="<s:url value="/images/edit.png" includeParams="none"/>"/>
+			    </display:column>
+			</authz:authorize>
+			<authz:authorize ifAllGranted="REMOVE_STORE">
+			    <display:column href="store_remove.action" paramId="storeId" paramProperty="id" class="resultsColumnCentered"> 
+			    	<img src="<s:url value="/images/delete.png" includeParams="none"/>"/>
+			    </display:column>
+			</authz:authorize>
+			<authz:authorize ifAllGranted="ADD_EMPLOYEE_STORE">
+			    <display:column href="employeeStore_add.action" paramId="storeId" paramProperty="id" class="resultsColumnCentered"> 
+			    	<img src="<s:url value="/images/user_add.png" includeParams="none"/>"/>
+			    </display:column>
+			</authz:authorize>
+			<authz:authorize ifAnyGranted="LIST_EMPLOYEE_STORE,ADD_EMPLOYEE_STORE,VIEW_EMPLOYEE_STORE,EDIT_EMPLOYEE_STORE,REMOVE_EMPLOYEE_STORE">
+			    <display:column href="employeeStore_list.action" paramId="storeId" paramProperty="id" class="resultsColumnCentered"> 
+			    	<img src="<s:url value="/images/user_group.png" includeParams="none"/>"/>
+			    </display:column>
+			</authz:authorize>
 		</display:table>
 		<!-- Search Results -->
 		</td>
