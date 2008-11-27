@@ -2,7 +2,6 @@ package com.laborguru.action.report;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.model.TotalHour;
