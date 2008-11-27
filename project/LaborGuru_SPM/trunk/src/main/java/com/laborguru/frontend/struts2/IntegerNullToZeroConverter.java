@@ -40,7 +40,7 @@ public class IntegerNullToZeroConverter extends StrutsTypeConverter {
 	 * @see org.apache.struts2.util.StrutsTypeConverter#convertToString(java.util.Map, java.lang.Object)
 	 */
 	@Override
-	public String convertToString(Map arg0, Object object) {
+	public String convertToString(Map map, Object object) {
 		if (object != null)
 			return ((Integer)object).toString();
 		
