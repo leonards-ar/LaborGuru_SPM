@@ -370,6 +370,9 @@ public class DailyStaffing extends SpmObject {
 	 * @return the totalFlexible
 	 */
 	public Double getTotalFlexible() {
+		if(totalFlexible == null) {
+			setTotalFlexible(new Double(0.0));
+		}
 		return totalFlexible;
 	}
 
@@ -384,6 +387,9 @@ public class DailyStaffing extends SpmObject {
 	 * @return the totalOpening
 	 */
 	public Double getTotalOpening() {
+		if(totalOpening == null) {
+			setTotalOpening(new Double(0.0));
+		}
 		return totalOpening;
 	}
 
@@ -463,6 +469,9 @@ public class DailyStaffing extends SpmObject {
 	 * @return the fixedPostRush
 	 */
 	public Double getFixedPostRush() {
+		if(fixedPostRush == null) {
+			setFixedPostRush(new Double(0.0));
+		}
 		return fixedPostRush;
 	}
 
@@ -477,6 +486,9 @@ public class DailyStaffing extends SpmObject {
 	 * @return the fixedClosing
 	 */
 	public Double getFixedClosing() {
+		if(fixedClosing == null) {
+			setFixedClosing(new Double(0.0));
+		}
 		return fixedClosing;
 	}
 
