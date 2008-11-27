@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import com.laborguru.action.SpmAction;
+import com.laborguru.action.SpmActionResult;
 import com.laborguru.model.Employee;
 import com.laborguru.service.employee.EmployeeService;
 
@@ -67,7 +68,7 @@ public class ScheduleEmployeeAutocompleterAction extends SpmAction implements Se
     public String execute() throws Exception {
     	loadStoreEmployees();
     	invalidateResponseCache();
-        return SUCCESS;
+        return SpmActionResult.SUCCESS.getResult();
     }
     
 	/**

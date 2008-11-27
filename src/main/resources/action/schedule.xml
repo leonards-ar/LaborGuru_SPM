@@ -17,7 +17,10 @@
 			<result name="input" type="tiles">editShiftByEmployeeByPositionByDatePage</result>
 			<result name="success" type="redirectAction"><param name="actionName">addshiftbyemployeebyposition_edit</param></result>
 		</action>
-		
+
+		<action name="showscheduledetails" class="com.laborguru.action.schedule.ScheduleDetailsAction">
+			<result name="success" type="tiles">showScheduleDetailsPage</result>
+		</action>		
 	</package>
 
 	<package name="schedule_ajax" namespace="/schedule" extends="json-default">

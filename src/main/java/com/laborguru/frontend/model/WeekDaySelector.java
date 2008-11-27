@@ -341,6 +341,19 @@ public class WeekDaySelector implements Serializable {
 	 * @param d
 	 * @return
 	 */
+	public static Date getAsDate(String d) {
+		try {
+			return DATE_FORMAT.parse(d);
+		} catch(Throwable ex) {
+			return CalendarUtils.todayWithoutTime();
+		}
+	}
+	
+	/**
+	 * 
+	 * @param d
+	 * @return
+	 */
 	public boolean isSelectedWeekDay(Date d) {
 		return getStringSelectedDay() != null && d != null && getStringSelectedDay().equals(DATE_FORMAT.format(d));
 	}
