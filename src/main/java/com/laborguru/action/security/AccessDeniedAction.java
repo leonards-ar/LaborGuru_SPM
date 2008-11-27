@@ -15,11 +15,14 @@ public class AccessDeniedAction extends SpmAction {
 	 */
 	private static final long serialVersionUID = -1454366842217802662L;
 	
-	
+	/**
+	 * 
+	 * @return
+	 * @see com.opensymphony.xwork2.ActionSupport#execute()
+	 */
 	public String execute() {
-		
 		Object message = getRequest().get(AccessDeniedHandlerImpl.ACEGI_SECURITY_ACCESS_DENIED_EXCEPTION_KEY);
-		log.error(getRequest().get(AccessDeniedHandlerImpl.ACEGI_SECURITY_ACCESS_DENIED_EXCEPTION_KEY));
+		log.error(message);
 		if(SecurityContextHolder.getContext().getAuthentication() !=null ){
 		  log.error(SecurityContextHolder.getContext().getAuthentication().toString());
 		}
