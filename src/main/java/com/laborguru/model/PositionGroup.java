@@ -74,7 +74,7 @@ public class PositionGroup extends SpmObject implements ComparableObject {
 	 */
 	public Set<Position> getPositions() {
 		if(positions == null) {
-			positions = new HashSet<Position>();
+			setPositions(new HashSet<Position>());
 		}
 		return positions;
 	}
