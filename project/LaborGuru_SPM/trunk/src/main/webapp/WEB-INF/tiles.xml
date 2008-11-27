@@ -14,6 +14,12 @@
 		<put-attribute name="header" value="/tiles/headermenu.jsp" />
 	</definition>
 
+	<definition name="popUp" template="/layouts/pop_up.jsp">
+		<put-attribute name="htmlExtHeader" value="/tiles/defaultHtmlExtHeader.jsp" />
+		<put-attribute name="popUpHeader" value="/tiles/popup_header.jsp" />
+		<put-attribute name="popUpFooter" value="/tiles/popup_footer.jsp" />
+	</definition>
+
 	<!--  Login and Security -->
 	<definition name="loginPage" extends="baseLayout">
 		<put-attribute name="body" value="/tiles/login/login.jsp" />
@@ -242,6 +248,12 @@
 		<put-attribute name="htmlExtHeader" value="/tiles/scheduleHtmlExtHeader.jsp" />
 		<put-attribute name="body" value="/tiles/schedule/addshiftbyemployeebyposition.jsp"/>
 	</definition>		
+
+	<definition name="showScheduleDetailsPage" extends="popUp">
+		<put-attribute name="htmlExtHeader" value="/tiles/dojoHtmlExtHeader.jsp" />
+		<put-attribute name="body" value="/tiles/schedule/schedule_details.jsp"/>
+	</definition>
+	
 	
 	<!-- User tiles definition -->
 	<definition name="listUserPage" extends="baseLayoutWithMenu">

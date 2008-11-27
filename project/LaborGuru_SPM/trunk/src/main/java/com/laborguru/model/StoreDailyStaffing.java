@@ -171,6 +171,62 @@ public class StoreDailyStaffing extends SpmObject {
 	 * 
 	 * @return
 	 */
+	public Double getTotalOpening() {
+		double total = 0.0;
+		Double positionTotal;
+		for(DailyStaffing dailyStaffing : getStoreDailyStaffing()) {
+			positionTotal = dailyStaffing.getTotalOpening();
+			total += positionTotal != null ? positionTotal.doubleValue() : 0.0;
+		}
+		return new Double(total);
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getTotalClosing() {
+		double total = 0.0;
+		Double positionTotal;
+		for(DailyStaffing dailyStaffing : getStoreDailyStaffing()) {
+			positionTotal = dailyStaffing.getFixedClosing();
+			total += positionTotal != null ? positionTotal.doubleValue() : 0.0;
+		}
+		return new Double(total);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getTotalFlexible() {
+		double total = 0.0;
+		Double positionTotal;
+		for(DailyStaffing dailyStaffing : getStoreDailyStaffing()) {
+			positionTotal = dailyStaffing.getTotalFlexible();
+			total += positionTotal != null ? positionTotal.doubleValue() : 0.0;
+		}
+		return new Double(total);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getTotalPostRush() {
+		double total = 0.0;
+		Double positionTotal;
+		for(DailyStaffing dailyStaffing : getStoreDailyStaffing()) {
+			positionTotal = dailyStaffing.getFixedPostRush();
+			total += positionTotal != null ? positionTotal.doubleValue() : 0.0;
+		}
+		return new Double(total);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public Double getTotalDailyTarget() {
 		double total = 0.0;
 		Double positionTotal;
