@@ -57,4 +57,14 @@ public class ScheduleDetailRow implements Serializable {
 		this.value = value;
 	}
 
+	/**
+	 * @param value the value to set
+	 */
+	public void setValue(Integer value) {
+		if(value != null) {
+			setValue(new Double(value.intValue()));
+		} else {
+			setValue(new Double(0.0));
+		}
+	}
 }

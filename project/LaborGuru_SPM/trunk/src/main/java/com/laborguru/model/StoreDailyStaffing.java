@@ -100,7 +100,7 @@ public class StoreDailyStaffing extends SpmObject {
 	 * @param position
 	 * @return
 	 */
-	private DailyStaffing getDailyStaffingFor(Position position) {
+	public DailyStaffing getDailyStaffingFor(Position position) {
 		if(position != null && position.getId() != null) {
 			for(Position key : this.storeDailyStaffing.keySet()) {
 				if(position.getId().equals(key.getId())) {
@@ -235,5 +235,22 @@ public class StoreDailyStaffing extends SpmObject {
 			total += positionTotal != null ? positionTotal.doubleValue() : 0.0;
 		}
 		return new Double(total);
+	}
+	
+	/**
+	 * 
+	 * @param time
+	 * @return
+	 */
+	public Integer getTotalMinimumStaffingFor(Date time) {
+		int total = 0;
+		
+		Integer minimumStaffing;
+		for(DailyStaffing dailyStaffing : getStoreDailyStaffing()) {
+			minimumStaffing = dailyStaffing.getHalfHourStaffing(time);
+			total += minimumStaffing != null ? minimumStaffing.intValue() : 0;
+		}
+		
+		return new Integer(total);
 	}
 }

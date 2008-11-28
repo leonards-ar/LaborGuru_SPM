@@ -70,6 +70,18 @@ public class CalendarUtils {
 		cal.add(Calendar.HOUR_OF_DAY, hoursToAddOrSubstract);
 		return cal.getTime();		
 	}
+
+	/**
+	 * 
+	 * @param d
+	 * @param minutesToAddOrSubstract
+	 * @return
+	 */
+	public static Date addOrSubstractMinutes(Date d, int minutesToAddOrSubstract) {
+		Calendar cal = CalendarUtils.getCalendar(d);
+		cal.add(Calendar.MINUTE, minutesToAddOrSubstract);
+		return cal.getTime();		
+	}
 	
 	/**
 	 * 

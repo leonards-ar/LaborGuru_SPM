@@ -244,7 +244,7 @@ public class DailyStaffing extends SpmObject {
 			}
 			return new Integer(0);
 		} else {
-			return -1;
+			return new Integer(0);
 		}		
 	}
 	
