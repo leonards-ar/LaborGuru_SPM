@@ -142,7 +142,7 @@
   <tbl_profiles_permissions profile_id="2" permission_id="3"/><!-- Edit Employee -->
   <tbl_profiles_permissions profile_id="2" permission_id="4"/><!-- Create Employee -->
   <tbl_profiles_permissions profile_id="2" permission_id="40"/><!-- Delete Employee -->
-  <tbl_profiles_permissions profile_id="2" permission_id="5"/><!-- View Store -->
+  <!--tbl_profiles_permissions profile_id="2" permission_id="5"/--><!-- View Store -->
   <!--tbl_profiles_permissions profile_id="2" permission_id="6"/--><!-- Edit Store -->
   <!--tbl_profiles_permissions profile_id="2" permission_id="7"/--><!-- Create Store -->
   <tbl_profiles_permissions profile_id="2" permission_id="11"/><!-- Manager Projections -->
