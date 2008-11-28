@@ -14,10 +14,13 @@ import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.ScheduleDetailRow;
 import com.laborguru.frontend.model.WeekDaySelector;
 import com.laborguru.model.DailyStaffing;
+import com.laborguru.model.HalfHourStaffing;
+import com.laborguru.model.OperationTime;
 import com.laborguru.model.Position;
 import com.laborguru.model.StoreDailyStaffing;
-import com.laborguru.service.position.PositionService;
 import com.laborguru.service.staffing.StaffingService;
+import com.laborguru.util.CalendarUtils;
+import com.laborguru.util.SpmConstants;
 
 /**
  *
@@ -46,7 +49,6 @@ public class ScheduleDetailsAction extends SpmAction {
 	private Double guestService;
 	
 	private StaffingService staffingService;
-	private PositionService positionService;
 	
 	/**
 	 * 
@@ -91,23 +93,69 @@ public class ScheduleDetailsAction extends SpmAction {
 		setOpening(dailyStaffing.getTotalOpening());
 		setClosing(dailyStaffing.getTotalClosing());
 		setPostRush(dailyStaffing.getTotalPostRush());
-		setFlexible(dailyStaffing.getTotalFlexible());		
+		setFlexible(dailyStaffing.getTotalFlexible());
+		
+		Date closeTime = getStoreCloseTime();
+		
+		for(Date time = getStoreOpenTime(); CalendarUtils.equalsOrSmallerTime(time, closeTime); time = CalendarUtils.addOrSubstractMinutes(time, SpmConstants.HALF_HOUR)) {
+			ScheduleDetailRow aRow = new ScheduleDetailRow();
+			
+			aRow.setHour(time);
+			aRow.setValue(dailyStaffing.getTotalMinimumStaffingFor(time));
+			
+			getHourDetails().add(aRow);
+		}		
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	private Date getStoreCloseTime() {
+		OperationTime opTime = getEmployeeStore().getOperationTime(CalendarUtils.getDayOfWeek(getSelectedDayAsDate()));
+		return opTime.getCloseHour();
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	private Date getStoreOpenTime() {
+		OperationTime opTime = getEmployeeStore().getOperationTime(CalendarUtils.getDayOfWeek(getSelectedDayAsDate()));
+		return opTime.getOpenHour();
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	private boolean isStoreOpen(Date time) {
+		OperationTime opTime = getEmployeeStore().getOperationTime(CalendarUtils.getDayOfWeek(getSelectedDayAsDate()));
+		return CalendarUtils.equalsOrGreaterTime(time, opTime.getOpenHour()) &&  CalendarUtils.equalsOrSmallerTime(time, opTime.getCloseHour());
+	}
+	
 	/**
 	 * 
 	 * @param dailyStaffing
 	 */
 	private void setDailyDetailsForPosition(StoreDailyStaffing dailyStaffing) {
-		Position pos = getPositionService().getPositionById(getPosition());
-		
-		DailyStaffing positionDailyStaffing = dailyStaffing.getDailyStaffing(pos);
+		DailyStaffing positionDailyStaffing = dailyStaffing.getDailyStaffingFor(getPosition());
 		setTotal(positionDailyStaffing.getTotalDailyTarget());
 		setOpening(positionDailyStaffing.getTotalOpening());
 		setClosing(positionDailyStaffing.getFixedClosing());
 		setPostRush(positionDailyStaffing.getFixedPostRush());
 		setFlexible(positionDailyStaffing.getTotalFlexible());
 		
+		for(HalfHourStaffing halfHourStaffing : positionDailyStaffing.getHalfHourStaffing()) {
+			if(isStoreOpen(halfHourStaffing.getTime())) {
+				ScheduleDetailRow aRow = new ScheduleDetailRow();
+				
+				aRow.setHour(halfHourStaffing.getTime());
+				aRow.setValue(halfHourStaffing.getCalculatedStaff());
+				
+				getHourDetails().add(aRow);
+			}
+		}
 	}
 	
 	/**
@@ -305,19 +353,5 @@ public class ScheduleDetailsAction extends SpmAction {
 	 */
 	public void setStaffingService(StaffingService staffingService) {
 		this.staffingService = staffingService;
-	}
-
-	/**
-	 * @return the positionService
-	 */
-	public PositionService getPositionService() {
-		return positionService;
-	}
-
-	/**
-	 * @param positionService the positionService to set
-	 */
-	public void setPositionService(PositionService positionService) {
-		this.positionService = positionService;
 	}
 }
