@@ -1,33 +1,41 @@
 package com.laborguru.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+/**
+ *
+ * @author <a href="fbarreraoro@gmail.com">Federico Barrera Oro</a>
+ * @version 1.0
+ * @since SPM 1.0
+ *
+ */
 public class TotalHour extends SpmObject{
 	
 	private static final long serialVersionUID = -7940750254658565313L;
 	
-	private String columnName;
+	private Date day;
 	private BigDecimal schedule;
 	private BigDecimal target;
-	private BigDecimal difference;
-	private BigDecimal percentaje;
 	
 	
 	/**
-	 * @return the column
+	 * @return the day
 	 */
-	public String getColumnName() {
-		return columnName;
+	public Date getDay() {
+		return day;
 	}
 	/**
-	 * @param column the column to set
+	 * @param column the day to set
 	 */
-	public void setColumnName(String columnName) {
-		this.columnName = columnName;
+	public void setDay(Date day) {
+		this.day = day;
 	}
 	/**
 	 * @return the schedule
@@ -57,26 +65,16 @@ public class TotalHour extends SpmObject{
 	 * @return the difference
 	 */
 	public BigDecimal getDifference() {
-		return difference;
+		return schedule.subtract(target);
 	}
-	/**
-	 * @param difference the difference to set
-	 */
-	public void setDifference(BigDecimal difference) {
-		this.difference = difference;
-	}
+	
 	/**
 	 * @return the percentaje
 	 */
 	public BigDecimal getPercentaje() {
-		return percentaje;
+		return getDifference().divide(schedule, 2, RoundingMode.HALF_UP).multiply(new BigDecimal("100"));
 	}
-	/**
-	 * @param percentaje the percentaje to set
-	 */
-	public void setPercentaje(BigDecimal percentaje) {
-		this.percentaje = percentaje;
-	}
+	
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -93,7 +91,7 @@ public class TotalHour extends SpmObject{
 		
 		return new EqualsBuilder().append(this.schedule, other.schedule)
 		.append(this.target, other.target)
-		.append(this.columnName, other.columnName)
+		.append(this.day, other.day)
 		.isEquals();		
 	}
 	
@@ -102,18 +100,18 @@ public class TotalHour extends SpmObject{
 		return new HashCodeBuilder(17, 37)
 		.append(this.schedule)
 		.append(this.target)
-		.append(this.columnName)
+		.append(this.day)
 		.toHashCode();
 	}
 	
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, DEFAULT_TO_STRING_STYLE)
-		.append(this.columnName)
+		.append(new SimpleDateFormat("E MM/dd").format(this.day))
 		.append(this.schedule)
 		.append(this.target)
-		.append(this.difference)
-		.append(this.percentaje)
+		.append(getDifference())
+		.append(getPercentaje())
 		.toString();
 	}
 	

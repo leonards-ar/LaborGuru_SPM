@@ -16,68 +16,58 @@
 			<td>
 			  <b><s:text name="report.weeklytotalhours.totalhours.label" /></b>
 			</td>
-			<td>Mon 5/19</td>
-			<td>Tue 5/20</td>
-			<td>Wed 5/21</td>
-			<td>Thu 5/22</td>
-			<td>Fri 5/23</td>
-			<td>Sat 5/24</td>
-			<td>Sun 5/25</td>
-			<td>Total Week</td>
+			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
+			  <td><s:text name="report.weekday.dateformat"><s:property value="day"/></s:text></td>
+			</s:iterator>
+			<td><s:text name="report.weeklytotalhours.totalweek.label" /></td>
 		  </tr>
 		  <tr>
 			<td>
 			  <s:text name="report.weeklytotalhours.scheduled.label" />
 			</td>
-			<td>172</td>
-			<td>189</td>
-			<td>216</td>
-			<td>190</td>
-			<td>236</td>
-			<td>265</td>
-			<td>215</td>
-			<td>1483</td>
+			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
+			  <td><s:property value="schedule"/></td>
+			</s:iterator>
+			<td><s:property value="totalSchedule"/></td>
 		  </tr>
 		  <tr>
 			<td>
 			  <s:text name="report.weeklytotalhours.target.label" />
 			</td>
-			<td>156</td>
-			<td>179</td>
-			<td>183</td>
-			<td>168</td>
-			<td>205</td>
-			<td>250</td>
-			<td>211</td>
-			<td>1353</td>
+			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
+			  <td><s:property value="target"/></td>
+			</s:iterator>
+			<td><s:property value="totalTarget"/></td>
 		  </tr>
 		  <tr>
 			<td>
 			  <s:text name="report.weeklytotalhours.difference.label" />
 			</td>
-			<td>16</td>
-			<td>10</td>
-			<td>33</td>
-			<td>22</td>
-			<td>31</td>
-			<td>15</td>
-			<td>4</td>
-			<td>130</td>
+			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
+			  <td><s:property value="difference"/></td>
+			</s:iterator>
+			<td><s:property value="totalDifference"/></td>
 		  </tr>
 		  <tr>
 			<td>
 			  <s:text name="report.weeklytotalhours.percentaje.label" />
 			</td>
-			<td>10</td>
-			<td>6</td>
-			<td>18</td>
-			<td>13</td>
-			<td>15</td>
-			<td>6</td>
-			<td>2</td>
-			<td>10</td>
+			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
+			  <td><s:property value="percentaje"/></td>
+			</s:iterator>
+			<td><s:property value="totalPercentaje"/></td>
 		  </tr>
 		</table>
       </td>
     </tr>
+	<tr>
+		<td>
+			<OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase=http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" width="600" height="500" id="Column3D" >
+		   	<param name="movie" value="<s:url value='/fusionCharts/FCF_MSColumn3DLineDY.swf?chartWidth=600&chartHeight=300' includeParams="none"/>" />
+   			<param name="FlashVars" value="&dataXML=<s:property value="xmlValues"/>">
+   			<param name="quality" value="high" />
+   			<embed src="<s:url value='/fusionCharts/FCF_MSColumn3DLineDY.swf?chartWidth=600&chartHeight=300' includeParams="none"/>" flashVars="&dataXML=<s:property value="xmlValues"/>" quality="high" width="600" height="300" name="Column3D" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
+			</object>
+		</td>
+	</tr>
 </table>
