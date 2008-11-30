@@ -114,6 +114,11 @@ public class ProjectionServiceBean implements ProjectionService {
 	 * @see com.laborguru.service.projection.ProjectionService#saveDailyProjection(com.laborguru.model.Store, java.math.BigDecimal, java.util.Date, java.util.Date)
 	 */
 	public void saveDailyProjection(Store store, BigDecimal projectionAmount, Date selectedDate, Date dateForCalculation) {
+		
+		if (store.getHalfHourProjectionsWeeksDefault() == null){
+			throw new IllegalArgumentException("HalfHourProjectionsWeeksDefault cannot be null");
+		}
+		
 		List<HalfHourProjection> calculatedHalfHourList = calculateDailyHalfHourProjection(store, projectionAmount, dateForCalculation, store.getHalfHourProjectionsWeeksDefault());		
 		saveProjection(store, calculatedHalfHourList, selectedDate);
 	}	
