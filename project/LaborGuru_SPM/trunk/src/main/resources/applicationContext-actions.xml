@@ -22,6 +22,8 @@
 	<bean id="storeToSave" class="com.laborguru.model.Store" scope="prototype">
 		<property name="allPositionsUtilization" value="90"/>
 		<property name="firstDayOfWeekAsInteger" value="0"/>
+		<property name="dailyProjectionsWeeksDefault" value="4"/>
+		<property name="halfHourProjectionsWeeksDefault" value="4"/>
 	</bean>
 		
 	<bean id="dateTemplateToday" class="java.util.Date"/>
