@@ -39,7 +39,7 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction i
 	public String weeklyReport() {
 		//String selectedDate = super.getSelectedWeekDay();
 		
-		setTotalHours(getReportService().getWeeklyTotalHours(super.getEmployeeStore(), new Date()));
+		setTotalHours(getReportService().getWeeklyTotalHours(super.getEmployeeStore(), getWeekDaySelector().getStartingWeekDay()));
 		calculateTotals();
 		return SpmActionResult.INPUT.getResult();
 	}
