@@ -34,6 +34,8 @@
 	<bean id="uploadFileDao" class="com.laborguru.service.uploadfile.dao.UploadFileDaoHibernate" autowire="byType"/>
 
 	<bean id="historicSalesDao" class="com.laborguru.service.historicsales.dao.HistoricSalesDaoHibernate" autowire="byType"/>
+	
+	<bean id="reportDao" class="com.laborguru.service.report.dao.SqlMapReportDao" autowire="byType"/>
 
 	<bean id="spmDaoUtils" class="com.laborguru.service.dao.hibernate.SpmHibernateDao" autowire="byType"/>
 						
@@ -100,6 +102,12 @@
         <property name="maxActive" value="${db.maxActive}" />
         <property name="maxIdle" value="${db.maxIdle}" />
         <property name="validationQuery" value="${db.validationQuery}" />
-	</bean>	
+	</bean>
+	
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sql-map-config.xml" />
+		<property name="dataSource" ref="myDataSourcePool" />
+	</bean>
+		
 </beans>
 

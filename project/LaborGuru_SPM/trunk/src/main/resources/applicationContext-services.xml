@@ -175,8 +175,10 @@
 		<property name="profileDao" ref="profileDao" />
 	</bean>
 	
-	<bean id="reportService"
-	    class="com.laborguru.service.report.ReportServiceBean"/>
+	<bean id="reportService" 
+	    class="com.laborguru.service.report.ReportServiceBean">
+	    <property name="reportDao" ref="reportDao"/>
+	</bean>
 	    
 	<bean id="userService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		<property name="proxyInterfaces">
