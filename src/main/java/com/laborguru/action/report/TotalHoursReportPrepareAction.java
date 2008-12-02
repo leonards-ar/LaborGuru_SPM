@@ -8,6 +8,7 @@ import java.util.List;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.model.TotalHour;
 import com.laborguru.service.report.ReportService;
+import com.laborguru.util.FusionXmlDataConverter;
 import com.opensymphony.xwork2.Preparable;
 
 public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction implements Preparable{
@@ -17,6 +18,7 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction i
 	private List<TotalHour> totalHours;
 	
 	private ReportService reportService;
+	private FusionXmlDataConverter fusionXmlDataConverter;
 
 	private BigDecimal totalSchedule = new BigDecimal("0");
 	private BigDecimal totalTarget = new BigDecimal("0");
@@ -36,12 +38,24 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction i
 		pageSetup();
 	}
 	
+	public void prepareChangeWeek(){
+		pageSetup();
+	}
+	
 	public String weeklyReport() {
-		//String selectedDate = super.getSelectedWeekDay();
-		
-		setTotalHours(getReportService().getWeeklyTotalHours(super.getEmployeeStore(), getWeekDaySelector().getStartingWeekDay()));
-		calculateTotals();
+		getReport();
+		loadCalendarData();
 		return SpmActionResult.INPUT.getResult();
+	}
+	
+	protected void processChangeWeek() {
+		getWeekDaySelector().setStringSelectedDay(getSelectedDate());
+		getReport();
+	}
+	
+	private void getReport() {
+		setTotalHours(getReportService().getWeeklyTotalHours(getEmployeeStore(), getWeekDaySelector().getStartingWeekDay()));
+		calculateTotals();
 	}
 	
 	private void calculateTotals(){
@@ -151,10 +165,31 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction i
 		this.totalPercentaje = totalPorcentaje;
 	}
 	
+	/**
+	 * Gets the data to display in the graphic chart.
+	 * @return
+	 */
 	public String getXmlValues() {
-		//return "<graph caption=\"Total Schedule Assessment\" PYAxisName=\"Schedule\" SYAxisName=\"Target\" showvalues=\"0\" numDivLines=\"4\" formatNumberScale=\"0\" decimalPrecision=\"0\" anchorSides=\"10\" anchorRadius=\"3\" anchorBorderColor=\"009900\"><categories><category name=\"Mon\" /><category name=\"Tue\" /><category name=\"Wed\" /><category name=\"Thu\" /><category name=\"Fri\" /><category name=\"Sat\" /><category name=\"Sun\" /></categories><dataset seriesName=\"Schedule\" color=\"AFD8F8\" showValues=\"0\"><set value=\"172\" /><set value=\"189\" /><set value=\"216\" /><set value=\"190\" /><set value=\"236\" /><set value=\"265\" /><set value=\"215\" /></dataset><dataset seriesName=\"Target\" color=\"8BBA00\" showValues=\"0\" parentYAxis=\"S\"><set value=\"156\" /><set value=\"179\" /><set value=\"183\" /><set value=\"168\" /><set value=\"205\" /><set value=\"250\" /><set value=\"211\" /></dataset></graph>";
-		return "<graph caption=\"Total Hours (Weekly)\" PYAxisName=\"Hours\" SYAxisName=\"Target\" showvalues=\"1\" numDivLines=\"4\" formatNumberScale=\"0\" decimalPrecision=\"0\" anchorSides=\"10\" anchorRadius=\"3\" anchorBorderColor=\"009900\"><categories><category name=\"Mon\"/><category name=\"Tue\" /><category name=\"Wed\" /><category name=\"Thu\" /><category name=\"Fri\" /><category name=\"Sat\" /><category name=\"Sun\" /></categories><dataset seriesName=\"Schedule\" color=\"8BBA00\" showValues=\"0\"><set value=\"172\" link=\"http://www.google.com.ar\"/><set value=\"189\" link=\"http://www.google.com.ar\"/><set value=\"216\" link=\"http://www.google.com.ar\"/><set value=\"190\" link=\"http://www.google.com.ar\"/><set value=\"236\" link=\"http://www.google.com.ar\"/><set value=\"265\" link=\"http://www.google.com.ar\"/><set value=\"215\" link=\"http://www.google.com.ar\"/></dataset><dataset seriesName=\"Target\" color=\"666666\" showValues=\"0\" parentYAxis=\"S\"><set value=\"156\" /><set value=\"179\" /><set value=\"183\" /><set value=\"168\" /><set value=\"205\" /><set value=\"250\" /><set value=\"211\" /></dataset></graph>";
+		return getFusionXmlDataConverter().weeklyTotalHoursXmlConverter(getTotalHours());
 	}
+
+	/**
+	 * @return the fusionXmlDataConverter
+	 */
+	public FusionXmlDataConverter getFusionXmlDataConverter() {
+		return fusionXmlDataConverter;
+	}
+
+	/**
+	 * @param fusionXmlDataConverter the fusionXmlDataConverter to set
+	 */
+	public void setFusionXmlDataConverter(
+			FusionXmlDataConverter fusionXmlDataConverter) {
+		this.fusionXmlDataConverter = fusionXmlDataConverter;
+	}
+
+	
+
 	
 
 }

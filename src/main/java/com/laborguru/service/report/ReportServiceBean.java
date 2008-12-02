@@ -16,6 +16,7 @@ import com.laborguru.exception.SpmUncheckedException;
 import com.laborguru.model.Store;
 import com.laborguru.model.TotalHour;
 import com.laborguru.service.report.dao.ReportDao;
+import com.laborguru.util.CalendarUtils;
 
 /**
  * 
@@ -31,10 +32,6 @@ public class ReportServiceBean implements ReportService {
 	
 	public List<TotalHour> getWeeklyTotalHours(Store store, Date startingWeekDate) {
 		List<TotalHour> totalHours = new ArrayList<TotalHour>();
-
-		Calendar endDate = Calendar.getInstance();
-		endDate.setTimeInMillis(startingWeekDate.getTime());
-		endDate.add(Calendar.DATE, 7);
 
 		TotalHour th = new TotalHour();
 		try {
@@ -84,7 +81,7 @@ public class ReportServiceBean implements ReportService {
 				Store tmpstore = new Store();
 				tmpstore.setId(1);
 				List<TotalHour> sqlTotalHour = reportDao.getWeeklyTotalHour(
-						store, startingWeekDate, endDate.getTime());
+						store, startingWeekDate, CalendarUtils.addOrSubstractDays(startingWeekDate, 7));
 				for (int i = 0; i < totalHours.size(); i++) {
 
 					for (TotalHour to : sqlTotalHour) {
