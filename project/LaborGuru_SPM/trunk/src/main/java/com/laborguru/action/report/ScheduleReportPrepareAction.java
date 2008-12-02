@@ -3,6 +3,7 @@ package com.laborguru.action.report;
 import java.util.Map;
 
 import com.laborguru.action.SpmAction;
+import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.WeekDaySelector;
 import com.laborguru.service.data.ReferenceDataService;
 
@@ -35,6 +36,25 @@ public abstract class ScheduleReportPrepareAction extends SpmAction  {
 			weekDaySelector = new WeekDaySelector(getEmployeeStore().getFirstDayOfWeek());
 		}
 		return weekDaySelector;
+	}
+
+	public String changeWeek() {
+
+		getWeekDaySelector().initializeChangeWeek(getSelectedDate(), getSelectedWeekDay());
+
+		processChangeWeek();
+		
+		loadCalendarData();
+		
+		return SpmActionResult.INPUT.getResult();
+	}
+	
+	/**
+	 * 
+	 */
+	protected void loadCalendarData() {
+		setSelectedDate(getWeekDaySelector().getStringStartingWeekDay());
+		setSelectedWeekDay(getWeekDaySelector().getStringSelectedDay());
 	}
 
 	/**
@@ -130,6 +150,9 @@ public abstract class ScheduleReportPrepareAction extends SpmAction  {
 
 	protected void pageSetup() {
 		setDisplayMap(getReferenceDataService().getReportViews());
-	}	
+	}
+	
+	public abstract void prepareChangeWeek();
+	protected abstract void processChangeWeek();
 
 }
