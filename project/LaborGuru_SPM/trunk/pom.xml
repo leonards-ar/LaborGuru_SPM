@@ -34,6 +34,7 @@
 		<db.maxActive>2</db.maxActive>
 		<db.maxIdle>1</db.maxIdle>
 		<db.validationQuery>select 1</db.validationQuery>
+		<db.defaultAutoCommit>false</db.defaultAutoCommit>
 	</properties>
 	<profiles>
 		<profile>

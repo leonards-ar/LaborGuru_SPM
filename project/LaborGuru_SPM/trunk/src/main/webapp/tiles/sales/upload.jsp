@@ -35,14 +35,23 @@
                     <td align="right" class="form_label" nowrap>* <s:text name="sales.filename.label" /></td>
 					<td class="value"><s:file name="salesFile" size="30"  theme="simple" /></td>
 				</tr>
-				<s:if test="salesFileFileName != null">
+				<s:if test="numberOfRecordsAdded > 0">
 					<tr class="editorTableOddRow">
 						<td>&nbsp;</td>
-	                    <td class="form_label" nowrap>
+	                    <td align="left" class="form_label" nowrap>
+						<s:if test ="numberOfRecordsWithError > 0">
+	                    	<s:text name="sales.upload.partialsuccess.message">
+	                    		<s:param value ="salesFileFileName"/>
+	                    		<s:param value ="numberOfRecordsAdded"/>
+	                    		<s:param value ="numberOfRecordsWithError"/>
+	                    	</s:text>
+						</s:if>
+						<s:else>							
 	                    	<s:text name="sales.upload.success.message">
 	                    		<s:param value ="salesFileFileName"/>
 	                    		<s:param value ="numberOfRecordsAdded"/>
 	                    	</s:text>
+						</s:else>
 						</td>
 					</tr>
 				</s:if>

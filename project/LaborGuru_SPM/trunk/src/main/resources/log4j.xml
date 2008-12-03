@@ -46,6 +46,16 @@
 		</layout>
 	</appender>
 
+	<appender name="dataimport_appender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="historicdataimport.log" />
+		<param name="append" value="true" />
+		<param name="bufferedIO" value="false"/>
+		<param name="datePattern" value="'.'yyyy-MM-dd"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{ISO8601}]%10p %C{1} - %m%n" />
+		</layout>
+	</appender>
+
 	<!--  logger name="auditory" additivity="false">
 		<level value="INFO" />
 		<appender-ref ref="auditory_append" />
@@ -92,7 +102,13 @@
 		<level value="WARN"/>
 		<appender-ref ref="STDOUT" />
 	</logger>
-		
+	
+	<logger name="com.laborguru.service.dataimport.file" additivity="false">
+		<level value="ERROR"/>
+		<appender-ref ref="dataimport_appender"/>
+		<appender-ref ref="error_append"/>
+	</logger>
+			
 	<root>
 		<priority value="WARN" />
 		<appender-ref ref="STDOUT" />

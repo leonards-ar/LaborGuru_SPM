@@ -35,6 +35,14 @@ public class HistoricSalesAssembler {
 	private final static String TIME_PARSE_FORMAT = "h:mm:ss a";
 	
 	public static HistoricSales getHistoricSales(String[] line){		
+		
+		if (!isValidLine(line)){
+			String message = "Parsing error: the line is invalid";
+			log.debug(message);
+			throw new FileParserException(message);			
+		}
+		
+		
 		HistoricSales historicSale = new HistoricSales();		
 		
 		//Setting store code
@@ -125,7 +133,7 @@ public class HistoricSalesAssembler {
 				return new BigDecimal(aValue.toString());
 			} 
 			
-			String message = "Parsing error - Column: "+column+ " - Error: number "+valueStringAux+" is not valid";
+			String message = "Parsing error - field: "+column+ " - Error: number "+valueStringAux+" is not valid";
 			log.debug(message);			
 		}
 		
@@ -133,6 +141,13 @@ public class HistoricSalesAssembler {
 	}
 	
 	
-
+	/**
+	 * Checks wether a line is valid. A valid line is different to null and has a lenght greater or equal to 5.
+	 * @param line the array that represents the line
+	 * @return true if valid
+	 */
+	public static boolean isValidLine(String[] line){
+		return (line != null) && (line.length >=5);
+	}
 	
 }
