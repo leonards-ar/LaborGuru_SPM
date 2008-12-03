@@ -51,4 +51,26 @@ public interface SalesFileParser {
 	 */
 	void close();
 	
+	
+	/**
+	 * Returns the total number of lines that have been processed in the file.
+	 * It includes headers, valid and invalid lines.
+	 * @return the number of lines that have been processed.
+	 */
+	int getAllLinesCounter();
+
+	/**
+	 * Returns the number of valid lines that have been processed in the file.
+	 * It only includes the valid lines.
+	 * @return the number of valid lines that have been processed.
+	 */
+	int getValidLinesCounter(); 
+	
+	/**
+	 * Returns the number of errors that have been processed in the file.
+	 * It only includes the lines with errors.
+	 * @return the number of errors that have been processed.
+	 */
+	int getErrorLinesCounter();
+	
 }

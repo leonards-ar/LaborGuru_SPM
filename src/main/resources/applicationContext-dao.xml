@@ -102,6 +102,7 @@
         <property name="maxActive" value="${db.maxActive}" />
         <property name="maxIdle" value="${db.maxIdle}" />
         <property name="validationQuery" value="${db.validationQuery}" />
+        <property name="defaultAutoCommit" value="${db.defaultAutoCommit}" />        
 	</bean>
 	
 	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">

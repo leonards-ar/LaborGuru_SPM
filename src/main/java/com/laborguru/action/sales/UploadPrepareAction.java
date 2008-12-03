@@ -8,7 +8,10 @@ import java.util.List;
 
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
+import com.laborguru.exception.ErrorMessage;
+import com.laborguru.exception.SpmUncheckedException;
 import com.laborguru.model.UploadFile;
+import com.laborguru.model.service.UploadFileProcessed;
 import com.laborguru.service.dataimport.file.SalesFileProcessorService;
 import com.laborguru.service.uploadfile.UploadFileService;
 
@@ -23,7 +26,10 @@ public class UploadPrepareAction extends SpmAction {
 	private String salesFileFileName;
 	
 	private Integer storeId;	
-	private Integer numberOfRecordsAdded;
+	
+	private Integer numberOfRecordsAdded = 0;
+	private Integer numberOfRecordsWithError = 0;
+
 	private Long uploadFileId;
 	private boolean uploadFileRemoved;
 	private String salesFileRemovedName;
@@ -45,15 +51,27 @@ public class UploadPrepareAction extends SpmAction {
 		
 		UploadFile auxUpload = new UploadFile();
 		auxUpload.setFilename(salesFileFileName);
-		
-		UploadFile retSales = salesFileProcessorService.processAndSaveFile(salesFile, auxUpload);
-		
-		setNumberOfRecordsAdded(retSales.getSalesRecords().size());
+		try{
+			UploadFileProcessed retSales = salesFileProcessorService.processAndSaveFile(salesFile, auxUpload);
+			setNumberOfRecordsAdded(retSales.getNumberOfRecordsAdded());
+			setNumberOfRecordsWithError(retSales.getNumberOfRecordsWithErrors());
+
+		} 
+		catch (SpmUncheckedException e){
+			ErrorMessage errorMessage = new ErrorMessage("error.upload.salesFile", new String[] {salesFileFileName});
+			this.addActionError(errorMessage);
+			clearDisplay();
+		}
 		
 		return edit();
 	}
 	
 	
+	private void clearDisplay() {
+		setNumberOfRecordsAdded(0);
+		setNumberOfRecordsWithError(0);
+	}
+
 	public String cancel(){
 		return SpmActionResult.CANCEL_EDIT.getResult();
 	}
@@ -241,6 +259,20 @@ public class UploadPrepareAction extends SpmAction {
 	 */
 	public void setUploadFileSelected(UploadFile uploadFileSelected) {
 		this.uploadFileSelected = uploadFileSelected;
+	}
+
+	/**
+	 * @return the numberOfRecordsWithError
+	 */
+	public Integer getNumberOfRecordsWithError() {
+		return numberOfRecordsWithError;
+	}
+
+	/**
+	 * @param numberOfRecordsWithError the numberOfRecordsWithError to set
+	 */
+	public void setNumberOfRecordsWithError(Integer numberOfRecordsWithError) {
+		this.numberOfRecordsWithError = numberOfRecordsWithError;
 	}
 	
 }

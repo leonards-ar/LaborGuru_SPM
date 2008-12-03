@@ -3,6 +3,7 @@ package com.laborguru.service.dataimport.file;
 import java.io.File;
 
 import com.laborguru.model.UploadFile;
+import com.laborguru.model.service.UploadFileProcessed;
 
 /**
  * This interface define the sale file processor used to import sales data to the SPM
@@ -22,7 +23,7 @@ public interface SalesFileProcessorService {
 	 * 
 	 * @return The upload file entity created.
 	 */
-	UploadFile processAndSaveFile(File file, UploadFile uploadFile);
+	UploadFileProcessed processAndSaveFile(File file, UploadFile uploadFile);
 	
 	/**
 	 * Sets the file parser to use when processing the file

@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import au.com.bytecode.opencsv.CSVReader;
 
 import com.laborguru.exception.FileParserException;
+import com.laborguru.exception.InvalidUploadFileException;
 import com.laborguru.model.HistoricSales;
 import com.laborguru.model.Store;
 import com.laborguru.model.filter.SearchStoreFilter;
@@ -29,6 +30,7 @@ public class SalesCSVFileParserBean implements SalesFileParser {
 
 	private int allLinesCounter;
 	private int validLinesCounter;
+	private int errorLinesCounter;
 	private StoreService storeService;
 	private Store store;
 	private CSVReader csvReader;
@@ -52,12 +54,15 @@ public class SalesCSVFileParserBean implements SalesFileParser {
 			inReader = new FileReader(fileToParse);
 		} catch (FileNotFoundException e) {
 			String message = "File to parse:"+fileToParse.getName()+ "is not found";
-			log.debug(message);
-			throw new IllegalArgumentException(message, e);			
+			log.error(message);
+			throw new InvalidUploadFileException(e, message);			
 		}
 		
 		this.filename = fileToParse.getName();
 		this.csvReader = new CSVReader(inReader);
+		this.allLinesCounter = 0;
+		this.errorLinesCounter = 0;
+		this.validLinesCounter = 0;
 		
 		if (ignoreLines > 0){
 			for (int i=0; i < ignoreLines; i++){
@@ -68,7 +73,7 @@ public class SalesCSVFileParserBean implements SalesFileParser {
 					
 				} catch (IOException e) {
 					String message = "Error reading the line:"+allLinesCounter+ " on the file:"+this.filename;
-					log.debug(message);
+					log.error(message);
 					throw new FileParserException(e, message);			
 				}
 			}
@@ -88,7 +93,7 @@ public class SalesCSVFileParserBean implements SalesFileParser {
 			this.csvReader.close();
 		} catch (IOException e) {
 			String message = "Error - Trying to close csv reader:"+this.csvReader+ " - IO reader for the file:"+this.filename+"could not be closed";
-			log.debug(message);
+			log.error(message);
 			throw new FileParserException(e, message);			
 		}
 	}	
@@ -104,7 +109,7 @@ public class SalesCSVFileParserBean implements SalesFileParser {
 
 		while (getNext){
 			try {
-				nextLine = csvReader.readNext();			
+				nextLine = csvReader.readNext();
 			} catch (IOException e) {
 				String message = "Error reading the line:"+allLinesCounter+ " on the file:"+this.filename;
 				log.debug(message);
@@ -120,8 +125,9 @@ public class SalesCSVFileParserBean implements SalesFileParser {
 					validLinesCounter++;
 					getNext = false;
 				} catch(FileParserException e) {
-				    String message = "Invalid line - Line number:"+allLinesCounter + " - See above log message.";
+				    String message = "Invalid line - Line number:"+allLinesCounter + " - Error message: "+e.getMessage();
 					log.error(message);
+					errorLinesCounter++;
 					continue;
 				}
 			} else{
@@ -196,4 +202,11 @@ public class SalesCSVFileParserBean implements SalesFileParser {
 	public int getValidLinesCounter() {
 		return validLinesCounter;
 	}
+	
+	/**
+	 * @return the allLinesCounter
+	 */
+	public int getErrorLinesCounter() {
+		return errorLinesCounter;
+	}	
 }

@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import com.laborguru.exception.InvalidUploadFileException;
 import com.laborguru.model.HistoricSales;
 import com.laborguru.model.UploadFile;
+import com.laborguru.model.service.UploadFileProcessed;
 import com.laborguru.service.dao.SpmDaoUtils;
 import com.laborguru.service.historicsales.dao.HistoricSalesDao;
 import com.laborguru.service.uploadfile.dao.UploadFileDao;
@@ -35,13 +36,15 @@ public class SalesCSVFileProcessorBean implements SalesFileProcessorService {
 	 * @param file
 	 * @param uploadFile: Optional helper object used to pass information to the method. The values defined in the object are going to be used. 
 	 * If null method defaults are used. 
-	 * @return The persisted upload file 
+	 * @return The persisted upload file information
 	 * @see com.laborguru.service.dataimport.file.SalesFileProcessorService#processAndSaveFile(java.io.File)
 	 */
-	public UploadFile processAndSaveFile(File file, UploadFile uploadFile) {
+	public UploadFileProcessed processAndSaveFile(File file, UploadFile uploadFile) {
 
 		UploadFile uploadToSave = null;
-
+		int numberOfErrors = 0;
+		int validLines = 0;
+		
 		try{
 			fileParser.assembleSalesFileParser(file, 1);
 			
@@ -74,36 +77,53 @@ public class SalesCSVFileProcessorBean implements SalesFileProcessorService {
 			}
 			
 	
-			//We persist the upload File instance first, so the historic sales are associated with the upload file		
-			uploadFileDao.saveOrUpdate(uploadToSave);
-			
-			//We persist the historic sales. To keep a light session and to improve the performace of the operation
-			//every 20 records we flush the session.
-			int recordsCounter = 0;
-	
 			HistoricSales historicSales = null;
 			
 			historicSales = fileParser.getNextRecord();
+
+			//If we find at least one historicSales to persist
+			//We persist the upload File instance first, so the historic sales are associated with the upload file		
+			if (historicSales != null){
+				uploadFileDao.saveOrUpdate(uploadToSave);			
+			}
 			
 			while(historicSales != null){						
 				historicSales.setUploadFile(uploadToSave);			
-				historicSalesDao.saveOrUpdate(historicSales);			
-				recordsCounter++;
-				
-				if (recordsCounter % 20 == 0){
+				historicSalesDao.saveOrUpdate(historicSales);	
+
+				//We persist the historic sales. To keep a light session and to improve the performace of the operation
+				//every 20 records we flush the session.
+				if (fileParser.getValidLinesCounter() % 20 == 0){
 					spmDaoUtils.flushSession();
 					spmDaoUtils.clearSession();
 				}
 							
 				historicSales = fileParser.getNextRecord();			
 			}
+			
+			validLines = fileParser.getValidLinesCounter();
+
+			//If there was no valid lines we reject the uplod
+			if (validLines == 0){
+				String msg = "The file " + uploadToSave.getFilename() +" is not valid. There were not valid lines in the file.";
+				log.error(msg);
+				throw new InvalidUploadFileException(msg);	
+			}
+			
+			numberOfErrors = fileParser.getErrorLinesCounter();
+
+			//Refreshing the uploadFile into the hibernate session
+			UploadFile retUploadFile = uploadFileDao.getUploadFileById(uploadToSave);
+			
+			UploadFileProcessed response = new UploadFileProcessed();
+			response.setUploadFile(retUploadFile);
+			response.setNumberOfRecordsAdded(validLines);
+			response.setNumberOfRecordsWithErrors(numberOfErrors);
+			
+			return response;			
 		} finally {
 			fileParser.close();
 		}
-		//Refreshing the uploadFile into the hibernate session
-		UploadFile retUploadFile = uploadFileDao.getUploadFileById(uploadToSave);
-		
-		return retUploadFile;
 	}
 
 	/**

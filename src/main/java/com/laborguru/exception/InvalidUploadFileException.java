@@ -19,6 +19,11 @@ public class InvalidUploadFileException extends SpmUncheckedException {
 		super(t, reason, ErrorEnum.INVALID_UPLOAD_FILE);
 	}
 	
+	
+	public InvalidUploadFileException(String reason, String[] arrayObjects){
+		super(reason, ErrorEnum.INVALID_UPLOAD_FILE, arrayObjects);
+	}
+	
 	private InvalidUploadFileException(String reason, ErrorEnum errorCode) {
 		super(reason, errorCode);
 	}
