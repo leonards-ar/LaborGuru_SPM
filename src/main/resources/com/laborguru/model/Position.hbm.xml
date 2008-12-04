@@ -12,6 +12,7 @@
 		
 		<property name="name" column="name" length="100" />
 		<property name="manager" column="manager" not-null="true" type="boolean"/>
+		<property name="guestService" column="guest_service" not-null="true" type="boolean"/>
 		
 		<property name="utilizationBottom" type="double">
 			<column name="utilization_bottom" not-null="false" default="65.00" />
