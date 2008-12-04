@@ -31,6 +31,7 @@
 					<td >&nbsp;</td>
 					<td><s:text name="store.storeoperations.positionnames.label" /></td>
 					<td><s:text name="store.storeoperations.position.ismanager.label" /></td>
+					<td><s:text name="store.storeoperations.position.isguestservice.label" /></td>
 					<td >&nbsp;</td>
 				</tr>
 
@@ -52,6 +53,9 @@
 						<td align="center">
 							<s:checkbox name="positions[%{#itPosition.index}].manager" fieldValue="true" theme="simple"/>				
 						</td>
+						<td align="center">
+							<s:checkbox name="positions[%{#itPosition.index}].guestService" fieldValue="true" theme="simple"/>				
+						</td>
 						<td>
 							<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 								<tr>
@@ -70,6 +74,7 @@
 						<s:textfield name="newPositionName" size="25" maxlength="150" theme="simple" />
 						</td>
 						<td><s:checkbox name="newPositionManager" fieldValue="true" theme="simple"/></td>
+						<td><s:checkbox name="newPositionGuestService" fieldValue="true" theme="simple"/></td>
 						<td>
 							<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 								<tr>

@@ -29,6 +29,7 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 
 	private String newPositionName;
 	private boolean newPositionManager;
+	private boolean newPositionGuestService = true;
 	
 	/**
 	 * This property holds an empty position set by Spring containing
@@ -170,6 +171,7 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 		newPosition.setName(getNewPositionName());
 		newPosition.setPositionIndex(getPositions().size());
 		newPosition.setManager(isNewPositionManager());
+		newPosition.setGuestService(isNewPositionGuestService());
 		getPositions().add(newPosition);
 	}
 	
@@ -185,6 +187,7 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 			addNewPosition();
 			setNewPositionName(null);
 			setNewPositionManager(false);
+			setNewPositionGuestService(true);
 		}
 		return SpmActionResult.EDIT.getResult();
 	}
@@ -362,6 +365,20 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 	 */
 	public void setNewPositionManager(boolean newPositionManager) {
 		this.newPositionManager = newPositionManager;
+	}
+
+	/**
+	 * @return the newPositionGuestService
+	 */
+	public boolean isNewPositionGuestService() {
+		return newPositionGuestService;
+	}
+
+	/**
+	 * @param newPositionGuestService the newPositionGuestService to set
+	 */
+	public void setNewPositionGuestService(boolean newPositionGuestService) {
+		this.newPositionGuestService = newPositionGuestService;
 	}
 	
 }

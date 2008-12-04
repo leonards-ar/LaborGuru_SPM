@@ -37,6 +37,7 @@ public class Position extends SpmObject implements ComparableObject{
 	private Integer utilizationMinimum;
 	private Integer utilizationMaximum;
 	private boolean manager;
+	private boolean guestService;
 	
 	private Integer positionIndex;
 	
@@ -326,5 +327,19 @@ public class Position extends SpmObject implements ComparableObject{
 	 */
 	public void setManager(boolean manager) {
 		this.manager = manager;
+	}
+
+	/**
+	 * @return the guestService
+	 */
+	public boolean isGuestService() {
+		return guestService;
+	}
+
+	/**
+	 * @param guestService the guestService to set
+	 */
+	public void setGuestService(boolean guestService) {
+		this.guestService = guestService;
 	}
 }
