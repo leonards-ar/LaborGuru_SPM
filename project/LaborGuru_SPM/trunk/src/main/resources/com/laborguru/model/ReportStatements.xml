@@ -8,7 +8,7 @@
 		<parameter property="end_date" jdbcType="DATE" javaType="java.sql.Date"/>
 	</parameterMap>
 	
-	<select id="getTargetWeeklyTotalHours" parameterClass='java.util.Map' resultClass="com.laborguru.model.TotalHour">
+	<select id="getTargetWeeklyTotalHours" parameterClass='java.util.Map' resultClass="com.laborguru.model.report.TotalHour">
 		SELECT
 		ss.day as day,
 		SUM(TIME_TO_SEC(TIMEDIFF(s.to_hour, s.from_hour)))/3600 as target
@@ -21,19 +21,27 @@
 		GROUP BY ss.day
 		ORDER BY ss.day
 	</select>
+
+	<resultMap id="get-total-hours-by-position-result" class="com.laborguru.model.report.TotalHourByPosition">
+		<result property="position.id" column="positionId"/>
+		<result property="totalHour.day" column="day"/>
+		<result property="totalHour.schedule" column="schedule" />
+		<result property="totalHour.target" column="target" />
+	</resultMap>
 	
-	<select id="getWeeklyTotalHoursByPosition" parameterClass='int' resultClass="com.laborguru.model.TotalHour">
+	<select id="getTargetWeeklyTotalHoursByPosition" parameterClass='java.util.Map' resultMap="get-total-hours-by-position-result">
 		SELECT
-		S.POSITION_ID,
-		SS.DAY as day,
-		SUM(TIME_TO_SEC(TIMEDIFF(to_hour, from_hour))) as target
-		FROM TBL_STORE_SCHEDULES as SS, TBL_EMPLOYEE_SCHEDULES as ES, TBL_SHIFTS as S
-		WHERE SS.STORE_SCHEDULE_ID = ES.STORE_SCHEDULE_ID
-		AND ES.EMPLOYEE_SCHEDULE_ID = S.EMPLOYEE_SCHEDULE_ID
-		AND S.POSITION_ID IS NOT NULL
+		s.position_id as positionId
+		ss.day as day,
+		SUM(TIME_TO_SEC(TIMEDIFF(s.to_hour, s.from_hour)))/3600 as target
+		FROM tbl_store_schedules as ss, tbl_employee_schedules as es, tbl_shifts as s
+		WHERE ss.store_schedule_id = es.store_schedule_id
+		AND es.employee_schedule_id = s.employee_schedule_id
+		AND s.position_id IS NOT NULL
 		AND SS.DAY BETWEEN STR_TO_DATE(#start_date#,'%Y-%m-%d %H:%i:%s') AND STR_TO_DATE(#end_date#,'%Y-%m-%d %H:%i:%s')
 		AND SS.STORE_ID = #store_id#
-		GROUP BY 
+		GROUP BY s.position_id, ss.day
+		ORDER BY s.position_id, ss.day
 	</select>
 	
 </sqlMap>

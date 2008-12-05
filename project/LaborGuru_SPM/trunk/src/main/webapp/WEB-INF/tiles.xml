@@ -346,9 +346,14 @@
 	<definition name="reportBaseLayout" template="/layouts/report/reports_base.jsp" extends="baseLayoutWithMenu">
 	  <put-attribute name="weekSelector" value="/tiles/report/week_selector.jsp"/>
 	</definition>
-	
+
+		
 	<definition name="showWeeklyTotalHours" extends="reportBaseLayout">
 	  <put-attribute name="reportData" value="/tiles/report/weekly_totalHours_report.jsp" />
+	</definition>
+	
+	<definition name="showWeeklyTotalHoursByPosition" extends="reportBaseLayout">
+	  <put-attribute name="reportData" value="/tiles/report/weekly_totalHoursByPosition_report.jsp" />
 	</definition>		
 
 </tiles-definitions>

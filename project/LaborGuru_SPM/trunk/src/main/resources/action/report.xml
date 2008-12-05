@@ -7,5 +7,9 @@
 		<action name="totalHoursReport_*" method="{1}" class="com.laborguru.action.report.TotalHoursReportPrepareAction">
 			<result name="input" type="tiles">showWeeklyTotalHours</result>
 		</action>
+		
+		<action name="totalHoursReportByPosition_*" method="{1}" class="com.laborguru.action.report.TotalHoursReportPrepareAction">
+			<result name="input" type="tiles">showWeeklyTotalHoursByPosition</result>
+		</action>
 	</package>
 </struts>

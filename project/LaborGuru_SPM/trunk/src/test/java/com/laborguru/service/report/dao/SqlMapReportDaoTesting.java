@@ -13,8 +13,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.laborguru.model.TotalHour;
 import com.laborguru.model.helpers.ReportTestHelper;
+import com.laborguru.model.report.TotalHour;
 import com.laborguru.service.dao.SpmDaoHibernateTest;
 
 /**

@@ -101,12 +101,13 @@
     <br/>
 
     <table border="0" cellspacing="0" align="center">
-     <td align="right" class="form_label"><s:text name="report.period.label"/></td>
-     <td align="left">Weekly</td>
-     <td>&nbsp;</td>
+	<tr>
 	 <td align="right" class="form_label"><s:text name="report.displaytype.label"/></td>
-     <td align="left"><s:select name="displayType" list="displayMap" listKey="key" listValue="%{getText(value)}" theme="simple"/></td>
-    
+     <td align="left"><s:select name="selectView" list="viewMap" listKey="key" listValue="%{getText(value)}" theme="simple"/></td>
+     <td>&nbsp;</td>
+     <td align="right" class="form_label"><s:text name="report.period.label"/></td>
+     <td align="left"><s:select name="period" list="periodMap" listKey="key" listValue="%{getText(value)}" theme="simple"/></td>
+    </tr>
     </table>
    
 

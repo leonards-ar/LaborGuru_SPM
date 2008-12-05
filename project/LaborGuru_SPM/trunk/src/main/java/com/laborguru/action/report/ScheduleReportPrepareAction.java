@@ -21,10 +21,11 @@ public abstract class ScheduleReportPrepareAction extends SpmAction  {
 	private WeekDaySelector weekDaySelector;
 	private String selectedDate;
 	private String selectedWeekDay;	
-	private String displayType;
+	private String selectView;
 	private String period;
 
-	private Map<String,String>displayMap;
+	private Map<String,String>viewMap;
+	private Map<String,String>periodMap;
 	
 	private ReferenceDataService referenceDataService;
 	
@@ -39,7 +40,6 @@ public abstract class ScheduleReportPrepareAction extends SpmAction  {
 	}
 
 	public String changeWeek() {
-
 		getWeekDaySelector().initializeChangeWeek(getSelectedDate(), getSelectedWeekDay());
 
 		processChangeWeek();
@@ -93,17 +93,31 @@ public abstract class ScheduleReportPrepareAction extends SpmAction  {
 	}
 
 	/**
-	 * @return the displayType
+	 * @return the selectView
 	 */
-	public String getDisplayType() {
-		return displayType;
+	public String getSelectView() {
+		return selectView;
 	}
 
 	/**
-	 * @param displayType the displayType to set
+	 * @param selectView the selectView to set
 	 */
-	public void setDisplayType(String displayType) {
-		this.displayType = displayType;
+	public void setSelectView(String selectView) {
+		this.selectView = selectView;
+	}
+
+	/**
+	 * @return the viewMap
+	 */
+	public Map<String, String> getViewMap() {
+		return viewMap;
+	}
+
+	/**
+	 * @param viewMap the viewMap to set
+	 */
+	public void setViewMap(Map<String, String> viewMap) {
+		this.viewMap = viewMap;
 	}
 
 	/**
@@ -121,17 +135,17 @@ public abstract class ScheduleReportPrepareAction extends SpmAction  {
 	}
 
 	/**
-	 * @return the displayMap
+	 * @return the periodMap
 	 */
-	public Map<String, String> getDisplayMap() {
-		return displayMap;
+	public Map<String, String> getPeriodMap() {
+		return periodMap;
 	}
 
 	/**
-	 * @param displayMap the displayMap to set
+	 * @param periodMap the periodMap to set
 	 */
-	public void setDisplayMap(Map<String, String> displayMap) {
-		this.displayMap = displayMap;
+	public void setPeriodMap(Map<String, String> periodMap) {
+		this.periodMap = periodMap;
 	}
 
 	/**
@@ -149,7 +163,8 @@ public abstract class ScheduleReportPrepareAction extends SpmAction  {
 	}
 
 	protected void pageSetup() {
-		setDisplayMap(getReferenceDataService().getReportViews());
+		setViewMap(getReferenceDataService().getReportViews());
+		setPeriodMap(getReferenceDataService().getReportPeriods());
 	}
 	
 	public abstract void prepareChangeWeek();

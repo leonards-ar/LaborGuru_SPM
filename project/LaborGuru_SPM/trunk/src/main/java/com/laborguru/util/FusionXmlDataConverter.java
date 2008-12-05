@@ -14,7 +14,7 @@ import org.dom4j.Element;
 
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.SpmUncheckedException;
-import com.laborguru.model.TotalHour;
+import com.laborguru.model.report.TotalHour;
 
 public class FusionXmlDataConverter {
 
