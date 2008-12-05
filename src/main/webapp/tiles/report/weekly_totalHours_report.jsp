@@ -11,51 +11,51 @@
    </tr>
     <tr>
       <td>
-		<table border="2" cellspacing="0" align="center">
+		<table border="2" width="100%" cellspacing="0" align="center">
 		  <tr>
-			<td>
+			<td class="windowTableLabel">
 			  <b><s:text name="report.weeklytotalhours.totalhours.label" /></b>
 			</td>
 			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
-			  <td><s:text name="report.weekday.dateformat"><s:property value="day"/></s:text></td>
+			  <td class="windowTableValue"><s:text name="report.weekday.dateformat"><s:property value="day"/></s:text></td>
 			</s:iterator>
-			<td><s:text name="report.weeklytotalhours.totalweek.label" /></td>
+			<td class="windowTableLabel"><s:text name="report.weeklytotalhours.totalweek.label" /></td>
 		  </tr>
 		  <tr>
-			<td>
+			<td class="windowTableLabel">
 			  <s:text name="report.weeklytotalhours.scheduled.label" />
 			</td>
 			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
-			  <td><s:property value="schedule"/></td>
+			  <td class="windowTableValue"><s:property value="schedule"/></td>
 			</s:iterator>
-			<td><s:property value="totalSchedule"/></td>
+			<td class="windowTableValue"><s:property value="totalSchedule"/></td>
 		  </tr>
 		  <tr>
-			<td>
+			<td class="windowTableLabel">
 			  <s:text name="report.weeklytotalhours.target.label" />
 			</td>
 			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
-			  <td><s:property value="target"/></td>
+			  <td class="windowTableValue"><s:property value="target"/></td>
 			</s:iterator>
-			<td><s:property value="totalTarget"/></td>
+			<td class="windowTableValue"><s:property value="totalTarget"/></td>
 		  </tr>
 		  <tr>
-			<td>
+			<td class="windowTableLabel">
 			  <s:text name="report.weeklytotalhours.difference.label" />
 			</td>
 			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
-			  <td><s:property value="difference"/></td>
+			  <td class="windowTableValue"><s:property value="difference"/></td>
 			</s:iterator>
-			<td><s:property value="totalDifference"/></td>
+			<td class="windowTableValue"><s:property value="totalDifference"/></td>
 		  </tr>
 		  <tr>
-			<td>
+			<td class="windowTableLabel">
 			  <s:text name="report.weeklytotalhours.percentaje.label" />
 			</td>
 			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
-			  <td><s:property value="percentaje"/></td>
+			  <td class="windowTableValue"><s:property value="percentaje"/></td>
 			</s:iterator>
-			<td><s:property value="totalPercentaje"/></td>
+			<td class="windowTableValue"><s:property value="totalPercentaje"/></td>
 		  </tr>
 		</table>
       </td>

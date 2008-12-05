@@ -1,10 +1,12 @@
 package com.laborguru.service.report;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
+import com.laborguru.model.Position;
 import com.laborguru.model.Store;
-import com.laborguru.model.TotalHour;
+import com.laborguru.model.report.TotalHour;
 import com.laborguru.service.Service;
 
 /**
@@ -23,4 +25,14 @@ public interface ReportService extends Service {
 	 * @return
 	 */
 	List<TotalHour> getWeeklyTotalHours(Store store, Date startingWeekDate);
+	
+	
+	/**
+	 * Retrieves the Hours that has been projected ant the hours that has been consumed 
+	 * by Position.
+	 * @param store
+	 * @param startingWeekDate
+	 * @return
+	 */
+	HashMap<Position, List<TotalHour>> getWeeklyTotalHoursByPosition(Store store, Date startingWeekDate);
 }

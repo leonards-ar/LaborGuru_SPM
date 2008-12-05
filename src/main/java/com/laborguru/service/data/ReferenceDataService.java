@@ -95,4 +95,10 @@ public interface ReferenceDataService extends Service {
 	 * @return
 	 */
 	Map<String, String> getReportViews();
+	
+	/**
+	 * Retrieves different options for period
+	 * @return
+	 */
+	Map<String, String> getReportPeriods();
 }

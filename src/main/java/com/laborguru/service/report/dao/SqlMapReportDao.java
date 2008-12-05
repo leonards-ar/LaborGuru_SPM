@@ -9,14 +9,15 @@ import org.apache.log4j.Logger;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import com.laborguru.model.Store;
-import com.laborguru.model.TotalHour;
+import com.laborguru.model.report.TotalHour;
+import com.laborguru.model.report.TotalHourByPosition;
 
 public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao {
 	private static final Logger log = Logger.getLogger(SqlMapReportDao.class);
 	
 	public List<TotalHour> getWeeklyTotalHour(Store store, Date startDate,Date endDate) throws SQLException {
 		if(log.isDebugEnabled()) {
-			log.debug("getWeeklyTotalHour params: store_id:" + store.getId() + " startDate: " + startDate + " endDate" + endDate);
+			log.debug("before select params: store_id:" + store.getId() + " startDate: " + startDate + " endDate" + endDate);
 		}
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -26,6 +27,19 @@ public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao
 		
 		return getSqlMapClient().queryForList("getTargetWeeklyTotalHours", map);
 		
+	}
+	
+	public List<TotalHourByPosition>getWeeklyTotalHourByPosition(Store store, Date startDate, Date endDate) throws SQLException {
+		if(log.isDebugEnabled()) {
+			log.debug(" before select params: store_id:" + store.getId() + " startDate: " + startDate + " endDate" + endDate);
+		}
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("store_id", store.getId());
+		map.put("start_date", startDate);
+		map.put("end_date", endDate);
+
+		return getSqlMapClient().queryForList("getTargetWeeklyTotalHoursByPosition", map);
 	}
 
 }

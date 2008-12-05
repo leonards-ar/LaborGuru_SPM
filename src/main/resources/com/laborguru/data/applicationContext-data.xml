@@ -39,6 +39,9 @@
 				</entry>
 				<entry key="reportViews">
 					<ref bean="reportViews"/>
+				</entry>
+				<entry key="reportPeriods">
+					<ref bean="reportPeriods"/>
 				</entry>				
 								
 			</map>
@@ -198,5 +201,19 @@
 			</map>
 		</constructor-arg>
 	</bean>
+	
+	<bean id="reportPeriods" class="java.util.HashMap" singleton="true">
+		<description>Different Periods for a report</description>
+		<constructor-arg>
+			<map>
+				<entry key="weekly">
+					<value>report.period.view.weekly</value>
+				</entry>
+				<entry key="halfhour">
+					<value>report.period.view.halfhour</value>
+				</entry>
+			</map>
+		</constructor-arg>
+	</bean>	
 	
 </beans>

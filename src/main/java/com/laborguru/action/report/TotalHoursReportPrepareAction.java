@@ -2,11 +2,10 @@ package com.laborguru.action.report;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Date;
 import java.util.List;
 
 import com.laborguru.action.SpmActionResult;
-import com.laborguru.model.TotalHour;
+import com.laborguru.model.report.TotalHour;
 import com.laborguru.service.report.ReportService;
 import com.laborguru.util.FusionXmlDataConverter;
 import com.opensymphony.xwork2.Preparable;
@@ -14,7 +13,9 @@ import com.opensymphony.xwork2.Preparable;
 public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction implements Preparable{
 
 	private static final long serialVersionUID = 1L;
-
+	private static final String DEFAULT_VIEW="total";
+	private static final String DEFAULT_PERIOD = "weekly";
+	
 	private List<TotalHour> totalHours;
 	
 	private ReportService reportService;
@@ -69,6 +70,16 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction i
 		setTotalPercentaje(getTotalDifference().divide(getTotalTarget(), 2, RoundingMode.HALF_UP).multiply(new BigDecimal("100")));
 	}
 	
+	protected void pageSetup() {
+		super.pageSetup();
+		if(getSelectView() == null) {
+			setSelectView(DEFAULT_VIEW);
+		}
+		
+		if(getPeriod() == null) {
+			setPeriod(DEFAULT_PERIOD);
+		}
+	}
 	/**
 	 * @return the totalHours
 	 */

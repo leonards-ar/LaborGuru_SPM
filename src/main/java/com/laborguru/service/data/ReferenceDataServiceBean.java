@@ -135,4 +135,8 @@ public class ReferenceDataServiceBean implements ReferenceDataService {
 	public Map<String, String> getReportViews() {
 		return (Map<String, String>) getReferenceData().get("reportViews");
 	}
+	
+	public Map<String, String> getReportPeriods() {
+		return (Map<String, String>) getReferenceData().get("reportPeriods");
+	}
 }
