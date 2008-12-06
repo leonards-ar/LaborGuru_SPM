@@ -31,15 +31,15 @@
 	
 	<select id="getTargetWeeklyTotalHoursByPosition" parameterClass='java.util.Map' resultMap="get-total-hours-by-position-result">
 		SELECT
-		s.position_id as positionId
+		s.position_id as positionId,
 		ss.day as day,
 		SUM(TIME_TO_SEC(TIMEDIFF(s.to_hour, s.from_hour)))/3600 as target
 		FROM tbl_store_schedules as ss, tbl_employee_schedules as es, tbl_shifts as s
 		WHERE ss.store_schedule_id = es.store_schedule_id
 		AND es.employee_schedule_id = s.employee_schedule_id
 		AND s.position_id IS NOT NULL
-		AND SS.DAY BETWEEN STR_TO_DATE(#start_date#,'%Y-%m-%d %H:%i:%s') AND STR_TO_DATE(#end_date#,'%Y-%m-%d %H:%i:%s')
-		AND SS.STORE_ID = #store_id#
+		AND ss.day BETWEEN STR_TO_DATE(#start_date#,'%Y-%m-%d %H:%i:%s') AND STR_TO_DATE(#end_date#,'%Y-%m-%d %H:%i:%s')
+		AND ss.store_id = #store_id#
 		GROUP BY s.position_id, ss.day
 		ORDER BY s.position_id, ss.day
 	</select>

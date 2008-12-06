@@ -103,12 +103,11 @@
     <table border="0" cellspacing="0" align="center">
 	<tr>
 	 <td align="right" class="form_label"><s:text name="report.displaytype.label"/></td>
-     <td align="left"><s:select name="selectView" list="viewMap" listKey="key" listValue="%{getText(value)}" theme="simple"/></td>
+     <td align="left"><s:select name="selectView" list="viewMap" listKey="key" listValue="%{getText(value)}" onchange="report_form.action=report_form.selectView.value; report_form.submit();" theme="simple"/></td>
      <td>&nbsp;</td>
      <td align="right" class="form_label"><s:text name="report.period.label"/></td>
      <td align="left"><s:select name="period" list="periodMap" listKey="key" listValue="%{getText(value)}" theme="simple"/></td>
     </tr>
     </table>
    
-
 </s:form>

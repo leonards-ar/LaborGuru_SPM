@@ -17,7 +17,7 @@ public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao
 	
 	public List<TotalHour> getWeeklyTotalHour(Store store, Date startDate,Date endDate) throws SQLException {
 		if(log.isDebugEnabled()) {
-			log.debug("before select params: store_id:" + store.getId() + " startDate: " + startDate + " endDate" + endDate);
+			log.debug("getWeeklyTotalHour: before select params: store_id:" + store.getId() + " startDate: " + startDate + " endDate" + endDate);
 		}
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -31,7 +31,7 @@ public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao
 	
 	public List<TotalHourByPosition>getWeeklyTotalHourByPosition(Store store, Date startDate, Date endDate) throws SQLException {
 		if(log.isDebugEnabled()) {
-			log.debug(" before select params: store_id:" + store.getId() + " startDate: " + startDate + " endDate" + endDate);
+			log.debug("getWeeklyTotalHourByPosition: before select params: store_id:" + store.getId() + " startDate: " + startDate + " endDate" + endDate);
 		}
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();

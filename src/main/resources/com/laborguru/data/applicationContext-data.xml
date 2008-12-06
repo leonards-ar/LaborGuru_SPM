@@ -189,15 +189,15 @@
 		<description>Different Display Types</description>
 		<constructor-arg>
 			<map>
-				<entry key="total">
+				<entry key="totalHoursReport_showReport.action">
 					<value>report.displayType.view.total</value>
 				</entry>
-				<entry key="position">
+				<entry key="totalHoursReportByPosition_showReport.action">
 					<value>report.diplayType.view.position</value>
 				</entry>
-				<entry key="service">
+				<!--  entry key="service">
 					<value>report.displayType.view.service</value>
-				</entry>
+				</entry-->
 			</map>
 		</constructor-arg>
 	</bean>

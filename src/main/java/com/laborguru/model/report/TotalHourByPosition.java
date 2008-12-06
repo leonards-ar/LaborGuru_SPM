@@ -1,8 +1,13 @@
 package com.laborguru.model.report;
 
-import com.laborguru.model.Position;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
-public class TotalHourByPosition {
+import com.laborguru.model.Position;
+import com.laborguru.model.SpmObject;
+
+public class TotalHourByPosition extends SpmObject{
 
 	Position position;
 	TotalHour totalHour;
@@ -30,6 +35,47 @@ public class TotalHourByPosition {
 	public void setTotalHour(TotalHour totalHour) {
 		this.totalHour = totalHour;
 	}
+
+	/**
+	 * @return
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder(17, 37)
+		.append(position)
+		.append(totalHour)
+		.toHashCode();
+
+	}
+	/**
+	 * @param obj
+	 * @return
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (getClass() != obj.getClass())
+			return false;
+		
+		final TotalHourByPosition other = (TotalHourByPosition)obj;
+		
+		return new EqualsBuilder().append(position, other.position)
+		.append(totalHour, other.totalHour).isEquals();
+		
+	}
 	
+	/**
+	 * @return
+	 * @see com.laborguru.model.SpmObject#toString()
+	 */
+	public String toString() {
+		return new ToStringBuilder(this, DEFAULT_TO_STRING_STYLE)
+		.append(position)
+		.append(totalHour)
+		.toString();
+	}
 	
 }

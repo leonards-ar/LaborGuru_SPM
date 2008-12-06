@@ -115,7 +115,8 @@
 				
 				/projection/*.action=MANAGER_PROJECTIONS
 				
-				/report/totalhoursreport_weeklyreport.action=REPORTS
+				/report/totalhoursreport_showreport.action=REPORTS
+				/report/totalhoursreportbyposition_showreport.action=REPORTS
 				
 				/sales/sales_edit.action=EDIT_STORE
 				

@@ -17,7 +17,9 @@ import com.laborguru.service.data.ReferenceDataService;
 public abstract class ScheduleReportPrepareAction extends SpmAction  {
 
 	private static final long serialVersionUID = 1L;
-
+	private static final String DEFAULT_VIEW="total";
+	private static final String DEFAULT_PERIOD = "weekly";
+	
 	private WeekDaySelector weekDaySelector;
 	private String selectedDate;
 	private String selectedWeekDay;	
@@ -165,6 +167,18 @@ public abstract class ScheduleReportPrepareAction extends SpmAction  {
 	protected void pageSetup() {
 		setViewMap(getReferenceDataService().getReportViews());
 		setPeriodMap(getReferenceDataService().getReportPeriods());
+		if(getSelectView() == null) {
+			setSelectView(DEFAULT_VIEW);
+		} else {
+			setSelectView(getSelectView());
+		}
+		
+		if(getPeriod() == null) {
+			setPeriod(DEFAULT_PERIOD);
+		} else {
+			setPeriod(getPeriod());
+		}
+		
 	}
 	
 	public abstract void prepareChangeWeek();
