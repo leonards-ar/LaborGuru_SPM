@@ -73,7 +73,7 @@
 			<id>mochahost</id>
 			<properties>
 				<db.url>jdbc:mysql://localhost:3306/laborgur_spm</db.url>
-				<db.username>spm</db.username>
+				<db.username>laborgur_spm</db.username>
 				<db.password>java1234</db.password>
 			</properties>
 		</profile>		
