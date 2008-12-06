@@ -2,8 +2,6 @@ package com.laborguru.service.report;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -17,6 +15,7 @@ import com.laborguru.model.Position;
 import com.laborguru.model.Store;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.model.report.TotalHourByPosition;
+import com.laborguru.service.position.PositionService;
 import com.laborguru.service.report.dao.ReportDao;
 import com.laborguru.util.CalendarUtils;
 
@@ -30,6 +29,7 @@ import com.laborguru.util.CalendarUtils;
 public class ReportServiceBean implements ReportService {
 	private static final Logger log = Logger.getLogger(ReportServiceBean.class);
 
+	
 	private ReportDao reportDao;
 
 	public List<TotalHour> getWeeklyTotalHours(Store store,
@@ -102,15 +102,15 @@ public class ReportServiceBean implements ReportService {
 	}
 
 	public HashMap<Position, List<TotalHour>> getWeeklyTotalHoursByPosition(
-			Store store, Date startingWeekDate) {
+			Store store, List<Position> positions, Date startingWeekDate) {
+
 		HashMap<Position, List<TotalHour>> totalHourByPosition = new HashMap<Position, List<TotalHour>>();
 		List<TotalHourByPosition> totalHoursScheduleByPosition = new ArrayList<TotalHourByPosition>();
 
-			for (Position position : store.getPositions()) {
+			for (Position position : positions) {
+				
 				TotalHourByPosition tp = new TotalHourByPosition();
 				TotalHour th = new TotalHour();
-
-
 				th.setDay(startingWeekDate);
 				th.setSchedule(new BigDecimal("172"));
 				th.setTarget(new BigDecimal("156"));
@@ -118,6 +118,7 @@ public class ReportServiceBean implements ReportService {
 				tp.setTotalHour(th);
 				totalHoursScheduleByPosition.add(tp);
 
+				tp = new TotalHourByPosition();
 				th = new TotalHour();
 				th.setDay(CalendarUtils.addOrSubstractDays(startingWeekDate, 1));
 				th.setSchedule(new BigDecimal("189"));
@@ -126,6 +127,7 @@ public class ReportServiceBean implements ReportService {
 				tp.setTotalHour(th);
 				totalHoursScheduleByPosition.add(tp);
 
+				tp = new TotalHourByPosition();
 				th = new TotalHour();
 				th.setDay(CalendarUtils.addOrSubstractDays(startingWeekDate, 2));
 				th.setSchedule(new BigDecimal("216"));
@@ -134,6 +136,7 @@ public class ReportServiceBean implements ReportService {
 				tp.setTotalHour(th);
 				totalHoursScheduleByPosition.add(tp);
 
+				tp = new TotalHourByPosition();
 				th = new TotalHour();
 				th.setDay(CalendarUtils.addOrSubstractDays(startingWeekDate, 3));
 				th.setSchedule(new BigDecimal("190"));
@@ -142,6 +145,7 @@ public class ReportServiceBean implements ReportService {
 				tp.setTotalHour(th);
 				totalHoursScheduleByPosition.add(tp);
 
+				tp = new TotalHourByPosition();
 				th = new TotalHour();
 				th.setDay(CalendarUtils.addOrSubstractDays(startingWeekDate, 4));
 				th.setSchedule(new BigDecimal("236"));
@@ -150,6 +154,7 @@ public class ReportServiceBean implements ReportService {
 				tp.setTotalHour(th);
 				totalHoursScheduleByPosition.add(tp);
 
+				tp = new TotalHourByPosition();
 				th = new TotalHour();
 				th.setDay(CalendarUtils.addOrSubstractDays(startingWeekDate, 5));
 				th.setSchedule(new BigDecimal("265"));
@@ -158,8 +163,9 @@ public class ReportServiceBean implements ReportService {
 				tp.setTotalHour(th);
 				totalHoursScheduleByPosition.add(tp);
 
+				tp = new TotalHourByPosition();
 				th = new TotalHour();
-				th.setDay(CalendarUtils.addOrSubstractDays(startingWeekDate, 7));
+				th.setDay(CalendarUtils.addOrSubstractDays(startingWeekDate, 6));
 				th.setSchedule(new BigDecimal("215"));
 				th.setTarget(new BigDecimal("211"));
 				tp.setPosition(position);
@@ -168,11 +174,13 @@ public class ReportServiceBean implements ReportService {
 
 			}
 
+			//System.out.println("totalScheduleHour: " + totalHoursScheduleByPosition);
+			
 		try {
 			List<TotalHourByPosition> totalHoursTargetByPosition;
 			totalHoursTargetByPosition = reportDao.getWeeklyTotalHourByPosition(store, startingWeekDate, CalendarUtils.addOrSubstractDays(startingWeekDate, 7));
 
-			for(Position position: store.getPositions()) {
+			for(Position position: positions) {
 				List<TotalHour> totalHoursScheduleList = getTotalHoursByPosition(position, totalHoursScheduleByPosition);
 				List<TotalHour> totalHoursTargetList = getTotalHoursByPosition(position, totalHoursTargetByPosition);
 				
@@ -202,12 +210,14 @@ public class ReportServiceBean implements ReportService {
 				totalHours.add(th.getTotalHour());
 			}
 		}
+		
 		return totalHours;
 	}
 	
 	private TotalHour getTotalHourByDay(Date day, List<TotalHour> list) {
 		for(TotalHour th: list) {
 			if(day.equals(th.getDay())) {
+				System.out.println("TotalHour Found:" + th);
 				return th;
 			}
 		}
@@ -228,5 +238,6 @@ public class ReportServiceBean implements ReportService {
 	public void setReportDao(ReportDao reportDao) {
 		this.reportDao = reportDao;
 	}
+
 
 }

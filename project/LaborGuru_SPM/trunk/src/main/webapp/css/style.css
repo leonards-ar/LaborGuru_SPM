@@ -592,3 +592,15 @@ input.text, input.password, textarea {
 	font-size: 11px;	
 	text-align: center;
 }
+
+.positionTableHeader {
+	background-color: #666666;
+	background-image: url('../images/table-header-bg.png');
+	background-position:  center 50%;
+	background-repeat: repeat-x;
+	color: #333333;
+	font-size: 12px;
+	text-align: left;
+	font-family: trebuchet ms, arial, sans-serif;
+	font-weight: bold	
+}

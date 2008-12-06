@@ -27,12 +27,14 @@ public interface ReportService extends Service {
 	List<TotalHour> getWeeklyTotalHours(Store store, Date startingWeekDate);
 	
 	
+	
 	/**
-	 * Retrieves the Hours that has been projected ant the hours that has been consumed 
+	 * Retrieves the Hours that has been projected and the hours taht has been consumed 
 	 * by Position.
 	 * @param store
+	 * @param positions
 	 * @param startingWeekDate
 	 * @return
 	 */
-	HashMap<Position, List<TotalHour>> getWeeklyTotalHoursByPosition(Store store, Date startingWeekDate);
+	HashMap<Position, List<TotalHour>> getWeeklyTotalHoursByPosition(Store store, List<Position> positions, Date startingWeekDate);
 }

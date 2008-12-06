@@ -5,8 +5,10 @@ import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.List;
 
+import com.laborguru.action.SpmActionResult;
 import com.laborguru.model.Position;
 import com.laborguru.model.report.TotalHour;
+import com.laborguru.service.position.PositionService;
 import com.laborguru.service.report.ReportService;
 import com.laborguru.util.FusionXmlDataConverter;
 import com.opensymphony.xwork2.Preparable;
@@ -27,23 +29,29 @@ public class TotalHoursReportByPositionPrepareAction extends ScheduleReportPrepa
 	private static final long serialVersionUID = 1L;
 
 	private HashMap<Position, List<TotalHour>> totalHoursByPosition;
-	private HashMap<Position, BigDecimal> totalSchedulebyPosition;
+	private HashMap<Position, BigDecimal> totalScheduleByPosition;
 	private HashMap<Position, BigDecimal> totalTargetByPosition;
-	private HashMap<Position, BigDecimal> totalDifference;
+	private HashMap<Position, BigDecimal> totalDifferenceByPosition;
 	private HashMap<Position, BigDecimal> totalPercentajeByPosition;
 	private HashMap<Position, String> graphData;
+	private List<Position> positions;
 	
 	private ReportService reportService;
+	private PositionService positionService;
+	
 	private FusionXmlDataConverter fusionXmlDataConverter;
 	
 	private final String actionName = "totalHoursReportByPosition";
 	
 	@Override
 	public void prepareChangeWeek() {
+		pageSetup();
 	}
 
 	@Override
 	protected void processChangeWeek() {
+		getWeekDaySelector().setStringSelectedDay(getSelectedDate());
+		showReport();
 	}
 
 	/**
@@ -53,14 +61,35 @@ public class TotalHoursReportByPositionPrepareAction extends ScheduleReportPrepa
 	public void prepare(){
 	}
 
-	private void getReport() {
-		setTotalHoursByPosition(reportService.getWeeklyTotalHoursByPosition(super.getEmployeeStore(), getWeekDaySelector().getStartingWeekDay()));
+	public void prepareShowReport(){
+		pageSetup();
+	}
+	
+	public String showReport() {
+		if(getPeriod() == null || getPeriod().equals("weekly")) {
+			return weeklyReport();
+		} 
+		//TODO show half hour report.
+		return weeklyReport();
+	}
+	
+	public String weeklyReport(){
+		getWeeklyReport();
+		loadCalendarData();
+		return SpmActionResult.INPUT.getResult();
+	}
+	
+	private void getWeeklyReport() {
+		setTotalHoursByPosition(reportService.getWeeklyTotalHoursByPosition(getEmployeeStore(), getPositions(), getWeekDaySelector().getStartingWeekDay()));
 		calculateTotals();
 		generateGraphs();
 	}
 	
 	private void calculateTotals() {
-		for(Position position: getEmployeeStore().getPositions()) {
+
+		initTotals();
+		
+		for(Position position: getPositions()) {
 			BigDecimal totalSchedule = new BigDecimal("0");
 			BigDecimal totalTarget = new BigDecimal("0");
 			BigDecimal totalDifference = new BigDecimal("0");
@@ -71,17 +100,29 @@ public class TotalHoursReportByPositionPrepareAction extends ScheduleReportPrepa
 				totalDifference = totalDifference.add(th.getDifference());
 			}
 			
-			getTotalSchedulebyPosition().put(position, totalSchedule);
+			getTotalScheduleByPosition().put(position, totalSchedule);
 			getTotalTargetByPosition().put(position, totalTarget);
-			getTotalDifference().put(position, totalDifference);
+			getTotalDifferenceByPosition().put(position, totalDifference);
 			getTotalPercentajeByPosition().put(position, totalDifference.divide(totalTarget, 2, RoundingMode.HALF_UP).multiply(new BigDecimal("100")));
+
 		}
+		
 	}
 	
 	private void generateGraphs(){
-		for(Position position: getEmployeeStore().getPositions()){
+		setGraphData(new HashMap<Position, String>());
+		for(Position position: getPositions()){
 			getGraphData().put(position, getFusionXmlDataConverter().weeklyTotalHoursXmlConverter(getTotalHoursByPosition().get(position)));
 		}
+	}
+	
+	private void initTotals() {
+		
+		setTotalScheduleByPosition(new HashMap<Position, BigDecimal>());
+		setTotalTargetByPosition(new HashMap<Position, BigDecimal>());
+		setTotalDifferenceByPosition(new HashMap<Position, BigDecimal>());
+		setTotalPercentajeByPosition(new HashMap<Position, BigDecimal>());
+
 	}
 	
 	/**
@@ -102,16 +143,16 @@ public class TotalHoursReportByPositionPrepareAction extends ScheduleReportPrepa
 	/**
 	 * @return the totalSchedulebyPosition
 	 */
-	public HashMap<Position, BigDecimal> getTotalSchedulebyPosition() {
-		return totalSchedulebyPosition;
+	public HashMap<Position, BigDecimal> getTotalScheduleByPosition() {
+		return totalScheduleByPosition;
 	}
 
 	/**
 	 * @param totalSchedulebyPosition the totalSchedulebyPosition to set
 	 */
-	public void setTotalSchedulebyPosition(
-			HashMap<Position, BigDecimal> totalSchedulebyPosition) {
-		this.totalSchedulebyPosition = totalSchedulebyPosition;
+	public void setTotalScheduleByPosition(
+			HashMap<Position, BigDecimal> totalScheduleByPosition) {
+		this.totalScheduleByPosition = totalScheduleByPosition;
 	}
 
 	/**
@@ -132,15 +173,15 @@ public class TotalHoursReportByPositionPrepareAction extends ScheduleReportPrepa
 	/**
 	 * @return the totalDifference
 	 */
-	public HashMap<Position, BigDecimal> getTotalDifference() {
-		return totalDifference;
+	public HashMap<Position, BigDecimal> getTotalDifferenceByPosition() {
+		return totalDifferenceByPosition;
 	}
 
 	/**
 	 * @param totalDifference the totalDifference to set
 	 */
-	public void setTotalDifference(HashMap<Position, BigDecimal> totalDifference) {
-		this.totalDifference = totalDifference;
+	public void setTotalDifferenceByPosition(HashMap<Position, BigDecimal> totalDifferenceByPosition) {
+		this.totalDifferenceByPosition = totalDifferenceByPosition;
 	}
 
 	/**
@@ -207,4 +248,36 @@ public class TotalHoursReportByPositionPrepareAction extends ScheduleReportPrepa
 	public String getActionName() {
 		return actionName;
 	}
+
+	/**
+	 * @return the positions
+	 */
+	public List<Position> getPositions() {
+		if(positions == null) {
+			positions = getPositionService().getPositionsByStore(getEmployeeStore());
+		}
+		return positions;
+	}
+
+	/**
+	 * @param positions the positions to set
+	 */
+	public void setPositions(List<Position> positions) {
+		this.positions = positions;
+	}
+
+	/**
+	 * @return the positionService
+	 */
+	public PositionService getPositionService() {
+		return positionService;
+	}
+
+	/**
+	 * @param positionService the positionService to set
+	 */
+	public void setPositionService(PositionService positionService) {
+		this.positionService = positionService;
+	}
+	
 }

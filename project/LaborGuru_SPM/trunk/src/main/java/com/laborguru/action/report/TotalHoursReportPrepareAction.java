@@ -13,8 +13,7 @@ import com.opensymphony.xwork2.Preparable;
 public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction implements Preparable{
 
 	private static final long serialVersionUID = 1L;
-	private static final String DEFAULT_VIEW="total";
-	private static final String DEFAULT_PERIOD = "weekly";
+	
 	
 	private List<TotalHour> totalHours;
 	
@@ -35,7 +34,7 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction i
 	public void prepare() throws Exception {
 	}
 	
-	public void prepareWeeklyReport() throws Exception {
+	public void prepareShowReport() throws Exception {
 		pageSetup();
 	}
 	
@@ -43,18 +42,22 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction i
 		pageSetup();
 	}
 	
-	public String weeklyReport() {
-		getReport();
+	public String showReport() {
+		if(getPeriod() == null || getPeriod().equals("weekly")) {
+			getWeeklyReport();
+		} else {
+			//TODO show half hour report. 
+		}
 		loadCalendarData();
 		return SpmActionResult.INPUT.getResult();
 	}
 	
 	protected void processChangeWeek() {
 		getWeekDaySelector().setStringSelectedDay(getSelectedDate());
-		getReport();
+		showReport();
 	}
 	
-	private void getReport() {
+	private void getWeeklyReport() {
 		setTotalHours(getReportService().getWeeklyTotalHours(getEmployeeStore(), getWeekDaySelector().getStartingWeekDay()));
 		calculateTotals();
 	}
@@ -70,16 +73,7 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction i
 		setTotalPercentaje(getTotalDifference().divide(getTotalTarget(), 2, RoundingMode.HALF_UP).multiply(new BigDecimal("100")));
 	}
 	
-	protected void pageSetup() {
-		super.pageSetup();
-		if(getSelectView() == null) {
-			setSelectView(DEFAULT_VIEW);
-		}
-		
-		if(getPeriod() == null) {
-			setPeriod(DEFAULT_PERIOD);
-		}
-	}
+
 	/**
 	 * @return the totalHours
 	 */
