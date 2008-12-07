@@ -189,10 +189,10 @@
 		<description>Different Display Types</description>
 		<constructor-arg>
 			<map>
-				<entry key="totalHoursReport_showReport.action">
+				<entry key="totalHoursReport_changeWeek.action">
 					<value>report.displayType.view.total</value>
 				</entry>
-				<entry key="totalHoursReportByPosition_showReport.action">
+				<entry key="totalHoursReportByPosition_changeWeek.action">
 					<value>report.diplayType.view.position</value>
 				</entry>
 				<!--  entry key="service">

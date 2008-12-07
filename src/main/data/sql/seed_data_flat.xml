@@ -86,7 +86,7 @@
   <tbl_menu_items menu_item_id="18" label_key="user.submenu.list" help_key="USER_LIST_HELP" target="/user/user_list.action" position="1" parent_id="17" permission_id="17"/>
   <tbl_menu_items menu_item_id="19" label_key="user.submenu.create" help_key="USER_ADD_HELP" target="/user/user_add.action" position="0" parent_id="17" permission_id="18"/>
   <tbl_menu_items menu_item_id="20" label_key="store.submenu.uploadsales" help_key="STORE_UPLOAD_SALES_HELP" target="/sales/sales_edit.action" position="2" parent_id="5" permission_id="6"/>
-  <tbl_menu_items menu_item_id="21" label_key="report.menu.label" help_key="REPORT_MENU_HELP" target="/report/totalHoursReport_showReport.action" position="7" permission_id="19"/>
+  <tbl_menu_items menu_item_id="21" label_key="report.menu.label" help_key="REPORT_MENU_HELP" target="/report/totalHoursReport_showFirstReport.action" position="7" permission_id="19"/>
 
   
   <tbl_stores store_id="1" name="microcentro" area_id="1" half_hour_projections_weeks_default="4" daily_projections_weeks_default="4" code="MD0001"/>
