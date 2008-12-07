@@ -11,6 +11,7 @@ import com.laborguru.model.report.TotalHour;
 import com.laborguru.service.position.PositionService;
 import com.laborguru.service.report.ReportService;
 import com.laborguru.util.FusionXmlDataConverter;
+import com.laborguru.util.SpmConstants;
 import com.opensymphony.xwork2.Preparable;
 
 
@@ -90,9 +91,9 @@ public class TotalHoursReportByPositionPrepareAction extends ScheduleReportPrepa
 		initTotals();
 		
 		for(Position position: getPositions()) {
-			BigDecimal totalSchedule = new BigDecimal("0");
-			BigDecimal totalTarget = new BigDecimal("0");
-			BigDecimal totalDifference = new BigDecimal("0");
+			BigDecimal totalSchedule = SpmConstants.BD_ZERO_VALUE;
+			BigDecimal totalTarget = SpmConstants.BD_ZERO_VALUE;
+			BigDecimal totalDifference = SpmConstants.BD_ZERO_VALUE;
 			
 			for(TotalHour th: getTotalHoursByPosition().get(position)) {
 				totalSchedule = totalSchedule.add(th.getSchedule());
@@ -103,7 +104,7 @@ public class TotalHoursReportByPositionPrepareAction extends ScheduleReportPrepa
 			getTotalScheduleByPosition().put(position, totalSchedule);
 			getTotalTargetByPosition().put(position, totalTarget);
 			getTotalDifferenceByPosition().put(position, totalDifference);
-			getTotalPercentajeByPosition().put(position, totalDifference.divide(totalTarget, 2, RoundingMode.HALF_UP).multiply(new BigDecimal("100")));
+			getTotalPercentajeByPosition().put(position, totalDifference.divide(totalTarget, 2, SpmConstants.ROUNDING_MODE).multiply(new BigDecimal("100")));
 
 		}
 		

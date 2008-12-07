@@ -8,6 +8,7 @@ import com.laborguru.action.SpmActionResult;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.service.report.ReportService;
 import com.laborguru.util.FusionXmlDataConverter;
+import com.laborguru.util.SpmConstants;
 import com.opensymphony.xwork2.Preparable;
 
 public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction implements Preparable{
@@ -20,10 +21,10 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction i
 	private ReportService reportService;
 	private FusionXmlDataConverter fusionXmlDataConverter;
 
-	private BigDecimal totalSchedule = new BigDecimal("0");
-	private BigDecimal totalTarget = new BigDecimal("0");
-	private BigDecimal totalDifference = new BigDecimal("0");
-	private BigDecimal totalPercentaje = new BigDecimal("0");
+	private BigDecimal totalSchedule = SpmConstants.BD_ZERO_VALUE;
+	private BigDecimal totalTarget = SpmConstants.BD_ZERO_VALUE;
+	private BigDecimal totalDifference = SpmConstants.BD_ZERO_VALUE;
+	private BigDecimal totalPercentaje = SpmConstants.BD_ZERO_VALUE;
 	
 	private final String actionName = "totalHoursReport";
 	
@@ -82,7 +83,7 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction i
 			setTotalDifference(getTotalDifference().add(th.getDifference()));
 		}
 		// totalDifference/totalTarget * 100
-		setTotalPercentaje(getTotalDifference().divide(getTotalTarget(), 2, RoundingMode.HALF_UP).multiply(new BigDecimal("100")));
+		setTotalPercentaje(getTotalDifference().divide(getTotalTarget(), 2, SpmConstants.ROUNDING_MODE).multiply(new BigDecimal("100")));
 	}
 	
 
