@@ -15,7 +15,6 @@ import com.laborguru.model.Position;
 import com.laborguru.model.Store;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.model.report.TotalHourByPosition;
-import com.laborguru.service.position.PositionService;
 import com.laborguru.service.report.dao.ReportDao;
 import com.laborguru.util.CalendarUtils;
 
@@ -32,6 +31,12 @@ public class ReportServiceBean implements ReportService {
 	
 	private ReportDao reportDao;
 
+	/**
+	 * @param store
+	 * @param startingWeekDate
+	 * @return
+	 * @see com.laborguru.service.report.ReportService#getWeeklyTotalHours(com.laborguru.model.Store, java.util.Date)
+	 */
 	public List<TotalHour> getWeeklyTotalHours(Store store,
 			Date startingWeekDate) {
 		List<TotalHour> totalHours = new ArrayList<TotalHour>();
@@ -101,6 +106,13 @@ public class ReportServiceBean implements ReportService {
 		return totalHours;
 	}
 
+	/**
+	 * @param store
+	 * @param positions
+	 * @param startingWeekDate
+	 * @return
+	 * @see com.laborguru.service.report.ReportService#getWeeklyTotalHoursByPosition(com.laborguru.model.Store, java.util.List, java.util.Date)
+	 */
 	public HashMap<Position, List<TotalHour>> getWeeklyTotalHoursByPosition(
 			Store store, List<Position> positions, Date startingWeekDate) {
 
@@ -173,8 +185,6 @@ public class ReportServiceBean implements ReportService {
 				totalHoursScheduleByPosition.add(tp);
 
 			}
-
-			//System.out.println("totalScheduleHour: " + totalHoursScheduleByPosition);
 			
 		try {
 			List<TotalHourByPosition> totalHoursTargetByPosition;
@@ -185,13 +195,22 @@ public class ReportServiceBean implements ReportService {
 				List<TotalHour> totalHoursTargetList = getTotalHoursByPosition(position, totalHoursTargetByPosition);
 				
 				for (int i = 0; i < totalHoursScheduleList.size(); i++) {
+					TotalHourByPosition thByPosition = new TotalHourByPosition();
+					//remove element so there is less iterations in the next search
+					thByPosition.setPosition(position);
+					thByPosition.setTotalHour(totalHoursScheduleList.get(i));
+					totalHoursScheduleByPosition.remove(thByPosition);
 					
 					TotalHour targetTotalHour = getTotalHourByDay(totalHoursScheduleList.get(i).getDay(), totalHoursTargetList);
 					if(targetTotalHour != null) {
 						totalHoursScheduleList.get(i).setTarget(targetTotalHour.getTarget());
+						//remove element so there is less iterations in the next search
+						thByPosition.setTotalHour(targetTotalHour);
+						totalHoursTargetByPosition.remove(thByPosition);
 					}
 					
 				}
+				
 				totalHourByPosition.put(position, totalHoursScheduleList);
 			}
 
@@ -204,6 +223,7 @@ public class ReportServiceBean implements ReportService {
 	}
 
 	private List<TotalHour> getTotalHoursByPosition(Position position, List<TotalHourByPosition> thByPosition) {
+
 		List<TotalHour>totalHours = new ArrayList<TotalHour>();
 		for(TotalHourByPosition th: thByPosition) {
 			if(position.getId().equals(th.getPosition().getId())) {
@@ -217,7 +237,6 @@ public class ReportServiceBean implements ReportService {
 	private TotalHour getTotalHourByDay(Date day, List<TotalHour> list) {
 		for(TotalHour th: list) {
 			if(day.equals(th.getDay())) {
-				System.out.println("TotalHour Found:" + th);
 				return th;
 			}
 		}
