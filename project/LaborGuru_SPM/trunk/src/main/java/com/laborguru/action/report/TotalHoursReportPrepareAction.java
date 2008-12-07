@@ -42,16 +42,28 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction i
 		pageSetup();
 	}
 	
+	public void prepareShowFirstReport() {
+		pageSetup();
+	}
+	
+	public String showFirstReport(){
+		setSelectView("totalHoursReport_changeWeek.action");
+		setPeriod("weekly");
+		return weeklyReport();
+	}
 	public String showReport() {
 		if(getPeriod() == null || getPeriod().equals("weekly")) {
-			getWeeklyReport();
-		} else {
-			//TODO show half hour report. 
-		}
+			return weeklyReport();
+		} 
+		//TODO show half hour report.
+		return weeklyReport();
+	}
+	
+	public String weeklyReport(){
+		getWeeklyReport();
 		loadCalendarData();
 		return SpmActionResult.INPUT.getResult();
 	}
-	
 	protected void processChangeWeek() {
 		getWeekDaySelector().setStringSelectedDay(getSelectedDate());
 		showReport();
