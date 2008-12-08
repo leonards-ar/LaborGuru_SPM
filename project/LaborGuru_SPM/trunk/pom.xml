@@ -35,6 +35,7 @@
 		<db.maxIdle>1</db.maxIdle>
 		<db.validationQuery>select 1</db.validationQuery>
 		<db.defaultAutoCommit>false</db.defaultAutoCommit>
+		<db.schema>spm</db.schema>
 	</properties>
 	<profiles>
 		<profile>
@@ -75,6 +76,7 @@
 				<db.url>jdbc:mysql://localhost:3306/laborgur_spm</db.url>
 				<db.username>laborgur_spm</db.username>
 				<db.password>java1234</db.password>
+				<db.schema>laborgur_spm</db.schema>
 			</properties>
 		</profile>		
 	</profiles>
