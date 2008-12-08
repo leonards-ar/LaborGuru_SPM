@@ -90,6 +90,7 @@
 					org.hibernate.dialect.MySQLDialect
 				</prop>
 				<prop key="hibernate.show_sql">true</prop>
+				<!--prop key="hibernate.default_schema">spm</prop-->
 			</props>
 		</property>
 	</bean>
