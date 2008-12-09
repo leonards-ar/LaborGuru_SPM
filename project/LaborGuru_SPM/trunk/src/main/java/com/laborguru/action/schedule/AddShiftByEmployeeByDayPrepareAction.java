@@ -26,7 +26,7 @@ import com.opensymphony.xwork2.Preparable;
  * @since SPM 1.0
  *
  */
-public class AddShiftByEmployeeByDayPrepareAction extends AddShiftBaseAction implements Preparable {
+public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseAction implements Preparable {
 	private static final Logger log = Logger.getLogger(AddShiftByEmployeeByDayPrepareAction.class);
 	
 	private List<ScheduleRow> scheduleData;

@@ -323,6 +323,19 @@ public class CalendarUtils {
 	
 	/**
 	 * 
+	 * @param date1
+	 * @param date2
+	 * @return
+	 */
+	public static Double differenceInHours(Date date1, Date date2) {
+		long t1 = date1 != null ? date1.getTime() : 0L;
+		long t2 = date2 != null ? date2.getTime() : 0L;
+		
+		return new Double(t1 - t2 / (1000L * 60L * 60L));
+	}
+	
+	/**
+	 * 
 	 * @param hours
 	 * @return
 	 */

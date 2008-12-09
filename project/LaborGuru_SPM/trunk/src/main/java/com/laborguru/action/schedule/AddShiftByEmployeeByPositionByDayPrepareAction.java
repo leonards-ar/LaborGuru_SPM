@@ -26,7 +26,7 @@ import com.opensymphony.xwork2.Preparable;
  * @since SPM 1.0
  *
  */
-public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftBaseAction implements Preparable {
+public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftByDayBaseAction implements Preparable {
 	/**
 	 * 
 	 */

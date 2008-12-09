@@ -338,6 +338,15 @@ table.results th a {
 	font-family: trebuchet ms, arial, sans-serif;
 }
 
+.waitMessage {
+	font-style: normal;
+	font-weight: bold;
+	font-size: 13px;
+	font-family: trebuchet ms, arial, sans-serif;
+	text-align: center;
+	color: #336600;
+}
+
 .errorSecurityTitle {
 	font-size: 15px;
 	font-weight: bold;
