@@ -31,6 +31,10 @@ public class DailyProjection extends SpmObject {
 	
 	private Store store;
 	
+	private BigDecimal dailyProjectionVariable2;
+	private BigDecimal dailyProjectionVariable3;
+	
+	
 	private List<HalfHourProjection> halfHourProjections = new ArrayList<HalfHourProjection>();
 		
 	
@@ -231,5 +235,39 @@ public class DailyProjection extends SpmObject {
 		}
 		
 		return dailyProjection;
+	}
+
+	/**
+	 * @return the dailyProjectionVariable3
+	 */
+	public BigDecimal getDailyProjectionVariable3() {
+		if(dailyProjectionVariable3 == null) {
+			setDailyProjectionVariable3(SpmConstants.BD_ZERO_VALUE);
+		}
+		return dailyProjectionVariable3;
+	}
+
+	/**
+	 * @param dailyProjectionVariable3 the dailyProjectionVariable3 to set
+	 */
+	public void setDailyProjectionVariable3(BigDecimal dailyProjectionVariable3) {
+		this.dailyProjectionVariable3 = dailyProjectionVariable3;
+	}
+
+	/**
+	 * @return the dailyProjectionVariable2
+	 */
+	public BigDecimal getDailyProjectionVariable2() {
+		if(dailyProjectionVariable2 == null) {
+			setDailyProjectionVariable2(SpmConstants.BD_ZERO_VALUE);
+		}
+		return dailyProjectionVariable2;
+	}
+
+	/**
+	 * @param dailyProjectionVariable2 the dailyProjectionVariable2 to set
+	 */
+	public void setDailyProjectionVariable2(BigDecimal dailyProjectionVariable2) {
+		this.dailyProjectionVariable2 = dailyProjectionVariable2;
 	}	
 }

@@ -14,7 +14,7 @@ import com.laborguru.action.SpmActionResult;
  * @since SPM 1.0
  *
  */
-public class AddShiftByEmployeeByWeekPrepareAction extends AddShiftBaseAction {
+public class AddShiftByEmployeeByWeekPrepareAction extends AddShiftByWeekBaseAction {
 
 	/**
 	 * 
