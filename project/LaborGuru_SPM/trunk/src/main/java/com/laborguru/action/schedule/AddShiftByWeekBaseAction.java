@@ -12,6 +12,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.laborguru.frontend.model.WeeklyScheduleRow;
+import com.laborguru.model.Position;
 import com.laborguru.model.StoreSchedule;
 
 /**
@@ -55,14 +56,14 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction {
 	/**
 	 * @param scheduleData the scheduleData to set
 	 */
-	public void setScheduleData(List<WeeklyScheduleRow> scheduleData) {
+	protected void setScheduleData(List<WeeklyScheduleRow> scheduleData) {
 		this.scheduleData = scheduleData;
 	}
 	
 	/**
 	 * @return the storeSchedule
 	 */
-	public List<StoreSchedule> getStoreSchedules() {
+	protected List<StoreSchedule> getStoreSchedules() {
 		if(storeSchedules == null) {
 			
 			storeSchedules = new ArrayList<StoreSchedule>();
@@ -85,6 +86,14 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction {
 		return storeSchedules;
 	}
 
+	/**
+	 * 
+	 * @param position
+	 */
+	protected void buildScheduleDataByEmployeeFor(Position position) {
+		
+	}
+	
 	/**
 	 * @return the weekDays
 	 */
