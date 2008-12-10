@@ -69,6 +69,12 @@ public class StoreDaoHibernate extends SpmHibernateDao implements StoreDao {
 			hqlParams.add("store.area.region.customer.id=" + storeFilter.getCustomerId());
 		}
 
+		//The code comparison matchs exact value. This behaviour It's required by the uploader. Do not modify without looking at
+		//the consequences in the historic sales upload process. 
+		if (includeInFilter(storeFilter.getCustomerCode())) {
+			hqlParams.add("store.area.region.customer.code like '" + storeFilter.getCustomerCode()+"'");
+		}		
+		
 		if (includeInFilter(storeFilter.getCode())){
 			hqlParams.add("store.code like '%"+storeFilter.getCode()+"%'");
 		}
