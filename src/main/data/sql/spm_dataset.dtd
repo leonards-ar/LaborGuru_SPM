@@ -33,6 +33,7 @@
 <!ATTLIST tbl_customers
     customer_id CDATA #REQUIRED
     name CDATA #IMPLIED
+    code CDATA #IMPLIED
 >
 
 <!ELEMENT tbl_employees EMPTY>

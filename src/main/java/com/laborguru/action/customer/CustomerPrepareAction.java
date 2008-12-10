@@ -39,6 +39,8 @@ public class CustomerPrepareAction extends SpmAction implements Preparable{
 	private List<Region> regions = new ArrayList<Region>();
 	private String newRegionName;
 	private String customerName;
+	private String customerCode;
+
 	
 	private Integer index;
 	private Integer customerId;
@@ -232,6 +234,7 @@ public class CustomerPrepareAction extends SpmAction implements Preparable{
 		loadCustomerFromId();
 		
 		setCustomerName(getCustomer().getName());
+		setCustomerCode(getCustomer().getCode());
 		setRegions(new ArrayList<Region>(getCustomer().getRegions()));
 		
 		return SpmActionResult.EDIT.getResult();
@@ -247,6 +250,7 @@ public class CustomerPrepareAction extends SpmAction implements Preparable{
 		loadCustomerFromId();
 		
 		setCustomerName(getCustomer().getName());
+		setCustomerCode(getCustomer().getCode());
 		
 		return SpmActionResult.SHOW.getResult();
 	}	
@@ -345,6 +349,8 @@ public class CustomerPrepareAction extends SpmAction implements Preparable{
 		}
 		
 		getCustomer().setName(getCustomerName());
+		getCustomer().setCode(getCustomerCode());
+
 		
 		//Adding a new region to the list if needed
 		if (getNewRegionName() != null && !"".equals(getNewRegionName().trim()) ){				
@@ -435,5 +441,19 @@ public class CustomerPrepareAction extends SpmAction implements Preparable{
 	 */
 	public void prepare() throws Exception {
 		//It's needed by the Preparable interface, don't comment out or removed
+	}
+
+	/**
+	 * @return the customerCode
+	 */
+	public String getCustomerCode() {
+		return customerCode;
+	}
+
+	/**
+	 * @param customerCode the customerCode to set
+	 */
+	public void setCustomerCode(String customerCode) {
+		this.customerCode = customerCode;
 	}	
 }

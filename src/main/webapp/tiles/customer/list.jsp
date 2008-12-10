@@ -36,6 +36,7 @@
 		<s:set name="customersList" value="customers" scope="request"/>
 		<display:table name="customersList" class="results" pagesize="20" requestURI="customer_list.action" sort="list" defaultsort="1">
 			<display:column property="id" titleKey="customer.id.label" sortable="true"/>
+		    <display:column property="code" titleKey="customer.code.label" sortable="true"/>
 		    <display:column property="name" titleKey="customer.name.label" sortable="true"/>
 		    <authz:authorize ifAllGranted="VIEW_CUSTOMER">
 			    <display:column href="customer_show.action" paramId="customerId" paramProperty="id" class="resultsColumnCentered">

@@ -511,6 +511,13 @@
 <variant precision-max="2147483647" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
 </data-type>
 </column>
+<column alias="" auto-increment="false" column-size="30" decimal-digits="0" default-value="" mandatory="false" name="code" remarks="" uid="bc7fa9:11e201bfa15:-7fe3">
+<column-description></column-description>
+<data-type jdbc-type="12" literal-prefix="'" literal-suffix="'" name="VARCHAR" selected-variant-pattern="VARCHAR(%n)">
+<variant precision-max="255" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n)"/>
+<variant precision-max="255" precision-min="1" precision-variable="%n" type-name-pattern="VARCHAR(%n) BINARY"/>
+</data-type>
+</column>
 </column-list>
 <primary-key alias="" name="PK_TBL_CUSTOMERS" remarks="" uid="1c5cdac:11a1b05b15e:-7e48">
 <primary-key-description></primary-key-description>
@@ -1719,8 +1726,8 @@
 <column alias="" auto-increment="false" column-size="100" decimal-digits="0" default-value="" mandatory="false" name="filename" remarks="" uid="d28fdc:11d82741e4a:-7fd9">
 <column-description></column-description>
 <data-type jdbc-type="1" literal-prefix="'" literal-suffix="'" name="CHAR" selected-variant-pattern="CHAR(%n)">
-<variant type-name-pattern="CHAR"/>
 <variant precision-max="255" precision-min="0" precision-variable="%n" type-name-pattern="CHAR(%n)"/>
+<variant type-name-pattern="CHAR"/>
 <variant precision-max="255" precision-min="0" precision-variable="%n" type-name-pattern="CHAR(%n) BINARY"/>
 </data-type>
 </column>

@@ -20,6 +20,7 @@ public class Customer extends SpmObject{
 
 	private Integer id;
 	private String name;
+	private String code;
 	
 	private Set<Region> regions;
 	
@@ -33,6 +34,7 @@ public class Customer extends SpmObject{
 		return new ToStringBuilder(this, DEFAULT_TO_STRING_STYLE)
 	   	.append("id" , id)
 	   	.append("name",name)
+	   	.append("code", code)
 	   	.toString();		
 	}	
 		
@@ -144,6 +146,20 @@ public class Customer extends SpmObject{
 		if (region.getCustomer() != null){
 			region.setCustomer(null);
 		}
+	}
+
+	/**
+	 * @return the code
+	 */
+	public String getCode() {
+		return code;
+	}
+
+	/**
+	 * @param code the code to set
+	 */
+	public void setCode(String code) {
+		this.code = code;
 	}	
 	
 }

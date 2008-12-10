@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE dataset SYSTEM "spm_dataset.dtd">
 <dataset>
-  <tbl_customers customer_id="1" name="Mac Donalds"/>
-  <tbl_customers customer_id="2" name="Burger King"/>
-  <tbl_customers customer_id="3" name="Pizza Hut"/>
+  <tbl_customers customer_id="1" name="Mac Donalds" code="MD"/>
+  <tbl_customers customer_id="2" name="Burger King" code="BK"/>
+  <tbl_customers customer_id="3" name="Pizza Hut" code="PH"/>
   <tbl_regions region_id="1" name="Capital Federal" customer_id="1"/>
   <tbl_regions region_id="2" name="Gran Buenos Aires" customer_id="1"/>
   <tbl_regions region_id="3" name="Cuyo" customer_id="2"/>

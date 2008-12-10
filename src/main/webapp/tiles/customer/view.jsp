@@ -24,6 +24,10 @@
                     <td align="right" class="form_label" nowrap><s:text name="customer.name.label" /></td>
                     <td align="left" class="value"><s:property value="customer.name"/></td>
 				</tr>
+              	<tr class="editFormEvenRow">
+                    <td align="right" class="form_label" nowrap><s:text name="customer.code.label" /></td>
+                    <td align="left" class="value"><s:property value="customer.code"/></td>
+				</tr>
               </table>
               </tr>                            
 		</table>
