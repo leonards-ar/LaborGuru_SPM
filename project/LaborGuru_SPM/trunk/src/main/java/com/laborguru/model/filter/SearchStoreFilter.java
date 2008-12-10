@@ -16,6 +16,11 @@ public class SearchStoreFilter {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer customerId;
+	
+	//The customer code matchs exact value. This behaviour It's required by the uploader. Do not modify without looking at
+	//the consequences in the historic sales upload process. 
+	private String customerCode;
+	
 	private String name;
 	private String code;
 		
@@ -63,6 +68,22 @@ public class SearchStoreFilter {
 	 */
 	public void setCustomerId(Integer customerId) {
 		this.customerId = customerId;
+	}
+
+
+	/**
+	 * @return the customerCode
+	 */
+	public String getCustomerCode() {
+		return customerCode;
+	}
+
+
+	/**
+	 * @param customerCode the customerCode to set
+	 */
+	public void setCustomerCode(String customerCode) {
+		this.customerCode = customerCode;
 	}
 	
 }

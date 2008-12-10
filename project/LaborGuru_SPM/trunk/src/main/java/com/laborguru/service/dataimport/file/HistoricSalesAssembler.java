@@ -7,21 +7,24 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 
 import com.laborguru.exception.FileParserException;
+import com.laborguru.model.Customer;
 import com.laborguru.model.HistoricSales;
 import com.laborguru.model.Store;
+import com.laborguru.model.service.SalesCSVHistoricSales;
 import com.laborguru.util.CalendarUtils;
 import com.laborguru.util.NumberUtils;
 
 /**
  * Line[]
- * 0 - Store Number - We use this to identify the store
- * 1 - String Location Code
- * 2 - Date - M/dd/yyyy
- * 3 - Half hour - h:mm a
- * 4 - Main Value
- * 5 - Sencond Value - Optional
- * 6 - Thrid Value - Optional
- * 7 - Fourth Value - Optional
+ * 0 - Customer Code - We use 0 and 1 to identify the store
+ * 1 - Store Number - We use 0 and 1 to identify the store
+ * 2 - String Location Code
+ * 3 - Date - M/dd/yyyy
+ * 4 - Half hour - h:mm a
+ * 5 - Main Value
+ * 6 - Sencond Value - Optional
+ * 7 - Thrid Value - Optional
+ * 8 - Fourth Value - Optional
  * 
  * @author <a href="cnunezre@gmail.com">Cristian Nunez Rebolledo</a>
  * @version 1.0
@@ -34,7 +37,7 @@ public class HistoricSalesAssembler {
 	private final static String DATE_PARSE_FORMAT = "M/dd/yyyy";
 	private final static String TIME_PARSE_FORMAT = "h:mm:ss a";
 	
-	public static HistoricSales getHistoricSales(String[] line){		
+	public static SalesCSVHistoricSales getHistoricSales(String[] line){		
 		
 		if (!isValidLine(line)){
 			String message = "Parsing error: the line is invalid";
@@ -42,14 +45,25 @@ public class HistoricSalesAssembler {
 			throw new FileParserException(message);			
 		}
 		
-		
+		SalesCSVHistoricSales customerHistoricSales = new SalesCSVHistoricSales();
+		Customer customer = new Customer();		
 		HistoricSales historicSale = new HistoricSales();		
 		
 		//Setting store code
-		String storeCode = line[0];
+		String customerCode = line[0];
+		if (customerCode != null && !("".equals(customerCode.trim()))){
+			customer.setCode(customerCode.trim());
+		
+		} else {
+			String message = "Parsing error: customer code is:"+customerCode;
+			log.debug(message);
+			throw new FileParserException(message);
+		}
+				
+		String storeCode = line[1];
 		
 		if (storeCode != null && !("".equals(storeCode.trim()))){
-			Store store = new Store();		
+			Store store = new Store();
 			store.setCode(storeCode.trim());		
 			historicSale.setStore(store);
 		} else {
@@ -59,12 +73,12 @@ public class HistoricSalesAssembler {
 		}
 		
 		//Setting date time & day of the week
-		Date date = CalendarUtils.stringToDate(line[2], DATE_PARSE_FORMAT);
+		Date date = CalendarUtils.stringToDate(line[3], DATE_PARSE_FORMAT);
 		
 		if (date != null){
 			Calendar calendarDate = CalendarUtils.getCalendar(date);		
 			
-			Date time = CalendarUtils.stringToDate(line[3], TIME_PARSE_FORMAT);
+			Date time = CalendarUtils.stringToDate(line[4], TIME_PARSE_FORMAT);
 			if (time != null){
 				Calendar calendarTime = CalendarUtils.getCalendar(time);		
 
@@ -74,48 +88,51 @@ public class HistoricSalesAssembler {
 				historicSale.setDateTime(calendarDate.getTime());
 				historicSale.setDayOfWeek(calendarDate.get(Calendar.DAY_OF_WEEK));
 			} else {
-				String message = "Parsing error: time "+line[3]+" is not valid";
+				String message = "Parsing error: time "+line[4]+" is not valid";
 				log.debug(message);
 				throw new FileParserException(message);
 			}
 		} else {
-			String message = "Parsing error: date "+line[2]+" is not valid";
+			String message = "Parsing error: date "+line[3]+" is not valid";
 			log.debug(message);
 			throw new FileParserException(message);
 		}
 		
 		//Setting Main Value
-		Number mainValue = NumberUtils.stringToNumber(line[4], NumberUtils.DECIMAL_FORMAT);
+		Number mainValue = NumberUtils.stringToNumber(line[5], NumberUtils.DECIMAL_FORMAT);
 		
 		if (mainValue != null){
 			BigDecimal mainBD = new BigDecimal(mainValue.toString());
 			historicSale.setMainValue(mainBD);
 		} else {
-			String message = "Parsing error: main value "+line[4]+" is not valid";
+			String message = "Parsing error: main value "+line[5]+" is not valid";
 			log.debug(message);
 			throw new FileParserException(message);
 		}
 		
 		//Setting optional fields
-		if (line.length > 5){
+		if (line.length > 6){
 			//Setting Second Value
-			BigDecimal secondValue = processNumber(line[5], 5);			
+			BigDecimal secondValue = processNumber(line[6], 6);			
 			historicSale.setSecondValue(secondValue);
 						
-			if (line.length > 6){
+			if (line.length > 7){
 				//Setting Third Value
-				BigDecimal thirdValue = processNumber(line[6], 6);
+				BigDecimal thirdValue = processNumber(line[7], 7);
 				historicSale.setThirdValue(thirdValue);					
 				
-				if (line.length > 7){
+				if (line.length > 8){
 					//Setting fourth Value
-					BigDecimal fourthValue = processNumber(line[7], 7);
+					BigDecimal fourthValue = processNumber(line[8], 8);
 					historicSale.setFourthValue(fourthValue);
 				}
 			}	
 		}
 		
-		return historicSale;
+		customerHistoricSales.setCustomer(customer);
+		customerHistoricSales.setHistoricSales(historicSale);
+		
+		return customerHistoricSales;
 	}
 		
 	
@@ -147,7 +164,7 @@ public class HistoricSalesAssembler {
 	 * @return true if valid
 	 */
 	public static boolean isValidLine(String[] line){
-		return (line != null) && (line.length >=5);
+		return (line != null) && (line.length >=6);
 	}
 	
 }

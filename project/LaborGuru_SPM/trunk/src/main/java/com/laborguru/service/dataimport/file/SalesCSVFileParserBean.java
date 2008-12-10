@@ -12,9 +12,11 @@ import au.com.bytecode.opencsv.CSVReader;
 
 import com.laborguru.exception.FileParserException;
 import com.laborguru.exception.InvalidUploadFileException;
+import com.laborguru.model.Customer;
 import com.laborguru.model.HistoricSales;
 import com.laborguru.model.Store;
 import com.laborguru.model.filter.SearchStoreFilter;
+import com.laborguru.model.service.SalesCSVHistoricSales;
 import com.laborguru.service.store.StoreService;
 
 /**
@@ -104,6 +106,7 @@ public class SalesCSVFileParserBean implements SalesFileParser {
 	 */
 	public HistoricSales getNextRecord() {		
 		HistoricSales aHistoricSales = null;
+		SalesCSVHistoricSales csvRecord = null;
 		String nextLine[] = null;
 		boolean getNext = true;
 
@@ -119,8 +122,11 @@ public class SalesCSVFileParserBean implements SalesFileParser {
 			if (nextLine != null){
 				allLinesCounter++;
 				try {
-					aHistoricSales = HistoricSalesAssembler.getHistoricSales(nextLine);					
-					Store store = getCurrentStore(aHistoricSales.getStore());				
+					csvRecord = HistoricSalesAssembler.getHistoricSales(nextLine);					
+					aHistoricSales = csvRecord.getHistoricSales();
+					
+					Store store = getCurrentStore(aHistoricSales.getStore(), csvRecord.getCustomer());
+					
 					aHistoricSales.setStore(store);
 					validLinesCounter++;
 					getNext = false;
@@ -146,19 +152,21 @@ public class SalesCSVFileParserBean implements SalesFileParser {
 	 * @param historicSales
 	 * @return
 	 */
-	private Store getCurrentStore(Store hsStore) {
+	private Store getCurrentStore(Store hsStore, Customer customer) {
 		
-		if (this.store == null || !this.store.getCode().equals(hsStore.getCode())){
+		if (this.store == null || !this.store.getCode().equals(hsStore.getCode()) 
+				|| !this.store.getArea().getRegion().getCustomer().getCode().equals(customer.getCode())){
 			SearchStoreFilter storeFilter = new SearchStoreFilter();
 			
 			storeFilter.setCode(hsStore.getCode());
-
+			storeFilter.setCustomerCode(customer.getCode());
+			
 			List<Store> storeList = storeService.filterStore(storeFilter);
 			
 			if (storeList != null && storeList.size() > 0){
 				this.store = storeList.get(0);
 			} else {				
-			    String message = "The store with code:"+ hsStore.getCode()+" does not exist";
+			    String message = "The store with store code:"+ hsStore.getCode()+" and customer code:"+customer.getCode()+" does not exist";
 				log.error(message);
 				throw new FileParserException(message);
 			}
