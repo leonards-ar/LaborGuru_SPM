@@ -39,6 +39,10 @@
                     <td align="right" class="form_label" nowrap>* <s:text name="customer.name.label" /></td>
                     <td align="left" class="value"><s:textfield name="customerName" size="30" theme="simple"/></td>
 				</tr>
+              	<tr class="editFormEvenRow">
+                    <td align="right" class="form_label" nowrap>* <s:text name="customer.code.label" /></td>
+                    <td align="left" class="value"><s:textfield name="customerCode" size="30" theme="simple"/></td>
+				</tr>
               </table>
               </tr>                            
 		</table>

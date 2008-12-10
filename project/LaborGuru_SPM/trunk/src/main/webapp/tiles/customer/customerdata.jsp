@@ -16,6 +16,9 @@
 					<tr class="resultsTableOddRow">
 						<td><s:property value="customer.name" /></td>
 					</tr>
+					<tr class="resultsTableEvenRow">
+						<td><s:property value="customer.code" /></td>
+					</tr>
 				</tbody>
 			</table>		
 
