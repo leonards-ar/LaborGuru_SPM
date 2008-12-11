@@ -22,14 +22,13 @@
 		ORDER BY ss.day
 	</select>
 
-	<resultMap id="get-total-hours-by-position-result" class="com.laborguru.model.report.TotalHourByPosition">
+	<resultMap id="get-target-total-hours-by-position-result" class="com.laborguru.model.report.TotalHourByPosition">
 		<result property="position.id" column="positionId"/>
 		<result property="totalHour.day" column="day"/>
-		<result property="totalHour.schedule" column="schedule" />
 		<result property="totalHour.target" column="target" />
 	</resultMap>
 	
-	<select id="getTargetWeeklyTotalHoursByPosition" parameterClass='java.util.Map' resultMap="get-total-hours-by-position-result">
+	<select id="getTargetWeeklyTotalHoursByPosition" parameterClass='java.util.Map' resultMap="get-target-total-hours-by-position-result">
 		SELECT
 		s.position_id as positionId,
 		ss.day as day,
