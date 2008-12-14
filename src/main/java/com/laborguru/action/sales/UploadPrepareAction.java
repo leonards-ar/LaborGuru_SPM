@@ -12,7 +12,7 @@ import com.laborguru.exception.ErrorMessage;
 import com.laborguru.exception.SpmUncheckedException;
 import com.laborguru.model.UploadFile;
 import com.laborguru.model.service.UploadFileProcessed;
-import com.laborguru.service.dataimport.file.SalesFileProcessorService;
+import com.laborguru.service.dataimport.csv.SalesFileProcessorService;
 import com.laborguru.service.uploadfile.UploadFileService;
 
 public class UploadPrepareAction extends SpmAction {
