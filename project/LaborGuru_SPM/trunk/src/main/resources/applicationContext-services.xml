@@ -5,7 +5,7 @@
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
 	<!-- Bean's wiring declaration -->
-	<bean id="salesFileParser" class="com.laborguru.service.dataimport.file.SalesCSVFileParserBean">
+	<bean id="salesFileParser" class="com.laborguru.service.dataimport.csv.SalesCSVFileParserBean">
 		<property name="storeService" ref="storeService"/>
 	</bean>
 
@@ -32,7 +32,7 @@
 		</property>			
 	</bean>	
 	
-	<bean id="salesFileProcessorServiceTarget" class="com.laborguru.service.dataimport.file.SalesCSVFileProcessorBean">
+	<bean id="salesFileProcessorServiceTarget" class="com.laborguru.service.dataimport.csv.SalesCSVFileProcessorBean">
 	  <property name="fileParser" ref="salesFileParser"/>
   	  <property name="historicSalesDao" ref="historicSalesDao"/>
 	  <property name="uploadFileDao" ref="uploadFileDao"/>
@@ -42,7 +42,7 @@
 	<bean id="salesFileProcessorService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		<property name="proxyInterfaces">
 			<list>
-				<value>com.laborguru.service.dataimport.file.SalesFileProcessorService</value>
+				<value>com.laborguru.service.dataimport.csv.SalesFileProcessorService</value>
 			</list>
 		</property>	
 	
