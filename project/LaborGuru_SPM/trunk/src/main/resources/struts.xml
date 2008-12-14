@@ -5,6 +5,7 @@
 
 <struts>
 	<constant name="struts.devMode" value="false" />
+	<constant name="struts.serve.static" value="false" />
 	<constant name="struts.custom.i18n.resources" value="defaultmessages, errormessages" />	
   	<constant name="struts.objectFactory" value="org.apache.struts2.spring.StrutsSpringObjectFactory" />
 	

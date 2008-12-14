@@ -261,7 +261,6 @@
 	</definition>
 		
 	<definition name="editUserPage" extends="baseLayoutWithMenu">
-		<put-attribute name="htmlExtHeader" value="/tiles/dojoHtmlExtHeader.jsp" />
 		<put-attribute name="body" value="/tiles/user/edit.jsp" />
 	</definition>
 
