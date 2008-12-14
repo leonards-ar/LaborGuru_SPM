@@ -61,18 +61,21 @@
 										</table>
 									</td>
 								</tr>
-
+								
 								<tr valign="bottom">
 									<td>
 										<table border="0" cellpadding="1" cellspacing="2">
 											<tr>
 												<td align="right" class="form_label"><s:text name="schedule.addshift.copy.label"/></td>
-												<td align="left"><s:datetimepicker displayFormat="MM/dd/yyyy" disabled="true" name="copyTargetDay" theme="simple"/></td>
+												<td align="left">
+												<s:datetimepicker id="copy_target_day" displayFormat="MM/dd/yyyy" disabled="true" name="copyTargetDay" theme="simple"/>
+												<script>djConfig.searchIds.push("copy_target_day");</script>
+												</td>
 												<td align="right"><s:submit id="copyButton" key="schedule.addshift.copy.button" action="addshiftbyemployee_copySchedule" theme="simple" cssClass="button"/></td>
 											</tr>
 										</table>
 									</td>
-								</tr>								
+								</tr>	
 							</table>
 							<!-- Left column -->
 						</td>
@@ -287,6 +290,7 @@
 								<s:hidden id="scheduleEmployeeMaxWeekHours_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].employeeMaxHoursDay"/>
 								<s:url id="employeeList" action="scheduleemployeeautocomplete" includeParams="none"/>
 								<s:autocompleter id="scheduleEmployee_%{#itScheduleData.index}" onchange="reloadEmployeeMaxHoursDay('', %{#itScheduleData.index}); return true;" name="scheduleData[%{#itScheduleData.index}].employeeName" keyName="scheduleData[%{#itScheduleData.index}].employeeId" loadMinimumCount="3" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring"/>
+								<script>djConfig.searchIds.push("scheduleEmployee_<s:property value="#itScheduleData.index"/>");</script>
 							</s:else> 
 							<s:hidden id="inHourInput_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].inHour"/>
 							<s:hidden id="outHourInput_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].outHour"/>
@@ -340,7 +344,8 @@
 								<tr>
 									<td>
 										<s:url id="employeeList" action="scheduleemployeeautocomplete" includeParams="none"/>
-										<s:autocompleter name="newEmployeeName" loadMinimumCount="3" keyName="newEmployeeId" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring" />
+										<s:autocompleter id="newEmployeeName" name="newEmployeeName" loadMinimumCount="3" keyName="newEmployeeId" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring" />
+										<script>djConfig.searchIds.push("newEmployeeName");</script>
 									</td>
 									<td>
 										&nbsp;

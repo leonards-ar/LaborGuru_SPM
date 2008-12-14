@@ -60,9 +60,19 @@
 
 	<filter-mapping>
 		<filter-name>hibernateFilter</filter-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>*.action</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>hibernateFilter</filter-name>
+		<url-pattern>*.jsp</url-pattern>
 	</filter-mapping>
 		
+	<filter-mapping>
+		<filter-name>hibernateFilter</filter-name>
+		<url-pattern>/j_acegi_security_check</url-pattern>
+	</filter-mapping>
+			
 	<!--filter-mapping>
 		<filter-name>Acegi Filter Chain Proxy</filter-name>
 		<url-pattern>/*</url-pattern>
@@ -87,15 +97,22 @@
 		<url-pattern>*.jsp</url-pattern>
 	</filter-mapping>
 
-
 	<filter-mapping>
 		<filter-name>struts2</filter-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>*.action</url-pattern>
 		<dispatcher>REQUEST</dispatcher> 
         <dispatcher>FORWARD</dispatcher> 
 		<dispatcher>ERROR</dispatcher> 
 	</filter-mapping>
 
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>*.jsp</url-pattern>
+		<dispatcher>REQUEST</dispatcher> 
+        <dispatcher>FORWARD</dispatcher> 
+		<dispatcher>ERROR</dispatcher> 
+	</filter-mapping>
+    
 	<listener>
 		<listener-class>
 			org.springframework.web.context.ContextLoaderListener
