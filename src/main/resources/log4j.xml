@@ -103,7 +103,7 @@
 		<appender-ref ref="STDOUT" />
 	</logger>
 	
-	<logger name="com.laborguru.service.dataimport.file" additivity="false">
+	<logger name="com.laborguru.service.dataimport.csv" additivity="false">
 		<level value="ERROR"/>
 		<appender-ref ref="dataimport_appender"/>
 		<appender-ref ref="error_append"/>
