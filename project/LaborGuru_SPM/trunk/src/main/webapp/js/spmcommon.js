@@ -1,4 +1,9 @@
-
+function breakout_of_frame() {
+  if (top.location != location) {
+    top.location.href = document.location.href ;
+  }
+}
+		
 function getObjectByID(objectId) {
 	if(document.getElementById) {
 		return document.getElementById(objectId);
