@@ -22,7 +22,7 @@
 						<td class="availableMenuItem"
 							onmouseover="className='availableMenuItemOver'"
 							onmouseout="className='availableMenuItem'">
-							<a href="<s:url value="%{target}" includeParams="none"><s:param name="menuItemIndex" value="#itCtx.index" /></s:url>"
+							<a onclick="return showSplash('splash', 'content');" href="<s:url value="%{target}" includeParams="none"><s:param name="menuItemIndex" value="#itCtx.index" /></s:url>"
 							class="availableMenuItemAnchor"><s:text name="%{labelKey}"/></a></td>						
 						</s:else>
 						<s:if test="!#itCtx.last">
@@ -55,7 +55,7 @@
 					colspan="0" cellspan="0">
 					<tr>
 					<s:iterator value="#session.spmMenu.selectedItem.orderedChildMenuItems" status="itCtx">
-						<td class="subMenuItem"><a href="<s:url value="%{target}" includeParams="none"/>" class="subMenuItemAnchor"><s:text name="%{labelKey}"/></a></td>
+						<td class="subMenuItem"><a onclick="return showSplash('splash', 'content');" href="<s:url value="%{target}" includeParams="none"/>" class="subMenuItemAnchor"><s:text name="%{labelKey}"/></a></td>
 						<s:if test="!#itCtx.last">
 						<td>|</td>
 						</s:if>

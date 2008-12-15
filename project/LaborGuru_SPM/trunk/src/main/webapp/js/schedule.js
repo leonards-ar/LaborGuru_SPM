@@ -77,14 +77,6 @@ function addPositionId(index, positionId) {
 	POSITION_IDS[index] = positionId;
 }
 
-function getObjectByID(objectId) {
-	if(document.getElementById) {
-		return document.getElementById(objectId);
-	} else {
-		return null;
-	}
-}
-
 function scheduleClick(tdObj, rowNum, colNum, defaultPositionId, scheduleId)
 {
 	setMessage('', scheduleId);

@@ -10,6 +10,8 @@
 		<link rel="stylesheet" href="<s:url value="/css/style.css" includeParams="none" />" type="text/css" charset="utf-8" />
 	</head>
 	<body>
+		<tiles:insertAttribute name="splash" />
+		<div id="content" style="width: 100%; height: 100%">
 		<table width="100%" border="0" cellpadding="0" cellspacing="0"
 			id="bodyTable" colspan="0" cellspan="0">
 			<!-- Header and Menu -->
@@ -39,6 +41,7 @@
 				<td id="footerRow"><tiles:insertAttribute name="footer" /></td>
 			</tr>
 		</table>
+		</div>
 	</body>
 </html>
 
