@@ -52,10 +52,10 @@
 											<tr>
 												<td align="right" class="form_label"><s:text name="schedule.addshift.view"/></td>
 												<td align="left">
-													<s:select id="selectView" name="selectView" onchange="addshiftbyemployeebyposition_form.action=addshiftbyemployeebyposition_form.selectView.value; addshiftbyemployeebyposition_form.submit();" theme="simple" list="scheduleViewsMap" listKey="key" listValue="%{getText(value)}"/></td>
+													<s:select id="selectView" name="selectView" onchange="showWaitSplash(); addshiftbyemployeebyposition_form.action=addshiftbyemployeebyposition_form.selectView.value; addshiftbyemployeebyposition_form.submit();" theme="simple" list="scheduleViewsMap" listKey="key" listValue="%{getText(value)}"/></td>
 												<td align="right" class="form_label"><s:text name="schedule.addshift.positions"/></td>
 												<td align="left">
-													<s:select onchange="addshiftbyemployeebyposition_form.action='addshiftbyemployeebyposition_selectPosition.action'; addshiftbyemployeebyposition_form.submit();" name="position.id" list="positions" listKey="id" listValue="name" theme="simple" headerKey="" headerValue="%{getText('schedule.addshift.positions.header.label')}"/>					
+													<s:select onchange="showWaitSplash(); addshiftbyemployeebyposition_form.action='addshiftbyemployeebyposition_selectPosition.action'; addshiftbyemployeebyposition_form.submit();" name="position.id" list="positions" listKey="id" listValue="name" theme="simple" headerKey="" headerValue="%{getText('schedule.addshift.positions.header.label')}"/>					
 												</td>
 											</tr>
 										</table>
@@ -71,7 +71,7 @@
 												<s:datetimepicker id="copy_target_day" displayFormat="MM/dd/yyyy" disabled="true" name="copyTargetDay" theme="simple"/>
 												<script>djConfig.searchIds.push("copy_target_day");</script>
 												</td>
-												<td align="right"><s:submit id="copyButton" key="schedule.addshift.copy.button" action="addshiftbyemployeebyposition_copySchedule" theme="simple" cssClass="button"/></td>
+												<td align="right"><s:submit onclick="return showWaitSplash();" id="copyButton" key="schedule.addshift.copy.button" action="addshiftbyemployeebyposition_copySchedule" theme="simple" cssClass="button"/></td>
 											</tr>
 										</table>
 									</td>
@@ -128,7 +128,7 @@
                   					<tr>
                   						<s:iterator id="prevDate" value="weekDaySelector.previousStartingWeekDays" status="itPrevDate">
 			                  				<td class="calendarTableColumn" width="10%" nowrap="nowrap">
-			                  					<a href="<s:url value="#" includeParams="none"/>" onclick="addshiftbyemployeebyposition_form.action='addshiftbyemployeebyposition_changeWeek.action'; addshiftbyemployeebyposition_form.selectedDate.value='<s:text name='schedule.addshift.weekdayselector.input.dateformat'><s:param value='prevDate'/></s:text>'; addshiftbyemployeebyposition_form.submit();" class="calendarUnselectedWeekLink">
+			                  					<a href="<s:url value="#" includeParams="none"/>" onclick="showWaitSplash(); addshiftbyemployeebyposition_form.action='addshiftbyemployeebyposition_changeWeek.action'; addshiftbyemployeebyposition_form.selectedDate.value='<s:text name='schedule.addshift.weekdayselector.input.dateformat'><s:param value='prevDate'/></s:text>'; addshiftbyemployeebyposition_form.submit();" class="calendarUnselectedWeekLink">
 			                  						<s:text name='schedule.addshift.weekdayselector.availableweek.dateformat'><s:param value='prevDate'/></s:text>
 			                  					</a>
 			                  				</td>
@@ -142,11 +142,11 @@
 			                  				<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 			                  					<tr>
 			                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-			                  						<td><a href="<s:url value="#" includeParams="none"/>" onclick="addshiftbyemployeebyposition_form.action='addshiftbyemployeebyposition_changeWeek.action'; addshiftbyemployeebyposition_form.selectedDate.value='<s:text name='schedule.addshift.weekdayselector.input.dateformat'><s:param value='weekDaySelector.previousStartingWeekDay'/></s:text>'; addshiftbyemployeebyposition_form.submit();"><img src="<s:url value="/images/cal_prev.png" includeParams="none"/>" border="0"/></a></td>
+			                  						<td><a href="<s:url value="#" includeParams="none"/>" onclick="showWaitSplash(); addshiftbyemployeebyposition_form.action='addshiftbyemployeebyposition_changeWeek.action'; addshiftbyemployeebyposition_form.selectedDate.value='<s:text name='schedule.addshift.weekdayselector.input.dateformat'><s:param value='weekDaySelector.previousStartingWeekDay'/></s:text>'; addshiftbyemployeebyposition_form.submit();"><img src="<s:url value="/images/cal_prev.png" includeParams="none"/>" border="0"/></a></td>
 			                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
 			                  						<td class="calendarSelectedWeekText" nowrap="nowrap"><s:text name='schedule.addshift.weekdayselector.selectedweek.dateformat'><s:param value='weekDaySelector.startingWeekDay'/></s:text></td>
 			                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-			                  						<td><a href="<s:url value="#" includeParams="none"/>" onclick="addshiftbyemployeebyposition_form.action='addshiftbyemployeebyposition_changeWeek.action'; addshiftbyemployeebyposition_form.selectedDate.value='<s:text name='schedule.addshift.weekdayselector.input.dateformat'><s:param value='weekDaySelector.nextStartingWeekDay'/></s:text>'; addshiftbyemployeebyposition_form.submit();"><img src="<s:url value="/images/cal_next.png" includeParams="none"/>" border="0"/></a></td>
+			                  						<td><a href="<s:url value="#" includeParams="none"/>" onclick="showWaitSplash(); addshiftbyemployeebyposition_form.action='addshiftbyemployeebyposition_changeWeek.action'; addshiftbyemployeebyposition_form.selectedDate.value='<s:text name='schedule.addshift.weekdayselector.input.dateformat'><s:param value='weekDaySelector.nextStartingWeekDay'/></s:text>'; addshiftbyemployeebyposition_form.submit();"><img src="<s:url value="/images/cal_next.png" includeParams="none"/>" border="0"/></a></td>
 			                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
 			                  					</tr>
 			                  				</table>
@@ -154,7 +154,7 @@
 			                  			<td class="calendarTableColumn"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
                   						<s:iterator id="nextDate" value="weekDaySelector.nextStartingWeekDays" status="itNextDate">
 			                  				<td class="calendarTableColumn" width="10%" nowrap="nowrap">
-			                  					<a href="<s:url value="#" includeParams="none"/>" onclick="addshiftbyemployeebyposition_form.action='addshiftbyemployeebyposition_changeWeek.action'; addshiftbyemployeebyposition_form.selectedDate.value='<s:text name='schedule.addshift.weekdayselector.input.dateformat'><s:param value='nextDate'/></s:text>'; addshiftbyemployeebyposition_form.submit();" class="calendarUnselectedWeekLink">
+			                  					<a href="<s:url value="#" includeParams="none"/>" onclick="showWaitSplash(); addshiftbyemployeebyposition_form.action='addshiftbyemployeebyposition_changeWeek.action'; addshiftbyemployeebyposition_form.selectedDate.value='<s:text name='schedule.addshift.weekdayselector.input.dateformat'><s:param value='nextDate'/></s:text>'; addshiftbyemployeebyposition_form.submit();" class="calendarUnselectedWeekLink">
 			                  						<s:text name='schedule.addshift.weekdayselector.availableweek.dateformat'><s:param value='nextDate'/></s:text>
 			                  					</a>
 			                  				</td>
@@ -179,7 +179,7 @@
                   						<td width="12%" class="selectedWeekDay"><s:text name='schedule.addshift.weekday.dateformat'><s:param value='weekDay'/></s:text></td>
                   						</s:if>
                   						<s:else>
-                  						<td width="12%" class="availableWeekDay"><a href="<s:url value="#" includeParams="none"/>" onclick="addshiftbyemployeebyposition_form.action='addshiftbyemployeebyposition_changeDay.action'; addshiftbyemployeebyposition_form.selectedWeekDay.value='<s:text name='schedule.addshift.weekdayselector.input.dateformat'><s:param value='weekDay'/></s:text>'; addshiftbyemployeebyposition_form.submit();" class="availableWeekDayLink">
+                  						<td width="12%" class="availableWeekDay"><a href="<s:url value="#" includeParams="none"/>" onclick="showWaitSplash(); addshiftbyemployeebyposition_form.action='addshiftbyemployeebyposition_changeDay.action'; addshiftbyemployeebyposition_form.selectedWeekDay.value='<s:text name='schedule.addshift.weekdayselector.input.dateformat'><s:param value='weekDay'/></s:text>'; addshiftbyemployeebyposition_form.submit();" class="availableWeekDayLink">
                   						<s:text name='schedule.addshift.weekday.dateformat'><s:param value='weekDay'/></s:text>
                   						</a>
                   						</td>                  						
@@ -336,7 +336,7 @@
 									<td>
 										&nbsp;
 									</td>
-									<td><a href="<s:url value="#" includeParams="none"/>" onclick="addshiftbyemployeebyposition_form.action='addshiftbyemployeebyposition_addEmployee.action'; addshiftbyemployeebyposition_form.scheduleDataIndex.value='<s:property value="#itSchedule.index"/>' ;addshiftbyemployeebyposition_form.submit();"><img src="<s:url value="/images/add.png" includeParams="none"/>" /></a></td>
+									<td><a href="<s:url value="#" includeParams="none"/>" onclick="showWaitSplash(); addshiftbyemployeebyposition_form.action='addshiftbyemployeebyposition_addEmployee.action'; addshiftbyemployeebyposition_form.scheduleDataIndex.value='<s:property value="#itSchedule.index"/>' ;addshiftbyemployeebyposition_form.submit();"><img src="<s:url value="/images/add.png" includeParams="none"/>" /></a></td>
 								</tr>
 							</table>
 						</td>    
@@ -455,7 +455,7 @@
 			<td width="100%" align="right">
 				<table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
 					<tr>
-						<td><s:submit id="saveButton" name="saveSchedule" key="save.button" theme="simple" cssClass="button"/></td>
+						<td><s:submit onclick="return showWaitSplash();" id="saveButton" name="saveSchedule" key="save.button" theme="simple" cssClass="button"/></td>
 						<td><s:submit id="cancelButton" key="cancel.button" action="addshiftbyemployeebyposition_cancel" theme="simple" cssClass="button"/></td>		                    
       				</tr>
      			</table>                    

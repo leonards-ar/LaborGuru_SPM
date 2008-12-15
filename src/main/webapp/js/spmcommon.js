@@ -11,7 +11,15 @@ function getObjectByID(objectId) {
 	}
 }
 
-function showSplash(splashId, contentId) {
+function showWaitSplash() {
+	return showSplash('splash', 'content', '');
+}
+
+function showWaitSplashWithMessage(message) {
+	return showSplash('splash', 'content', message);
+}
+
+function showSplash(splashId, contentId, message) {
 	var so = getObjectByID(splashId);
 	var co = getObjectByID(contentId);
 	if(co && co.style) {
