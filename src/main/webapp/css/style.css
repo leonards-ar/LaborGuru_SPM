@@ -378,12 +378,18 @@ table.results th a {
 	
 }
 
+.waitTable {
+	background-color: #E6E6E6;
+	border: 2px solid #B6B40A;
+}
+	
 .availableMenuItem {
 	background-color: #666666;
 	background-image: url('../images/avail-menu-item-bg.png');
 	background-repeat: repeat-x;
 	text-align: center;
-	font-weight: bold; background-position-y:50%
+	font-weight: bold;
+	background-position-y:50%
 }
 
 .availableMenuItemOver {

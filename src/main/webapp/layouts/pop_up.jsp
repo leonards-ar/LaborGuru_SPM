@@ -6,6 +6,7 @@
 <html>
 	<head>
 		<title><s:text name="application.title"/></title>
+		<script language="javascript" type="text/javascript" src="<s:url value="/js/spmcommon.js" includeParams="none" />"></script>
 		<tiles:insertAttribute name="htmlExtHeader" />
 		<link rel="stylesheet" href="<s:url value="/css/style.css" includeParams="none"/>" type="text/css" charset="utf-8" />
 	</head>
