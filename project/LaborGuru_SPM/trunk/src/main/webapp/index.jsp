@@ -4,7 +4,14 @@ uri="/struts-tags" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
 	<head>
-	<title><s:text name="application.title" /></title>
+		<title><s:text name="application.title" /></title>
+		<script language="javascript" type="text/javascript" src="<s:url value="/js/spmcommon.js" includeParams="none" />"></script>
+		
+		<script language="JavaScript" type="text/javascript">
+		<!--
+		//breakout_of_frame();
+		-->
+		</script>
 	</head>
 
 	<frameset rows="100%" cols="100%">
