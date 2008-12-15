@@ -37,5 +37,12 @@ function showSplash(splashId, contentId, message) {
 		var sw = screen.width;
 		so.style.left = Math.round((sw/2) - 100);
 	}
+	
+	if(message != null && message != '') {
+		var emo = getObjectByID('extendedWaitMessage');
+		if(emo) {
+			emo.innerHTML = message;
+		}
+	}
 	return true;
 }
