@@ -2,9 +2,10 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <br />
-<s:form id="report_form" name="report_form" theme="simple">
+<s:form id="report_form" name="report_form" theme="simple" >
 	<s:hidden id="selectedDate" name="selectedDate" />
 	<s:hidden id="selectedWeekDay" name="selectedWeekDay" />
+
 
 	<table border="1" cellspacing="0" align="center">
 		<tr>
@@ -24,7 +25,7 @@
 								value="weekDaySelector.previousStartingWeekDays"
 								status="itPrevDate">
 								<td class="calendarTableColumn" width="10%" nowrap="nowrap">
-								<a href="<s:url value="#" includeParams="none"/>"
+<a href="<s:url value="#" includeParams="none"/>"
 									onclick="report_form.action='<s:property value='actionName'/>_changeWeek.action'; report_form.selectedDate.value='<s:text name='report.weekdayselector.weekdayselector.input.dateformat'><s:param value='prevDate'/></s:text>'; report_form.submit();"
 									class="calendarUnselectedWeekLink"> <s:text
 									name='report.weekdayselector.availableweek.dateformat'>
@@ -103,7 +104,7 @@
     <table border="0" cellspacing="0" align="center">
 	<tr>
 	 <td align="right" class="form_label"><s:text name="report.displaytype.label"/></td>
-     <td align="left"><s:select name="selectView" list="viewMap" listKey="key" listValue="%{getText(value)}" onchange="report_form.action=report_form.selectView.value; report_form.submit();" theme="simple"/></td>
+     <td align="left"><s:select name="selectView" list="viewMap" listKey="key" listValue="%{getText(value)}" onchange="controller.refresh()" theme="simple"/></td>
      <td>&nbsp;</td>
      <td align="right" class="form_label"><s:text name="report.period.label"/></td>
      <td align="left"><s:select name="period" list="periodMap" listKey="key" listValue="%{getText(value)}" theme="simple"/></td>

@@ -44,7 +44,7 @@ public class SqlMapReportDaoTesting extends SpmDaoHibernateTest{
 	
     @Test
 	public void testFindAll_happyPath() throws Exception {
-    	List<TotalHour> totalHours = reportDao.getWeeklyTotalHour(ReportTestHelper.getStore(), ReportTestHelper.getStartDate(), ReportTestHelper.getEndDate());
+    	List<TotalHour> totalHours = reportDao.getScheduleWeeklyTotalHour(ReportTestHelper.getStore(), ReportTestHelper.getStartDate(), ReportTestHelper.getEndDate());
     	
     	System.out.println(totalHours.toString());
     	

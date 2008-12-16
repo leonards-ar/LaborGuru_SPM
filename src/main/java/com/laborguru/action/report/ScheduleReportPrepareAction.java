@@ -66,6 +66,11 @@ public abstract class ScheduleReportPrepareAction extends SpmAction  {
 		this.weekDaySelector = weekDaySelector;
 	}
 
+	public void initWeekSelectorValues() {
+		if(getSelectedDate() != null && getSelectedWeekDay() != null){
+			getWeekDaySelector().initializeChangeWeek(getSelectedDate(), getSelectedWeekDay());
+		}
+	}
 	/**
 	 * @return the selectedDate
 	 */

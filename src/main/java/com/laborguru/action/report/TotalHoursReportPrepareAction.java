@@ -1,11 +1,12 @@
 package com.laborguru.action.report;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 
 import com.laborguru.action.SpmActionResult;
+import com.laborguru.model.Position;
 import com.laborguru.model.report.TotalHour;
+import com.laborguru.service.position.PositionService;
 import com.laborguru.service.report.ReportService;
 import com.laborguru.util.FusionXmlDataConverter;
 import com.laborguru.util.SpmConstants;
@@ -15,10 +16,13 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction i
 
 	private static final long serialVersionUID = 1L;
 	
-	
 	private List<TotalHour> totalHours;
+	private List<Position> positionList;
+	private Integer positionId;
+	
 	
 	private ReportService reportService;
+	private PositionService positionService;
 	private FusionXmlDataConverter fusionXmlDataConverter;
 
 	private BigDecimal totalSchedule = SpmConstants.BD_ZERO_VALUE;
@@ -50,28 +54,51 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction i
 	public String showFirstReport(){
 		setSelectView("totalHoursReport_changeWeek.action");
 		setPeriod("weekly");
-		return weeklyReport();
+		
+		return SpmActionResult.INPUT.getResult();
 	}
+	
 	public String showReport() {
-		if(getPeriod() == null || getPeriod().equals("weekly")) {
+		initWeekSelectorValues();
+		if(getSelectView().equals("totalHoursReport_changeWeek.action")) {
 			return weeklyReport();
 		} 
-		//TODO show half hour report.
-		return weeklyReport();
+	
+		return weeklyReportByPosition();
 	}
 	
 	public String weeklyReport(){
 		getWeeklyReport();
-		loadCalendarData();
-		return SpmActionResult.INPUT.getResult();
+		//loadCalendarData();
+		return SpmActionResult.SHOW_WEEKLY_TOTAL.getResult();
 	}
+	
+	public String weeklyReportByPosition(){
+		setPositionList(getPositionService().getPositionsByStore(getEmployeeStore()));
+		return SpmActionResult.SHOW_WEEKLY_TOTAL_BY_POSITION.getResult();
+	}
+	
+	public String showWeeklyReportByPosition() {
+		initWeekSelectorValues();
+		getWeeklyReportByPosition();
+		return SpmActionResult.SHOW.getResult();
+	}
+	
 	protected void processChangeWeek() {
 		getWeekDaySelector().setStringSelectedDay(getSelectedDate());
-		showReport();
 	}
 	
 	private void getWeeklyReport() {
 		setTotalHours(getReportService().getWeeklyTotalHours(getEmployeeStore(), getWeekDaySelector().getStartingWeekDay()));
+		calculateTotals();
+	}
+	
+	private void getWeeklyReportByPosition() {
+		Position position = new Position();
+		//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!estoy para traer esto y el id es: " + getPositionId());
+		position.setId(getPositionId());
+		
+		setTotalHours(getReportService().getWeeklyTotalHoursByPosition(getEmployeeStore(), position, getWeekDaySelector().getStartingWeekDay()));
 		calculateTotals();
 	}
 	
@@ -83,7 +110,11 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction i
 			setTotalDifference(getTotalDifference().add(th.getDifference()));
 		}
 		// totalDifference/totalTarget * 100
-		setTotalPercentaje(getTotalDifference().divide(getTotalTarget(), 2, SpmConstants.ROUNDING_MODE).multiply(new BigDecimal("100")));
+		if(getTotalTarget().compareTo(SpmConstants.BD_ZERO_VALUE) == 0) {
+			setTotalPercentaje(SpmConstants.BD_ZERO_VALUE);
+		} else {
+			setTotalPercentaje(getTotalDifference().divide(getTotalTarget(), 2, SpmConstants.ROUNDING_MODE).multiply(new BigDecimal("100")).abs());
+		}
 	}
 	
 
@@ -100,6 +131,21 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction i
 	public void setTotalHours(List<TotalHour> totalHours) {
 		this.totalHours = totalHours;
 	}
+
+	/**
+	 * @return the positionId
+	 */
+	public Integer getPositionId() {
+		return positionId;
+	}
+
+	/**
+	 * @param positionId the positionId to set
+	 */
+	public void setPositionId(Integer positionId) {
+		this.positionId = positionId;
+	}
+
 	/**
 	 * @return the reportService
 	 */
@@ -206,8 +252,32 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction i
 		this.fusionXmlDataConverter = fusionXmlDataConverter;
 	}
 
-	
+	/**
+	 * @return the positionService
+	 */
+	public PositionService getPositionService() {
+		return positionService;
+	}
 
-	
+	/**
+	 * @param positionService the positionService to set
+	 */
+	public void setPositionService(PositionService positionService) {
+		this.positionService = positionService;
+	}
+
+	/**
+	 * @return the positionList
+	 */
+	public List<Position> getPositionList() {
+		return positionList;
+	}
+
+	/**
+	 * @param positionList the positionList to set
+	 */
+	public void setPositionList(List<Position> positionList) {
+		this.positionList = positionList;
+	}
 
 }

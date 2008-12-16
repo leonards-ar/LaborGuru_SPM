@@ -22,6 +22,7 @@ public class FusionXmlDataConverter {
 
 	private HashMap<String, String> reportConfigurations;
 
+	private static final String WEEKLY_TOTAL_HOURS_REPORT = "weeklyTotalHoursReport";
 	public String weeklyTotalHoursXmlConverter(List<TotalHour> totalHours) {
 
 		Document document = DocumentHelper.createDocument();
@@ -32,7 +33,7 @@ public class FusionXmlDataConverter {
 		Properties props = null;
 
 		try {
-			props = getProperties("weeklyTotalHoursReport");
+			props = getProperties(WEEKLY_TOTAL_HOURS_REPORT);
 		} catch (IOException e) {
 			log.error("No file found", e);
 			throw new SpmUncheckedException(e.getCause(), e.getMessage(), ErrorEnum.GENERIC_ERROR);
@@ -40,6 +41,10 @@ public class FusionXmlDataConverter {
 		SimpleDateFormat sdf = new SimpleDateFormat(props.getProperty("dateFormat"));
 
 		graph.addAttribute("caption", "Total Hours (Weekly)");
+		graph.addAttribute("PYAxisMinValue", props.getProperty("defaultPYAxisMinValue"));
+		graph.addAttribute("SYAxisMinValue", props.getProperty("defaultSYAxisMinValue"));
+		graph.addAttribute("PYAxisMaxValue", props.getProperty("defaultPYAxisMaxValue"));
+		graph.addAttribute("SYAxisMaxValue", props.getProperty("defaultSYAxisMaxValue"));
 		graph.addAttribute("PYAxisName", "Hours");
 		graph.addAttribute("SYAxisName", "Hours");
 		graph.addAttribute("showvalues", props.getProperty("showvalues"));
