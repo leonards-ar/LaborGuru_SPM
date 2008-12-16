@@ -347,13 +347,10 @@
 	  <put-attribute name="weekSelector" value="/tiles/report/week_selector.jsp"/>
 	</definition>
 
-		
-	<definition name="showWeeklyTotalHours" extends="reportBaseLayout">
-	  <put-attribute name="reportData" value="/tiles/report/weekly_totalHours_report.jsp" />
+	<definition name="showWeeklyTotalHours" template="/layouts/report/reports_base.jsp" extends="baseLayoutWithMenu">
+	  <put-attribute name="htmlExtHeader" value="/tiles/dojoHtmlExtHeader.jsp" />
+	  <put-attribute name="weekSelector" value="/tiles/report/week_selector.jsp"/>
+	  <put-attribute name="reportData" value="/tiles/report/report_frame.jsp" />
 	</definition>
-	
-	<definition name="showWeeklyTotalHoursByPosition" extends="reportBaseLayout">
-	  <put-attribute name="reportData" value="/tiles/report/weekly_totalHoursByPosition_report.jsp" />
-	</definition>		
 
 </tiles-definitions>

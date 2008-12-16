@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+import com.laborguru.model.Position;
 import com.laborguru.model.Store;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.model.report.TotalHourByPosition;
@@ -18,23 +19,41 @@ import com.laborguru.model.report.TotalHourByPosition;
 public interface ReportDao {
 
 	/**
-	 * Retrieves all the values for the Total Hour Weekly
+	 * Retrieves all the schedule values for the Total Hour Weekly
 	 * @param store 
 	 * @param startDate
 	 * @param endDate
 	 * @return
 	 */
-	List<TotalHour>getWeeklyTotalHour(Store store, Date startDate, Date endDate) throws SQLException;
-	
+	List<TotalHour>getScheduleWeeklyTotalHour(Store store, Date startDate, Date endDate) throws SQLException;
 	
 	/**
-	 * Retrieves all the values for the Total Hour Weekly for each Position.
+	 * Retrieves all the target values for the Total Hour Weekly
+	 * @param store 
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	List<TotalHour>getTargetWeeklyTotalHour(Store store, Date startDate, Date endDate) throws SQLException;
+	
+	/**
+	 * Retrieves all the schedule values for the Total Hour Weekly By Position.
 	 * @param store
 	 * @param startDate
 	 * @param endDate
 	 * @return
 	 * @throws SQLException
 	 */
-	List<TotalHourByPosition>getWeeklyTotalHourByPosition(Store store, Date startDate, Date endDate) throws SQLException;
+	List<TotalHour> getScheduleWeeklyTotalHourByPosition(Store store, Position position, Date startDate, Date endDate) throws SQLException;
 	
+	/**
+	 * Retrieves all the target values for Total Hour Weekly By Position.
+	 * @param store
+	 * @param position
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @throws SQLException
+	 */
+	List<TotalHour> getTargetWeeklyTotalHourByPosition(Store store, Position position, Date startDate, Date endDate) throws SQLException;
 }

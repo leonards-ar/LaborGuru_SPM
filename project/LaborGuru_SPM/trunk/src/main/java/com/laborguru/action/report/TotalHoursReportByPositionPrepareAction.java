@@ -81,7 +81,7 @@ public class TotalHoursReportByPositionPrepareAction extends ScheduleReportPrepa
 	}
 	
 	private void getWeeklyReport() {
-		setTotalHoursByPosition(reportService.getWeeklyTotalHoursByPosition(getEmployeeStore(), getPositions(), getWeekDaySelector().getStartingWeekDay()));
+		//setTotalHoursByPosition(reportService.getWeeklyTotalHoursByPosition(getEmployeeStore(), getPositions(), getWeekDaySelector().getStartingWeekDay()));
 		calculateTotals();
 		generateGraphs();
 	}

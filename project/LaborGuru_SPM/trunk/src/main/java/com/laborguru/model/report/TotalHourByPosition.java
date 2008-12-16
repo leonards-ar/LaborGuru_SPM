@@ -7,10 +7,25 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import com.laborguru.model.Position;
 import com.laborguru.model.SpmObject;
 
+/**
+ *
+ * @author <a href="fbarreraoro@gmail.com">Federico Barrera Oro</a>
+ * @version 1.0
+ * @since SPM 1.0
+ *
+ */
 public class TotalHourByPosition extends SpmObject{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 303432028624469673L;
+	
+	
 	Position position;
+	
 	TotalHour totalHour;
+	
 	/**
 	 * @return the position
 	 */
