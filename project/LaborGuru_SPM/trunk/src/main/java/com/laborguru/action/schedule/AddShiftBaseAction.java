@@ -5,7 +5,9 @@
  */
 package com.laborguru.action.schedule;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -51,6 +53,9 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	private String saveSchedule;
 
 	private Date copyTargetDay;
+	
+	private List<Position> positions;
+	private Position position;
 	
 	/**
 	 * 
@@ -354,6 +359,49 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	public void setCopyTargetDay(Date copyTargetDay) {
 		this.copyTargetDay = copyTargetDay;
 	}	
+	
+	/**
+	 * @return the positions
+	 */
+	public List<Position> getPositions() {
+		if(positions == null) {
+			setPositions(new ArrayList<Position>());
+		}
+		return positions;
+	}
+
+	/**
+	 * @param positions the positions to set
+	 */
+	public void setPositions(List<Position> positions) {
+		this.positions = positions;
+	}
+	
+	/**
+	 * 
+	 */
+	protected void loadPositions() {
+		this.setPositions(getPositionService().getPositionsByStore(getEmployeeStore()));
+	}
+	
+	/**
+	 * @return the position
+	 */
+	public Position getPosition() {
+		if(position != null && position.getId() == null) {
+			return null;
+		} else if(position != null && position.getId() != null && position.getName() == null) {
+			position.setName(getPositionName(position.getId()));
+		}
+		return position;
+	}
+
+	/**
+	 * @param position the position to set
+	 */
+	public void setPosition(Position position) {
+		this.position = position;
+	}
 	
 	/**
 	 * 

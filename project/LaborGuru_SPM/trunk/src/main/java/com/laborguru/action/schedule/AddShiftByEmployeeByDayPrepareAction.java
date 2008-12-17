@@ -14,7 +14,6 @@ import org.apache.log4j.Logger;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.ScheduleRow;
 import com.laborguru.model.Employee;
-import com.laborguru.model.Position;
 import com.laborguru.util.CalendarUtils;
 import com.laborguru.util.SpmConstants;
 import com.opensymphony.xwork2.Preparable;
@@ -32,15 +31,9 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 	private List<ScheduleRow> scheduleData;
 	private List<Integer> minimumStaffing;
 	
-	private Position position;
-	
-	private List<Position> positions;
-	
-	
 	private Integer newEmployeeId;
 	private String newEmployeeName;
 	private Integer newEmployeePositionId;
-	
 	
 	/**
 	 * 
@@ -65,7 +58,7 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 	 * Loads position and status list
 	 */
 	private void loadPageData() {
-		this.setPositions(getPositionService().getPositionsByStore(getEmployeeStore()));
+		loadPositions();
 		loadCalendarData();
 		loadCopyTargetDay();
 	}
@@ -401,39 +394,6 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 	 */
 	public void setScheduleData(List<ScheduleRow> scheduleData) {
 		this.scheduleData = scheduleData;
-	}
-
-	/**
-	 * @return the position
-	 */
-	public Position getPosition() {
-		if(position != null && position.getId() == null) {
-			return null;
-		} else if(position != null && position.getId() != null && position.getName() == null) {
-			position.setName(getPositionName(position.getId()));
-		}
-		return position;
-	}
-
-	/**
-	 * @param position the position to set
-	 */
-	public void setPosition(Position position) {
-		this.position = position;
-	}
-
-	/**
-	 * @return the positions
-	 */
-	public List<Position> getPositions() {
-		return positions;
-	}
-
-	/**
-	 * @param positions the positions to set
-	 */
-	public void setPositions(List<Position> positions) {
-		this.positions = positions;
 	}
 
 	/**

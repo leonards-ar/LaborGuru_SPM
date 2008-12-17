@@ -18,7 +18,7 @@
 				<!-- Header tables -->
 				<table border="0" cellpadding="2" cellspacing="2" width="100%">
 					<tr>
-						<td valign="top"  width="50%">
+						<td valign="top" align="right" width="45%">
 							<!-- Left column -->
 							<table id="fullHeightTable" border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 								<tr valign="top">
@@ -80,7 +80,9 @@
 							<!-- Left column -->
 						</td>
 						
-						<td valign="top" align="right">
+						<td width="10%">&nbsp;</td>
+						
+						<td valign="top" width="45%" align="left">
 							<!-- Right column -->
 							<table id="windowTable">
 								<tr>
@@ -186,7 +188,7 @@
                   						</s:else>
                   						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
                   						</s:iterator>
-                  						<td width="12%" class="availableWeekDay"><a href="#" class="availableWeekDayLink"><s:text name="schedule.addshift.weekselector.week"/></a></td>
+                  						<td width="12%" class="availableWeekDay"><a href="#" onclick="showWaitSplash(); addshiftbyemployeebyposition_form.action='addweeklyshiftbyemployee_edit.action'; addshiftbyemployeebyposition_form.submit();" class="availableWeekDayLink"><s:text name="schedule.addshift.weekselector.week"/></a></td>
                   					</tr>
                   				</table>			              		
 			              	</td>
