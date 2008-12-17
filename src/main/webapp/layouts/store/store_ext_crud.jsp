@@ -8,6 +8,7 @@
 		<title><s:text name="application.title"/></title>
 		<tiles:insertAttribute name="htmlExtHeader" />
 		<link rel="stylesheet" href="<s:url value="/css/style.css" includeParams="none" />" type="text/css" charset="utf-8" />
+		<script language="javascript" type="text/javascript" src="<s:url value="/js/spmcommon.js" includeParams="none" />"></script>
 	</head>
 	<body>
 		<tiles:insertAttribute name="splash" />

@@ -664,7 +664,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	 * @param pos1
 	 * @param pos2
 	 */
-	private boolean isEqualPosition(Position pos1, Position pos2) {
+	protected boolean isEqualPosition(Position pos1, Position pos2) {
 		return pos1 != null && pos2 != null && isEqualId(pos1.getId(), pos2.getId());
 	}
 

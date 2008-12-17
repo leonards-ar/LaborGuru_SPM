@@ -6,6 +6,7 @@
 package com.laborguru.action.schedule;
 
 import com.laborguru.action.SpmActionResult;
+import com.opensymphony.xwork2.Preparable;
 
 /**
  *
@@ -14,7 +15,7 @@ import com.laborguru.action.SpmActionResult;
  * @since SPM 1.0
  *
  */
-public class AddShiftByEmployeeByWeekPrepareAction extends AddShiftByWeekBaseAction {
+public class AddShiftByEmployeeByWeekPrepareAction extends AddShiftByWeekBaseAction implements Preparable {
 
 	/**
 	 * 
@@ -22,6 +23,13 @@ public class AddShiftByEmployeeByWeekPrepareAction extends AddShiftByWeekBaseAct
 	public AddShiftByEmployeeByWeekPrepareAction() {
 	}
 
+	/**
+	 * Prepare the data to be used on the edit page
+	 */
+	public void prepareEdit() {
+		loadPageData();
+	}
+	
 	/**
 	 * 
 	 * @see com.laborguru.action.schedule.AddShiftBaseAction#prepareChangeDay()
@@ -60,5 +68,20 @@ public class AddShiftByEmployeeByWeekPrepareAction extends AddShiftByWeekBaseAct
 	 */
 	public String edit() {
 		return SpmActionResult.EDIT.getResult();
+	}
+	
+	/**
+	 * 
+	 */
+	private void loadPageData() {
+		loadPositions();
+	}
+
+	/**
+	 * 
+	 * @throws Exception
+	 * @see com.opensymphony.xwork2.Preparable#prepare()
+	 */
+	public void prepare() throws Exception {
 	}
 }

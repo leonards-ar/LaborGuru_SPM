@@ -16,7 +16,6 @@ import com.laborguru.frontend.model.ScheduleByPositionEntry;
 import com.laborguru.frontend.model.ScheduleRow;
 import com.laborguru.model.Employee;
 import com.laborguru.model.Position;
-import com.laborguru.service.position.PositionService;
 import com.opensymphony.xwork2.Preparable;
 
 /**
@@ -34,11 +33,7 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftByDa
 
 	private static final Logger log = Logger.getLogger(AddShiftByEmployeeByPositionByDayPrepareAction.class);
 	
-	private Position position;
 	private Integer scheduleDataIndex;
-	
-	private List<Position> positions;
-	private PositionService positionService;
 	
 	private List<ScheduleByPositionEntry> positionScheduleData;
 
@@ -62,7 +57,7 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftByDa
 	 * Loads position and status list
 	 */
 	private void loadPageData() {
-		this.setPositions(getPositionService().getPositionsByStore(getEmployeeStore()));
+		loadPositions();
 		loadCalendarData();
 		loadCopyTargetDay();
 	}
@@ -333,56 +328,6 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftByDa
 	}
 	
 	/**
-	 * @return the position
-	 */
-	public Position getPosition() {
-		if(position != null && position.getId() == null) {
-			return null;
-		} else if(position != null && position.getId() != null && position.getName() == null) {
-			position.setName(getPositionName(position.getId()));
-		}
-		return position;
-	}
-
-	/**
-	 * @param position the position to set
-	 */
-	public void setPosition(Position position) {
-		this.position = position;
-	}
-
-	/**
-	 * @return the positions
-	 */
-	public List<Position> getPositions() {
-		if(positions == null) {
-			setPositions(new ArrayList<Position>());
-		}
-		return positions;
-	}
-
-	/**
-	 * @param positions the positions to set
-	 */
-	public void setPositions(List<Position> positions) {
-		this.positions = positions;
-	}
-
-	/**
-	 * @return the positionService
-	 */
-	public PositionService getPositionService() {
-		return positionService;
-	}
-
-	/**
-	 * @param positionService the positionService to set
-	 */
-	public void setPositionService(PositionService positionService) {
-		this.positionService = positionService;
-	}
-
-	/**
 	 * @return the positionScheduleData
 	 */
 	public List<ScheduleByPositionEntry> getPositionScheduleData() {
@@ -406,12 +351,16 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftByDa
 		if(positionScheduleData == null || positionScheduleData.isEmpty()) {
 			ScheduleByPositionEntry scheduleEntry;
 			for(Position aPosition : getPositions()) {
-				scheduleEntry = new ScheduleByPositionEntry();
-				scheduleEntry.setScheduleData(buildScheduleFor(aPosition));
-				scheduleEntry.setMinimumStaffing(buildMinimumStaffingFor(aPosition));
-				scheduleEntry.setPosition(aPosition);
-				
-				getPositionScheduleData().add(scheduleEntry);
+				Position selectedPosition = getPosition();
+				// If it is filtered by position only include that position
+				if(selectedPosition == null || isEqualPosition(selectedPosition, aPosition)) {
+					scheduleEntry = new ScheduleByPositionEntry();
+					scheduleEntry.setScheduleData(buildScheduleFor(aPosition));
+					scheduleEntry.setMinimumStaffing(buildMinimumStaffingFor(aPosition));
+					scheduleEntry.setPosition(aPosition);
+					
+					getPositionScheduleData().add(scheduleEntry);
+				}
 			}
 		}
 	}	
