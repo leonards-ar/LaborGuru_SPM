@@ -10,7 +10,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.laborguru.action.SpmActionResult;
-import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.DayPart;
 import com.laborguru.model.DayPartData;
 import com.laborguru.model.Position;
@@ -144,24 +143,19 @@ public abstract class StorePositionDayPartDataBaseAction extends StoreAdministra
 	 * @throws Exception
 	 */
 	public String save() throws Exception {
-		try {
-			setDayPartData();
-			
-			if(log.isDebugEnabled()) {
-				log.debug("About to save store: " + getStore());
-			}
-			
-			getStoreService().save(getStore());
-
-			if(log.isInfoEnabled()) {
-				log.info("Store position/day part data successfully updated for store with id [" + getStoreId() + "]");
-			}
-			
-			return SpmActionResult.SUCCESS.getResult();
-		} catch (SpmCheckedException e) {
-			addActionError(e.getErrorMessage());
-			return SpmActionResult.INPUT.getResult();
+		setDayPartData();
+		
+		if(log.isDebugEnabled()) {
+			log.debug("About to save store: " + getStore());
 		}
+		
+		getStoreService().save(getStore());
+
+		if(log.isInfoEnabled()) {
+			log.info("Store position/day part data successfully updated for store with id [" + getStoreId() + "]");
+		}
+		
+		return SpmActionResult.SUCCESS.getResult();
 	}
 
 	/**

@@ -11,7 +11,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.laborguru.action.SpmActionResult;
-import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.DayOfWeek;
 import com.laborguru.model.DayOfWeekData;
 import com.laborguru.model.Position;
@@ -165,24 +164,19 @@ public abstract class StorePositionDayOfWeekDataBaseAction extends StoreAdminist
 	 * @throws Exception
 	 */
 	public String save() throws Exception {
-		try {
-			setDayOfWeekData();
-			
-			if(log.isDebugEnabled()) {
-				log.debug("About to save store: " + getStore());
-			}
-			
-			getStoreService().save(getStore());
-
-			if(log.isInfoEnabled()) {
-				log.info("Store position/day of week data successfully updated for store with id [" + getStoreId() + "]");
-			}
-			
-			return SpmActionResult.SUCCESS.getResult();
-		} catch (SpmCheckedException e) {
-			addActionError(e.getErrorMessage());
-			return SpmActionResult.INPUT.getResult();
+		setDayOfWeekData();
+		
+		if(log.isDebugEnabled()) {
+			log.debug("About to save store: " + getStore());
 		}
+		
+		getStoreService().save(getStore());
+
+		if(log.isInfoEnabled()) {
+			log.info("Store position/day of week data successfully updated for store with id [" + getStoreId() + "]");
+		}
+		
+		return SpmActionResult.SUCCESS.getResult();
 	}
 
 	/**

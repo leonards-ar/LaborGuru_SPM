@@ -1,8 +1,8 @@
 package com.laborguru.service.store;
 
+import java.io.File;
 import java.util.List;
 
-import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.Store;
 import com.laborguru.model.filter.SearchStoreFilter;
 import com.laborguru.service.Service;
@@ -20,9 +20,8 @@ public interface StoreService extends Service {
 	 * Saves or updates a store
 	 * @param store store to save or update
 	 * @return the Store updated.
-	 * @throws SpmCheckedException In case there is any error during save
 	 */
-	Store save(Store store) throws SpmCheckedException;
+	Store save(Store store);
 	
 	
 	/**
@@ -50,4 +49,16 @@ public interface StoreService extends Service {
 	 * @return a list of stores
 	 */
 	List<Store> findAll();
+	
+	/**
+	 * This method uploads a store definition to the SPM
+	 * The file passed as parameter contains the parameters to create an store.
+	 * 
+	 * New Store: If the file passed as paramater defines a new store. A new store is created.
+	 * Update Store: If the file passed as parameter defines an existing store, the existing store is updated with the new values.
+	 * 
+	 * @param storeDefinition
+	 * @return the store created
+	 */
+	Store processStoreDefinitionAndSave(File storeDefinition);
 }

@@ -189,6 +189,11 @@
 			<result name="cancelShow" type="redirectAction">store_show</result> 
 			<result name="input" type="tiles">editOtherFactorsPage</result>
 			<result name="success" type="redirectAction">store_edit</result> 			
-		</action>	
+		</action>		
+		<action name="uploadDefinition_*" method="{1}" class="com.laborguru.action.store.UploadDefinitionPrepareAction">
+			<result name="edit" type="tiles">storeDefinitionUploadPage</result>
+			<result name="input" type="tiles">storeDefinitionUploadPage</result>
+			<result name="cancel" type="redirectAction">store_list</result>						
+		</action>
 	</package>
 </struts>
