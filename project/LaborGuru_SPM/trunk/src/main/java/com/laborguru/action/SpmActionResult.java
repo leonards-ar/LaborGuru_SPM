@@ -22,6 +22,7 @@ public enum SpmActionResult {
 	SUCCESS("success"),
 	CANCEL_EDIT("cancelEdit"),
 	CANCEL_SHOW("cancelShow"),
+	CANCEL("cancel"),
 	SHOW_WEEKLY_TOTAL("showWeeklyTotal"),
 	SHOW_WEEKLY_TOTAL_BY_POSITION("showWeeklyTotalByPosition");
 	

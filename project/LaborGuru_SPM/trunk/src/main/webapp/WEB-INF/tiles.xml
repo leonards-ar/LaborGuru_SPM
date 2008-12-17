@@ -353,4 +353,9 @@
 	  <put-attribute name="reportData" value="/tiles/report/report_frame.jsp" />
 	</definition>
 
+	<!-- Upload Store Page -->
+	<definition name="storeDefinitionUploadPage" extends="baseLayoutWithMenu">
+		<put-attribute name="body" value="/tiles/store/uploaddefinition_edit.jsp" />
+	</definition>
+	
 </tiles-definitions>
