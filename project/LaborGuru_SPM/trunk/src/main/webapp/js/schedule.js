@@ -56,14 +56,6 @@ function addScheduleTotalRows(index, totalRows) {
 	TOTAL_ROWS[index] = totalRows;
 }
 
-function toInt(n) {
-	if(isNaN(n)) {
-		return 0;
-	} else {
-		return parseInt(n, 10);
-	}
-}
-
 function getTotalRows(scheduleId) {
 	if(scheduleId == '' || isNaN(scheduleId)) {
 		return TOTAL_ROWS[0];
@@ -241,20 +233,6 @@ function minutesToTime(minutes) {
 	var m = minutes % 60;
 	
 	return formatTimeNumber(h) + ':' + formatTimeNumber(m);
-}
-
-function formatTimeNumber(n) {
-	n = '' + n;
-	
-	if(n == null || n == '' || n == '-' || isNaN(n)) {
-		return '00';
-	}
-	
-	if(n.length < 2) {
-		return '0' + n;
-	}
-	
-	return n;
 }
 
 function refreshRows(scheduleId) {
