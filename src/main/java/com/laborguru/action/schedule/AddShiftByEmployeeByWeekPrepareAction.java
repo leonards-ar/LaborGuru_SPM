@@ -6,6 +6,8 @@
 package com.laborguru.action.schedule;
 
 import com.laborguru.action.SpmActionResult;
+import com.laborguru.model.Employee;
+import com.laborguru.model.Shift;
 import com.opensymphony.xwork2.Preparable;
 
 /**
@@ -16,6 +18,10 @@ import com.opensymphony.xwork2.Preparable;
  *
  */
 public class AddShiftByEmployeeByWeekPrepareAction extends AddShiftByWeekBaseAction implements Preparable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1728336763892104682L;
 
 	/**
 	 * 
@@ -67,6 +73,8 @@ public class AddShiftByEmployeeByWeekPrepareAction extends AddShiftByWeekBaseAct
 	 * @return
 	 */
 	public String edit() {
+		setScheduleData();
+		
 		return SpmActionResult.EDIT.getResult();
 	}
 	
@@ -83,5 +91,17 @@ public class AddShiftByEmployeeByWeekPrepareAction extends AddShiftByWeekBaseAct
 	 * @see com.opensymphony.xwork2.Preparable#prepare()
 	 */
 	public void prepare() throws Exception {
+	}
+
+	/**
+	 * 
+	 * @param employee
+	 * @param shift
+	 * @return
+	 * @see com.laborguru.action.schedule.AddShiftByWeekBaseAction#getGroupById(com.laborguru.model.Employee, com.laborguru.model.Shift)
+	 */
+	@Override
+	protected Object getGroupById(Employee employee, Shift shift) {
+		return employee != null ? employee.getId() : null;
 	}
 }

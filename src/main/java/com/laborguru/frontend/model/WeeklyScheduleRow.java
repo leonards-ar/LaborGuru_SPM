@@ -6,6 +6,7 @@
 package com.laborguru.frontend.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,12 +24,15 @@ public class WeeklyScheduleRow implements Serializable {
 	private Integer positionId;
 	private String positionName;
 	private Integer employeeId;
+	private Integer originalEmployeeId;
 	private String employeeName;
-	private List<WeeklyScheduleDailyRow> weeklySchedule;
+	private List<WeeklyScheduleDailyEntry> weeklySchedule;
 	
 	private Integer employeeMaxHoursWeek;
 	private Integer employeeMaxDaysWeek;
 	private Integer employeeMaxHoursDay;
+	
+	private Object groupById;
 	
 	/**
 	 * 
@@ -68,9 +72,25 @@ public class WeeklyScheduleRow implements Serializable {
 	 * @return the employeeId
 	 */
 	public Integer getEmployeeId() {
-		return employeeId;
+		/*
+		 * Because of the missing attribute keyValue in the autocompleter
+		 * component, then a shadow employeeId must be kept.
+		 */
+		if(employeeId == null) {
+			return getOriginalEmployeeId();
+		} else {
+			return employeeId;
+		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isSelectedEmployeeChange() {
+		return employeeId != null && !employeeId.equals(getOriginalEmployeeId());
+	}
+	
 	/**
 	 * @param employeeId the employeeId to set
 	 */
@@ -95,14 +115,17 @@ public class WeeklyScheduleRow implements Serializable {
 	/**
 	 * @return the weeklySchedule
 	 */
-	public List<WeeklyScheduleDailyRow> getWeeklySchedule() {
+	public List<WeeklyScheduleDailyEntry> getWeeklySchedule() {
+		if(weeklySchedule == null) {
+			setWeeklySchedule(new ArrayList<WeeklyScheduleDailyEntry>());
+		}
 		return weeklySchedule;
 	}
 
 	/**
 	 * @param weeklySchedule the weeklySchedule to set
 	 */
-	public void setWeeklySchedule(List<WeeklyScheduleDailyRow> weeklySchedule) {
+	public void setWeeklySchedule(List<WeeklyScheduleDailyEntry> weeklySchedule) {
 		this.weeklySchedule = weeklySchedule;
 	}
 
@@ -146,6 +169,34 @@ public class WeeklyScheduleRow implements Serializable {
 	 */
 	public void setEmployeeMaxHoursDay(Integer employeeMaxHoursDay) {
 		this.employeeMaxHoursDay = employeeMaxHoursDay;
+	}
+
+	/**
+	 * @return the originalEmployeeId
+	 */
+	public Integer getOriginalEmployeeId() {
+		return originalEmployeeId;
+	}
+
+	/**
+	 * @param originalEmployeeId the originalEmployeeId to set
+	 */
+	public void setOriginalEmployeeId(Integer originalEmployeeId) {
+		this.originalEmployeeId = originalEmployeeId;
+	}
+
+	/**
+	 * @return the groupById
+	 */
+	public Object getGroupById() {
+		return groupById;
+	}
+
+	/**
+	 * @param groupById the groupById to set
+	 */
+	public void setGroupById(Object groupById) {
+		this.groupById = groupById;
 	}
 
 }

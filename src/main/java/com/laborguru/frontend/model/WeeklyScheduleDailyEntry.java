@@ -1,5 +1,5 @@
 /*
- * File name: WeeklyScheduleDailyRow.java
+ * File name: WeeklyScheduleDailyEntry.java
  * Creation date: 08/12/2008 11:19:59
  * Copyright Mindpool
  */
@@ -17,20 +17,22 @@ import com.laborguru.util.CalendarUtils;
  * @since SPM 1.0
  *
  */
-public class WeeklyScheduleDailyRow implements Serializable {
+public class WeeklyScheduleDailyEntry implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -5232573319988760565L;
-	private Date day;
+	private Date day = null;
 	private Date inHour;
 	private Date outHour;
 	private Double totalHours;
+	private boolean multipleShifts = false;
+	
 	
 	/**
 	 * 
 	 */
-	public WeeklyScheduleDailyRow() {
+	public WeeklyScheduleDailyEntry() {
 	}
 
 	/**
@@ -92,4 +94,24 @@ public class WeeklyScheduleDailyRow implements Serializable {
 		this.totalHours = totalHours;
 	}
 
+	/**
+	 * @return the multipleShifts
+	 */
+	public boolean isMultipleShifts() {
+		return multipleShifts;
+	}
+
+	/**
+	 * @param multipleShifts the multipleShifts to set
+	 */
+	public void setMultipleShifts(boolean multipleShifts) {
+		this.multipleShifts = multipleShifts;
+	}
+	
+	/**
+	 * 
+	 */
+	public void resetTotalHours() {
+		setTotalHours(null);
+	}
 }

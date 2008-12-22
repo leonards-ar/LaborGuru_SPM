@@ -404,6 +404,25 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	}
 	
 	/**
+	 * Compares two positions by their ID
+	 * @param pos1
+	 * @param pos2
+	 */
+	protected boolean isEqualPosition(Position pos1, Position pos2) {
+		return pos1 != null && pos2 != null && isEqualId(pos1.getId(), pos2.getId());
+	}
+
+	/**
+	 * 
+	 * @param id1
+	 * @param id2
+	 * @return
+	 */
+	protected boolean isEqualId(Integer id1, Integer id2) {
+		return id1 != null && id1.equals(id2);
+	}
+	
+	/**
 	 * 
 	 */
 	protected abstract void onWeekdaySelectorChange();

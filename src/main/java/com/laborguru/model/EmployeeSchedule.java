@@ -77,6 +77,26 @@ public class EmployeeSchedule extends SpmObject {
 
 	/**
 	 * 
+	 * @param position
+	 * @return
+	 */
+	public boolean hasMultipleShifts(Position position) {
+		int count = 0;
+		if(position != null && position.getId() != null) {
+			for(Shift shift : getShifts()) {
+				if(shift.getPosition() != null && position.getId().equals(shift.getPosition().getId())) {
+					count++;
+					if(count > 1) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * 
 	 * @param shift
 	 */
 	public void addShift(Shift shift) {
