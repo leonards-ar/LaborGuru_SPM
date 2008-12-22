@@ -230,11 +230,32 @@
 					</tr>
 				    <!-- Header -->
 				    
+				    
+				    
 				    <!-- Employees -->
+				    <s:iterator id="dataRow" value="scheduleData.scheduleData" status="itScheduleData">
 				    <tr class="scheduleMainTableEmployeeRow">
-				    	<td class="scheduleNameCell" rowspan="2" valign="top">Mariano Capurro</td>
-						<td class="scheduleNameCell">Server</td>    
-						<td class="scheduleNameCell">10</td>
+				    	<td class="scheduleNameCell" rowspan="<s:property value="scheduleData.getCountFor(#dataRow.employeeId)"/>" valign="top">
+							<s:hidden id="scheduleOriginalEmployeeId_%{#itScheduleData.index}" name="scheduleData.scheduleData[%{#itScheduleData.index}].originalEmployeeId"/>
+							<s:hidden id="scheduleEmployeeMaxHoursDay_%{#itScheduleData.index}" name="scheduleData.scheduleData[%{#itScheduleData.index}].employeeMaxHoursDay"/>
+							<s:hidden id="scheduleEmployeeMaxHoursWeek_%{#itScheduleData.index}" name="scheduleData.scheduleData[%{#itScheduleData.index}].employeeMaxHoursWeek"/>
+							<s:hidden id="scheduleEmployeeMaxDaysWeek_%{#itScheduleData.index}" name="scheduleData.scheduleData[%{#itScheduleData.index}].employeeMaxDaysWeek"/>
+							<s:hidden id="scheduleGroupById_%{#itScheduleData.index}" name="scheduleData.scheduleData[%{#itScheduleData.index}].groupById"/>
+							<s:url id="employeeList" action="scheduleemployeeautocomplete" includeParams="none"/>
+							<s:autocompleter id="scheduleEmployee_%{#itScheduleData.index}" onchange="XXXreloadEmployeeMaxHoursDay('', %{#itScheduleData.index}); return true;" name="scheduleData.scheduleData[%{#itScheduleData.index}].employeeName" keyName="scheduleData.scheduleData[%{#itScheduleData.index}].employeeId" loadMinimumCount="3" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring"/>
+							<script>djConfig.searchIds.push("scheduleEmployee_<s:property value="#itScheduleData.index"/>");</script>
+				    	</td>
+						<td class="scheduleNameCell">
+				    		<s:if test="%{position == null}">
+				    			<s:select id="scheduleposition_%{#itScheduleData.index}" onchange="XXXrefreshRows(''); XXXupdatePositionTotals();" name="scheduleData.scheduleData[%{#itScheduleData.index}].positionId" list="positions" listKey="id" listValue="name" theme="simple"/>
+				    		</s:if>
+				    		<s:else>
+				    			<s:property value="position.name"/>
+				    			<s:hidden id="scheduleposition_%{#itScheduleData.index}" name="scheduleData.scheduleData[%{#itScheduleData.index}].positionId" value="%{position.id}"/>
+				    		</s:else>
+				    		<s:hidden name="scheduleData.scheduleData[%{#itScheduleData.index}].positionName"/>						
+						</td>    
+						<td class="scheduleNameCell" id="scheduleWeeklyTotal_<s:property value="#itScheduleData.index"/>">&nbsp;</td>
 						<td class="scheduleValueCell">
 							<table border="0" align="center" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 								<tr>
@@ -299,13 +320,7 @@
 						</td>
 						<td class="scheduleValueCell" width="45px">6</td>
 				    </tr>
-				    <!-- Add new position row -->
-				    <tr>
-				    	<td class="scheduleNameCell"><select><option value="">Server</option><option value="">Server</option><option value="">Server</option></select></td>
-						<td class="scheduleNameCell">&nbsp;</td>
-						<td class="scheduleValueCell" colspan="14">&nbsp;</td>
-				    </tr>
-				    <!-- Add new position row -->
+				    </s:iterator>
 				    <!-- Employees -->
 
 				    <!-- New Employee -->
