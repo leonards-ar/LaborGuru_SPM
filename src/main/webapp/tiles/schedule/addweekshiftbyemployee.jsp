@@ -1,6 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
+<script language="JavaScript">
+<!--
+	function updateTime(formElement) {
+		formElement.value = parseTime(formElement.value);
+	}
+// -->
+</script>
+
 <br />
 <s:form id="addweeklyshiftbyemployee_form" name="addweeklyshiftbyemployee_form" action="addweeklyshiftbyemployee_save" theme="simple">
 	<s:hidden id="selectedDate" name="selectedDate"/>
@@ -259,8 +267,8 @@
 						<td class="scheduleValueCell">
 							<table border="0" align="center" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 								<tr>
-									<td><input type="text" size="3"></td>
-									<td><input type="text" size="3"></td>
+									<td><input type="text" size="3" onchange="updateTime(this);"></td>
+									<td><input type="text" size="3" onchange="updateTime(this);"></td>
 								</tr>
 							</table>
 						</td>
