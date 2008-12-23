@@ -3,9 +3,7 @@
 
 <script language="JavaScript">
 <!--
-	function updateTime(formElement) {
-		formElement.value = parseTime(formElement.value);
-	}
+
 // -->
 </script>
 
@@ -264,6 +262,8 @@
 				    		<s:hidden name="scheduleData.scheduleData[%{#itScheduleData.index}].positionName"/>						
 						</td>    
 						<td class="scheduleNameCell" id="scheduleWeeklyTotal_<s:property value="#itScheduleData.index"/>">&nbsp;</td>
+						
+						<s:iterator id="dayDataEntry" value="dataRow.weeklySchedule" status="itScheduleData">
 						<td class="scheduleValueCell">
 							<table border="0" align="center" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 								<tr>
@@ -273,60 +273,7 @@
 							</table>
 						</td>
 						<td class="scheduleValueCell" width="45px">6</td>
-						<td class="scheduleValueCell">
-							<table border="0" align="center" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
-								<tr>
-									<td><input type="text" size="3"></td>
-									<td><input type="text" size="3"></td>
-								</tr>
-							</table>
-						</td>
-						<td class="scheduleValueCell" width="45px">6</td>
-						<td class="scheduleValueCell">
-							<table border="0" align="center" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
-								<tr>
-									<td><input type="text" size="3"></td>
-									<td><input type="text" size="3"></td>
-								</tr>
-							</table>
-						</td>
-						<td class="scheduleValueCell" width="45px">6</td>
-						<td class="scheduleValueCell">
-							<table border="0" align="center" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
-								<tr>
-									<td><input type="text" size="3"></td>
-									<td><input type="text" size="3"></td>
-								</tr>
-							</table>
-						</td>
-						<td class="scheduleValueCell" width="45px">6</td>
-						<td class="scheduleValueCell">
-							<table border="0" align="center" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
-								<tr>
-									<td><input type="text" size="3"></td>
-									<td><input type="text" size="3"></td>
-								</tr>
-							</table>
-						</td>
-						<td class="scheduleValueCell" width="45px">6</td>
-						<td class="scheduleValueCell">
-							<table border="0" align="center" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
-								<tr>
-									<td><input type="text" size="3"></td>
-									<td><input type="text" size="3"></td>
-								</tr>
-							</table>
-						</td>
-						<td class="scheduleValueCell" width="45px">6</td>
-						<td class="scheduleValueCell">
-							<table border="0" align="center" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
-								<tr>
-									<td><input type="text" size="3"></td>
-									<td><input type="text" size="3"></td>
-								</tr>
-							</table>
-						</td>
-						<td class="scheduleValueCell" width="45px">6</td>
+						</s:iterator>
 				    </tr>
 				    </s:iterator>
 				    <!-- Employees -->
