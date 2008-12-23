@@ -75,9 +75,9 @@ function showSplash(splashId, contentId, message) {
  * 4, 4a, 4am, 4:00, 4:00 AM, 4 am, 4: ==> 04:00
  * 18, 6p, 6pm, 18:00, 6:00 PM, 6 pm, 18: ==> 18:00
  * 
- * Regular expression: (\d+):*(\d*)\s*(\w*)
+ * Regular expression: (\d*):*(\d\d)\s*(\w*)
  */
-var TIME_REGEXP = new RegExp('(\d+):*(\d*)\s*(\w*)');
+var TIME_REGEXP = new RegExp('(\d*):*(\d\d)\s*(\w*)');
  
 function parseTime(timeTxt) {
 	var m = TIME_REGEXP.exec(timeTxt);
@@ -102,4 +102,8 @@ function parseTime(timeTxt) {
 		}
 		return formatTimeNumber(hs) + ':' + formatTimeNumber(mins);
 	}
+}
+
+function updateTime(formElement) {
+	formElement.value = parseTime(formElement.value);
 }
