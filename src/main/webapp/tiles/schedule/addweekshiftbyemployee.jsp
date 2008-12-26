@@ -180,18 +180,13 @@
 								<table align="center" border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
                   					<tr>
                   						<s:iterator id="weekDay" value="weekDaySelector.weekDays" status="itWeekDay">
-                  						<s:if test="%{weekDaySelector.isSelectedWeekDay(#weekDay)}">
-                  						<td width="12%" class="selectedWeekDay"><s:text name='schedule.addshift.weekday.dateformat'><s:param value='weekDay'/></s:text></td>
-                  						</s:if>
-                  						<s:else>
-                  						<td width="12%" class="availableWeekDay"><a href="<s:url value="#" includeParams="none"/>" onclick="addshiftbyemployee_form.action='addshiftbyemployee_changeDay.action'; addshiftbyemployee_form.selectedWeekDay.value='<s:text name='schedule.addshift.weekdayselector.input.dateformat'><s:param value='weekDay'/></s:text>'; addshiftbyemployee_form.submit();" class="availableWeekDayLink">
-                  						<s:text name='schedule.addshift.weekday.dateformat'><s:param value='weekDay'/></s:text>
-                  						</a>
-                  						</td>                  						
-                  						</s:else>
-                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+	                  						<td width="12%" class="availableWeekDay"><a href="<s:url value="#" includeParams="none"/>" onclick="addshiftbyemployee_form.action='addshiftbyemployee_changeDay.action'; addshiftbyemployee_form.selectedWeekDay.value='<s:text name='schedule.addshift.weekdayselector.input.dateformat'><s:param value='weekDay'/></s:text>'; addshiftbyemployee_form.submit();" class="availableWeekDayLink">
+	                  						<s:text name='schedule.addshift.weekday.dateformat'><s:param value='weekDay'/></s:text>
+	                  						</a>
+	                  						</td>                  						
+	                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
                   						</s:iterator>
-                  						<td width="12%" class="availableWeekDay"><a href="#" class="availableWeekDayLink"><s:text name="schedule.addshift.weekselector.week"/></a></td>
+                  						<td width="12%" class="selectedWeekDay"><s:text name="schedule.addshift.weekselector.week"/></td>
                   					</tr>
                   				</table>			              		
 			              	</td>
@@ -239,40 +234,40 @@
 				    
 				    
 				    <!-- Employees -->
-				    <s:iterator id="dataRow" value="scheduleData.scheduleData" status="itScheduleData">
+				    <s:iterator id="dataRow" value="weeklyScheduleData.scheduleData" status="itScheduleData">
 				    <tr class="scheduleMainTableEmployeeRow">
-				    	<td class="scheduleNameCell" rowspan="<s:property value="scheduleData.getCountFor(#dataRow.employeeId)"/>" valign="top">
-							<s:hidden id="scheduleOriginalEmployeeId_%{#itScheduleData.index}" name="scheduleData.scheduleData[%{#itScheduleData.index}].originalEmployeeId"/>
-							<s:hidden id="scheduleEmployeeMaxHoursDay_%{#itScheduleData.index}" name="scheduleData.scheduleData[%{#itScheduleData.index}].employeeMaxHoursDay"/>
-							<s:hidden id="scheduleEmployeeMaxHoursWeek_%{#itScheduleData.index}" name="scheduleData.scheduleData[%{#itScheduleData.index}].employeeMaxHoursWeek"/>
-							<s:hidden id="scheduleEmployeeMaxDaysWeek_%{#itScheduleData.index}" name="scheduleData.scheduleData[%{#itScheduleData.index}].employeeMaxDaysWeek"/>
-							<s:hidden id="scheduleGroupById_%{#itScheduleData.index}" name="scheduleData.scheduleData[%{#itScheduleData.index}].groupById"/>
+				    	<td class="scheduleNameCell" rowspan="<s:property value="weeklyScheduleData.getCountFor(#dataRow.employeeId)"/>" valign="top">
+							<s:hidden id="scheduleOriginalEmployeeId_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].originalEmployeeId"/>
+							<s:hidden id="scheduleEmployeeMaxHoursDay_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].employeeMaxHoursDay"/>
+							<s:hidden id="scheduleEmployeeMaxHoursWeek_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].employeeMaxHoursWeek"/>
+							<s:hidden id="scheduleEmployeeMaxDaysWeek_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].employeeMaxDaysWeek"/>
+							<s:hidden id="scheduleGroupById_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].groupById"/>
 							<s:url id="employeeList" action="scheduleemployeeautocomplete" includeParams="none"/>
-							<s:autocompleter id="scheduleEmployee_%{#itScheduleData.index}" onchange="XXXreloadEmployeeMaxHoursDay('', %{#itScheduleData.index}); return true;" name="scheduleData.scheduleData[%{#itScheduleData.index}].employeeName" keyName="scheduleData.scheduleData[%{#itScheduleData.index}].employeeId" loadMinimumCount="3" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring"/>
+							<s:autocompleter id="scheduleEmployee_%{#itScheduleData.index}" onchange="XXXreloadEmployeeMaxHoursDay('', %{#itScheduleData.index}); return true;" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].employeeName" keyName="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].employeeId" loadMinimumCount="3" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring"/>
 							<script>djConfig.searchIds.push("scheduleEmployee_<s:property value="#itScheduleData.index"/>");</script>
 				    	</td>
 						<td class="scheduleNameCell">
 				    		<s:if test="%{position == null}">
-				    			<s:select id="scheduleposition_%{#itScheduleData.index}" onchange="XXXrefreshRows(''); XXXupdatePositionTotals();" name="scheduleData.scheduleData[%{#itScheduleData.index}].positionId" list="positions" listKey="id" listValue="name" theme="simple"/>
+				    			<s:select id="scheduleposition_%{#itScheduleData.index}" onchange="XXXrefreshRows(''); XXXupdatePositionTotals();" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].positionId" list="positions" listKey="id" listValue="name" theme="simple"/>
 				    		</s:if>
 				    		<s:else>
 				    			<s:property value="position.name"/>
-				    			<s:hidden id="scheduleposition_%{#itScheduleData.index}" name="scheduleData.scheduleData[%{#itScheduleData.index}].positionId" value="%{position.id}"/>
+				    			<s:hidden id="scheduleposition_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].positionId" value="%{position.id}"/>
 				    		</s:else>
-				    		<s:hidden name="scheduleData.scheduleData[%{#itScheduleData.index}].positionName"/>						
+				    		<s:hidden name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].positionName"/>						
 						</td>    
 						<td class="scheduleNameCell" id="scheduleWeeklyTotal_<s:property value="#itScheduleData.index"/>">&nbsp;</td>
 						
-						<s:iterator id="dayDataEntry" value="dataRow.weeklySchedule" status="itScheduleData">
+						<s:iterator id="dayDataEntry" value="weeklySchedule" status="itDataEntry">
 						<td class="scheduleValueCell">
-							<table border="0" align="center" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
+							<table border="0" align="center" cellpadding="1" cellspacing="0" colspan="0" cellspan="0">
 								<tr>
-									<td><input type="text" size="3" onchange="updateTime(this);"></td>
-									<td><input type="text" size="3" onchange="updateTime(this);"></td>
+									<td><s:textfield id="weeklyScheduleInHour_%{#itScheduleData.index}_%{#itDataEntry.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].weeklySchedule[%{#itDataEntry.index}].inHourAsString" onchange="updateTime(this);" size="2" maxlength="8"/></td>
+									<td><s:textfield id="weeklyScheduleOutHour_%{#itScheduleData.index}_%{#itDataEntry.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].weeklySchedule[%{#itDataEntry.index}].outHourAsString" onchange="updateTime(this);" size="2" maxlength="8"/></td>
 								</tr>
 							</table>
 						</td>
-						<td class="scheduleValueCell" width="45px">6</td>
+						<td class="scheduleValueCell" width="20px" id="weeklyScheduleOutHour_<s:property value="#itScheduleData.index"/>_<s:property value="#itDataEntry.index"/>">&nbsp;</td>
 						</s:iterator>
 				    </tr>
 				    </s:iterator>
@@ -280,8 +275,20 @@
 
 				    <!-- New Employee -->
 				    <tr>
-				    	<td class="scheduleNameCell"><input type="text" size="15"></td>
-				    	<td class="scheduleNameCell"><select><option value="">Server</option><option value="">Server</option><option value="">Server</option></select></td>
+				    	<td class="scheduleNameCell">
+							<s:url id="employeeList" action="scheduleemployeeautocomplete" includeParams="none"/>
+							<s:autocompleter id="newEmployeeName" name="newEmployeeName" loadMinimumCount="3" keyName="newEmployeeId" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring" />
+							<script>djConfig.searchIds.push("newEmployeeName");</script>
+				    	</td>
+				    	<td class="scheduleNameCell">
+				    		<s:if test="%{position == null}">
+								<s:select name="newEmployeePositionId" list="positions" listKey="id" listValue="name" theme="simple"/>
+				    		</s:if>
+				    		<s:else>
+				    			<s:property value="position.name"/>
+				    			<s:hidden name="newEmployeePositionId" value="%{position.id}"/>
+				    		</s:else>				    	
+				    	</td>
 						<td class="scheduleNameCell"><a href="<s:url value="#" includeParams="none"/>" onclick="showWaitSplash(); addshiftbyemployee_form.action='addshiftbyemployee_addEmployee.action'; addshiftbyemployee_form.submit();"><img src="<s:url value="/images/add.png" includeParams="none"/>" /></a></td>
 						<td class="scheduleValueCell" colspan="14">&nbsp;</td>
 				    </tr>				    

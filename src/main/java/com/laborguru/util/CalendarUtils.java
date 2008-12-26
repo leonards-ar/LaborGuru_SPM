@@ -10,6 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
@@ -25,6 +27,8 @@ import com.laborguru.model.DayOfWeek;
 public class CalendarUtils {
 
 	private final static Logger log = Logger.getLogger(CalendarUtils.class);
+
+	private final static Pattern INPUT_TIME_REGEXP[] = {Pattern.compile("^\\s*(\\d{1})(\\d\\d){1}\\s*([aApP][mM]*)*\\s*$"), Pattern.compile("^\\s*(\\d\\d){1}(\\d\\d){1}\\s*([aApP][mM]*)*\\s*$"), Pattern.compile("^\\s*(\\d*)[:.]*(\\d\\d)*\\s*([aApP][mM]*)*\\s*$")};
 
 	/**
 	 * 
@@ -151,8 +155,62 @@ public class CalendarUtils {
 	 * @param time
 	 * @return
 	 */
+	public static Date inputTimeToDate(String time) {
+		try {
+			Matcher m = null;
+			int i = 0;
+			do {
+				m = INPUT_TIME_REGEXP[i].matcher(time);
+				i++;
+			} while(!m.matches() && i < INPUT_TIME_REGEXP.length);
+
+			if(m != null && m.matches()) {
+				return SpmConstants.TIME_FORMAT.parse(getTime(m.group(1), m.group(2), m.group(3)));
+			} else {
+				return null;
+			}			
+		} catch (Throwable ex) {
+			log.error("Cannot parse date/time [" + time + "]", ex);
+			return null;
+		}
+	}
+
+	/**
+	 * 
+	 * @param dayPart
+	 * @return
+	 */
+	private static boolean isPM(String dayPart) {
+		return dayPart != null && (dayPart.equalsIgnoreCase("pm") || dayPart.equalsIgnoreCase("p"));
+	}
+	
+	/**
+	 * 
+	 * @param hours
+	 * @param minutes
+	 * @param dayPart
+	 * @return
+	 */
+	private static String getTime(String hours, String minutes, String dayPart) {
+		int hs = Integer.parseInt(hours != null ? hours : "0");
+		int mins = Integer.parseInt(minutes != null ? minutes : "0");
+		if(dayPart != null && isPM(dayPart) && hs < 12) {
+			hs += 12;
+		}
+		return formatTimeComponent(hs) + ":" + formatTimeComponent(mins);
+	}
+	
+	/**
+	 * 
+	 * @param time
+	 * @return
+	 */
 	public static String dateToDisplayTime(Date time) {
+		if(time != null) {
 			return SpmConstants.TIME_FORMAT.format(time);
+		} else {
+			return "";
+		}
 	}
 
 	/**
