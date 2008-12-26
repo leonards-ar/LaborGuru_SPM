@@ -12,6 +12,8 @@ public class SpmConstants {
 	
 	public static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
 	public static final SimpleDateFormat TIME_NUMBER_FORMAT = new SimpleDateFormat("HHmm");
+	public static final SimpleDateFormat TIME_HOUR_FORMAT = new SimpleDateFormat("HH");
+	public static final SimpleDateFormat TIME_MINUTE_FORMAT = new SimpleDateFormat("mm");
 	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
 	public static final SimpleDateFormat REMOVE_TIME_FORMAT = new SimpleDateFormat("yyyyMMdd");
 	

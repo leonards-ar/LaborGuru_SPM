@@ -95,6 +95,14 @@ public class WeeklyScheduleDailyEntry implements Serializable {
 	}
 
 	/**
+	 * 
+	 * @return
+	 */
+	public String getTotalHoursAsString() {
+		return CalendarUtils.hoursToTime(getTotalHours());
+	}
+	
+	/**
 	 * @return the multipleShifts
 	 */
 	public boolean isMultipleShifts() {
@@ -145,5 +153,21 @@ public class WeeklyScheduleDailyEntry implements Serializable {
 	 */
 	public void resetTotalHours() {
 		setTotalHours(null);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isShift() {
+		return getInHour() != null && getOutHour() != null;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isEditable() {
+		return CalendarUtils.isAfterToday(getDay());
 	}
 }

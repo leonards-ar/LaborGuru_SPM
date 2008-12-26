@@ -5,10 +5,11 @@
  */
 package com.laborguru.action.schedule;
 
-import com.laborguru.action.SpmActionResult;
+import java.util.List;
+
+import com.laborguru.frontend.model.WeeklyScheduleRow;
 import com.laborguru.model.Employee;
 import com.laborguru.model.Shift;
-import com.opensymphony.xwork2.Preparable;
 
 /**
  *
@@ -17,7 +18,7 @@ import com.opensymphony.xwork2.Preparable;
  * @since SPM 1.0
  *
  */
-public class AddShiftByEmployeeByWeekPrepareAction extends AddShiftByWeekBaseAction implements Preparable {
+public class AddShiftByEmployeeByWeekPrepareAction extends AddShiftByWeekBaseAction {
 	/**
 	 * 
 	 */
@@ -30,70 +31,6 @@ public class AddShiftByEmployeeByWeekPrepareAction extends AddShiftByWeekBaseAct
 	}
 
 	/**
-	 * Prepare the data to be used on the edit page
-	 */
-	public void prepareEdit() {
-		loadPageData();
-	}
-	
-	/**
-	 * 
-	 * @see com.laborguru.action.schedule.AddShiftBaseAction#prepareChangeDay()
-	 */
-	@Override
-	public void prepareChangeDay() {
-	}
-
-	/**
-	 * 
-	 * @see com.laborguru.action.schedule.AddShiftBaseAction#prepareChangeWeek()
-	 */
-	@Override
-	public void prepareChangeWeek() {
-	}
-
-	/**
-	 * 
-	 * @see com.laborguru.action.schedule.AddShiftBaseAction#processChangeDay()
-	 */
-	@Override
-	protected void processChangeDay() {
-	}
-
-	/**
-	 * 
-	 * @see com.laborguru.action.schedule.AddShiftBaseAction#processChangeWeek()
-	 */
-	@Override
-	protected void processChangeWeek() {
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public String edit() {
-		setScheduleData();
-		
-		return SpmActionResult.EDIT.getResult();
-	}
-	
-	/**
-	 * 
-	 */
-	private void loadPageData() {
-		loadPositions();
-	}
-
-	/**
-	 * 
-	 * @throws Exception
-	 * @see com.opensymphony.xwork2.Preparable#prepare()
-	 */
-	public void prepare() throws Exception {
-	}
-
-	/**
 	 * 
 	 * @param employee
 	 * @param shift
@@ -101,7 +38,18 @@ public class AddShiftByEmployeeByWeekPrepareAction extends AddShiftByWeekBaseAct
 	 * @see com.laborguru.action.schedule.AddShiftByWeekBaseAction#getGroupById(com.laborguru.model.Employee, com.laborguru.model.Shift)
 	 */
 	@Override
-	protected Object getGroupById(Employee employee, Shift shift) {
+	protected Integer getGroupById(Employee employee, Shift shift) {
 		return employee != null ? employee.getId() : null;
+	}
+	
+	/**
+	 * 
+	 * @param employeeId
+	 * @return
+	 * @see com.laborguru.action.schedule.AddShiftByWeekBaseAction#getEmployeeSchedule(java.lang.Integer)
+	 */
+	@Override
+	protected List<WeeklyScheduleRow> getEmployeeSchedule(Integer employeeId) {
+		return getWeeklyScheduleData().getScheduleDataFor(employeeId);
 	}
 }

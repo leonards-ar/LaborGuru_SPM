@@ -16,6 +16,7 @@ import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.WeekDaySelector;
 import com.laborguru.model.Position;
+import com.laborguru.model.Shift;
 import com.laborguru.service.data.ReferenceDataService;
 import com.laborguru.service.employee.EmployeeService;
 import com.laborguru.service.position.PositionService;
@@ -426,4 +427,15 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	 * 
 	 */
 	protected abstract void onWeekdaySelectorChange();
+	
+	/**
+	 * 
+	 * @param source
+	 * @param destination
+	 */
+	protected void updateShift(Shift source, Shift destination) {
+		destination.setFromHour(source.getFromHour());
+		destination.setToHour(source.getToHour());
+		destination.setPosition(source.getPosition());
+	}	
 }

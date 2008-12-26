@@ -25,7 +25,7 @@ public class WeeklyScheduleData implements Serializable {
 	 */
 	private static final long serialVersionUID = -7341616935357394374L;
 	
-	private Map<Object, List<WeeklyScheduleRow>> indexedScheduleData = null;
+	private Map<Integer, List<WeeklyScheduleRow>> indexedScheduleData = null;
 
 	private List<WeeklyScheduleRow> scheduleData = null;
 	
@@ -38,7 +38,7 @@ public class WeeklyScheduleData implements Serializable {
 	/**
 	 * @return the indexedScheduleData
 	 */
-	private Map<Object, List<WeeklyScheduleRow>> getIndexedScheduleData() {
+	private Map<Integer, List<WeeklyScheduleRow>> getIndexedScheduleData() {
 		if(indexedScheduleData == null) {
 			setIndexedScheduleData(buildIndexedScheduleData());
 		}
@@ -48,12 +48,13 @@ public class WeeklyScheduleData implements Serializable {
 	/**
 	 * 
 	 */
-	private Map<Object, List<WeeklyScheduleRow>> buildIndexedScheduleData() {
-		Map<Object, List<WeeklyScheduleRow>> indexedData = new HashMap<Object, List<WeeklyScheduleRow>>();
-		Object aGroupById = null;
+	private Map<Integer, List<WeeklyScheduleRow>> buildIndexedScheduleData() {
+		Map<Integer, List<WeeklyScheduleRow>> indexedData = new HashMap<Integer, List<WeeklyScheduleRow>>();
+		Integer aGroupById = null;
 		List<WeeklyScheduleRow> data = null;
 		
 		for(WeeklyScheduleRow aRow : getScheduleData()) {
+			aRow.setFirstRow(false);
 			if(aGroupById == null || !aGroupById.equals(aRow.getGroupById())) {
 				if(data != null && aGroupById != null) {
 					indexedData.put(aGroupById, data);
@@ -86,7 +87,7 @@ public class WeeklyScheduleData implements Serializable {
 	 * @param groupById
 	 * @return
 	 */
-	public int getCountFor(Object groupById) {
+	public int getCountFor(Integer groupById) {
 		List<WeeklyScheduleRow> data = getScheduleDataFor(groupById);
 		return data != null ? data.size() : 0;
 	}
@@ -94,7 +95,7 @@ public class WeeklyScheduleData implements Serializable {
 	/**
 	 * @param indexedScheduleData the indexedScheduleData to set
 	 */
-	private void setIndexedScheduleData(Map<Object, List<WeeklyScheduleRow>> indexedScheduleData) {
+	private void setIndexedScheduleData(Map<Integer, List<WeeklyScheduleRow>> indexedScheduleData) {
 		this.indexedScheduleData = indexedScheduleData;
 	}	
 	
@@ -103,7 +104,7 @@ public class WeeklyScheduleData implements Serializable {
 	 * @param groupById
 	 * @param row
 	 */
-	public void addScheduleRow(Object groupById, WeeklyScheduleRow row) {
+	public void addScheduleRow(Integer groupById, WeeklyScheduleRow row) {
 		List<WeeklyScheduleRow> data = getScheduleDataFor(groupById);
 		if(data == null) {
 			data = new ArrayList<WeeklyScheduleRow>();
@@ -111,6 +112,7 @@ public class WeeklyScheduleData implements Serializable {
 		}
 		data.add(row);
 		//:TODO: Sort???
+		resetScheduleData();
 	}
 	
 	/**
@@ -118,7 +120,7 @@ public class WeeklyScheduleData implements Serializable {
 	 * @param groupById
 	 * @return
 	 */
-	public List<WeeklyScheduleRow> getScheduleDataFor(Object groupById) {
+	public List<WeeklyScheduleRow> getScheduleDataFor(Integer groupById) {
 		return getIndexedScheduleData().get(groupById);
 	}
 	
@@ -127,10 +129,10 @@ public class WeeklyScheduleData implements Serializable {
 	 * @param groupByIds
 	 * @return
 	 */
-	public List<WeeklyScheduleRow> getScheduleDataFor(List<Object> groupByIds) {
+	public List<WeeklyScheduleRow> getScheduleDataFor(List<Integer> groupByIds) {
 		List<WeeklyScheduleRow> data = new ArrayList<WeeklyScheduleRow>();
 		List<WeeklyScheduleRow> dataForId;
-		for(Object anId : groupByIds) {
+		for(Integer anId : groupByIds) {
 			dataForId = getScheduleDataFor(anId);
 			if(dataForId != null) {
 				data.addAll(dataForId);
@@ -147,7 +149,10 @@ public class WeeklyScheduleData implements Serializable {
 	public List<WeeklyScheduleRow> getAllScheduleData() {
 		List<WeeklyScheduleRow> data = new ArrayList<WeeklyScheduleRow>();
 		for(List<WeeklyScheduleRow> l : getIndexedScheduleData().values()) {
-			data.addAll(l);
+			if(l != null && l.size() > 0) {
+				l.get(0).setFirstRow(true);
+				data.addAll(l);
+			}
 		}
 		return data;
 	}
@@ -170,4 +175,11 @@ public class WeeklyScheduleData implements Serializable {
 	public void setScheduleData(List<WeeklyScheduleRow> scheduleData) {
 		this.scheduleData = scheduleData;
 	}	
+	
+	/**
+	 * 
+	 */
+	private void resetScheduleData() {
+		setScheduleData(null);
+	}
 }

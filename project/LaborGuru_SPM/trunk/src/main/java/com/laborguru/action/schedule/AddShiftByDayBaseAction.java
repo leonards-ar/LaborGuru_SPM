@@ -525,17 +525,6 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	/**
 	 * 
 	 * @param source
-	 * @param destination
-	 */
-	private void updateShift(Shift source, Shift destination) {
-		destination.setFromHour(source.getFromHour());
-		destination.setToHour(source.getToHour());
-		destination.setPosition(source.getPosition());
-	}
-	
-	/**
-	 * 
-	 * @param source
 	 * @param employeeSchedule
 	 */
 	private void setShiftsAllPositions(List<ScheduleRow> source, EmployeeSchedule employeeSchedule) {

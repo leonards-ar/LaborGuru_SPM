@@ -6,11 +6,14 @@
 package com.laborguru.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+
+import com.laborguru.util.CalendarUtils;
 
 /**
  *
@@ -93,6 +96,44 @@ public class EmployeeSchedule extends SpmObject {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 */
+	public Date getFromHour(Position position) {
+		Date inTime = null;
+		if(position != null && position.getId() != null) {
+			for(Shift shift : getShifts()) {
+				if(shift.getPosition() != null && position.getId().equals(shift.getPosition().getId())) {
+					if(inTime == null || CalendarUtils.greaterTime(inTime, shift.getFromHour())) {
+						inTime = shift.getFromHour();
+					}					
+				}
+			}
+		}
+		return inTime;		
+	}
+	
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 */
+	public Date getToHour(Position position) {
+		Date outTime = null;
+		if(position != null && position.getId() != null) {
+			for(Shift shift : getShifts()) {
+				if(shift.getPosition() != null && position.getId().equals(shift.getPosition().getId())) {
+					if(outTime == null || CalendarUtils.smallerTime(outTime, shift.getToHour())) {
+						outTime = shift.getToHour();
+					}					
+				}
+			}
+		}
+		return outTime;				
 	}
 	
 	/**
