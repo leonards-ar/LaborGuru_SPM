@@ -31,10 +31,14 @@ import com.laborguru.util.CalendarUtils;
 public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction {
 	private static final Logger log = Logger.getLogger(AddShiftByWeekBaseAction.class);
 	
-	private WeeklyScheduleData scheduleData = null;
+	private WeeklyScheduleData weeklyScheduleData = null;
 	
 	private List<StoreSchedule> storeSchedules = null;
 	private List<Date> weekDays = null;
+	
+	private Integer newEmployeeId;
+	private String newEmployeeName;
+	private Integer newEmployeePositionId;
 	
 	/**
 	 * 
@@ -92,7 +96,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction {
 						aRow = getRowFor(employeeSchedule, shift);
 						if(aRow == null) {
 							aRow = buildRowFor(employeeSchedule, shift);
-							getScheduleData().addScheduleRow(getGroupById(employeeSchedule.getEmployee(), shift), aRow);
+							getWeeklyScheduleData().addScheduleRow(getGroupById(employeeSchedule.getEmployee(), shift), aRow);
 						}
 						buildScheduleDataFor(aRow, employeeSchedule, shift, i);
 					}
@@ -176,7 +180,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction {
 	 * @return
 	 */
 	private WeeklyScheduleRow getRowFor(EmployeeSchedule employeeSchedule, Shift shift) {
-		List<WeeklyScheduleRow> dataRows = getScheduleData().getScheduleDataFor(getGroupById(employeeSchedule.getEmployee(), shift));
+		List<WeeklyScheduleRow> dataRows = getWeeklyScheduleData().getScheduleDataFor(getGroupById(employeeSchedule.getEmployee(), shift));
 		if(dataRows != null) {
 			for(WeeklyScheduleRow aRow : dataRows) {
 				if(isEqualId(aRow.getEmployeeId(), employeeSchedule.getEmployee().getId()) && isEqualId(aRow.getPositionId(), shift.getPosition().getId())) {
@@ -208,26 +212,68 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction {
 	/**
 	 * @return the scheduleData
 	 */
-	public WeeklyScheduleData getScheduleData() {
-		if(scheduleData == null) {
-			setScheduleData(new WeeklyScheduleData());
+	public WeeklyScheduleData getWeeklyScheduleData() {
+		if(weeklyScheduleData == null) {
+			setWeeklyScheduleData(new WeeklyScheduleData());
 		}
-		return scheduleData;
+		return weeklyScheduleData;
 	}
 
 	/**
-	 * @param scheduleData the scheduleData to set
+	 * @param weeklyScheduleData the scheduleData to set
 	 */
-	public void setScheduleData(WeeklyScheduleData scheduleData) {
-		this.scheduleData = scheduleData;
+	public void setWeeklyScheduleData(WeeklyScheduleData weeklyScheduleData) {
+		this.weeklyScheduleData = weeklyScheduleData;
 	}
 	
 	/**
 	 * 
 	 */
 	protected void setScheduleData() {
-		if(getScheduleData().isEmpty()) {
+		if(getWeeklyScheduleData().isEmpty()) {
 			buildScheduleDataFor(getPosition());
 		}
+	}
+
+	/**
+	 * @return the newEmployeeId
+	 */
+	public Integer getNewEmployeeId() {
+		return newEmployeeId;
+	}
+
+	/**
+	 * @param newEmployeeId the newEmployeeId to set
+	 */
+	public void setNewEmployeeId(Integer newEmployeeId) {
+		this.newEmployeeId = newEmployeeId;
+	}
+
+	/**
+	 * @return the newEmployeeName
+	 */
+	public String getNewEmployeeName() {
+		return newEmployeeName;
+	}
+
+	/**
+	 * @param newEmployeeName the newEmployeeName to set
+	 */
+	public void setNewEmployeeName(String newEmployeeName) {
+		this.newEmployeeName = newEmployeeName;
+	}
+
+	/**
+	 * @return the newEmployeePositionId
+	 */
+	public Integer getNewEmployeePositionId() {
+		return newEmployeePositionId;
+	}
+
+	/**
+	 * @param newEmployeePositionId the newEmployeePositionId to set
+	 */
+	public void setNewEmployeePositionId(Integer newEmployeePositionId) {
+		this.newEmployeePositionId = newEmployeePositionId;
 	}
 }

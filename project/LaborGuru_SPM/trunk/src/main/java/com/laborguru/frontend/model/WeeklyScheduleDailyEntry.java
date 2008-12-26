@@ -110,6 +110,38 @@ public class WeeklyScheduleDailyEntry implements Serializable {
 	
 	/**
 	 * 
+	 * @return
+	 */
+	public String getInHourAsString() {
+		return CalendarUtils.dateToDisplayTime(getInHour());
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getOutHourAsString() {
+		return CalendarUtils.dateToDisplayTime(getOutHour());
+	}
+
+	/**
+	 * 
+	 * @param inHour
+	 */
+	public void setInHourAsString(String inHour) {
+		setInHour(CalendarUtils.inputTimeToDate(inHour));
+	}
+
+	/**
+	 * 
+	 * @param inHour
+	 */
+	public void setOutHourAsString(String outHour) {
+		setOutHour(CalendarUtils.inputTimeToDate(outHour));
+	}
+	
+	/**
+	 * 
 	 */
 	public void resetTotalHours() {
 		setTotalHours(null);

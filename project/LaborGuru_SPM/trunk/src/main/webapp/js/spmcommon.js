@@ -77,24 +77,42 @@ function showSplash(splashId, contentId, message) {
  * 
  * Regular expression: (\d*):*(\d\d)\s*(\w*)
  */
-var TIME_REGEXP = new RegExp('(\d*):*(\d\d)\s*(\w*)');
+/* CASE 1: hmm[pm] */
+var TIME_REGEXP1 = /^\s*(\d{1})(\d\d){1}\s*([aApP][mM]*)*\s*$/;
+
+/* CASE 2: hhmm[pm] */
+var TIME_REGEXP2 = /^\s*(\d\d){1}(\d\d){1}\s*([aApP][mM]*)*\s*$/;
+
+/* CASE 3: h[pm], hh[pm], h:[mm][pm], hh:[mm][pm] */
+var TIME_REGEXP3 = /^\s*(\d*)[:.]*(\d\d)*\s*([aApP][mM]*)*\s*$/;
+
+function getRegExpMatch(timeTxt) {
+	var m = null;
+	m = TIME_REGEXP1.exec(timeTxt);
+	if(m) { return m;}
+	m = TIME_REGEXP2.exec(timeTxt);
+	if(m) { return m;}
+	return TIME_REGEXP3.exec(timeTxt);
+} 
  
 function parseTime(timeTxt) {
-	var m = TIME_REGEXP.exec(timeTxt);
+	var m = getRegExpMatch(timeTxt);
 	if(m == null) {
 		return '';
 	} else {
 		var hs = 0;
 		var mins = 0
 		var d = null;
-		
-		if(m.length > 0) {
+		// Hours m[1]
+		if(m.length > 0 && m[1]) {
 			hs = toInt(m[1]);
 		}
-		if(m.length > 1) {
+		// Minutes m[2]
+		if(m.length > 1 && m[2]) {
 			mins = toInt(m[2]);
 		}
-		if(m.length > 2) {
+		// AM/PM m[3]
+		if(m.length > 2 && m[3]) {
 			d = m[3];
 			if(d && (d.toLowerCase() == 'p' || d.toLowerCase() == 'pm') && hs >= 0 && hs < 12) {
 				hs = hs + 12;

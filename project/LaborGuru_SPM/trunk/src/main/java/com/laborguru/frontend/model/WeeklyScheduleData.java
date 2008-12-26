@@ -156,8 +156,10 @@ public class WeeklyScheduleData implements Serializable {
 	 * @return the scheduleData
 	 */
 	public List<WeeklyScheduleRow> getScheduleData() {
-		if(scheduleData == null || scheduleData.isEmpty()) {
+		if((scheduleData == null || scheduleData.isEmpty()) && (indexedScheduleData != null && !indexedScheduleData.isEmpty())) {
 			setScheduleData(getAllScheduleData());
+		} else if(scheduleData == null) {
+			setScheduleData(new ArrayList<WeeklyScheduleRow>());
 		}
 		return scheduleData;
 	}
