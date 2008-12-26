@@ -125,6 +125,19 @@ public class CalendarUtils {
 	 * @param d
 	 * @return
 	 */
+	public static boolean isAfterToday(Date d) {
+		if(d != null) {
+			return removeTimeFromDate(d).after(todayWithoutTime()); 
+		} else {
+			return false;
+		}
+	}
+	
+	/**
+	 * 
+	 * @param d
+	 * @return
+	 */
 	public static Date removeTimeFromDate(Date d) {
 		try {
 			String str = SpmConstants.REMOVE_TIME_FORMAT.format(d);
@@ -156,22 +169,26 @@ public class CalendarUtils {
 	 * @return
 	 */
 	public static Date inputTimeToDate(String time) {
-		try {
-			Matcher m = null;
-			int i = 0;
-			do {
-				m = INPUT_TIME_REGEXP[i].matcher(time);
-				i++;
-			} while(!m.matches() && i < INPUT_TIME_REGEXP.length);
-
-			if(m != null && m.matches()) {
-				return SpmConstants.TIME_FORMAT.parse(getTime(m.group(1), m.group(2), m.group(3)));
-			} else {
-				return null;
-			}			
-		} catch (Throwable ex) {
-			log.error("Cannot parse date/time [" + time + "]", ex);
+		if(time == null || time.trim().length() <= 0) {
 			return null;
+		} else {
+			try {
+				Matcher m = null;
+				int i = 0;
+				do {
+					m = INPUT_TIME_REGEXP[i].matcher(time);
+					i++;
+				} while(!m.matches() && i < INPUT_TIME_REGEXP.length);
+
+				if(m != null && m.matches()) {
+					return SpmConstants.TIME_FORMAT.parse(getTime(m.group(1), m.group(2), m.group(3)));
+				} else {
+					return null;
+				}			
+			} catch (Throwable ex) {
+				log.error("Cannot parse date/time [" + time + "]", ex);
+				return null;
+			}
 		}
 	}
 
@@ -253,6 +270,24 @@ public class CalendarUtils {
 		}
 	}
 
+	/**
+	 * Returns if time1 is equal to time2
+	 * @param time1
+	 * @param time2
+	 * @return
+	 */
+	public static boolean equalsTime(Date time1, Date time2) {
+		try {
+			long t1 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(time1));
+			long t2 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(time2));
+			
+			return t1 == t2;
+		} catch(Throwable ex) {
+			return false;
+		}
+	}
+
+	
 	/**
 	 * Returns if time1 is smaller or equal than time2
 	 * @param time1
@@ -381,15 +416,26 @@ public class CalendarUtils {
 	
 	/**
 	 * 
+	 * @param t
+	 * @return
+	 */
+	private static int timeToMinutes(Date t) {
+		int hs = Integer.parseInt(SpmConstants.TIME_HOUR_FORMAT.format(t));
+		int mins = Integer.parseInt(SpmConstants.TIME_MINUTE_FORMAT.format(t));
+		return (hs * 60) + mins;
+	}
+	
+	/**
+	 * 
 	 * @param date1
 	 * @param date2
 	 * @return
 	 */
 	public static Double differenceInHours(Date date1, Date date2) {
-		long t1 = date1 != null ? date1.getTime() : 0L;
-		long t2 = date2 != null ? date2.getTime() : 0L;
+		int t1 = date1 != null ? timeToMinutes(date1) : 0;
+		int t2 = date2 != null ? timeToMinutes(date2) : 0;
 		
-		return new Double(t1 - t2 / (1000L * 60L * 60L));
+		return new Double((t1 - t2) / 60D);
 	}
 	
 	/**

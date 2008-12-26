@@ -32,7 +32,9 @@ public class WeeklyScheduleRow implements Serializable {
 	private Integer employeeMaxDaysWeek;
 	private Integer employeeMaxHoursDay;
 	
-	private Object groupById;
+	private Integer groupById;
+	
+	private boolean firstRow = false;
 	
 	/**
 	 * 
@@ -188,15 +190,28 @@ public class WeeklyScheduleRow implements Serializable {
 	/**
 	 * @return the groupById
 	 */
-	public Object getGroupById() {
+	public Integer getGroupById() {
 		return groupById;
 	}
 
 	/**
 	 * @param groupById the groupById to set
 	 */
-	public void setGroupById(Object groupById) {
+	public void setGroupById(Integer groupById) {
 		this.groupById = groupById;
 	}
 
+	/**
+	 * @return the firstRow
+	 */
+	public boolean isFirstRow() {
+		return firstRow;
+	}
+
+	/**
+	 * @param firstRow the firstRow to set
+	 */
+	public void setFirstRow(boolean firstRow) {
+		this.firstRow = firstRow;
+	}
 }
