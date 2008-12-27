@@ -1,3 +1,13 @@
+/*****************************************
+ * COMMON VARIABLES
+ *****************************************/
+var TOTAL_COLS = 0;
+var TOTAL_ROWS = [0];
+var POSITION_IDS;
+
+/*****************************************
+ * DAILY SCHEDULE VARIABLES
+ *****************************************/
 /*
    Possible Actions are:
      1: set working time
@@ -19,22 +29,34 @@ var scheduleState = 1;
 
 var fromColumn;
 var toColumn;
-
 var currentRow;
 var currentScheduleId;
 var previousClassName;
 var onMouseOutEnabled = true;
-
-var TOTAL_COLS = 0;
-var TOTAL_ROWS = [0];
 var TIME_INTERVAL = 15;
 var BREAK = null;
 var CANNOT_CHANGE_ROW_MSG = null;
 var END_TIME_MSG = null;
 var START_TIME_MSG = null;
 var SCHEDULE_IDS = [''];
-var POSITION_IDS;
 
+
+/*****************************************
+ * COMMON FUNCTIONS
+ *****************************************/
+
+
+function addPositionId(index, positionId) {
+	POSITION_IDS[index] = positionId;
+}
+
+function addScheduleTotalRows(index, totalRows) {
+	TOTAL_ROWS[index] = totalRows;
+}
+
+/*****************************************
+ * DAILY SCHEDULE FUNCTIONS
+ *****************************************/
 function initialize(totalCols, breakTxt, cannotChangeRowMsg, startTimeMsg, endTimeMsg, positionsQty, schedulesQty) {
 	TOTAL_COLS = totalCols;
 	TOTAL_ROWS = new Array(schedulesQty);
@@ -52,10 +74,6 @@ function initializeMultiSchedule(schedulesQty) {
 	}
 }
 
-function addScheduleTotalRows(index, totalRows) {
-	TOTAL_ROWS[index] = totalRows;
-}
-
 function getTotalRows(scheduleId) {
 	if(scheduleId == '' || isNaN(scheduleId)) {
 		return TOTAL_ROWS[0];
@@ -63,10 +81,6 @@ function getTotalRows(scheduleId) {
 		scheduleId = toInt(scheduleId);
 		return TOTAL_ROWS[scheduleId];
 	}
-}
-
-function addPositionId(index, positionId) {
-	POSITION_IDS[index] = positionId;
 }
 
 function scheduleClick(tdObj, rowNum, colNum, defaultPositionId, scheduleId)
@@ -186,53 +200,6 @@ function scheduleOnMouseOut(tdObj) {
 	}
 	onMouseOutEnabled = true;
 	previousColor = null;
-}
-
-function getHours(time) {
-	var i = time.indexOf(':');
-	if(i >= 0) {
-		return time.substring(0, i);
-	} else {
-		return time.substring(0, 2);
-	}
-}
-
-function getMinutes(time) {
-	var i = time.indexOf(':');
-	if(i >= 0) {
-		return time.substring(i + 1, time.length);
-	} else {
-		return time.substring(2, 4);
-	}
-}
-
-function integerDivision(numerator, denominator) {
-    var remainder = numerator % denominator;
-    var quotient = ( numerator - remainder ) / denominator;
-
-    if ( quotient >= 0 )
-        quotient = Math.floor( quotient );
-    else  // negative
-        quotient = Math.ceil( quotient );
-
-	return quotient;
-}
-
-
-function timeInMinutes(time) {
-	time = trim(time);
-	if(time != null && time != '' && time != '-') {
-		return toInt(getHours(time)) * 60 + toInt(getMinutes(time));
-	} else {
-		return 0;
-	}
-}
-
-function minutesToTime(minutes) {
-	var h = integerDivision(minutes, 60);
-	var m = minutes % 60;
-	
-	return formatTimeNumber(h) + ':' + formatTimeNumber(m);
 }
 
 function refreshRows(scheduleId) {
@@ -607,15 +574,6 @@ function refreshRowImpl(rowNum, scheduleId, refreshTotals) {
 	}
 }
 
-function trim(s) {
-	if(s) {
-		var t = s.replace(/^\s+/, '');
-		return t.replace(/\s+$/, '');
-	} else {
-		return s;
-	}
-}
-
 function reloadEmployeeMaxHoursDay(scheduleId, rowNum) {
 	var autoCompleter = dojo.widget.byId(scheduleId + 'scheduleEmployee_' + rowNum);
 	var employeeId = null;
@@ -651,4 +609,66 @@ function reloadEmployeeMaxHoursDay(scheduleId, rowNum) {
 	dojo.xhrGet(kw);
 	 
 	refreshEmployeeDayTotalHours(scheduleId, rowNum);
+}
+
+/*****************************************
+ * DAILY SCHEDULE FUNCTIONS
+ *****************************************/
+function wsInitialize(totalCols, positionsQty) {
+	TOTAL_COLS = totalCols;
+	TOTAL_ROWS = new Array(1);
+	POSITION_IDS = new Array(positionsQty);
+}
+
+function wsRefreshTotalHours(rowNum, columnNum) {
+	var inHourMin = getObjectValueAsTimeInMinutes('weeklyScheduleInHour_' + rowNum + '_' + columnNum, '00:00');
+	var outHourMin = getObjectValueAsTimeInMinutes('weeklyScheduleOutHour_' + rowNum + '_' + columnNum, '00:00');
+	var totalHourMin = outHourMin - inHourMin;
+	if(totalHourMin >= 0) {
+		setObjectByIDValue('weeklyScheduleTotalHours_' + rowNum + '_' + columnNum, minutesToTime(totalHourMin));
+	}
+	wsRefreshRowTotals(rowNum);
+}
+
+function wsRefreshRowTotals(rowNum) {
+	var total = 0;
+	var colTotal;
+	var totalDays = 0;
+	var className;
+	var maxHoursDay = toInt(getObjectByIDValue('scheduleEmployeeMaxHoursDay_' + rowNum, '24')) * 60;
+	var maxHoursWeek = toInt(getObjectByIDValue('scheduleEmployeeMaxHoursWeek_' + rowNum, '168')) * 60;
+	var maxDaysWeek = toInt(getObjectByIDValue('scheduleEmployeeMaxDaysWeek_' + rowNum, '7'));
+	
+	for(var i=0; i < TOTAL_COLS; i++) {
+		colTotal = getObjectValueAsTimeInMinutes('weeklyScheduleTotalHours_' + rowNum + '_' + i, '00:00');
+		if(colTotal > maxHoursDay) {
+			setObjectByIDClass('weeklyScheduleTotalHours_' + rowNum + '_' + i, 'scheduleEmployeeTotalHoursExceeded');
+		} else {
+			setObjectByIDClass('weeklyScheduleTotalHours_' + rowNum + '_' + i, 'scheduleValueCell');
+		}
+		if(colTotal > 0) {
+			totalDays++;
+		}
+		total += colTotal;
+	}
+	
+	if(total > maxHoursWeek) {
+		className = 'scheduleEmployeeTotalWeekHoursExceeded';
+	} else {
+		className = 'scheduleNameCell';
+	}
+	setObjectByIDValueAndClass('scheduleWeeklyTotal_' + rowNum, minutesToTime(total), className);
+
+	if(totalDays > maxDaysWeek) {
+		className = 'scheduleEmployeeTotalWeekDaysExceeded';
+	} else {
+		className = '';
+	}
+	setObjectByIDClass('scheduleRow_' + rowNum, className);	
+}
+
+function wsRefreshAllRowsTotals() {
+	for(var i=0; i < TOTAL_ROWS[0]; i++) {
+		wsRefreshRowTotals(i);
+	}
 }

@@ -235,7 +235,7 @@
 				    
 				    <!-- Employees -->
 				    <s:iterator id="dataRow" value="weeklyScheduleData.scheduleData" status="itScheduleData">
-				    <tr class="scheduleMainTableEmployeeRow">
+				    <tr class="scheduleMainTableEmployeeRow" id="scheduleRow_%{#itScheduleData.index}">
 						<s:hidden id="scheduleOriginalEmployeeId_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].originalEmployeeId"/>
 						<s:hidden id="scheduleEmployeeMaxHoursDay_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].employeeMaxHoursDay"/>
 						<s:hidden id="scheduleEmployeeMaxHoursWeek_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].employeeMaxHoursWeek"/>
@@ -256,7 +256,7 @@
 						<td class="scheduleNameCell">
 							<s:if test="%{editable}">
 					    		<s:if test="%{position == null}">
-					    			<s:select id="scheduleposition_%{#itScheduleData.index}" onchange="XXXrefreshRows(''); XXXupdatePositionTotals();" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].positionId" list="positions" listKey="id" listValue="name" theme="simple"/>
+					    			<s:select id="scheduleposition_%{#itScheduleData.index}" onchange="XXXupdatePositionTotals();" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].positionId" list="positions" listKey="id" listValue="name" theme="simple"/>
 					    		</s:if>
 					    		<s:else>
 					    			<s:property value="position.name"/>
@@ -277,8 +277,8 @@
 								<s:hidden name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].weeklySchedule[%{#itDataEntry.index}].multipleShifts"/>
 								<tr>
 									<s:if test="%{editable}">
-									<td><s:textfield id="weeklyScheduleInHour_%{#itScheduleData.index}_%{#itDataEntry.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].weeklySchedule[%{#itDataEntry.index}].inHourAsString" onchange="updateTime(this);" size="2" maxlength="8"/></td>
-									<td><s:textfield id="weeklyScheduleOutHour_%{#itScheduleData.index}_%{#itDataEntry.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].weeklySchedule[%{#itDataEntry.index}].outHourAsString" onchange="updateTime(this);" size="2" maxlength="8"/></td>
+									<td><s:textfield id="weeklyScheduleInHour_%{#itScheduleData.index}_%{#itDataEntry.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].weeklySchedule[%{#itDataEntry.index}].inHourAsString" onchange="updateTime(this); wsRefreshTotalHours(%{#itScheduleData.index}, %{#itDataEntry.index});" size="2" maxlength="8"/></td>
+									<td><s:textfield id="weeklyScheduleOutHour_%{#itScheduleData.index}_%{#itDataEntry.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].weeklySchedule[%{#itDataEntry.index}].outHourAsString" onchange="updateTime(this); wsRefreshTotalHours(%{#itScheduleData.index}, %{#itDataEntry.index});" size="2" maxlength="8"/></td>
 									</s:if>
 									<s:else>
 									<s:hidden name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].weeklySchedule[%{#itDataEntry.index}].inHourAsString"/>
@@ -290,7 +290,7 @@
 								</tr>
 							</table>
 						</td>
-						<td class="scheduleValueCell" width="20px" id="weeklyScheduleOutHour_<s:property value="#itScheduleData.index"/>_<s:property value="#itDataEntry.index"/>"><s:property value="totalHoursAsString"/></td>
+						<td class="scheduleValueCell" width="20px" id="weeklyScheduleTotalHours_<s:property value="#itScheduleData.index"/>_<s:property value="#itDataEntry.index"/>"><s:property value="totalHoursAsString"/></td>
 						</s:iterator>
 				    </tr>
 				    </s:iterator>
@@ -329,7 +329,7 @@
 				<table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
 					<tr>
 						<td><s:submit onclick="return showWaitSplash();" id="saveButton" name="saveSchedule" key="save.button" theme="simple" cssClass="button"/></td>
-						<td><s:submit id="cancelButton" key="cancel.button" action="addshiftbyemployee_cancel" theme="simple" cssClass="button"/></td>		                    
+						<td><s:submit id="cancelButton" key="cancel.button" action="addweeklyshiftbyemployee_cancel" theme="simple" cssClass="button"/></td>		                    
       				</tr>
      			</table>                    
     		</td>
@@ -337,3 +337,14 @@
 		</s:if>
 	</table>
 </s:form>
+<script language="javascript" type="text/javascript">
+<!--
+wsInitialize(<s:property value="weekDays.size()"/>, <s:property value="positions.size()"/>);
+<s:iterator id="pos" value="positions" status="posStatus">
+	addPositionId(<s:property value="#posStatus.index"/>, '<s:property value="id"/>');
+</s:iterator>
+addScheduleTotalRows(0, <s:property value="totalScheduleRows"/>);
+wsRefreshAllRowsTotals();
+//wsUpdateSummaryTotals('');
+// -->
+</script>
