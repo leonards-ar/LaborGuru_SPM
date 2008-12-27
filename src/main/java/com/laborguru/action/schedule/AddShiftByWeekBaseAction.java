@@ -751,8 +751,35 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	
 	/**
 	 * 
+	 * @return
+	 */
+	public int getTotalScheduleRows() {
+		return getWeeklyScheduleData().getScheduleData().size();
+	}
+	
+	/**
+	 * 
 	 * @param employeeId
 	 * @return
 	 */
 	protected abstract List<WeeklyScheduleRow> getEmployeeSchedule(Integer employeeId);
+	
+	/**
+	 * Prepare the data to be used on the edit page
+	 */
+	public void prepareCancel() {
+		loadPageData();
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String cancel() {
+		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
+		resetScheduleData();
+		setScheduleData();
+		
+		return SpmActionResult.EDIT.getResult();
+	}	
 }

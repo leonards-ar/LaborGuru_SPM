@@ -3,6 +3,15 @@ function breakout_of_frame() {
     top.location.href = document.location.href ;
   }
 }
+
+function trim(s) {
+	if(s) {
+		var t = s.replace(/^\s+/, '');
+		return t.replace(/\s+$/, '');
+	} else {
+		return s;
+	}
+}
 		
 function getObjectByID(objectId) {
 	if(document.getElementById) {
@@ -14,6 +23,51 @@ function getObjectByID(objectId) {
 	} else {
 		return null;
 	}
+}
+
+function getObjectByIDValue(objectId, defaultValue) {
+	var obj = getObjectByID(objectId);
+	var val = defaultValue;
+	if(obj) {
+		if(obj.value) { 
+			val = obj.value;
+		} else if(obj.innerHTML) {
+			val = obj.innerHTML;
+		}
+	}
+	return val;
+}
+
+function setObjectByIDValue(objectId, value) {
+	var obj = getObjectByID(objectId);
+	if(obj) {
+		if(obj.value) { 
+			obj.value = value;
+		} else if(obj.innerHTML) {
+			obj.innerHTML = value;
+		}
+	}	
+}
+
+function setObjectByIDClass(objectId, className) {
+	var obj = getObjectByID(objectId);
+	if(obj) {
+		obj.className = className;
+	}
+}
+
+function setObjectByIDValueAndClass(objectId, value, className) {
+	var obj = getObjectByID(objectId);
+	if(obj) {
+		if(obj.value) { 
+			obj.value = value;
+		} else if(obj.innerHTML) {
+			obj.innerHTML = value;
+		}
+		if(className) {
+			obj.className = className;
+		}
+	}	
 }
 
 function toInt(n) {
@@ -124,4 +178,55 @@ function parseTime(timeTxt) {
 
 function updateTime(formElement) {
 	formElement.value = parseTime(formElement.value);
+}
+
+function getHours(time) {
+	var i = time.indexOf(':');
+	if(i >= 0) {
+		return time.substring(0, i);
+	} else {
+		return time.substring(0, 2);
+	}
+}
+
+function getMinutes(time) {
+	var i = time.indexOf(':');
+	if(i >= 0) {
+		return time.substring(i + 1, time.length);
+	} else {
+		return time.substring(2, 4);
+	}
+}
+
+function integerDivision(numerator, denominator) {
+    var remainder = numerator % denominator;
+    var quotient = ( numerator - remainder ) / denominator;
+
+    if ( quotient >= 0 )
+        quotient = Math.floor( quotient );
+    else  // negative
+        quotient = Math.ceil( quotient );
+
+	return quotient;
+}
+
+function timeInMinutes(time) {
+	time = trim(time);
+	if(time != null && time != '' && time != '-') {
+		return toInt(getHours(time)) * 60 + toInt(getMinutes(time));
+	} else {
+		return 0;
+	}
+}
+
+function minutesToTime(minutes) {
+	var h = integerDivision(minutes, 60);
+	var m = minutes % 60;
+	
+	return formatTimeNumber(h) + ':' + formatTimeNumber(m);
+}
+
+function getObjectValueAsTimeInMinutes(objectId, defaultTime) {
+	var t = parseTime(getObjectByIDValue(objectId, defaultTime));
+	return timeInMinutes(t);
 }
