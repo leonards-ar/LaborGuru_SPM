@@ -9,6 +9,8 @@
 		<property name="storeService" ref="storeService"/>
 	</bean>
 
+	<bean id="storeDefinitionFileParser" class="com.laborguru.service.store.file.StoreDefinitionFileParserBean" autowire="byType"/>
+
 	<!--  Transactional Services's declarations -->
 	<bean id="uploadFileServiceTarget" class="com.laborguru.service.uploadfile.UploadFileServiceBean" autowire="byType"/>
 	
