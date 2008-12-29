@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.laborguru.model.Position;
+import com.laborguru.model.PositionGroup;
 import com.laborguru.model.Store;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.model.report.TotalHourByPosition;
@@ -56,4 +57,46 @@ public interface ReportDao {
 	 * @throws SQLException
 	 */
 	List<TotalHour> getTargetWeeklyTotalHourByPosition(Store store, Position position, Date startDate, Date endDate) throws SQLException;
+	
+	/**
+	 * Retrieves the schedule forecast of all the positions.
+	 * @param store
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @throws SQLException
+	 */
+	List<TotalHourByPosition> getScheduleForecastByPosition(Store store, Date startDate, Date endDate) throws SQLException;
+	
+	/**
+	 * Retrieves the target forecast of all the positions.
+	 * @param store
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @throws SQLException
+	 */
+	List<TotalHourByPosition> getTargetForecastByPosition(Store store, Date startDate, Date endDate) throws SQLException;
+	
+	/**
+	 * Retrieves the schedule values for Total Hour Weekly by Position Group
+	 * @param store
+	 * @param positionGroup
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @throws SQLException
+	 */
+	List<TotalHour> getScheduleWeeklyTotalHourByService(Store store, PositionGroup positionGroup, Date startDate, Date endDate) throws SQLException;
+	
+	/**
+	 * Retrieves the target values for Total Hour Weekly by Position Group
+	 * @param store
+	 * @param positionGroup
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @throws SQLException
+	 */
+	List<TotalHour> getTargetWeeklyTotalHourByService(Store store, PositionGroup positionGroup, Date startDate, Date endDate) throws SQLException;
 }

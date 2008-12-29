@@ -1,7 +1,6 @@
 package com.laborguru.action.report;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.List;
 
@@ -44,16 +43,6 @@ public class TotalHoursReportByPositionPrepareAction extends ScheduleReportPrepa
 	
 	private final String actionName = "totalHoursReportByPosition";
 	
-	@Override
-	public void prepareChangeWeek() {
-		pageSetup();
-	}
-
-	@Override
-	protected void processChangeWeek() {
-		getWeekDaySelector().setStringSelectedDay(getSelectedDate());
-		showReport();
-	}
 
 	/**
 	 * 
@@ -67,10 +56,6 @@ public class TotalHoursReportByPositionPrepareAction extends ScheduleReportPrepa
 	}
 	
 	public String showReport() {
-		if(getPeriod() == null || getPeriod().equals("weekly")) {
-			return weeklyReport();
-		} 
-		//TODO show half hour report.
 		return weeklyReport();
 	}
 	

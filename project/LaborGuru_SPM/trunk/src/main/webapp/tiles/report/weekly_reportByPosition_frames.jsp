@@ -9,18 +9,20 @@
 			<td class="positionTableHeader" colspan="2"><s:property value="name" /></td>
 		</tr>
 		<tr>
-			<s:url id="%{name}"
-				value="/report/totalHoursReportByPosition_showReport.action" method="post">
+			<s:url id="%{name}" action="totalHoursReportByPosition_showReport" namespace="report" method="post">
 				<s:param name="selectedDate" value="selectedDate"/>
 				<s:param name="selectedWeekDay" value="selectedWeekDay"/>
 				<s:param name="position" value="position"/>
 			</s:url>
 		
-		
 			<s:div id="reportFrame" theme="ajax" 
 					href="%{name}" 
 					indicator="indicator" />
 		</tr>
+
+<script language="javascript" type="text/javascript">
+		djConfig.searchIds.push("<s:property value='%{name}' />");	
+</script>
 	</s:iterator>
 
 </table>
@@ -28,3 +30,5 @@
 <img id="indicator"
 	src="<s:url value="/images/indicator.gif" includeParams="none" />"
 	alt="<s:text name="wait.message"/>" style="display: none" />
+	
+	

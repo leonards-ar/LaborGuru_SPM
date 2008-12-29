@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.laborguru.model.Position;
+import com.laborguru.model.PositionGroup;
 import com.laborguru.model.Store;
 
 /**
@@ -53,6 +54,16 @@ public class ReportDaoHelper {
 		map.put("start_date", startDate);
 		map.put("end_date", endDate);
 
+		return map;
+	}
+	
+	public static Map<String, Object>mapTotalHoursReportByService(Store store, PositionGroup positionGroup, Date startDate, Date endDate){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("store_id", store.getId());
+		map.put("position_group_id", positionGroup.getId());
+		map.put("start_date", startDate);
+		map.put("end_date", endDate);
+		
 		return map;
 	}
 	

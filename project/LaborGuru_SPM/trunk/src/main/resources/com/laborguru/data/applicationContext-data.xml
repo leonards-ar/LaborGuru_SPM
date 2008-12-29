@@ -37,11 +37,11 @@
 				<entry key="areaRole">
 					<ref bean="areaManagerRole"/>
 				</entry>
-				<entry key="reportViews">
-					<ref bean="reportViews"/>
+				<entry key="reportTypes">
+					<ref bean="reportTypes"/>
 				</entry>
-				<entry key="reportPeriods">
-					<ref bean="reportPeriods"/>
+				<entry key="reportGrouping">
+					<ref bean="reportGrouping"/>
 				</entry>				
 								
 			</map>
@@ -185,32 +185,35 @@
 		</constructor-arg>
 	</bean>
 	
-	<bean id="reportViews" class="java.util.HashMap" singleton="true">
-		<description>Different Display Types</description>
+	<bean id="reportTypes" class="java.util.HashMap" singleton="true">
+		<description>Different Report Types</description>
 		<constructor-arg>
 			<map>
-				<entry key="totalHoursReport_changeWeek.action">
-					<value>report.displayType.view.total</value>
+				<entry key="ScheduleCheck">
+					<value>report.reportType.scheduleCheck.label</value>
 				</entry>
-				<entry key="totalHoursReportByPosition_changeWeek.action">
-					<value>report.diplayType.view.position</value>
+				<entry key="StorePerformance">
+					<value>report.reportType.storePerfomance.label</value>
 				</entry>
-				<!--  entry key="service">
-					<value>report.displayType.view.service</value>
-				</entry-->
+				<entry key="ScheduleExecution">
+					<value>report.reportType.scheduleExcution.label</value>
+				</entry>
 			</map>
 		</constructor-arg>
 	</bean>
 	
-	<bean id="reportPeriods" class="java.util.HashMap" singleton="true">
-		<description>Different Periods for a report</description>
+	<bean id="reportGrouping" class="java.util.HashMap" singleton="true">
+		<description>Different way of grouping data</description>
 		<constructor-arg>
 			<map>
-				<entry key="weekly">
-					<value>report.period.view.weekly</value>
+				<entry key="total">
+					<value>report.reportGrouping.view.total</value>
 				</entry>
-				<entry key="halfhour">
-					<value>report.period.view.halfhour</value>
+				<entry key="byPosition">
+					<value>report.reportGrouping.view.position</value>
+				</entry>
+				<entry key="byService">
+					<value>report.reportGrouping.view.service</value>
 				</entry>
 			</map>
 		</constructor-arg>

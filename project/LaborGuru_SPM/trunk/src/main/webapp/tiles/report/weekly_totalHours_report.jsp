@@ -17,7 +17,7 @@
 			  <b><s:text name="report.weeklytotalhours.totalhours.label" /></b>
 			</td>
 			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
-			  <td class="windowTableValue"><s:text name="report.weekday.dateformat"><s:property value="day"/></s:text></td>
+			  <td class="windowTableValue"><s:text name="report.weeklytotalhours.dateformat"><s:param value="day"/></s:text></td>
 			</s:iterator>
 			<td class="windowTableLabel"><s:text name="report.weeklytotalhours.totalweek.label" /></td>
 		  </tr>
@@ -60,6 +60,9 @@
 		</table>
       </td>
     </tr>
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
 	<tr>
 		<td>
 			<OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase=http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" width="600" height="350" id="Column3D" >

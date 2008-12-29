@@ -5,12 +5,17 @@
 <struts>
 	<package name="report"  namespace="/report" extends="spm-default">
 		<action name="totalHoursReport_*" method="{1}" class="com.laborguru.action.report.TotalHoursReportPrepareAction">
-			<result name="wait" type="tiles">showWaitingPageForReport</result>
 			<result name="input" type="tiles">showWeeklyTotalHours</result>
-			<result name="showWeeklyTotal">/tiles/report/weekly_totalHours_report.jsp</result>
-			<result name="showWeeklyTotalByPosition">/tiles/report/weekly_totalHoursByPosition_report.jsp</result>
-			<result name="show">/tiles/report/weekly_totalHoursByPosition_data.jsp</result>
+			<result name="show">/tiles/report/weekly_totalHours_report.jsp</result>
+		</action>
+
+		<action name="foreCastReport_*" method="{1}" class="com.laborguru.action.report.ForecastByPositionPrepareAction">
+			<result name="show">/tiles/report/position_forecast_report.jsp</result>
 		</action>
 		
+		<action name="positionAutocompleter" class="com.laborguru.action.report.PositionAutocompleterAction">
+			<result name="success">/tiles/report/position_group_selector.jsp</result>
+		</action>
 	</package>
+	
 </struts>

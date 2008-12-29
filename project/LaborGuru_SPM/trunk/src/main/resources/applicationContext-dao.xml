@@ -12,6 +12,8 @@
 	<bean id="employeeDao" class="com.laborguru.service.employee.dao.EmployeeDaoHibernate" autowire="byType"/>
 
 	<bean id="positionDao" class="com.laborguru.service.position.dao.PositionDaoHibernate" autowire="byType"/>
+	
+	<bean id="positionGroupDao" class="com.laborguru.service.positionGroup.dao.PositionGroupDaoHibernate" autowire="byType"/>
 
 	<bean id="storeDao" class="com.laborguru.service.store.dao.StoreDaoHibernate" autowire="byType"/>
 

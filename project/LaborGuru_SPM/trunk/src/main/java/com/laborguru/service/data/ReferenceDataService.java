@@ -94,11 +94,11 @@ public interface ReferenceDataService extends Service {
 	 * Retrieves different views for a report
 	 * @return
 	 */
-	Map<String, String> getReportViews();
+	Map<String, String> getReportTypes();
 	
 	/**
 	 * Retrieves different options for period
 	 * @return
 	 */
-	Map<String, String> getReportPeriods();
+	Map<String, String> getReportGrouping();
 }

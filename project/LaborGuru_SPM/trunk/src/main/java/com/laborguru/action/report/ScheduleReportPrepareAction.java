@@ -17,17 +17,19 @@ import com.laborguru.service.data.ReferenceDataService;
 public abstract class ScheduleReportPrepareAction extends SpmAction  {
 
 	private static final long serialVersionUID = 1L;
-	private static final String DEFAULT_VIEW="total";
-	private static final String DEFAULT_PERIOD = "weekly";
+	private static final String DEFAULT_REPORT="ScheduleCheck";
+	private static final String DEFAULT_GROUPING = "total";
 	
 	private WeekDaySelector weekDaySelector;
 	private String selectedDate;
 	private String selectedWeekDay;	
-	private String selectView;
-	private String period;
+	private String selectedReport;
+	private String selectedGrouping;
+	private Integer itemId;
 
-	private Map<String,String>viewMap;
-	private Map<String,String>periodMap;
+	private Map<String,String>reportMap;
+	private Map<String,String>groupingMap;
+	private Map<Integer, String>itemsMap;
 	
 	private ReferenceDataService referenceDataService;
 	
@@ -42,9 +44,12 @@ public abstract class ScheduleReportPrepareAction extends SpmAction  {
 	}
 
 	public String changeWeek() {
+		
+		pageSetup();
+		
 		getWeekDaySelector().initializeChangeWeek(getSelectedDate(), getSelectedWeekDay());
 
-		processChangeWeek();
+		getWeekDaySelector().setStringSelectedDay(getSelectedDate());
 		
 		loadCalendarData();
 		
@@ -99,60 +104,89 @@ public abstract class ScheduleReportPrepareAction extends SpmAction  {
 		this.selectedWeekDay = selectedWeekDay;
 	}
 
+
 	/**
-	 * @return the selectView
+	 * @return the selectedReport
 	 */
-	public String getSelectView() {
-		return selectView;
+	public String getSelectedReport() {
+		return selectedReport;
 	}
 
 	/**
-	 * @param selectView the selectView to set
+	 * @param selectedReport the selectedReport to set
 	 */
-	public void setSelectView(String selectView) {
-		this.selectView = selectView;
+	public void setSelectedReport(String selectedReport) {
+		this.selectedReport = selectedReport;
 	}
 
 	/**
-	 * @return the viewMap
+	 * @return the reportList
 	 */
-	public Map<String, String> getViewMap() {
-		return viewMap;
+	public Map<String, String> getReportMap() {
+		return reportMap;
 	}
 
 	/**
-	 * @param viewMap the viewMap to set
+	 * @param reportList the reportList to set
 	 */
-	public void setViewMap(Map<String, String> viewMap) {
-		this.viewMap = viewMap;
+	public void setReportMap(Map<String, String> reportMap) {
+		this.reportMap = reportMap;
 	}
 
 	/**
-	 * @return the period
+	 * @return the selectedGrouping
 	 */
-	public String getPeriod() {
-		return period;
+	public String getSelectedGrouping() {
+		return selectedGrouping;
 	}
 
 	/**
-	 * @param period the period to set
+	 * @param selectedGrouping the selectedGrouping to set
 	 */
-	public void setPeriod(String period) {
-		this.period = period;
+	public void setSelectedGrouping(String selectedGrouping) {
+		this.selectedGrouping = selectedGrouping;
 	}
 
 	/**
-	 * @return the periodMap
+	 * @return the groupingMap
 	 */
-	public Map<String, String> getPeriodMap() {
-		return periodMap;
+	public Map<String, String> getGroupingMap() {
+		return groupingMap;
 	}
 
 	/**
-	 * @param periodMap the periodMap to set
+	 * @param groupingMap the groupingMap to set
 	 */
-	public void setPeriodMap(Map<String, String> periodMap) {
-		this.periodMap = periodMap;
+	public void setGroupingMap(Map<String, String> groupingMap) {
+		this.groupingMap = groupingMap;
+	}
+
+	/**
+	 * @return the itemId
+	 */
+	public Integer getItemId() {
+		return itemId;
+	}
+
+	/**
+	 * @param itemId the itemId to set
+	 */
+	public void setItemId(Integer itemId) {
+		this.itemId = itemId;
+	}
+
+	/**
+	 * @return the itemsMap
+	 */
+	public Map<Integer, String> getItemsMap() {
+		return itemsMap;
+	}
+
+	/**
+	 * @param itemsMap the itemsMap to set
+	 */
+	public void setItemsMap(Map<Integer, String> itemsMap) {
+		this.itemsMap = itemsMap;
 	}
 
 	/**
@@ -170,23 +204,20 @@ public abstract class ScheduleReportPrepareAction extends SpmAction  {
 	}
 
 	protected void pageSetup() {
-		setViewMap(getReferenceDataService().getReportViews());
-		setPeriodMap(getReferenceDataService().getReportPeriods());
-		if(getSelectView() == null) {
-			setSelectView(DEFAULT_VIEW);
+		setReportMap(getReferenceDataService().getReportTypes());
+		setGroupingMap(getReferenceDataService().getReportGrouping());
+		if(getSelectedReport() == null) {
+			setSelectedReport(DEFAULT_REPORT);
 		} else {
-			setSelectView(getSelectView());
+			setSelectedReport(getSelectedReport());
 		}
 		
-		if(getPeriod() == null) {
-			setPeriod(DEFAULT_PERIOD);
+		if(getSelectedGrouping() == null) {
+			setSelectedGrouping(DEFAULT_GROUPING);
 		} else {
-			setPeriod(getPeriod());
+			setSelectedGrouping(getSelectedGrouping());
 		}
 		
 	}
 	
-	public abstract void prepareChangeWeek();
-	protected abstract void processChangeWeek();
-
 }
