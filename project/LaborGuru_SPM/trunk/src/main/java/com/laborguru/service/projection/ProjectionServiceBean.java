@@ -68,6 +68,17 @@ public class ProjectionServiceBean implements ProjectionService {
 		return projectionDao.getDailyProjection(store, selectedDate);
 	}
 	
+	/**
+	 * 
+	 * @param store
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	public List<DailyProjection> getDailyProjections(Store store, Date startDate, Date endDate) {
+		return getProjectionDao().getDailyProjections(store, startDate, endDate);
+	}
+	
 
 	/**
 	 * @param store

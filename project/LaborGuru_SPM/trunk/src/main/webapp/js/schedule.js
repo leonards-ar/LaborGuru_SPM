@@ -298,7 +298,6 @@ function updateProjectionTotals() {
 	var totalHours = 0;
 	var target = 0;
 	var diff = 0;
-	var diffPercent = 0;
 
 	for(var i = 0; i < SCHEDULE_IDS.length; i++) {
 		var totalHoursObj = getObjectByID(SCHEDULE_IDS[i] + 'total_cell');
@@ -628,6 +627,7 @@ function wsRefreshTotalHours(rowNum, columnNum) {
 		setObjectByIDValue('weeklyScheduleTotalHours_' + rowNum + '_' + columnNum, minutesToTime(totalHourMin));
 	}
 	wsRefreshRowTotals(rowNum);
+	wsUpdateSummaryTotals();
 }
 
 function wsRefreshRowTotals(rowNum) {
@@ -659,16 +659,99 @@ function wsRefreshRowTotals(rowNum) {
 	}
 	setObjectByIDValueAndClass('scheduleWeeklyTotal_' + rowNum, minutesToTime(total), className);
 
-	if(totalDays > maxDaysWeek) {
-		className = 'scheduleEmployeeTotalWeekDaysExceeded';
-	} else {
-		className = '';
-	}
-	setObjectByIDClass('scheduleRow_' + rowNum, className);	
+	for(var i=0; i < TOTAL_COLS; i++) {
+		if(totalDays > maxDaysWeek && colTotal > 0) {
+			className = 'scheduleEmployeeTotalWeekDaysExceeded';
+		} else {
+			className = 'scheduleValueCell';
+		}
+		setObjectByIDClass('scheduleHours_' + rowNum + '_' + i, className);
+	}	
 }
 
 function wsRefreshAllRowsTotals() {
 	for(var i=0; i < TOTAL_ROWS[0]; i++) {
 		wsRefreshRowTotals(i);
 	}
+}
+
+function wsUpdateProjectionTotals() {
+	var totalHours = 0;
+	var target = 0;
+	var diff = 0;
+
+	for(var i = 0; i < TOTAL_ROWS[0]; i++) {
+		totalHours += getObjectValueAsTimeInMinutes('scheduleWeeklyTotal_' + i, '00:00');
+	}
+	
+	setObjectByIDValue('projection_schedule_total', minutesToTime(totalHours));
+
+	target = getObjectValueAsTimeInMinutes('projection_target_total', '00:00');
+
+	diff = totalHours - target;
+	
+	if(diff < 0) {
+		setObjectByIDValue('projection_diff', '-' + minutesToTime(-1 * diff));
+	} else {
+		setObjectByIDValue('projection_diff', minutesToTime(diff));
+	}	
+
+	if(target != 0) {
+		setObjectByIDValue('projection_diff_percent', ((diff) / target * 100).toFixed(2) + '%');
+	} else {
+		setObjectByIDValue('projection_diff_percent', '0%');
+	}	
+}
+
+function wsUpdatePositionTotals() {
+	var totalSchedule = 0;
+	var totalTarget = 0;
+	var totalDiff = 0;
+
+	var positionSchedule = 0;
+	var positionTarget = 0;
+	var positionTargetObj;
+	var diff;
+	
+	for(var i=0; i < POSITION_IDS.length; i++) {
+		positionSchedule = 0;
+
+		for(var i = 0; i < TOTAL_ROWS[0]; i++) {
+			var rowPositionId = getObjectByIDValue('scheduleposition_' + i, null);
+			if(rowPositionId == POSITION_IDS[i]) {
+				var posRowTotal = getObjectValueAsTimeInMinutes('scheduleWeeklyTotal_' + i, '00:00');
+				positionSchedule += posRowTotal;
+				totalSchedule += posRowTotal;			
+			}
+		}
+
+		positionTarget = getObjectValueAsTimeInMinutes(POSITION_IDS[i] + '_position_target_total', '00:00');
+		totalTarget += positionTarget;		
+
+		diff = positionSchedule - positionTarget;
+
+		if(diff < 0) {
+			setObjectByIDValue(POSITION_IDS[i] + '_position_diff', '-' + minutesToTime(-1 * diff));
+		} else {
+			setObjectByIDValue(POSITION_IDS[i] + '_position_diff', minutesToTime(diff));
+		}
+
+		setObjectByIDValue(POSITION_IDS[i] + '_position_schedule_total', minutesToTime(positionSchedule));
+	
+	}
+
+	setObjectByIDValue('position_schedule_total', minutesToTime(totalSchedule));
+	setObjectByIDValue('position_target_total', minutesToTime(totalTarget));
+
+	if(totalDiff < 0) {
+		setObjectByIDValue('position_diff', '-' + minutesToTime(-1 * totalDiff));
+	} else {
+		setObjectByIDValue('position_diff', minutesToTime(totalDiff));
+		totalDiffObj.innerHTML = ;
+	}
+}
+
+function wsUpdateSummaryTotals() {
+	wsUpdateProjectionTotals();
+	wsUpdatePositionTotals();
 }

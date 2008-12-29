@@ -19,16 +19,51 @@ import com.laborguru.service.staffing.StaffingService;
  * @since SPM 1.0
  *
  */
-public interface ProjectionService extends Service{
+public interface ProjectionService extends Service {
 
+	/**
+	 * 
+	 * @param numberOfWeeks
+	 * @param store
+	 * @param startWeekDate
+	 * @return
+	 */
 	List<BigDecimal> getAvgDailyProjectionForAWeek(Integer numberOfWeeks, Store store, Date startWeekDate);
 
+	/**
+	 * 
+	 * @param store
+	 * @param startWeekDate
+	 * @return
+	 */
 	List<DailyProjection> getAdjustedDailyProjectionForAWeek(Store store, Date startWeekDate);
 	
+	/**
+	 * 
+	 * @param store
+	 * @param selectedDate
+	 * @return
+	 */
 	DailyProjection getDailyProjection(Store store, Date selectedDate);
 
+	/**
+	 * 
+	 * @param halfHourElement
+	 * @param totalAdjusted
+	 * @param totalProjected
+	 * @param percentageNotChangedHours
+	 * @return
+	 */
 	HalfHourElement calculateRevisedValue(HalfHourElement halfHourElement, BigDecimal totalAdjusted, BigDecimal totalProjected, BigDecimal percentageNotChangedHours);
 	
+	/**
+	 * 
+	 * @param store
+	 * @param projectionAmount
+	 * @param selectedDate
+	 * @param numberOfWeeks
+	 * @return
+	 */
 	List<HalfHourProjection> calculateDailyHalfHourProjection(Store store, BigDecimal projectionAmount, Date selectedDate, Integer numberOfWeeks);
 		
 	/**
@@ -41,9 +76,32 @@ public interface ProjectionService extends Service{
 	 */
 	void saveDailyProjection(Store store, BigDecimal projectionAmount, Date selectedDate, Date dateForCalculation);
 	
+	/**
+	 * 
+	 * @param store
+	 * @param halfHourProjectionList
+	 * @param selectedDate
+	 */
 	void saveProjection(Store store, List<HalfHourProjection> halfHourProjectionList, Date selectedDate);
 
+	/**
+	 * 
+	 * @param projectionDao
+	 */
 	void setProjectionDao(ProjectionDao projectionDao);
+
+	/**
+	 * 
+	 * @param store
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	List<DailyProjection> getDailyProjections(Store store, Date startDate, Date endDate);
 	
+	/**
+	 * 
+	 * @param staffingService
+	 */
 	void setStaffingService(StaffingService staffingService);
 }

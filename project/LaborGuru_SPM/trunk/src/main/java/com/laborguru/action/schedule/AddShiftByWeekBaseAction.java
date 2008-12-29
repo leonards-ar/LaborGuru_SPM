@@ -5,6 +5,7 @@
  */
 package com.laborguru.action.schedule;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -17,12 +18,16 @@ import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.WeeklyScheduleDailyEntry;
 import com.laborguru.frontend.model.WeeklyScheduleData;
 import com.laborguru.frontend.model.WeeklyScheduleRow;
+import com.laborguru.model.DailyProjection;
+import com.laborguru.model.DailyStaffing;
 import com.laborguru.model.Employee;
 import com.laborguru.model.EmployeeSchedule;
 import com.laborguru.model.Position;
 import com.laborguru.model.Shift;
+import com.laborguru.model.StoreDailyStaffing;
 import com.laborguru.model.StoreSchedule;
 import com.laborguru.util.CalendarUtils;
+import com.laborguru.util.SpmConstants;
 import com.opensymphony.xwork2.Preparable;
 
 /**
@@ -39,10 +44,13 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	
 	private List<StoreSchedule> storeSchedules = null;
 	private List<Date> weekDays = null;
+	private List<StoreDailyStaffing> dailyStaffings = null;
 	
 	private Integer newEmployeeId;
 	private String newEmployeeName;
 	private Integer newEmployeePositionId;
+	
+	private BigDecimal weeklyVolume;
 	
 	/**
 	 * 
@@ -587,6 +595,11 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 */
 	@Override
 	public void prepareChangeDay() {
+		/*
+		 * Change day does not apply for weekly view
+		 * as changeDay is executed directly on daily
+		 * actions
+		 */ 
 	}
 
 	/**
@@ -595,6 +608,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 */
 	@Override
 	public void prepareChangeWeek() {
+		loadPageData();
 	}
 
 	/**
@@ -603,6 +617,11 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 */
 	@Override
 	protected void processChangeDay() {
+		/*
+		 * Change day does not apply for weekly view
+		 * as changeDay is executed directly on daily
+		 * actions
+		 */ 
 	}
 
 	/**
@@ -611,6 +630,11 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 */
 	@Override
 	protected void processChangeWeek() {
+		setStoreSchedules(null);
+		resetScheduleData();
+		//resetStaffingData();
+		setScheduleData();
+		loadCopyTargetDay();		
 	}
 
 	/**
@@ -782,4 +806,128 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		
 		return SpmActionResult.EDIT.getResult();
 	}	
+	
+	/**
+	 * 
+	 */
+	public void prepareSelectPosition() {
+		loadPageData();
+	}
+
+	/**
+	 * @param storeSchedules the storeSchedules to set
+	 */
+	public void setStoreSchedules(List<StoreSchedule> storeSchedules) {
+		this.storeSchedules = storeSchedules;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String selectPosition() {
+		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
+	
+		resetScheduleData();
+		//resetStaffingData();
+
+		setScheduleData();
+		
+		return SpmActionResult.EDIT.getResult();
+	}
+
+	/**
+	 * @return the weeklyVolume
+	 */
+	public BigDecimal getWeeklyVolume() {
+		if(weeklyVolume == null) {
+			//:TODO: Retrieve the SUM in only one query
+			List<DailyProjection> dailyProjections = getProjectionService().getDailyProjections(getEmployeeStore(), getWeekDays().get(0), getWeekDays().get(getWeekDays().size() - 1));
+			if(dailyProjections != null) {
+				BigDecimal total = SpmConstants.BD_ZERO_VALUE;
+				for(DailyProjection dp : dailyProjections) {
+					total = total.add(dp.getDailyProjectionValue());
+				}
+				setWeeklyVolume(total);
+			} else {
+				setWeeklyVolume(SpmConstants.BD_ZERO_VALUE);
+			}
+		}
+		return weeklyVolume;		
+	}
+
+	/**
+	 * @param weeklyVolume the weeklyVolume to set
+	 */
+	public void setWeeklyVolume(BigDecimal weeklyVolume) {
+		this.weeklyVolume = weeklyVolume;
+	}	
+	
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 */
+	public String getTotalPositionTarget(Position position) {
+		return CalendarUtils.minutesToTime(new Integer(getTotalPositionTargetInMinutes(position)));
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getTotalTarget() {
+		int total = 0;
+		for(StoreDailyStaffing storeDailyStaffing : getDailyStaffings()) {
+			if(storeDailyStaffing != null) {
+				total += getTotalTargetInMinutes(storeDailyStaffing.getStoreDailyStaffing());
+			}
+		}
+		return CalendarUtils.minutesToTime(new Integer(total));
+	}
+	
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 */
+	private int getTotalPositionTargetInMinutes(Position position) {
+		int total = 0;
+		for(StoreDailyStaffing storeDailyStaffing : getDailyStaffings()) {
+			if(storeDailyStaffing != null) {
+				DailyStaffing dailyStaffing = storeDailyStaffing.getDailyStaffing(position);
+				total += getTotalDailyStaffingInMinutes(dailyStaffing);
+			}
+		}
+		return total;
+	}
+
+	/**
+	 * @return the dailyStaffings
+	 */
+	public List<StoreDailyStaffing> getDailyStaffings() {
+		if(dailyStaffings == null) {
+			dailyStaffings = new ArrayList<StoreDailyStaffing>();
+			try {
+				StoreDailyStaffing aDailyStaffing;
+				//:TODO: Probably should retrieve the whole week from the database
+				for(Date aDate : getWeekDays()) {
+					aDailyStaffing = getStaffingService().getDailyStaffingByDate(getEmployeeStore(), aDate);
+					dailyStaffings.add(aDailyStaffing);
+				}
+			} catch(RuntimeException ex) {
+				log.error("Could not retrieve store daily staffing for week days " + getWeekDays() + " for store " + getEmployeeStore(), ex);
+			}
+
+		}
+		return dailyStaffings;		
+	}
+
+	/**
+	 * @param dailyStaffings the dailyStaffings to set
+	 */
+	public void setDailyStaffings(List<StoreDailyStaffing> dailyStaffings) {
+		this.dailyStaffings = dailyStaffings;
+	}
+	
 }
