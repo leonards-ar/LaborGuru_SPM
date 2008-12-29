@@ -14,14 +14,6 @@ public class HalfHoursReportPrepareAction extends ScheduleReportPrepareAction {
 	 */
 	private static final long serialVersionUID = -101891023525910101L;
 
-	@Override
-	public void prepareChangeWeek() {
-	}
 
-	@Override
-	protected void processChangeWeek() {
-	}
-	
-	
 
 }

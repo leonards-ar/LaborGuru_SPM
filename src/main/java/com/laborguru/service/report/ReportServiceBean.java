@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -12,6 +11,7 @@ import org.apache.log4j.Logger;
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.SpmUncheckedException;
 import com.laborguru.model.Position;
+import com.laborguru.model.PositionGroup;
 import com.laborguru.model.Store;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.model.report.TotalHourByPosition;
@@ -41,32 +41,11 @@ public class ReportServiceBean implements ReportService {
 
 			try {
 
-				List<TotalHour> scheduleTotalHours = reportDao.getScheduleWeeklyTotalHour(store, startingWeekDate, CalendarUtils.addOrSubstractDays(startingWeekDate, 6));
-				List<TotalHour> targetTotalHours = reportDao.getTargetWeeklyTotalHour(store, startingWeekDate, CalendarUtils.addOrSubstractDays(startingWeekDate, 6));
-				List<TotalHour> totalHours = new ArrayList<TotalHour>();
+				Date endingWeekDate = CalendarUtils.addOrSubstractDays(startingWeekDate, 6);
+				List<TotalHour> scheduleTotalHours = reportDao.getScheduleWeeklyTotalHour(store, startingWeekDate, endingWeekDate);
+				List<TotalHour> targetTotalHours = reportDao.getTargetWeeklyTotalHour(store, startingWeekDate, endingWeekDate);
 				
-				for (Date date=startingWeekDate; date.before(CalendarUtils.addOrSubstractDays(startingWeekDate, 7)); date=CalendarUtils.addOrSubstractDays(date, 1)) {
-					
-					TotalHour totalhour = new TotalHour();
-					totalhour.setDay(date);
-					TotalHour scheduleTotalHour = getTotalHourByDay(date, scheduleTotalHours);
-					if(scheduleTotalHour != null) {
-						totalhour.setSchedule(scheduleTotalHour.getSchedule());
-					} else {
-						totalhour.setSchedule(new BigDecimal("0"));
-					}
-					TotalHour targetTotalHour = getTotalHourByDay(date, targetTotalHours);
-					if(targetTotalHour != null) {
-						totalhour.setTarget(targetTotalHour.getTarget());
-					} else {
-						totalhour.setTarget(new BigDecimal("0"));
-					}
-					
-					totalHours.add(totalhour);
-				}
-				
-				return totalHours;
-				
+				return getMergedTotalHours(scheduleTotalHours, targetTotalHours, startingWeekDate, endingWeekDate); 
 			} catch (SQLException e) {
 				log.error("An SQLError has occurred", e);
 				throw new SpmUncheckedException(e.getCause(), e.getMessage(),
@@ -84,31 +63,11 @@ public class ReportServiceBean implements ReportService {
 	public List<TotalHour> getWeeklyTotalHoursByPosition(Store store, Position position, Date startingWeekDate){
 		try {
 
-			List<TotalHour> scheduleTotalHours = reportDao.getScheduleWeeklyTotalHourByPosition(store, position, startingWeekDate, CalendarUtils.addOrSubstractDays(startingWeekDate, 6));
-			List<TotalHour> targetTotalHours = reportDao.getTargetWeeklyTotalHourByPosition(store, position, startingWeekDate, CalendarUtils.addOrSubstractDays(startingWeekDate, 6));
-			List<TotalHour> totalHours = new ArrayList<TotalHour>();
+			Date endingWeekDate = CalendarUtils.addOrSubstractDays(startingWeekDate, 6);
+			List<TotalHour> scheduleTotalHours = reportDao.getScheduleWeeklyTotalHourByPosition(store, position, startingWeekDate, endingWeekDate);
+			List<TotalHour> targetTotalHours = reportDao.getTargetWeeklyTotalHourByPosition(store, position, startingWeekDate, endingWeekDate);
 			
-			for (Date date=startingWeekDate; date.before(CalendarUtils.addOrSubstractDays(startingWeekDate, 7)); date=CalendarUtils.addOrSubstractDays(date, 1)) {
-				
-				TotalHour totalhour = new TotalHour();
-				totalhour.setDay(date);
-				TotalHour scheduleTotalHour = getTotalHourByDay(date, scheduleTotalHours);
-				if(scheduleTotalHour != null) {
-					totalhour.setSchedule(scheduleTotalHour.getSchedule());
-				} else {
-					totalhour.setSchedule(new BigDecimal("0"));
-				}
-				TotalHour targetTotalHour = getTotalHourByDay(date, targetTotalHours);
-				if(targetTotalHour != null) {
-					totalhour.setTarget(targetTotalHour.getTarget());
-				} else {
-					totalhour.setTarget(new BigDecimal("0"));
-				}
-				
-				totalHours.add(totalhour);
-			}
-			
-			return totalHours;
+			return getMergedTotalHours(scheduleTotalHours, targetTotalHours, startingWeekDate, endingWeekDate);
 			
 		} catch (SQLException e) {
 			log.error("An SQLError has occurred", e);
@@ -116,17 +75,60 @@ public class ReportServiceBean implements ReportService {
 					ErrorEnum.GENERIC_DATABASE_ERROR);
 		}
 		
-	}	
-	private List<TotalHour> getTotalHoursByPosition(Position position, List<TotalHourByPosition> thByPosition) {
-
-		List<TotalHour>totalHours = new ArrayList<TotalHour>();
-		for(TotalHourByPosition th: thByPosition) {
-			if(position.getId().equals(th.getPosition().getId())) {
-				totalHours.add(th.getTotalHour());
-			}
+	}
+	
+	public List<TotalHour> getWeeklyTotalHoursByService(Store store, PositionGroup positiongroup, Date startingWeekDate){
+		try {
+			Date endingWeekDate = CalendarUtils.addOrSubstractDays(startingWeekDate, 6);
+			List<TotalHour> scheduleTotalHours = reportDao.getScheduleWeeklyTotalHourByService(store, positiongroup, startingWeekDate, endingWeekDate);
+			List<TotalHour> targetTotalHours = reportDao.getTargetWeeklyTotalHourByService(store, positiongroup, startingWeekDate, endingWeekDate);
+			return getMergedTotalHours(scheduleTotalHours, targetTotalHours, startingWeekDate, endingWeekDate);
+			
+		} catch (SQLException e) {
+			log.error("An SQLError has occurred", e);
+			throw new SpmUncheckedException(e.getCause(), e.getMessage(),
+					ErrorEnum.GENERIC_DATABASE_ERROR);
 		}
-		
-		return totalHours;
+	}
+	
+	/**
+	 * @param store
+	 * @param startingWeekDate
+	 * @return
+	 * @see com.laborguru.service.report.ReportService#getForecastByPosition(com.laborguru.model.Store, java.util.Date)
+	 */
+	public List<TotalHourByPosition> getForecastByPosition(Store store, List<Position> positions, Date startingWeekDate) {
+		try{
+			List<TotalHourByPosition> scheduleTotalHourByPosition = reportDao.getScheduleForecastByPosition(store, startingWeekDate, CalendarUtils.addOrSubstractDays(startingWeekDate, 6));
+			List<TotalHourByPosition> targetTotalHourByPosition = reportDao.getTargetForecastByPosition(store, startingWeekDate, CalendarUtils.addOrSubstractDays(startingWeekDate, 6));
+			List<TotalHourByPosition> result = new ArrayList<TotalHourByPosition>();
+			for(Position position: positions) {
+				TotalHour schedule = getTotalHourByPosition(position, scheduleTotalHourByPosition);
+				TotalHour target = getTotalHourByPosition(position, targetTotalHourByPosition);
+				TotalHourByPosition thByPosition = new TotalHourByPosition();
+				thByPosition.setPosition(position);
+				thByPosition.setTotalHour(new TotalHour());
+				if(schedule != null){
+					thByPosition.getTotalHour().setSchedule(schedule.getSchedule());
+				} else {
+					thByPosition.getTotalHour().setSchedule(new BigDecimal("0"));
+				}
+				
+				if(target != null){
+					thByPosition.getTotalHour().setTarget(target.getTarget());
+				} else {
+					thByPosition.getTotalHour().setTarget(new BigDecimal("0"));
+				}
+				result.add(thByPosition);
+			}
+			
+			return result;
+			
+		} catch (SQLException e) {
+			log.error("An SQLError has occurred", e);
+			throw new SpmUncheckedException(e.getCause(), e.getMessage(),
+					ErrorEnum.GENERIC_DATABASE_ERROR);
+		}
 	}
 	
 	private TotalHour getTotalHourByDay(Date day, List<TotalHour> list) {
@@ -138,6 +140,41 @@ public class ReportServiceBean implements ReportService {
 		return null;
 	}
 	
+	private TotalHour getTotalHourByPosition(Position position, List<TotalHourByPosition> totalHours) {
+		for(TotalHourByPosition th: totalHours) {
+			if(th.getPosition().getId().equals(position.getId())) {
+				return th.getTotalHour();
+			}
+		}
+		return null;
+	}
+	
+	private List<TotalHour> getMergedTotalHours(List<TotalHour> scheduleTotalHours, List<TotalHour> targetTotalHours, Date startDate, Date endDate) {
+		
+		List<TotalHour> totalHours = new ArrayList<TotalHour>();
+		
+		for (Date date=startDate; date.compareTo(endDate) <= 0; date=CalendarUtils.addOrSubstractDays(date, 1)) {
+
+			TotalHour totalhour = new TotalHour();
+			totalhour.setDay(date);
+			TotalHour scheduleTotalHour = getTotalHourByDay(date, scheduleTotalHours);
+			if(scheduleTotalHour != null) {
+				totalhour.setSchedule(scheduleTotalHour.getSchedule());
+			} else {
+				totalhour.setSchedule(new BigDecimal("0"));
+			}
+			TotalHour targetTotalHour = getTotalHourByDay(date, targetTotalHours);
+			if(targetTotalHour != null) {
+				totalhour.setTarget(targetTotalHour.getTarget());
+			} else {
+				totalhour.setTarget(new BigDecimal("0"));
+			}
+			
+			totalHours.add(totalhour);
+		}
+		return totalHours;
+
+	}
 	/**
 	 * @return the reportDao
 	 */

@@ -167,6 +167,11 @@
 		<property name="positionDao" ref="positionDao" />
 	</bean>
 
+	<bean id="positionGroupService"
+		class="com.laborguru.service.positionGroup.PositionGroupServiceBean">
+		<property name="positionGroupDao" ref="positionGroupDao" />
+	</bean>
+
 	<bean id="menuService"
 		class="com.laborguru.service.menu.MenuServiceBean">
 		<property name="menuDao" ref="menuDao" />

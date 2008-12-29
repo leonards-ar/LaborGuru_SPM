@@ -132,11 +132,11 @@ public class ReferenceDataServiceBean implements ReferenceDataService {
 	 * @return
 	 * @see com.laborguru.service.data.ReferenceDataService#getReportViews()
 	 */
-	public Map<String, String> getReportViews() {
-		return (Map<String, String>) getReferenceData().get("reportViews");
+	public Map<String, String> getReportTypes() {
+		return (Map<String, String>) getReferenceData().get("reportTypes");
 	}
 	
-	public Map<String, String> getReportPeriods() {
-		return (Map<String, String>) getReferenceData().get("reportPeriods");
+	public Map<String, String> getReportGrouping() {
+		return (Map<String, String>) getReferenceData().get("reportGrouping");
 	}
 }
