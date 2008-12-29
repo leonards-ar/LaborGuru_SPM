@@ -16,7 +16,7 @@ import com.laborguru.model.comparator.SpmComparator;
 import com.laborguru.util.CalendarUtils;
 
 public class Store extends SpmObject {
-
+	
 	/**
 	 * Default serial version ID
 	 */
@@ -53,6 +53,7 @@ public class Store extends SpmObject {
 		return new ToStringBuilder(this, DEFAULT_TO_STRING_STYLE)
 	   	.append("id" , id)
 	   	.append("name",name)
+	   	.append("code",code)
 	   	.toString();		
 	}
 	

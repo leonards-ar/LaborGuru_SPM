@@ -28,7 +28,7 @@
 	</tr>
 	<tr>
 		<td>
-			<table border="0" cellpadding="3" cellspacing="1" align="center">
+			<table border="0" cellpadding="3" cellspacing="1" align="left">
 				<tr class="editorTableEvenRow">
                     <td align="right" class="form_label" nowrap>* <s:text name="store.uploadstoredefinition.filename.label" /></td>
 					<td class="value"><s:file name="storeDefinition" size="30"  theme="simple" /></td>
@@ -39,7 +39,7 @@
 	<br/>	
 	</tr>
 		<td>
-			<table border="0" cellpadding="0" cellspacing="0">
+			<table border="0" cellpadding="0" cellspacing="0" align="left">
               	<tr class="editFormOddRow">
                     <td width="100%" align="right" colspan="2">
 	                    <table border="0" cellpadding="1" cellspacing="5">

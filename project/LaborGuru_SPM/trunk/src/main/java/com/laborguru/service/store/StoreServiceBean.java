@@ -1,24 +1,15 @@
 package com.laborguru.service.store;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-import com.laborguru.exception.InvalidUploadFileException;
 import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.Store;
 import com.laborguru.model.filter.SearchStoreFilter;
 import com.laborguru.service.store.dao.StoreDao;
+import com.laborguru.service.store.file.StoreDefinitionFileParser;
 
 /**
  * Implementation for Store Service
@@ -36,6 +27,8 @@ public class StoreServiceBean implements StoreService {
 	private static final String STORE_FILTER_NULL = "the filter passed as parameter is null";
 	
 	private StoreDao storeDao;
+	private StoreDefinitionFileParser storeDefinitionFileParser;
+	
 	
 	/**
 	 * Removes a store
@@ -130,36 +123,27 @@ public class StoreServiceBean implements StoreService {
 	 * @return
 	 * @see com.laborguru.service.store.StoreService#processStoreDefinitionAndSave(java.io.File)
 	 */
-	public Store processStoreDefinitionAndSave(File storeDefinition) {
+	public Store processStoreDefinitionAndSave(File storeDefinitionFile) {
+		Store store = storeDefinitionFileParser.parseStore(storeDefinitionFile);
 		
-		try {
-			 InputStream inp = new FileInputStream(storeDefinition);
-			 
-			 HSSFWorkbook wb = new HSSFWorkbook(inp);
-			 HSSFSheet sheet = wb.getSheetAt(0);	
-			 
-			 Iterator<HSSFRow> rit = (Iterator<HSSFRow>)sheet.rowIterator();
-			 
-			 while(rit.hasNext()) {
-				HSSFRow row = rit.next();
-				Iterator<HSSFCell> cit = (Iterator<HSSFCell>)row.cellIterator();
-				while (cit.hasNext()) {
-					HSSFCell cell = cit.next();
-					System.out.println("Cell:"+cell);
-				}
-			}
+		//TODO: Save the store
+		System.out.println("********************** Store:"+store);
+		
+		return store;
+	}
 
-		} catch (FileNotFoundException exceptionFNF) {
-			String message = "File to parse:"+storeDefinition.getName()+ "is not found";
-			log.error(message);
-			throw new InvalidUploadFileException(exceptionFNF, message);
-		} catch (IOException e) {
-			String msg = "The file " + storeDefinition.getName() +" passed in as parameter cannot be read.";
-			log.error(msg);
-			throw new InvalidUploadFileException(msg);			
-		}
+	/**
+	 * @return the storeDefinitionFileParser
+	 */
+	public StoreDefinitionFileParser getStoreDefinitionFileParser() {
+		return storeDefinitionFileParser;
+	}
 
-		return null;
+	/**
+	 * @param storeDefinitionFileParser the storeDefinitionFileParser to set
+	 */
+	public void setStoreDefinitionFileParser(StoreDefinitionFileParser storeDefinitionFileParser) {
+		this.storeDefinitionFileParser = storeDefinitionFileParser;
 	}
 
 }
