@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -839,30 +838,6 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 		} else {
 			return 0;
 		}		
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	private int getTotalTargetInMinutes(Collection<DailyStaffing> storeDailyStaffing) {
-		int total = 0;
-		
-		for(DailyStaffing dailyStaffing : storeDailyStaffing) {
-			total += getTotalDailyStaffingInMinutes(dailyStaffing);
-		}
-		
-		return total;
-	}
-	
-	/**
-	 * 
-	 * @param dailyStaffing
-	 * @return
-	 */
-	private int getTotalDailyStaffingInMinutes(DailyStaffing dailyStaffing) {
-		Integer mins = CalendarUtils.hoursToMinutes(dailyStaffing != null ? dailyStaffing.getTotalDailyTarget() : new Double(0.0));
-		return mins != null ? mins.intValue() : 0;
 	}
 	
 	/**

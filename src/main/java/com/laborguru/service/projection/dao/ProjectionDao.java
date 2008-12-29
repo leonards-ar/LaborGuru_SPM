@@ -49,4 +49,14 @@ public interface ProjectionDao {
 	 * @param projection
 	 */
 	void save(DailyProjection projection);
+	
+	/**
+	 * 
+	 * @param store
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	List<DailyProjection> getDailyProjections(Store store, Date startDate, Date endDate);
+
 }

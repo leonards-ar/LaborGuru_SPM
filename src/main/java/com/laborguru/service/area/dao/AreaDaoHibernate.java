@@ -15,10 +15,21 @@ import com.laborguru.model.Area;
  */
 public class AreaDaoHibernate extends HibernateDaoSupport implements AreaDao {
 
+	/**
+	 * 
+	 * @return
+	 * @see com.laborguru.service.area.dao.AreaDao#findAll()
+	 */
 	public List<Area> findAll(){
-		return getHibernateTemplate().loadAll(Area.class);
+		return (List<Area>) getHibernateTemplate().loadAll(Area.class);
 	}
 	
+	/**
+	 * 
+	 * @param area
+	 * @return
+	 * @see com.laborguru.service.area.dao.AreaDao#getAreaById(com.laborguru.model.Area)
+	 */
 	public Area getAreaById(Area area) {
 		return (Area)getHibernateTemplate().get(Area.class, area.getId());
 	}

@@ -6,6 +6,7 @@
 package com.laborguru.action.schedule;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import org.apache.log4j.Logger;
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.WeekDaySelector;
+import com.laborguru.model.DailyStaffing;
 import com.laborguru.model.Position;
 import com.laborguru.model.Shift;
 import com.laborguru.service.data.ReferenceDataService;
@@ -438,4 +440,29 @@ public abstract class AddShiftBaseAction extends SpmAction {
 		destination.setToHour(source.getToHour());
 		destination.setPosition(source.getPosition());
 	}	
+
+	/**
+	 * 
+	 * @param dailyStaffing
+	 * @return
+	 */
+	protected int getTotalDailyStaffingInMinutes(DailyStaffing dailyStaffing) {
+		Integer mins = CalendarUtils.hoursToMinutes(dailyStaffing != null ? dailyStaffing.getTotalDailyTarget() : new Double(0.0));
+		return mins != null ? mins.intValue() : 0;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	protected int getTotalTargetInMinutes(Collection<DailyStaffing> storeDailyStaffing) {
+		int total = 0;
+		
+		for(DailyStaffing dailyStaffing : storeDailyStaffing) {
+			total += getTotalDailyStaffingInMinutes(dailyStaffing);
+		}
+		
+		return total;
+	}
+
 }

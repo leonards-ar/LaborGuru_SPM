@@ -32,7 +32,13 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 	private static final RoundingMode ROUNDING_MODE = RoundingMode.HALF_EVEN;
 	private static final String INIT_VALUE_ZERO = "0.00";
 
-	
+	/**
+	 * 
+	 * @param store
+	 * @param startWeekDate
+	 * @return
+	 * @see com.laborguru.service.projection.dao.ProjectionDao#getAdjustedDailyProjectionForAWeek(com.laborguru.model.Store, java.util.Date)
+	 */
 	public List<DailyProjection> getAdjustedDailyProjectionForAWeek(Store store, Date startWeekDate) {
 		
 		DateTime startDate = new DateTime(startWeekDate);
@@ -132,6 +138,13 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 		return retSalesList;
 	}
 	
+	/**
+	 * 
+	 * @param store
+	 * @param selectedDate
+	 * @return
+	 * @see com.laborguru.service.projection.dao.ProjectionDao#getDailyProjection(com.laborguru.model.Store, java.util.Date)
+	 */
 	public DailyProjection getDailyProjection(Store store, Date selectedDate) {
 		
 		DateTime dt = new DateTime(selectedDate);
@@ -156,6 +169,41 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 		return projections.get(0);
 	}
 	
+	/**
+	 * 
+	 * @param store
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @see com.laborguru.service.projection.dao.ProjectionDao#getDailyProjections(com.laborguru.model.Store, java.util.Date, java.util.Date)
+	 */
+	public List<DailyProjection> getDailyProjections(Store store, Date startDate, Date endDate) {
+		DateTime from = new DateTime(startDate).withTime(0, 0, 0, 0);
+		DateTime to = new DateTime(endDate).withTime(23, 59, 59, 999);
+		
+		if(log.isDebugEnabled()){
+			log.debug("Before getting daily projections - Parameters: Store Id:" + store.getId() + " startDate: " + from.toString()+ " endDate: " + to.toString());
+		}
+
+		List<DailyProjection> projections =  (List<DailyProjection>) getHibernateTemplate().findByNamedParam("from DailyProjection dp where dp.store.id=:storeId and dp.projectionDate >= :fromProjectionDate and dp.projectionDate <= :toProjectionDate", 
+				new String[]{"storeId", "fromProjectionDate", "toProjectionDate"}, 
+				new Object[]{store.getId(), from.toDate(), to.toDate()});
+		
+		if(log.isDebugEnabled()) {
+			log.debug("Retrieved " + projections.size() + " daily projections - Parameters: Store Id:" + store.getId() + " startDate: " + from.toString()+ " endDate: " + to.toString());
+		}
+		
+		return projections;
+	}
+	
+	/**
+	 * 
+	 * @param numberOfWeeks
+	 * @param store
+	 * @param selectedDate
+	 * @return
+	 * @see com.laborguru.service.projection.dao.ProjectionDao#getAvgHalfHourProjection(java.lang.Integer, com.laborguru.model.Store, java.util.Date)
+	 */
 	public List<HalfHourProjection> getAvgHalfHourProjection(Integer numberOfWeeks, Store store, Date selectedDate){
 		
 		DateTime startDate = new DateTime(selectedDate);

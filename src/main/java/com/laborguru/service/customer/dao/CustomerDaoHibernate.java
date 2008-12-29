@@ -15,6 +15,11 @@ public class CustomerDaoHibernate extends SpmHibernateDao implements CustomerDao
 	
 	private static final Logger log = Logger.getLogger(CustomerDaoHibernate.class);	
 
+	/**
+	 * 
+	 * @return
+	 * @see com.laborguru.service.customer.dao.CustomerDao#findAll()
+	 */
 	public List<Customer> findAll() {
 		return (List<Customer>) getHibernateTemplate().loadAll(Customer.class);
 	}
@@ -23,7 +28,6 @@ public class CustomerDaoHibernate extends SpmHibernateDao implements CustomerDao
 	 * 
 	 */
 	public Customer getCustomerById(Customer customer) {
-		
 		return (Customer)getHibernateTemplate().get(Customer.class, customer.getId());		
 	}
 
@@ -49,7 +53,7 @@ public class CustomerDaoHibernate extends SpmHibernateDao implements CustomerDao
 			sb.append(" where customer.name like '%"+customerSearch.getName()+"%'");
 		}
 		
-		log.debug("Calling hibernate with query:"+ sb.toString());
+		log.debug("Calling hibernate with query: " + sb.toString());
 
 		
 		return (List<Customer>)getHibernateTemplate().find(sb.toString());

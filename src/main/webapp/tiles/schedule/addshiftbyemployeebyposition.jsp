@@ -178,10 +178,10 @@
                   					<tr>
                   						<s:iterator id="weekDay" value="weekDaySelector.weekDays" status="itWeekDay">
                   						<s:if test="%{weekDaySelector.isSelectedWeekDay(#weekDay)}">
-                  						<td width="12%" class="selectedWeekDay"><s:text name='schedule.addshift.weekday.dateformat'><s:param value='weekDay'/></s:text></td>
+                  						<td width="12%" class="selectedWeekDay" title="<s:text name='schedule.addshift.weekdayselector.daytooltip.dateformat'><s:param value='weekDay'/></s:text>"><s:text name='schedule.addshift.weekday.dateformat'><s:param value='weekDay'/></s:text></td>
                   						</s:if>
                   						<s:else>
-                  						<td width="12%" class="availableWeekDay"><a href="<s:url value="#" includeParams="none"/>" onclick="showWaitSplash(); addshiftbyemployeebyposition_form.action='addshiftbyemployeebyposition_changeDay.action'; addshiftbyemployeebyposition_form.selectedWeekDay.value='<s:text name='schedule.addshift.weekdayselector.input.dateformat'><s:param value='weekDay'/></s:text>'; addshiftbyemployeebyposition_form.submit();" class="availableWeekDayLink">
+                  						<td width="12%" class="availableWeekDay"><a title="<s:text name='schedule.addshift.weekdayselector.daytooltip.dateformat'><s:param value='weekDay'/></s:text>" href="<s:url value="#" includeParams="none"/>" onclick="showWaitSplash(); addshiftbyemployeebyposition_form.action='addshiftbyemployeebyposition_changeDay.action'; addshiftbyemployeebyposition_form.selectedWeekDay.value='<s:text name='schedule.addshift.weekdayselector.input.dateformat'><s:param value='weekDay'/></s:text>'; addshiftbyemployeebyposition_form.submit();" class="availableWeekDayLink">
                   						<s:text name='schedule.addshift.weekday.dateformat'><s:param value='weekDay'/></s:text>
                   						</a>
                   						</td>                  						
