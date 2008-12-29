@@ -126,8 +126,19 @@ public class StoreServiceBean implements StoreService {
 	public Store processStoreDefinitionAndSave(File storeDefinitionFile) {
 		Store store = storeDefinitionFileParser.parseStore(storeDefinitionFile);
 		
-		//TODO: Save the store
-		System.out.println("********************** Store:"+store);
+		//Checking if store already exist
+		SearchStoreFilter storeFilter = new SearchStoreFilter();
+		storeFilter.setCode(store.getCode());
+		storeFilter.setCustomerCode(store.getArea().getRegion().getCustomer().getCode());
+		
+		List<Store> storeListAux = filterStore(storeFilter); 
+		
+		if(storeListAux.isEmpty()){
+			//TODO: Save the store
+			System.out.println("********************** Save Store:"+store);			
+		}else{
+			System.out.println("********************** Update Store:"+store);			
+		}
 		
 		return store;
 	}
