@@ -747,7 +747,6 @@ function wsUpdatePositionTotals() {
 		setObjectByIDValue('position_diff', '-' + minutesToTime(-1 * totalDiff));
 	} else {
 		setObjectByIDValue('position_diff', minutesToTime(totalDiff));
-		totalDiffObj.innerHTML = ;
 	}
 }
 
