@@ -710,16 +710,15 @@ function wsUpdatePositionTotals() {
 
 	var positionSchedule = 0;
 	var positionTarget = 0;
-	var positionTargetObj;
 	var diff;
 	
 	for(var i=0; i < POSITION_IDS.length; i++) {
 		positionSchedule = 0;
 
-		for(var i = 0; i < TOTAL_ROWS[0]; i++) {
-			var rowPositionId = getObjectByIDValue('scheduleposition_' + i, null);
+		for(var j = 0; j < TOTAL_ROWS[0]; j++) {
+			var rowPositionId = getObjectByIDValue('scheduleposition_' + j, null);
 			if(rowPositionId == POSITION_IDS[i]) {
-				var posRowTotal = getObjectValueAsTimeInMinutes('scheduleWeeklyTotal_' + i, '00:00');
+				var posRowTotal = getObjectValueAsTimeInMinutes('scheduleWeeklyTotal_' + j, '00:00');
 				positionSchedule += posRowTotal;
 				totalSchedule += posRowTotal;			
 			}
