@@ -13,6 +13,11 @@ Break: #D6DE26
 	border: 2px solid #333333;
 }
 
+.timeInput {
+	border: 1px solid #333333;
+	font-size: 11px;
+	width: 35px;
+}
 
 .scheduleMainTableHeader {
 	background-color: #C8C8C8;
