@@ -37,4 +37,11 @@ public interface CustomerDao {
 	 * @param customer The customer
 	 */
 	public void delete(Customer customer);
+
+	/**
+	 * Retrieves a customer by customer code
+	 * @param customer
+	 * @return Customer
+	 */
+	Customer getCustomerByCode(Customer customer);
 }

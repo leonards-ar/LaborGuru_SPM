@@ -18,6 +18,7 @@
               				<td>
 				              	<s:fielderror theme="simple"/>
 				              	<s:actionerror theme="simple"/>
+								<s:actionmessage theme="simple"/>
 			              	</td>
             		  	</tr>
               		</table>

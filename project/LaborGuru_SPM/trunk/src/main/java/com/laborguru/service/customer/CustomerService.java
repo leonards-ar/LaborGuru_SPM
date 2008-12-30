@@ -28,6 +28,15 @@ public interface CustomerService extends Service {
 	 */
 	Customer getCustomerById(Customer customer);
 
+	
+	/**
+	 * Retrieves a customer by code
+	 * @param customer
+	 * @return a Customer or null
+	 */
+	Customer getCustomerByCode(Customer customer);
+
+	
 	/**
 	 * Retrieve a list of all customers
 	 * @param customer

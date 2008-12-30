@@ -5,8 +5,10 @@ import java.io.File;
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.exception.ErrorMessage;
+import com.laborguru.exception.InvalidFieldUploadFileException;
 import com.laborguru.exception.RequiredFieldUploadFileException;
 import com.laborguru.exception.SpmUncheckedException;
+import com.laborguru.model.Store;
 import com.laborguru.service.store.StoreService;
 
 public class UploadDefinitionPrepareAction extends SpmAction{
@@ -34,17 +36,21 @@ public class UploadDefinitionPrepareAction extends SpmAction{
 	public String upload(){
 		
 		try{
-			storeService.processStoreDefinitionAndSave(storeDefinition);
-			
+			Store store = storeService.processStoreDefinitionAndSave(storeDefinition);
+			this.addActionMessage(getText("store.storeDefinition.file.upload.success", new String[]{store.getName()}));
 		}catch(RequiredFieldUploadFileException fieldException){
 			ErrorMessage errorMessage = new ErrorMessage("error.store.storeDefinition.file", new String[] {storeDefinitionFileName});
 			this.addActionError(errorMessage);
 			this.addActionError(fieldException.getErrorMessage());
+		}catch(InvalidFieldUploadFileException invalidFieldException){
+			ErrorMessage errorMessage = new ErrorMessage("error.store.storeDefinition.file", new String[] {storeDefinitionFileName});
+			this.addActionError(errorMessage);
+			this.addActionError(invalidFieldException.getErrorMessage());
 		}
 		catch (SpmUncheckedException e){
 			ErrorMessage errorMessage = new ErrorMessage("error.store.storeDefinition.file", new String[] {storeDefinitionFileName});
 			this.addActionError(errorMessage);
-		}		
+		}			
 		return SpmActionResult.EDIT.getResult();
 	}	
 	

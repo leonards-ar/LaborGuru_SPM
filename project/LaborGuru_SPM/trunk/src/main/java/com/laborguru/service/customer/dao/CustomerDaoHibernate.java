@@ -12,6 +12,8 @@ public class CustomerDaoHibernate extends SpmHibernateDao implements CustomerDao
 	private static final String CUSTOMER_FILTER_NULL = "The customer filter passed as parameter is null.";
 	private static final String CUSTOMER_NULL = "The customer passed as parameter is null.";
 	private static final String CUSTOMER_ID_NULL = "The customer id passed as parameter is null.";
+	private static final String CUSTOMER_CODE_NULL = "The customer code passed as parameter is null.";
+
 	
 	private static final Logger log = Logger.getLogger(CustomerDaoHibernate.class);	
 
@@ -88,5 +90,29 @@ public class CustomerDaoHibernate extends SpmHibernateDao implements CustomerDao
 		}
 		
 		getHibernateTemplate().delete(customer);
+	}
+
+	/**
+	 * Retrieves a customer by customer code
+	 * @param customer
+	 * @return
+	 * @see com.laborguru.service.customer.dao.CustomerDao#getCustomerByCode(com.laborguru.model.Customer)
+	 */
+	public Customer getCustomerByCode(Customer customer) {
+		if (customer == null){
+			throw new IllegalArgumentException(CUSTOMER_NULL);
+		}
+		
+		if (customer.getCode() == null){
+			throw new IllegalArgumentException(CUSTOMER_CODE_NULL);
+		}
+
+		List<Customer> results = (List<Customer>)getHibernateTemplate().findByNamedParam("from Customer customer where customer.code = :searchString", "searchString", customer.getCode());
+
+		if(!results.isEmpty()){
+			return results.get(0);
+		}
+		
+		return null;
 	}
 }
