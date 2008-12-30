@@ -7,6 +7,7 @@ import java.util.Map;
 import com.laborguru.model.Position;
 import com.laborguru.model.PositionGroup;
 import com.laborguru.model.Store;
+import com.laborguru.util.CalendarUtils;
 
 /**
  *
@@ -43,6 +44,8 @@ public class ReportDaoHelper {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("store_id", store.getId());
 		map.put("date", date);
+		map.put("open_hour", store.getOperationTime(CalendarUtils.getDayOfWeek(date)).getOpenHour());
+		map.put("close_hour", store.getOperationTime(CalendarUtils.getDayOfWeek(date)).getCloseHour());
 		
 		return map;
 	}

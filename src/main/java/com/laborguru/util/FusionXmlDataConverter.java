@@ -23,6 +23,8 @@ public class FusionXmlDataConverter {
 	private HashMap<String, String> reportConfigurations;
 
 	private static final String WEEKLY_TOTAL_HOURS_REPORT = "weeklyTotalHoursReport";
+	private static final String DAILY_HALFHOUR_REPORT = "dailyHalfhourReport";
+	
 	public String weeklyTotalHoursXmlConverter(List<TotalHour> totalHours) {
 
 		Document document = DocumentHelper.createDocument();
@@ -72,12 +74,12 @@ public class FusionXmlDataConverter {
 			// Add schedule value
 			element = scheduleDataset.addElement("set");
 			element.addAttribute("value", th.getSchedule().toPlainString());
-			element.addAttribute("link", "http://www.google.com.ar");
+			//element.addAttribute("link", "http://www.google.com.ar");
 
 			// Add target value
 			element = targetDataset.addElement("set");
 			element.addAttribute("value", th.getTarget().toPlainString());
-			element.addAttribute("link", "http://www.google.com.ar");
+			//element.addAttribute("link", "http://www.google.com.ar");
 		}
 
 		if (log.isDebugEnabled()) {
@@ -86,17 +88,82 @@ public class FusionXmlDataConverter {
 		return document.asXML();
 	}
 
+	public String halfHoursXmlConverter(List<TotalHour> totalHours) {
+
+		Document document = DocumentHelper.createDocument();
+		Element graph = document.addElement("graph");
+		Element categories = graph.addElement("categories");
+		Element scheduleDataset = graph.addElement("dataset");
+		Element targetDataset = graph.addElement("dataset");
+		Properties props = null;
+
+		try {
+			props = getProperties(DAILY_HALFHOUR_REPORT);
+		} catch (IOException e) {
+			log.error("No file found", e);
+			throw new SpmUncheckedException(e.getCause(), e.getMessage(), ErrorEnum.GENERIC_ERROR);
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat(props.getProperty("dateFormat"));
+
+		graph.addAttribute("caption", "Day By Half Hour");
+		graph.addAttribute("PYAxisMinValue", props.getProperty("defaultPYAxisMinValue"));
+		graph.addAttribute("SYAxisMinValue", props.getProperty("defaultSYAxisMinValue"));
+		graph.addAttribute("PYAxisMaxValue", props.getProperty("defaultPYAxisMaxValue"));
+		graph.addAttribute("SYAxisMaxValue", props.getProperty("defaultSYAxisMaxValue"));
+		graph.addAttribute("PYAxisName", "Hours");
+		graph.addAttribute("SYAxisName", "Hours");
+		graph.addAttribute("showvalues", props.getProperty("showvalues"));
+		graph.addAttribute("numDivLines", props.getProperty("numDivLines"));
+		graph.addAttribute("formatNumberScale", props.getProperty("formatNumberScale"));
+		graph.addAttribute("decimalPrecision", props.getProperty("decimalPrecision"));
+		graph.addAttribute("anchorSides", props.getProperty("anchorSides"));
+		graph.addAttribute("anchorRadius", props.getProperty("anchorRadius"));
+		graph.addAttribute("anchorBorderColor", props.getProperty("anchorBorderColor"));
+		graph.addAttribute("labelDisplay", "ROTATE");
+		graph.addAttribute("rotateLabels", "true");
+
+		scheduleDataset.addAttribute("seriesName", "Schedule");
+		scheduleDataset.addAttribute("color", props.getProperty("scheduleColor"));
+		scheduleDataset.addAttribute("showValues", props.getProperty("scheduleShowValues"));
+
+		targetDataset.addAttribute("seriesName", "Target");
+		targetDataset.addAttribute("color", props.getProperty("targetColor"));
+		targetDataset.addAttribute("showValues", props.getProperty("targetShowValues"));
+		targetDataset.addAttribute("parentYAxis", "S");
+
+		for (TotalHour th : totalHours) {
+			// Add column
+			Element element = categories.addElement("category");
+			element.addAttribute("name", sdf.format(th.getDay()));
+
+			// Add schedule value
+			element = scheduleDataset.addElement("set");
+			element.addAttribute("value", th.getSchedule().toPlainString());
+			//element.addAttribute("link", "http://www.google.com.ar");
+
+			// Add target value
+			element = targetDataset.addElement("set");
+			element.addAttribute("value", th.getTarget().toPlainString());
+			//element.addAttribute("link", "http://www.google.com.ar");
+		}
+
+		if (log.isDebugEnabled()) {
+			log.debug(document.asXML());
+		}
+		return document.asXML();
+	}
+	
 	private Properties getProperties(String reportName) throws IOException {
 
 		Properties props = new Properties();
 		if (getReportConfigurations().get(reportName) == null) {
 			log.error("There is no entry in the hashMap for element: " + reportName);
 			throw new NoSuchElementException(
-					"There is no entry for report weeklyTotalHoursReport");
+					"There is no entry for report " + reportName);
 		}
 
 		props.load(getClass().getResourceAsStream(
-				getReportConfigurations().get("weeklyTotalHoursReport")));
+				getReportConfigurations().get(reportName)));
 
 		return props;
 	}

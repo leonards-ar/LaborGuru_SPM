@@ -185,6 +185,7 @@
 	<bean id="reportService" 
 	    class="com.laborguru.service.report.ReportServiceBean">
 	    <property name="reportDao" ref="reportDao"/>
+	    <property name="staffingService" ref="staffingService" />
 	</bean>
 	    
 	<bean id="userService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">

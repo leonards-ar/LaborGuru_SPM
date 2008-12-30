@@ -1,6 +1,5 @@
 package com.laborguru.service.report;
 
-import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,7 +15,9 @@ import com.laborguru.model.Store;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.model.report.TotalHourByPosition;
 import com.laborguru.service.report.dao.ReportDao;
+import com.laborguru.service.staffing.StaffingService;
 import com.laborguru.util.CalendarUtils;
+import com.laborguru.util.SpmConstants;
 
 /**
  * 
@@ -28,7 +29,7 @@ import com.laborguru.util.CalendarUtils;
 public class ReportServiceBean implements ReportService {
 	private static final Logger log = Logger.getLogger(ReportServiceBean.class);
 
-	
+	private StaffingService staffingService;
 	private ReportDao reportDao;
 
 	/**
@@ -111,13 +112,13 @@ public class ReportServiceBean implements ReportService {
 				if(schedule != null){
 					thByPosition.getTotalHour().setSchedule(schedule.getSchedule());
 				} else {
-					thByPosition.getTotalHour().setSchedule(new BigDecimal("0"));
+					thByPosition.getTotalHour().setSchedule(SpmConstants.BD_ZERO_VALUE);
 				}
 				
 				if(target != null){
 					thByPosition.getTotalHour().setTarget(target.getTarget());
 				} else {
-					thByPosition.getTotalHour().setTarget(new BigDecimal("0"));
+					thByPosition.getTotalHour().setTarget(SpmConstants.BD_ZERO_VALUE);
 				}
 				result.add(thByPosition);
 			}
@@ -125,6 +126,32 @@ public class ReportServiceBean implements ReportService {
 			return result;
 			
 		} catch (SQLException e) {
+			log.error("An SQLError has occurred", e);
+			throw new SpmUncheckedException(e.getCause(), e.getMessage(),
+					ErrorEnum.GENERIC_DATABASE_ERROR);
+		}
+	}
+
+	public List<TotalHour> getHalfHourlyReport(Store store, Date date) {
+		try{
+			//Initialize Minimum staffing in case it doesn't exist.
+			staffingService.getDailyStaffingByDate(store, date);
+			
+			List<TotalHour> schedule = reportDao.getHalfHourlySchedule(store, date);
+			List<TotalHour> target = reportDao.getHalfHourlyMinimumStaffing(store, date);
+			
+			for(TotalHour th: target) {
+				TotalHour scheduleTotalHour = getTotalHourByDay(th.getDay(), schedule);
+				if(scheduleTotalHour != null){
+					th.setSchedule(scheduleTotalHour.getSchedule());
+				} else {
+					th.setSchedule(SpmConstants.BD_ZERO_VALUE);
+				}
+			}
+			
+			return target;
+			
+		}catch(SQLException e){
 			log.error("An SQLError has occurred", e);
 			throw new SpmUncheckedException(e.getCause(), e.getMessage(),
 					ErrorEnum.GENERIC_DATABASE_ERROR);
@@ -161,13 +188,13 @@ public class ReportServiceBean implements ReportService {
 			if(scheduleTotalHour != null) {
 				totalhour.setSchedule(scheduleTotalHour.getSchedule());
 			} else {
-				totalhour.setSchedule(new BigDecimal("0"));
+				totalhour.setSchedule(SpmConstants.BD_ZERO_VALUE);
 			}
 			TotalHour targetTotalHour = getTotalHourByDay(date, targetTotalHours);
 			if(targetTotalHour != null) {
 				totalhour.setTarget(targetTotalHour.getTarget());
 			} else {
-				totalhour.setTarget(new BigDecimal("0"));
+				totalhour.setTarget(SpmConstants.BD_ZERO_VALUE);
 			}
 			
 			totalHours.add(totalhour);
@@ -189,5 +216,20 @@ public class ReportServiceBean implements ReportService {
 	public void setReportDao(ReportDao reportDao) {
 		this.reportDao = reportDao;
 	}
+
+	/**
+	 * @return the staffingService
+	 */
+	public StaffingService getStaffingService() {
+		return staffingService;
+	}
+
+	/**
+	 * @param staffingService the staffingService to set
+	 */
+	public void setStaffingService(StaffingService staffingService) {
+		this.staffingService = staffingService;
+	}
+	
 
 }

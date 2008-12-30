@@ -94,10 +94,11 @@
 		AND s.position_id IS NOT NULL
 		AND st.staffing_id = h.staffing_id 
 		AND st.staffing_date = ss.day
+		AND TIME(h.time) BETWEEN TIME(#open_hour#) AND TIME(#close_hour#)
 		AND TIME(h.time) <![CDATA[ >= ]]>TIME(s.from_hour) 
 		AND TIME(h.time) <![CDATA[ < ]]> TIME(s.to_hour)
 		AND ss.store_id = #store_id#
-		AND ss.day = STR_TO_DATE('#date#','%Y-%m-%d')
+		AND ss.day = STR_TO_DATE(#date#,'%Y-%m-%d')
 		GROUP BY h.time
 		ORDER BY TIME(h.time);
 	</select>
@@ -109,7 +110,8 @@
 		FROM tbl_staffing as s, tbl_halfhour_staffing as h, tbl_positions as p 
 		WHERE p.position_id = s.position_id 
 		AND s.staffing_id = h.staffing_id 
-		AND s.staffing_date = STR_TO_DATE(#date#,'%Y-%m-%d') 
+		AND s.staffing_date = STR_TO_DATE(#date#,'%Y-%m-%d')
+		AND TIME(h.time) BETWEEN TIME(#open_hour#) AND TIME(#close_hour#)		 
 		AND p.store_id=#store_id# 
 		GROUP BY h.time 
 		ORDER BY TIME(h.time)

@@ -50,5 +50,14 @@ public interface ReportService extends Service {
 	 * @param startingWeekDate
 	 * @return
 	 */
-	List<TotalHourByPosition> getForecastByPosition(Store store, List<Position> positions, Date startingWeekDate);	
+	List<TotalHourByPosition> getForecastByPosition(Store store, List<Position> positions, Date startingWeekDate);
+	
+	/**
+	 * Retrieves the half hours that has been projected and the hours that has been consumed
+	 * @param store
+	 * @param date
+	 * @return
+	 */
+	List<TotalHour> getHalfHourlyReport(Store store, Date date);
+	
 }

@@ -99,4 +99,22 @@ public interface ReportDao {
 	 * @throws SQLException
 	 */
 	List<TotalHour> getTargetWeeklyTotalHourByService(Store store, PositionGroup positionGroup, Date startDate, Date endDate) throws SQLException;
+	
+	/**
+	 * Retrieves the scheduled half hours for a Store on a selected date
+	 * @param store
+	 * @param date
+	 * @return
+	 * @throws SQLException
+	 */
+	List<TotalHour> getHalfHourlySchedule(Store store, Date date) throws SQLException;
+
+	/**
+	 * Retrieves the target half hours for a Store on a selected date
+	 * @param store
+	 * @param date
+	 * @return
+	 * @throws SQLException
+	 */
+	List<TotalHour> getHalfHourlyMinimumStaffing(Store store, Date date) throws SQLException;
 }

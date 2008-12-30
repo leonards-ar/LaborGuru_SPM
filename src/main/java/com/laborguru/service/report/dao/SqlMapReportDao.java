@@ -66,6 +66,13 @@ public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao
 		return getSqlMapClient().queryForList("getTargetWeeklyTotalHoursByService", ReportDaoHelper.mapTotalHoursReportByService(store, positionGroup, startDate, endDate));
 	}
 	
+	public List<TotalHour> getHalfHourlySchedule(Store store, Date date) throws SQLException{
+		if(log.isDebugEnabled()){
+			log.debug("getHalfHourlySchedule: before select params: store_id: " + store.getId() + " date: " + date);
+		}
+		
+		return getSqlMapClient().queryForList("getScheduleHalfHourlyTotalHours", ReportDaoHelper.mapHalfHoursReport(store, date));
+	}
 	
 	public List<TotalHour> getHalfHourlyMinimumStaffing(Store store, Date date) throws SQLException{
 		if(log.isDebugEnabled()){

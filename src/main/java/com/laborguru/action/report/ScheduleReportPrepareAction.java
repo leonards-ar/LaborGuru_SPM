@@ -6,6 +6,8 @@ import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.WeekDaySelector;
 import com.laborguru.service.data.ReferenceDataService;
+import com.laborguru.service.report.ReportService;
+import com.laborguru.util.FusionXmlDataConverter;
 
 /**
  *
@@ -17,8 +19,8 @@ import com.laborguru.service.data.ReferenceDataService;
 public abstract class ScheduleReportPrepareAction extends SpmAction  {
 
 	private static final long serialVersionUID = 1L;
-	private static final String DEFAULT_REPORT="ScheduleCheck";
-	private static final String DEFAULT_GROUPING = "total";
+	protected static final String DEFAULT_REPORT="ScheduleCheck";
+	protected static final String DEFAULT_GROUPING = "total";
 	
 	private WeekDaySelector weekDaySelector;
 	private String selectedDate;
@@ -32,6 +34,8 @@ public abstract class ScheduleReportPrepareAction extends SpmAction  {
 	private Map<Integer, String>itemsMap;
 	
 	private ReferenceDataService referenceDataService;
+	private ReportService reportService;
+	private FusionXmlDataConverter fusionXmlDataConverter;
 	
 	/**
 	 * @return the weekDaySelector
@@ -56,6 +60,18 @@ public abstract class ScheduleReportPrepareAction extends SpmAction  {
 		return SpmActionResult.INPUT.getResult();
 	}
 	
+	public String changeDay() {
+		pageSetup();
+		
+		getWeekDaySelector().initializeChangeDay(getSelectedWeekDay(), getSelectedDate());
+		
+		getWeekDaySelector().setStringSelectedDay(getSelectedWeekDay());
+		
+		loadCalendarData();
+		
+		return SpmActionResult.INPUT.getResult();
+		
+	}
 	/**
 	 * 
 	 */
@@ -203,6 +219,36 @@ public abstract class ScheduleReportPrepareAction extends SpmAction  {
 		this.referenceDataService = referenceDataService;
 	}
 
+	/**
+	 * @return the reportService
+	 */
+	public ReportService getReportService() {
+		return reportService;
+	}
+
+	/**
+	 * @param reportService the reportService to set
+	 */
+	public void setReportService(ReportService reportService) {
+		this.reportService = reportService;
+	}
+
+	/**
+	 * @return the fusionXmlDataConverter
+	 */
+	public FusionXmlDataConverter getFusionXmlDataConverter() {
+		return fusionXmlDataConverter;
+	}
+
+	/**
+	 * @param fusionXmlDataConverter
+	 *            the fusionXmlDataConverter to set
+	 */
+	public void setFusionXmlDataConverter(
+			FusionXmlDataConverter fusionXmlDataConverter) {
+		this.fusionXmlDataConverter = fusionXmlDataConverter;
+	}
+
 	protected void pageSetup() {
 		setReportMap(getReferenceDataService().getReportTypes());
 		setGroupingMap(getReferenceDataService().getReportGrouping());
@@ -219,5 +265,7 @@ public abstract class ScheduleReportPrepareAction extends SpmAction  {
 		}
 		
 	}
+	
+	
 	
 }
