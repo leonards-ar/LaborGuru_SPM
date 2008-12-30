@@ -21,9 +21,8 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction
 	private List<TotalHour> totalHours;
 	private Integer positionId;
 
-	private ReportService reportService;
 	private PositionService positionService;
-	private FusionXmlDataConverter fusionXmlDataConverter;
+
 
 	private BigDecimal totalSchedule = SpmConstants.BD_ZERO_VALUE;
 	private BigDecimal totalTarget = SpmConstants.BD_ZERO_VALUE;
@@ -109,6 +108,7 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction
 		}
 	}
 
+	
 	/**
 	 * @return the totalHours
 	 */
@@ -137,21 +137,6 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction
 	 */
 	public void setPositionId(Integer positionId) {
 		this.positionId = positionId;
-	}
-
-	/**
-	 * @return the reportService
-	 */
-	public ReportService getReportService() {
-		return reportService;
-	}
-
-	/**
-	 * @param reportService
-	 *            the reportService to set
-	 */
-	public void setReportService(ReportService reportService) {
-		this.reportService = reportService;
 	}
 
 	/**
@@ -237,22 +222,6 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction
 	public String getXmlValues() {
 		return getFusionXmlDataConverter().weeklyTotalHoursXmlConverter(
 				getTotalHours());
-	}
-
-	/**
-	 * @return the fusionXmlDataConverter
-	 */
-	public FusionXmlDataConverter getFusionXmlDataConverter() {
-		return fusionXmlDataConverter;
-	}
-
-	/**
-	 * @param fusionXmlDataConverter
-	 *            the fusionXmlDataConverter to set
-	 */
-	public void setFusionXmlDataConverter(
-			FusionXmlDataConverter fusionXmlDataConverter) {
-		this.fusionXmlDataConverter = fusionXmlDataConverter;
 	}
 
 	/**

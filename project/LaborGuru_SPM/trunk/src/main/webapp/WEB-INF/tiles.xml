@@ -357,6 +357,11 @@
 	  <put-attribute name="weekSelector" value="/tiles/report/week_selector.jsp"/>
 	  <put-attribute name="reportData" value="/tiles/report/report_frame.jsp" />
 	</definition>
+	
+	<definition name="showHalfHours" extends="baseLayoutWithMenu">
+		<put-attribute name="htmlExtHeader" value="/tiles/dojoHtmlExtHeader.jsp" />
+		<put-attribute name="body" value="/tiles/report/halfhours_report.jsp" />
+	</definition>
 
 	<!-- Upload Store Page -->
 	<definition name="storeDefinitionUploadPage" extends="baseLayoutWithMenu">

@@ -16,6 +16,11 @@
 		<action name="positionAutocompleter" class="com.laborguru.action.report.PositionAutocompleterAction">
 			<result name="success">/tiles/report/position_group_selector.jsp</result>
 		</action>
+		
+		<action name="halfHourReport_*" method="{1}" class="com.laborguru.action.report.HalfHoursReportPrepareAction">
+			<result name="input" type="tiles">showHalfHours</result>
+			<result name="show">/tiles/report/halfhour_table_report.jsp</result>
+		</action>
 	</package>
 	
 </struts>

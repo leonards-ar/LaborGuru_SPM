@@ -24,8 +24,6 @@ public class ForecastByPositionPrepareAction extends ScheduleReportPrepareAction
 
 	private List <TotalHourByPosition> totalHoursByPosition;
 	
-	private ReportService reportService;
-	
 	private PositionService positionService;
 
 	
@@ -47,7 +45,7 @@ public class ForecastByPositionPrepareAction extends ScheduleReportPrepareAction
 	
 	private void getForecastReport() {
 		
-		setTotalHoursByPosition(reportService.getForecastByPosition(getEmployeeStore(), positionService.getPositionsByStore(getEmployeeStore()), getWeekDaySelector().getStartingWeekDay()));
+		setTotalHoursByPosition(getReportService().getForecastByPosition(getEmployeeStore(), positionService.getPositionsByStore(getEmployeeStore()), getWeekDaySelector().getStartingWeekDay()));
 	}
 	/**
 	 * @return the totalHoursByPosition
@@ -63,20 +61,6 @@ public class ForecastByPositionPrepareAction extends ScheduleReportPrepareAction
 	public void setTotalHoursByPosition(
 			List<TotalHourByPosition> totalHoursByPosition) {
 		this.totalHoursByPosition = totalHoursByPosition;
-	}
-
-	/**
-	 * @return the reportService
-	 */
-	public ReportService getReportService() {
-		return reportService;
-	}
-
-	/**
-	 * @param reportService the reportService to set
-	 */
-	public void setReportService(ReportService reportService) {
-		this.reportService = reportService;
 	}
 
 	/**
