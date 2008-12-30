@@ -277,8 +277,8 @@
 								<s:hidden name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].weeklySchedule[%{#itDataEntry.index}].multipleShifts"/>
 								<tr>
 									<s:if test="%{editable}">
-									<td><s:textfield id="weeklyScheduleInHour_%{#itScheduleData.index}_%{#itDataEntry.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].weeklySchedule[%{#itDataEntry.index}].inHourAsString" onchange="updateTime(this); wsRefreshTotalHours(%{#itScheduleData.index}, %{#itDataEntry.index});" size="2" maxlength="8"/></td>
-									<td><s:textfield id="weeklyScheduleOutHour_%{#itScheduleData.index}_%{#itDataEntry.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].weeklySchedule[%{#itDataEntry.index}].outHourAsString" onchange="updateTime(this); wsRefreshTotalHours(%{#itScheduleData.index}, %{#itDataEntry.index});" size="2" maxlength="8"/></td>
+									<td><s:textfield cssClass="timeInput" id="weeklyScheduleInHour_%{#itScheduleData.index}_%{#itDataEntry.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].weeklySchedule[%{#itDataEntry.index}].inHourAsString" onchange="updateTime(this); wsRefreshTotalHours(%{#itScheduleData.index}, %{#itDataEntry.index});" maxlength="8"/></td>
+									<td><s:textfield cssClass="timeInput" id="weeklyScheduleOutHour_%{#itScheduleData.index}_%{#itDataEntry.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].weeklySchedule[%{#itDataEntry.index}].outHourAsString" onchange="updateTime(this); wsRefreshTotalHours(%{#itScheduleData.index}, %{#itDataEntry.index});" maxlength="8"/></td>
 									</s:if>
 									<s:else>
 									<s:hidden name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].weeklySchedule[%{#itDataEntry.index}].inHourAsString"/>
