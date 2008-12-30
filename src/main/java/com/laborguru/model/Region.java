@@ -24,6 +24,22 @@ public class Region extends SpmObject {
 	private Set<Area> areas;
 	
 	/**
+	 * Retrieves an Area that belongs to the region by area name
+	 * @param areaName
+	 * @return
+	 */
+	public Area getAreaByName(String areaName){
+		for (Area area : getAreas()){
+			if (area.getName().equalsIgnoreCase(areaName)){
+				return area;
+			}
+		}
+		
+		return null;
+	}
+	
+	
+	/**
 	 * Region toString
 	 * @return string version of the object 
 	 * @see com.laborguru.model.SpmObject#toString()

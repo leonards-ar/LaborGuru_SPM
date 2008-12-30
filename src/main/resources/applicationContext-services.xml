@@ -256,7 +256,11 @@
 		</property>	
  	</bean>
 
- 	<bean id="storeServiceTarget" class="com.laborguru.service.store.StoreServiceBean" autowire="byType"/>
+ 	<bean id="storeServiceTarget" class="com.laborguru.service.store.StoreServiceBean">
+ 		<property name="customerService" ref="customerService"/>
+ 	 	<property name="storeDefinitionFileParser" ref="storeDefinitionFileParser"/> 		
+ 		<property name="storeDao" ref="storeDao"/>
+ 	</bean>
 				
 	<bean id="scheduleService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		<property name="proxyInterfaces">

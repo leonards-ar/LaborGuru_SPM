@@ -25,6 +25,22 @@ public class Customer extends SpmObject{
 	private Set<Region> regions;
 	
 	/**
+	 * Retrieves a region that belongs to the customer by region name
+	 * @param regionName
+	 * @return a Region
+	 */
+	public Region getRegionByName(String regionName){
+		for (Region region : getRegions()){
+			if (region.getName().equalsIgnoreCase(regionName)){
+				return region;
+			}
+		}
+		
+		return null;
+	}
+	
+	
+	/**
 	 * Customer toString
 	 * @return string version of the object 
 	 * @see com.laborguru.model.SpmObject#toString()

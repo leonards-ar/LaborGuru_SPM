@@ -39,6 +39,10 @@ public class CustomerServiceBean implements CustomerService {
 		return getCustomerDao().getCustomerById(customer);
 	}
 
+	public Customer getCustomerByCode(Customer customer) {
+		return getCustomerDao().getCustomerByCode(customer);
+	}
+	
 	public List<Customer> getAllCustomers() {
 		return this.customerDao.findAll();
 	}
