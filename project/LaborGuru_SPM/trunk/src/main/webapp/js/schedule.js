@@ -642,9 +642,9 @@ function wsRefreshRowTotals(rowNum) {
 	for(var i=0; i < TOTAL_COLS; i++) {
 		colTotal = getObjectValueAsTimeInMinutes('weeklyScheduleTotalHours_' + rowNum + '_' + i, '00:00');
 		if(colTotal > maxHoursDay) {
-			setObjectByIDClass('weeklyScheduleTotalHours_' + rowNum + '_' + i, 'scheduleEmployeeTotalHoursExceeded');
+			setObjectByIDClass('weeklyScheduleTotalHours_' + rowNum + '_' + i, 'weekScheduleEmployeeTotalHoursExceeded');
 		} else {
-			setObjectByIDClass('weeklyScheduleTotalHours_' + rowNum + '_' + i, 'scheduleValueCell');
+			setObjectByIDClass('weeklyScheduleTotalHours_' + rowNum + '_' + i, 'weekScheduleTimeInputCellText');
 		}
 		if(colTotal > 0) {
 			totalDays++;
@@ -653,17 +653,17 @@ function wsRefreshRowTotals(rowNum) {
 	}
 	
 	if(total > maxHoursWeek) {
-		className = 'scheduleEmployeeTotalWeekHoursExceeded';
+		className = 'weekScheduleEmployeeTotalWeekHoursExceeded';
 	} else {
-		className = 'scheduleNameCell';
+		className = 'weekScheduleNameCell';
 	}
 	setObjectByIDValueAndClass('scheduleWeeklyTotal_' + rowNum, minutesToTime(total), className);
 
 	for(var i=0; i < TOTAL_COLS; i++) {
 		if(totalDays > maxDaysWeek && colTotal > 0) {
-			className = 'scheduleEmployeeTotalWeekDaysExceeded';
+			className = 'weekScheduleEmployeeTotalWeekDaysExceeded';
 		} else {
-			className = 'scheduleValueCell';
+			className = 'weekScheduleValueCell';
 		}
 		setObjectByIDClass('scheduleHours_' + rowNum + '_' + i, className);
 	}	
