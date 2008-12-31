@@ -72,28 +72,8 @@ Break: #D6DE26
 
 .scheduleEmployeeTotalHoursExceeded {
 	border: 1px solid #333333;
-	background-color: #FFF337;
-	color: #FF1717;
-	font-size: 12px;
-	text-align: center;
-	font-family: trebuchet ms, arial, sans-serif;
-	font-weight: bold;
-}
-
-.scheduleEmployeeTotalWeekHoursExceeded {
-	border: 1px solid #333333;
-	background-color: #FFF337;
-	color: #FF1717;
-	font-size: 12px;
-	text-align: center;
-	font-family: trebuchet ms, arial, sans-serif;
-	font-weight: bold;
-}
-
-.scheduleEmployeeTotalWeekDaysExceeded {
-	border: 1px solid #333333;
-	background-color: #FFF337;
-	color: #FF1717;
+	background-color: #FF6400;
+	color: #000000;
 	font-size: 12px;
 	text-align: center;
 	font-family: trebuchet ms, arial, sans-serif;
@@ -260,4 +240,92 @@ a.scheduleActionLink {
 
 a.scheduleActionLink:hover {
 	text-decoration: underline;
+}
+
+#weekScheduleMainTable {
+	border: 1px solid #969696;
+}
+
+#weekScheduleTimeInputTable {
+}
+
+.weekScheduleMainTableHeader {
+	background-color: #C8C8C8;
+	color: #333333;
+	font-size: 12px;
+	text-align: center;
+	font-family: trebuchet ms, arial, sans-serif;
+	font-weight: bold;
+}
+
+.weekScheduleCellHeader {
+	border: 1px solid #969696;
+}
+
+.weekScheduleTimeInputCellText {
+	border: 0px;
+	color: #333333;
+	font-size: 11px;
+	text-align: center;
+	font-family: trebuchet ms, arial, sans-serif;
+	font-weight: bold;
+}
+
+.weekScheduleValueCell {
+	border: 1px solid #969696;
+	background-color: #E6E6E6;
+	color: #333333;
+	font-size: 11px;
+	text-align: center;
+	font-family: trebuchet ms, arial, sans-serif;
+	font-weight: bold;	
+}
+
+.weekScheduleNameCell {
+	border: 1px solid #969696;
+	background-color: #E6E6E6;
+	color: #333333;
+	font-size: 11px;
+	text-align: center;
+	font-family: trebuchet ms, arial, sans-serif;
+}
+
+.weekScheduleValueCellText {
+	border: 1px solid #969696;
+	color: #333333;
+	font-size: 11px;
+	text-align: center;
+	font-family: trebuchet ms, arial, sans-serif;
+	font-weight: bold;
+}
+
+
+.weekScheduleEmployeeTotalHoursExceeded {
+	border: 1px solid #969696;
+	background-color: #FF6400;
+	color: #000000;
+	font-size: 11px;
+	text-align: center;
+	font-family: trebuchet ms, arial, sans-serif;
+	font-weight: bold;
+}
+
+.weekScheduleEmployeeTotalWeekHoursExceeded {
+	border: 1px solid #969696;
+	background-color: #FF6400;
+	color: #000000;
+	font-size: 11px;
+	text-align: center;
+	font-family: trebuchet ms, arial, sans-serif;
+	font-weight: bold;
+}
+
+.weekScheduleEmployeeTotalWeekDaysExceeded {
+	border: 1px solid #969696;
+	background-color: #FF6400;
+	color: #000000;
+	font-size: 11px;
+	text-align: center;
+	font-family: trebuchet ms, arial, sans-serif;
+	font-weight: bold;
 }
