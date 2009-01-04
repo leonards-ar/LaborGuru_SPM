@@ -16,6 +16,9 @@
 				<entry key="scheduleViews">
 					<ref bean="scheduleViews"/>
 				</entry>
+				<entry key="weeklyScheduleViews">
+					<ref bean="weeklyScheduleViews"/>
+				</entry>
 				<entry key="usedWeeks">
 					<ref bean="usedWeeks"/>
 				</entry>
@@ -184,7 +187,21 @@
 			</map>
 		</constructor-arg>
 	</bean>
-	
+
+	<bean id="weeklyScheduleViews" class="java.util.HashMap" singleton="true">
+		<description>Different Weekly schedule Views</description>
+		<constructor-arg>
+			<map>
+				<entry key="addweeklyshiftbyemployee_selectView.action">
+					<value>schedule.addshift.view.weekly</value>
+				</entry>
+				<entry key="addweeklyshiftbyposition_selectView.action">
+					<value>schedule.addshift.view.position</value>
+				</entry>
+			</map>
+		</constructor-arg>
+	</bean>
+
 	<bean id="reportTypes" class="java.util.HashMap" singleton="true">
 		<description>Different Report Types</description>
 		<constructor-arg>

@@ -174,6 +174,8 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftByDa
 	public String edit() {
 		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
 
+		initializeSelectView();
+		
 		setScheduleData();
 		
 		return SpmActionResult.EDIT.getResult();
@@ -387,4 +389,15 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftByDa
 	public void setScheduleDataIndex(Integer scheduleDataIndex) {
 		this.scheduleDataIndex = scheduleDataIndex;
 	}
+	
+	/**
+	 * 
+	 * 
+	 * @see com.laborguru.action.schedule.AddShiftBaseAction#initializeSelectView()
+	 */
+	@Override
+	protected void initializeSelectView() {
+		setSelectView("addshiftbyemployeebyposition_selectView.action");
+	}
+	
 }

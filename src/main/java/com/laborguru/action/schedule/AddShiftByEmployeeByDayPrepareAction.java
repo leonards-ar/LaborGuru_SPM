@@ -215,6 +215,8 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 	public String edit() {
 		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
 
+		initializeSelectView();
+		
 		setScheduleData();
 		
 		return SpmActionResult.EDIT.getResult();
@@ -466,5 +468,15 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 	 */
 	public void setMinimumStaffing(List<Integer> minimumStaffing) {
 		this.minimumStaffing = minimumStaffing;
+	}
+
+	/**
+	 * 
+	 * 
+	 * @see com.laborguru.action.schedule.AddShiftBaseAction#initializeSelectView()
+	 */
+	@Override
+	protected void initializeSelectView() {
+		setSelectView("addshiftbyemployee_selectView.action");
 	}
 }

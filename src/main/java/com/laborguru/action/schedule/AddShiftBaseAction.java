@@ -276,11 +276,16 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	}
 
 	/**
+	 * 
+	 */
+	protected abstract void loadScheduleViewsMap();
+
+	/**
 	 * @return the scheduleViewsMap
 	 */
 	public Map<String, String> getScheduleViewsMap() {
 		if(scheduleViewsMap == null) {
-			setScheduleViewsMap(getReferenceDataService().getScheduleViews());
+			loadScheduleViewsMap();
 		}
 		return scheduleViewsMap;
 	}
@@ -319,6 +324,11 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	public void setSelectView(String selectView) {
 		this.selectView = selectView;
 	}
+	
+	/**
+	 * 
+	 */
+	protected abstract void initializeSelectView();
 	
 	/**
 	 * @return the saveSchedule
