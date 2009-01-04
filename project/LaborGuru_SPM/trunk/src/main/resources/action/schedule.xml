@@ -24,6 +24,13 @@
 			<result name="input" type="tiles">editShiftByEmployeeByWeekPage</result>
 			<result name="success" type="redirectAction"><param name="actionName">addweeklyshiftbyemployee_edit</param></result>
 		</action>
+
+		<action name="addweeklyshiftbyposition_*" method="{1}"
+			class="com.laborguru.action.schedule.AddShiftByPositionByWeekPrepareAction">
+			<result name="edit" type="tiles">editShiftByPositionByWeekPage</result>
+			<result name="input" type="tiles">editShiftByPositionByWeekPage</result>
+			<result name="success" type="redirectAction"><param name="actionName">addweeklyshiftbyposition_edit</param></result>
+		</action>
 		
 		<action name="showscheduledetails" class="com.laborguru.action.schedule.ScheduleDetailsAction">
 			<result name="success" type="tiles">showScheduleDetailsPage</result>

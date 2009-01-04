@@ -63,6 +63,7 @@
   <tbl_permissions permission_id="38" name="REMOVE_AREA_CUSTOMER" description="Remove Area Manager"/>
   <tbl_permissions permission_id="39" name="REMOVE_USER" description="Remove admin users"/>
   <tbl_permissions permission_id="40" name="REMOVE_EMPLOYEE" description="Remove an Employee"/>
+  <tbl_permissions permission_id="41" name="PRINT_SHIFT" description="Print Schedule Shifts"/>
 
   
       
@@ -90,6 +91,7 @@
   <tbl_menu_items menu_item_id="22" label_key="store.submenu.uploadstoredefinition" help_key="STORE_UPLOAD_DEFINITION_HELP" target="/store/uploadDefinition_edit.action" position="3" parent_id="5" permission_id="6"/>
   <tbl_menu_items menu_item_id="23" label_key="report.weekByDay.title" help_key="WEEK_BY_DAY_REPORT_HELP" target="/report/totalHoursReport_showFirstReport.action" position="1" parent_id="21" permission_id="19"/>
   <tbl_menu_items menu_item_id="24" label_key="report.dailyHours.title" help_key="DAY_BY_HALFHOUR_REPORT_HELP" target="/report/halfHourReport_showFirstReport.action" position="2" parent_id="21" permission_id="19"/>
+  <tbl_menu_items menu_item_id="16" label_key="schedule.submenu.printshift" help_key="SCHEDULE_PRINTSHIFT_HELP" target="/schedule/printshift_view.action" position="2" parent_id="15" permission_id="41"/>
 
   
   <tbl_stores store_id="1" name="microcentro" area_id="1" half_hour_projections_weeks_default="4" daily_projections_weeks_default="4" code="MD0001"/>
@@ -152,11 +154,13 @@
   <tbl_profiles_permissions profile_id="2" permission_id="12"/><!-- Edit Projections -->
   <tbl_profiles_permissions profile_id="2" permission_id="13"/><!-- Edit Half Hour Projections -->
   <tbl_profiles_permissions profile_id="2" permission_id="14"/><!-- Edit Projections Settings-->
-  <tbl_profiles_permissions profile_id="2" permission_id="15"/><!-- Add shift (TODO only see projections) -->
+  <tbl_profiles_permissions profile_id="2" permission_id="15"/><!-- Add shift (TODO only see shifts) -->
+  <tbl_profiles_permissions profile_id="2" permission_id="41"/><!-- Print shift -->
   <tbl_profiles_permissions profile_id="2" permission_id="19"/><!-- Reports -->
   
 <!-- Employee Permissions -->
   <tbl_profiles_permissions profile_id="3" permission_id="15"/><!-- Add shift (TODO only see projections) -->
+  <tbl_profiles_permissions profile_id="3" permission_id="41"/><!-- Print shift -->
 <!-- Customer Manager Permissions -->  
   <tbl_profiles_permissions profile_id="4" permission_id="1"/><!-- Home -->
   <tbl_profiles_permissions profile_id="4" permission_id="19"/><!-- Reports -->

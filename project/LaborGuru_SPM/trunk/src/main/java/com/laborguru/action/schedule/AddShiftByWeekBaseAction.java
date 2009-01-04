@@ -644,6 +644,8 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	public String edit() {
 		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
 		
+		initializeSelectView();
+		
 		setScheduleData();
 		
 		return SpmActionResult.EDIT.getResult();
@@ -690,7 +692,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		newRow.setPositionId(getNewEmployeePositionId());
 		newRow.setPositionName(getPositionName(getNewEmployeePositionId()));
 		newRow.setEmployeeName(getNewEmployeeName());
-		newRow.setGroupById(getNewEmployeeId());
+		newRow.setGroupById(getAddEmployeeGroupById());
 		newRow.setWeeklySchedule(initializeWeeklySchedule());
 
 		if(newEmployee != null) {
@@ -699,7 +701,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 			newRow.setEmployeeMaxHoursWeek(newEmployee.getMaxHoursWeek());		
 		}
 		
-		getWeeklyScheduleData().addScheduleRow(getNewEmployeeId(), newRow);
+		getWeeklyScheduleData().addScheduleRow(getAddEmployeeGroupById(), newRow);
 
 		setNewEmployeeId(null);
 		setNewEmployeeName(null);
@@ -708,6 +710,12 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		return SpmActionResult.EDIT.getResult();
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	protected abstract Integer getAddEmployeeGroupById();
+	
 	/**
 	 * Prepare the data to be used on the edit page
 	 */
@@ -930,4 +938,115 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		this.dailyStaffings = dailyStaffings;
 	}
 	
+	/**
+	 * 
+	 * 
+	 * @see com.laborguru.action.schedule.AddShiftBaseAction#loadScheduleViewsMap()
+	 */
+	@Override
+	protected void loadScheduleViewsMap() {
+		setScheduleViewsMap(getReferenceDataService().getWeeklyScheduleViews());
+	}
+	
+	/**
+	 * 
+	 */
+	public void prepareSelectView() {
+		loadPageData();
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String selectView() {
+		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
+		
+		resetScheduleData();
+		//resetStaffingData();
+		
+		setScheduleData();
+		
+		return SpmActionResult.EDIT.getResult();
+	}	
+	
+	/**
+	 * 
+	 */
+	public void prepareCopySchedule() {
+		loadPageData();
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String copySchedule() {
+		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
+
+		if(log.isDebugEnabled()) {
+			log.debug("About to copy schedule data " + getWeeklyScheduleData() + " to week starting " + getCopyTargetDay());
+		}
+
+		Date currentDay = getWeekDaySelector().getSelectedDay();
+		Date currentWeekDay = getWeekDaySelector().getStartingWeekDay();
+		
+		List<Object> params = new ArrayList<Object>();
+		params.add(getCopyTargetDay());
+		params.add(currentWeekDay);
+		params.add(new Date());
+
+		if(getCopyTargetDay() != null && getCopyTargetDay().after(new Date())) {
+			/*
+			 * Force selected date to the target date.
+			 */
+			setStoreSchedules(null);
+			setWeekDays(null);
+			getWeekDaySelector().setSelectedDay(getCopyTargetDay());
+			getWeekDaySelector().setStartingWeekDay(getCopyTargetDay());
+			
+			setSchedule();
+
+			if(log.isDebugEnabled()) {
+				log.debug("About to copy schedules " + getStoreSchedules());
+			}
+		
+			int size = getStoreSchedules().size();
+			StoreSchedule storeSchedule;
+			for(int dayIndex = 0; dayIndex < size; dayIndex++ ) {
+				storeSchedule = getStoreSchedules().get(dayIndex);
+
+				if(log.isDebugEnabled()) {
+					log.debug("About to save schedule " + storeSchedule);
+				}
+				
+				getScheduleService().save(storeSchedule);
+				
+				if(log.isDebugEnabled()) {
+					log.debug("Saved schedule for date " + storeSchedule.getDay());
+				}
+			}
+
+			/*
+			 * Set selected day back again
+			 */
+			setWeekDays(null);
+			getWeekDaySelector().setSelectedDay(currentDay);
+			getWeekDaySelector().setStartingWeekDay(currentWeekDay);
+			setStoreSchedules(null);
+			
+			addActionMessage(getText("schedule.addshift.weekly.copy_success", params));
+		} else {
+			addActionError(getText("error.schedule.addshift.invalid_target_day", params));
+		}
+		
+		return SpmActionResult.EDIT.getResult();
+	}
+
+	/**
+	 * @param weekDays the weekDays to set
+	 */
+	public void setWeekDays(List<Date> weekDays) {
+		this.weekDays = weekDays;
+	}	
 }

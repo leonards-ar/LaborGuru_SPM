@@ -894,4 +894,14 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	protected void onWeekdaySelectorChange() {
 		setDailyVolume(null);
 	}
+	
+	/**
+	 * 
+	 * 
+	 * @see com.laborguru.action.schedule.AddShiftBaseAction#loadScheduleViewsMap()
+	 */
+	@Override
+	protected void loadScheduleViewsMap() {
+		setScheduleViewsMap(getReferenceDataService().getScheduleViews());
+	}
 }

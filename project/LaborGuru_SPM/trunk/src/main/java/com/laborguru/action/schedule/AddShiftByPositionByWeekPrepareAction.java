@@ -5,6 +5,7 @@
  */
 package com.laborguru.action.schedule;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.laborguru.frontend.model.WeeklyScheduleRow;
@@ -18,7 +19,7 @@ import com.laborguru.model.Shift;
  * @since SPM 1.0
  *
  */
-public class AddShiftByEmployeeByWeekPrepareAction extends AddShiftByWeekBaseAction {
+public class AddShiftByPositionByWeekPrepareAction extends AddShiftByWeekBaseAction {
 	/**
 	 * 
 	 */
@@ -27,7 +28,7 @@ public class AddShiftByEmployeeByWeekPrepareAction extends AddShiftByWeekBaseAct
 	/**
 	 * 
 	 */
-	public AddShiftByEmployeeByWeekPrepareAction() {
+	public AddShiftByPositionByWeekPrepareAction() {
 	}
 
 	/**
@@ -39,7 +40,7 @@ public class AddShiftByEmployeeByWeekPrepareAction extends AddShiftByWeekBaseAct
 	 */
 	@Override
 	protected Integer getGroupById(Employee employee, Shift shift) {
-		return employee != null ? employee.getId() : null;
+		return shift != null && shift.getPosition() != null ? shift.getPosition().getId() : null;
 	}
 	
 	/**
@@ -50,7 +51,15 @@ public class AddShiftByEmployeeByWeekPrepareAction extends AddShiftByWeekBaseAct
 	 */
 	@Override
 	protected List<WeeklyScheduleRow> getEmployeeSchedule(Integer employeeId) {
-		return getWeeklyScheduleData().getScheduleDataFor(employeeId);
+		List<WeeklyScheduleRow> employeeSchedule = new ArrayList<WeeklyScheduleRow>();
+		if(employeeId != null) {
+			for(WeeklyScheduleRow row : getWeeklyScheduleData().getScheduleData()) {
+				if(row != null && isEqualId(employeeId, row.getEmployeeId())) {
+					employeeSchedule.add(row);
+				}
+			}
+		}
+		return employeeSchedule;
 	}
 
 	/**
@@ -60,9 +69,9 @@ public class AddShiftByEmployeeByWeekPrepareAction extends AddShiftByWeekBaseAct
 	 */
 	@Override
 	protected Integer getAddEmployeeGroupById() {
-		return getNewEmployeeId();
+		return getNewEmployeePositionId();
 	}
-
+	
 	/**
 	 * 
 	 * 
@@ -70,6 +79,6 @@ public class AddShiftByEmployeeByWeekPrepareAction extends AddShiftByWeekBaseAct
 	 */
 	@Override
 	protected void initializeSelectView() {
-		setSelectView("addweeklyshiftbyemployee_selectView.action");
-	}	
+		setSelectView("addweeklyshiftbyposition_selectView.action");
+	}		
 }
