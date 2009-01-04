@@ -301,7 +301,6 @@ a.scheduleActionLink:hover {
 
 
 .weekScheduleEmployeeTotalHoursExceeded {
-	border: 1px solid #969696;
 	background-color: #FF6400;
 	color: #000000;
 	font-size: 11px;

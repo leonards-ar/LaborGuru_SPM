@@ -188,7 +188,7 @@
                   						</s:else>
                   						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
                   						</s:iterator>
-                  						<td width="12%" class="availableWeekDay"><a href="#" onclick="showWaitSplash(); addshiftbyemployeebyposition_form.action='addweeklyshiftbyemployee_edit.action'; addshiftbyemployeebyposition_form.submit();" class="availableWeekDayLink"><s:text name="schedule.addshift.weekselector.week"/></a></td>
+                  						<td width="12%" class="availableWeekDay"><a href="#" onclick="showWaitSplash(); addshiftbyemployeebyposition_form.action='addweeklyshiftbyposition_edit.action'; addshiftbyemployeebyposition_form.submit();" class="availableWeekDayLink"><s:text name="schedule.addshift.weekselector.week"/></a></td>
                   					</tr>
                   				</table>			              		
 			              	</td>
