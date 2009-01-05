@@ -156,4 +156,18 @@ public class StoreSchedule extends SpmObject {
 		}
 		return null;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Set<Position> getSchedulePositions() {
+		Set<Position> positions = new HashSet<Position>();
+		
+		for(EmployeeSchedule employeeSchedule : getEmployeeSchedules()) {
+			positions.addAll(employeeSchedule.getSchedulePositions());
+		}
+		
+		return positions;
+	}
 }
