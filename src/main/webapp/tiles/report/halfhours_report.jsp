@@ -46,7 +46,7 @@
 			                  			<td class="calendarTableColumn"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
                   						<s:iterator id="nextDate" value="weekDaySelector.nextStartingWeekDays" status="itNextDate">
 			                  				<td class="calendarTableColumn" width="10%" nowrap="nowrap">
-			                  					<a href="<s:url value="#" includeParams="none"/>" onclick="showWaitSplash(); dailyReport_form.action='halfHourReport_changeWeek.action'; dailyReport_form.selectedDate.value='<s:text name=''><s:param value='nextDate'/></s:text>'; dailyReport_form.submit();" class="calendarUnselectedWeekLink">
+			                  					<a href="<s:url value="#" includeParams="none"/>" onclick="showWaitSplash(); dailyReport_form.action='halfHourReport_changeWeek.action'; dailyReport_form.selectedDate.value='<s:text name='report.weekdayselector.weekdayselector.input.dateformat'><s:param value='nextDate'/></s:text>'; dailyReport_form.submit();" class="calendarUnselectedWeekLink">
 			                  						<s:text name='report.weekdayselector.availableweek.dateformat'><s:param value='nextDate'/></s:text>
 			                  					</a>
 			                  				</td>
@@ -117,7 +117,7 @@
 
 <img id="indicator"
 	src="<s:url value="/images/indicator.gif" includeParams="none" />"
-	alt="<s:text name="wait.message"/>" style="display: none" />
+	alt="<s:text name="wait.message"/>" style="display: none; text-align: center" />
 	
 
 <script language="javascript" type="text/javascript">

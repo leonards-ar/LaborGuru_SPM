@@ -49,6 +49,34 @@ public class ReportDaoHelper {
 		
 		return map;
 	}
+
+	/**
+	 * @param store
+	 * @param position
+	 * @param date
+	 * @return
+	 */
+	public static Map<String, Object> mapHalfHoursReportByPosition(Store store, Position position, Date date){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("store_id", store.getId());
+		map.put("date", date);
+		map.put("open_hour", store.getOperationTime(CalendarUtils.getDayOfWeek(date)).getOpenHour());
+		map.put("close_hour", store.getOperationTime(CalendarUtils.getDayOfWeek(date)).getCloseHour());
+		map.put("position_id", position.getId());
+		
+		return map;
+	}
+
+	public static Map<String, Object> mapHalfHoursReportByService(Store store, PositionGroup positionGroup, Date date){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("store_id", store.getId());
+		map.put("date", date);
+		map.put("open_hour", store.getOperationTime(CalendarUtils.getDayOfWeek(date)).getOpenHour());
+		map.put("close_hour", store.getOperationTime(CalendarUtils.getDayOfWeek(date)).getCloseHour());
+		map.put("position_group_id", positionGroup.getId());
+		
+		return map;
+	}
 	
 	public static Map<String, Object>mapTotalHoursReportByPosition(Store store, Position position, Date startDate, Date endDate) {
 		HashMap<String, Object> map = new HashMap<String, Object>();

@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.laborguru.action.SpmActionResult;
+import com.laborguru.model.Position;
+import com.laborguru.model.PositionGroup;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.util.SpmConstants;
 import com.opensymphony.xwork2.Preparable;
@@ -30,6 +32,7 @@ public class HalfHoursReportPrepareAction extends ScheduleReportPrepareAction im
 	private BigDecimal totalDifference = SpmConstants.BD_ZERO_VALUE;
 	private BigDecimal totalPercentaje = SpmConstants.BD_ZERO_VALUE;
 	
+	private String xmlValues;
 	public void prepareShowReport(){
 		pageSetup();
 	}
@@ -56,21 +59,26 @@ public class HalfHoursReportPrepareAction extends ScheduleReportPrepareAction im
 				getDailyReport();
 			}
 		}		
+		calculateTotals();
+		generateXmlGraph();
 		
 		return SpmActionResult.SHOW.getResult();
 	}
 	
 	private void getDailyReport(){
 		setTotalHours(getReportService().getHalfHourlyReport(getEmployeeStore(), getWeekDaySelector().getSelectedDay()));
-		calculateTotals();
 	}
 	
 	private void getDailyReportByPosition(){
-		
+		Position position = new Position();
+		position.setId(getItemId());
+		setTotalHours(getReportService().getHalfHourlyReportByPosition(getEmployeeStore(), position, getWeekDaySelector().getSelectedDay()));
 	}
 	
 	private void getDailyReportByService(){
-		
+		PositionGroup positionGroup = new PositionGroup();
+		positionGroup.setId(getItemId());
+		setTotalHours(getReportService().getHalfHourlyReportByService(getEmployeeStore(), positionGroup, getWeekDaySelector().getSelectedDay()));
 	}
 
 	private void calculateTotals() {
@@ -80,14 +88,11 @@ public class HalfHoursReportPrepareAction extends ScheduleReportPrepareAction im
 			setTotalTarget(getTotalTarget().add(th.getTarget()));
 			setTotalDifference(getTotalDifference().add(th.getDifference()));
 		}
-		// totalDifference/totalTarget * 100
-		if (getTotalTarget().compareTo(SpmConstants.BD_ZERO_VALUE) == 0) {
-			setTotalPercentaje(SpmConstants.BD_ZERO_VALUE);
-		} else {
-			setTotalPercentaje(getTotalDifference().divide(getTotalTarget(), 2,
-					SpmConstants.ROUNDING_MODE).multiply(new BigDecimal("100"))
-					.abs());
-		}
+	}
+	
+	public void generateXmlGraph(){
+		setXmlValues(getFusionXmlDataConverter().halfHoursXmlConverter(
+				getTotalHours()));
 	}
 	
 	/**
@@ -96,10 +101,12 @@ public class HalfHoursReportPrepareAction extends ScheduleReportPrepareAction im
 	 * @return
 	 */
 	public String getXmlValues() {
-		return getFusionXmlDataConverter().halfHoursXmlConverter(
-				getTotalHours());
+		return xmlValues;
 	}
 	
+	public void setXmlValues(String xmlValues) {
+		this.xmlValues = xmlValues;
+	}
 	/**
 	 * @return the totalHours
 	 */
