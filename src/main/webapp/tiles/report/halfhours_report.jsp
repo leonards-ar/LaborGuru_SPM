@@ -115,9 +115,10 @@
 		</tr>
 	</table>
 
-<img id="indicator"
+<center><img id="indicator"
 	src="<s:url value="/images/indicator.gif" includeParams="none" />"
 	alt="<s:text name="wait.message"/>" style="display: none; text-align: center" />
+</center>
 	
 
 <script language="javascript" type="text/javascript">
