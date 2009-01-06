@@ -18,6 +18,9 @@ import com.laborguru.util.CalendarUtils;
  */
 public class ReportDaoHelper {
 
+	private static final int DELTA_HOUR = 2;
+	private static final int OPEN_DELTA_HOUR = (-1) * DELTA_HOUR;
+	private static final int CLOSE_DELTA_HOUR = DELTA_HOUR + 1;
 	/**
 	 * Retrieves a Map with the parameters needed to execute the report.
 	 * @param store
@@ -44,8 +47,10 @@ public class ReportDaoHelper {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("store_id", store.getId());
 		map.put("date", date);
-		map.put("open_hour", store.getOperationTime(CalendarUtils.getDayOfWeek(date)).getOpenHour());
-		map.put("close_hour", store.getOperationTime(CalendarUtils.getDayOfWeek(date)).getCloseHour());
+		Date openHour = store.getOperationTime(CalendarUtils.getDayOfWeek(date)).getOpenHour();
+		Date closeHour = store.getOperationTime(CalendarUtils.getDayOfWeek(date)).getCloseHour();
+		map.put("open_hour", CalendarUtils.addOrSubstractHours(openHour, OPEN_DELTA_HOUR));
+		map.put("close_hour", CalendarUtils.addOrSubstractHours(closeHour, CLOSE_DELTA_HOUR));
 		
 		return map;
 	}
@@ -60,8 +65,10 @@ public class ReportDaoHelper {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("store_id", store.getId());
 		map.put("date", date);
-		map.put("open_hour", store.getOperationTime(CalendarUtils.getDayOfWeek(date)).getOpenHour());
-		map.put("close_hour", store.getOperationTime(CalendarUtils.getDayOfWeek(date)).getCloseHour());
+		Date openHour = store.getOperationTime(CalendarUtils.getDayOfWeek(date)).getOpenHour();
+		Date closeHour = store.getOperationTime(CalendarUtils.getDayOfWeek(date)).getCloseHour();
+		map.put("open_hour", CalendarUtils.addOrSubstractHours(openHour, OPEN_DELTA_HOUR));
+		map.put("close_hour", CalendarUtils.addOrSubstractHours(closeHour, CLOSE_DELTA_HOUR));
 		map.put("position_id", position.getId());
 		
 		return map;
@@ -71,8 +78,10 @@ public class ReportDaoHelper {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("store_id", store.getId());
 		map.put("date", date);
-		map.put("open_hour", store.getOperationTime(CalendarUtils.getDayOfWeek(date)).getOpenHour());
-		map.put("close_hour", store.getOperationTime(CalendarUtils.getDayOfWeek(date)).getCloseHour());
+		Date openHour = store.getOperationTime(CalendarUtils.getDayOfWeek(date)).getOpenHour();
+		Date closeHour = store.getOperationTime(CalendarUtils.getDayOfWeek(date)).getCloseHour();
+		map.put("open_hour", CalendarUtils.addOrSubstractHours(openHour, OPEN_DELTA_HOUR));
+		map.put("close_hour", CalendarUtils.addOrSubstractHours(closeHour, CLOSE_DELTA_HOUR));
 		map.put("position_group_id", positionGroup.getId());
 		
 		return map;

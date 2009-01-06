@@ -152,6 +152,7 @@ public class ReportServiceBean implements ReportService {
 	
 	public List<TotalHour> getHalfHourlyReportByPosition(Store store, Position position, Date date){
 		try{
+			//Initialize Minimum staffing in case it doesn't exist.			
 			getStaffingService().getDailyStaffingByDate(store, date);
 			
 			List<TotalHour> schedule = reportDao.getHalfHourlyScheduleByPosition(store, position, date);
@@ -165,7 +166,19 @@ public class ReportServiceBean implements ReportService {
 	}
 	
 	public List<TotalHour> getHalfHourlyReportByService(Store store, PositionGroup positionGroup, Date date){
-		return null;
+		try{
+			//Initialize Minimum staffing in case it doesn't exist.			
+			getStaffingService().getDailyStaffingByDate(store, date);
+			
+			List<TotalHour> schedule = reportDao.getHalfHourlyScheduleByService(store, positionGroup, date);
+			List<TotalHour> target = reportDao.getHalfHourlyMinimumStaffingByService(store, positionGroup, date);
+			
+			return getMergedHalfHours(schedule, target);
+		} catch(SQLException e){
+			log.error("An SQLError has occurred", e);
+			throw new SpmUncheckedException(e.getCause(), e.getMessage(),
+					ErrorEnum.GENERIC_DATABASE_ERROR);
+		}
 	}
 	private TotalHour getTotalHourByDay(Date day, List<TotalHour> list) {
 		for(TotalHour th: list) {
