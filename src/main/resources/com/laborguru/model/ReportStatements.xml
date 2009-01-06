@@ -94,7 +94,8 @@
 		AND s.position_id IS NOT NULL
 		AND st.staffing_id = h.staffing_id 
 		AND st.staffing_date = ss.day
-		AND TIME(h.time) BETWEEN TIME(#open_hour#) AND TIME(#close_hour#)
+		AND TIME(h.time) <![CDATA[ >= ]]> TIME(#open_hour#) 
+		AND TIME(h.time) <![CDATA[ < ]]>  TIME(#close_hour#)
 		AND TIME(h.time) <![CDATA[ >= ]]>TIME(s.from_hour) 
 		AND TIME(h.time) <![CDATA[ < ]]> TIME(s.to_hour)
 		AND ss.store_id = #store_id#
@@ -111,7 +112,8 @@
 		WHERE p.position_id = s.position_id 
 		AND s.staffing_id = h.staffing_id 
 		AND s.staffing_date = STR_TO_DATE(#date#,'%Y-%m-%d')
-		AND TIME(h.time) BETWEEN TIME(#open_hour#) AND TIME(#close_hour#)		 
+		AND TIME(h.time) <![CDATA[ >= ]]> TIME(#open_hour#) 
+		AND TIME(h.time) <![CDATA[ < ]]>  TIME(#close_hour#)
 		AND p.store_id=#store_id# 
 		GROUP BY h.time 
 		ORDER BY TIME(h.time)
@@ -128,7 +130,8 @@
 		AND st.staffing_id = h.staffing_id 
 		AND st.staffing_date = ss.day
 		AND s.position_id = #position_id#
-		AND TIME(h.time) BETWEEN TIME(#open_hour#) AND TIME(#close_hour#)
+		AND TIME(h.time) <![CDATA[ >= ]]> TIME(#open_hour#) 
+		AND TIME(h.time) <![CDATA[ < ]]>  TIME(#close_hour#)
 		AND TIME(h.time) <![CDATA[ >= ]]>TIME(s.from_hour) 
 		AND TIME(h.time) <![CDATA[ < ]]> TIME(s.to_hour)
 		AND ss.store_id = #store_id#
@@ -145,7 +148,8 @@
 		WHERE p.position_id = s.position_id 
 		AND s.staffing_id = h.staffing_id 
 		AND s.staffing_date = STR_TO_DATE(#date#,'%Y-%m-%d')
-		AND TIME(h.time) BETWEEN TIME(#open_hour#) AND TIME(#close_hour#)		 
+		AND TIME(h.time) <![CDATA[ >= ]]> TIME(#open_hour#) 
+		AND TIME(h.time) <![CDATA[ < ]]>  TIME(#close_hour#)
 		AND p.store_id=#store_id# 
 		AND p.position_id=#position_id#
 		GROUP BY h.time 
@@ -164,7 +168,8 @@
 		AND st.staffing_date = ss.day
 		AND s.position_id = p.position_id
 		AND p.position_group_id = #position_group_id#
-		AND TIME(h.time) BETWEEN TIME(#open_hour#) AND TIME(#close_hour#)
+		AND TIME(h.time) <![CDATA[ >= ]]> TIME(#open_hour#) 
+		AND TIME(h.time) <![CDATA[ < ]]>  TIME(#close_hour#)
 		AND TIME(h.time) <![CDATA[ >= ]]>TIME(s.from_hour) 
 		AND TIME(h.time) <![CDATA[ < ]]> TIME(s.to_hour)
 		AND ss.store_id = #store_id#
@@ -181,7 +186,8 @@
 		WHERE p.position_id = s.position_id 
 		AND s.staffing_id = h.staffing_id 
 		AND s.staffing_date = STR_TO_DATE(#date#,'%Y-%m-%d')
-		AND TIME(h.time) BETWEEN TIME(#open_hour#) AND TIME(#close_hour#)		 
+		AND TIME(h.time) <![CDATA[ >= ]]> TIME(#open_hour#) 
+		AND TIME(h.time) <![CDATA[ < ]]>  TIME(#close_hour#)
 		AND p.store_id=#store_id# 
 		AND p.position_group_id=#position_group_id#
 		GROUP BY h.time 
