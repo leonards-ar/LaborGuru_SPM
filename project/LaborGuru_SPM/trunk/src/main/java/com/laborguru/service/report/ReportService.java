@@ -60,4 +60,21 @@ public interface ReportService extends Service {
 	 */
 	List<TotalHour> getHalfHourlyReport(Store store, Date date);
 	
+	/**
+	 * Retrieves the half hours filtered by a Position.
+	 * @param store
+	 * @param position
+	 * @param date
+	 * @return
+	 */
+	List<TotalHour> getHalfHourlyReportByPosition(Store store, Position position, Date date);
+	
+	/**
+	 * Retrieves the half hours filtered by a Position Group.
+	 * @param store
+	 * @param positionGroup
+	 * @param date
+	 * @return
+	 */
+	List<TotalHour> getHalfHourlyReportByService(Store store, PositionGroup positionGroup, Date date);
 }

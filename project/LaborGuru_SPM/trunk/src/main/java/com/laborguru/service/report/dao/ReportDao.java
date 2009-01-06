@@ -117,4 +117,44 @@ public interface ReportDao {
 	 * @throws SQLException
 	 */
 	List<TotalHour> getHalfHourlyMinimumStaffing(Store store, Date date) throws SQLException;
+	
+	/**
+	 * Retrieves the scheduled hours for a Store on a selected date filtered by a Position
+	 * @param store
+	 * @param position
+	 * @param date
+	 * @return
+	 * @throws SQLException
+	 */
+	List<TotalHour> getHalfHourlyScheduleByPosition(Store store, Position position, Date date) throws SQLException;
+	
+	/**
+	 * Retrieves the target hours for a Store on a selected date filtered by a Position
+	 * @param store
+	 * @param position
+	 * @param date
+	 * @return
+	 * @throws SQLException
+	 */
+	List<TotalHour> getHalfHourlyMinimumStaffingByPosition(Store store, Position position, Date date) throws SQLException;
+	
+	/**
+	 * Retrieves the scheduled hours for a Store on a selected date filtered by a Position
+	 * @param store
+	 * @param position
+	 * @param date
+	 * @return
+	 * @throws SQLException
+	 */
+	List<TotalHour> getHalfHourlyScheduleByService(Store store, PositionGroup positionGroup, Date date) throws SQLException;
+	
+	/**
+	 * Retrieves the target hours for a Store on a selected date filtered by a Position
+	 * @param store
+	 * @param position
+	 * @param date
+	 * @return
+	 * @throws SQLException
+	 */
+	List<TotalHour> getHalfHourlyMinimumStaffingByService(Store store, PositionGroup positionGroup, Date date) throws SQLException;	
 }

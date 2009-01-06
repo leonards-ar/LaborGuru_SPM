@@ -135,21 +135,13 @@ public class ReportServiceBean implements ReportService {
 	public List<TotalHour> getHalfHourlyReport(Store store, Date date) {
 		try{
 			//Initialize Minimum staffing in case it doesn't exist.
-			staffingService.getDailyStaffingByDate(store, date);
+			getStaffingService().getDailyStaffingByDate(store, date);
 			
 			List<TotalHour> schedule = reportDao.getHalfHourlySchedule(store, date);
 			List<TotalHour> target = reportDao.getHalfHourlyMinimumStaffing(store, date);
 			
-			for(TotalHour th: target) {
-				TotalHour scheduleTotalHour = getTotalHourByDay(th.getDay(), schedule);
-				if(scheduleTotalHour != null){
-					th.setSchedule(scheduleTotalHour.getSchedule());
-				} else {
-					th.setSchedule(SpmConstants.BD_ZERO_VALUE);
-				}
-			}
 			
-			return target;
+			return getMergedHalfHours(schedule, target);
 			
 		}catch(SQLException e){
 			log.error("An SQLError has occurred", e);
@@ -158,6 +150,23 @@ public class ReportServiceBean implements ReportService {
 		}
 	}
 	
+	public List<TotalHour> getHalfHourlyReportByPosition(Store store, Position position, Date date){
+		try{
+			getStaffingService().getDailyStaffingByDate(store, date);
+			
+			List<TotalHour> schedule = reportDao.getHalfHourlyScheduleByPosition(store, position, date);
+			List<TotalHour> target = reportDao.getHalfHourlyMinimumStaffingByPosition(store, position, date);
+			return getMergedHalfHours(schedule, target);
+		} catch(SQLException e){
+			log.error("An SQLError has occurred", e);
+			throw new SpmUncheckedException(e.getCause(), e.getMessage(),
+					ErrorEnum.GENERIC_DATABASE_ERROR);
+		}
+	}
+	
+	public List<TotalHour> getHalfHourlyReportByService(Store store, PositionGroup positionGroup, Date date){
+		return null;
+	}
 	private TotalHour getTotalHourByDay(Date day, List<TotalHour> list) {
 		for(TotalHour th: list) {
 			if(day.equals(th.getDay())) {
@@ -202,6 +211,19 @@ public class ReportServiceBean implements ReportService {
 		return totalHours;
 
 	}
+	
+	private List<TotalHour> getMergedHalfHours(List<TotalHour> schedule, List<TotalHour> target){
+		for(TotalHour th: target) {
+			TotalHour scheduleTotalHour = getTotalHourByDay(th.getDay(), schedule);
+			if(scheduleTotalHour != null){
+				th.setSchedule(scheduleTotalHour.getSchedule());
+			} else {
+				th.setSchedule(SpmConstants.BD_ZERO_VALUE);
+			}
+		}
+		return target;
+	}
+	
 	/**
 	 * @return the reportDao
 	 */

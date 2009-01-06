@@ -82,6 +82,37 @@ public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao
 		return getSqlMapClient().queryForList("getTargetHalfHourlyTotalHours", ReportDaoHelper.mapHalfHoursReport(store, date));
 	}
 	
+	public List<TotalHour> getHalfHourlyScheduleByPosition(Store store, Position position, Date date) throws SQLException{
+		if(log.isDebugEnabled()){
+			log.debug("getHalfHourlyScheduleByPosition: before select params: store_id: " + store.getId() + " position_id: " + position.getId() + " date: " + date );
+		}
+		
+		return getSqlMapClient().queryForList("getScheduleHalfHourlyTotalHoursByPosition", ReportDaoHelper.mapHalfHoursReportByPosition(store, position, date));
+	}
+	
+	public List<TotalHour> getHalfHourlyMinimumStaffingByPosition(Store store, Position position, Date date) throws SQLException{
+		if(log.isDebugEnabled()){
+			log.debug("getHalfHourlyTargetByPosition: before select params: store_id: " + store.getId() + " position_id: " + position.getId() + " date: " + date );
+		}
+		
+		return getSqlMapClient().queryForList("getTargetHalfHourlyTotalHoursByPosition", ReportDaoHelper.mapHalfHoursReportByPosition(store, position, date));
+	}
+
+	public List<TotalHour> getHalfHourlyScheduleByService(Store store, PositionGroup positionGroup, Date date) throws SQLException{
+		if(log.isDebugEnabled()){
+			log.debug("getHalfHourlyScheduleByService: before select params: store_id: " + store.getId() + " position_id: " + positionGroup.getId() + " date: " + date );
+		}
+		
+		return getSqlMapClient().queryForList("getScheduleHalfHourlyTotalHoursByService", ReportDaoHelper.mapHalfHoursReportByService(store, positionGroup, date));
+	}
+	
+	public List<TotalHour> getHalfHourlyMinimumStaffingByService(Store store, PositionGroup positionGroup, Date date) throws SQLException{
+		if(log.isDebugEnabled()){
+			log.debug("getHalfHourlyTargetByService: before select params: store_id: " + store.getId() + " position_id: " + positionGroup.getId() + " date: " + date );
+		}
+		
+		return getSqlMapClient().queryForList("getTargetHalfHourlyTotalHoursByService", ReportDaoHelper.mapHalfHoursReportByService(store, positionGroup, date));
+	}
 	
 	public List<TotalHourByPosition> getScheduleForecastByPosition(Store store, Date startDate, Date endDate) throws SQLException {
 		if(log.isDebugEnabled()) {
@@ -99,6 +130,8 @@ public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao
 		
 		return getSqlMapClient().queryForList("getTargetForecastByPosition", ReportDaoHelper.mapTotalHoursReport(store, startDate, endDate));
 	}
+	
+	
 	
 	
 

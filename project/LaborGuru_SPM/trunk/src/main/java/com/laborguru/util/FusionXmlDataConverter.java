@@ -119,8 +119,10 @@ public class FusionXmlDataConverter {
 		graph.addAttribute("anchorSides", props.getProperty("anchorSides"));
 		graph.addAttribute("anchorRadius", props.getProperty("anchorRadius"));
 		graph.addAttribute("anchorBorderColor", props.getProperty("anchorBorderColor"));
+		graph.addAttribute("showLabels", "false");
 		graph.addAttribute("labelDisplay", "ROTATE");
-		graph.addAttribute("rotateLabels", "true");
+		//graph.addAttribute("rotateLabels", "true");
+		graph.addAttribute("labelStep","2");
 
 		scheduleDataset.addAttribute("seriesName", "Schedule");
 		scheduleDataset.addAttribute("color", props.getProperty("scheduleColor"));
@@ -131,10 +133,11 @@ public class FusionXmlDataConverter {
 		targetDataset.addAttribute("showValues", props.getProperty("targetShowValues"));
 		targetDataset.addAttribute("parentYAxis", "S");
 
-		for (TotalHour th : totalHours) {
+		for (int i=0; i < totalHours.size(); i++ ) {
 			// Add column
+			TotalHour th = totalHours.get(i);
 			Element element = categories.addElement("category");
-			element.addAttribute("name", sdf.format(th.getDay()));
+			element.addAttribute("name", (i%2==0)?sdf.format(th.getDay()):"");
 
 			// Add schedule value
 			element = scheduleDataset.addElement("set");

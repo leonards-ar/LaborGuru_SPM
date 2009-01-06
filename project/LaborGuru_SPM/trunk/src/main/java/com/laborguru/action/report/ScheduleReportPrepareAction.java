@@ -52,8 +52,6 @@ public abstract class ScheduleReportPrepareAction extends SpmAction  {
 		pageSetup();
 		
 		getWeekDaySelector().initializeChangeWeek(getSelectedDate(), getSelectedWeekDay());
-
-		getWeekDaySelector().setStringSelectedDay(getSelectedDate());
 		
 		loadCalendarData();
 		
@@ -63,15 +61,14 @@ public abstract class ScheduleReportPrepareAction extends SpmAction  {
 	public String changeDay() {
 		pageSetup();
 		
-		getWeekDaySelector().initializeChangeDay(getSelectedWeekDay(), getSelectedDate());
-		
-		getWeekDaySelector().setStringSelectedDay(getSelectedWeekDay());
+		getWeekDaySelector().initializeChangeDay(getSelectedDate(),getSelectedWeekDay());
 		
 		loadCalendarData();
 		
 		return SpmActionResult.INPUT.getResult();
 		
 	}
+	
 	/**
 	 * 
 	 */
