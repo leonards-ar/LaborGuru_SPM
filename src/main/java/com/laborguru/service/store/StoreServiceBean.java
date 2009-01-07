@@ -7,9 +7,12 @@ import org.apache.log4j.Logger;
 
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.InvalidFieldUploadFileException;
+import com.laborguru.exception.InvalidUploadFileException;
 import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.Area;
 import com.laborguru.model.Customer;
+import com.laborguru.model.DayPart;
+import com.laborguru.model.OperationTime;
 import com.laborguru.model.Region;
 import com.laborguru.model.Store;
 import com.laborguru.model.filter.SearchStoreFilter;
@@ -143,30 +146,75 @@ public class StoreServiceBean implements StoreService {
 		List<Store> storeListAux = filterStore(storeFilter); 
 		
 		if(storeListAux.isEmpty()){
-			String customerCode = store.getArea().getRegion().getCustomer().getCode();
-			Customer customer = customerService.getCustomerByCode(store.getArea().getRegion().getCustomer());
-			validateStoreField(customer, "Customer Code", customerCode);
-
-			String regionName = store.getArea().getRegion().getName();
-			Region region = customer.getRegionByName(regionName);
-			validateStoreField(region, "Region", regionName);
-									
-			String areaName = store.getArea().getName();
-			Area area = region.getAreaByName(areaName);
-			validateStoreField(area, "Area", areaName);			
-
-			store.setArea(area);
+			setPersistentArea(store);			
 			storeToSave = store;
-			//System.out.println("********************** Save Store:"+store);
 		}else{
-			//System.out.println("********************** Update Store:"+store);
-			storeToSave = storeListAux.get(0);
-			storeToSave.setName(store.getName());
+			//storeToSave = storeListAux.get(0);
+			//updateStoreInUpload(store, storeToSave);
+			String message ="It is not possbile to upload an store that already exist";
+			log.error(message);
+			throw new InvalidUploadFileException(message, ErrorEnum.INVALID_UPLOAD_STORE_ALREADY_EXISTS);		
 		}
 		
 		storeDao.save(storeToSave);
 		
 		return storeToSave;
+	}
+	
+	
+	private void updateStoreInUpload(Store source, Store destination){
+		//Information section
+		destination.setName(source.getName());
+		
+		//Store Operations
+		destination.setFirstDayOfWeek(source.getFirstDayOfWeek());
+		
+		//Operation Times
+		for (OperationTime operationTime: source.getOperationTimes()){
+			OperationTime existingOperationTime = destination.getOperationTime(operationTime.getDayOfWeek());
+			if (existingOperationTime != null){
+				//already exists
+				existingOperationTime.setCloseHour(operationTime.getCloseHour());
+				existingOperationTime.setOpenHour(operationTime.getOpenHour());
+			}else{
+				//new
+				destination.addOperationTime(operationTime);
+			}
+		}
+		
+		//Day Parts
+		for (DayPart dayPart: source.getDayParts()){
+			DayPart existingDayPart = destination.getDayPartByName(dayPart.getName());
+			if (existingDayPart != null){
+				//already exists
+				existingDayPart.setStartHour(dayPart.getStartHour());
+			}else{
+				//new
+				destination.addDayPart(dayPart);
+			}
+		}
+		//End store operations
+	}
+	
+	
+	/**
+	 * @param store
+	 * @return
+	 */
+	private void setPersistentArea(Store store) {
+		String customerCode = store.getArea().getRegion().getCustomer().getCode();
+		Customer customer = customerService.getCustomerByCode(store.getArea().getRegion().getCustomer());
+		validateStoreField(customer, "Customer Code", customerCode);
+
+		String regionName = store.getArea().getRegion().getName();
+		Region region = customer.getRegionByName(regionName);
+		validateStoreField(region, "Region", regionName);
+								
+		String areaName = store.getArea().getName();
+		Area area = region.getAreaByName(areaName);
+		validateStoreField(area, "Area", areaName);
+		
+		store.setArea(area);		
 	}
 
 	
@@ -179,7 +227,7 @@ public class StoreServiceBean implements StoreService {
 		if (field == null){
 			String message = fieldIdName+": "+fieldIdValue+" does not exist";
 			log.error(message);
-			throw new InvalidFieldUploadFileException(ErrorEnum.FIELD_DOES_NOT_EXIST, message, new String[]{fieldIdName, fieldIdValue});	
+			throw new InvalidFieldUploadFileException(message, ErrorEnum.FIELD_DOES_NOT_EXIST, new String[]{fieldIdName, fieldIdValue});	
 		}
 	}
 	

@@ -57,6 +57,60 @@ public class Store extends SpmObject {
 	   	.toString();		
 	}
 	
+	
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public DayPart getDayPartByName(String name) {
+		if(name == null) {
+			throw new IllegalArgumentException("name cannot be null");
+		}
+		for(DayPart dp : getDayParts()) {
+			if(name.equals(dp.getName())) {
+				return dp;
+			}
+		}
+		return null;
+	}
+
+	
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public Position getPositionByName(String name) {
+		if(name == null) {
+			throw new IllegalArgumentException("name cannot be null");
+		}
+		for(Position position : getPositions()) {
+			if(name.equals(position.getName())) {
+				return position;
+			}
+		}
+		return null;
+	}
+	
+	
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public PositionGroup getPositionGroupByName(String name) {
+		if(name == null) {
+			throw new IllegalArgumentException("name cannot be null");
+		}
+		for(PositionGroup pg : getPositionGroups()) {
+			if(name.equals(pg.getName())) {
+				return pg;
+			}
+		}
+		return null;
+	}
+	
 	/**
 	 * 
 	 * @return

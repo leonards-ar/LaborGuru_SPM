@@ -7,8 +7,10 @@ import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 
-import com.laborguru.exception.InvalidUploadFileException;
+import com.laborguru.exception.ErrorEnum;
+import com.laborguru.exception.InvalidFieldUploadFileException;
 import com.laborguru.model.Store;
+import com.laborguru.util.PoiUtils;
 
 /**
  * This class assembles a store instance from an excel file.
@@ -23,7 +25,6 @@ import com.laborguru.model.Store;
 public class StoreAssembler {
 	
 	private static final Logger log = Logger.getLogger(StoreAssembler.class);
-
 	
 	public enum StoreSection{
 		
@@ -45,7 +46,8 @@ public class StoreAssembler {
 	
 	private Store store;
 	private StoreInformation storeInformation;
-	private List<HSSFRow> storeOperation;
+	private StoreOperation storeOperation;
+	
 	private List<HSSFRow> laborAssumptions;
 	private List<HSSFRow> storeAllowances;
 	
@@ -53,6 +55,7 @@ public class StoreAssembler {
 	private StoreAssembler(){
 		this.store = new Store();
 		this.storeInformation = new StoreInformation();
+		this.storeOperation = new StoreOperation();
 	}
 	
 	public static StoreAssembler getStoreAssembler(){
@@ -82,65 +85,54 @@ public class StoreAssembler {
 		}
 	}
 	
+	
 	/**
 	 * @param row
-	 * @return
 	 */
-	public boolean validateStoreInformationRow(HSSFRow row){
-		HSSFCell fieldName = row.getCell((short)2);
-		HSSFCell fieldValue = row.getCell((short)4);
+	public void addStoreOperation(HSSFRow row) {
+		storeOperation.addField(row);
+	}
 
-		
-		return (fieldName != null) && (fieldValue != null);
+
+	/**
+	 * @param row
+	 */
+	public void addStoreInformation(HSSFRow row) {		
+		storeInformation.addField(row);		
 	}
 	
-	public void addStoreOperation(HSSFRow row) {
-	}
 
+	
+	
 	public void addStoreAllowance(HSSFRow row) {
 	}
 
 	public void addLaborAssumption(HSSFRow row) {
 	}
 
-	public void addStoreInformation(HSSFRow row) {
-		HSSFCell fieldName = row.getCell((short)2);
-		HSSFCell fieldValue = row.getCell((short)4);
-		
-		if (!validateStoreInformationRow(row)){
-
-			String message = "Row is invalid - fieldName:"+fieldName+" - fieldValue:"+fieldValue;
-			log.error(message);
-			throw new InvalidUploadFileException(message);	
-		}
-
-		
-		storeInformation.addField(fieldName.getStringCellValue().trim(), fieldValue.getStringCellValue().trim());
-		
-	}
-
 	private StoreSection getRowSection(HSSFRow row){		
 		HSSFCell cell = row.getCell((short) 0);
 		
+		String section = PoiUtils.getStringValue(cell);
 		
-		
-		String section = cell.getStringCellValue();
-		
-		for (StoreSection sectionType: EnumSet.allOf(StoreSection.class)){
-			if (sectionType.getStoreSection().equalsIgnoreCase(section))
-				return sectionType;
+		if (section != null){		
+			for (StoreSection sectionType: EnumSet.allOf(StoreSection.class)){
+				if (sectionType.getStoreSection().equalsIgnoreCase(section))
+					return sectionType;
+			}
 		}
 		
-		return null;
+		String message = "Section: "+section+" is invalid - It is not possible to parse the row - Row:"+row;
+		log.error(message);
+		throw new InvalidFieldUploadFileException(message, ErrorEnum.INVALID_SECTION_ROW, new String[] {section});
 	}
 	
 	/**
 	 * @return
 	 */
-	public Store assemble(){
-		
-		StoreAssemblerValidator.validate(storeInformation);
+	public Store assemble(){				
 		storeInformation.assembleStore(this.store);
+		storeOperation.assembleStore(this.store);
 		
 		return this.store;
 	}

@@ -2,10 +2,18 @@ package com.laborguru.service.store.file;
 
 import java.util.EnumSet;
 
+import org.apache.log4j.Logger;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+
+import com.laborguru.exception.ErrorEnum;
+import com.laborguru.exception.InvalidFieldUploadFileException;
 import com.laborguru.model.Area;
 import com.laborguru.model.Customer;
 import com.laborguru.model.Region;
 import com.laborguru.model.Store;
+import com.laborguru.service.store.file.StoreAssembler.StoreSection;
+import com.laborguru.util.PoiUtils;
 
 
 /**
@@ -16,6 +24,7 @@ import com.laborguru.model.Store;
  *
  */
 public class StoreInformation {
+	private static final Logger log = Logger.getLogger(StoreInformation.class);
 
 	public enum StoreInformationField{
 		
@@ -49,8 +58,13 @@ public class StoreInformation {
 	 * @param fieldName
 	 * @param fieldValue
 	 */
-	public void addField(String fieldName, String fieldValue) {
+	public void addField(HSSFRow row) {
 		
+		validateRow(row);
+
+		String fieldName = PoiUtils.getStringValue(row.getCell((short)2));
+		String fieldValue = PoiUtils.getStringValue(row.getCell((short)4));
+
 		StoreInformationField infoStoreType = getFielType(fieldName);
 		
 		switch(infoStoreType){		
@@ -87,7 +101,9 @@ public class StoreInformation {
 			}
 		}
 		
-		return null;
+		String message = "Store Information row is invalid  - fieldName:"+fieldName;
+		log.error(message);
+		throw new InvalidFieldUploadFileException(message, ErrorEnum.STORE_INVALID_ROW, new String[] {fieldName});
 	}
 
 	
@@ -95,6 +111,8 @@ public class StoreInformation {
 	 * @param store
 	 */
 	public void assembleStore(Store store) {
+		validate();
+		
 		Area area = new Area();
 		Region region = new Region();
 		Customer customer = new Customer();
@@ -113,6 +131,34 @@ public class StoreInformation {
 		store.setCode(getNumber());
 		store.setName(getName());
 	}
+	
+
+	/**
+	 * @param row
+	 * @return
+	 */
+	public void validateRow(HSSFRow row){
+		HSSFCell fieldName = row.getCell((short)2);
+		HSSFCell fieldValue = row.getCell((short)4);
+		
+		if ((fieldName == null) || (fieldValue == null)){
+			String message = "Store Information row is invalid  - fieldName:"+fieldName+" - fieldValue:"+fieldValue;
+			log.error(message);
+			throw new InvalidFieldUploadFileException(message, ErrorEnum.STORE_INVALID_ROW, new String[] {StoreSection.STORE_INFORMATION.getStoreSection()});
+		}
+	}	
+	
+	/**
+	 * 
+	 */
+	public void validate(){
+		StoreAssemblerValidator.validateRequiredField(getArea(), StoreInformationField.AREA.getFieldName());
+		StoreAssemblerValidator.validateRequiredField(getRegion(),StoreInformationField.REGION.getFieldName());
+		StoreAssemblerValidator.validateRequiredField(getNumber(),StoreInformationField.NUMBER.getFieldName());
+		StoreAssemblerValidator.validateRequiredField(getName(), StoreInformationField.NAME.getFieldName());
+		StoreAssemblerValidator.validateRequiredField(getClientCode(), StoreInformationField.CLIENT_CODE.getFieldName());
+	}
+	
 	
 	/**
 	 * @return the client
