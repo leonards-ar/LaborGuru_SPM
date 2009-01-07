@@ -13,9 +13,6 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import com.laborguru.action.SpmAction;
-import com.laborguru.action.SpmActionResult;
-import com.laborguru.frontend.model.WeekDaySelector;
 import com.laborguru.model.DailyStaffing;
 import com.laborguru.model.Position;
 import com.laborguru.model.Shift;
@@ -35,14 +32,10 @@ import com.laborguru.util.SpmConstants;
  * @since SPM 1.0
  *
  */
-public abstract class AddShiftBaseAction extends SpmAction {
+public abstract class AddShiftBaseAction extends ScheduleBaseAction {
 	private static final Logger log = Logger.getLogger(AddShiftBaseAction.class);
 	
 	private Map<String, String> scheduleViewsMap = null;
-
-	private WeekDaySelector weekDaySelector;
-	private String selectedDate;
-	private String selectedWeekDay;
 
 	private String selectView;
 	
@@ -82,95 +75,6 @@ public abstract class AddShiftBaseAction extends SpmAction {
 	}
 	
 	/**
-	 * @return the weekDaySelector
-	 */
-	public WeekDaySelector getWeekDaySelector() {
-		if(weekDaySelector == null) {
-			weekDaySelector = new WeekDaySelector(getEmployeeStore().getFirstDayOfWeek());
-		}
-		return weekDaySelector;
-	}
-	
-	/**
-	 * @param weekDaySelector the weekDaySelector to set
-	 */
-	public void setWeekDaySelector(WeekDaySelector weekDaySelector) {
-		this.weekDaySelector = weekDaySelector;
-	}
-	
-	/**
-	 * Actions that must be performed before
-	 * this action is executed
-	 */
-	public abstract void prepareChangeWeek();
-	
-	/**
-	 * Actions that must be performed before
-	 * this action is executed
-	 */
-	public abstract void prepareChangeDay();
-	
-	/**
-	 * Performs any needed calculations after
-	 * a change week action is issued.
-	 */
-	protected abstract void processChangeWeek();
-
-	/**
-	 * Performs any needed calculations after
-	 * a change day action is issued.
-	 */
-	protected abstract void processChangeDay();
-	
-	/**
-	 * @return the selectedDate
-	 */
-	public String getSelectedDate() {
-		return selectedDate;
-	}
-
-	/**
-	 * @param selectedDate the selectedDate to set
-	 */
-	public void setSelectedDate(String selectedDate) {
-		this.selectedDate = selectedDate;
-	}
-
-	/**
-	 * @return the selectedWeekDay
-	 */
-	public String getSelectedWeekDay() {
-		return selectedWeekDay;
-	}
-
-	/**
-	 * @param selectedWeekDay the selectedWeekDay to set
-	 */
-	public void setSelectedWeekDay(String selectedWeekDay) {
-		this.selectedWeekDay = selectedWeekDay;
-	}
-
-	/**
-	 * 
-	 * @param weekSelectedDay
-	 * @param selectedDay
-	 */
-	protected void initializeDayWeekSelector(String weekSelectedDay, String selectedDay) {
-		if(log.isDebugEnabled()) {
-			log.debug("Initializing day week selector with weekSelectedDay: " + weekSelectedDay + " and selectedDay: " + selectedDay);
-		}
-		getWeekDaySelector().initializeChangeDay(weekSelectedDay, selectedDay);
-	}
-
-	/**
-	 * 
-	 */
-	protected void loadCalendarData() {
-		setSelectedDate(getWeekDaySelector().getStringStartingWeekDay());
-		setSelectedWeekDay(getWeekDaySelector().getStringSelectedDay());
-	}
-	
-	/**
 	 * 
 	 * @return
 	 */
@@ -185,40 +89,6 @@ public abstract class AddShiftBaseAction extends SpmAction {
 		}
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
-	public String changeWeek() {
-		getWeekDaySelector().initializeChangeWeek(getSelectedDate(), getSelectedWeekDay());
-		
-		processChangeWeek();
-		
-		loadCalendarData();
-		
-		onWeekdaySelectorChange();
-		
-		return SpmActionResult.INPUT.getResult();
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public String changeDay() {
-		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
-		
-		processChangeDay();
-		
-		loadCalendarData();
-
-		onWeekdaySelectorChange();
-		
-		return SpmActionResult.INPUT.getResult();
-	}
-	
-
-
 	/**
 	 * @return the scheduleService
 	 */
@@ -435,10 +305,7 @@ public abstract class AddShiftBaseAction extends SpmAction {
 		return id1 != null && id1.equals(id2);
 	}
 	
-	/**
-	 * 
-	 */
-	protected abstract void onWeekdaySelectorChange();
+
 	
 	/**
 	 * 

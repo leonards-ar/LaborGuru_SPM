@@ -7,6 +7,7 @@ package com.laborguru.model;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -169,5 +170,25 @@ public class StoreSchedule extends SpmObject {
 		}
 		
 		return positions;
+	}
+	
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 */
+	public Set<Employee> getScheduleEmployeesFor(Position position) {
+		Set<Employee> employees = new HashSet<Employee>();
+		
+		List<Shift> positionShifts;
+		
+		for(EmployeeSchedule employeeSchedule : getEmployeeSchedules()) {
+			positionShifts = employeeSchedule.getShiftsFor(position);
+			if(positionShifts != null && positionShifts.size() > 0) {
+				employees.add(employeeSchedule.getEmployee());
+			}
+		}		
+		
+		return employees;
 	}
 }
