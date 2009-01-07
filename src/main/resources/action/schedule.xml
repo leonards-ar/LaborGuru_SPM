@@ -31,6 +31,12 @@
 			<result name="input" type="tiles">editShiftByPositionByWeekPage</result>
 			<result name="success" type="redirectAction"><param name="actionName">addweeklyshiftbyposition_edit</param></result>
 		</action>
+
+		<action name="printweeklyshiftbyposition_*" method="{1}"
+			class="com.laborguru.action.schedule.PrintShiftByPositionByWeekPrepareAction">
+			<result name="input" type="tiles">viewPrintShiftByPositionByWeekPage</result>
+			<result name="success" type="tiles">viewPrintShiftByPositionByWeekPage</result>
+		</action>		
 		
 		<action name="showscheduledetails" class="com.laborguru.action.schedule.ScheduleDetailsAction">
 			<result name="success" type="tiles">showScheduleDetailsPage</result>

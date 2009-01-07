@@ -11,6 +11,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import com.laborguru.util.CalendarUtils;
+
 /**
  * This class represents a shift which is a period of time in which an
  * employee occupies a position.
@@ -180,4 +182,12 @@ public class Shift extends SpmObject {
 	public void setShiftIndex(Integer shiftIndex) {
 		this.shiftIndex = shiftIndex;
 	}	
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getTotalShiftHours() {
+		return CalendarUtils.differenceInHours(getToHour(), getFromHour());
+	}
 }
