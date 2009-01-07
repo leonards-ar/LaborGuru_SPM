@@ -18,6 +18,9 @@ public class SpmConstants {
 	public static final SimpleDateFormat REMOVE_TIME_FORMAT = new SimpleDateFormat("yyyyMMdd");
 	
 	public static final String WEEKDAY_SELECTOR_DATEFORMAT= "yyyyMMdd";
+
+	public final static String TIME_PARSE_FORMAT = "h:mm:ss a";
+
 	
 	public static final NumberFormat DOUBLE_FORMAT_5 = DecimalFormat.getInstance(Locale.US);
 	public static final NumberFormat DOUBLE_FORMAT_2 = DecimalFormat.getInstance(Locale.US);

@@ -28,7 +28,7 @@ public class InvalidFieldUploadFileException extends SpmUncheckedException {
 		super(reason, errorCode);
 	}
 
-	public InvalidFieldUploadFileException(ErrorEnum errorCode, String reason, String[] arrayObjects){
+	public InvalidFieldUploadFileException(String reason, ErrorEnum errorCode, String[] arrayObjects){
 		super(reason, errorCode, arrayObjects);
 	}
 

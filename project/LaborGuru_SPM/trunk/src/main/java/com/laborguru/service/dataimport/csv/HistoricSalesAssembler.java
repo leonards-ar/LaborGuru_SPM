@@ -13,6 +13,7 @@ import com.laborguru.model.Store;
 import com.laborguru.model.service.SalesCSVHistoricSales;
 import com.laborguru.util.CalendarUtils;
 import com.laborguru.util.NumberUtils;
+import com.laborguru.util.SpmConstants;
 
 /**
  * Line[]
@@ -35,7 +36,6 @@ public class HistoricSalesAssembler {
 	private static final Logger log = Logger.getLogger(HistoricSalesAssembler.class);
 
 	private final static String DATE_PARSE_FORMAT = "M/dd/yyyy";
-	private final static String TIME_PARSE_FORMAT = "h:mm:ss a";
 	
 	public static SalesCSVHistoricSales getHistoricSales(String[] line){		
 		
@@ -78,7 +78,7 @@ public class HistoricSalesAssembler {
 		if (date != null){
 			Calendar calendarDate = CalendarUtils.getCalendar(date);		
 			
-			Date time = CalendarUtils.stringToDate(line[4], TIME_PARSE_FORMAT);
+			Date time = CalendarUtils.stringToDate(line[4], SpmConstants.TIME_PARSE_FORMAT);
 			if (time != null){
 				Calendar calendarTime = CalendarUtils.getCalendar(time);		
 

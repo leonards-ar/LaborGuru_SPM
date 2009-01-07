@@ -54,9 +54,7 @@ public class StoreDefinitionFileParserBean implements StoreDefinitionFileParser 
 				storeAssembler.addToStore(row);
 			}
 			 
-			 Store store = storeAssembler.assemble();
-			 
-			 return store;
+			 return storeAssembler.assemble();			 
 
 		} catch (FileNotFoundException exceptionFNF) {
 			String message = "File to parse:"+storeToUpload.getName()+ "is not found";
