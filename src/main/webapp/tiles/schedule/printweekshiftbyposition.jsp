@@ -27,7 +27,7 @@
                   					<tr>
                   						<s:iterator id="prevDate" value="weekDaySelector.previousStartingWeekDays" status="itPrevDate">
 			                  				<td class="calendarTableColumn" width="10%" nowrap="nowrap">
-			                  					<a href="<s:url value="#" includeParams="none"/>" onclick="printweeklyshiftbyposition_form.action='addweeklyshiftbyemployee_changeWeek.action'; printweeklyshiftbyposition_form.selectedDate.value='<s:text name='schedule.addshift.weekdayselector.input.dateformat'><s:param value='prevDate'/></s:text>'; printweeklyshiftbyposition_form.submit();" class="calendarUnselectedWeekLink">
+			                  					<a href="<s:url value="#" includeParams="none"/>" onclick="printweeklyshiftbyposition_form.action='printweeklyshiftbyposition_changeWeek.action'; printweeklyshiftbyposition_form.selectedDate.value='<s:text name='schedule.addshift.weekdayselector.input.dateformat'><s:param value='prevDate'/></s:text>'; printweeklyshiftbyposition_form.submit();" class="calendarUnselectedWeekLink">
 			                  						<s:text name='schedule.printshift.weekdayselector.availableweek.dateformat'><s:param value='prevDate'/></s:text>
 			                  					</a>
 			                  				</td>
@@ -41,11 +41,11 @@
 			                  				<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 			                  					<tr>
 			                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-			                  						<td><a href="<s:url value="#" includeParams="none"/>" onclick="showWaitSplash(); printweeklyshiftbyposition_form.action='addweeklyshiftbyemployee_changeWeek.action'; printweeklyshiftbyposition_form.selectedDate.value='<s:text name='schedule.printshift.weekdayselector.input.dateformat'><s:param value='weekDaySelector.previousStartingWeekDay'/></s:text>'; printweeklyshiftbyposition_form.submit();"><img src="<s:url value="/images/cal_prev.png" includeParams="none"/>" border="0"/></a></td>
+			                  						<td><a href="<s:url value="#" includeParams="none"/>" onclick="showWaitSplash(); printweeklyshiftbyposition_form.action='printweeklyshiftbyposition_changeWeek.action'; printweeklyshiftbyposition_form.selectedDate.value='<s:text name='schedule.printshift.weekdayselector.input.dateformat'><s:param value='weekDaySelector.previousStartingWeekDay'/></s:text>'; printweeklyshiftbyposition_form.submit();"><img src="<s:url value="/images/cal_prev.png" includeParams="none"/>" border="0"/></a></td>
 			                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
 			                  						<td class="calendarSelectedWeekText" nowrap="nowrap"><s:text name='schedule.printshift.weekdayselector.selectedweek.dateformat'><s:param value='weekDaySelector.startingWeekDay'/></s:text></td>
 			                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-			                  						<td><a href="<s:url value="#" includeParams="none"/>" onclick="showWaitSplash(); printweeklyshiftbyposition_form.action='addweeklyshiftbyemployee_changeWeek.action'; printweeklyshiftbyposition_form.selectedDate.value='<s:text name='schedule.printshift.weekdayselector.input.dateformat'><s:param value='weekDaySelector.nextStartingWeekDay'/></s:text>'; printweeklyshiftbyposition_form.submit();"><img src="<s:url value="/images/cal_next.png" includeParams="none"/>" border="0"/></a></td>
+			                  						<td><a href="<s:url value="#" includeParams="none"/>" onclick="showWaitSplash(); printweeklyshiftbyposition_form.action='printweeklyshiftbyposition_changeWeek.action'; printweeklyshiftbyposition_form.selectedDate.value='<s:text name='schedule.printshift.weekdayselector.input.dateformat'><s:param value='weekDaySelector.nextStartingWeekDay'/></s:text>'; printweeklyshiftbyposition_form.submit();"><img src="<s:url value="/images/cal_next.png" includeParams="none"/>" border="0"/></a></td>
 			                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
 			                  					</tr>
 			                  				</table>
@@ -53,7 +53,7 @@
 			                  			<td class="calendarTableColumn"><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
                   						<s:iterator id="nextDate" value="weekDaySelector.nextStartingWeekDays" status="itNextDate">
 			                  				<td class="calendarTableColumn" width="10%" nowrap="nowrap">
-			                  					<a href="<s:url value="#" includeParams="none"/>" onclick="showWaitSplash(); printweeklyshiftbyposition_form.action='addweeklyshiftbyemployee_changeWeek.action'; printweeklyshiftbyposition_form.selectedDate.value='<s:text name='schedule.addshift.weekdayselector.input.dateformat'><s:param value='nextDate'/></s:text>'; printweeklyshiftbyposition_form.submit();" class="calendarUnselectedWeekLink">
+			                  					<a href="<s:url value="#" includeParams="none"/>" onclick="showWaitSplash(); printweeklyshiftbyposition_form.action='printweeklyshiftbyposition_changeWeek.action'; printweeklyshiftbyposition_form.selectedDate.value='<s:text name='schedule.printshift.weekdayselector.input.dateformat'><s:param value='nextDate'/></s:text>'; printweeklyshiftbyposition_form.submit();" class="calendarUnselectedWeekLink">
 			                  						<s:text name='schedule.printshift.weekdayselector.availableweek.dateformat'><s:param value='nextDate'/></s:text>
 			                  					</a>
 			                  				</td>
@@ -75,8 +75,8 @@
 								<table align="center" border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
                   					<tr>
                   						<s:iterator id="weekDay" value="weekDaySelector.weekDays" status="itWeekDay">
-	                  						<td width="12%" class="availableWeekDay"><a title="<s:text name='schedule.printshift.weekdayselector.daytooltip.dateformat'><s:param value='weekDay'/></s:text>" href="<s:url value="#" includeParams="none"/>" onclick="showWaitSplash(); printweeklyshiftbyposition_form.action='addshiftbyemployee_changeDay.action'; printweeklyshiftbyposition_form.selectedWeekDay.value='<s:text name='schedule.addshift.weekdayselector.input.dateformat'><s:param value='weekDay'/></s:text>'; printweeklyshiftbyposition_form.submit();" class="availableWeekDayLink">
-	                  						<s:text name='schedule.addshift.weekday.dateformat'><s:param value='weekDay'/></s:text>
+	                  						<td width="12%" class="availableWeekDay"><a title="<s:text name='schedule.printshift.weekdayselector.daytooltip.dateformat'><s:param value='weekDay'/></s:text>" href="<s:url value="#" includeParams="none"/>" onclick="showWaitSplash(); printweeklyshiftbyposition_form.action='printweeklyshiftbyposition_changeDay.action'; printweeklyshiftbyposition_form.selectedWeekDay.value='<s:text name='schedule.printshift.weekdayselector.input.dateformat'><s:param value='weekDay'/></s:text>'; printweeklyshiftbyposition_form.submit();" class="availableWeekDayLink">
+	                  						<s:text name='schedule.printshift.weekday.dateformat'><s:param value='weekDay'/></s:text>
 	                  						</a>
 	                  						</td>                  						
 	                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
@@ -113,39 +113,45 @@
 		<tr>
 			<td align="center">
 			<!-- Schedule selection table -->
-				<table class="weekScheduleMainTable" id="weekScheduleMainTable" cellpadding="1" cellspacing="0">
+				<table class="printScheduleMainTable" id="printScheduleMainTable" cellpadding="1" cellspacing="0">
 				    <!-- Header -->
-				    <tr class="weekScheduleMainTableHeader">
-						<td class="weekScheduleCellHeader"><s:text name="schedule.printshift.employee"/></td>    
+				    <tr class="printScheduleMainTableHeader">
+						<td class="printScheduleCellHeader"><s:text name="schedule.printshift.employee"/></td>    
 						<!-- Iterate week days -->
 						<s:iterator id="weekDay" value="weekDaySelector.weekDays">
-							<td class="weekScheduleCellHeader"><s:text name='schedule.printshift.weekly.weekday.dateformat'><s:param value='weekDay'/></s:text></td>
+							<td class="printScheduleCellHeader"><s:text name='schedule.printshift.weekly.weekday.dateformat'><s:param value='weekDay'/></s:text></td>
 						</s:iterator>
 						<!-- End Iterate week days -->		
-						<td class="weekScheduleCellHeader"><s:text name="schedule.printshift.week_total_hours"/></td>		    
+						<td class="printScheduleCellHeader"><s:text name="schedule.printshift.week_total_hours"/></td>		    
 					</tr>
 					<!-- Header -->
 					
 					<s:iterator id="pos" value="weeklySchedulePositions" status="itPosStatus">
-						<tr class="weekScheduleCellHeader"><td colspan="8"><s:property value="name"/></td></tr>
+						<tr><td  class="printSchedulePositionTitle" colspan="9"><s:property value="name"/></td></tr>
 						
 						<s:iterator id="employee" value="getWeeklyScheduleEmployeesFor(#pos)" status="itEmployeeStatus">
 						<tr>
-							<td class="weekScheduleNameCell"><s:property value="fullName"/></td>
+							<td class="printScheduleValueCell"><s:property value="fullName"/></td>
 							<s:iterator id="weekDay" value="weekDaySelector.weekDays" status="itDayStatus">
-							<td class="weekScheduleValueCell">
-									<table border="0" cellpadding="1" cellspacing="0">
-									<s:iterator id="shift" value="getShiftsFor(#pos, #employee, #itDayStatus.index)" status="itShiftStatus">
+							<td class="printScheduleValueCell" align="center">
+							<s:set id="shifts" name="shifts" value="%{getShiftsFor(#pos, #employee, #itDayStatus.index)}"/>
+							<s:if test="#shifts.size() > 0">
+									<table border="0" cellpadding="1" cellspacing="0" align="center">
+									<s:iterator id="shift" value="shifts" status="itShiftStatus">
 										<tr>
-											<td><s:text name='schedule.printshift.weekly.hour.dateformat'><s:param value='fromHour'/></s:text></td>
-											<td>-</td>
-											<td><s:text name='schedule.printshift.weekly.hour.dateformat'><s:param value='toHour'/></s:text></td>
+											<td class="printScheduleValueTextCell"><s:text name='schedule.printshift.weekly.hour.dateformat'><s:param value='fromHour'/></s:text></td>
+											<td class="printScheduleValueTextCell">-</td>
+											<td class="printScheduleValueTextCell"><s:text name='schedule.printshift.weekly.hour.dateformat'><s:param value='toHour'/></s:text></td>
 										</tr>
 									</s:iterator>
 									</table>
+							</s:if>
+							<s:else>
+							&nbsp;
+							</s:else>
 							</td>
 							</s:iterator>
-							<td class="weekScheduleNameCell"><s:property value="%{getWeekTotalHoursFor(#pos, #employee)}"/></td>
+							<td class="printScheduleValueCell"><s:property value="%{getWeekTotalHoursFor(#pos, #employee)}"/></td>
 						</tr>
 						</s:iterator>
 					</s:iterator>

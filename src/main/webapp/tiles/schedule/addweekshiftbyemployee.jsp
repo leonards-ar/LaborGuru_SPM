@@ -254,7 +254,7 @@
 							</s:else>
 				    	</td>
 				    	</s:if>
-						<td class="weekScheduleNameCell" id="schedulePosition_<s:property value="#itScheduleData.index"/>">
+						<td class="weekScheduleNameCell" id="schedulePositionTD_<s:property value="#itScheduleData.index"/>">
 							<s:if test="%{editable}">
 					    		<s:if test="%{position == null}">
 					    			<s:select id="scheduleposition_%{#itScheduleData.index}" onchange="wsUpdatePositionTotals();" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].positionId" list="positions" listKey="id" listValue="name" theme="simple"/>
