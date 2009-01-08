@@ -290,7 +290,12 @@
 									<td class="weekScheduleTimeInputCellText"><s:property value="outHourAsString"/></td>
 									</s:if>
 									</s:else>
-									<td class="weekScheduleTimeInputCellText" id="weeklyScheduleTotalHours_<s:property value="#itScheduleData.index"/>_<s:property value="#itDataEntry.index"/>"><s:property value="totalHoursAsString"/></td>
+									<td class="weekScheduleTimeInputCellText" id="weeklyScheduleTotalHours_<s:property value="#itScheduleData.index"/>_<s:property value="#itDataEntry.index"/>">
+									<s:property value="totalHoursAsString"/>
+									<s:if test="%{multipleShifts}">
+									<span title="| <s:iterator id="h" value="shiftHours"><s:property/> | </s:iterator>"><s:text name="schedule.addshift.weekly.has_multiple_shifts" /></span>
+									</s:if>
+									</td>
 								</tr>
 							</table>
 						</td>
@@ -326,6 +331,16 @@
 			</td>
 		</tr>
 
+		<tr>
+			<td width="100%" align="left">
+				<table border="0" cellpadding="1" cellspacing="2">
+					<tr>
+						<td class="infoMessage"><s:text name="schedule.addshift.weekly.has_multiple_shif.label" /></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
 		<s:if test="%{editable}">
 		<tr>
 			<td width="100%" align="right">
@@ -337,6 +352,7 @@
      			</table>                    
     		</td>
 		</tr>		
+		
 		</s:if>
 	</table>
 </s:form>

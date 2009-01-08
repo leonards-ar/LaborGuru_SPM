@@ -129,16 +129,17 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		WeeklyScheduleDailyEntry entry = getDailyEntry(row.getWeeklySchedule(), dayIndex);
 		if(!entry.isMultipleShifts()) {
 			entry.setMultipleShifts(employeeSchedule.hasMultipleShifts(shift.getPosition()));
+			entry.setTotalHours(employeeSchedule.getTotalShiftHours(shift.getPosition()));
 		}
 		
 		if(entry.getInHour() == null || CalendarUtils.greaterTime(entry.getInHour(), shift.getFromHour())) {
 			entry.setInHour(shift.getFromHour());
-			entry.resetTotalHours();
 		}
 		if(entry.getOutHour() == null || CalendarUtils.smallerTime(entry.getOutHour(), shift.getToHour())) {
 			entry.setOutHour(shift.getToHour());
-			entry.resetTotalHours();
 		}
+		
+		entry.addShiftHours(shift.getFromHour(), shift.getToHour());
 	}
 	
 	/**
