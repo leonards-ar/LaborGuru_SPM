@@ -328,3 +328,48 @@ a.scheduleActionLink:hover {
 	font-family: trebuchet ms, arial, sans-serif;
 	font-weight: bold;
 }
+
+#printScheduleMainTable {
+	border: 1px solid #969696;
+}
+
+.printScheduleMainTableHeader {
+	background-color: #C8C8C8;
+	color: #333333;
+	font-size: 12px;
+	text-align: center;
+	font-family: trebuchet ms, arial, sans-serif;
+	font-weight: bold;
+}
+
+.printScheduleCellHeader {
+	border: 1px solid #969696;
+}
+
+.printSchedulePositionTitle {
+	border: 1px solid #969696;
+	background-color: #C0C0C0;
+	color: #333333;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: left;
+	font-family: trebuchet ms, arial, sans-serif;
+}
+
+.printScheduleValueTextCell {
+	background-color: #E6E6E6;
+	color: #333333;
+	font-size: 11px;
+	text-align: center;
+	font-family: trebuchet ms, arial, sans-serif;
+	font-weight: bold;	}
+
+.printScheduleValueCell {
+	border: 1px solid #969696;
+	background-color: #E6E6E6;
+	color: #333333;
+	font-size: 11px;
+	text-align: center;
+	font-family: trebuchet ms, arial, sans-serif;
+	font-weight: bold;	
+}

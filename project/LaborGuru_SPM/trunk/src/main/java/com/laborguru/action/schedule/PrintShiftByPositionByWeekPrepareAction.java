@@ -143,7 +143,11 @@ public class PrintShiftByPositionByWeekPrepareAction extends PrintShiftBaseActio
 	public List<Shift> getShiftsFor(Position position, Employee employee, int dayIndex) {
 		StoreSchedule storeSchedule = getStoreSchedules().get(dayIndex);
 		EmployeeSchedule schedule = storeSchedule.getEmployeeSchedule(employee);
-		return schedule.getShiftsFor(position);
+		if(schedule != null) {
+			return schedule.getShiftsFor(position);
+		} else {
+			return new ArrayList<Shift>();
+		}
 	}
 	
 	/**
