@@ -105,6 +105,23 @@ public class EmployeeSchedule extends SpmObject {
 	 * @param position
 	 * @return
 	 */
+	public Double getTotalShiftHours(Position position) {
+		double total = 0.0;
+		if(position != null && position.getId() != null) {
+			for(Shift shift : getShifts()) {
+				if(shift.getPosition() != null && position.getId().equals(shift.getPosition().getId())) {
+					total += shift.getTotalShiftHours().doubleValue();
+				}
+			}
+		}
+		return new Double(total);
+	}
+	
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 */
 	public Date getFromHour(Position position) {
 		Date inTime = null;
 		if(position != null && position.getId() != null) {

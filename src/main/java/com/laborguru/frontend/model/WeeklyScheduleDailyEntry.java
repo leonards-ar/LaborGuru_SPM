@@ -6,7 +6,9 @@
 package com.laborguru.frontend.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.laborguru.util.CalendarUtils;
 
@@ -27,7 +29,7 @@ public class WeeklyScheduleDailyEntry implements Serializable {
 	private Date outHour;
 	private Double totalHours;
 	private boolean multipleShifts = false;
-	
+	private List<String> shiftHours;
 	
 	/**
 	 * 
@@ -150,13 +152,6 @@ public class WeeklyScheduleDailyEntry implements Serializable {
 	
 	/**
 	 * 
-	 */
-	public void resetTotalHours() {
-		setTotalHours(null);
-	}
-	
-	/**
-	 * 
 	 * @return
 	 */
 	public boolean isShift() {
@@ -169,5 +164,31 @@ public class WeeklyScheduleDailyEntry implements Serializable {
 	 */
 	public boolean isEditable() {
 		return CalendarUtils.isAfterToday(getDay());
+	}
+
+	/**
+	 * 
+	 * @param from
+	 * @param to
+	 */
+	public void addShiftHours(Date from, Date to) {
+		getShiftHours().add(CalendarUtils.dateToDisplayTime(from) + " - " + CalendarUtils.dateToDisplayTime(to));
+	}
+	
+	/**
+	 * @return the shiftHours
+	 */
+	public List<String> getShiftHours() {
+		if(shiftHours == null) {
+			setShiftHours(new ArrayList<String>());
+		}
+		return shiftHours;
+	}
+
+	/**
+	 * @param shiftHours the shiftHours to set
+	 */
+	private void setShiftHours(List<String> shiftHours) {
+		this.shiftHours = shiftHours;
 	}
 }
