@@ -145,18 +145,15 @@
 		<td>
 		<br/><br/>
 		<table border="0" cellspacing="0" align="center">
-		
-			<s:if test="selectedReport=='ScheduleCheck'">
 			<tr>
-				<td><s:url id="forecastReport"
+				<td>
+				<s:url id="forecastReport"
 					action="foreCastReport_showTable.action" namespace="/report"
 					includeParams="none">
-					<s:param name="positionId" value="%{id}" />
-					<s:param name="selectedDate" value="selectedDate" />
-					<s:param name="selectedWeekDay" value="selectedWeekDay" />
-				</s:url> <s:div id="foreCast" theme="ajax" href="%{forecastReport}" disabled="true"/></td>
+				</s:url> <s:div id="foreCast" theme="ajax" formId="report_form" listenTopics="/refresh,/Changed" href="%{forecastReport}" />
+			</td>
 			</tr>
-			</s:if>
+			
 			<tr>
 				<td><s:url id="totalHourReportUrl"
 					action="totalHoursReport_showReport" namespace="/report"

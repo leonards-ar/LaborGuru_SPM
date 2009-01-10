@@ -23,6 +23,7 @@ public class ForecastByPositionPrepareAction extends ScheduleReportPrepareAction
 	private static final long serialVersionUID = 2260516967324989873L;
 
 	private List <TotalHourByPosition> totalHoursByPosition;
+	private boolean showTable;
 	
 	private PositionService positionService;
 
@@ -38,8 +39,13 @@ public class ForecastByPositionPrepareAction extends ScheduleReportPrepareAction
 	}
 	
 	public String showTable(){
+		if(DEFAULT_REPORT.equals(getSelectedReport()) && DEFAULT_GROUPING.equals(getSelectedGrouping())) {
 		initWeekSelectorValues();
 		getForecastReport();
+		setShowTable(true);
+		} else {
+			setShowTable(false);
+		}
 		return SpmActionResult.SHOW.getResult();
 	}
 	
@@ -75,6 +81,20 @@ public class ForecastByPositionPrepareAction extends ScheduleReportPrepareAction
 	 */
 	public void setPositionService(PositionService positionService) {
 		this.positionService = positionService;
+	}
+
+	/**
+	 * @return the showTable
+	 */
+	public boolean isShowTable() {
+		return showTable;
+	}
+
+	/**
+	 * @param showTable the showTable to set
+	 */
+	public void setShowTable(boolean showTable) {
+		this.showTable = showTable;
 	}
 	
 }

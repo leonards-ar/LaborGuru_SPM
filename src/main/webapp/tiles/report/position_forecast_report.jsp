@@ -1,7 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
-<table table border="2" width="100%" cellspacing="0" align="center">
+<s:if test="showTable">
+<table border="2" width="100%" cellspacing="0" align="center">
 <tr>
 	<td>&nbsp;</td>
 	<s:iterator id="totalHourByPosition" value="totalHoursByPosition" status="itTotalHours">
@@ -34,3 +35,4 @@
 	</s:iterator>
 </tr>
 </table>
+</s:if>
