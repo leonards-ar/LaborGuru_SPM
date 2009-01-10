@@ -8,8 +8,6 @@ import com.laborguru.model.Position;
 import com.laborguru.model.PositionGroup;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.service.position.PositionService;
-import com.laborguru.service.report.ReportService;
-import com.laborguru.util.FusionXmlDataConverter;
 import com.laborguru.util.SpmConstants;
 import com.opensymphony.xwork2.Preparable;
 
@@ -29,7 +27,7 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction
 	private BigDecimal totalDifference = SpmConstants.BD_ZERO_VALUE;
 	private BigDecimal totalPercentaje = SpmConstants.BD_ZERO_VALUE;
 
-	private final String actionName = "totalHoursReport";
+	private String xmlValues;
 
 	/**
 	 * @throws Exception
@@ -64,13 +62,14 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction
 				getWeeklyReport();
 			}
 		}
+		calculateTotals();
+		generateXmlGraph();
 		return SpmActionResult.SHOW.getResult();
 	}
 
 	private void getWeeklyReport() {
 		setTotalHours(getReportService().getWeeklyTotalHours(
 				getEmployeeStore(), getWeekDaySelector().getStartingWeekDay()));
-		calculateTotals();
 	}
 
 	private void getWeeklyReportByPosition() {
@@ -79,7 +78,6 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction
 		setTotalHours(getReportService().getWeeklyTotalHoursByPosition(
 				getEmployeeStore(), position,
 				getWeekDaySelector().getStartingWeekDay()));
-		calculateTotals();
 	}
 
 	private void getWeeklyReportByService() {
@@ -88,7 +86,6 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction
 		setTotalHours(getReportService().getWeeklyTotalHoursByService(
 				getEmployeeStore(), positionGroup,
 				getWeekDaySelector().getStartingWeekDay()));
-		calculateTotals();
 	}
 
 	private void calculateTotals() {
@@ -108,6 +105,11 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction
 		}
 	}
 
+	
+	public void generateXmlGraph(){
+		setXmlValues(getFusionXmlDataConverter().halfHoursXmlConverter(
+				getTotalHours()));
+	}
 	
 	/**
 	 * @return the totalHours
@@ -137,21 +139,6 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction
 	 */
 	public void setPositionId(Integer positionId) {
 		this.positionId = positionId;
-	}
-
-	/**
-	 * @return the actionName
-	 */
-	public String getActionName() {
-		return actionName;
-	}
-
-	/**
-	 * @param actionName
-	 *            the actionName to set
-	 */
-	public void setActionName(String actionName) {
-		// Not implemented
 	}
 
 	/**
@@ -220,8 +207,14 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction
 	 * @return
 	 */
 	public String getXmlValues() {
-		return getFusionXmlDataConverter().weeklyTotalHoursXmlConverter(
-				getTotalHours());
+		return xmlValues;
+	}
+	
+	/**
+	 * @param xmlValues
+	 */
+	public void setXmlValues(String xmlValues) {
+		this.xmlValues = xmlValues;
 	}
 
 	/**
