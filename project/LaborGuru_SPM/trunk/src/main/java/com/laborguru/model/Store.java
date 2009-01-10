@@ -42,6 +42,7 @@ public class Store extends SpmObject {
 	private Double earnedBreakFactor = null;
 	private Double floorManagementFactor = null;
 	private Integer minimumFloorManagementHours = null;
+	private Integer extraScheduleHours = null;
 	
 	/**
 	 * Store toString
@@ -598,5 +599,21 @@ public class Store extends SpmObject {
 			return dayPart != null && dayPart.getStartHour() != null ? dayPart : null;
 		}
 		return null;
+	}
+
+
+	/**
+	 * @return the extraScheduleHours
+	 */
+	public Integer getExtraScheduleHours() {
+		return extraScheduleHours;
+	}
+
+
+	/**
+	 * @param extraScheduleHours the extraScheduleHours to set
+	 */
+	public void setExtraScheduleHours(Integer extraScheduleHours) {
+		this.extraScheduleHours = extraScheduleHours;
 	}
 }
