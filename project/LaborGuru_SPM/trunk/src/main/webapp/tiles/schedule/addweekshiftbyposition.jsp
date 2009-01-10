@@ -273,7 +273,7 @@
 						
 						<s:iterator id="dayDataEntry" value="weeklySchedule" status="itDataEntry">
 						<td class="weekScheduleValueCell" id="scheduleHours_<s:property value="#itScheduleData.index"/>_<s:property value="#itDataEntry.index"/>">
-							<table border="0" cellpadding="1" cellspacing="0" align="center" id="weekScheduleTimeInputTable">
+							<table border="0" cellpadding="1" cellspacing="0" align="<s:if test="%{editable}">left</s:if><s:else>center</s:else>" id="weekScheduleTimeInputTable">
 								<s:hidden name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].weeklySchedule[%{#itDataEntry.index}].day"/>
 								<s:hidden name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].weeklySchedule[%{#itDataEntry.index}].multipleShifts"/>
 								<tr>
