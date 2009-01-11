@@ -67,8 +67,8 @@ public class DayPartData extends SpmObject {
 		final DayPartData other = (DayPartData) obj;
 		
 		return new EqualsBuilder()
-		.append(this.position != null ? this.position.getId() : null, other.position != null ? other.position.getId() : null)
-		.append(this.dayPart != null ? this.dayPart.getId() : null, other.dayPart != null ? other.dayPart.getId() : null)
+		.append(this.position != null ? this.position : null, other.position != null ? other.position : null)
+		.append(this.dayPart != null ? this.dayPart : null, other.dayPart != null ? other.dayPart : null)
 		.isEquals();
 	}
 	
@@ -79,8 +79,8 @@ public class DayPartData extends SpmObject {
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37)
-		.append(this.position != null ? this.position.getId() : null)
-		.append(this.dayPart != null ? this.dayPart.getId() : null)
+		.append(this.position != null ? this.position : null)
+		.append(this.dayPart != null ? this.dayPart : null)
 		.toHashCode();
 	}
 

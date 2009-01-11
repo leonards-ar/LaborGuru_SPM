@@ -14,6 +14,9 @@ import org.apache.poi.hssf.usermodel.HSSFDateUtil;
  */
 public class PoiUtils {
 
+	/**
+	 * Private constructor - Enforces non instanciation of the utility class
+	 */
 	private PoiUtils(){
 		
 	}
@@ -24,7 +27,7 @@ public class PoiUtils {
 	 */
 	public static String getStringValue(HSSFCell cell){
 		if ( (cell!= null) && (cell.getCellType() == HSSFCell.CELL_TYPE_STRING)){
-			return cell.getStringCellValue();
+			return cell.getStringCellValue().trim();
 		}
 		
 		return null;
@@ -37,6 +40,31 @@ public class PoiUtils {
 	public static Date getDateValue(HSSFCell cell){
 		if ( (cell != null) && (cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC) && (HSSFDateUtil.isCellDateFormatted(cell))){
 			return cell.getDateCellValue();
+		}
+		
+		return null;
+	}
+
+
+	/**
+	 * @param cell
+	 * @return
+	 */
+	public static Double getDoubleValue(HSSFCell cell){
+		if ((cell != null) && (cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC) && !(HSSFDateUtil.isCellDateFormatted(cell))){
+			return cell.getNumericCellValue();
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * @param cell
+	 * @return
+	 */
+	public static Integer getIntegerValue(HSSFCell cell){
+		if ((cell != null) && (cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC) && !(HSSFDateUtil.isCellDateFormatted(cell))){
+			return new Integer(((int)cell.getNumericCellValue()));
 		}
 		
 		return null;
