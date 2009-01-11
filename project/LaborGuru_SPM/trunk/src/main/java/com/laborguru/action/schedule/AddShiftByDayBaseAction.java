@@ -103,7 +103,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 		}
 		return this.scheduleIndividualHours;
 	}
-	
+
 	/**
 	 * 
 	 * @return

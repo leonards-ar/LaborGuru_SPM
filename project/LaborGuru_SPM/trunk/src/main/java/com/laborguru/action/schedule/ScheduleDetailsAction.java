@@ -30,6 +30,7 @@ import com.laborguru.util.SpmConstants;
  *
  */
 public class ScheduleDetailsAction extends SpmAction {
+	
 	/**
 	 * 
 	 */

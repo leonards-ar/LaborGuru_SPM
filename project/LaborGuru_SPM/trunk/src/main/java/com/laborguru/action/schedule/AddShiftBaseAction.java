@@ -32,7 +32,7 @@ import com.laborguru.util.SpmConstants;
  * @since SPM 1.0
  *
  */
-public abstract class AddShiftBaseAction extends ScheduleBaseAction {
+public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 	private static final Logger log = Logger.getLogger(AddShiftBaseAction.class);
 	
 	private Map<String, String> scheduleViewsMap = null;

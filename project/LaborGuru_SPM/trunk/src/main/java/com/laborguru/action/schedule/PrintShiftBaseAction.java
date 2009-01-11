@@ -16,7 +16,7 @@ import com.laborguru.service.schedule.ScheduleService;
  * @since SPM 1.0
  *
  */
-public abstract class PrintShiftBaseAction extends ScheduleBaseAction {
+public abstract class PrintShiftBaseAction extends ScheduleShiftBaseAction {
 	private static final Logger log = Logger.getLogger(AddShiftBaseAction.class);
 	
 	private ScheduleService scheduleService;
@@ -45,7 +45,7 @@ public abstract class PrintShiftBaseAction extends ScheduleBaseAction {
 	/**
 	 * 
 	 * 
-	 * @see com.laborguru.action.schedule.ScheduleBaseAction#onWeekdaySelectorChange()
+	 * @see com.laborguru.action.schedule.ScheduleShiftBaseAction#onWeekdaySelectorChange()
 	 */
 	@Override
 	protected void onWeekdaySelectorChange() {
@@ -54,7 +54,7 @@ public abstract class PrintShiftBaseAction extends ScheduleBaseAction {
 	/**
 	 * 
 	 * 
-	 * @see com.laborguru.action.schedule.ScheduleBaseAction#prepareChangeDay()
+	 * @see com.laborguru.action.schedule.ScheduleShiftBaseAction#prepareChangeDay()
 	 */
 	@Override
 	public void prepareChangeDay() {
@@ -63,7 +63,7 @@ public abstract class PrintShiftBaseAction extends ScheduleBaseAction {
 	/**
 	 * 
 	 * 
-	 * @see com.laborguru.action.schedule.ScheduleBaseAction#prepareChangeWeek()
+	 * @see com.laborguru.action.schedule.ScheduleShiftBaseAction#prepareChangeWeek()
 	 */
 	@Override
 	public void prepareChangeWeek() {
@@ -72,7 +72,7 @@ public abstract class PrintShiftBaseAction extends ScheduleBaseAction {
 	/**
 	 * 
 	 * 
-	 * @see com.laborguru.action.schedule.ScheduleBaseAction#processChangeDay()
+	 * @see com.laborguru.action.schedule.ScheduleShiftBaseAction#processChangeDay()
 	 */
 	@Override
 	protected void processChangeDay() {
@@ -81,7 +81,7 @@ public abstract class PrintShiftBaseAction extends ScheduleBaseAction {
 	/**
 	 * 
 	 * 
-	 * @see com.laborguru.action.schedule.ScheduleBaseAction#processChangeWeek()
+	 * @see com.laborguru.action.schedule.ScheduleShiftBaseAction#processChangeWeek()
 	 */
 	@Override
 	protected void processChangeWeek() {
