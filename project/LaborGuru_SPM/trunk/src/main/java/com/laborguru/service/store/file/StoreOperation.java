@@ -13,11 +13,11 @@ import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.InvalidFieldUploadFileException;
 import com.laborguru.model.DayOfWeek;
 import com.laborguru.model.DayPart;
+import com.laborguru.model.DayPartData;
 import com.laborguru.model.OperationTime;
 import com.laborguru.model.Position;
 import com.laborguru.model.PositionGroup;
 import com.laborguru.model.Store;
-import com.laborguru.service.store.file.StoreAssembler.StoreSection;
 import com.laborguru.util.PoiUtils;
 
 
@@ -28,13 +28,14 @@ import com.laborguru.util.PoiUtils;
  * @since SPM 1.0
  *
  */
-public class StoreOperation {
+public class StoreOperation extends BaseStoreSection {
 
 	private static final Logger log = Logger.getLogger(StoreOperation.class);
 
 	private static final String FIRST_DAY_OF_WEEK = "First day of week";
 	private static final String OPEN = "Open";
 	private static final String CLOSE = "Close";
+	
 	
 	public enum StoreOperationField{
 		
@@ -52,6 +53,22 @@ public class StoreOperation {
 		
 		public String getFieldName(){
 			return this.fieldName;
+		}
+		
+		/**
+		 * @param fieldName
+		 * @return
+		 */
+		public static StoreOperationField getFielType(String fieldName){
+			for (StoreOperationField field: EnumSet.allOf(StoreOperationField.class)){
+				if (field.getFieldName().equalsIgnoreCase(fieldName)){
+					return field;
+				}
+			}
+			
+			String message = "Store Information row is invalid  - fieldName:"+fieldName;
+			log.error(message);
+			throw new InvalidFieldUploadFileException(message, ErrorEnum.STORE_INVALID_ROW, new String[] {fieldName});
 		}
 	}
 	
@@ -86,6 +103,20 @@ public class StoreOperation {
 			this.dayOfWeek = dayOfWeek;
 			this.dayName = day;
 		}
+		
+		/**
+		 * @param fieldName
+		 * @return
+		 */
+		public static UploadWeekDays getUploadWeekDay(String fieldName){
+			for (UploadWeekDays uploadWeekDay: EnumSet.allOf(UploadWeekDays.class)){
+				if (uploadWeekDay.getDayName().equalsIgnoreCase(fieldName)){
+					return uploadWeekDay;
+				}
+			}
+			
+			return null;
+		}
 	}
 	
 	private OperationTime[] hoursOfOperation = new OperationTime[7];
@@ -94,18 +125,26 @@ public class StoreOperation {
 	private List<String> groupNames = new ArrayList<String>();
 	private List<String> variableDefinitions = new ArrayList<String>();
 	private DayOfWeek firstDayOfWeek;
+
 	
 	/**
-	 * @param fieldName
-	 * @param fieldValue
+	 * Default Constructor
 	 */
-	public void addField(HSSFRow row) {	
-		
-		validateRow(row);
-		
+	public StoreOperation(){
+		super();
+		setSection(StoreSection.STORE_OPERATIONS);
+	}
+	
+	/**
+	 * @param row
+	 * @see com.laborguru.service.store.file.BaseStoreSection#addRowToSection(org.apache.poi.hssf.usermodel.HSSFRow)
+	 */
+	@Override
+	protected void addRowToSection(HSSFRow row) {	
+				
 		String category = PoiUtils.getStringValue(row.getCell((short)1));
 		
-		StoreOperationField infoStoreType = getFielType(category);
+		StoreOperationField infoStoreType = StoreOperationField.getFielType(category);
 		
 		switch(infoStoreType){		
 			case HOURS_OF_OPERATION:
@@ -127,19 +166,35 @@ public class StoreOperation {
 		}
 	}
 	
+	/**
+	 * @param row
+	 * @see com.laborguru.service.store.file.BaseStoreSection#validateRow(org.apache.poi.hssf.usermodel.HSSFRow)
+	 */
+	@Override
+	protected void validateRow(HSSFRow row){
+		HSSFCell category = row.getCell((short)1);
+		HSSFCell fieldValue = row.getCell((short)4);
+		
+		if ((category == null) || (fieldValue == null)){
+			String message = getSection().getStoreSection()+" row is invalid - category:"+category+" - fieldValue:"+fieldValue;
+			log.error(message);
+			throw new InvalidFieldUploadFileException(message, ErrorEnum.STORE_INVALID_ROW, new String[] {getSection().getStoreSection()});
+		}
+	}
+	
 	private void addVariableDefinitions(HSSFRow row){
 		String fieldValue = PoiUtils.getStringValue(row.getCell((short)4));
-		getVariableDefinitions().add(fieldValue);
+		getVariableDefinitions().add(fieldValue.trim());
 	}
 	
 	private void addGroupNames(HSSFRow row) {
 		String fieldValue = PoiUtils.getStringValue(row.getCell((short)4));
-		getGroupNames().add(fieldValue);
+		getGroupNames().add(fieldValue.trim());
 	}
 
 	private void addPositionNames(HSSFRow row) {
 		String fieldValue = PoiUtils.getStringValue(row.getCell((short)4));
-		getPositionNames().add(fieldValue);
+		getPositionNames().add(fieldValue.trim());
 		
 	}
 
@@ -148,14 +203,14 @@ public class StoreOperation {
 		Date startTime = PoiUtils.getDateValue(row.getCell((short)4));
 
 		if (fieldName == null || startTime == null){
-			String message = "Store Operation row is invalid - category: day part definition - fieldName:"+fieldName + " - startTime:"+startTime;
+			String message = getSection().getStoreSection()+" row is invalid - category: day part definition - fieldName:"+fieldName + " - startTime:"+startTime;
 			log.error(message);
-			throw new InvalidFieldUploadFileException(message, new String[] {StoreSection.STORE_OPERATIONS.getStoreSection(), 
+			throw new InvalidFieldUploadFileException(message, new String[] {getSection().getStoreSection(), 
 					StoreOperationField.DAYPART_DEFINITION.getFieldName()});
 		}
 
 		DayPart dayPart = new DayPart();
-		dayPart.setName(fieldName);
+		dayPart.setName(fieldName.trim());
 		dayPart.setStartHour(startTime);
 		
 		getDayPartDefinitions().add(dayPart);
@@ -172,7 +227,7 @@ public class StoreOperation {
 				
 		if (FIRST_DAY_OF_WEEK.equalsIgnoreCase(fieldName)){
 			String fieldValue = row.getCell((short)4).getStringCellValue();
-			UploadWeekDays firstDay = getUploadWeekDay(fieldValue);
+			UploadWeekDays firstDay = UploadWeekDays.getUploadWeekDay(fieldValue);
 			
 			if (firstDay!=null){
 				setFirstDayOfWeek(firstDay.getDayOfWeek());
@@ -187,9 +242,9 @@ public class StoreOperation {
 		OperationTime operationTime = getHourOfOperation(fieldName);
 		
 		if ((hour == null) || (operationTime == null) ){
-			String message = "Store Operation row is invalid - category: Hour of operation - fieldName:"+fieldName + " - fieldAux:"+fieldAux+ " - hour: "+ hour;
+			String message = getSection().getStoreSection()+" row is invalid - category: Hour of operation - fieldName:"+fieldName + " - fieldAux:"+fieldAux+ " - hour: "+ hour;
 			log.error(message);
-			throw new InvalidFieldUploadFileException(message, new String[] {StoreSection.STORE_OPERATIONS.getStoreSection(), 
+			throw new InvalidFieldUploadFileException(message, new String[] {getSection().getStoreSection(), 
 					StoreOperationField.HOURS_OF_OPERATION.getFieldName()});
 		}
 		
@@ -198,9 +253,9 @@ public class StoreOperation {
 		}else if (CLOSE.equalsIgnoreCase(fieldAux)){
 			operationTime.setCloseHour(hour);
 		} else {
-			String message = "Store Operation row is invalid - category: Hour of operation - fieldName:"+fieldName + " - fieldAux:"+fieldAux+ " - hour: "+ hour;
+			String message = getSection().getStoreSection()+" row is invalid - category: Hour of operation - fieldName:"+fieldName + " - fieldAux:"+fieldAux+ " - hour: "+ hour;
 			log.error(message);
-			throw new InvalidFieldUploadFileException(message, new String[] {StoreSection.STORE_OPERATIONS.getStoreSection(), 
+			throw new InvalidFieldUploadFileException(message, new String[] {getSection().getStoreSection(), 
 					StoreOperationField.HOURS_OF_OPERATION.getFieldName()});
 		}
 	}
@@ -212,7 +267,7 @@ public class StoreOperation {
 	 */
 	private OperationTime getHourOfOperation(String fieldName) {
 
-		UploadWeekDays dayOfWeek = getUploadWeekDay(fieldName);
+		UploadWeekDays dayOfWeek = UploadWeekDays.getUploadWeekDay(fieldName);
 		
 		if (dayOfWeek == null){
 			return null;
@@ -224,37 +279,6 @@ public class StoreOperation {
 			getHoursOfOperation()[dayOfWeek.ordinal()] = operationTime;
 		}
 		return getHoursOfOperation()[dayOfWeek.ordinal()];
-	}
-
-	
-	/**
-	 * @param fieldName
-	 * @return
-	 */
-	private UploadWeekDays getUploadWeekDay(String fieldName){
-		for (UploadWeekDays uploadWeekDay: EnumSet.allOf(UploadWeekDays.class)){
-			if (uploadWeekDay.getDayName().equalsIgnoreCase(fieldName)){
-				return uploadWeekDay;
-			}
-		}
-		
-		return null;
-	}
-	
-	/**
-	 * @param fieldName
-	 * @return
-	 */
-	public StoreOperationField getFielType(String fieldName){
-		for (StoreOperationField field: EnumSet.allOf(StoreOperationField.class)){
-			if (field.getFieldName().equalsIgnoreCase(fieldName)){
-				return field;
-			}
-		}
-		
-		String message = "Store Information row is invalid  - fieldName:"+fieldName;
-		log.error(message);
-		throw new InvalidFieldUploadFileException(message, ErrorEnum.STORE_INVALID_ROW, new String[] {fieldName});
 	}
 
 	
@@ -278,6 +302,14 @@ public class StoreOperation {
 			Position position = new Position();
 			position.setPositionIndex(index++);
 			position.setName(positionName);
+			
+			for (DayPart dayPart: store.getDayParts()){
+				DayPartData dayPartData = new DayPartData();
+				dayPartData.setDayPart(dayPart);
+				dayPartData.setPosition(position);
+				position.getDayPartData().add(dayPartData);
+			}			
+					
 			store.addPosition(position);
 		}
 
@@ -292,21 +324,6 @@ public class StoreOperation {
 		}
 	}
 
-	/**
-	 * @param row
-	 * @return
-	 */
-	public void validateRow(HSSFRow row){
-		HSSFCell category = row.getCell((short)1);
-		HSSFCell fieldValue = row.getCell((short)4);
-		
-		if ((category == null) || (fieldValue == null)){
-			String message = "Store Operation row is invalid - category:"+category+" - fieldValue:"+fieldValue;
-			log.error(message);
-			throw new InvalidFieldUploadFileException(message, ErrorEnum.STORE_INVALID_ROW, new String[] {StoreSection.STORE_OPERATIONS.getStoreSection()});
-		}
-	}
-	
 	
 	/**
 	 * @return the hoursOfOperation
