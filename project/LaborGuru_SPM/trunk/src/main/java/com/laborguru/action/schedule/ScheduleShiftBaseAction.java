@@ -5,16 +5,10 @@
  */
 package com.laborguru.action.schedule;
 
-import java.util.Date;
-
 import org.apache.log4j.Logger;
 
-import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.WeekDaySelector;
-import com.laborguru.model.OperationTime;
-import com.laborguru.model.Store;
-import com.laborguru.util.CalendarUtils;
 import com.opensymphony.xwork2.Preparable;
 
 /**
@@ -24,7 +18,7 @@ import com.opensymphony.xwork2.Preparable;
  * @since SPM 1.0
  *
  */
-public abstract class ScheduleShiftBaseAction extends SpmAction implements Preparable {
+public abstract class ScheduleShiftBaseAction extends ScheduleBaseAction implements Preparable {
 	private static final Logger log = Logger.getLogger(ScheduleShiftBaseAction.class);
 	
 	private WeekDaySelector weekDaySelector;
@@ -162,32 +156,4 @@ public abstract class ScheduleShiftBaseAction extends SpmAction implements Prepa
 	public void setSelectedWeekDay(String selectedWeekDay) {
 		this.selectedWeekDay = selectedWeekDay;
 	}
-
-	/**
-	 * 
-	 * @param operationTime
-	 * @return
-	 */
-	protected Date getScheduleOpenHour(OperationTime operationTime) {
-		return CalendarUtils.addOrSubstractHours(operationTime.getOpenHour(), (-1) * getStoreScheduleExtraHours());
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	private int getStoreScheduleExtraHours() {
-		Store store = getEmployeeStore();
-		return store != null && store.getExtraScheduleHours() != null ? store.getExtraScheduleHours().intValue() : 0;
-	}
-	
-	/**
-	 * 
-	 * @param operationTime
-	 * @return
-	 */
-	protected Date getScheduleCloseHour(OperationTime operationTime) {
-		return CalendarUtils.addOrSubstractHours(operationTime.getOpenHour(), getStoreScheduleExtraHours());
-	}
-
 }
