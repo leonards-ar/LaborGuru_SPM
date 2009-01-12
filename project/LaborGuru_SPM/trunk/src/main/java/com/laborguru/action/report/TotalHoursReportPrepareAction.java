@@ -21,12 +21,12 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction
 
 	private PositionService positionService;
 
-
 	private BigDecimal totalSchedule = SpmConstants.BD_ZERO_VALUE;
 	private BigDecimal totalTarget = SpmConstants.BD_ZERO_VALUE;
 	private BigDecimal totalDifference = SpmConstants.BD_ZERO_VALUE;
 	private BigDecimal totalPercentaje = SpmConstants.BD_ZERO_VALUE;
-
+	private BigDecimal totalSales = SpmConstants.BD_ZERO_VALUE;
+	
 	private String xmlValues;
 
 	/**
@@ -53,6 +53,7 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction
 
 		if (getItemId() == null) {
 			getWeeklyReport();
+			
 		} else {
 			if ("byPosition".equals(getSelectedGrouping())) {
 				getWeeklyReportByPosition();
@@ -91,6 +92,7 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction
 	private void calculateTotals() {
 
 		for (TotalHour th : getTotalHours()) {
+			setTotalSales(getTotalSales().add(th.getSales()));
 			setTotalSchedule(getTotalSchedule().add(th.getSchedule()));
 			setTotalTarget(getTotalTarget().add(th.getTarget()));
 			setTotalDifference(getTotalDifference().add(th.getDifference()));
@@ -107,7 +109,7 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction
 
 	
 	public void generateXmlGraph(){
-		setXmlValues(getFusionXmlDataConverter().halfHoursXmlConverter(
+		setXmlValues(getFusionXmlDataConverter().weeklyTotalHoursXmlConverter(
 				getTotalHours()));
 	}
 	
@@ -230,6 +232,20 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction
 	 */
 	public void setPositionService(PositionService positionService) {
 		this.positionService = positionService;
+	}
+
+	/**
+	 * @return the totalSales
+	 */
+	public BigDecimal getTotalSales() {
+		return totalSales;
+	}
+
+	/**
+	 * @param totalSales the totalSales to set
+	 */
+	public void setTotalSales(BigDecimal totalSales) {
+		this.totalSales = totalSales;
 	}
 
 }

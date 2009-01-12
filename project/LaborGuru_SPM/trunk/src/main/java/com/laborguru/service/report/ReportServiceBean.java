@@ -9,11 +9,13 @@ import org.apache.log4j.Logger;
 
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.SpmUncheckedException;
+import com.laborguru.model.DailyProjection;
 import com.laborguru.model.Position;
 import com.laborguru.model.PositionGroup;
 import com.laborguru.model.Store;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.model.report.TotalHourByPosition;
+import com.laborguru.service.projection.ProjectionService;
 import com.laborguru.service.report.dao.ReportDao;
 import com.laborguru.service.staffing.StaffingService;
 import com.laborguru.util.CalendarUtils;
@@ -30,6 +32,7 @@ public class ReportServiceBean implements ReportService {
 	private static final Logger log = Logger.getLogger(ReportServiceBean.class);
 
 	private StaffingService staffingService;
+	private ProjectionService projectionService;
 	private ReportDao reportDao;
 
 	/**
@@ -43,10 +46,11 @@ public class ReportServiceBean implements ReportService {
 			try {
 
 				Date endingWeekDate = CalendarUtils.addOrSubstractDays(startingWeekDate, 6);
+				List<DailyProjection> projections = projectionService.getAdjustedDailyProjectionForAWeek(store, startingWeekDate);
 				List<TotalHour> scheduleTotalHours = reportDao.getScheduleWeeklyTotalHour(store, startingWeekDate, endingWeekDate);
 				List<TotalHour> targetTotalHours = reportDao.getTargetWeeklyTotalHour(store, startingWeekDate, endingWeekDate);
 				
-				return getMergedTotalHours(scheduleTotalHours, targetTotalHours, startingWeekDate, endingWeekDate); 
+				return getMergedTotalHours(scheduleTotalHours, targetTotalHours, projections, startingWeekDate, endingWeekDate); 
 			} catch (SQLException e) {
 				log.error("An SQLError has occurred", e);
 				throw new SpmUncheckedException(e.getCause(), e.getMessage(),
@@ -65,10 +69,11 @@ public class ReportServiceBean implements ReportService {
 		try {
 
 			Date endingWeekDate = CalendarUtils.addOrSubstractDays(startingWeekDate, 6);
+			List<DailyProjection> projections = projectionService.getAdjustedDailyProjectionForAWeek(store, startingWeekDate);
 			List<TotalHour> scheduleTotalHours = reportDao.getScheduleWeeklyTotalHourByPosition(store, position, startingWeekDate, endingWeekDate);
 			List<TotalHour> targetTotalHours = reportDao.getTargetWeeklyTotalHourByPosition(store, position, startingWeekDate, endingWeekDate);
 			
-			return getMergedTotalHours(scheduleTotalHours, targetTotalHours, startingWeekDate, endingWeekDate);
+			return getMergedTotalHours(scheduleTotalHours, targetTotalHours, projections, startingWeekDate, endingWeekDate);
 			
 		} catch (SQLException e) {
 			log.error("An SQLError has occurred", e);
@@ -81,9 +86,10 @@ public class ReportServiceBean implements ReportService {
 	public List<TotalHour> getWeeklyTotalHoursByService(Store store, PositionGroup positiongroup, Date startingWeekDate){
 		try {
 			Date endingWeekDate = CalendarUtils.addOrSubstractDays(startingWeekDate, 6);
+			List<DailyProjection> projections = projectionService.getAdjustedDailyProjectionForAWeek(store, startingWeekDate);
 			List<TotalHour> scheduleTotalHours = reportDao.getScheduleWeeklyTotalHourByService(store, positiongroup, startingWeekDate, endingWeekDate);
 			List<TotalHour> targetTotalHours = reportDao.getTargetWeeklyTotalHourByService(store, positiongroup, startingWeekDate, endingWeekDate);
-			return getMergedTotalHours(scheduleTotalHours, targetTotalHours, startingWeekDate, endingWeekDate);
+			return getMergedTotalHours(scheduleTotalHours, targetTotalHours, projections, startingWeekDate, endingWeekDate);
 			
 		} catch (SQLException e) {
 			log.error("An SQLError has occurred", e);
@@ -198,20 +204,28 @@ public class ReportServiceBean implements ReportService {
 		return null;
 	}
 	
-	private List<TotalHour> getMergedTotalHours(List<TotalHour> scheduleTotalHours, List<TotalHour> targetTotalHours, Date startDate, Date endDate) {
+	private List<TotalHour> getMergedTotalHours(List<TotalHour> scheduleTotalHours, List<TotalHour> targetTotalHours, List<DailyProjection>projections, Date startDate, Date endDate) {
 		
 		List<TotalHour> totalHours = new ArrayList<TotalHour>();
 		
 		for (Date date=startDate; date.compareTo(endDate) <= 0; date=CalendarUtils.addOrSubstractDays(date, 1)) {
-
+			
 			TotalHour totalhour = new TotalHour();
 			totalhour.setDay(date);
+			DailyProjection dp = getDailyProjectionByDate(date, projections);
+			if(dp != null){
+				totalhour.setSales(dp.getDailyProjectionValue());
+			} else {
+				totalhour.setSales(SpmConstants.BD_ZERO_VALUE);
+			}
+
 			TotalHour scheduleTotalHour = getTotalHourByDay(date, scheduleTotalHours);
 			if(scheduleTotalHour != null) {
 				totalhour.setSchedule(scheduleTotalHour.getSchedule());
 			} else {
 				totalhour.setSchedule(SpmConstants.BD_ZERO_VALUE);
 			}
+			
 			TotalHour targetTotalHour = getTotalHourByDay(date, targetTotalHours);
 			if(targetTotalHour != null) {
 				totalhour.setTarget(targetTotalHour.getTarget());
@@ -235,6 +249,16 @@ public class ReportServiceBean implements ReportService {
 			}
 		}
 		return target;
+	}
+	
+	private DailyProjection getDailyProjectionByDate(Date date, List<DailyProjection> projections) {
+		for(DailyProjection dp: projections) {
+			if(date.equals(dp.getProjectionDate())) {
+				return dp;
+			}
+		
+		}
+		return null;
 	}
 	
 	/**
@@ -265,6 +289,20 @@ public class ReportServiceBean implements ReportService {
 	public void setStaffingService(StaffingService staffingService) {
 		this.staffingService = staffingService;
 	}
-	
+
+	/**
+	 * @return the projectionService
+	 */
+	public ProjectionService getProjectionService() {
+		return projectionService;
+	}
+
+	/**
+	 * @param projectionService the projectionService to set
+	 */
+	public void setProjectionService(ProjectionService projectionService) {
+		this.projectionService = projectionService;
+	}
+
 
 }
