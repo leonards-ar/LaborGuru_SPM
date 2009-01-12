@@ -24,6 +24,7 @@ public class TotalHour extends SpmObject{
 	private static final long serialVersionUID = -7940750254658565313L;
 	
 	private Date day;
+	private BigDecimal sales;
 	private BigDecimal schedule;
 	private BigDecimal target;
 	
@@ -64,6 +65,19 @@ public class TotalHour extends SpmObject{
 	public void setTarget(BigDecimal target) {
 		this.target = target;
 	}
+	
+	/**
+	 * @return the sales
+	 */
+	public BigDecimal getSales() {
+		return sales;
+	}
+	/**
+	 * @param sales the sales to set
+	 */
+	public void setSales(BigDecimal sales) {
+		this.sales = sales;
+	}
 	/**
 	 * @return the difference
 	 */
@@ -97,6 +111,7 @@ public class TotalHour extends SpmObject{
 		
 		return new EqualsBuilder().append(this.schedule, other.schedule)
 		.append(this.target, other.target)
+		.append(this.sales, other.sales)
 		.append(this.day, other.day)
 		.isEquals();		
 	}
@@ -104,6 +119,7 @@ public class TotalHour extends SpmObject{
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37)
+		.append(this.sales)
 		.append(this.schedule)
 		.append(this.target)
 		.append(this.day)
@@ -114,6 +130,7 @@ public class TotalHour extends SpmObject{
 	public String toString() {
 		return new ToStringBuilder(this, DEFAULT_TO_STRING_STYLE)
 		.append(new SimpleDateFormat("E MM/dd").format(this.day))
+		.append(this.sales)
 		.append(this.schedule)
 		.append(this.target)
 		.append(getDifference())

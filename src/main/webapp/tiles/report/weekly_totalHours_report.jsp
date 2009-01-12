@@ -23,6 +23,19 @@
 		  </tr>
 		  <tr>
 			<td class="windowTableLabel">
+			  <s:text name="report.weeklytotalhours.checks.label" />
+			</td>
+			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
+			  <td class="windowTableValue">
+			  	<s:text name="currency"><s:param value="sales"/></s:text>
+			  </td>
+			</s:iterator>
+			<td class="windowTableValue">
+				<s:text name="currency"><s:param value="totalSales"/></s:text>
+			</td>
+		  </tr>
+		  <tr>
+			<td class="windowTableLabel">
 			  <s:text name="report.weeklytotalhours.scheduled.label" />
 			</td>
 			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
