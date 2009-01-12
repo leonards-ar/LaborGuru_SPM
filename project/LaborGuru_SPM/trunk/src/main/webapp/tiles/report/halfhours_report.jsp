@@ -109,7 +109,7 @@
 				<s:div id="tableFrame" theme="ajax" 
 							href="%{halfHourReportUrl}" 
 							formId="dailyReport_form"
-							listenTopics="/refresh,/Changed"
+							listenTopics="/refresh"
 							indicator="indicator" />
 			</td>
 		</tr>
