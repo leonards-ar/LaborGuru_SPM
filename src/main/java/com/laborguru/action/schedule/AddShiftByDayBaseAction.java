@@ -88,8 +88,8 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 		if(this.scheduleIndividualHours == null) {
 			if(getStoreSchedule() != null && getStoreSchedule().getStore() != null) {
 				OperationTime operationTime = getStoreSchedule().getStore().getOperationTime(getWeekDaySelector().getSelectedDayOfWeek());
-				Date closeHour = getScheduleCloseHour(operationTime.getCloseHour());
-				Date d = operationTime != null ? getScheduleOpenHour(operationTime.getOpenHour()) : null;
+				Date closeHour = getScheduleCloseHour(getStoreScheduleCloseHour(operationTime));
+				Date d = operationTime != null ? getScheduleOpenHour(getStoreScheduleOpenHour(operationTime)) : null;
 				
 				List<Date> hours = new ArrayList<Date>();
 				while(d != null && d.getTime() < closeHour.getTime()) {
@@ -123,8 +123,8 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 			if(getStoreSchedule() != null && getStoreSchedule().getStore() != null) {
 				OperationTime operationTime = getStoreSchedule().getStore().getOperationTime(getWeekDaySelector().getSelectedDayOfWeek());
 				
-				Date d = operationTime != null ? getScheduleOpenHour(operationTime.getOpenHour()) : null;
-				Date baseCloseHour = getScheduleBaseHour(operationTime.getCloseHour());
+				Date d = operationTime != null ? getScheduleOpenHour(getStoreScheduleOpenHour(operationTime)) : null;
+				Date baseCloseHour = getScheduleBaseHour(getStoreScheduleCloseHour(operationTime));
 				
 				List<ScheduleHourLabelElement> hours = new ArrayList<ScheduleHourLabelElement>();
 				
@@ -138,8 +138,8 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 					d = getScheduleBaseHour(CalendarUtils.addOrSubstractHours(d, 1));
 				}
 				
-				if(operationTime.getCloseHour().getTime() > baseCloseHour.getTime()) {
-					hours.add(new ScheduleHourLabelElement(baseCloseHour, getHourColspan(d), getCloseHourSelectable(operationTime.getCloseHour())));
+				if(getStoreScheduleCloseHour(operationTime).getTime() > baseCloseHour.getTime()) {
+					hours.add(new ScheduleHourLabelElement(baseCloseHour, getHourColspan(d), getCloseHourSelectable(getStoreScheduleCloseHour(operationTime))));
 				}
 				
 				this.scheduleLabelHours = hours;

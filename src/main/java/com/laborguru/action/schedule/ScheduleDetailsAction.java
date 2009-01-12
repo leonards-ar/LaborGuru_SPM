@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.ScheduleDetailRow;
 import com.laborguru.frontend.model.WeekDaySelector;
@@ -29,7 +28,7 @@ import com.laborguru.util.SpmConstants;
  * @since SPM 1.0
  *
  */
-public class ScheduleDetailsAction extends SpmAction {
+public class ScheduleDetailsAction extends ScheduleBaseAction {
 	
 	/**
 	 * 
@@ -114,7 +113,7 @@ public class ScheduleDetailsAction extends SpmAction {
 	 */
 	private Date getStoreCloseTime() {
 		OperationTime opTime = getEmployeeStore().getOperationTime(CalendarUtils.getDayOfWeek(getSelectedDayAsDate()));
-		return opTime.getCloseHour();
+		return getStoreScheduleCloseHour(opTime);
 	}
 	
 	/**
@@ -123,7 +122,7 @@ public class ScheduleDetailsAction extends SpmAction {
 	 */
 	private Date getStoreOpenTime() {
 		OperationTime opTime = getEmployeeStore().getOperationTime(CalendarUtils.getDayOfWeek(getSelectedDayAsDate()));
-		return opTime.getOpenHour();
+		return getStoreScheduleOpenHour(opTime);
 	}
 	
 	/**
@@ -132,7 +131,7 @@ public class ScheduleDetailsAction extends SpmAction {
 	 */
 	private boolean isStoreOpen(Date time) {
 		OperationTime opTime = getEmployeeStore().getOperationTime(CalendarUtils.getDayOfWeek(getSelectedDayAsDate()));
-		return CalendarUtils.equalsOrGreaterTime(time, opTime.getOpenHour()) &&  CalendarUtils.equalsOrSmallerTime(time, opTime.getCloseHour());
+		return CalendarUtils.equalsOrGreaterTime(time, getStoreScheduleOpenHour(opTime)) &&  CalendarUtils.equalsOrSmallerTime(time, getStoreScheduleCloseHour(opTime));
 	}
 	
 	/**
