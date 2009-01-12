@@ -2,6 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <s:if test="showTable">
+
 <table border="2" width="100%" cellspacing="0" align="center">
 <tr>
 	<td>&nbsp;</td>

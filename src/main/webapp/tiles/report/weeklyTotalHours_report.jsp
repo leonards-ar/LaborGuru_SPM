@@ -159,7 +159,7 @@
 					action="totalHoursReport_showReport" namespace="/report"
 					includeParams="none" /> <s:div id="reportFrame" theme="ajax"
 					href="%{totalHourReportUrl}" formId="report_form"
-					listenTopics="/refresh,/Changed" indicator="indicator" /></td>
+					listenTopics="/refresh" indicator="indicator" /></td>
 			</tr>
 		</table>
 
