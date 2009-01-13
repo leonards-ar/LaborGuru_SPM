@@ -115,16 +115,16 @@ public abstract class StorePositionDayOfWeekDataBaseAction extends StoreAdminist
 			for(int i = 0; i < p.size(); i++) {
 				for(int j = 0; j < DayOfWeek.values().length; j++) {
 					dayOfWeekIndex = getDayOfWeekIndex(j, firstDayOfWeekIndex);
-					aDayOfWeekData = j < p.get(i).getDayOfWeekData().size() ? p.get(i).getDayOfWeekData().get(j) : null;
+					aDayOfWeekData = j < p.get(i).getDayOfWeekData().size() ? p.get(i).getDayOfWeekData().get(dayOfWeekIndex) : null;
 					if(aDayOfWeekData != null) {
 						// Already exists. Update value
-						setDayOfWeekDataValue(aDayOfWeekData, getDayOfWeekValues()[i][dayOfWeekIndex]);
+						setDayOfWeekDataValue(aDayOfWeekData, getDayOfWeekValues()[i][j]);
 					} else {
 						// Add new day part data
 						aDayOfWeekData = new DayOfWeekData();
 						aDayOfWeekData.setPosition(p.get(i));
 						aDayOfWeekData.setDayOfWeekIndex(dayOfWeekIndex);
-						setDayOfWeekDataValue(aDayOfWeekData, getDayOfWeekValues()[i][dayOfWeekIndex]);
+						setDayOfWeekDataValue(aDayOfWeekData, getDayOfWeekValues()[i][j]);
 						
 						p.get(i).getDayOfWeekData().add(aDayOfWeekData);
 					}

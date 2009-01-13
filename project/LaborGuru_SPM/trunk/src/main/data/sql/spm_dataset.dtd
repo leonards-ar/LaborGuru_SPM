@@ -142,6 +142,7 @@
     area_id CDATA #IMPLIED
     daily_projections_weeks_default CDATA #IMPLIED
     half_hour_projections_weeks_default CDATA #IMPLIED
+    extra_schedule_hours CDATA #IMPLIED
 >
 
 <!ELEMENT tbl_users EMPTY>
