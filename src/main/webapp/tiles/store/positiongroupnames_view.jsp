@@ -13,14 +13,16 @@
 		<td align="center">
 				<tr class="editFormEvenRow" style=" width : 297px;">
 					<td>
-				 		<s:set name="positionGroupList" value="positionGroups" scope="request"/>
-						<display:table name="positionGroupList" class="results" sort="external">		    
-						    <display:column property="name" titleKey="store.storeoperations.positiongroupnames.label"/>
-						    <display:setProperty name="paging.banner.all_items_found" value="" />
-						    <display:setProperty name="paging.banner.one_item_found" value="" />
-							<display:setProperty name="css.tr.even" value="editorTableEvenRow"/>
-							<display:setProperty name="css.tr.odd" value="editorTableOddRow"/>
-						</display:table>					
+						<table border="0" cellpadding="3" cellspacing="1" align="center">
+							<tr class="editorTableHeader">
+								<td><s:text name="store.storeoperations.positiongroupnames.label" /></td>
+							</tr>
+							<s:iterator id="positionGroup" value="positionGroups" status="itPositionGroups">
+								<tr class="editorTable<s:if test="#itPositionGroups.even">Even</s:if><s:else>Odd</s:else>Row">
+									<td class="value"><s:property value="%{name}"/></td>
+								</tr>
+							</s:iterator>
+						</table>						
 					</td>
 				</tr>
 
