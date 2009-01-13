@@ -49,6 +49,9 @@ public class DayPartData extends SpmObject {
 	}
 
 	/**
+	 * CN - DayPartData needs in the "position" equals and not "position id", as we need to distinguish DayPartData objects before
+	 * they are persisted. DayPartData depends of position anyway, so there is no significant penalization on performance as there is already a position preloaded
+	 * in the hibernate cache. 
 	 * @param obj
 	 * @return
 	 * @see com.laborguru.model.SpmObject#equals(java.lang.Object)

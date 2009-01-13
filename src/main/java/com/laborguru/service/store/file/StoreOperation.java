@@ -12,6 +12,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.InvalidFieldUploadFileException;
 import com.laborguru.model.DayOfWeek;
+import com.laborguru.model.DayOfWeekData;
 import com.laborguru.model.DayPart;
 import com.laborguru.model.DayPartData;
 import com.laborguru.model.OperationTime;
@@ -22,7 +23,8 @@ import com.laborguru.util.PoiUtils;
 
 
 /**
- *
+ * Represents a Store Operation Section from the store definition upload file
+ * 
  * @author <a href="cnunezre@gmail.com">Cristian Nunez Rebolledo</a>
  * @version 1.0
  * @since SPM 1.0
@@ -35,7 +37,6 @@ public class StoreOperation extends BaseStoreSection {
 	private static final String FIRST_DAY_OF_WEEK = "First day of week";
 	private static final String OPEN = "Open";
 	private static final String CLOSE = "Close";
-	
 	
 	public enum StoreOperationField{
 		
@@ -69,53 +70,6 @@ public class StoreOperation extends BaseStoreSection {
 			String message = "Store Information row is invalid  - fieldName:"+fieldName;
 			log.error(message);
 			throw new InvalidFieldUploadFileException(message, ErrorEnum.STORE_INVALID_ROW, new String[] {fieldName});
-		}
-	}
-	
-	private enum UploadWeekDays {
-		MONDAY("Monday", DayOfWeek.MONDAY),
-		TUESDAY("Tuesday", DayOfWeek.TUESDAY),
-		WEDNESDAY("Wednesday", DayOfWeek.WEDNESDAY),
-		THURSDAY("Thursday", DayOfWeek.THURSDAY),
-		FRIDAY("Friday", DayOfWeek.FRIDAY),
-		SATURDAY("Saturday", DayOfWeek.SATURDAY),
-		SUNDAY("Sunday", DayOfWeek.SUNDAY);
-		
-		private String dayName;
-		private DayOfWeek dayOfWeek;
-
-		/**
-		 * @return the dayName
-		 */
-		public String getDayName() {
-			return dayName;
-		}
-
-		/**
-		 * @return the dayOfWeek
-		 */
-		public DayOfWeek getDayOfWeek() {
-			return dayOfWeek;
-		}
-
-
-		private UploadWeekDays(String day, DayOfWeek dayOfWeek){
-			this.dayOfWeek = dayOfWeek;
-			this.dayName = day;
-		}
-		
-		/**
-		 * @param fieldName
-		 * @return
-		 */
-		public static UploadWeekDays getUploadWeekDay(String fieldName){
-			for (UploadWeekDays uploadWeekDay: EnumSet.allOf(UploadWeekDays.class)){
-				if (uploadWeekDay.getDayName().equalsIgnoreCase(fieldName)){
-					return uploadWeekDay;
-				}
-			}
-			
-			return null;
 		}
 	}
 	
@@ -182,22 +136,34 @@ public class StoreOperation extends BaseStoreSection {
 		}
 	}
 	
+	/**
+	 * @param row
+	 */
 	private void addVariableDefinitions(HSSFRow row){
 		String fieldValue = PoiUtils.getStringValue(row.getCell((short)4));
 		getVariableDefinitions().add(fieldValue.trim());
 	}
 	
+	/**
+	 * @param row
+	 */
 	private void addGroupNames(HSSFRow row) {
 		String fieldValue = PoiUtils.getStringValue(row.getCell((short)4));
 		getGroupNames().add(fieldValue.trim());
 	}
 
+	/**
+	 * @param row
+	 */
 	private void addPositionNames(HSSFRow row) {
 		String fieldValue = PoiUtils.getStringValue(row.getCell((short)4));
 		getPositionNames().add(fieldValue.trim());
 		
 	}
 
+	/**
+	 * @param row
+	 */
 	private void addDaypartDefinition(HSSFRow row) {		
 		String fieldName = PoiUtils.getStringValue(row.getCell((short)2));
 		Date startTime = PoiUtils.getDateValue(row.getCell((short)4));
@@ -303,22 +269,35 @@ public class StoreOperation extends BaseStoreSection {
 			position.setPositionIndex(index++);
 			position.setName(positionName);
 			
+			//Building the dayparts data
 			for (DayPart dayPart: store.getDayParts()){
 				DayPartData dayPartData = new DayPartData();
 				dayPartData.setDayPart(dayPart);
 				dayPartData.setPosition(position);
+				
 				position.getDayPartData().add(dayPartData);
 			}			
-					
+
+			//Building the day of week data
+			for (DayOfWeek dayOfWeek : EnumSet.allOf(DayOfWeek.class)){
+				DayOfWeekData data = new DayOfWeekData();
+				data.setDayOfWeek(dayOfWeek);
+				data.setPosition(position);
+				
+				position.getDayOfWeekData().add(data);
+			}
+			
 			store.addPosition(position);
 		}
 
+		//Setting the groups
 		for (String groupName: getGroupNames()){
 			PositionGroup positionGroup = new PositionGroup();
 			positionGroup.setName(groupName);
 			store.addPositionGroup(positionGroup);
 		}
 		
+		//Setting first day of the week
 		if (getFirstDayOfWeek() != null){
 			store.setFirstDayOfWeek(getFirstDayOfWeek());
 		}

@@ -46,6 +46,9 @@ public class DayOfWeekData extends SpmObject {
 	}
 
 	/**
+	 * CN - DayOfWeekData needs "position" in the equals and not "position id" as we need to distinguish DayOfWeekData objects before
+	 * they are persisted. DayOfWeekData depends of position anyway, so there is no significant penalization on performance as there is already a position preloaded
+	 * in the hibernate cache. 
 	 * @param obj
 	 * @return
 	 * @see com.laborguru.model.SpmObject#equals(java.lang.Object)
@@ -64,7 +67,7 @@ public class DayOfWeekData extends SpmObject {
 		final DayOfWeekData other = (DayOfWeekData) obj;
 		
 		return new EqualsBuilder()
-		.append(this.position != null ? this.position.getId() : null, other.position != null ? other.position.getId() : null)
+		.append(this.position != null ? this.position : null, other.position != null ? other.position : null)
 		.append(this.dayOfWeek != null ? this.dayOfWeek.getDayOfWeek() : null, other.dayOfWeek != null ? other.dayOfWeek.getDayOfWeek() : null)
 		.isEquals();
 	}
@@ -76,7 +79,7 @@ public class DayOfWeekData extends SpmObject {
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37)
-		.append(this.position != null ? this.position.getId() : null)
+		.append(this.position != null ? this.position : null)
 		.append(this.dayOfWeek != null ? this.dayOfWeek.getDayOfWeek() : null)
 		.toHashCode();
 	}
