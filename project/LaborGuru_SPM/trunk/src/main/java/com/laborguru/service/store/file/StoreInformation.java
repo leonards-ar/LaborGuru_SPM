@@ -15,6 +15,7 @@ import com.laborguru.util.PoiUtils;
 
 
 /**
+ * Represents a Store Information Section from the store definition upload file
  *
  * @author <a href="cnunezre@gmail.com">Cristian Nunez Rebolledo</a>
  * @version 1.0

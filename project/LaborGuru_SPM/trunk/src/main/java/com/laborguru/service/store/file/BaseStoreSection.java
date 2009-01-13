@@ -8,10 +8,12 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.InvalidFieldUploadFileException;
+import com.laborguru.model.DayOfWeek;
 import com.laborguru.util.PoiUtils;
 
 /**
- *
+ * Base class for upload store from an excel file
+ * 
  * @author <a href="cnunezre@gmail.com">Cristian Nunez Rebolledo</a>
  * @version 1.0
  * @since SPM 1.0
@@ -20,6 +22,8 @@ import com.laborguru.util.PoiUtils;
 public abstract class BaseStoreSection {
 
 	private static final Logger log = Logger.getLogger(BaseStoreSection.class);
+	
+	private static final double PERCENTAGE_FACTOR = 100.00;
 
 	public enum StoreSection{
 		
@@ -48,6 +52,61 @@ public abstract class BaseStoreSection {
 		}
 	}
 	
+	protected enum UploadWeekDays {
+			SUNDAY("Sunday", DayOfWeek.SUNDAY),
+			MONDAY("Monday", DayOfWeek.MONDAY),
+			TUESDAY("Tuesday", DayOfWeek.TUESDAY),
+			WEDNESDAY("Wednesday", DayOfWeek.WEDNESDAY),
+			THURSDAY("Thursday", DayOfWeek.THURSDAY),
+			FRIDAY("Friday", DayOfWeek.FRIDAY),
+			SATURDAY("Saturday", DayOfWeek.SATURDAY);
+			
+			private String dayName;
+			private DayOfWeek dayOfWeek;
+	
+			/**
+			 * @return the dayName
+			 */
+			public String getDayName() {
+				return dayName;
+			}
+	
+			/**
+			 * @return the dayOfWeek
+			 */
+			public DayOfWeek getDayOfWeek() {
+				return dayOfWeek;
+			}
+	
+	
+			private UploadWeekDays(String day, DayOfWeek dayOfWeek){
+				this.dayOfWeek = dayOfWeek;
+				this.dayName = day;
+			}
+			
+			/**
+			 * @param fieldName
+			 * @return
+			 */
+			public static UploadWeekDays getUploadWeekDay(String fieldName){
+				for (UploadWeekDays uploadWeekDay: EnumSet.allOf(UploadWeekDays.class)){
+					if (uploadWeekDay.getDayName().equalsIgnoreCase(fieldName)){
+						return uploadWeekDay;
+					}
+				}
+				
+				return null;
+			}
+			
+			/**
+			 * @param fieldName
+			 * @return
+			 */
+			public static UploadWeekDays getUploadWeekDay(DayOfWeek dayOfWeek){
+				return UploadWeekDays.values()[dayOfWeek.ordinal()];
+			}
+		}
+
 	private StoreSection section;
 	
 	/**
@@ -112,5 +171,13 @@ public abstract class BaseStoreSection {
 			log.error(message);
 			throw new InvalidFieldUploadFileException(message, ErrorEnum.STORE_INVALID_ROW, new String[] {getSection().getStoreSection()});
 		}
+	}
+
+	/**
+	 * @param value
+	 * @return
+	 */
+	protected Double makePercentage(Double value) {
+		return Double.valueOf(value.doubleValue() * PERCENTAGE_FACTOR);
 	}
 }

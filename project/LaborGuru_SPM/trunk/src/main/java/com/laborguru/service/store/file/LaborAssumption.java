@@ -17,7 +17,8 @@ import com.laborguru.util.PoiUtils;
 
 
 /**
- *
+ * Represents a Labor Assumption Section from the store definition upload file
+ * 
  * @author <a href="cnunezre@gmail.com">Cristian Nunez Rebolledo</a>
  * @version 1.0
  * @since SPM 1.0
@@ -27,8 +28,6 @@ public class LaborAssumption extends BaseStoreSection{
 
 	private static final Logger log = Logger.getLogger(LaborAssumption.class);
 	
-	private static final double PERCENTAGE_FACTOR = 100.00;
-
 	private static final String BOTTOM_UTILIZATION = "Bottom";
 	private static final String TOP_UTILIZATION = "Top";
 	private static final String NON_GUEST_SERV_UTL= "NON-GUEST SERVICE UTL.";
@@ -99,6 +98,9 @@ public class LaborAssumption extends BaseStoreSection{
 	
 	private Map<String, String> activitySharing = new HashMap<String,String>();
 
+	/**
+	 * Default Constructor
+	 */
 	public LaborAssumption(){
 		super();
 		setSection(StoreSection.LABOR_ASSUMPTIONS);
@@ -136,6 +138,9 @@ public class LaborAssumption extends BaseStoreSection{
 	}
 
 
+	/**
+	 * @param row
+	 */
 	private void addActivitySharing(HSSFRow row) {
 		String position = PoiUtils.getStringValue(row.getCell((short)2));
 		String group = PoiUtils.getStringValue(row.getCell((short)4));
@@ -189,6 +194,9 @@ public class LaborAssumption extends BaseStoreSection{
 		getOtherFactors().put(fieldName, factor);
 	}
 
+	/**
+	 * @param row
+	 */
 	private void addUtilization(HSSFRow row) {		
 		String fieldName = PoiUtils.getStringValue(row.getCell((short)2));
 		String position = PoiUtils.getStringValue(row.getCell((short)3));
@@ -211,6 +219,12 @@ public class LaborAssumption extends BaseStoreSection{
 		}
 	}
 	
+	/**
+	 * @param fieldName
+	 * @param position
+	 * @param value
+	 * @return
+	 */
 	private boolean areUtilizationFieldsValid(String fieldName, String position, Double value){
 		
 		if ((fieldName == null) || (value == null)){
@@ -229,6 +243,9 @@ public class LaborAssumption extends BaseStoreSection{
 	}
 
 	
+	/**
+	 * @param row
+	 */
 	private void addUtilizationLimits(HSSFRow row) {		
 		String fieldName = PoiUtils.getStringValue(row.getCell((short)2));
 		String position = PoiUtils.getStringValue(row.getCell((short)3));
@@ -250,6 +267,12 @@ public class LaborAssumption extends BaseStoreSection{
 		}
 	}
 	
+	/**
+	 * @param fieldName
+	 * @param position
+	 * @param value
+	 * @return
+	 */
 	private boolean areUtilizationLimitsFieldsValid(String fieldName, String position, Integer value){
 		
 		if ((fieldName == null) || (value == null) || (position == null)){
@@ -331,6 +354,10 @@ public class LaborAssumption extends BaseStoreSection{
 	}
 
 	
+	/**
+	 * @param store
+	 * @param otherFactor
+	 */
 	private void assembleFactorValue(Store store, OtherFactorsField otherFactor){
 		Double value = otherFactors.get(otherFactor.getFactorName());
 		
@@ -362,15 +389,6 @@ public class LaborAssumption extends BaseStoreSection{
 				throw new IllegalArgumentException("The factor passed in as parameter is not vald");
 		}
 	}
-
-	/**
-	 * @param value
-	 * @return
-	 */
-	private Double makePercentage(Double value) {
-		return Double.valueOf(value.doubleValue() * PERCENTAGE_FACTOR);
-	}
-
 
 	/**
 	 * @return the otherFactors

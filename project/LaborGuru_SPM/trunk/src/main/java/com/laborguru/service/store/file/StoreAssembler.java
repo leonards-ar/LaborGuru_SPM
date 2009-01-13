@@ -1,7 +1,5 @@
 package com.laborguru.service.store.file;
 
-import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 
@@ -22,13 +20,11 @@ public class StoreAssembler {
 	
 	private static final Logger log = Logger.getLogger(StoreAssembler.class);
 	
-
-	
 	private Store store;
 	private StoreInformation storeInformation;
 	private StoreOperation storeOperation;	
 	private LaborAssumption laborAssumption;
-	private List<HSSFRow> storeAllowances;
+	private StoreAllowance storeAllowances;
 	
 	
 	private StoreAssembler(){
@@ -36,6 +32,7 @@ public class StoreAssembler {
 		this.storeInformation = new StoreInformation();
 		this.storeOperation = new StoreOperation();
 		this.laborAssumption = new LaborAssumption();
+		this.storeAllowances = new StoreAllowance();
 	}
 	
 	public static StoreAssembler getStoreAssembler(){
@@ -56,6 +53,7 @@ public class StoreAssembler {
 				laborAssumption.addField(row);
 				break;
 			case STORE_ALLOWANCES:
+				storeAllowances.addField(row);
 				break;
 			case STORE_OPERATIONS:
 				storeOperation.addField(row);				
@@ -72,6 +70,7 @@ public class StoreAssembler {
 		storeInformation.assembleStore(this.store);
 		storeOperation.assembleStore(this.store);
 		laborAssumption.assembleStore(this.store);
+		storeAllowances.assembleStore(this.store);
 		
 		return this.store;
 	}
