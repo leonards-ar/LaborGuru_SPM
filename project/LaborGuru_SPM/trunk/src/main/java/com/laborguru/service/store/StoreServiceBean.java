@@ -14,6 +14,7 @@ import com.laborguru.model.DayOfWeekData;
 import com.laborguru.model.DayPart;
 import com.laborguru.model.DayPartData;
 import com.laborguru.model.Position;
+import com.laborguru.model.PositionGroup;
 import com.laborguru.model.Region;
 import com.laborguru.model.Store;
 import com.laborguru.model.filter.SearchStoreFilter;
@@ -159,9 +160,6 @@ public class StoreServiceBean implements StoreService {
 		}else{
 			storeToSave = storeListAux.get(0);
 			updateStoreInUpload(store, storeToSave);
-			//String message ="It is not possbile to upload an store that already exist";
-			//log.error(message);
-			//throw new InvalidUploadFileException(message, ErrorEnum.INVALID_UPLOAD_STORE_ALREADY_EXISTS);		
 		}
 		
 		storeDao.save(storeToSave);
@@ -175,8 +173,14 @@ public class StoreServiceBean implements StoreService {
 	 * @param destination
 	 */
 	private void updateStoreInUpload(Store source, Store destination){
-		//The only section that can be updated is the Store Allowances so we ignore the other sections.
+		//The only sections that can be updated are Store Allowances and Labor Assumptions so we ignore the other sections.
+		
+		//Updating Labor Assumptions
+		updateLaborAssumptions(source, destination);
+				
+		//Updating Store Allowances
 		for(Position position :source.getPositions()){
+			
 			//DayParts data
 			for(DayPartData data: position.getDayPartData()){
 				updateDayPartData(data, destination);
@@ -187,6 +191,97 @@ public class StoreServiceBean implements StoreService {
 			}
 		}
 	}
+
+	/**
+	 * @param source
+	 * @param destination
+	 */
+	private void updateLaborAssumptions(Store source, Store destination) {
+		Double value = source.getEarnedBreakFactor();		
+		if (value != null){
+			destination.setEarnedBreakFactor(value);
+		}
+		
+		value = source.getScheduleInefficiency();		
+		if (value != null){
+			destination.setScheduleInefficiency(value);
+		}
+
+		value = source.getFillInefficiency();		
+		if (value != null){
+			destination.setFillInefficiency(value);
+		}
+		
+		value = source.getTrainingFactor();		
+		if (value != null){
+			destination.setTrainingFactor(value);
+		}
+		
+		value = source.getFloorManagementFactor();		
+		if (value != null){
+			destination.setFloorManagementFactor(value);
+		}
+		
+		value = source.getAllPositionsUtilization();		
+		if (value != null){
+			destination.setAllPositionsUtilization(value);
+		}
+		
+		Integer intValue = source.getMinimumFloorManagementHours();		
+		if (intValue != null){
+			destination.setMinimumFloorManagementHours(intValue);
+		}
+
+		
+		for(Position sourcePosition: source.getPositions()){
+			Position destinationPos = destination.getPositionByName(sourcePosition.getName());
+			if (destinationPos != null){
+				updatePositionUtilization(sourcePosition, destinationPos);
+				
+				//Update position group
+				PositionGroup sourceGroup = sourcePosition.getPositionGroup();
+				
+				if (sourceGroup!= null){
+					PositionGroup destinationGroup = destination.getPositionGroupByName(sourceGroup.getName());
+					
+					if (destinationGroup != null){
+						PositionGroup originalDestinationGroup = destinationPos.getPositionGroup();
+						originalDestinationGroup.removePosition(destinationPos);
+						destinationGroup.addPosition(destinationPos);
+					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * @param source
+	 * @param destination
+	 */
+	private void updatePositionUtilization(Position source, Position destination){
+		
+		Double valueAux  = source.getUtilizationBottom();		
+		if (valueAux != null){
+			destination.setUtilizationBottom(valueAux);
+		}
+
+		valueAux  = source.getUtilizationTop();		
+		if (valueAux != null){
+			destination.setUtilizationTop(valueAux);
+		}
+
+		Integer intValue  = source.getUtilizationMaximum();		
+		if (intValue != null){
+			destination.setUtilizationMaximum(intValue);
+		}
+
+		intValue  = source.getUtilizationMinimum();		
+		if (intValue != null){
+			destination.setUtilizationMinimum(intValue);
+		}
+	}
+	
+	
 	
 	/**
 	 * @param data
@@ -307,6 +402,11 @@ public class StoreServiceBean implements StoreService {
 		value = data.getWeekendGuestService();
 		if (value != null){
 			destinationData.setWeekendGuestService(value);
+		}
+		
+		Integer minimumStaffing = data.getMinimunStaffing();
+		if (minimumStaffing != null){
+			destinationData.setMinimunStaffing(minimumStaffing);
 		}
 
 	}
