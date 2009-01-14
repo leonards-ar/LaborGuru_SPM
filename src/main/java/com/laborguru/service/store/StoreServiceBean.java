@@ -7,12 +7,13 @@ import org.apache.log4j.Logger;
 
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.InvalidFieldUploadFileException;
-import com.laborguru.exception.InvalidUploadFileException;
 import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.Area;
 import com.laborguru.model.Customer;
+import com.laborguru.model.DayOfWeekData;
 import com.laborguru.model.DayPart;
-import com.laborguru.model.OperationTime;
+import com.laborguru.model.DayPartData;
+import com.laborguru.model.Position;
 import com.laborguru.model.Region;
 import com.laborguru.model.Store;
 import com.laborguru.model.filter.SearchStoreFilter;
@@ -22,6 +23,13 @@ import com.laborguru.service.store.file.StoreDefinitionFileParser;
 
 /**
  * Implementation for Store Service
+ * @author <a href="cnunezre@gmail.com">Cristian Nunez Rebolledo</a>
+ * @version 1.0
+ * @since SPM 1.0
+ *
+ */
+/**
+ *
  * @author <a href="cnunezre@gmail.com">Cristian Nunez Rebolledo</a>
  * @version 1.0
  * @since SPM 1.0
@@ -149,11 +157,11 @@ public class StoreServiceBean implements StoreService {
 			setPersistentArea(store);			
 			storeToSave = store;
 		}else{
-			//storeToSave = storeListAux.get(0);
-			//updateStoreInUpload(store, storeToSave);
-			String message ="It is not possbile to upload an store that already exist";
-			log.error(message);
-			throw new InvalidUploadFileException(message, ErrorEnum.INVALID_UPLOAD_STORE_ALREADY_EXISTS);		
+			storeToSave = storeListAux.get(0);
+			updateStoreInUpload(store, storeToSave);
+			//String message ="It is not possbile to upload an store that already exist";
+			//log.error(message);
+			//throw new InvalidUploadFileException(message, ErrorEnum.INVALID_UPLOAD_STORE_ALREADY_EXISTS);		
 		}
 		
 		storeDao.save(storeToSave);
@@ -162,41 +170,149 @@ public class StoreServiceBean implements StoreService {
 	}
 	
 	
+	/**
+	 * @param source
+	 * @param destination
+	 */
 	private void updateStoreInUpload(Store source, Store destination){
-		//Information section
-		destination.setName(source.getName());
-		
-		//Store Operations
-		destination.setFirstDayOfWeek(source.getFirstDayOfWeek());
-		
-		//Operation Times
-		for (OperationTime operationTime: source.getOperationTimes()){
-			OperationTime existingOperationTime = destination.getOperationTime(operationTime.getDayOfWeek());
-			if (existingOperationTime != null){
-				//already exists
-				existingOperationTime.setCloseHour(operationTime.getCloseHour());
-				existingOperationTime.setOpenHour(operationTime.getOpenHour());
-			}else{
-				//new
-				destination.addOperationTime(operationTime);
+		//The only section that can be updated is the Store Allowances so we ignore the other sections.
+		for(Position position :source.getPositions()){
+			//DayParts data
+			for(DayPartData data: position.getDayPartData()){
+				updateDayPartData(data, destination);
+			}
+			
+			for(DayOfWeekData dayData: position.getDayOfWeekData()){
+				updateDayOfWeekData(dayData, destination);
 			}
 		}
-		
-		//Day Parts
-		for (DayPart dayPart: source.getDayParts()){
-			DayPart existingDayPart = destination.getDayPartByName(dayPart.getName());
-			if (existingDayPart != null){
-				//already exists
-				existingDayPart.setStartHour(dayPart.getStartHour());
-			}else{
-				//new
-				destination.addDayPart(dayPart);
+	}
+	
+	/**
+	 * @param data
+	 * @param destination
+	 */
+	private void updateDayPartData(DayPartData data, Store destination){
+		DayPart dayPart = destination.getDayPartByName(data.getDayPart().getName());
+		if(dayPart != null){			
+			Position position = destination.getPositionByName(data.getPosition().getName());
+			
+			if(position != null)
+			{
+				DayPartData destinationData = position.getDayPartDataFor(dayPart);
+				
+				if (destinationData != null){
+					replaceDayPartData(data, destinationData);
+				}else{
+					addDayPartData(position, dayPart, data);
+				}
 			}
+			
 		}
-		//End store operations
 	}
 	
 	
+	private void updateDayOfWeekData(DayOfWeekData data, Store destination){			
+		Position position = destination.getPositionByName(data.getPosition().getName());
+			
+		if(position != null)
+		{
+			DayOfWeekData destinationData = position.getDayOfWeekDataFor(data.getDayOfWeek());
+			
+			if (destinationData != null){
+				replaceDayOfWeekData(data, destinationData);
+			}else{
+				addDayOfWeekData(position, data);
+			}
+		}
+	}
+	
+	/**
+	 * @param position
+	 * @param data
+	 */
+	private void addDayOfWeekData(Position position, DayOfWeekData data) {
+		data.setPosition(position);
+		position.getDayOfWeekData().add(data);
+	}
+
+	/**
+	 * @param data
+	 * @param destinationData
+	 */
+	private void replaceDayOfWeekData(DayOfWeekData data, DayOfWeekData destinationData) {
+		Double value = null;
+		
+		value = data.getFixedClosing();
+		if (value != null){
+			destinationData.setFixedClosing(value);
+		}
+		
+		value = data.getFixedFlexible();
+		if (value != null){
+			destinationData.setFixedFlexible(value);
+		}
+
+		
+		value = data.getFixedOpening();
+		if (value != null){
+			destinationData.setFixedOpening(value);
+		}
+
+		value = data.getFixedPostRush();
+		if (value != null){
+			destinationData.setFixedPostRush(value);
+		}		
+	}
+
+	/**
+	 * @param position
+	 * @param dayPart
+	 * @param data
+	 */
+	private void addDayPartData(Position position, DayPart dayPart, DayPartData data) {
+		data.setPosition(position);
+		data.setDayPart(dayPart);
+		position.getDayPartData().add(data);
+	}
+
+	/**
+	 * @param data
+	 * @param destinationData
+	 */
+	private void replaceDayPartData(DayPartData data, DayPartData destinationData) {
+		Double value = null;
+		
+		value = data.getFixedGuestService();
+		if (value != null){
+			destinationData.setFixedGuestService(value);
+		}
+		
+		value = data.getVariableFlexible();
+		if (value != null){
+			destinationData.setVariableFlexible(value);
+		}
+
+		
+		value = data.getVariableOpening();
+		if (value != null){
+			destinationData.setVariableOpening(value);
+		}
+
+		value = data.getWeekdayGuestService();
+		if (value != null){
+			destinationData.setWeekdayGuestService(value);
+		}
+		
+		value = data.getWeekendGuestService();
+		if (value != null){
+			destinationData.setWeekendGuestService(value);
+		}
+
+	}
+	
+	
+
 	/**
 	 * @param store
 	 * @return
