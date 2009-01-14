@@ -254,7 +254,9 @@ public class StoreOperation extends BaseStoreSection {
 	public void assembleStore(Store store) {
 		
 		for (OperationTime operationTime: getHoursOfOperation()){
-			store.addOperationTime(operationTime);
+			if (operationTime != null){
+				store.addOperationTime(operationTime);
+			}
 		}
 		
 		int index = 0;		
