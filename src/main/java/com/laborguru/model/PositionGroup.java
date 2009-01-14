@@ -106,6 +106,23 @@ public class PositionGroup extends SpmObject implements ComparableObject {
 
 	/**
 	 * 
+	 * @param position
+	 */
+	public void removePosition(Position position){
+		
+		if (position == null){
+			throw new IllegalArgumentException("Null position passed in as parameter");
+		}
+
+		getPositions().remove(position);
+
+		if(position.getPositionGroup() != null) {
+			position.setPositionGroup(null);
+		}		
+	}
+	
+	/**
+	 * 
 	 * @param obj
 	 * @return
 	 * @see com.laborguru.model.SpmObject#equals(java.lang.Object)
