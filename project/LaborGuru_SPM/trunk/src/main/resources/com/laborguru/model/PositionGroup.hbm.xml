@@ -9,7 +9,7 @@
 			<generator class="identity" />
 		</id>
 		
-		<property name="name" column="name" type="string" length="100" unique="true" not-null="true"/>
+		<property name="name" column="name" type="string" length="100" unique="false" not-null="true"/>
 		
 		<many-to-one name="store" class="Store" foreign-key="fk_position_groups_store">
 			<column name="store_id" not-null="false"/>
