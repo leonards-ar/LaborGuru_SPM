@@ -42,6 +42,7 @@ public class HalfHoursReportPrepareAction extends ScheduleReportPrepareAction im
 	}
 
 	public String showFirstReport() {
+		initWeekSelectorValues();
 		return SpmActionResult.INPUT.getResult();
 	}
 	
