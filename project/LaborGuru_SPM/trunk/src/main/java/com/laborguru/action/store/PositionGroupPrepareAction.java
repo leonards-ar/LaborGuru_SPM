@@ -112,6 +112,9 @@ public class PositionGroupPrepareAction extends StoreAdministrationBaseAction {
 		}
 	}
 	
+	/**
+	 * 
+	 */
 	private void setStorePositionGroups(){
 		if (!"".equals(getNewPositionGroup().trim())) {
 			addNewPositionGroup();
@@ -135,6 +138,9 @@ public class PositionGroupPrepareAction extends StoreAdministrationBaseAction {
 
 	}
 
+	/**
+	 * 
+	 */
 	private void addNewPositionGroup() {
 		PositionGroup newPositionGroup = new PositionGroup();
 		newPositionGroup.setName(getNewPositionGroup());
@@ -142,6 +148,11 @@ public class PositionGroupPrepareAction extends StoreAdministrationBaseAction {
 		getPositionGroups().add(newPositionGroup);
 	}
 	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	private PositionGroup getPositionGroupById(Integer id){
 		if(id != null){
 			for(PositionGroup positionGroup: getStore().getPositionGroups()) {
