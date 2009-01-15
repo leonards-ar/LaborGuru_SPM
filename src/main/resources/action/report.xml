@@ -6,7 +6,7 @@
 	<package name="report"  namespace="/report" extends="spm-default">
 		<action name="totalHoursReport_*" method="{1}" class="com.laborguru.action.report.TotalHoursReportPrepareAction">
 			<result name="input" type="tiles">showWeeklyTotalHours</result>
-			<result name="show">/tiles/report/weekly_totalHours_report.jsp</result>
+			<result name="show">/tiles/report/weekly_totalHours_table_report.jsp</result>
 		</action>
 
 		<action name="foreCastReport_*" method="{1}" class="com.laborguru.action.report.ForecastByPositionPrepareAction">

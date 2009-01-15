@@ -45,6 +45,7 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction
 	}
 
 	public String showFirstReport() {
+		initWeekSelectorValues();
 		return SpmActionResult.INPUT.getResult();
 	}
 
