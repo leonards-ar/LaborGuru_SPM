@@ -39,7 +39,7 @@ public class ForecastByPositionPrepareAction extends ScheduleReportPrepareAction
 	}
 	
 	public String showTable(){
-		if(DEFAULT_REPORT.equals(getSelectedReport()) && DEFAULT_GROUPING.equals(getSelectedGrouping())) {
+		if(DEFAULT_GROUPING.equals(getSelectedGrouping())) {
 		initWeekSelectorValues();
 		getForecastReport();
 		setShowTable(true);

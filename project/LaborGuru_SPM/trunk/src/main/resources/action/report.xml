@@ -4,11 +4,21 @@
         "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
 	<package name="report"  namespace="/report" extends="spm-default">
-		<action name="totalHoursReport_*" method="{1}" class="com.laborguru.action.report.TotalHoursReportPrepareAction">
+		<action name="totalHoursReport_*" method="{1}" class="com.laborguru.action.report.SchedulingEfficiencyReportPrepareAction">
 			<result name="input" type="tiles">showWeeklyTotalHours</result>
 			<result name="show">/tiles/report/weekly_totalHours_table_report.jsp</result>
 		</action>
 
+		<action name="performanceEfficiencyReport_*" method="{1}" class="com.laborguru.action.report.PerformanceEfficiencyReportPrepareAction">
+			<result name="input" type="tiles">showPerformanceEfficiencyReport</result>
+			<result name="show">/tiles/report/performance_efficiency_table_report.jsp</result>		
+		</action>
+
+		<action name="scheduleExecutionEfficiencyReport_*" method="{1}" class="com.laborguru.action.report.ScheduleExecutionEfficiencyReportPrepareAction">
+			<result name="input" type="tiles">showScheduleExecutionEfficiencyReport</result>
+			<result name="show">/tiles/report/schedule_execution_efficiency_table_report.jsp</result>		
+		</action>
+		
 		<action name="foreCastReport_*" method="{1}" class="com.laborguru.action.report.ForecastByPositionPrepareAction">
 			<result name="show">/tiles/report/position_forecast_report.jsp</result>
 		</action>
@@ -21,6 +31,7 @@
 			<result name="input" type="tiles">showHalfHours</result>
 			<result name="show">/tiles/report/halfhour_table_report.jsp</result>
 		</action>
+		
 	</package>
 	
 </struts>

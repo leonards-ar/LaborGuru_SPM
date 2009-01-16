@@ -19,7 +19,7 @@ import com.laborguru.util.FusionXmlDataConverter;
 public abstract class ScheduleReportPrepareAction extends SpmAction  {
 
 	private static final long serialVersionUID = 1L;
-	protected static final String DEFAULT_REPORT="ScheduleCheck";
+	protected static final String DEFAULT_REPORT="totalHoursReport_showFirstReport.action";
 	protected static final String DEFAULT_GROUPING = "total";
 	
 	private WeekDaySelector weekDaySelector;
