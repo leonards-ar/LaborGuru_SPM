@@ -367,6 +367,16 @@
 		<put-attribute name="body" value="/tiles/report/halfhours_report.jsp" />
 	</definition>
 
+	<definition name="showPerformanceEfficiencyReport" extends="baseLayoutWithMenu">
+		<put-attribute name="htmlExtHeader" value="/tiles/dojoHtmlExtHeader.jsp" />
+		<put-attribute name="body" value="/tiles/report/performance_efficiency_report.jsp" />
+	</definition>
+
+	<definition name="showScheduleExecutionEfficiencyReport" extends="baseLayoutWithMenu">
+		<put-attribute name="htmlExtHeader" value="/tiles/dojoHtmlExtHeader.jsp" />
+		<put-attribute name="body" value="/tiles/report/schedule_execution_efficiency_report.jsp" />
+	</definition>
+
 	<!-- Upload Store Page -->
 	<definition name="storeDefinitionUploadPage" extends="baseLayoutWithMenu">
 		<put-attribute name="body" value="/tiles/store/uploaddefinition_edit.jsp" />

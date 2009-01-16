@@ -35,7 +35,7 @@
 												status="itPrevDate">
 												<td class="calendarTableColumn" width="10%" nowrap="nowrap">
 												<a href="<s:url value="#" includeParams="none"/>"
-													onclick="showWaitSplash(); report_form.action='totalHoursReport_changeWeek.action'; report_form.selectedDate.value='<s:text name='report.weekdayselector.weekdayselector.input.dateformat'><s:param value='prevDate'/></s:text>'; report_form.submit();"
+													onclick="showWaitSplash(); report_form.action='performanceEfficiencyReport_changeWeek.action'; report_form.selectedDate.value='<s:text name='report.weekdayselector.weekdayselector.input.dateformat'><s:param value='prevDate'/></s:text>'; report_form.submit();"
 													class="calendarUnselectedWeekLink"> <s:text
 													name='report.weekdayselector.availableweek.dateformat'>
 													<s:param value='prevDate' />
@@ -56,7 +56,7 @@
 													<td><img
 														src="<s:url value="/images/transp2x1.gif" includeParams="none"/>" /></td>
 													<td><a href="<s:url value="#" includeParams="none"/>"
-														onclick="showWaitSplash(); report_form.action='totalHoursReport_changeWeek.action'; report_form.selectedDate.value='<s:text name='report.weekdayselector.weekdayselector.input.dateformat'><s:param value='weekDaySelector.previousStartingWeekDay'/></s:text>'; report_form.submit();"><img
+														onclick="showWaitSplash(); report_form.action='performanceEfficiencyReport_changeWeek.action'; report_form.selectedDate.value='<s:text name='report.weekdayselector.weekdayselector.input.dateformat'><s:param value='weekDaySelector.previousStartingWeekDay'/></s:text>'; report_form.submit();"><img
 														src="<s:url value="/images/cal_prev.png" includeParams="none"/>"
 														border="0" /></a></td>
 													<td><img
@@ -68,7 +68,7 @@
 													<td><img
 														src="<s:url value="/images/transp2x1.gif" includeParams="none"/>" /></td>
 													<td><a href="<s:url value="#" includeParams="none"/>"
-														onclick="showWaitSplash(); report_form.action='totalHoursReport_changeWeek.action'; report_form.selectedDate.value='<s:text name='report.weekdayselector.weekdayselector.input.dateformat'><s:param value='weekDaySelector.nextStartingWeekDay'/></s:text>'; report_form.submit();"><img
+														onclick="showWaitSplash(); report_form.action='performanceEfficiencyReport_changeWeek.action'; report_form.selectedDate.value='<s:text name='report.weekdayselector.weekdayselector.input.dateformat'><s:param value='weekDaySelector.nextStartingWeekDay'/></s:text>'; report_form.submit();"><img
 														src="<s:url value="/images/cal_next.png" includeParams="none"/>"
 														border="0" /></a></td>
 													<td><img
@@ -82,12 +82,10 @@
 												value="weekDaySelector.nextStartingWeekDays"
 												status="itNextDate">
 												<td class="calendarTableColumn" width="10%" nowrap="nowrap">
-												<a href="<s:url value="#" includeParams="none"/>"
-													onclick="showWaitSplash(); report_form.action='totalHoursReport_changeWeek.action'; report_form.selectedDate.value='<s:text name='report.weekdayselector.weekdayselector.input.dateformat'><s:param value='nextDate'/></s:text>'; report_form.submit();"
-													class="calendarUnselectedWeekLink"> <s:text
-													name='report.weekdayselector.availableweek.dateformat'>
+												 <s:text name='report.weekdayselector.availableweek.dateformat'>
 													<s:param value='nextDate' />
-												</s:text> </a></td>
+												</s:text>
+												</td>
 
 												<s:if test="!#itNextDate.last">
 													<td class="calendarTableColumn" nowrap="nowrap"><img
@@ -145,20 +143,12 @@
 		<td>
 		<br/><br/>
 		<table border="0" cellspacing="0" align="center">
+
 			<tr>
-				<td>
-				<s:url id="forecastReport"
-					action="foreCastReport_showTable.action" namespace="/report"
-					includeParams="none">
-				</s:url> <s:div id="foreCast" theme="ajax" formId="report_form" listenTopics="/refresh,/Changed" href="%{forecastReport}" />
-			</td>
-			</tr>
-			
-			<tr>
-				<td><s:url id="totalHourReportUrl"
-					action="totalHoursReport_showReport" namespace="/report"
+				<td><s:url id="performanceEfficiencyReportUrl"
+					action="performanceEfficiencyReport_showReport" namespace="/report"
 					includeParams="none" /> <s:div id="reportFrame" theme="ajax"
-					href="%{totalHourReportUrl}" formId="report_form"
+					href="%{performanceEfficiencyReportUrl}" formId="report_form"
 					listenTopics="/refresh" indicator="indicator" /></td>
 			</tr>
 		</table>

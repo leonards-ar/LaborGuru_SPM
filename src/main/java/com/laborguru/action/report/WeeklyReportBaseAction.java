@@ -4,17 +4,12 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.laborguru.action.SpmActionResult;
-import com.laborguru.model.Position;
-import com.laborguru.model.PositionGroup;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.service.position.PositionService;
 import com.laborguru.util.SpmConstants;
 import com.opensymphony.xwork2.Preparable;
 
-public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction
-		implements Preparable {
-
-	private static final long serialVersionUID = 1L;
+public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction implements Preparable{
 
 	private List<TotalHour> totalHours;
 	private Integer positionId;
@@ -36,7 +31,7 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction
 	public void prepare() throws Exception {
 	}
 
-	public void prepareShowReport() throws Exception {
+	public void prepareShowReport(){
 		pageSetup();
 	}
 
@@ -51,17 +46,16 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction
 
 	public String showReport() {
 		initWeekSelectorValues();
-
 		if (getItemId() == null) {
-			getWeeklyReport();
+			getReport();
 			
 		} else {
 			if ("byPosition".equals(getSelectedGrouping())) {
-				getWeeklyReportByPosition();
+				getReportByPosition();
 			} else if ("byService".equals(getSelectedGrouping())) {
-				getWeeklyReportByService();
+				getReportByService();
 			} else {
-				getWeeklyReport();
+				getReport();
 			}
 		}
 		calculateTotals();
@@ -69,29 +63,7 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction
 		return SpmActionResult.SHOW.getResult();
 	}
 
-	private void getWeeklyReport() {
-		setTotalHours(getReportService().getWeeklyTotalHours(
-				getEmployeeStore(), getWeekDaySelector().getStartingWeekDay()));
-	}
-
-	private void getWeeklyReportByPosition() {
-		Position position = new Position();
-		position.setId(getItemId());
-		setTotalHours(getReportService().getWeeklyTotalHoursByPosition(
-				getEmployeeStore(), position,
-				getWeekDaySelector().getStartingWeekDay()));
-	}
-
-	private void getWeeklyReportByService() {
-		PositionGroup positionGroup = new PositionGroup();
-		positionGroup.setId(getItemId());
-		setTotalHours(getReportService().getWeeklyTotalHoursByService(
-				getEmployeeStore(), positionGroup,
-				getWeekDaySelector().getStartingWeekDay()));
-	}
-
 	private void calculateTotals() {
-
 		for (TotalHour th : getTotalHours()) {
 			setTotalSales(getTotalSales().add(th.getSales()));
 			setTotalSchedule(getTotalSchedule().add(th.getSchedule()));
@@ -107,13 +79,16 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction
 					.abs());
 		}
 	}
-
 	
-	public void generateXmlGraph(){
+	private void generateXmlGraph(){
 		setXmlValues(getFusionXmlDataConverter().weeklyTotalHoursXmlConverter(
 				getTotalHours()));
 	}
 	
+	protected abstract void getReport();
+	protected abstract void getReportByPosition();
+	protected abstract void getReportByService();
+
 	/**
 	 * @return the totalHours
 	 */
@@ -122,8 +97,7 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction
 	}
 
 	/**
-	 * @param totalHours
-	 *            the totalHours to set
+	 * @param totalHours the totalHours to set
 	 */
 	public void setTotalHours(List<TotalHour> totalHours) {
 		this.totalHours = totalHours;
@@ -137,11 +111,24 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction
 	}
 
 	/**
-	 * @param positionId
-	 *            the positionId to set
+	 * @param positionId the positionId to set
 	 */
 	public void setPositionId(Integer positionId) {
 		this.positionId = positionId;
+	}
+
+	/**
+	 * @return the positionService
+	 */
+	public PositionService getPositionService() {
+		return positionService;
+	}
+
+	/**
+	 * @param positionService the positionService to set
+	 */
+	public void setPositionService(PositionService positionService) {
+		this.positionService = positionService;
 	}
 
 	/**
@@ -152,8 +139,7 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction
 	}
 
 	/**
-	 * @param totalSchedule
-	 *            the totalSchedule to set
+	 * @param totalSchedule the totalSchedule to set
 	 */
 	public void setTotalSchedule(BigDecimal totalSchedule) {
 		this.totalSchedule = totalSchedule;
@@ -167,8 +153,7 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction
 	}
 
 	/**
-	 * @param totalTarget
-	 *            the totalTarget to set
+	 * @param totalTarget the totalTarget to set
 	 */
 	public void setTotalTarget(BigDecimal totalTarget) {
 		this.totalTarget = totalTarget;
@@ -182,57 +167,24 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction
 	}
 
 	/**
-	 * @param totalDifference
-	 *            the totalDifference to set
+	 * @param totalDifference the totalDifference to set
 	 */
 	public void setTotalDifference(BigDecimal totalDifference) {
 		this.totalDifference = totalDifference;
 	}
 
 	/**
-	 * @return the totalPorcentaje
+	 * @return the totalPercentaje
 	 */
 	public BigDecimal getTotalPercentaje() {
 		return totalPercentaje;
 	}
 
 	/**
-	 * @param totalPorcentaje
-	 *            the totalPorcentaje to set
+	 * @param totalPercentaje the totalPercentaje to set
 	 */
-	public void setTotalPercentaje(BigDecimal totalPorcentaje) {
-		this.totalPercentaje = totalPorcentaje;
-	}
-
-	/**
-	 * Gets the data to display in the graphic chart.
-	 * 
-	 * @return
-	 */
-	public String getXmlValues() {
-		return xmlValues;
-	}
-	
-	/**
-	 * @param xmlValues
-	 */
-	public void setXmlValues(String xmlValues) {
-		this.xmlValues = xmlValues;
-	}
-
-	/**
-	 * @return the positionService
-	 */
-	public PositionService getPositionService() {
-		return positionService;
-	}
-
-	/**
-	 * @param positionService
-	 *            the positionService to set
-	 */
-	public void setPositionService(PositionService positionService) {
-		this.positionService = positionService;
+	public void setTotalPercentaje(BigDecimal totalPercentaje) {
+		this.totalPercentaje = totalPercentaje;
 	}
 
 	/**
@@ -247,6 +199,20 @@ public class TotalHoursReportPrepareAction extends ScheduleReportPrepareAction
 	 */
 	public void setTotalSales(BigDecimal totalSales) {
 		this.totalSales = totalSales;
+	}
+
+	/**
+	 * @return the xmlValues
+	 */
+	public String getXmlValues() {
+		return xmlValues;
+	}
+
+	/**
+	 * @param xmlValues the xmlValues to set
+	 */
+	public void setXmlValues(String xmlValues) {
+		this.xmlValues = xmlValues;
 	}
 
 }

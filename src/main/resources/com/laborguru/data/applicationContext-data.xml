@@ -206,13 +206,13 @@
 		<description>Different Report Types</description>
 		<constructor-arg>
 			<map>
-				<entry key="ScheduleCheck">
+				<entry key="totalHoursReport_showFirstReport.action">
 					<value>report.reportType.scheduleCheck.label</value>
 				</entry>
-				<entry key="StorePerformance">
+				<entry key="performanceEfficiencyReport_showFirstReport.action">
 					<value>report.reportType.storePerfomance.label</value>
 				</entry>
-				<entry key="ScheduleExecution">
+				<entry key="scheduleExecutionEfficiencyReport_showFirstReport.action">
 					<value>report.reportType.scheduleExcution.label</value>
 				</entry>
 			</map>

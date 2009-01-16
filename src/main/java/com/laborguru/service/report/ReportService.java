@@ -77,4 +77,54 @@ public interface ReportService extends Service {
 	 * @return
 	 */
 	List<TotalHour> getHalfHourlyReportByService(Store store, PositionGroup positionGroup, Date date);
+	
+	/**
+	 * Retrieves the Performance Efficiency Report
+	 * @param store
+	 * @param startingWeekDate
+	 * @return
+	 */
+	List<TotalHour> getPerformanceEfficiencyReport(Store store, Date startingWeekDate);
+	
+	/**
+	 * Retrieves the Performance Efficiency Report filtered by position
+	 * @param store
+	 * @param position
+	 * @param startingWeekDate
+	 * @return
+	 */
+	List<TotalHour> getPerformanceEfficiencyReportByPosition(Store store, Position position, Date startingWeekDate);
+	
+	/**
+	 * Retrieves the PerformanceEfficiencyReport filtered by position group
+	 * @param store
+	 * @param positionGroup
+	 * @param startingWeekDate
+	 * @return
+	 */
+	List<TotalHour> getPerformanceEfficiencyReportByService(Store store, PositionGroup positionGroup, Date startingWeekDate);
+	
+	/**
+	 * Retrieves the Schedule Execution Efficiency
+	 * @param store
+	 * @param startingWeekDate
+	 * @return
+	 */
+	List<TotalHour> getScheduleExecutionEfficiency(Store store, Date startingWeekDate);
+	
+	/**
+	 * Retrieves the Schedule Execution Efficiency filtered by position
+	 * @param store
+	 * @param startingWeekDate
+	 * @return
+	 */
+	List<TotalHour> getScheduleExecutionEfficiencyByPosition(Store store, Position position, Date startingWeekDate);
+	
+	/**
+	 * Retrieves the Schedule Execution Efficiency filtered by position group
+	 * @param store
+	 * @param startingWeekDate
+	 * @return
+	 */
+	List<TotalHour> getScheduleExecutionEfficiencyByService(Store store, PositionGroup positionGroup, Date startingWeekDate);
 }
