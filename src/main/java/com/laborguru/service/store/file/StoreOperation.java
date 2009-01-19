@@ -38,6 +38,11 @@ public class StoreOperation extends BaseStoreSection {
 	private static final String OPEN = "Open";
 	private static final String CLOSE = "Close";
 	
+	//Projections Defaults
+	//TODO:Include this on the upload file
+	private static final Integer DAILY_PROJECTION_WEEK_DEFAULT = 4;
+	private static final Integer HALF_HOUR_PROJECTION_WEEK_DEFAULT = 4;
+	
 	public enum StoreOperationField{
 		
 		HOURS_OF_OPERATION("Hours of operation"),
@@ -78,8 +83,7 @@ public class StoreOperation extends BaseStoreSection {
 	private List<String> positionNames = new ArrayList<String>();
 	private List<String> groupNames = new ArrayList<String>();
 	private List<String> variableDefinitions = new ArrayList<String>();
-	private DayOfWeek firstDayOfWeek;
-
+	private DayOfWeek firstDayOfWeek;	
 	
 	/**
 	 * Default Constructor
@@ -303,6 +307,10 @@ public class StoreOperation extends BaseStoreSection {
 		if (getFirstDayOfWeek() != null){
 			store.setFirstDayOfWeek(getFirstDayOfWeek());
 		}
+		
+		//Setting default projection values
+		store.setDailyProjectionsWeeksDefault(DAILY_PROJECTION_WEEK_DEFAULT);
+		store.setHalfHourProjectionsWeeksDefault(HALF_HOUR_PROJECTION_WEEK_DEFAULT);
 	}
 
 	
