@@ -3,7 +3,7 @@
 <validators> 
   <field name="positionGroups">
        <field-validator type="visitor">
-          <param name="context">positionGroupSave</param>               
+          <param name="context">positionGroupsSave</param>               
           <message>Position Group: </message>
       </field-validator>
   </field>

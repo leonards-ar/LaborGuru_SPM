@@ -191,4 +191,23 @@ public class StoreSchedule extends SpmObject {
 		
 		return employees;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Set<Employee> getScheduleEmployeesBreaks() {
+		Set<Employee> employees = new HashSet<Employee>();
+		
+		List<Shift> positionShifts;
+		
+		for(EmployeeSchedule employeeSchedule : getEmployeeSchedules()) {
+			positionShifts = employeeSchedule.getBreakShifts();
+			if(positionShifts != null && positionShifts.size() > 0) {
+				employees.add(employeeSchedule.getEmployee());
+			}
+		}		
+		
+		return employees;		
+	}
 }

@@ -37,6 +37,12 @@
 			<result name="input" type="tiles">viewPrintShiftByPositionByWeekPage</result>
 			<result name="success" type="tiles">viewPrintShiftByPositionByWeekPage</result>
 		</action>		
+
+		<action name="printweeklyshiftbreaks_*" method="{1}"
+			class="com.laborguru.action.schedule.PrintShiftBreaksByWeekPrepareAction">
+			<result name="input" type="tiles">viewPrintShiftBreaksByWeekPage</result>
+			<result name="success" type="tiles">viewPrintShiftBreaksByWeekPage</result>
+		</action>		
 		
 		<action name="showscheduledetails" class="com.laborguru.action.schedule.ScheduleDetailsAction">
 			<result name="success" type="tiles">showScheduleDetailsPage</result>

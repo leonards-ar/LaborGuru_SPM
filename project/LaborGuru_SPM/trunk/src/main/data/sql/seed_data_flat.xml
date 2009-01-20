@@ -92,6 +92,7 @@
   <tbl_menu_items menu_item_id="23" label_key="report.weekByDay.title" help_key="WEEK_BY_DAY_REPORT_HELP" target="/report/totalHoursReport_showFirstReport.action?selectedDate=${selectedDate}&amp;selectedWeekDay=${selectedWeekDay}" position="1" parent_id="21" permission_id="19"/>
   <tbl_menu_items menu_item_id="24" label_key="report.dailyHours.title" help_key="DAY_BY_HALFHOUR_REPORT_HELP" target="/report/halfHourReport_showFirstReport.action?selectedDate=${selectedDate}&amp;selectedWeekDay=${selectedWeekDay}" position="2" parent_id="21" permission_id="19"/>
   <tbl_menu_items menu_item_id="25" label_key="schedule.submenu.printshift" help_key="SCHEDULE_PRINTSHIFT_HELP" target="/schedule/printweeklyshiftbyposition_view.action" position="2" parent_id="15" permission_id="41"/>
+  <tbl_menu_items menu_item_id="26" label_key="schedule.submenu.printbreak" help_key="SCHEDULE_PRINTBREAK_HELP" target="/schedule/printweeklyshiftbreaks_view.action" position="3" parent_id="15" permission_id="41"/>
 
   
   <tbl_stores store_id="1" name="microcentro" area_id="1" half_hour_projections_weeks_default="4" daily_projections_weeks_default="4" code="MD0001"/>
