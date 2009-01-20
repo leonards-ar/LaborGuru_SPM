@@ -89,8 +89,8 @@
   <tbl_menu_items menu_item_id="20" label_key="store.submenu.uploadsales" help_key="STORE_UPLOAD_SALES_HELP" target="/sales/sales_edit.action" position="2" parent_id="5" permission_id="6"/>
   <tbl_menu_items menu_item_id="21" label_key="report.menu.label" help_key="REPORT_MENU_HELP" target="/report/totalHoursReport_showFirstReport.action" position="7" permission_id="19"/>
   <tbl_menu_items menu_item_id="22" label_key="store.submenu.uploadstoredefinition" help_key="STORE_UPLOAD_DEFINITION_HELP" target="/store/uploadDefinition_edit.action" position="3" parent_id="5" permission_id="6"/>
-  <tbl_menu_items menu_item_id="23" label_key="report.weekByDay.title" help_key="WEEK_BY_DAY_REPORT_HELP" target="/report/totalHoursReport_showFirstReport.action?selectedDate=${selectedDate}&selectedWeekDay=${selectedWeekDay}" position="1" parent_id="21" permission_id="19"/>
-  <tbl_menu_items menu_item_id="24" label_key="report.dailyHours.title" help_key="DAY_BY_HALFHOUR_REPORT_HELP" target="/report/halfHourReport_showFirstReport.action?selectedDate=${selectedDate}&selectedWeekDay=${selectedWeekDay}" position="2" parent_id="21" permission_id="19"/>
+  <tbl_menu_items menu_item_id="23" label_key="report.weekByDay.title" help_key="WEEK_BY_DAY_REPORT_HELP" target="/report/totalHoursReport_showFirstReport.action?selectedDate=${selectedDate}&amp;selectedWeekDay=${selectedWeekDay}" position="1" parent_id="21" permission_id="19"/>
+  <tbl_menu_items menu_item_id="24" label_key="report.dailyHours.title" help_key="DAY_BY_HALFHOUR_REPORT_HELP" target="/report/halfHourReport_showFirstReport.action?selectedDate=${selectedDate}&amp;selectedWeekDay=${selectedWeekDay}" position="2" parent_id="21" permission_id="19"/>
   <tbl_menu_items menu_item_id="25" label_key="schedule.submenu.printshift" help_key="SCHEDULE_PRINTSHIFT_HELP" target="/schedule/printweeklyshiftbyposition_view.action" position="2" parent_id="15" permission_id="41"/>
 
   
