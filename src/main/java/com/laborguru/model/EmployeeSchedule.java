@@ -257,6 +257,22 @@ public class EmployeeSchedule extends SpmObject {
 	 * @param position
 	 * @return
 	 */
+	public List<Shift> getBreakShifts() {
+		List<Shift> shifts = new ArrayList<Shift>();
+		for(Shift shift : getShifts()) {
+			if(shift.isBreak()) {
+				shifts.add(shift);
+			}
+		}
+		
+		return shifts;
+	}
+	
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 */
 	public List<Shift> getShiftsFor(Position position) {
 		List<Shift> shifts = new ArrayList<Shift>();
 		if(position != null && position.getId() != null) {
