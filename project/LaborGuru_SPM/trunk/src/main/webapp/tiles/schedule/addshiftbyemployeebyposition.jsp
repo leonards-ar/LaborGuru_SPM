@@ -300,8 +300,6 @@
 									<s:iterator id="startToIgnore" value="scheduleIndividualStartHoursToIgnore">
 										<td class="scheduleUnavailable">
 											&nbsp;
-											<s:hidden id="%{#itSchedule.index}schedulehour_%{#itScheduleData.index}_%{#itHour.index}" name="positionScheduleData[%{#itSchedule.index}].scheduleData[%{#itScheduleData.index}].hours[%{#itHour.index}]"/>
-											<s:hidden id="%{#itSchedule.index}schedule_%{#itScheduleData.index}_%{#itHour.index}" name="positionScheduleData[%{#itSchedule.index}].scheduleData[%{#itScheduleData.index}].schedule[%{#itHour.index}]"/>
 										</td>
 									</s:iterator>
 								</s:if>  
@@ -314,8 +312,6 @@
 									<s:iterator id="startToIgnore" value="scheduleIndividualEndHoursToIgnore">
 										<td class="scheduleUnavailable">
 											&nbsp;
-											<s:hidden id="%{#itSchedule.index}schedulehour_%{#itScheduleData.index}_%{#itHour.index}" name="positionScheduleData[%{#itSchedule.index}].scheduleData[%{#itScheduleData.index}].hours[%{#itHour.index}]"/>
-											<s:hidden id="%{#itSchedule.index}schedule_%{#itScheduleData.index}_%{#itHour.index}" name="positionScheduleData[%{#itSchedule.index}].scheduleData[%{#itScheduleData.index}].schedule[%{#itHour.index}]"/>
 										</td>
 									</s:iterator>
 								</s:if> 
@@ -369,13 +365,13 @@
 							<s:iterator id="staffing" value="minimumStaffing" status="itStaffing">
 								<s:if test="#itStaffing.first">
 									<s:iterator id="startToIgnore" value="scheduleIndividualStartHoursToIgnore">
-										<td id='<s:property value="#itSchedule.index"/>total_cell_<s:property value="#itStaffing.index"/>' class="scheduleStaffingUnavailable">&nbsp;</td>
+										<td class="scheduleStaffingUnavailable">&nbsp;</td>
 									</s:iterator>
 								</s:if>
 								<td id='<s:property value="#itSchedule.index"/>total_cell_<s:property value="#itStaffing.index"/>' class="scheduleTotalValueCell">&nbsp;</td>
 								<s:if test="#itStaffing.last">
 									<s:iterator id="startToIgnore" value="scheduleIndividualEndHoursToIgnore">
-										<td id='<s:property value="#itSchedule.index"/>total_cell_<s:property value="#itStaffing.index"/>' class="scheduleStaffingUnavailable">&nbsp;</td>
+										<td class="scheduleStaffingUnavailable">&nbsp;</td>
 									</s:iterator>
 								</s:if> 
 							</s:iterator>				    	
@@ -387,7 +383,7 @@
 							<s:iterator id="staffing" value="minimumStaffing" status="itStaffing">
 								<s:if test="#itStaffing.first">
 									<s:iterator id="startToIgnore" value="scheduleIndividualStartHoursToIgnore">
-										<td id='<s:property value="#itSchedule.index"/>staffing_cell_<s:property value="#itStaffing.index"/>' class="scheduleStaffingUnavailable"><s:hidden name="positionScheduleData[%{#itSchedule.index}].minimumStaffing[%{#itStaffing.index}]" value="0"/>&nbsp;</td>
+										<td class="scheduleStaffingUnavailable">&nbsp;</td>
 									</s:iterator>
 								</s:if>
 								<td id='<s:property value="#itSchedule.index"/>staffing_cell_<s:property value="#itStaffing.index"/>' class="scheduleStaffingCalculated">
@@ -396,7 +392,7 @@
 								</td>
 								<s:if test="#itStaffing.last">
 									<s:iterator id="startToIgnore" value="scheduleIndividualEndHoursToIgnore">
-										<td id='<s:property value="#itSchedule.index"/>staffing_cell_<s:property value="#itStaffing.index"/>' class="scheduleStaffingUnavailable"><s:hidden name="positionScheduleData[%{#itSchedule.index}].minimumStaffing[%{#itStaffing.index}]" value="0"/>&nbsp;</td>
+										<td class="scheduleStaffingUnavailable">&nbsp;</td>
 									</s:iterator>
 								</s:if> 
 							</s:iterator>				    	
@@ -408,13 +404,13 @@
 							<s:iterator id="staffing" value="minimumStaffing" status="itStaffing">
 								<s:if test="#itStaffing.first">
 									<s:iterator id="startToIgnore" value="scheduleIndividualStartHoursToIgnore">
-										<td id='<s:property value="#itSchedule.index"/>difference_cell_<s:property value="#itStaffing.index"/>' class="scheduleStaffingUnavailable">&nbsp;</td>
+										<td class="scheduleStaffingUnavailable">&nbsp;</td>
 									</s:iterator>
 								</s:if>
 								<td id='<s:property value="#itSchedule.index"/>difference_cell_<s:property value="#itStaffing.index"/>' class="scheduleStaffingDifferenceEqual">&nbsp;</td>
 								<s:if test="#itStaffing.last">
 									<s:iterator id="startToIgnore" value="scheduleIndividualEndHoursToIgnore">
-										<td id='<s:property value="#itSchedule.index"/>difference_cell_<s:property value="#itStaffing.index"/>' class="scheduleStaffingUnavailable">&nbsp;</td>
+										<td class="scheduleStaffingUnavailable">&nbsp;</td>
 									</s:iterator>
 								</s:if> 
 							</s:iterator>				    	
