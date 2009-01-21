@@ -22,6 +22,7 @@ public class OperationTimePrepareAction extends StoreAdministrationBaseAction {
 	private static Logger log = Logger.getLogger(OperationTimePrepareAction.class);
 
 	private Integer firstDayOfWeek;
+	private Integer extraScheduleHours;
 	
 	private String weekOperationTimeOpen[] = new String[DayOfWeek.values().length];
 	private String weekOperationTimeClose[] = new String[DayOfWeek.values().length];
@@ -99,7 +100,7 @@ public class OperationTimePrepareAction extends StoreAdministrationBaseAction {
 	public String edit() throws Exception {
 		loadOperationTimes();
 		setFirstDayOfWeek(getStore().getFirstDayOfWeekAsInteger());
-		
+		setExtraScheduleHours(getStore().getExtraScheduleHours());
 		return SpmActionResult.EDIT.getResult();
 	}
 
@@ -126,7 +127,7 @@ public class OperationTimePrepareAction extends StoreAdministrationBaseAction {
 		try {
 			setOperationTimes();
 			getStore().setFirstDayOfWeekAsInteger(getFirstDayOfWeek());
-			
+			getStore().setExtraScheduleHours(getExtraScheduleHours());
 			if(log.isDebugEnabled()) {
 				log.debug("About to save store: " + getStore());
 			}
@@ -208,5 +209,19 @@ public class OperationTimePrepareAction extends StoreAdministrationBaseAction {
 				}
 			}
 		}
+	}
+
+	/**
+	 * @return the extraScheduleHours
+	 */
+	public Integer getExtraScheduleHours() {
+		return extraScheduleHours;
+	}
+
+	/**
+	 * @param extraScheduleHours the extraScheduleHours to set
+	 */
+	public void setExtraScheduleHours(Integer extraScheduleHours) {
+		this.extraScheduleHours = extraScheduleHours;
 	}
 }
