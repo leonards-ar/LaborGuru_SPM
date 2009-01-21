@@ -4,7 +4,7 @@
 <br />
 <table border="0" cellspacing="0" align="center">
 	<tr>
-		<td id="subtitleBar" nowrap><s:text name="store.storeoperations.title" /> - <s:text name="store.storeoperations.firstdayofweek.title" /></td>
+		<td id="subtitleBar" nowrap><s:text name="store.storeoperations.title" /> - <s:text name="store.storeoperations.schedule.title" /></td>
 	</tr>
 
 	<tr>
@@ -18,6 +18,12 @@
                     	</s:if>
                     </td>
 				</tr>
+				<tr class="editFormEvenRow">
+                    <td align="right" class="form_label" nowrap><s:text name="store.storeoperations.hours_before_after.label" /></td>
+                    <td align="left" class="value">
+                    	<s:property value="store.extraScheduleHours"/>
+                    </td>
+				</tr>				
 			</table>
 		</td>
 	</tr>

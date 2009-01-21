@@ -6,7 +6,7 @@
               <s:hidden name="storeId" theme="simple"/>
 <table border="0" cellspacing="0" align="center">
 	<tr>
-		<td id="subtitleBar" nowrap><s:text name="store.storeoperations.title" /> - <s:text name="store.storeoperations.firstdayofweek.title" /></td>
+		<td id="subtitleBar" nowrap><s:text name="store.storeoperations.title" /> - <s:text name="store.storeoperations.schedule.title" /></td>
 	</tr>
 
 	<tr>
@@ -18,6 +18,13 @@
                     	<s:select name="firstDayOfWeek" list="{'0','1','2','3','4','5','6'}" listValue="%{getText('dayofweek.'+toString())}"/>
                     </td>
 				</tr>
+				<tr class="editFormEvenRow">
+                    <td align="right" class="form_label" nowrap><s:text name="store.storeoperations.hours_before_after.label" /></td>
+                    <td align="left" class="value">
+                    	<s:textfield name="extraScheduleHours" size="2" maxlength="2"/>
+                    </td>
+				</tr>
+				
 			</table>
 		</td>
 	</tr>
