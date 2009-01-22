@@ -38,6 +38,12 @@
 			<result name="success" type="tiles">viewPrintShiftByPositionByWeekPage</result>
 		</action>		
 
+		<action name="printweeklytotalhoursbyposition_*" method="{1}"
+			class="com.laborguru.action.schedule.PrintTotalHoursByPositionByWeekPrepareAction">
+			<result name="input" type="tiles">viewPrintTotalHoursByPositionByWeekPage</result>
+			<result name="success" type="tiles">viewPrintTotalHoursByPositionByWeekPage</result>
+		</action>		
+
 		<action name="printweeklyshiftbreaks_*" method="{1}"
 			class="com.laborguru.action.schedule.PrintShiftBreaksByWeekPrepareAction">
 			<result name="input" type="tiles">viewPrintShiftBreaksByWeekPage</result>
