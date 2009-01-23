@@ -270,7 +270,6 @@
 		<put-attribute name="body" value="/tiles/schedule/printweekshiftbyposition.jsp"/>
 	</definition>
 
-	
 	<definition name="viewPrintTotalHoursByPositionByWeekPage" extends="baseLayoutWithMenu">
 		<put-attribute name="htmlExtHeader" value="/tiles/printscheduleHtmlExtHeader.jsp" />
 		<put-attribute name="body" value="/tiles/schedule/printweektotalhoursbyposition.jsp"/>
