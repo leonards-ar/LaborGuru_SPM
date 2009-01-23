@@ -5,6 +5,7 @@
  */
 package com.laborguru.action.schedule;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.laborguru.frontend.model.WeeklyScheduleRow;
@@ -50,7 +51,8 @@ public class AddShiftByEmployeeByWeekPrepareAction extends AddShiftByWeekBaseAct
 	 */
 	@Override
 	protected List<WeeklyScheduleRow> getEmployeeSchedule(Integer employeeId) {
-		return getWeeklyScheduleData().getScheduleDataFor(employeeId);
+		List<WeeklyScheduleRow> schedule = getWeeklyScheduleData().getScheduleDataFor(employeeId);
+		return schedule != null ? schedule : new ArrayList<WeeklyScheduleRow>();
 	}
 
 	/**
