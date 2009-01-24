@@ -225,12 +225,18 @@ public abstract class EmployeeBaseAction extends SpmAction implements Preparable
 	 * Load position and status list
 	 */
 	protected void loadListsForAddEditPage() {
-		this.setPositions(positionService.getPositionsByStore(getEmployeeStore()));
+		this.setPositions(retrievePositions());
 		this.setStatusMap(getReferenceDataService().getStatus());
 		//:TODO: Add country support
 		this.setStatesList(getReferenceDataService().getStates("us"));
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	protected abstract List<Position> retrievePositions();
+	
 	/**
 	 * @return the employee
 	 */

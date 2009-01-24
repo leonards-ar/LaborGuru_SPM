@@ -3,6 +3,7 @@ package com.laborguru.action.employee;
 import java.util.List;
 
 import com.laborguru.model.Employee;
+import com.laborguru.model.Position;
 import com.laborguru.model.Profile;
 import com.laborguru.model.Store;
 import com.laborguru.service.store.StoreService;
@@ -108,6 +109,17 @@ public class EmployeeStorePrepareAction extends EmployeeBaseAction {
 	 */
 	public void setStoreService(StoreService storeService) {
 		this.storeService = storeService;
+	}
+	
+	/**
+	 * @return
+	 * @see com.laborguru.action.employee.EmployeeBaseAction#retrievePositions()
+	 */
+	@Override
+	protected List<Position> retrievePositions() {
+		Store auxStore = new Store();
+		auxStore.setId(getStoreId());
+		return getPositionService().getPositionsByStore(auxStore);
 	}
 	
 }

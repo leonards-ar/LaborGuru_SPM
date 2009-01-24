@@ -6,7 +6,9 @@ import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
+import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.ErrorMessage;
+import com.laborguru.exception.SpmUncheckedException;
 import com.laborguru.frontend.HttpRequestConstants;
 import com.laborguru.model.Employee;
 import com.laborguru.model.Store;
@@ -93,9 +95,8 @@ public class SpmAction extends ActionSupport implements SessionAware,RequestAwar
 				//Setting back the store to the session
 				getSession().put(HttpRequestConstants.STORE,store);
 			} else {
-				//:TODO: Remove this, as it only works for now
-				store = new Store();
-				store.setId(new Integer(1));
+				
+				throw new SpmUncheckedException("There is no store present in session. Called from the admin interface?", ErrorEnum.NO_STORE_IN_SESSION);
 			}
 		}
 		return store;

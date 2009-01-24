@@ -112,6 +112,7 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 			if (storePosition != null) {
 				storePosition.setName(position.getName());
 				storePosition.setManager(position.isManager());
+				storePosition.setGuestService(position.isGuestService());
 				storePosition.setPositionIndex(position.getPositionIndex());
 			} else {
 				getStore().addPosition(position);
