@@ -85,7 +85,7 @@
 								</td>
 								<td>
 									<a href="<s:url value="#" includeParams="none"/>" onclick="customer_form.action='regionalUser_list.action?paramId=<s:property value='id'/>'; customer_form.submit();">
-										<img src="<s:url value="/images/user_group.png" includeParams="none"/>" />
+										<img src="<s:url value="/images/usergroup.png" includeParams="none"/>" />
 									</a>
 								</td>
 							</tr>
