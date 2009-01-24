@@ -42,7 +42,9 @@ public class HomeAction extends SpmAction implements Preparable {
 	 * @see com.opensymphony.xwork2.Preparable#prepare()
 	 */
 	public void prepare() throws Exception {
-		setPositions(getPositionService().getPositionsByStore(getEmployeeStore()));
+		if(getLoggedEmployeeOrNull() != null) {
+			setPositions(getPositionService().getPositionsByStore(getEmployeeStore()));
+		}
 	}
 
 	/**
