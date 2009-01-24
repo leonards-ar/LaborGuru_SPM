@@ -1,5 +1,6 @@
 package com.laborguru.action.employee;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.laborguru.model.Employee;
@@ -42,8 +43,8 @@ public class EmployeeStorePrepareAction extends EmployeeBaseAction {
 			setStore(getStoreService().getStoreById(auxStore));
 		} else {
 			setStore(getStoreService().getStoreById(getEmployee().getStore()));
+			setStoreId(getStore().getId());
 		}
-		setStoreId(getStore().getId());
 	}
 
 	/**
@@ -117,9 +118,16 @@ public class EmployeeStorePrepareAction extends EmployeeBaseAction {
 	 */
 	@Override
 	protected List<Position> retrievePositions() {
-		Store auxStore = new Store();
-		auxStore.setId(getStoreId());
-		return getPositionService().getPositionsByStore(auxStore);
+		if(getStoreId() != null) {
+			Store auxStore = new Store();
+			auxStore.setId(getStoreId());
+			List<Position> positions = getPositionService().getPositionsByStore(auxStore);
+			return positions != null ? positions : new ArrayList<Position>();
+		} else {
+			// :TODO: Fix. This method is called for listing employees where positions are not
+			// required! 
+			return new ArrayList<Position>();
+		}
 	}
 	
 }

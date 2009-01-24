@@ -1,5 +1,6 @@
 package com.laborguru.action.employee;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.laborguru.model.Employee;
@@ -53,7 +54,8 @@ public class EmployeePrepareAction extends EmployeeBaseAction {
 	 */
 	@Override
 	protected List<Position> retrievePositions() {
-		return getPositionService().getPositionsByStore(getEmployeeStore());
+		List<Position> positions = getPositionService().getPositionsByStore(getEmployeeStore());
+		return positions != null ? positions : new ArrayList<Position>();
 	}
 
 	/**

@@ -54,7 +54,7 @@ public abstract class EmployeeBaseAction extends SpmAction implements Preparable
 	 * Prepare data to be used to display employee data
 	 */
 	public void prepareShow() {
-		loadListsForAddEditPage();
+		//loadListsForAddEditPage();
 	}
 
 	/**
@@ -68,7 +68,7 @@ public abstract class EmployeeBaseAction extends SpmAction implements Preparable
 	 * Prepare data to be used in case it goes back to a page that may need it.
 	 */
 	public void prepareList() {
-		loadListsForAddEditPage();
+		//loadListsForAddEditPage();
 	}	
 	
 	/**
@@ -105,7 +105,6 @@ public abstract class EmployeeBaseAction extends SpmAction implements Preparable
 	 * @throws Exception
 	 */
 	public String show() throws Exception {	
-		
 		loadEmployeeFromId();
 		setExtraInformation();
 		return SpmActionResult.SHOW.getResult();
@@ -130,6 +129,7 @@ public abstract class EmployeeBaseAction extends SpmAction implements Preparable
 	 */
 	public String add() throws Exception {
 		setExtraInformation();
+		this.setPositions(retrievePositions());
 		return SpmActionResult.EDIT.getResult();
 	}
 
@@ -166,9 +166,9 @@ public abstract class EmployeeBaseAction extends SpmAction implements Preparable
 	 * @throws Exception
 	 */
 	public String edit() throws Exception {
-		
 		loadEmployeeFromId();
 		setExtraInformation();	
+		this.setPositions(retrievePositions());
 		return SpmActionResult.EDIT.getResult();
 	}
 
@@ -225,7 +225,6 @@ public abstract class EmployeeBaseAction extends SpmAction implements Preparable
 	 * Load position and status list
 	 */
 	protected void loadListsForAddEditPage() {
-		this.setPositions(retrievePositions());
 		this.setStatusMap(getReferenceDataService().getStatus());
 		//:TODO: Add country support
 		this.setStatesList(getReferenceDataService().getStates("us"));

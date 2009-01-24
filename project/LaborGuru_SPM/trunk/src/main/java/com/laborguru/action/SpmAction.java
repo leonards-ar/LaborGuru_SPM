@@ -95,7 +95,6 @@ public class SpmAction extends ActionSupport implements SessionAware,RequestAwar
 				//Setting back the store to the session
 				getSession().put(HttpRequestConstants.STORE,store);
 			} else {
-				
 				throw new SpmUncheckedException("There is no store present in session. Called from the admin interface?", ErrorEnum.NO_STORE_IN_SESSION);
 			}
 		}
