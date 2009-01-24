@@ -66,7 +66,7 @@
 			</authz:authorize>
 			<authz:authorize ifAnyGranted="LIST_EMPLOYEE_STORE,ADD_EMPLOYEE_STORE,VIEW_EMPLOYEE_STORE,EDIT_EMPLOYEE_STORE,REMOVE_EMPLOYEE_STORE">
 			    <display:column href="employeeStore_list.action" paramId="storeId" paramProperty="id" class="resultsColumnCentered"> 
-			    	<img src="<s:url value="/images/user_group.png" includeParams="none"/>"/>
+			    	<img src="<s:url value="/images/usergroup.png" includeParams="none"/>"/>
 			    </display:column>
 			</authz:authorize>
 		</display:table>

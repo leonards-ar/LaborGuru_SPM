@@ -60,7 +60,7 @@
 			</authz:authorize>
 			<authz:authorize ifAnyGranted="ADD_MANAGER_CUSTOMER,VIEW_MANAGER_CUSTOMER,EDIT_MANAGER_CUSTOMER,REMOVE_MANAGER_CUSTOMER">
 			    <display:column href="customerUser_list.action" paramId="paramId" paramProperty="id" class="resultsColumnCentered"> 
-			    	<img src="<s:url value="/images/user_group.png" includeParams="none"/>"/>
+			    	<img src="<s:url value="/images/usergroup.png" includeParams="none"/>"/>
 			    </display:column>
 			</authz:authorize>
 
