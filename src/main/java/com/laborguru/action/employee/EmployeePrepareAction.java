@@ -3,6 +3,7 @@ package com.laborguru.action.employee;
 import java.util.List;
 
 import com.laborguru.model.Employee;
+import com.laborguru.model.Position;
 import com.laborguru.model.Profile;
 
 /**
@@ -46,6 +47,15 @@ public class EmployeePrepareAction extends EmployeeBaseAction {
 		return getReferenceDataService().getEmployeeRole();
 	}
 	
+	/**
+	 * @return
+	 * @see com.laborguru.action.employee.EmployeeBaseAction#retrievePositions()
+	 */
+	@Override
+	protected List<Position> retrievePositions() {
+		return getPositionService().getPositionsByStore(getEmployeeStore());
+	}
+
 	/**
 	 * Adds a Store, Area, Region or Customer association to an employee
 	 * 
