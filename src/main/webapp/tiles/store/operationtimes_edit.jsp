@@ -63,23 +63,23 @@
 							</tr>
 							<tr>
 								<td class="editorTableFirstColumn"><s:text name="store.storeoperations.hoursofoperation.open" /></td>
-								<td class="editorTableOddRow"><s:textfield name='weekOperationTimeOpen[0]' size="4" maxlength="5"/></td>
-								<td class="editorTableOddRow"><s:textfield name='weekOperationTimeOpen[1]' size="4" maxlength="5"/></td>
-								<td class="editorTableOddRow"><s:textfield name='weekOperationTimeOpen[2]' size="4" maxlength="5"/></td>
-								<td class="editorTableOddRow"><s:textfield name='weekOperationTimeOpen[3]' size="4" maxlength="5"/></td>
-								<td class="editorTableOddRow"><s:textfield name='weekOperationTimeOpen[4]' size="4" maxlength="5"/></td>
-								<td class="editorTableOddRow"><s:textfield name='weekOperationTimeOpen[5]' size="4" maxlength="5"/></td>
-								<td class="editorTableOddRow"><s:textfield name='weekOperationTimeOpen[6]' size="4" maxlength="5"/></td>
+								<td class="editorTableOddRow"><s:textfield name='weekOperationTimeOpen[0]' onchange="updateTime(this);" onchange="updateTime(this);" size="4" maxlength="8"/></td>
+								<td class="editorTableOddRow"><s:textfield name='weekOperationTimeOpen[1]' onchange="updateTime(this);" size="4" maxlength="8"/></td>
+								<td class="editorTableOddRow"><s:textfield name='weekOperationTimeOpen[2]' onchange="updateTime(this);" size="4" maxlength="8"/></td>
+								<td class="editorTableOddRow"><s:textfield name='weekOperationTimeOpen[3]' onchange="updateTime(this);" size="4" maxlength="8"/></td>
+								<td class="editorTableOddRow"><s:textfield name='weekOperationTimeOpen[4]' onchange="updateTime(this);" size="4" maxlength="8"/></td>
+								<td class="editorTableOddRow"><s:textfield name='weekOperationTimeOpen[5]' onchange="updateTime(this);" size="4" maxlength="8"/></td>
+								<td class="editorTableOddRow"><s:textfield name='weekOperationTimeOpen[6]' onchange="updateTime(this);" size="4" maxlength="8"/></td>
 							</tr>
 							<tr>
 								<td class="editorTableFirstColumn"><s:text name="store.storeoperations.hoursofoperation.close" /></td>
-								<td class="editorTableEvenRow"><s:textfield name='weekOperationTimeClose[0]' size="4" maxlength="5"/></td>
-								<td class="editorTableEvenRow"><s:textfield name='weekOperationTimeClose[1]' size="4" maxlength="5"/></td>
-								<td class="editorTableEvenRow"><s:textfield name='weekOperationTimeClose[2]' size="4" maxlength="5"/></td>
-								<td class="editorTableEvenRow"><s:textfield name='weekOperationTimeClose[3]' size="4" maxlength="5"/></td>
-								<td class="editorTableEvenRow"><s:textfield name='weekOperationTimeClose[4]' size="4" maxlength="5"/></td>
-								<td class="editorTableEvenRow"><s:textfield name='weekOperationTimeClose[5]' size="4" maxlength="5"/></td>
-								<td class="editorTableEvenRow"><s:textfield name='weekOperationTimeClose[6]' size="4" maxlength="5"/></td>
+								<td class="editorTableEvenRow"><s:textfield name='weekOperationTimeClose[0]' onchange="updateTime(this);" size="4" maxlength="8"/></td>
+								<td class="editorTableEvenRow"><s:textfield name='weekOperationTimeClose[1]' onchange="updateTime(this);" size="4" maxlength="8"/></td>
+								<td class="editorTableEvenRow"><s:textfield name='weekOperationTimeClose[2]' onchange="updateTime(this);" size="4" maxlength="8"/></td>
+								<td class="editorTableEvenRow"><s:textfield name='weekOperationTimeClose[3]' onchange="updateTime(this);" size="4" maxlength="8"/></td>
+								<td class="editorTableEvenRow"><s:textfield name='weekOperationTimeClose[4]' onchange="updateTime(this);" size="4" maxlength="8"/></td>
+								<td class="editorTableEvenRow"><s:textfield name='weekOperationTimeClose[5]' onchange="updateTime(this);" size="4" maxlength="8"/></td>
+								<td class="editorTableEvenRow"><s:textfield name='weekOperationTimeClose[6]' onchange="updateTime(this);" size="4" maxlength="8"/></td>
 							</tr>						
 
 							<tr>

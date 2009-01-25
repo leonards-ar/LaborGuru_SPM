@@ -1,7 +1,5 @@
 package com.laborguru.frontend.struts2;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
@@ -9,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.apache.struts2.util.StrutsTypeConverter;
 
 import com.laborguru.action.utils.CustomValidators;
+import com.laborguru.util.CalendarUtils;
 import com.opensymphony.xwork2.util.TypeConversionException;
 
 /**
@@ -24,8 +23,6 @@ public class SpmDisplayTimeConverter extends StrutsTypeConverter {
 
 	static Logger log = Logger.getLogger(SpmDisplayTimeConverter.class);
 
-	private static final SimpleDateFormat DISPLAY_TIME_FORMAT = new SimpleDateFormat("HH:mm");
-
 	/**
 	 * @see org.apache.struts2.util.StrutsTypeConverter#convertFromString(java.util.Map, java.lang.String[], java.lang.Class)
 	 */
@@ -34,16 +31,12 @@ public class SpmDisplayTimeConverter extends StrutsTypeConverter {
 		
 		if (time == null || "".equals(time.trim())){
 			return null;
+		} else if(CustomValidators.isValidMilitaryTime(time)) {
+			return displayTimeToDate(time);
+		} else {
+			log.error("Not time valid expression [" + time + "]");
+			throw new TypeConversionException("Not time valid expression [" + time + "]");		
 		}
-		
-		if (CustomValidators.isValidMilitaryTime(time, true))
-		{
-			Date date = displayTimeToDate(time);
-			return date;
-		}
-		
-		log.error("Not time valid expression [" + time + "]");
-		throw new TypeConversionException("Not time valid expression [" + time + "]");		
 	}
 
 
@@ -61,7 +54,7 @@ public class SpmDisplayTimeConverter extends StrutsTypeConverter {
 	 */
 	private String dateToDisplayTime(Date d) {
 		if (d != null) {
-			return DISPLAY_TIME_FORMAT.format(d);
+			return CalendarUtils.dateToDisplayTime(d);
 		} else {
 			return null;
 		}
@@ -73,11 +66,19 @@ public class SpmDisplayTimeConverter extends StrutsTypeConverter {
 	 * @return
 	 */
 	private Date displayTimeToDate(String time) {
-		try {
-			return DISPLAY_TIME_FORMAT.parse(time);
-		} catch (ParseException ex) {
-			log.error("Cannot parse time [" + time + "]", ex);
-			throw new TypeConversionException("Cannot parse time [" + time + "]", ex);
+		if(time != null && time.trim().length() > 0) {
+			Date d = CalendarUtils.inputTimeToDate(time);
+			if(d != null) {
+				if(log.isDebugEnabled()) {
+					log.debug("Parsed time [" + time + "] to date [" + d + "]");
+				}
+				return d;
+			} else {
+				log.error("Cannot parse time [" + time + "]");
+				throw new TypeConversionException("Cannot parse time [" + time + "]");
+			}
+		} else {
+			return null;
 		}
 	}	
 	

@@ -5,6 +5,8 @@
  */
 package com.laborguru.action.utils;
 
+import com.laborguru.util.CalendarUtils;
+
 /**
  *
  * @author <a href="mcapurro@gmail.com">Mariano Capurro</a>
@@ -32,6 +34,7 @@ public class CustomValidators {
 	 */
 	public static boolean isValidMilitaryTime(String time, boolean required) {
 		if(time != null && time.trim().length() > 0) {
+			time = CalendarUtils.inputTimeToMilitaryTime(time);
 			int idx;
 			String h, m;
 			if((idx = time.indexOf(':')) >= 0) {

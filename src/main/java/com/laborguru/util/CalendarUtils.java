@@ -194,6 +194,35 @@ public class CalendarUtils {
 
 	/**
 	 * 
+	 * @param time
+	 * @return
+	 */
+	public static String inputTimeToMilitaryTime(String time) {
+		if(time == null || time.trim().length() <= 0) {
+			return null;
+		} else {
+			try {
+				Matcher m = null;
+				int i = 0;
+				do {
+					m = INPUT_TIME_REGEXP[i].matcher(time);
+					i++;
+				} while(!m.matches() && i < INPUT_TIME_REGEXP.length);
+
+				if(m != null && m.matches()) {
+					return getTime(m.group(1), m.group(2), m.group(3));
+				} else {
+					return null;
+				}			
+			} catch (Throwable ex) {
+				log.error("Cannot parse date/time [" + time + "]", ex);
+				return null;
+			}
+		}
+	}
+	
+	/**
+	 * 
 	 * @param dayPart
 	 * @return
 	 */
