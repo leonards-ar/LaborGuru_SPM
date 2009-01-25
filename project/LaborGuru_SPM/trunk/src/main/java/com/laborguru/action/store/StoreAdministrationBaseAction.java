@@ -17,6 +17,7 @@ import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.frontend.HttpRequestConstants;
 import com.laborguru.model.Store;
 import com.laborguru.service.store.StoreService;
+import com.laborguru.util.CalendarUtils;
 import com.laborguru.util.SpmConstants;
 import com.opensymphony.xwork2.Preparable;
 
@@ -169,7 +170,7 @@ public abstract class StoreAdministrationBaseAction extends SpmAction implements
 	protected Date displayTimeToDate(String time) {
 		try {
 			if(time != null) {
-				return SpmConstants.TIME_FORMAT.parse(time);
+				return CalendarUtils.inputTimeToDate(time);
 			} else {
 				return null;
 			}

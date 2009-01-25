@@ -37,7 +37,7 @@
 							<s:hidden name="dayParts[%{#itDayPart.index}].positionIndex" value="%{positionIndex}" theme="simple"/>
 							<tr class="editorTable<s:if test="#itDayPart.even">Even</s:if><s:else>Odd</s:else>Row">
 								<td>
-									<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
+									<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 										<tr>
 											<td><a href="#" onclick="dayPartDefinition_form.action='storeDayPartDefinition_oneUp.action?index=<s:property value='#itDayPart.index'/>'; dayPartDefinition_form.submit();"><img src="<s:url value="/images/up.png" includeParams="none"/>"/></a></td>
 											<td><a href="#" onclick="dayPartDefinition_form.action='storeDayPartDefinition_oneDown.action?index=<s:property value='#itDayPart.index'/>'; dayPartDefinition_form.submit();"><img src="<s:url value="/images/down.png" includeParams="none"/>"/></a></td>
@@ -45,9 +45,9 @@
 									</table>
 								</td>							
 								<td class="value"><s:textfield name="dayParts[%{#itDayPart.index}].name" value="%{name}" size="25" maxlength="100" theme="simple" /></td>
-								<td class="value"><s:textfield name="dayParts[%{#itDayPart.index}].startHour" value="%{startHour}" size="5" maxlength="5" theme="simple" /></td>
+								<td class="value"><s:textfield name="dayParts[%{#itDayPart.index}].startHour" value="%{startHour}" size="5" onchange="updateTime(this);" maxlength="8" theme="simple" /></td>
 								<td>
-									<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
+									<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 										<tr>
 											<td><a href="#" onclick="dayPartDefinition_form.action='storeDayPartDefinition_remove.action?index=<s:property value='#itDayPart.index'/>'; dayPartDefinition_form.submit();"><img src="<s:url value="/images/delete.png" includeParams="none"/>"/></a></td>
 										</tr>
@@ -57,7 +57,7 @@
 							</s:iterator>
 							<tr class="editorTableEvenRow">
 								<td>
-									<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
+									<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 										<tr>
 											<td>&nbsp;</td>
 											<td>&nbsp;</td>
@@ -68,7 +68,7 @@
 								<td class="value"><s:textfield name="newDayPart.name" size="25" maxlength="100" theme="simple" /></td>
 								<td class="value"><s:textfield name="newDayPart.startHour" size="5" maxlength="5" theme="simple" /></td>
 								<td>
-									<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
+									<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 										<tr>
 											<td><a href="#" onclick="dayPartDefinition_form.action='storeDayPartDefinition_add.action'; dayPartDefinition_form.submit();"><img src="<s:url value="/images/add.png" includeParams="none"/>"/></a></td>
 										</tr>

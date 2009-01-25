@@ -38,7 +38,7 @@
 						  <s:textfield name="positionGroups[%{#itPosition.index}].name" value="%{name}" size="25" maxlength="150" theme="simple" />
 						</td>
 						<td>
-						  <table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
+						  <table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 							<tr>
 								<td>
 									<a href="<s:url value="#" includeParams="none"/>" onclick="positionGroup_form.action='positionGroup_removePositionGroup.action?index=<s:property value='#itPosition.index'/>'; positionGroup_form.submit();"><img
@@ -53,7 +53,7 @@
 						<td class="value">
 						<s:textfield name="newPositionGroup" size="25" maxlength="150" theme="simple" /></td>
 						<td>
-						<table order="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
+						<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 							<tr>
 								<td>
 									<a href="<s:url value="#" includeParams="none"/>" onclick="positionGroup_form.action='positionGroup_addPositionGroup.action'; positionGroup_form.submit();"><img
