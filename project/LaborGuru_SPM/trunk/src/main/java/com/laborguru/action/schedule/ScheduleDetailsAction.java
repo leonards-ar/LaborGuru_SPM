@@ -113,7 +113,7 @@ public class ScheduleDetailsAction extends ScheduleBaseAction {
 	 */
 	private Date getStoreCloseTime() {
 		OperationTime opTime = getEmployeeStore().getOperationTime(CalendarUtils.getDayOfWeek(getSelectedDayAsDate()));
-		return getStoreScheduleCloseHour(opTime);
+		return getStoreScheduleEndHour(opTime);
 	}
 	
 	/**
@@ -122,7 +122,7 @@ public class ScheduleDetailsAction extends ScheduleBaseAction {
 	 */
 	private Date getStoreOpenTime() {
 		OperationTime opTime = getEmployeeStore().getOperationTime(CalendarUtils.getDayOfWeek(getSelectedDayAsDate()));
-		return getStoreScheduleOpenHour(opTime);
+		return getStoreScheduleStartHour(opTime);
 	}
 	
 	/**
@@ -131,7 +131,7 @@ public class ScheduleDetailsAction extends ScheduleBaseAction {
 	 */
 	private boolean isStoreOpen(Date time) {
 		OperationTime opTime = getEmployeeStore().getOperationTime(CalendarUtils.getDayOfWeek(getSelectedDayAsDate()));
-		return CalendarUtils.equalsOrGreaterTime(time, getStoreScheduleOpenHour(opTime)) &&  CalendarUtils.equalsOrSmallerTime(time, getStoreScheduleCloseHour(opTime));
+		return CalendarUtils.equalsOrGreaterTime(time, getStoreScheduleStartHour(opTime)) &&  CalendarUtils.equalsOrSmallerTime(time, getStoreScheduleEndHour(opTime));
 	}
 	
 	/**
