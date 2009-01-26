@@ -16,6 +16,7 @@ public class SpmConstants {
 	public static final SimpleDateFormat TIME_MINUTE_FORMAT = new SimpleDateFormat("mm");
 	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
 	public static final SimpleDateFormat REMOVE_TIME_FORMAT = new SimpleDateFormat("yyyyMMdd");
+	public static final SimpleDateFormat REMOVE_DATE_FORMAT = new SimpleDateFormat("HHmmss");
 	
 	public static final String WEEKDAY_SELECTOR_DATEFORMAT= "yyyyMMdd";
 

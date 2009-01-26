@@ -32,7 +32,7 @@ public abstract class ScheduleBaseAction extends SpmAction {
 	 * @param operationTime
 	 * @return
 	 */
-	protected Date getStoreScheduleOpenHour(OperationTime operationTime) {
+	protected Date getStoreScheduleStartHour(OperationTime operationTime) {
 		return CalendarUtils.addOrSubstractHours(operationTime.getOpenHour(), (-1) * getStoreScheduleExtraHours());
 	}
 
@@ -47,10 +47,20 @@ public abstract class ScheduleBaseAction extends SpmAction {
 	
 	/**
 	 * 
+	 * @param day
+	 * @return
+	 */
+	protected OperationTime getOperationTime(Date day) {
+		Store store = getEmployeeStore();
+		return store != null ? store.getOperationTime(CalendarUtils.getDayOfWeek(day)) : null;
+	}
+	
+	/**
+	 * 
 	 * @param operationTime
 	 * @return
 	 */
-	protected Date getStoreScheduleCloseHour(OperationTime operationTime) {
+	protected Date getStoreScheduleEndHour(OperationTime operationTime) {
 		return CalendarUtils.addOrSubstractHours(operationTime.getCloseHour(), getStoreScheduleExtraHours());
 	}
 }

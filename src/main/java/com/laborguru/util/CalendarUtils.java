@@ -30,6 +30,8 @@ public class CalendarUtils {
 
 	private final static Pattern INPUT_TIME_REGEXP[] = {Pattern.compile("^\\s*(\\d{1})(\\d\\d){1}\\s*([aApP][mM]*)*\\s*$"), Pattern.compile("^\\s*(\\d\\d){1}(\\d\\d){1}\\s*([aApP][mM]*)*\\s*$"), Pattern.compile("^\\s*(\\d*)[:.]*(\\d\\d)*\\s*([aApP][mM]*)*\\s*$")};
 
+	private final static Date MIDNIGHT_TIME = todayWithoutTime();
+	
 	/**
 	 * 
 	 */
@@ -149,6 +151,21 @@ public class CalendarUtils {
 		
 	}
 
+	/**
+	 * 
+	 * @param time
+	 * @return
+	 */
+	public static Date removeDateFromTime(Date time) {
+		try {
+			String str = SpmConstants.REMOVE_DATE_FORMAT.format(time);
+			return SpmConstants.REMOVE_DATE_FORMAT.parse(str);
+		} catch(ParseException ex) {
+			// Should never happen
+			return null;
+		}		
+	}
+	
 	/**
 	 * 
 	 * @param time
@@ -371,7 +388,7 @@ public class CalendarUtils {
 	}
 	
 	/**
-	 * Returns if time1 is smaller than time2
+	 * Returns if time1 is greater than time2
 	 * @param time1
 	 * @param time2
 	 * @return
@@ -387,6 +404,7 @@ public class CalendarUtils {
 		}
 	}
 	
+
 	/**
 	 * This method returns a Calendar that represents this week's weekday taking as example the date's weekday passed as parameter.
 	 * For example: If we passed Monday 20/10/2008 as parameter, the method returns this week monday.
@@ -487,5 +505,13 @@ public class CalendarUtils {
 		} else {
 			return String.valueOf(n);
 		}
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public static Date getMidnightTime() {
+		return MIDNIGHT_TIME;
 	}
 }

@@ -88,14 +88,59 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 		if(this.scheduleIndividualHours == null) {
 			if(getStoreSchedule() != null && getStoreSchedule().getStore() != null) {
 				OperationTime operationTime = getStoreSchedule().getStore().getOperationTime(getWeekDaySelector().getSelectedDayOfWeek());
-				Date closeHour = getScheduleCloseHour(getStoreScheduleCloseHour(operationTime));
-				Date d = operationTime != null ? getScheduleOpenHour(getStoreScheduleOpenHour(operationTime)) : null;
-				
+				Date closeHour = getScheduleCloseHour(getStoreScheduleEndHour(operationTime));
+				Date d = operationTime != null ? getScheduleOpenHour(getStoreScheduleStartHour(operationTime)) : null;
+
 				List<Date> hours = new ArrayList<Date>();
-				while(d != null && d.getTime() < closeHour.getTime()) {
-					hours.add(d);
-					d = new Date(d.getTime() + SpmConstants.MINUTES_INTERVAL * 60000L);
+
+				if(operationTime != null && d != null) {
+					Date realOpen = operationTime.getOpenHour();
+					Date realClose = operationTime.getCloseHour();
+					
+					// Hours from yesterday
+					if(CalendarUtils.greaterTime(d, realOpen)) {
+						while(!CalendarUtils.equalsTime(d, CalendarUtils.getMidnightTime())) {
+							hours.add(d);
+							d = new Date(d.getTime() + SpmConstants.MINUTES_INTERVAL * 60000L);
+						}
+					}
+					
+					// Hours before opening
+					while(CalendarUtils.smallerTime(d, realOpen)) {
+						hours.add(d);
+						d = new Date(d.getTime() + SpmConstants.MINUTES_INTERVAL * 60000L);						
+					}
+					
+					// Operation hours
+					boolean endsTomorrow = CalendarUtils.equalsOrGreaterTime(realClose, realOpen);
+					if(endsTomorrow) {
+						// Today hours
+						while(!CalendarUtils.equalsTime(d, CalendarUtils.getMidnightTime())) {
+							hours.add(d);
+							d = new Date(d.getTime() + SpmConstants.MINUTES_INTERVAL * 60000L);
+						}
+					}
+					
+					while(CalendarUtils.smallerTime(d, realClose)) {
+						hours.add(d);
+						d = new Date(d.getTime() + SpmConstants.MINUTES_INTERVAL * 60000L);
+					}
+					
+					// Hours after closing
+					if(CalendarUtils.smallerTime(closeHour, realClose)) {
+						while(!CalendarUtils.equalsTime(d, CalendarUtils.getMidnightTime())) {
+							hours.add(d);
+							d = new Date(d.getTime() + SpmConstants.MINUTES_INTERVAL * 60000L);
+						}						
+					}
+					
+					// Hours from tomorrow
+					while(CalendarUtils.smallerTime(d, closeHour)) {
+						hours.add(d);
+						d = new Date(d.getTime() + SpmConstants.MINUTES_INTERVAL * 60000L);						
+					}
 				}
+				
 				this.scheduleIndividualHours = hours;
 			} else {
 				this.scheduleIndividualHours = new ArrayList<Date>();
@@ -120,34 +165,37 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	 */
 	public List<ScheduleHourLabelElement> getScheduleLabelHours() {
 		if(this.scheduleLabelHours == null) {
-			if(getStoreSchedule() != null && getStoreSchedule().getStore() != null) {
-				OperationTime operationTime = getStoreSchedule().getStore().getOperationTime(getWeekDaySelector().getSelectedDayOfWeek());
-				
-				Date d = operationTime != null ? getScheduleOpenHour(getStoreScheduleOpenHour(operationTime)) : null;
-				Date baseCloseHour = getScheduleBaseHour(getStoreScheduleCloseHour(operationTime));
-				
-				List<ScheduleHourLabelElement> hours = new ArrayList<ScheduleHourLabelElement>();
-				
-				// Open hour is a special case
-				hours.add(new ScheduleHourLabelElement(getScheduleBaseHour(d), getHourColspan(d), getOpenHourSelectable(d)));
-				
-				d = getScheduleBaseHour(CalendarUtils.addOrSubstractHours(d, 1));
-
-				while(d != null && d.getTime() < baseCloseHour.getTime()) {
-					hours.add(new ScheduleHourLabelElement(d, getHourColspan(d), getHourColspan(d)));
-					d = getScheduleBaseHour(CalendarUtils.addOrSubstractHours(d, 1));
-				}
-				
-				if(getStoreScheduleCloseHour(operationTime).getTime() > baseCloseHour.getTime()) {
-					hours.add(new ScheduleHourLabelElement(baseCloseHour, getHourColspan(d), getCloseHourSelectable(getStoreScheduleCloseHour(operationTime))));
-				}
-				
-				this.scheduleLabelHours = hours;
-				
-			} else {
-				this.scheduleLabelHours = new ArrayList<ScheduleHourLabelElement>();
-			}
+			OperationTime operationTime = getStoreSchedule().getStore().getOperationTime(getWeekDaySelector().getSelectedDayOfWeek());
 			
+			List<ScheduleHourLabelElement> hours = new ArrayList<ScheduleHourLabelElement>();
+			
+			int size = getScheduleIndividualHours().size();
+			Date firstHour = size > 0 ? getScheduleIndividualHours().get(0) : null;
+			Date lastHour = size > 0 ? getScheduleIndividualHours().get(size - 1) : null;
+
+			if(firstHour != null && lastHour != null) {
+				// Open hour is a special case
+				hours.add(new ScheduleHourLabelElement(getScheduleBaseHour(firstHour), getHourColspan(firstHour), getOpenHourSelectable(firstHour)));		
+				
+				Date lastHourInserted = getScheduleBaseHour(firstHour);
+				Date lastHourBase = getScheduleBaseHour(lastHour);
+				Date currentHour = lastHourInserted;
+				
+				for(int i = 1; i < size && CalendarUtils.smallerTime(getScheduleIndividualHours().get(i), lastHourBase); i++) {
+					currentHour = getScheduleIndividualHours().get(i);
+					if(!CalendarUtils.equalsTime(lastHourInserted, currentHour)) {
+						hours.add(new ScheduleHourLabelElement(currentHour, getHourColspan(currentHour), getHourColspan(currentHour)));
+						lastHourInserted = currentHour;
+					}
+				}
+				
+				// Close hour
+				hours.add(new ScheduleHourLabelElement(lastHourBase, getHourColspan(lastHourBase), getCloseHourSelectable(getStoreScheduleEndHour(operationTime))));
+
+			}
+			this.scheduleLabelHours = hours;
+		} else {
+				this.scheduleLabelHours = new ArrayList<ScheduleHourLabelElement>();
 		}
 		return this.scheduleLabelHours;
 	}
