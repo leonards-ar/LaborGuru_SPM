@@ -776,8 +776,8 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	 * @param shift
 	 */
 	private void setScheduleOccupation(List<String> occupation, List<Date> scheduleBuckets, Shift shift) {
-		int from = getIndexOfBucket(shift.getFromHour(), scheduleBuckets);
-		int to = getIndexOfBucket(shift.getToHour(), scheduleBuckets) - 1;
+		int from = getFirstIndexOfBucket(shift.getFromHour(), scheduleBuckets);
+		int to = getLastIndexOfBucket(shift.getToHour(), scheduleBuckets) - 1;
 		
 		String value;
 		for(int i = from; i <= to; i++) {
@@ -795,11 +795,28 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	 * @param scheduleBuckets
 	 * @return
 	 */
-	private int getIndexOfBucket(Date hour, List<Date> scheduleBuckets) {
+	private int getFirstIndexOfBucket(Date hour, List<Date> scheduleBuckets) {
 		Date anHour;
 		for(int i = 0; i < scheduleBuckets.size(); i++) {
 			anHour = scheduleBuckets.get(i);
 			if(hour.getTime() <= anHour.getTime()) {
+				return i;
+			}
+		}
+		return scheduleBuckets.size();
+	}
+	
+	/**
+	 * 
+	 * @param hour
+	 * @param scheduleBuckets
+	 * @return
+	 */
+	private int getLastIndexOfBucket(Date hour, List<Date> scheduleBuckets) {
+		Date anHour;
+		for(int i = scheduleBuckets.size() - 1; i >= 0; i--) {
+			anHour = scheduleBuckets.get(i);
+			if(hour.getTime() >= anHour.getTime()) {
 				return i;
 			}
 		}

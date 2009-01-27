@@ -132,13 +132,21 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 			entry.setTotalHours(employeeSchedule.getTotalShiftHours(shift.getPosition()));
 		}
 		
+		if(entry.getInHour() == null) {
+			entry.setInHour(employeeSchedule.getFromHour(shift.getPosition()));
+		}
+
+		if(entry.getOutHour() == null) {
+			entry.setOutHour(employeeSchedule.getToHour(shift.getPosition()));
+		}
+		/*
 		if(entry.getInHour() == null || CalendarUtils.greaterTime(entry.getInHour(), shift.getFromHour())) {
 			entry.setInHour(shift.getFromHour());
 		}
 		if(entry.getOutHour() == null || CalendarUtils.smallerTime(entry.getOutHour(), shift.getToHour())) {
 			entry.setOutHour(shift.getToHour());
 		}
-		
+		*/
 		entry.addShiftHours(shift.getFromHour(), shift.getToHour());
 	}
 	

@@ -127,15 +127,35 @@ public class EmployeeSchedule extends SpmObject {
 		if(position != null && position.getId() != null) {
 			for(Shift shift : getShifts()) {
 				if(shift.getPosition() != null && position.getId().equals(shift.getPosition().getId())) {
+					inTime = shift.getFromHour();
+					break;
+					/*
 					if(inTime == null || CalendarUtils.greaterTime(inTime, shift.getFromHour())) {
 						inTime = shift.getFromHour();
-					}					
+					}	
+					*/				
 				}
 			}
 		}
 		return inTime;		
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public Date getFromHour() {
+		return getShifts() != null && getShifts().size() > 0 ? getShifts().get(0).getFromHour() : null;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Date getToHour() {
+		return getShifts() != null && getShifts().size() > 0 ? getShifts().get(getShifts().size() - 1).getToHour() : null;
+	}
+
 	/**
 	 * 
 	 * @param position
@@ -146,9 +166,10 @@ public class EmployeeSchedule extends SpmObject {
 		if(position != null && position.getId() != null) {
 			for(Shift shift : getShifts()) {
 				if(shift.getPosition() != null && position.getId().equals(shift.getPosition().getId())) {
-					if(outTime == null || CalendarUtils.smallerTime(outTime, shift.getToHour())) {
-						outTime = shift.getToHour();
-					}					
+					//if(outTime == null || CalendarUtils.smallerTime(outTime, shift.getToHour())) {
+					// The out time of the last shift
+					outTime = shift.getToHour();
+					//}					
 				}
 			}
 		}
