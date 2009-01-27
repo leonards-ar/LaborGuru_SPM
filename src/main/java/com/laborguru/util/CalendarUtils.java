@@ -474,15 +474,19 @@ public class CalendarUtils {
 	
 	/**
 	 * 
-	 * @param date1
-	 * @param date2
+	 * @param date1 The end time
+	 * @param date2 The start time
 	 * @return
 	 */
 	public static Double differenceInHours(Date date1, Date date2) {
 		int t1 = date1 != null ? timeToMinutes(date1) : 0;
 		int t2 = date2 != null ? timeToMinutes(date2) : 0;
-		
-		return new Double((t1 - t2) / 60D);
+		if(t1 > t2 || (t1 == 0 && t2 == 0)) {
+			return new Double((t1 - t2) / 60D);
+		} else {
+			final int ONE_DAY_MINUTES = 24 * 60;
+			return new Double( (ONE_DAY_MINUTES + (t1 - t2)) / 60D);
+		}
 	}
 	
 	/**

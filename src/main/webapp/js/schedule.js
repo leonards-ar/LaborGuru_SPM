@@ -505,9 +505,9 @@ function refreshRowImpl(rowNum, scheduleId, refreshTotals) {
 			if(inHour == null) {
 				inHour = currentHour;
 			}
-			if(outHour == null || outHour < currentHour) {
-				outHour = currentHour;
-			}
+
+			// Out hour is the last selected hour			
+			outHour = currentHour;
 			
 			totalHours += 15;
 		}
