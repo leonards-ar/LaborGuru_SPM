@@ -112,7 +112,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 					}
 					
 					// Operation hours
-					boolean endsTomorrow = CalendarUtils.equalsOrGreaterTime(realClose, realOpen);
+					boolean endsTomorrow = CalendarUtils.equalsOrGreaterTime(realOpen, realClose);
 					if(endsTomorrow) {
 						// Today hours
 						while(!CalendarUtils.equalsTime(d, CalendarUtils.getMidnightTime())) {
@@ -181,8 +181,13 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 				Date lastHourBase = getScheduleBaseHour(lastHour);
 				Date currentHour = lastHourInserted;
 				
-				for(int i = 1; i < size && CalendarUtils.smallerTime(getScheduleIndividualHours().get(i), lastHourBase); i++) {
-					currentHour = getScheduleIndividualHours().get(i);
+				// Skip last hour
+				while(CalendarUtils.equalsTime(lastHourBase, getScheduleBaseHour(getScheduleIndividualHours().get(size - 1)))) {
+					size--;
+				}
+				
+				for(int i = 1; i < size; i++) {
+					currentHour = getScheduleBaseHour(getScheduleIndividualHours().get(i));
 					if(!CalendarUtils.equalsTime(lastHourInserted, currentHour)) {
 						hours.add(new ScheduleHourLabelElement(currentHour, getHourColspan(currentHour), getHourColspan(currentHour)));
 						lastHourInserted = currentHour;
@@ -194,8 +199,6 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 
 			}
 			this.scheduleLabelHours = hours;
-		} else {
-				this.scheduleLabelHours = new ArrayList<ScheduleHourLabelElement>();
 		}
 		return this.scheduleLabelHours;
 	}
