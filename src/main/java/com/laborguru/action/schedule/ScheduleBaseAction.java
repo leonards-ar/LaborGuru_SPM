@@ -63,4 +63,24 @@ public abstract class ScheduleBaseAction extends SpmAction {
 	protected Date getStoreScheduleEndHour(OperationTime operationTime) {
 		return CalendarUtils.addOrSubstractHours(operationTime.getCloseHour(), getStoreScheduleExtraHours());
 	}
+	
+	/**
+	 * 
+	 * @param day
+	 * @return
+	 */
+	protected boolean isMultiDaySchedule(Date day) {
+		OperationTime operationTime = getOperationTime(day);
+		return CalendarUtils.equalsOrGreaterTime(operationTime.getOpenHour(), operationTime.getCloseHour());
+	}	
+
+	/**
+	 * 
+	 * @param day
+	 * @return
+	 */
+	protected boolean isMultiDayScheduleWithExtraHours(Date day) {
+		OperationTime operationTime = getOperationTime(day);
+		return CalendarUtils.equalsOrGreaterTime(getStoreScheduleStartHour(operationTime), getStoreScheduleEndHour(operationTime));
+	}	
 }
