@@ -345,7 +345,6 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 		}
 	
 		getScheduleService().save(getStoreSchedule());
-		getStaffingService().save(getDailyStaffing());
 
 		resetScheduleData();
 		setScheduleData();

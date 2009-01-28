@@ -43,7 +43,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	private List<ScheduleHourLabelElement> scheduleLabelHours;
 	private List<Date> scheduleIndividualHours;
 	private StoreSchedule storeSchedule;
-	private StoreDailyStaffing dailyStaffing = null;
+	private List<StoreDailyStaffing> dailyStaffings = null;
 	private BigDecimal dailyVolume;
 	
 	/**
@@ -76,7 +76,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	public void setStoreSchedule(StoreSchedule storeSchedule) {
 		this.storeSchedule = storeSchedule;
 	}
-	
+
 	/**
 	 * This method returns a list with all the individaul 
 	 * selectable times (For example all the 15 minutes
@@ -375,6 +375,23 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 
 	/**
 	 * 
+	 * @param time
+	 * @return
+	 */
+	protected boolean isExtraHourTime(Date time) {
+		Date selectedDay = getWeekDaySelector().getSelectedDay();
+		OperationTime operationTime = getOperationTime(selectedDay);
+		if(isMultiDaySchedule(selectedDay)) {
+			//:TODO: Ver si cae fuera de los limites del dia
+			
+			return false;
+		} else {
+			return CalendarUtils.smallerTime(time, operationTime.getOpenHour()) || CalendarUtils.greaterTime(time, operationTime.getCloseHour());
+		}
+	}
+	
+	/**
+	 * 
 	 * @param position
 	 * @return
 	 */
@@ -384,14 +401,31 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 
 		// :TODO: Improve performance. This will call getHalfHourStaffing every 15 minutes (2 times)
 		// This should be calculated only once
-		StoreDailyStaffing dailyStaffing = getDailyStaffing();
+		StoreDailyStaffing dailyStaffing = getSelectedDayDailyStaffing();
+		Date lastProcessedTime = null;
 		if(position == null) {
 			for(Date time : getScheduleIndividualHours()) {
-				minimumStaffing.add(new Integer(dailyStaffing.getHalfHourStaffing(time)));
+				if(lastProcessedTime != null && CalendarUtils.smallerTime(time, lastProcessedTime)) {
+					dailyStaffing = getNextDayDailyStaffing();
+				}
+				if(isExtraHourTime(time)) {
+					minimumStaffing.add(new Integer(0));
+				} else {
+					minimumStaffing.add(new Integer(dailyStaffing.getHalfHourStaffing(time)));
+				}
+				lastProcessedTime = time;
 			}			
 		} else {
 			for(Date time : getScheduleIndividualHours()) {
-				minimumStaffing.add(new Integer(dailyStaffing.getHalfHourStaffing(position, time)));
+				if(lastProcessedTime != null && CalendarUtils.smallerTime(time, lastProcessedTime)) {
+					dailyStaffing = getNextDayDailyStaffing();
+				}
+				if(isExtraHourTime(time)) {
+					minimumStaffing.add(new Integer(0));
+				} else {
+					minimumStaffing.add(new Integer(dailyStaffing.getHalfHourStaffing(position, time)));
+				}				
+				lastProcessedTime = time;
 			}			
 		}
 		
@@ -877,20 +911,27 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	}
 	
 	/**
-	 * @return the dailyStaffing
+	 * @return the dailyStaffings
 	 */
-	public StoreDailyStaffing getDailyStaffing() {
-		if(dailyStaffing == null) {
-			setDailyStaffing(getStaffingService().getDailyStaffingByDate(getEmployeeStore(), getWeekDaySelector().getSelectedDay()));
+	public List<StoreDailyStaffing> getDailyStaffings() {
+		if(dailyStaffings == null) {
+			setDailyStaffings(new ArrayList<StoreDailyStaffing>(2));
+			Date selectedDay = getWeekDaySelector().getSelectedDay();
+			
+			dailyStaffings.add(getStaffingService().getDailyStaffingByDate(getEmployeeStore(), selectedDay));
+			if(isMultiDaySchedule(selectedDay)) {
+				dailyStaffings.add(getStaffingService().getDailyStaffingByDate(getEmployeeStore(), CalendarUtils.addOrSubstractDays(selectedDay, 1)));
+			}
+			
 		}
-		return dailyStaffing;
+		return dailyStaffings;
 	}
 
 	/**
 	 * @param dailyStaffing the dailyStaffing to set
 	 */
-	public void setDailyStaffing(StoreDailyStaffing dailyStaffing) {
-		this.dailyStaffing = dailyStaffing;
+	public void setDailyStaffings(List<StoreDailyStaffing> dailyStaffings) {
+		this.dailyStaffings = dailyStaffings;
 	}
 	
 	/**
@@ -899,7 +940,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	 * @return
 	 */
 	private int getTotalPositionTargetInMinutes(Position position) {
-		StoreDailyStaffing storeDailyStaffing = getDailyStaffing();
+		StoreDailyStaffing storeDailyStaffing = getSelectedDayDailyStaffing();
 		if(storeDailyStaffing != null) {
 			DailyStaffing dailyStaffing = storeDailyStaffing.getDailyStaffing(position);
 			return getTotalDailyStaffingInMinutes(dailyStaffing);
@@ -936,8 +977,37 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	 * 
 	 * @return
 	 */
+	protected StoreDailyStaffing getSelectedDayDailyStaffing() {
+		List<StoreDailyStaffing> staffings = getDailyStaffings();
+		if(staffings != null && staffings.size() > 0) {
+			return staffings.get(0);
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	protected StoreDailyStaffing getNextDayDailyStaffing() {
+		List<StoreDailyStaffing> staffings = getDailyStaffings();
+		if(staffings != null && staffings.size() > 1) {
+			return staffings.get(1);
+		} else if(staffings.size() > 0) {
+			return staffings.get(0);
+		} else {
+			return null;
+		}
+	}
+	
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getTotalTarget() {
-		StoreDailyStaffing storeDailyStaffing = getDailyStaffing();
+		StoreDailyStaffing storeDailyStaffing = getSelectedDayDailyStaffing();
 		if(storeDailyStaffing != null) {
 			return CalendarUtils.minutesToTime(new Integer(getTotalTargetInMinutes(storeDailyStaffing.getStoreDailyStaffing())));
 		} else {
