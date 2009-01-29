@@ -1,0 +1,1 @@
+insert into tbl_menu_items values (27, 'schedule.submenu.printtotalhours', 'SCHEDULE_PRINTTOTALHOURS_HELP', '/schedule/printweeklytotalhoursbyposition_view.action', 4, 15, 41);
