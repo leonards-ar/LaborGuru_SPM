@@ -9,9 +9,12 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -432,6 +435,109 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 
 	/**
 	 * 
+	 * @return
+	 */
+	protected Map<Integer, List<Shift>> retrieveCurrentShiftsWithContiguous(Position position) {
+		Map<Integer, List<Shift>> shiftsWithContiguous = new HashMap<Integer, List<Shift>>();
+		
+		List<Shift> shifts;
+		for(EmployeeSchedule schedule : getStoreSchedule().getEmployeeSchedules()) {
+			shifts = position == null ? schedule.getShiftsWithContiguous() : schedule.getShiftsWithContiguous(position);
+			if(shifts != null && shifts.size() > 0) {
+				shiftsWithContiguous.put(schedule.getEmployee().getId(), cloneShifts(shifts));
+			}
+		}
+		
+		return shiftsWithContiguous;
+	}
+
+	/**
+	 * 
+	 * @param source
+	 * @return
+	 */
+	private List<Shift> cloneShifts(List<Shift> source) {
+		if(source == null || source.size() <= 0) {
+			return null;
+		} else {
+			List<Shift> clonedShifts = new ArrayList<Shift>(source.size());
+			Shift cloned;
+			for(Shift aShift : source) {
+				cloned = new Shift();
+				cloned.setContiguousShift(aShift.getContiguousShift());
+				cloned.setFromHour(aShift.getFromHour());
+				cloned.setToHour(aShift.getToHour());
+				cloned.setPosition(aShift.getPosition());
+				clonedShifts.add(cloned);
+			}
+			return clonedShifts;
+		}
+	}
+	
+	/**
+	 * 
+	 * @param shiftsWithContiguous
+	 * @return
+	 */
+	private Collection<Position> retrieveShiftsWithContiguousPositions(List<Shift> shiftsWithContiguous) {
+		if(shiftsWithContiguous != null) {
+			Map<Integer, Position> positions = new HashMap<Integer, Position>(shiftsWithContiguous.size());
+			for(Shift shift : shiftsWithContiguous) {
+				if(!shift.isBreak() && shift.getPosition() != null && shift.getPosition().getId() != null) {
+					positions.put(shift.getPosition().getId(), shift.getPosition());
+				}
+			}
+			return positions.values();
+		} else {
+			return new HashSet<Position>();
+		}
+		
+	}
+	
+	/**
+	 * 
+	 * @param shiftsWithContiguous
+	 * @param position
+	 * @return
+	 */
+	private Shift retrieveShiftWithContiguousFor(List<Shift> shiftsWithContiguous, Position position) {
+		for(Shift shift : shiftsWithContiguous) {
+			if(isEqualPosition(shift.getPosition(), position)) {
+				return shift;
+			}
+		}
+		// Should never happen as position should exit
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @param shiftsWithContiguous
+	 */
+	protected void updateShiftsWithContiguous(Map<Integer, List<Shift>> shiftsWithContiguous) {
+		Date selectedDayEndHour = getStoreScheduleEndHour(getOperationTime(getWeekDaySelector().getSelectedDay()));
+
+		for(EmployeeSchedule schedule : getStoreSchedule().getEmployeeSchedules()) {
+			List<Shift> originalShifts = shiftsWithContiguous.get(schedule.getEmployee().getId());
+			if(originalShifts != null && originalShifts.size() > 0) {
+				for(Position position : retrieveShiftsWithContiguousPositions(originalShifts)) {
+					Shift originalShift = retrieveShiftWithContiguousFor(originalShifts, position);
+					if(originalShift != null) {
+						Shift scheduleShift = schedule.getLastShiftFor(position);
+						
+						// Re-establish the contiguous relation when ther is no change in the shift end time
+						if(scheduleShift != null && CalendarUtils.equalsTime(selectedDayEndHour, scheduleShift.getToHour()) && CalendarUtils.equalsTime(scheduleShift.getToHour(), originalShift.getToHour())) {
+							scheduleShift.setContiguousShift(originalShift.getContiguousShift());
+						}
+					}
+				}
+			}
+		}
+		
+	}
+	
+	/**
+	 * 
 	 * @param schedule
 	 * @param position
 	 * @param day
@@ -520,6 +626,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 		
 		for(ScheduleRow row : source) {
 			rowShifts = retrieveShifts(row);
+			
 			for(Shift aShift : rowShifts) {
 				if(isEqualPosition(position, aShift.getPosition())) {
 					while(shiftPosition < currentShifts.size() && !isEqualPosition(position, currentShifts.get(shiftPosition).getPosition())) {

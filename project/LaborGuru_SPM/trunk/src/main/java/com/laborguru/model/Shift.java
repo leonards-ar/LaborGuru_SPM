@@ -33,6 +33,7 @@ public class Shift extends SpmObject {
 	private Date toHour;
 	private Position position;
 	private Integer shiftIndex;
+	private Shift contiguousShift;
 	
 	/**
 	 * 
@@ -190,4 +191,34 @@ public class Shift extends SpmObject {
 	public Double getTotalShiftHours() {
 		return CalendarUtils.differenceInHours(getToHour(), getFromHour());
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getTotalShiftHoursWithContiguous() {
+		return CalendarUtils.differenceInHours(!hasContiguousShift() ? getToHour() : getContiguousShift().getToHour(), getFromHour());
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean hasContiguousShift() {
+		return getContiguousShift() != null;
+	}
+	
+	/**
+	 * @return the contiguousShift
+	 */
+	public Shift getContiguousShift() {
+		return contiguousShift;
+	}
+
+	/**
+	 * @param contiguousShift the contiguousShift to set
+	 */
+	public void setContiguousShift(Shift contiguousShift) {
+		this.contiguousShift = contiguousShift;
+	}	
 }
