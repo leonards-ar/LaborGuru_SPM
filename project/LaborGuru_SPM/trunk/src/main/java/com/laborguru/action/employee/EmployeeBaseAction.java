@@ -129,7 +129,7 @@ public abstract class EmployeeBaseAction extends SpmAction implements Preparable
 	 */
 	public String add() throws Exception {
 		setExtraInformation();
-		this.setPositions(retrievePositions());
+		setPositionsForSelect();
 		return SpmActionResult.EDIT.getResult();
 	}
 
@@ -168,10 +168,19 @@ public abstract class EmployeeBaseAction extends SpmAction implements Preparable
 	public String edit() throws Exception {
 		loadEmployeeFromId();
 		setExtraInformation();	
-		this.setPositions(retrievePositions());
+		setPositionsForSelect();
 		return SpmActionResult.EDIT.getResult();
 	}
 
+	/**
+	 * 
+	 */
+	protected void setPositionsForSelect() {
+		if(getPositions() == null || getPositions().isEmpty()) {
+			setPositions(retrievePositions());
+		}
+	}
+	
 	/**
 	 * TODO Performs an Employee Search
 	 * @return
@@ -229,7 +238,7 @@ public abstract class EmployeeBaseAction extends SpmAction implements Preparable
 		//:TODO: Add country support
 		this.setStatesList(getReferenceDataService().getStates("us"));
 		
-		setPositions(retrievePositions());
+		setPositionsForSelect();
 	}
 
 	/**
