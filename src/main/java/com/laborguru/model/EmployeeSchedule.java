@@ -15,8 +15,6 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-import com.laborguru.util.CalendarUtils;
-
 /**
  *
  * @author <a href="mcapurro@gmail.com">Mariano Capurro</a>
@@ -122,6 +120,23 @@ public class EmployeeSchedule extends SpmObject {
 	 * @param position
 	 * @return
 	 */
+	public Double getTotalShiftHoursWithContiguous(Position position) {
+		double total = 0.0;
+		if(position != null && position.getId() != null) {
+			for(Shift shift : getShifts()) {
+				if(shift.getPosition() != null && position.getId().equals(shift.getPosition().getId())) {
+					total += shift.getTotalShiftHoursWithContiguous().doubleValue();
+				}
+			}
+		}
+		return new Double(total);
+	}
+	
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 */
 	public Date getFromHour(Position position) {
 		Date inTime = null;
 		if(position != null && position.getId() != null) {
@@ -152,10 +167,43 @@ public class EmployeeSchedule extends SpmObject {
 	 * 
 	 * @return
 	 */
+	public Date getToHourWithContiguous() {
+		Shift shift = getShifts() != null && getShifts().size() > 0 ? getShifts().get(getShifts().size() - 1) : null;
+		if(shift != null) {
+			return shift.hasContiguousShift() ? shift.getContiguousShift().getToHour() : shift.getToHour();
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
 	public Date getToHour() {
 		return getShifts() != null && getShifts().size() > 0 ? getShifts().get(getShifts().size() - 1).getToHour() : null;
 	}
 
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 */
+	public Date getToHourWithContiguous(Position position) {
+		Date outTime = null;
+		if(position != null && position.getId() != null) {
+			for(Shift shift : getShifts()) {
+				if(shift.getPosition() != null && position.getId().equals(shift.getPosition().getId())) {
+					//if(outTime == null || CalendarUtils.smallerTime(outTime, shift.getToHour())) {
+					// The out time of the last shift
+					outTime = shift.hasContiguousShift() ? shift.getContiguousShift().getToHour() : shift.getToHour();
+					//}					
+				}
+			}
+		}
+		return outTime;				
+	}
+	
 	/**
 	 * 
 	 * @param position
@@ -303,7 +351,63 @@ public class EmployeeSchedule extends SpmObject {
 				}
 			}
 		}
-		
 		return shifts;
+	}
+
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 */
+	public Shift getLastShiftFor(Position position) {
+		List<Shift> shifts = getShiftsFor(position);
+		return shifts != null && shifts.size() > 0 ? shifts.get(shifts.size() - 1) : null;
+	}
+	
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 */
+	public Shift getShiftWithContiguousFor(Position position) {
+		if(position != null && position.getId() != null) {
+			for(Shift shift : getShifts()) {
+				if(shift.getPosition() != null && position.getId().equals(shift.getPosition().getId()) && shift.hasContiguousShift()) {
+					return shift;
+				}
+			}
+		}
+		return null;		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public List<Shift> getShiftsWithContiguous() {
+		List<Shift> shifts = new ArrayList<Shift>();
+		for(Shift shift : getShifts()) {
+			if(shift.hasContiguousShift()) {
+				shifts.add(shift);
+			}
+		}
+		return shifts;
+	}
+	
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 */
+	public List<Shift> getShiftsWithContiguous(Position position) {
+		List<Shift> shifts = new ArrayList<Shift>();
+		if(position != null && position.getId() != null) {
+			for(Shift shift : getShifts()) {
+				if(shift.hasContiguousShift() && position.getId().equals(shift.getPosition().getId())) {
+					shifts.add(shift);
+				}
+			}
+		}
+		return shifts;		
 	}
 }

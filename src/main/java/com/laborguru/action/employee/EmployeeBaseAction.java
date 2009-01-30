@@ -228,6 +228,8 @@ public abstract class EmployeeBaseAction extends SpmAction implements Preparable
 		this.setStatusMap(getReferenceDataService().getStatus());
 		//:TODO: Add country support
 		this.setStatesList(getReferenceDataService().getStates("us"));
+		
+		setPositions(retrievePositions());
 	}
 
 	/**

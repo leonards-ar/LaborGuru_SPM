@@ -8,6 +8,7 @@ package com.laborguru.action.schedule;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -16,6 +17,7 @@ import com.laborguru.frontend.model.ScheduleByPositionEntry;
 import com.laborguru.frontend.model.ScheduleRow;
 import com.laborguru.model.Employee;
 import com.laborguru.model.Position;
+import com.laborguru.model.Shift;
 import com.opensymphony.xwork2.Preparable;
 
 /**
@@ -301,7 +303,13 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftByDa
 			log.debug("About to save schedule data" + getPositionScheduleData());
 		}
 		
+		Map<Integer, List<Shift>> shiftsWithContiguous = retrieveCurrentShiftsWithContiguous(getPosition());
+		
 		setSchedule();
+		
+		updateShiftsWithContiguous(shiftsWithContiguous);
+		
+		
 
 		if(log.isDebugEnabled()) {
 			log.debug("About to save schedule " + getStoreSchedule());

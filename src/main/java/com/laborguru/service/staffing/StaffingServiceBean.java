@@ -396,6 +396,7 @@ public class StaffingServiceBean implements StaffingService {
 	 */
 	private void updateAdditionalEmployee(List<HalfHourStaffingPositionData> groupStaffing) {
 		int total = getTotalEmployeesForGroup(groupStaffing);
+		total = total < groupStaffing.size() ? total : groupStaffing.size();
 		for(int i = 0; i < total; i++) {
 			groupStaffing.get(i).setAdditionalEmployee(true);
 		}
@@ -411,6 +412,7 @@ public class StaffingServiceBean implements StaffingService {
 		for(HalfHourStaffingPositionData staffing : groupStaffing) {
 			total += staffing.getWorkContentDecimalPart();
 		}
+		//:TODO: Check why sometimes it is returning a number larger than groupStaffing.size
 		return (int) Math.ceil(total);
 	}
 	

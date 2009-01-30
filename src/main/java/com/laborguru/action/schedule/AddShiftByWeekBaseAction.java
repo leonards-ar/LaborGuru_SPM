@@ -129,7 +129,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		WeeklyScheduleDailyEntry entry = getDailyEntry(row.getWeeklySchedule(), dayIndex);
 		if(!entry.isMultipleShifts()) {
 			entry.setMultipleShifts(employeeSchedule.hasMultipleShifts(shift.getPosition()));
-			entry.setTotalHours(employeeSchedule.getTotalShiftHours(shift.getPosition()));
+			entry.setTotalHours(employeeSchedule.getTotalShiftHoursWithContiguous(shift.getPosition()));
 		}
 		
 		if(entry.getInHour() == null) {
@@ -137,7 +137,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		}
 
 		if(entry.getOutHour() == null) {
-			entry.setOutHour(employeeSchedule.getToHour(shift.getPosition()));
+			entry.setOutHour(employeeSchedule.getToHourWithContiguous(shift.getPosition()));
 		}
 		/*
 		if(entry.getInHour() == null || CalendarUtils.greaterTime(entry.getInHour(), shift.getFromHour())) {
@@ -450,7 +450,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	private boolean changeShiftForPosition(Shift shift, EmployeeSchedule employeeSchedule) {
 		if(shift != null && shift.getPosition() != null) {
 			Date in = employeeSchedule.getFromHour(shift.getPosition());
-			Date out = employeeSchedule.getToHour(shift.getPosition());
+			Date out = employeeSchedule.getToHourWithContiguous(shift.getPosition());
 			return !CalendarUtils.equalsTime(in, shift.getFromHour()) || !CalendarUtils.equalsTime(out, shift.getToHour());
 		} else {
 			return false;
