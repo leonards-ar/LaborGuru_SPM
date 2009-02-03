@@ -5,6 +5,8 @@ uri="/struts-tags" %>
 <html>
 	<head>
 		<title><s:text name="application.title" /></title>
+		<link rel="icon" href="<s:url value="/images/favicon.ico" includeParams="none" />" type="image/x-icon">
+		<link rel="shortcut icon" href="<s:url value="/images/favicon.ico" includeParams="none" />" type="image/x-icon">
 		<script language="javascript" type="text/javascript" src="<s:url value="/js/spmcommon.js" includeParams="none" />"></script>
 		
 		<script language="JavaScript" type="text/javascript">
