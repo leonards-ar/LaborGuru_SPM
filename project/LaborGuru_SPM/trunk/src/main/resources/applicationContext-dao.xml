@@ -39,6 +39,8 @@
 	
 	<bean id="reportDao" class="com.laborguru.service.report.dao.SqlMapReportDao" autowire="byType"/>
 
+	<bean id="actualHoursDao" class="com.laborguru.service.actualhours.dao.ActualHoursDaoHibernate" autowire="byType"/>
+
 	<bean id="spmDaoUtils" class="com.laborguru.service.dao.hibernate.SpmHibernateDao" autowire="byType"/>
 
 	<bean id="shiftDao" class="com.laborguru.service.schedule.dao.ShiftDaoHibernate" autowire="byType"/>						
@@ -78,6 +80,7 @@
 				<value>com/laborguru/model/HalfHourStaffing.hbm.xml</value>
 				<value>com/laborguru/model/DailyStaffing.hbm.xml</value>
 				<value>com/laborguru/model/UploadFile.hbm.xml</value>				
+				<value>com/laborguru/model/ActualHours.hbm.xml</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
