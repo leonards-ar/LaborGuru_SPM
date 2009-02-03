@@ -318,6 +318,7 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 		destination.setPosition(source.getPosition());
 		// Reset contiguous shift
 		destination.setContiguousShift(null);
+		destination.setStartingShift(null);
 	}	
 
 	/**

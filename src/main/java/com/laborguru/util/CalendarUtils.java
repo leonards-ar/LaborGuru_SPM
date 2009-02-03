@@ -364,7 +364,13 @@ public class CalendarUtils {
 			long t1 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(startTime));
 			long t2 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(endTime));
 			
-			return t >= t1 && t < t2;
+			if(t1 <= t2) {
+				return t >= t1 && t < t2;
+			} else {
+				// Multi day range
+				final long midnight = 2400L;
+				return t >= t1 && t < midnight || t < t2;
+			}
 		} catch(Throwable ex) {
 			return false;
 		}		

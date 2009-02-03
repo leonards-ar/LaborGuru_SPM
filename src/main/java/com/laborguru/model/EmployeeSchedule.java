@@ -141,7 +141,7 @@ public class EmployeeSchedule extends SpmObject {
 		Date inTime = null;
 		if(position != null && position.getId() != null) {
 			for(Shift shift : getShifts()) {
-				if(shift.getPosition() != null && position.getId().equals(shift.getPosition().getId())) {
+				if(shift.getPosition() != null && position.getId().equals(shift.getPosition().getId()) && !shift.isReferencedShift()) {
 					inTime = shift.getFromHour();
 					break;
 					/*
@@ -160,7 +160,19 @@ public class EmployeeSchedule extends SpmObject {
 	 * @return
 	 */
 	public Date getFromHour() {
-		return getShifts() != null && getShifts().size() > 0 ? getShifts().get(0).getFromHour() : null;
+		Date inTime = null;
+		for(Shift shift : getShifts()) {
+			if(!shift.isReferencedShift()) {
+				inTime = shift.getFromHour();
+				break;
+				/*
+				if(inTime == null || CalendarUtils.greaterTime(inTime, shift.getFromHour())) {
+					inTime = shift.getFromHour();
+				}	
+				*/				
+			}
+		}
+		return inTime;			
 	}
 
 	/**
@@ -233,6 +245,28 @@ public class EmployeeSchedule extends SpmObject {
 			shift.setEmployeeSchedule(this);
 			shift.setShiftIndex(new Integer(getShifts().size()));
 			getShifts().add(shift);
+		}
+	}
+	
+	/**
+	 * 
+	 * @param shift
+	 */
+	public void addFirstShift(Shift shift) {
+		if(shift != null) {
+			List<Shift> newShifts = new ArrayList<Shift>();
+			shift.setEmployeeSchedule(this);
+			shift.setShiftIndex(new Integer(0));
+			
+			newShifts.add(shift);
+			
+			int index = 1;
+			for(Shift aShift : getShifts()) {
+				aShift.setShiftIndex(new Integer(index));
+				index++;
+			}
+			
+			setShifts(newShifts);
 		}
 	}
 	
@@ -359,9 +393,16 @@ public class EmployeeSchedule extends SpmObject {
 	 * @param position
 	 * @return
 	 */
-	public Shift getLastShiftFor(Position position) {
-		List<Shift> shifts = getShiftsFor(position);
-		return shifts != null && shifts.size() > 0 ? shifts.get(shifts.size() - 1) : null;
+	public List<Shift> getUnreferencedShiftsFor(Position position) {
+		List<Shift> shifts = new ArrayList<Shift>();
+		if(position != null && position.getId() != null) {
+			for(Shift shift : getShifts()) {
+				if(!shift.isReferencedShift() && shift.getPosition() != null && position.getId().equals(shift.getPosition().getId())) {
+					shifts.add(shift);
+				}
+			}
+		}
+		return shifts;
 	}
 	
 	/**
@@ -369,15 +410,51 @@ public class EmployeeSchedule extends SpmObject {
 	 * @param position
 	 * @return
 	 */
-	public Shift getShiftWithContiguousFor(Position position) {
+	public Shift getLastShiftFor(Position position) {
+		List<Shift> shifts = getShiftsFor(position);
+		return shifts != null && shifts.size() > 0 ? shifts.get(shifts.size() - 1) : null;
+	}
+
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 */
+	public Shift getFirstShiftFor(Position position) {
+		List<Shift> shifts = getShiftsFor(position);
+		return shifts != null && shifts.size() > 0 ? shifts.get(0) : null;
+	}
+	
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public List<Shift> getReferencedShifts() {
+		List<Shift> shifts = new ArrayList<Shift>();
+		for(Shift shift : getShifts()) {
+			if(shift.isReferencedShift()) {
+				shifts.add(shift);
+			}
+		}
+		return shifts;
+	}
+	
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 */
+	public List<Shift> getReferencedShifts(Position position) {
+		List<Shift> shifts = new ArrayList<Shift>();
 		if(position != null && position.getId() != null) {
 			for(Shift shift : getShifts()) {
-				if(shift.getPosition() != null && position.getId().equals(shift.getPosition().getId()) && shift.hasContiguousShift()) {
-					return shift;
+				if(shift.isReferencedShift() && position.getId().equals(shift.getPosition().getId())) {
+					shifts.add(shift);
 				}
 			}
 		}
-		return null;		
+		return shifts;		
 	}
 	
 	/**

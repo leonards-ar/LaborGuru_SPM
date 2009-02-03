@@ -43,6 +43,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	private WeeklyScheduleData weeklyScheduleData = null;
 	
 	private List<StoreSchedule> storeSchedules = null;
+	private StoreSchedule firstDayNextWeekStoreSchedule = null;
 	private List<Date> weekDays = null;
 	private List<StoreDailyStaffing> dailyStaffings = null;
 	
@@ -73,7 +74,9 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 						aSchedule = new StoreSchedule();
 						aSchedule.setStore(getEmployeeStore());
 						aSchedule.setDay(aDate);
-					}					
+					} else {
+						getScheduleService().detach(aSchedule);
+					}
 					storeSchedules.add(aSchedule);
 				}
 			} catch(RuntimeException ex) {
@@ -105,7 +108,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 			aSchedule = getStoreSchedules().get(i);
 			for(EmployeeSchedule employeeSchedule : aSchedule.getEmployeeSchedules()) {
 				for(Shift shift : employeeSchedule.getShifts()) {
-					if(!shift.isBreak() && (position == null || (position != null && isEqualPosition(position, shift.getPosition())))) {
+					if(!shift.isBreak() && (position == null || (position != null && isEqualPosition(position, shift.getPosition()))) && !shift.isReferencedShift()) {
 						aRow = getRowFor(employeeSchedule, shift);
 						if(aRow == null) {
 							aRow = buildRowFor(employeeSchedule, shift);
@@ -117,6 +120,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 			}			
 		}
 	}
+
 	
 	/**
 	 * 
@@ -147,7 +151,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 			entry.setOutHour(shift.getToHour());
 		}
 		*/
-		entry.addShiftHours(shift.getFromHour(), shift.getToHour());
+		entry.addShiftHours(shift.getFromHour(), shift.getToHourWithContiguousShift());
 	}
 	
 	/**
@@ -335,6 +339,35 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	
 	/**
 	 * 
+	 * @param shiftsFromPreviousDay
+	 * @param storeSchedule
+	 */
+	private void processShiftsFromPreviousDay(List<Shift> shiftsFromPreviousDay, StoreSchedule storeSchedule) {
+		if(storeSchedule != null && shiftsFromPreviousDay != null && shiftsFromPreviousDay.size() > 0) {
+			EmployeeSchedule schedule;
+			Shift firstShift;
+			for(Shift shift : shiftsFromPreviousDay) {
+				schedule = storeSchedule.getEmployeeSchedule(shift.getEmployeeSchedule().getEmployee());
+				if(schedule == null) {
+					schedule = new EmployeeSchedule();
+					schedule.setEmployee(getEmployeeService().getEmployeeById(shift.getEmployeeSchedule().getEmployee()));
+					schedule.setStoreSchedule(storeSchedule);
+					storeSchedule.getEmployeeSchedules().add(schedule);
+				}
+				firstShift = schedule.getFirstShiftFor(shift.getPosition());
+				if(firstShift == null || CalendarUtils.equalsOrGreaterTime(firstShift.getFromHour(), shift.getToHour())) {
+					shift.setEmployeeSchedule(schedule);
+					schedule.addFirstShift(shift);
+				} else {
+					// Error! There is already an overlapping shift!
+				}
+			}
+			
+		}
+	}
+	
+	/**
+	 * 
 	 * @param schedule
 	 * @param position
 	 * @param day
@@ -342,9 +375,15 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	protected void setSchedule() {
 		int size = getStoreSchedules().size();
 		StoreSchedule storeSchedule;
+		List<Shift> shiftsForNextDay = null;
+		List<Shift> shiftsFromPreviousDay = null;
+		
 		for(int dayIndex = 0; dayIndex < size; dayIndex++ ) {
 			if(isEditable(dayIndex)) {
 				storeSchedule = getStoreSchedules().get(dayIndex);
+				
+				shiftsFromPreviousDay = shiftsForNextDay;
+				shiftsForNextDay = new ArrayList<Shift>();
 				
 				Set<Integer> employeeIds = getDifferentEmployeeIds();
 				Employee employee;
@@ -357,12 +396,18 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 						employeeSchedule.setStoreSchedule(storeSchedule);
 						storeSchedule.getEmployeeSchedules().add(employeeSchedule);
 					}
-					setShifts(getEmployeeSchedule(employeeId), employeeSchedule, dayIndex);
+					setShifts(getEmployeeSchedule(employeeId), employeeSchedule, dayIndex, shiftsForNextDay);
 				}
-				
+
 				// Remove non existing shifts for the employee and for a position
 				cleanStoreSchedule(employeeIds, storeSchedule, dayIndex);
+				
+				processShiftsFromPreviousDay(shiftsFromPreviousDay, storeSchedule);
 			}
+		}
+		
+		if(isEditable(size) && shiftsForNextDay != null && shiftsForNextDay.size() > 0) {
+			processShiftsFromPreviousDay(shiftsForNextDay, getFirstDayNextWeekStoreSchedule());
 		}
 	}
 
@@ -395,6 +440,8 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 							employeeSchedulesToRemove.add(employeeSchedule);
 						}
 					}
+				} else if(employeeSchedule.getShifts().isEmpty()) {
+					employeeSchedulesToRemove.add(employeeSchedule);
 				}
 			}
 			storeSchedule.getEmployeeSchedules().removeAll(employeeSchedulesToRemove);
@@ -406,12 +453,13 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 * @param source
 	 * @param employeeSchedule
 	 * @param dayIndex
+	 * @param shiftsFromPreviousDay
 	 */
-	private void setShifts(List<WeeklyScheduleRow> source, EmployeeSchedule employeeSchedule, int dayIndex) {
+	private void setShifts(List<WeeklyScheduleRow> source, EmployeeSchedule employeeSchedule, int dayIndex, List<Shift> shiftsFromPreviousDay) {
 		if(getPosition() == null) {
-			setShiftsAllPositions(source, employeeSchedule, dayIndex);
+			setShiftsAllPositions(source, employeeSchedule, dayIndex, shiftsFromPreviousDay);
 		} else {
-			setShiftsForPosition(source, employeeSchedule, getPosition(), dayIndex);
+			setShiftsForPosition(source, employeeSchedule, getPosition(), dayIndex, shiftsFromPreviousDay);
 		}
 	}
 	
@@ -451,7 +499,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		if(shift != null && shift.getPosition() != null) {
 			Date in = employeeSchedule.getFromHour(shift.getPosition());
 			Date out = employeeSchedule.getToHourWithContiguous(shift.getPosition());
-			return !CalendarUtils.equalsTime(in, shift.getFromHour()) || !CalendarUtils.equalsTime(out, shift.getToHour());
+			return !CalendarUtils.equalsTime(in, shift.getFromHour()) || !CalendarUtils.equalsTime(out, shift.getToHourWithContiguousShift());
 		} else {
 			return false;
 		}
@@ -510,34 +558,86 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		}
 		return false;
 	}
+
+	/**
+	 * 
+	 * @param shift
+	 * @param dayIndex
+	 * @param employeeSchedule
+	 * @return
+	 */
+	private Shift breakAndUpdateContiguousShift(Shift shift, int dayIndex, EmployeeSchedule employeeSchedule) {
+		Date selectedDayEndTime = getStoreScheduleEndHour(getOperationTime(getDay(dayIndex)));
+		Date selectedDayNextDayStartTime = getStoreScheduleStartHour(getOperationTime(getDay(dayIndex + 1)));
+		Shift contiguousShift = null;
+		if(breakIntoContiguousShift(shift, selectedDayEndTime, selectedDayNextDayStartTime)) {
+			contiguousShift = new Shift();
+			contiguousShift.setContiguousShift(null);
+			contiguousShift.setPosition(shift.getPosition());
+			contiguousShift.setToHour(shift.getToHour());
+			contiguousShift.setFromHour(selectedDayNextDayStartTime);
+			// Just for the employee! Should be replaced when assigned to the
+			// next day schedule
+			contiguousShift.setEmployeeSchedule(employeeSchedule);
+			shift.setToHour(selectedDayEndTime);
+		}
+		shift.setContiguousShift(contiguousShift);
+		return contiguousShift;
+	}
+	
+	/**
+	 * 
+	 * @param shift
+	 * @param selectedDayEndTime
+	 * @param selectedDayNextDayStartTime
+	 * @return
+	 */
+	private boolean breakIntoContiguousShift(Shift shift, Date selectedDayEndTime, Date selectedDayNextDayStartTime) {
+		return CalendarUtils.equalsTime(selectedDayEndTime, selectedDayNextDayStartTime) &&
+			   (
+			   // Case 1: 24hs shift and limit between them
+			   (CalendarUtils.equalsTime(shift.getFromHour(), shift.getToHour()) && !CalendarUtils.equalsTime(shift.getFromHour(), selectedDayEndTime)) ||
+			   // Case 2: To Hour is greater than From Hour and limit is between them
+			   (CalendarUtils.greaterTime(shift.getToHour(), shift.getFromHour()) && CalendarUtils.inRange(selectedDayEndTime, shift.getFromHour(), shift.getToHour())) ||
+			   // Case 3: From Hours is greater than To Hour and limit is between them
+			   (CalendarUtils.greaterTime(shift.getFromHour(), shift.getToHour()) && CalendarUtils.inRange(selectedDayEndTime, shift.getFromHour(), shift.getToHour()))
+			   );
+	}
 	
 	/**
 	 * 
 	 * @param source
 	 * @param employeeSchedule
 	 * @param dayIndex
+	 * @param shiftsForNextDay
 	 */
-	private void setShiftsAllPositions(List<WeeklyScheduleRow> source, EmployeeSchedule employeeSchedule, int dayIndex) {
+	private void setShiftsAllPositions(List<WeeklyScheduleRow> source, EmployeeSchedule employeeSchedule, int dayIndex, List<Shift> shiftsForNextDay) {
 		int shiftPosition = 0;
 		Shift rowShift;
 		List<Shift> currentShifts = employeeSchedule.getShifts();
 		int currentShiftsSize = currentShifts.size();
 		List<Shift> shiftsToKeep = retrieveShiftsToKeep(source, employeeSchedule, dayIndex);
-			
+		Shift contiguousShift = null;
+		
 		for(WeeklyScheduleRow row : source) {
 			rowShift = retrieveShift(row, dayIndex);
 			if(rowShift != null && changeShiftForPosition(rowShift, employeeSchedule)) {
 				// Do not replace breaks
 				while(shiftPosition < currentShifts.size() && isShiftToKeep(shiftsToKeep, currentShifts.get(shiftPosition))) {
 					shiftPosition++;
-				}				
+				}
+				contiguousShift = breakAndUpdateContiguousShift(rowShift, dayIndex, employeeSchedule);
+				if(contiguousShift != null) {
+					shiftsForNextDay.add(contiguousShift);
+				}
+				
 				if(shiftPosition < currentShiftsSize) {
 					updateShift(rowShift, currentShifts.get(shiftPosition));
 					shiftPosition++;
 				} else {
 					rowShift.setEmployeeSchedule(employeeSchedule);
 					employeeSchedule.addShift(rowShift);
-				}					
+				}			
 			}
 		}
 		
@@ -550,27 +650,33 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 			}
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param source
 	 * @param employeeSchedule
 	 * @param position
 	 * @param dayIndex
+	 * @param shiftsForNextDay
 	 */
-	private void setShiftsForPosition(List<WeeklyScheduleRow> source, EmployeeSchedule employeeSchedule, Position position, int dayIndex) {
+	private void setShiftsForPosition(List<WeeklyScheduleRow> source, EmployeeSchedule employeeSchedule, Position position, int dayIndex, List<Shift> shiftsForNextDay) {
 		int shiftPosition = 0;
 		Shift rowShift;
 		List<Shift> currentShifts = employeeSchedule.getShifts();
 		int currentShiftsSize = currentShifts.size();
 		List<Shift> shiftsToKeep = retrieveShiftsToKeep(source, employeeSchedule, dayIndex);
-
+		Shift contiguousShift = null;
 	
 		for(WeeklyScheduleRow row : source) {
 			rowShift = retrieveShift(row, dayIndex);
 			if(rowShift != null && isEqualPosition(position, rowShift.getPosition()) && changeShiftForPosition(rowShift, employeeSchedule)) {
 				while(shiftPosition < currentShifts.size() && (isShiftToKeep(shiftsToKeep, currentShifts.get(shiftPosition)) || !isEqualPosition(position, currentShifts.get(shiftPosition).getPosition()))) {
 					shiftPosition++;
+				}
+				
+				contiguousShift = breakAndUpdateContiguousShift(rowShift, dayIndex, employeeSchedule);
+				if(contiguousShift != null) {
+					shiftsForNextDay.add(contiguousShift);
 				}
 				
 				if(shiftPosition < currentShiftsSize) {
@@ -590,7 +696,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 					currentShifts.remove(i);
 				}
 			}
-		}		
+		}	
 	}
 	
 	/**
@@ -642,6 +748,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	@Override
 	protected void processChangeWeek() {
 		setStoreSchedules(null);
+		setFirstDayNextWeekStoreSchedule(null);
 		resetScheduleData();
 		//resetStaffingData();
 		setScheduleData();
@@ -743,10 +850,16 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		
 		// Build schedule for correct days
 		setSchedule();
-		
+
 		int size = getStoreSchedules().size();
 		StoreSchedule storeSchedule;
-		for(int dayIndex = 0; dayIndex < size; dayIndex++ ) {
+		
+		// Inverse so that contiguous shifts are saved first!
+		if(isFirstDayNextWeekStoreSchedule()) {
+			getScheduleService().save(getFirstDayNextWeekStoreSchedule());
+		}
+		
+		for(int dayIndex = size - 1; dayIndex >= 0; dayIndex--) {
 			if(isEditable(dayIndex)) {
 				storeSchedule = getStoreSchedules().get(dayIndex);
 
@@ -761,7 +874,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 				}
 			}
 		}
-
+		
 		resetScheduleData();
 		setScheduleData();
 		
@@ -776,7 +889,24 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 * @return
 	 */
 	public boolean isEditable(int dayIndex) {
-		return CalendarUtils.isAfterToday(getWeekDays().get(dayIndex));
+		Date d = getDay(dayIndex);
+		return d != null ? CalendarUtils.isAfterToday(d) : false;
+	}
+	
+	/**
+	 * 
+	 * @param dayIndex
+	 * @return
+	 */
+	protected Date getDay(int dayIndex) {
+		if(dayIndex < getWeekDays().size() && dayIndex >= 0) {
+			return getWeekDays().get(dayIndex);
+		} else if (dayIndex >= getWeekDays().size()) {
+			return CalendarUtils.addOrSubstractDays(getWeekDays().get(getWeekDays().size() - 1), dayIndex - getWeekDays().size() + 1);
+		} else {
+			return null;
+		}
+		
 	}
 	
 	/**
@@ -1012,6 +1142,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 			 * Force selected date to the target date.
 			 */
 			setStoreSchedules(null);
+			setFirstDayNextWeekStoreSchedule(null);
 			setWeekDays(null);
 			getWeekDaySelector().setSelectedDay(getCopyTargetDay());
 			getWeekDaySelector().setStartingWeekDay(getCopyTargetDay());
@@ -1022,9 +1153,11 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 				log.debug("About to copy schedules " + getStoreSchedules());
 			}
 		
+			//:TODO: Should also copy contiguous shifts for next day!
+			
 			int size = getStoreSchedules().size();
 			StoreSchedule storeSchedule;
-			for(int dayIndex = 0; dayIndex < size; dayIndex++ ) {
+			for(int dayIndex = size - 1; dayIndex >= 0; dayIndex--) {
 				storeSchedule = getStoreSchedules().get(dayIndex);
 
 				if(log.isDebugEnabled()) {
@@ -1041,10 +1174,12 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 			/*
 			 * Set selected day back again
 			 */
+			setFirstDayNextWeekStoreSchedule(null);
 			setWeekDays(null);
 			getWeekDaySelector().setSelectedDay(currentDay);
 			getWeekDaySelector().setStartingWeekDay(currentWeekDay);
 			setStoreSchedules(null);
+			setFirstDayNextWeekStoreSchedule(null);
 			
 			addActionMessage(getText("schedule.addshift.weekly.copy_success", params));
 		} else {
@@ -1059,5 +1194,31 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 */
 	public void setWeekDays(List<Date> weekDays) {
 		this.weekDays = weekDays;
+	}
+
+	/**
+	 * @return the firstDayNextWeekStoreSchedule
+	 */
+	public StoreSchedule getFirstDayNextWeekStoreSchedule() {
+		if(firstDayNextWeekStoreSchedule == null) {
+			Date day = CalendarUtils.addOrSubstractDays(getWeekDays().get(getWeekDays().size() - 1), 1);
+			setFirstDayNextWeekStoreSchedule(getScheduleService().getStoreScheduleByDate(getEmployeeStore(), day));
+		}
+		return firstDayNextWeekStoreSchedule;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isFirstDayNextWeekStoreSchedule() {
+		return firstDayNextWeekStoreSchedule != null;
+	}
+	
+	/**
+	 * @param firstDayNextWeekStoreSchedule the firstDayNextWeekStoreSchedule to set
+	 */
+	public void setFirstDayNextWeekStoreSchedule(StoreSchedule firstDayNextWeekStoreSchedule) {
+		this.firstDayNextWeekStoreSchedule = firstDayNextWeekStoreSchedule;
 	}	
 }

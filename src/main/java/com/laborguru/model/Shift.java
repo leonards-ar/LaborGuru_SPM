@@ -34,6 +34,7 @@ public class Shift extends SpmObject {
 	private Position position;
 	private Integer shiftIndex;
 	private Shift contiguousShift;
+	private Shift startingShift;
 	
 	/**
 	 * 
@@ -197,7 +198,7 @@ public class Shift extends SpmObject {
 	 * @return
 	 */
 	public Double getTotalShiftHoursWithContiguous() {
-		return CalendarUtils.differenceInHours(!hasContiguousShift() ? getToHour() : getContiguousShift().getToHour(), getFromHour());
+		return CalendarUtils.differenceInHours(getToHourWithContiguousShift(), getFromHour());
 	}
 	
 	/**
@@ -219,6 +220,40 @@ public class Shift extends SpmObject {
 	 * @param contiguousShift the contiguousShift to set
 	 */
 	public void setContiguousShift(Shift contiguousShift) {
+		if(contiguousShift != null) {
+			contiguousShift.startingShift = this;
+		}
 		this.contiguousShift = contiguousShift;
 	}	
+	
+	/**
+	 * @return the toHour
+	 */
+	public Date getToHourWithContiguousShift() {
+		return hasContiguousShift() ? getContiguousShift().getToHour() : getToHour();
+	}
+
+	/**
+	 * @return the referencedShift
+	 */
+	public boolean isReferencedShift() {
+		return getStartingShift() != null;
+	}
+
+	/**
+	 * @return the startingShift
+	 */
+	public Shift getStartingShift() {
+		return startingShift;
+	}
+
+	/**
+	 * @param startingShift the startingShift to set
+	 */
+	public void setStartingShift(Shift startingShift) {
+		if(startingShift != null) {
+			startingShift.contiguousShift = this;
+		}
+		this.startingShift = startingShift;
+	}
 }

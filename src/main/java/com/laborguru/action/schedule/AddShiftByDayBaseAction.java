@@ -30,6 +30,7 @@ import com.laborguru.model.Position;
 import com.laborguru.model.Shift;
 import com.laborguru.model.StoreDailyStaffing;
 import com.laborguru.model.StoreSchedule;
+import com.laborguru.service.schedule.ShiftService;
 import com.laborguru.util.CalendarUtils;
 import com.laborguru.util.SpmConstants;
 
@@ -48,6 +49,8 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	private StoreSchedule storeSchedule;
 	private List<StoreDailyStaffing> dailyStaffings = null;
 	private BigDecimal dailyVolume;
+	
+	private ShiftService shiftService;
 	
 	/**
 	 * 
@@ -464,6 +467,8 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 			Shift cloned;
 			for(Shift aShift : source) {
 				cloned = new Shift();
+				cloned.setId(aShift.getId());
+				cloned.setStartingShift(aShift.getStartingShift());
 				cloned.setContiguousShift(aShift.getContiguousShift());
 				cloned.setFromHour(aShift.getFromHour());
 				cloned.setToHour(aShift.getToHour());
@@ -533,7 +538,67 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 				}
 			}
 		}
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	protected Map<Integer, List<Shift>> retrieveCurrentReferencedShifts(Position position) {
+		Map<Integer, List<Shift>> referencedShifts = new HashMap<Integer, List<Shift>>();
 		
+		List<Shift> shifts;
+		for(EmployeeSchedule schedule : getStoreSchedule().getEmployeeSchedules()) {
+			shifts = position == null ? schedule.getReferencedShifts() : schedule.getReferencedShifts(position);
+			if(shifts != null && shifts.size() > 0) {
+				referencedShifts.put(schedule.getEmployee().getId(), cloneShifts(shifts));
+			}
+		}
+		
+		return referencedShifts;
+	}
+	
+	/**
+	 * 
+	 * @param shifts
+	 */
+	private void breakContiguousShiftReference(List<Shift> shifts) {
+		Shift referencingShift;
+		for(Shift shift : shifts) {
+			referencingShift = getShiftService().getReferencedByShift(shift);
+			referencingShift.setContiguousShift(null);
+			getShiftService().save(referencingShift);
+		}
+	}
+	
+	/**
+	 * 
+	 * @param referencedShifts
+	 */
+	protected void updateReferencedShifts(Map<Integer, List<Shift>> referencedShifts) {
+		EmployeeSchedule schedule;
+		Shift referencingShift, currentFirstShift;
+		List<Shift> shiftsToBreakReference = new ArrayList<Shift>();
+		Date selectedDayStartHour = getStoreScheduleStartHour(getOperationTime(getWeekDaySelector().getSelectedDay()));
+		
+		for(Integer employeeId : referencedShifts.keySet()) {
+			schedule = getStoreSchedule().getEmployeeSchedule(new Employee(employeeId));
+			if(schedule != null) {
+				for(Shift shift : referencedShifts.get(employeeId)) {
+					referencingShift = getShiftService().getReferencedByShift(shift);
+					currentFirstShift = schedule.getFirstShiftFor(shift.getPosition());
+					if(referencedShifts != null && currentFirstShift != null && CalendarUtils.equalsTime(selectedDayStartHour, currentFirstShift.getFromHour()) && CalendarUtils.equalsTime(referencingShift.getToHour(), currentFirstShift.getToHour())) {
+						referencingShift.setContiguousShift(currentFirstShift);
+						getShiftService().save(referencingShift);
+					} else {
+						shiftsToBreakReference.add(referencingShift);
+					}
+				}
+			} else {
+				shiftsToBreakReference.addAll(referencedShifts.get(employeeId));
+			}
+		}
+		breakContiguousShiftReference(shiftsToBreakReference);
 	}
 	
 	/**
@@ -916,7 +981,8 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	 */
 	private void setScheduleOccupation(List<String> occupation, List<Date> scheduleBuckets, Shift shift) {
 		int from = getFirstIndexOfBucket(shift.getFromHour(), scheduleBuckets);
-		int to = getLastIndexOfBucket(shift.getToHour(), scheduleBuckets) - 1;
+		int to = CalendarUtils.equalsOrGreaterTime(shift.getFromHour(), shift.getToHour()) ? getLastIndexOfBucket(shift.getToHour(), scheduleBuckets) :
+			getFirstIndexOfBucket(shift.getToHour(), scheduleBuckets) - 1;
 		
 		String value;
 		for(int i = from; i <= to; i++) {
@@ -955,7 +1021,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 		Date anHour;
 		for(int i = scheduleBuckets.size() - 1; i >= 0; i--) {
 			anHour = scheduleBuckets.get(i);
-			if(hour.getTime() >= anHour.getTime()) {
+			if(CalendarUtils.greaterTime(hour, anHour)) {
 				return i;
 			}
 		}
@@ -1146,5 +1212,19 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	@Override
 	protected void loadScheduleViewsMap() {
 		setScheduleViewsMap(getReferenceDataService().getScheduleViews());
+	}
+
+	/**
+	 * @return the shiftService
+	 */
+	public ShiftService getShiftService() {
+		return shiftService;
+	}
+
+	/**
+	 * @param shiftService the shiftService to set
+	 */
+	public void setShiftService(ShiftService shiftService) {
+		this.shiftService = shiftService;
 	}
 }

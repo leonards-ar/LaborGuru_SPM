@@ -286,6 +286,28 @@
 
  	<bean id="scheduleServiceTarget" class="com.laborguru.service.schedule.ScheduleServiceBean" autowire="byType"/>
  					
+	<bean id="shiftService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.laborguru.service.schedule.ShiftService</value>
+			</list>
+		</property>	
+	
+		<property name="target">
+			<ref bean="shiftServiceTarget"/>
+		</property>		
+		
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>	
+		
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributeSourceDefault"/>
+		</property>	
+ 	</bean>
+
+ 	<bean id="shiftServiceTarget" class="com.laborguru.service.schedule.ShiftServiceBean" autowire="byType"/>
+ 					
 	<bean id="staffingServiceTarget" class="com.laborguru.service.staffing.StaffingServiceBean" autowire="byType"/>
 
 	<bean id="staffingService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">

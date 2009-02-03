@@ -60,4 +60,13 @@ public class ScheduleServiceBean implements ScheduleService {
 		this.scheduleDao = scheduleDao;
 	}
 
+	/**
+	 * 
+	 * @param schedule
+	 * @return
+	 * @see com.laborguru.service.schedule.ScheduleService#detach(com.laborguru.model.StoreSchedule)
+	 */
+	public StoreSchedule detach(StoreSchedule schedule) {
+		return getScheduleDao().detach(schedule);
+	}
 }

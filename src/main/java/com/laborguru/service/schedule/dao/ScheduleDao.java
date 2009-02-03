@@ -33,4 +33,11 @@ public interface ScheduleDao {
 	 * @return
 	 */
 	StoreSchedule save(StoreSchedule schedule);
+	
+	/**
+	 * 
+	 * @param schedule
+	 * @return
+	 */
+	StoreSchedule detach(StoreSchedule schedule);		
 }

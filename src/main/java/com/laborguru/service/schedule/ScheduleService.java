@@ -34,5 +34,12 @@ public interface ScheduleService extends Service {
 	 * @return
 	 */
 	StoreSchedule save(StoreSchedule schedule);
+	
+	/**
+	 * 
+	 * @param schedule
+	 * @return
+	 */
+	StoreSchedule detach(StoreSchedule schedule);
 }
  
