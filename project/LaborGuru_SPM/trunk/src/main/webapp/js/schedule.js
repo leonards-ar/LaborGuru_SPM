@@ -4,7 +4,7 @@
 var TOTAL_COLS = 0;
 var TOTAL_ROWS = [0];
 var POSITION_IDS;
-
+var ONE_DAY_MINUTES = 24 * 60;
 /*****************************************
  * DAILY SCHEDULE VARIABLES
  *****************************************/
@@ -622,7 +622,14 @@ function wsInitialize(totalCols, positionsQty) {
 function wsRefreshTotalHours(rowNum, columnNum) {
 	var inHourMin = getObjectValueAsTimeInMinutes('weeklyScheduleInHour_' + rowNum + '_' + columnNum, '00:00');
 	var outHourMin = getObjectValueAsTimeInMinutes('weeklyScheduleOutHour_' + rowNum + '_' + columnNum, '00:00');
-	var totalHourMin = outHourMin - inHourMin;
+	var totalHourMin = 0;
+	
+	if(outHourMin > inHourMin || (inHourMin == 0 && outHourMin == 0)) {
+		totalHourMin = outHourMin - inHourMin;
+	} else {
+		totalHourMin = ONE_DAY_MINUTES + (outHourMin - inHourMin);
+	}
+	
 	if(totalHourMin >= 0) {
 		setObjectByIDValue('weeklyScheduleTotalHours_' + rowNum + '_' + columnNum, minutesToTime(totalHourMin));
 	}

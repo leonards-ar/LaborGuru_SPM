@@ -144,7 +144,7 @@ public class PrintShiftByPositionByWeekPrepareAction extends PrintShiftBaseActio
 		StoreSchedule storeSchedule = getStoreSchedules().get(dayIndex);
 		EmployeeSchedule schedule = storeSchedule.getEmployeeSchedule(employee);
 		if(schedule != null) {
-			return schedule.getShiftsFor(position);
+			return schedule.getUnreferencedShiftsFor(position);
 		} else {
 			return new ArrayList<Shift>();
 		}

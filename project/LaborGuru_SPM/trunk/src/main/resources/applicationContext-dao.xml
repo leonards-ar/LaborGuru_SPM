@@ -40,7 +40,9 @@
 	<bean id="reportDao" class="com.laborguru.service.report.dao.SqlMapReportDao" autowire="byType"/>
 
 	<bean id="spmDaoUtils" class="com.laborguru.service.dao.hibernate.SpmHibernateDao" autowire="byType"/>
-						
+
+	<bean id="shiftDao" class="com.laborguru.service.schedule.dao.ShiftDaoHibernate" autowire="byType"/>						
+	
 	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
 		<property name="sessionFactory">
 			<ref bean="mySessionFactory" />

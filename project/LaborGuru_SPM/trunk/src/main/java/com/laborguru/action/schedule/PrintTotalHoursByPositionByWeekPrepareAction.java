@@ -165,7 +165,9 @@ public class PrintTotalHoursByPositionByWeekPrepareAction extends PrintShiftBase
 		
 		if(shifts != null) {
 			for(Shift shift : shifts) {
-				total += shift.getTotalShiftHours().doubleValue();
+				if(!shift.isReferencedShift()) {
+					total += shift.getTotalShiftHoursWithContiguous().doubleValue();
+				}
 			}
 		}
 		
@@ -182,7 +184,9 @@ public class PrintTotalHoursByPositionByWeekPrepareAction extends PrintShiftBase
 		double total = 0.0;
 		for(int i=0; i < getWeekDays().size(); i++) {
 			for(Shift shift : getShiftsFor(position, employee, i)) {
-				total += shift.getTotalShiftHours().doubleValue();
+				if(!shift.isReferencedShift()) {
+					total += shift.getTotalShiftHoursWithContiguous().doubleValue();
+				}
 			}
 		}
 		return CalendarUtils.hoursToTime(new Double(total));

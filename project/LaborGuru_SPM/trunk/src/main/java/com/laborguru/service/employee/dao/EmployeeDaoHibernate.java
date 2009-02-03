@@ -24,7 +24,6 @@ public class EmployeeDaoHibernate extends SpmHibernateDao implements EmployeeDao
 	 * 
 	 */
 	public Employee getEmployeeById(Employee employee) {
-		
 		return (Employee)getHibernateTemplate().get(Employee.class, employee.getId());		
 	}
 	

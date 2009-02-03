@@ -341,11 +341,13 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 		}
 		
 		Map<Integer, List<Shift>> shiftsWithContiguous = retrieveCurrentShiftsWithContiguous(getPosition());
+		Map<Integer, List<Shift>> referencedShifts = retrieveCurrentReferencedShifts(getPosition());
 		
 		setSchedule(getScheduleData(), getPosition());
 		
 		updateShiftsWithContiguous(shiftsWithContiguous);
-
+		updateReferencedShifts(referencedShifts);
+		
 		if(log.isDebugEnabled()) {
 			log.debug("About to save schedule " + getStoreSchedule());
 		}

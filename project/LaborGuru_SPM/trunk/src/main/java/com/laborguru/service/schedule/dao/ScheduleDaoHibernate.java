@@ -64,4 +64,15 @@ public class ScheduleDaoHibernate extends HibernateDaoSupport implements Schedul
 		return schedule;
 	}
 
+	/**
+	 * 
+	 * @param schedule
+	 * @return
+	 * @see com.laborguru.service.schedule.dao.ScheduleDao#detach(com.laborguru.model.StoreSchedule)
+	 */
+	public StoreSchedule detach(StoreSchedule schedule) {
+		getHibernateTemplate().evict(schedule);
+		return schedule;
+	}
+
 }

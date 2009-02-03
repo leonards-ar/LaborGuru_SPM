@@ -141,7 +141,7 @@
 										<tr>
 											<td class="printScheduleValueTextCell"><s:text name='schedule.printshift.weekly.hour.dateformat'><s:param value='fromHour'/></s:text></td>
 											<td class="printScheduleValueTextCell">-</td>
-											<td class="printScheduleValueTextCell"><s:text name='schedule.printshift.weekly.hour.dateformat'><s:param value='toHour'/></s:text></td>
+											<td class="printScheduleValueTextCell"><s:text name='schedule.printshift.weekly.hour.dateformat'><s:param value='toHourWithContiguousShift'/></s:text></td>
 										</tr>
 									</s:iterator>
 									</table>
