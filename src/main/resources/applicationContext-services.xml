@@ -11,7 +11,62 @@
 
 	<bean id="storeDefinitionFileParser" class="com.laborguru.service.store.file.StoreDefinitionFileParserBean" autowire="byType"/>
 
+	<bean id="actualHoursFileParser" class="com.laborguru.service.dataimport.actualhours.csv.ActualHoursSimpleCSVParserBean">
+		<property name="storeService" ref="storeService"/>
+		<property name="assembler" ref="actualHoursAssembler"/>
+	</bean>
+
+	<bean id="actualHoursAssembler" class="com.laborguru.service.dataimport.actualhours.csv.ActualHoursSimpleAssembler" autowire="byType"/>
+
 	<!--  Transactional Services's declarations -->
+ 	<bean id="actualHoursServiceTarget" class="com.laborguru.service.actualhours.ActualHoursServiceBean" autowire="byType"/>
+
+	<bean id="actualHoursService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.laborguru.service.actualhours.ActualHoursService</value>
+			</list>
+		</property>	
+	
+		<property name="target">
+			<ref bean="actualHoursServiceTarget"/>
+		</property>		
+		
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>	
+		
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributeSourceDefault"/>
+		</property>	
+ 	</bean>
+	
+	<bean id="actualHoursFileProcessorTarget" class="com.laborguru.service.dataimport.actualhours.csv.ActualHoursFileProcessorBean">
+	  <property name="fileParser" ref="actualHoursFileParser"/>
+  	  <property name="actualHoursService" ref="actualHoursService"/>
+	</bean>
+
+	<bean id="actualHoursFileProcessor" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.laborguru.service.dataimport.actualhours.ActualHoursFileProcessor</value>
+			</list>
+		</property>	
+	
+		<property name="target">
+			<ref bean="actualHoursFileProcessorTarget"/>
+		</property>		
+		
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>	
+		
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributeSourceDefault"/>
+		</property>			
+	</bean>
+	
+	
 	<bean id="uploadFileServiceTarget" class="com.laborguru.service.uploadfile.UploadFileServiceBean" autowire="byType"/>
 	
 	<bean id="uploadFileService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
