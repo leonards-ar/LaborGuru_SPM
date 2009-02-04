@@ -20,9 +20,13 @@
 			<column name="employee_schedule_id" not-null="true"/>
 		</many-to-one>
 		
-		<many-to-one name="contiguousShift" class="Shift" foreign-key="fk_shifts_shifts" cascade="save-update" unique="true">
-			<column name="reference_shift_id" not-null="false"/>
+		<many-to-one name="contiguousShift" class="Shift" foreign-key="fk_shifts_contiguousshifts" cascade="save-update" unique="true" >
+			<column name="contiguous_shift_id" not-null="false"/>
 		</many-to-one>
+		<many-to-one name="startingShift" class="Shift" foreign-key="fk_shifts_startingshifts" cascade="save-update" unique="true" >
+			<column name="starting_shift_id" not-null="false"/>
+		</many-to-one>
+
 	</class>
 	<database-object>
 		<create>ALTER TABLE tbl_shifts AUTO_INCREMENT=1000</create>
