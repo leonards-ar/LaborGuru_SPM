@@ -223,7 +223,7 @@ public class Shift extends SpmObject {
 	 */
 	public void setContiguousShift(Shift contiguousShift) {
 		if(contiguousShift != null) {
-			contiguousShift.setStartingShift(this);
+			contiguousShift.startingShift = this;
 			setContiguousShiftId(contiguousShift.getId());
 		}
 		this.contiguousShift = contiguousShift;
@@ -255,7 +255,7 @@ public class Shift extends SpmObject {
 	 */
 	public void setStartingShift(Shift startingShift) {
 		if(startingShift != null) {
-			startingShift.setContiguousShift(this);
+			startingShift.contiguousShift = this;
 			setStartingShiftId(startingShift.getId());
 		}
 		this.startingShift = startingShift;
