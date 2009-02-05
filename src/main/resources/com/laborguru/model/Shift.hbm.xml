@@ -19,13 +19,13 @@
 		<many-to-one name="employeeSchedule" class="EmployeeSchedule" foreign-key="fk_shifts_employeeschedules">
 			<column name="employee_schedule_id" not-null="true"/>
 		</many-to-one>
+
+        <!--property name="contiguousShiftId" column="contiguous_shift_id" type="int" not-null="false"/>        
+        <property name="startingShiftId" column="starting_shift_id" type="int" not-null="false"/-->        
+
+		<many-to-one name="contiguousShift" not-null="false" column="contiguous_shift_id" class="Shift" foreign-key="fk_shifts_contiguousshifts" cascade="none"/>
 		
-		<many-to-one name="contiguousShift" class="Shift" foreign-key="fk_shifts_contiguousshifts" cascade="save-update" unique="true" >
-			<column name="contiguous_shift_id" not-null="false"/>
-		</many-to-one>
-		<many-to-one name="startingShift" class="Shift" foreign-key="fk_shifts_startingshifts" cascade="save-update" unique="true" >
-			<column name="starting_shift_id" not-null="false"/>
-		</many-to-one>
+		<many-to-one name="startingShift" not-null="false" column="starting_shift_id" class="Shift" foreign-key="fk_shifts_startingshifts" cascade="none"/>
 
 	</class>
 	<database-object>

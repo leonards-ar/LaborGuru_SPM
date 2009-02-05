@@ -400,7 +400,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 				}
 
 				// Remove non existing shifts for the employee and for a position
-				cleanStoreSchedule(employeeIds, storeSchedule, dayIndex);
+				cleanStoreSchedule(employeeIds, storeSchedule, dayIndex, shiftsFromPreviousDay != null && !shiftsFromPreviousDay.isEmpty());
 				
 				processShiftsFromPreviousDay(shiftsFromPreviousDay, storeSchedule);
 			}
@@ -417,7 +417,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 * @param employeeSchedule
 	 * @param dayIndex
 	 */
-	private void cleanStoreSchedule(Set<Integer> employeeIds, StoreSchedule storeSchedule, int dayIndex) {
+	private void cleanStoreSchedule(Set<Integer> employeeIds, StoreSchedule storeSchedule, int dayIndex, boolean shiftsFromPreviousDay) {
 		if(storeSchedule != null && employeeIds != null) {
 			Set<EmployeeSchedule> employeeSchedulesToRemove = new HashSet<EmployeeSchedule>();
 			Set<Shift> shiftsToRemove = new HashSet<Shift>();
@@ -440,7 +440,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 							employeeSchedulesToRemove.add(employeeSchedule);
 						}
 					}
-				} else if(employeeSchedule.getShifts().isEmpty()) {
+				} else if(employeeSchedule.getShifts().isEmpty() && !shiftsFromPreviousDay) {
 					employeeSchedulesToRemove.add(employeeSchedule);
 				}
 			}

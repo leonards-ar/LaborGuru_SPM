@@ -35,6 +35,8 @@ public class Shift extends SpmObject {
 	private Integer shiftIndex;
 	private Shift contiguousShift;
 	private Shift startingShift;
+	private Integer contiguousShiftId;
+	private Integer startingShiftId;
 	
 	/**
 	 * 
@@ -221,7 +223,8 @@ public class Shift extends SpmObject {
 	 */
 	public void setContiguousShift(Shift contiguousShift) {
 		if(contiguousShift != null) {
-			contiguousShift.startingShift = this;
+			contiguousShift.setStartingShift(this);
+			setContiguousShiftId(contiguousShift.getId());
 		}
 		this.contiguousShift = contiguousShift;
 	}	
@@ -252,8 +255,43 @@ public class Shift extends SpmObject {
 	 */
 	public void setStartingShift(Shift startingShift) {
 		if(startingShift != null) {
-			startingShift.contiguousShift = this;
+			startingShift.setContiguousShift(this);
+			setStartingShiftId(startingShift.getId());
 		}
 		this.startingShift = startingShift;
+	}
+
+	/**
+	 * @return the contiguousShiftId
+	 */
+	public Integer getContiguousShiftId() {
+		if(contiguousShiftId == null && getContiguousShift() != null) {
+			setContiguousShiftId(getContiguousShift().getId());
+		}
+		return contiguousShiftId;
+	}
+
+	/**
+	 * @param contiguousShiftId the contiguousShiftId to set
+	 */
+	public void setContiguousShiftId(Integer contiguousShiftId) {
+		this.contiguousShiftId = contiguousShiftId;
+	}
+
+	/**
+	 * @return the startingShiftId
+	 */
+	public Integer getStartingShiftId() {
+		if(startingShiftId == null && getStartingShift() != null) {
+			setStartingShiftId(getStartingShift().getId());
+		}
+		return startingShiftId;
+	}
+
+	/**
+	 * @param startingShiftId the startingShiftId to set
+	 */
+	private void setStartingShiftId(Integer startingShiftId) {
+		this.startingShiftId = startingShiftId;
 	}
 }
