@@ -37,6 +37,7 @@ public class Shift extends SpmObject {
 	private Shift startingShift;
 	private Integer contiguousShiftId;
 	private Integer startingShiftId;
+	private boolean referencedShiftToKeep;
 	
 	/**
 	 * 
@@ -224,8 +225,8 @@ public class Shift extends SpmObject {
 	public void setContiguousShift(Shift contiguousShift) {
 		if(contiguousShift != null) {
 			contiguousShift.startingShift = this;
-			setContiguousShiftId(contiguousShift.getId());
 		}
+		setContiguousShiftId(contiguousShift != null ? contiguousShift.getId() : null);
 		this.contiguousShift = contiguousShift;
 	}	
 	
@@ -256,8 +257,8 @@ public class Shift extends SpmObject {
 	public void setStartingShift(Shift startingShift) {
 		if(startingShift != null) {
 			startingShift.contiguousShift = this;
-			setStartingShiftId(startingShift.getId());
 		}
+		setStartingShiftId(startingShift != null ? startingShift.getId() : null);
 		this.startingShift = startingShift;
 	}
 
@@ -293,5 +294,19 @@ public class Shift extends SpmObject {
 	 */
 	private void setStartingShiftId(Integer startingShiftId) {
 		this.startingShiftId = startingShiftId;
+	}
+
+	/**
+	 * @return the referencedShiftToKeep
+	 */
+	public boolean isReferencedShiftToKeep() {
+		return referencedShiftToKeep;
+	}
+
+	/**
+	 * @param referencedShiftToKeep the referencedShiftToKeep to set
+	 */
+	public void setReferencedShiftToKeep(boolean referencedShiftToKeep) {
+		this.referencedShiftToKeep = referencedShiftToKeep;
 	}
 }
