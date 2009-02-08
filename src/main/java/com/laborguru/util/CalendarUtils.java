@@ -421,7 +421,7 @@ public class CalendarUtils {
 	public static Calendar getDayOfThisWeek(Date auxSelectedDate) {
 		DayOfWeek dayOfWeekCalculatedDay = CalendarUtils.getDayOfWeek(auxSelectedDate);
 
-		Date today = CalendarUtils.todayWithoutTime();;
+		Date today = CalendarUtils.todayWithoutTime();
 		DayOfWeek dayOfWeek = CalendarUtils.getDayOfWeek(today);
 		
 		Calendar day = CalendarUtils.getCalendar(today);
@@ -436,7 +436,32 @@ public class CalendarUtils {
 		day.add(Calendar.DAY_OF_MONTH, -1 * daysTosubstract);
 		return day;
 	}
-	
+
+	/**
+	 * Get the date for the specific week that starts on initialDateOfWeek
+	 * @param initialDateOfWeek
+	 * @param dayOfWeekToCalculate
+	 * @return
+	 */
+	public static Date getDayOfTheWeek(Date initialDateOfWeek, DayOfWeek dayOfWeekToCalculate) {
+		
+		int initialDayOrdinal = CalendarUtils.getDayOfWeek(initialDateOfWeek).ordinal();				
+		int dayToCalculateOrdinal = dayOfWeekToCalculate.ordinal();				
+		
+		int daysToAdd = 0;
+					
+		if (initialDayOrdinal < dayToCalculateOrdinal){
+			daysToAdd = dayToCalculateOrdinal - initialDayOrdinal;
+		} else if (initialDayOrdinal > dayToCalculateOrdinal){
+			daysToAdd = 7 - (initialDayOrdinal - dayToCalculateOrdinal);
+		} 
+		
+		Calendar initialDay = CalendarUtils.getCalendar(initialDateOfWeek);	
+		initialDay.add(Calendar.DAY_OF_MONTH, daysToAdd);
+		
+		return initialDay.getTime();
+	}
+
 	/**
 	 * 
 	 * @param minutes

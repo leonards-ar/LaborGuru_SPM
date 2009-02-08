@@ -240,27 +240,6 @@ public class ProjectionServiceBean implements ProjectionService {
 		return retList;
 	}
 
-
-	/**
-	 * @param avgProjections
-	 * @param openHour
-	 * @return
-	 *
-	private List<HalfHourCalculated> getSubListStartingInOpenHour(List<HalfHourCalculated> avgProjections, DateTime openHour) {
-		int startIndex=0;
-		
-		//Getting a sublist that starts in openHour time
-		for(HalfHourCalculated halfHour: avgProjections) {
-			DateTime halfHourTime = new DateTime(displayTimeToDate(halfHour.getTime()).getTime());
-			if (halfHourTime.isAfter(openHour) || halfHourTime.isEqual(openHour)){
-				break;
-			}
-			startIndex++;
-		}
-		
-		List<HalfHourCalculated> auxListStartIndex = avgProjections.subList(startIndex, avgProjections.size());
-		return auxListStartIndex;
-	}/
 	
 	/**
 	 * @param halfHourElement

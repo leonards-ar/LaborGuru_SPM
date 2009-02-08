@@ -5,9 +5,11 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
@@ -16,6 +18,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import com.laborguru.model.DailyProjection;
 import com.laborguru.model.HalfHourProjection;
 import com.laborguru.model.Store;
+import com.laborguru.util.SpmConstants;
 
 /**
  *
@@ -50,7 +53,7 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 		}
 		
 		List<DailyProjection> projections  = (List<DailyProjection>)  getHibernateTemplate().findByNamedParam("from DailyProjection dp " +
-				"where dp.store.id=:storeId AND dp.projectionDate >= :startDate AND dp.projectionDate <= :endDate",
+				"where dp.store.id=:storeId AND dp.projectionDate >= :startDate AND dp.projectionDate <= :endDate order by dp.projectionDate",
 				new String[] {"storeId", "startDate", "endDate"}, new Object[] {store.getId(), startTime.toDate(), endTime.toDate()} );		
 		
 		if(log.isDebugEnabled()){
@@ -109,27 +112,53 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 		DateTime endTime = startDate.minusDays(1).withTime(23, 59, 59, 999);
 		
 		if(log.isDebugEnabled()){
-			log.debug("Before getting avg daily projections - Parameters: Store Id:"+ store.getId()+" startDate:"+startTime.toString()+" endDate:"+endTime.toString());
+			log.debug("Before getting avg daily projections - Parameters: Store Id:"+ store.getId() 
+					+" number of weeks:"+numberOfWeeks
+					+" startWeekDate:"+ startWeekDate
+					+" startDate:"+startTime.toString()+" endDate:"+endTime.toString());
 		}
 		
-		List<Object[]> avgSalesList = getHibernateTemplate().findByNamedParam("select distinct sum(hs.mainValue), hs.dayOfWeek from HistoricSales hs " +
-				"where hs.store.id=:storeId AND hs.dateTime >= :startDate AND hs.dateTime <= :endDate group by hs.dayOfWeek",
+		//We are retrieving daily totals for all the days that are in the date range
+		List<Object[]> avgSalesList = getHibernateTemplate().findByNamedParam("select sum(hs.mainValue), hs.dayOfWeek from HistoricSales hs " +
+				"where hs.store.id=:storeId AND hs.dateTime >= :startDate AND hs.dateTime <= :endDate AND hs.mainValue > 0 group by date(hs.dateTime) order by hs.dayOfWeek",
 				new String[] {"storeId", "startDate", "endDate"}, new Object[] {store.getId(), startTime.toDate(), endTime.toDate()} );
 
 		if(log.isDebugEnabled()){
 			log.debug("After getting avg daily projections - Average Sales List size: Store Id:"+ avgSalesList.size());
 		}
 		
-		List<BigDecimal> retSalesList = new ArrayList<BigDecimal>(7);
+		List<BigDecimal> retSalesList = new ArrayList<BigDecimal>(SpmConstants.DAILY_PROJECTION_PERIOD_DAYS);
+
+		//We need to ignore the dates that don't have any projection so we need to this auxiliary variable:		
+		//We use dayOfWeekArray to set the number of weeks that we are going to use in the average for each day projection, each element represents
+		//the number of times that each day appear on the result.
+		int dayOfWeekArray[] = {0,0,0,0,0,0,0};
+
+		//We use the total sales map to accumulate the totals for each day in the projection
+		Map<Integer, BigDecimal> totalSales = new HashMap<Integer, BigDecimal>(SpmConstants.DAILY_PROJECTION_PERIOD_DAYS);
 		
-		for (int i=1, j=0; i < 8; i++){
+		//Initializes the mapping
+		for (int i=0; i <  SpmConstants.DAILY_PROJECTION_PERIOD_DAYS; i++){
+			totalSales.put(i+1, BigDecimal.valueOf(0.00));
+		}
+		
+		//We proccess the results calculting totals and the number of times that each day in on the result list.
+		//TODO: Change the approache an use a query with subqueries see query for avg half hours
+		for (int i=0; i < avgSalesList.size(); i++){
+			Integer dayOfWeek = (Integer)(avgSalesList.get(i)[1]);
+			dayOfWeekArray[dayOfWeek-1]++;
+			BigDecimal totalValue = totalSales.get(dayOfWeek).add((BigDecimal)avgSalesList.get(i)[0]);
+			totalSales.put(dayOfWeek, totalValue);
+			
+		}
+		
+		//We set result list. We start in 1 as we need to pull the total from the auxiliary map and calculate the avg.
+		for (int i=1; i < 8; i++){
 			BigDecimal aValue = new BigDecimal(INIT_VALUE_ZERO);
 			
-			if (j < avgSalesList.size()){
-				if (i == ((Integer)(avgSalesList.get(j)[1])).intValue()){
-					aValue = ((BigDecimal)avgSalesList.get(j)[0]).divide(BigDecimal.valueOf(numberOfWeeks), DECIMAL_SCALE, ROUNDING_MODE);
-					j++;
-				}
+			int timesInResult = dayOfWeekArray[i-1];
+			if (timesInResult > 0){
+				aValue = totalSales.get(i).divide(BigDecimal.valueOf(timesInResult), DECIMAL_SCALE, ROUNDING_MODE);
 			}
 			
 			retSalesList.add(aValue);
@@ -215,10 +244,13 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 		calendarDate.setTime(selectedDate);
 		
 		if(log.isDebugEnabled()) {
-			log.debug("Before getting avg half hour projections - Parameters: Store Id:"+ store.getId()+" startDate:"+startTime.toString("yyyy-MM-dd HH:mm:ss") + " endDate:" + endTime.toString("yyyy-MM-dd HH:mm:ss") + " dayOfWeek:" + startDate.getDayOfWeek());
+			log.debug("Before getting avg half hour projections - Parameters: Store Id:"+ store.getId()
+					+" number of weeks:"+numberOfWeeks
+					+" selectedDate:"+selectedDate
+					+" startDate:"+startTime.toString("yyyy-MM-dd HH:mm:ss") + " endDate:" + endTime.toString("yyyy-MM-dd HH:mm:ss") + " dayOfWeek:" + startDate.getDayOfWeek());
 		}
 		
-		List sumProjections = getHibernateTemplate().findByNamedQueryAndNamedParam(
+		List avgProjections = getHibernateTemplate().findByNamedQueryAndNamedParam(
 				"halfHourProjections", 
 				new String[]{"storeId","startDate","endDate","dayOfWeek"}, 
 				new Object[]{store.getId(),startTime.toString("yyyy-MM-dd HH:mm:ss"),endTime.toString("yyyy-MM-dd HH:mm:ss"), calendarDate.get(Calendar.DAY_OF_WEEK)});
@@ -226,16 +258,16 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 		
 		List<HalfHourProjection> projections = new LinkedList<HalfHourProjection>();
 		
-		Iterator<Object[]> iterator = sumProjections.iterator();
-		BigDecimal numberOfWeeksAux = new BigDecimal(numberOfWeeks);
+		Iterator<Object[]> iterator = avgProjections.iterator();
 		
 		while ( iterator.hasNext() ) {
 			Object[] row = (Object[]) iterator.next();			
-			BigDecimal number =  ((BigDecimal) (row[1])).divide(numberOfWeeksAux, DECIMAL_SCALE, ROUNDING_MODE);
-			HalfHourProjection hhp = new HalfHourProjection();
+			BigDecimal projectionValue =  (BigDecimal)row[0];
+			String projectionTime = (String) row[1];
 			
-			hhp.setTime((String) row[0]);
-			hhp.setAdjustedValue(number);
+			HalfHourProjection hhp = new HalfHourProjection();			
+			hhp.setTime(projectionTime);
+			hhp.setAdjustedValue(projectionValue);
 			projections.add(hhp);
 			
 		}

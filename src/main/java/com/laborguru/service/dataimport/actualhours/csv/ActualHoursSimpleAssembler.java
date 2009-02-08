@@ -110,12 +110,13 @@ public class ActualHoursSimpleAssembler implements ActualHoursAssembler {
 	}
 		
 	/**
-	 * Checks wether a line is valid. A valid line is different to null and has a lenght greater or equal to 5.
+	 * Checks wether a line is valid. A valid line is different to null and has a lenght equal to 5.
+	 * The number of fields is restricted to 5.
 	 * @param line the array that represents the line
 	 * @return true if valid
 	 */
 	private boolean isValidLine(String[] line){
-		return (line != null) && (line.length >=5);
+		return (line != null) && (line.length ==5);
 	}
 	
 }
