@@ -2,7 +2,6 @@ package com.laborguru.action.projection;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +10,7 @@ import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.ErrorMessage;
 import com.laborguru.frontend.model.HalfHourElement;
 import com.laborguru.model.DailyProjection;
+import com.laborguru.model.DayOfWeek;
 import com.laborguru.model.HalfHourProjection;
 import com.laborguru.model.OperationTime;
 import com.laborguru.util.CalendarUtils;
@@ -218,13 +218,10 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	private void getNewValues(){
 		
 		//Setting the date for the calculation
-		Date auxSelectedDate = getWeekDaySelector().getSelectedDay();
+		DayOfWeek auxSelectedDOW = getWeekDaySelector().getSelectedDayOfWeek();
 		
-		Calendar day = CalendarUtils.getDayOfThisWeek(auxSelectedDate);
-
-		//TODO: confirm that there is no need of substracting the week
-		//Date calculatedDate = CalendarUtils.addOrSubstractDays(day.getTime(), -7);		
-		Date calculatedDate = day.getTime(); 
+		Date currentStartWeekDate = CalendarUtils.getDayOfThisWeek(getWeekDaySelector().getStartingWeekDay()).getTime();		
+		Date calculatedDate = CalendarUtils.getDayOfTheWeek(currentStartWeekDate, auxSelectedDOW); 
 		
 		BigDecimal auxTotal = getTotalProjectedValues();
 		

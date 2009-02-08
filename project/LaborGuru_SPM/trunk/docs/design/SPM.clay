@@ -980,7 +980,7 @@
 </table>
 <table alias="" name="tbl_regions" remarks="" uid="d276c:11ad0fa8fd2:-7fac">
 <table-description></table-description>
-<table-figure-bounds height="-1" width="-1" x="282" y="498"/>
+<table-figure-bounds height="-1" width="-1" x="109" y="499"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="region_id" remarks="" uid="d276c:11ad0fa8fd2:-7fa8">
 <column-description></column-description>
@@ -1019,7 +1019,7 @@
 </table>
 <table alias="" name="tbl_areas" remarks="" uid="d276c:11ad0fa8fd2:-7fa6">
 <table-description></table-description>
-<table-figure-bounds height="-1" width="-1" x="326" y="623"/>
+<table-figure-bounds height="-1" width="-1" x="250" y="620"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="area_id" remarks="" uid="d276c:11ad0fa8fd2:-7fa2">
 <column-description></column-description>

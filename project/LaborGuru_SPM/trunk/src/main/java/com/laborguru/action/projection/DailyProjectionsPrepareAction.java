@@ -2,6 +2,7 @@ package com.laborguru.action.projection;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -83,16 +84,14 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	/**
 	 * 
 	 */
-	protected void setupDailyProjectionData() {
-		Date calculatedDate;
-		
+	protected void setupDailyProjectionData() {		
 		// Force object initialization
 		initializeDayWeekSelector(getSelectedDate(), getSelectedDate());		
 
 		clearPageValues();
 
 		//Setting the date for the weekly calculation
-		calculatedDate = getWeekDaySelector().getStartingWeekDay();
+		Date calculatedDate = getWeekDaySelector().getStartingWeekDay();
 		Date firstDayThisWeek =  getWeekDaySelector().getFirstDayOfWeek(CalendarUtils.todayWithoutTime());
 
 		if (calculatedDate.compareTo(firstDayThisWeek) >= 0){
@@ -107,16 +106,21 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 		List<BigDecimal> calculatedProjections = getProjectionService().getAvgDailyProjectionForAWeek(getUsedWeeks(), this.getEmployeeStore(), calculatedDate);		
 		List<DailyProjection> adjustedProjections = getProjectionService().getAdjustedDailyProjectionForAWeek(this.getEmployeeStore(), getWeekDaySelector().getStartingWeekDay());
 
+		Calendar  auxCalendar = Calendar.getInstance();
 		// Set default adjusted values
 		for (int i = 0; i < SpmConstants.DAILY_PROJECTION_PERIOD_DAYS; i++) {
 			DailyProjectionElement dailyProjection = new DailyProjectionElement();
 			
 			dailyProjection.setAdjustedProjection(adjustedProjections.get(i).getDailyProjectionValue());			
-			dailyProjection.setCalculatedProjection(calculatedProjections.get(i));
 			dailyProjection.setProjectionDate(getWeekDaySelector().getWeekDays().get(i));
-
+			
+			auxCalendar.setTime(dailyProjection.getProjectionDate());
+			BigDecimal auxValue = calculatedProjections.get(auxCalendar.get(Calendar.DAY_OF_WEEK)-1);
+			
+			dailyProjection.setCalculatedProjection(auxValue);
+			
 			if (dailyProjection.getAdjustedProjection() == null)
-				dailyProjection.setAdjustedProjection(calculatedProjections.get(i));
+				dailyProjection.setAdjustedProjection(auxValue);
 			
 			getDailyProjections().add(dailyProjection);
 		}
