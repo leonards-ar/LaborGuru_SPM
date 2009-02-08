@@ -407,6 +407,24 @@ public class EmployeeSchedule extends SpmObject {
 	
 	/**
 	 * 
+	 * @param shift
+	 * @return
+	 */
+	public Shift getShift(Shift shift) {
+		if(shift != null) {
+			for(Shift aShift : getShifts()) {
+				if(aShift != null && aShift.getId() != null && aShift.getId().equals(shift.getId())) {
+					return aShift;
+				}
+			}
+			return null;
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 * 
 	 * @param position
 	 * @return
 	 */

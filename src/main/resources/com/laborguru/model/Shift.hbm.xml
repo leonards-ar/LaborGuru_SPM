@@ -23,9 +23,9 @@
         <property name="contiguousShiftId" column="contiguous_shift_id" type="int" not-null="false"/>        
         <property name="startingShiftId" column="starting_shift_id" type="int" not-null="false"/>        
 
-		<many-to-one insert="false" update="false" name="contiguousShift" not-null="false" column="contiguous_shift_id" class="Shift" foreign-key="fk_shifts_contiguousshifts" cascade="none"/>
+		<many-to-one insert="false" update="false" name="contiguousShift" not-null="false" column="contiguous_shift_id" class="Shift" foreign-key="fk_shifts_contiguousshifts" cascade="none" lazy="false"/>
 		
-		<many-to-one insert="false" update="false" name="startingShift" not-null="false" column="starting_shift_id" class="Shift" foreign-key="fk_shifts_startingshifts" cascade="none"/>
+		<many-to-one insert="false" update="false" name="startingShift" not-null="false" column="starting_shift_id" class="Shift" foreign-key="fk_shifts_startingshifts" cascade="none" lazy="false"/>
 
 	</class>
 	<database-object>
