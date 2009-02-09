@@ -4,12 +4,14 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
@@ -254,25 +256,45 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 				"halfHourProjections", 
 				new String[]{"storeId","startDate","endDate","dayOfWeek"}, 
 				new Object[]{store.getId(),startTime.toString("yyyy-MM-dd HH:mm:ss"),endTime.toString("yyyy-MM-dd HH:mm:ss"), calendarDate.get(Calendar.DAY_OF_WEEK)});
-	
+				
+		
+		Map<String, BigDecimal> totalMap = new HashMap<String, BigDecimal>(48);
+		Set<String> differentDates = new HashSet<String>(numberOfWeeks);
+
+		int size = avgProjections.size();				
+		for(int i =0; i < size; i++){
+			Object[] row = (Object[]) avgProjections.get(i);
+			
+			BigDecimal projectionValue =  (BigDecimal)row[1];
+			String projectionTime = (String) row[0];
+			String projectionDate = (String) row[2];
+			
+			differentDates.add(projectionDate);
+			
+			if(totalMap.containsKey(projectionTime)){
+				BigDecimal auxValue = totalMap.get(projectionTime).add(projectionValue);
+				totalMap.put(projectionTime, auxValue);
+			}else{
+				totalMap.put(projectionTime, projectionValue);
+			}
+		}
 		
 		List<HalfHourProjection> projections = new LinkedList<HalfHourProjection>();
+		BigDecimal weeksNumber = new BigDecimal(differentDates.size());
 		
-		Iterator<Object[]> iterator = avgProjections.iterator();
-		
-		while ( iterator.hasNext() ) {
-			Object[] row = (Object[]) iterator.next();			
-			BigDecimal projectionValue =  (BigDecimal)row[0];
-			String projectionTime = (String) row[1];
-			
+		for (Map.Entry<String, BigDecimal> hhEntry:  totalMap.entrySet()) {			
 			HalfHourProjection hhp = new HalfHourProjection();			
-			hhp.setTime(projectionTime);
-			hhp.setAdjustedValue(projectionValue);
-			projections.add(hhp);
 			
+			hhp.setTime(hhEntry.getKey());
+			
+			BigDecimal avgValue = hhEntry.getValue().divide(weeksNumber, DECIMAL_SCALE, ROUNDING_MODE);
+			hhp.setAdjustedValue(avgValue);
+			projections.add(hhp);
 		}
+		
+		Collections.sort(projections);
+		
 		return projections;
-
 	}
 
 	/**
