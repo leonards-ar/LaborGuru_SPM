@@ -33,9 +33,32 @@ public abstract class ScheduleBaseAction extends SpmAction {
 	 * @return
 	 */
 	protected Date getStoreScheduleStartHour(OperationTime operationTime) {
-		return CalendarUtils.addOrSubstractHours(operationTime.getOpenHour(), (-1) * getStoreScheduleExtraHours());
+		return CalendarUtils.addOrSubstractHours(operationTime.getOpenHour(), (-1) * getCalculatedExtraHours(operationTime.getOpenHour(), operationTime.getCloseHour(), true));
 	}
 
+	/**
+	 * 
+	 * @param open
+	 * @param close
+	 * @return
+	 */
+	private int getCalculatedExtraHours(Date open, Date close, boolean isCeil) {
+		if(CalendarUtils.equalsTime(open, close)) {
+			// 24hs store
+			return 0;
+		} else {
+			double diff = CalendarUtils.differenceInHours(close, open).doubleValue();
+			int extraHours = getStoreScheduleExtraHours();
+			if(diff + extraHours > 24) {
+				double hs = (diff + extraHours - 24) / 2;
+				return (int) (isCeil ? Math.ceil(hs) : Math.floor(hs));
+			} else {
+				// Normal case
+				return extraHours;
+			}
+		}
+	}
+	
 	/**
 	 * 
 	 * @return
@@ -61,7 +84,7 @@ public abstract class ScheduleBaseAction extends SpmAction {
 	 * @return
 	 */
 	protected Date getStoreScheduleEndHour(OperationTime operationTime) {
-		return CalendarUtils.addOrSubstractHours(operationTime.getCloseHour(), getStoreScheduleExtraHours());
+		return CalendarUtils.addOrSubstractHours(operationTime.getCloseHour(), getCalculatedExtraHours(operationTime.getOpenHour(), operationTime.getCloseHour(), false));
 	}
 	
 	/**

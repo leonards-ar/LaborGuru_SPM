@@ -191,4 +191,19 @@ public class WeeklyScheduleDailyEntry implements Serializable {
 	private void setShiftHours(List<String> shiftHours) {
 		this.shiftHours = shiftHours;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 * @see java.lang.Object#clone()
+	 */
+	public WeeklyScheduleDailyEntry clone() {
+		WeeklyScheduleDailyEntry cloned = new WeeklyScheduleDailyEntry();
+		cloned.setDay(getDay());
+		cloned.setInHour(getInHour());
+		cloned.setOutHour(getOutHour());
+		cloned.setMultipleShifts(isMultipleShifts());
+		cloned.setTotalHours(getTotalHours());
+		return cloned;
+	}
 }

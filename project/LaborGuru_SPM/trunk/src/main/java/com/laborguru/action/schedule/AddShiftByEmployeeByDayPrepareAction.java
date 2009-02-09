@@ -345,8 +345,9 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 		
 		setSchedule(getScheduleData(), getPosition());
 		
-		updateShiftsWithContiguous(shiftsWithContiguous);
-		updateReferencedShifts(referencedShifts);
+		List<Shift> outOfScheduleShiftsToUpdate = new ArrayList<Shift>(shiftsWithContiguous.size() + referencedShifts.size());
+		outOfScheduleShiftsToUpdate.addAll(updateShiftsWithContiguous(shiftsWithContiguous));
+		outOfScheduleShiftsToUpdate.addAll(updateReferencedShifts(referencedShifts));
 		
 		if(log.isDebugEnabled()) {
 			log.debug("About to save schedule " + getStoreSchedule());
@@ -354,6 +355,8 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 	
 		getScheduleService().save(getStoreSchedule());
 
+		updateShifts(outOfScheduleShiftsToUpdate);
+		
 		resetScheduleData();
 		setScheduleData();
 		
