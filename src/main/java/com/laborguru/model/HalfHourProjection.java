@@ -18,7 +18,7 @@ import com.laborguru.util.CalendarUtils;
  * @since SPM 1.0
  *
  */
-public class HalfHourProjection extends SpmObject{
+public class HalfHourProjection extends SpmObject implements Comparable<HalfHourProjection> {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -172,5 +172,26 @@ public class HalfHourProjection extends SpmObject{
 			return CalendarUtils.dateToDisplayTime(this.getTime());
 		
 		return null;
+	}
+
+	/**
+	 * Compares to HalfHourProject by time
+	 * @param object
+	 * @return
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	public int compareTo(HalfHourProjection object) {
+
+		if (object == null){
+			return 1;
+		}
+		
+		Date anotherDate = object.getTime();
+		
+		if (getTime() != null){
+			return (anotherDate != null)? getTime().compareTo(anotherDate): 1;
+		}
+		
+		return (anotherDate != null)?-1:0;
 	}
 }
