@@ -5,7 +5,7 @@ function breakout_of_frame() {
 }
 
 function trim(s) {
-	if(s) {
+	if(s && s.replace) {
 		var t = s.replace(/^\s+/, '');
 		return t.replace(/\s+$/, '');
 	} else {
@@ -151,7 +151,7 @@ function getRegExpMatch(timeTxt) {
  
 function parseTime(timeTxt) {
 	var m = getRegExpMatch(timeTxt);
-	if(m == null) {
+	if(m == null || trim(m) == '') {
 		return '';
 	} else {
 		var hs = 0;
@@ -227,6 +227,15 @@ function minutesToTime(minutes) {
 }
 
 function getObjectValueAsTimeInMinutes(objectId, defaultTime) {
-	var t = parseTime(getObjectByIDValue(objectId, defaultTime));
-	return timeInMinutes(t);
+	var v = getObjectByIDValue(objectId, defaultTime);
+	if(v) {
+		var t = parseTime(v);
+		return timeInMinutes(t);
+	} else {
+		return null;
+	}
+}
+
+function hasValue(s) {
+	return s != null && trim(s) != '';
 }

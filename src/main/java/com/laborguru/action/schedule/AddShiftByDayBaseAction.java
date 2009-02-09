@@ -119,7 +119,14 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 					
 					// Operation hours
 					boolean endsTomorrow = CalendarUtils.equalsOrGreaterTime(realOpen, realClose);
+					
 					if(endsTomorrow) {
+						// Special case: Open 24hs from 00:00 to 00:00
+						if(CalendarUtils.equalsTime(realOpen, CalendarUtils.getMidnightTime()) && CalendarUtils.equalsTime(realOpen, realClose)) {
+							hours.add(d);
+							d = new Date(d.getTime() + SpmConstants.MINUTES_INTERVAL * 60000L);
+						}
+						
 						// Today hours
 						while(!CalendarUtils.equalsTime(d, CalendarUtils.getMidnightTime())) {
 							hours.add(d);
@@ -519,9 +526,10 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	 * 
 	 * @param shiftsWithContiguous
 	 */
-	protected void updateShiftsWithContiguous(Map<Integer, List<Shift>> shiftsWithContiguous) {
+	protected List<Shift> updateShiftsWithContiguous(Map<Integer, List<Shift>> shiftsWithContiguous) {
 		Date selectedDayEndHour = getStoreScheduleEndHour(getOperationTime(getWeekDaySelector().getSelectedDay()));
-
+		List<Shift> referencedShiftToUpdate = new ArrayList<Shift>();
+		
 		for(EmployeeSchedule schedule : getStoreSchedule().getEmployeeSchedules()) {
 			List<Shift> originalShifts = shiftsWithContiguous.get(schedule.getEmployee().getId());
 			if(originalShifts != null && originalShifts.size() > 0) {
@@ -533,11 +541,15 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 						// Re-establish the contiguous relation when ther is no change in the shift end time
 						if(scheduleShift != null && CalendarUtils.equalsTime(selectedDayEndHour, scheduleShift.getToHour()) && CalendarUtils.equalsTime(scheduleShift.getToHour(), originalShift.getToHour())) {
 							scheduleShift.setContiguousShift(originalShift.getContiguousShift());
+						} else {
+							originalShift.getContiguousShift().setStartingShift(null);
 						}
+						referencedShiftToUpdate.add(originalShift.getContiguousShift());
 					}
 				}
 			}
 		}
+		return referencedShiftToUpdate;
 	}
 
 	/**
@@ -562,12 +574,9 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	 * 
 	 * @param shifts
 	 */
-	private void breakContiguousShiftReference(List<Shift> shifts) {
-		Shift referencingShift;
+	protected void updateShifts(List<Shift> shifts) {
 		for(Shift shift : shifts) {
-			referencingShift = getShiftService().getReferencedByShift(shift);
-			referencingShift.setContiguousShift(null);
-			getShiftService().save(referencingShift);
+			getShiftService().save(shift);
 		}
 	}
 	
@@ -575,30 +584,52 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	 * 
 	 * @param referencedShifts
 	 */
-	protected void updateReferencedShifts(Map<Integer, List<Shift>> referencedShifts) {
+	protected List<Shift> updateReferencedShifts(Map<Integer, List<Shift>> referencedShifts) {
 		EmployeeSchedule schedule;
 		Shift referencingShift, currentFirstShift;
-		List<Shift> shiftsToBreakReference = new ArrayList<Shift>();
+		List<Shift> referencedShiftToUpdate = new ArrayList<Shift>();
 		Date selectedDayStartHour = getStoreScheduleStartHour(getOperationTime(getWeekDaySelector().getSelectedDay()));
 		
 		for(Integer employeeId : referencedShifts.keySet()) {
 			schedule = getStoreSchedule().getEmployeeSchedule(new Employee(employeeId));
 			if(schedule != null) {
 				for(Shift shift : referencedShifts.get(employeeId)) {
-					referencingShift = getShiftService().getReferencedByShift(shift);
+					referencingShift = shift.getStartingShift();
 					currentFirstShift = schedule.getFirstShiftFor(shift.getPosition());
-					if(referencedShifts != null && currentFirstShift != null && CalendarUtils.equalsTime(selectedDayStartHour, currentFirstShift.getFromHour()) && CalendarUtils.equalsTime(referencingShift.getToHour(), currentFirstShift.getToHour())) {
-						referencingShift.setContiguousShift(currentFirstShift);
-						getShiftService().save(referencingShift);
+					
+					if(referencedShifts != null && currentFirstShift != null && CalendarUtils.equalsTime(selectedDayStartHour, currentFirstShift.getFromHour()) && CalendarUtils.equalsTime(referencingShift.getToHour(), currentFirstShift.getFromHour())) {
+						currentFirstShift.setStartingShift(referencingShift);
 					} else {
-						shiftsToBreakReference.add(referencingShift);
+						currentFirstShift.setStartingShift(null);
+						breakContiguousShiftReference(referencingShift);
 					}
+					referencedShiftToUpdate.add(referencingShift);
 				}
 			} else {
-				shiftsToBreakReference.addAll(referencedShifts.get(employeeId));
+				List<Shift> referencingShifts = referencedShifts.get(employeeId);
+				breakContiguousShiftReference(referencingShifts);
+				referencedShiftToUpdate.addAll(referencingShifts);
 			}
 		}
-		breakContiguousShiftReference(shiftsToBreakReference);
+		return referencedShiftToUpdate;
+	}
+	
+	/**
+	 * 
+	 * @param shift
+	 */
+	private void breakContiguousShiftReference(Shift shift) {
+		shift.setContiguousShift(null);
+	}
+	
+	/**
+	 * 
+	 * @param shifts
+	 */
+	private void breakContiguousShiftReference(List<Shift> shifts) {
+		for(Shift shift : shifts) {
+			breakContiguousShiftReference(shift);
+		}
 	}
 	
 	/**

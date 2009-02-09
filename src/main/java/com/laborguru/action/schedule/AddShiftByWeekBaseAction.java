@@ -8,8 +8,10 @@ package com.laborguru.action.schedule;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -130,7 +132,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	private void buildScheduleDataFor(WeeklyScheduleRow row, EmployeeSchedule employeeSchedule, Shift shift, int dayIndex) {
 		WeeklyScheduleDailyEntry entry = getDailyEntry(row.getWeeklySchedule(), dayIndex);
 		if(!entry.isMultipleShifts()) {
-			entry.setMultipleShifts(employeeSchedule.hasMultipleShifts(shift.getPosition()));
+			entry.setMultipleShifts(employeeSchedule.hasMultipleShiftsWithoutContiguous(shift.getPosition()));
 			entry.setTotalHours(employeeSchedule.getTotalShiftHoursWithContiguous(shift.getPosition()));
 		}
 		
@@ -327,7 +329,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		Set<Integer> ids = new HashSet<Integer>();
 		
 		for(WeeklyScheduleRow aRow : getWeeklyScheduleData().getScheduleData()) {
-			if(!ids.contains(aRow.getEmployeeId())) {
+			if(aRow.getEmployeeId() != null && !ids.contains(aRow.getEmployeeId())) {
 				ids.add(aRow.getEmployeeId());
 			}
 		}
@@ -1281,5 +1283,173 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 */
 	public void setFirstDayNextWeekStoreSchedule(StoreSchedule firstDayNextWeekStoreSchedule) {
 		this.firstDayNextWeekStoreSchedule = firstDayNextWeekStoreSchedule;
+	}
+	
+	/**
+	 * 
+	 * @see com.opensymphony.xwork2.ActionSupport#validate()
+	 */
+	@Override
+	public void validate() {
+		if(getSaveSchedule() != null) {
+			initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
+
+			int rowCount = 1;
+			for(WeeklyScheduleRow row : getWeeklyScheduleData().getScheduleData()) {
+				if(row.getEmployeeId() == null || row.getEmployeeId().intValue() <= 0) {
+					addActionError(getText("error.schedule.addshift.weekly_employee_missing", new String[]{String.valueOf(rowCount)}));
+				}
+				rowCount++;
+				for(int i = 0; i < row.getWeeklySchedule().size(); i++) {
+					if(isEditable(i)) {
+						validateWeeklyScheduleDailyEntry(row, row.getWeeklySchedule().get(i), i);
+					}
+				}
+			}
+			validateOverlappingShifts();
+		}
+	}	
+
+
+	/**
+	 * 
+	 * @param row
+	 * @param entry
+	 * @param dayIndex
+	 * @return
+	 */
+	private List<Object> buildValidationErrorParameters(WeeklyScheduleRow row, WeeklyScheduleDailyEntry entry, int dayIndex) {
+		List<Object> params = new ArrayList<Object>();
+		params.add(row.getEmployeeName());
+		params.add(row.getPositionName());
+		params.add(entry.getDay());
+		return params;
+	}
+	
+	/**
+	 * 
+	 * @param row
+	 * @param entry
+	 * @param dayIndex
+	 */
+	private void validateWeeklyScheduleDailyEntry(WeeklyScheduleRow row, WeeklyScheduleDailyEntry entry, int dayIndex) {
+		if(entry.getInHour() == null && entry.getOutHour() != null) {
+			addActionError(getText("error.schedule.addshift.weekly.no_in_hour", buildValidationErrorParameters(row, entry, dayIndex)));
+		} else if(entry.getOutHour() == null && entry.getInHour() != null) {
+			addActionError(getText("error.schedule.addshift.weekly.no_out_hour", buildValidationErrorParameters(row, entry, dayIndex)));
+		} else {
+			// Validate start and end time is inside the operation hours
+			Date selectedDayStartTime = getStoreScheduleStartHour(getOperationTime(getDay(dayIndex)));
+			Date selectedDayEndTime = getStoreScheduleEndHour(getOperationTime(getDay(dayIndex)));
+			if(!CalendarUtils.equalsTime(selectedDayStartTime, selectedDayEndTime)) {
+				if(CalendarUtils.smallerTime(selectedDayStartTime, selectedDayEndTime) && (CalendarUtils.smallerTime(entry.getInHour(), selectedDayStartTime) || CalendarUtils.greaterTime(entry.getOutHour(), selectedDayEndTime) || CalendarUtils.equalsOrGreaterTime(entry.getInHour(), entry.getOutHour()))) {
+					addActionError(getText("error.schedule.addshift.weekly.out__of_range_hours", buildValidationErrorParameters(row, entry, dayIndex)));
+				} else if(true) {
+					//:TODO: Put condition for multiday Shift
+					addActionError(getText("error.schedule.addshift.weekly.out__of_range_hours", buildValidationErrorParameters(row, entry, dayIndex)));
+				}
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 * @param row
+	 * @param entry
+	 * @param dayIndex
+	 */
+	private void validateOverlappingShifts() {
+		getDifferentEmployeeIds();
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	private List<Map<Integer, List<WeeklyScheduleDailyEntry>>> buildWeeklyDailyEntries() {
+		List<Map<Integer, List<WeeklyScheduleDailyEntry>>> entries = new ArrayList<Map<Integer, List<WeeklyScheduleDailyEntry>>>();
+		WeeklyScheduleDailyEntry entry;
+		List<WeeklyScheduleDailyEntry> splittedEntries;
+		List<WeeklyScheduleDailyEntry> employeeEntries;
+		
+		for(WeeklyScheduleRow row : getWeeklyScheduleData().getScheduleData()) {
+			int size = row.getWeeklySchedule().size();
+
+			for(int dayIndex = 0; dayIndex < size; dayIndex++) {
+				entry = row.getWeeklySchedule().get(dayIndex);
+				
+				if(entries.size() <= dayIndex) {
+					while(entries.size() <= dayIndex) {
+						entries.add(new HashMap<Integer, List<WeeklyScheduleDailyEntry>>());
+					}
+				}
+				employeeEntries = entries.get(dayIndex).get(row.getEmployeeId());
+				if(employeeEntries == null) {
+					employeeEntries = new ArrayList<WeeklyScheduleDailyEntry>();
+					entries.get(dayIndex).put(row.getEmployeeId(), employeeEntries);
+				}
+				splittedEntries = splitEntries(entry, dayIndex);
+				
+				if(splittedEntries.size() > 0) {
+					employeeEntries.add(splittedEntries.get(0));
+				}
+				
+				if(splittedEntries.size() > 1) {
+					int nextDayIndex = dayIndex + 1;
+					while(entries.size() <= nextDayIndex) {
+						entries.add(new HashMap<Integer, List<WeeklyScheduleDailyEntry>>());
+					}		
+					employeeEntries = entries.get(nextDayIndex).get(row.getEmployeeId());	
+					if(employeeEntries == null) {
+						employeeEntries = new ArrayList<WeeklyScheduleDailyEntry>();
+						entries.get(nextDayIndex).put(row.getEmployeeId(), employeeEntries);
+					}			
+					employeeEntries.add(splittedEntries.get(1));
+				}
+			}
+		}
+		
+		return entries;
+	}
+
+	/**
+	 * 
+	 * @param entry
+	 * @param dayIndex
+	 * @return
+	 */
+	private List<WeeklyScheduleDailyEntry> splitEntries(WeeklyScheduleDailyEntry entry, int dayIndex) {
+		List<WeeklyScheduleDailyEntry> splittedEntries = new ArrayList<WeeklyScheduleDailyEntry>(2);
+		Date selectedDayEndTime = getStoreScheduleEndHour(getOperationTime(getDay(dayIndex)));
+		Date selectedDayNextDayStartTime = getStoreScheduleStartHour(getOperationTime(getDay(dayIndex + 1)));
+		if(CalendarUtils.equalsTime(selectedDayEndTime, selectedDayNextDayStartTime) && splitEntries(entry, selectedDayEndTime, selectedDayNextDayStartTime)) {
+			WeeklyScheduleDailyEntry current = entry.clone();
+			WeeklyScheduleDailyEntry next = new WeeklyScheduleDailyEntry();
+			next.setInHour(selectedDayNextDayStartTime);
+			next.setOutHour(current.getOutHour());
+			current.setOutHour(selectedDayEndTime);
+		} else {
+			splittedEntries.add(entry.clone());
+		}
+		return splittedEntries;
+	}
+	
+	/**
+	 * 
+	 * @param shift
+	 * @param selectedDayEndTime
+	 * @param selectedDayNextDayStartTime
+	 * @return
+	 */
+	private boolean splitEntries(WeeklyScheduleDailyEntry entry, Date selectedDayEndTime, Date selectedDayNextDayStartTime) {
+		return CalendarUtils.equalsTime(selectedDayEndTime, selectedDayNextDayStartTime) &&
+			   (
+			   // Case 1: 24hs shift and limit between them
+			   (CalendarUtils.equalsTime(entry.getInHour(), entry.getOutHour()) && !CalendarUtils.equalsTime(entry.getInHour(), selectedDayEndTime)) ||
+			   // Case 2: To Hour is greater than From Hour and limit is between them
+			   (CalendarUtils.greaterTime(entry.getOutHour(), entry.getInHour()) && CalendarUtils.inRange(selectedDayEndTime, entry.getInHour(), entry.getOutHour())) ||
+			   // Case 3: From Hours is greater than To Hour and limit is between them
+			   (CalendarUtils.greaterTime(entry.getInHour(), entry.getOutHour()) && CalendarUtils.inRange(selectedDayEndTime, entry.getInHour(), entry.getOutHour()))
+			   );
 	}	
 }
