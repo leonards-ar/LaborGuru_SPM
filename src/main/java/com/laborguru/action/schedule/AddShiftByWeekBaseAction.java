@@ -1341,13 +1341,8 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 			// Validate start and end time is inside the operation hours
 			Date selectedDayStartTime = getStoreScheduleStartHour(getOperationTime(getDay(dayIndex)));
 			Date selectedDayEndTime = getStoreScheduleEndHour(getOperationTime(getDay(dayIndex)));
-			if(!CalendarUtils.equalsTime(selectedDayStartTime, selectedDayEndTime)) {
-				if(CalendarUtils.smallerTime(selectedDayStartTime, selectedDayEndTime) && (CalendarUtils.smallerTime(entry.getInHour(), selectedDayStartTime) || CalendarUtils.greaterTime(entry.getOutHour(), selectedDayEndTime) || CalendarUtils.equalsOrGreaterTime(entry.getInHour(), entry.getOutHour()))) {
-					addActionError(getText("error.schedule.addshift.weekly.out__of_range_hours", buildValidationErrorParameters(row, entry, dayIndex)));
-				} else if(true) {
-					//:TODO: Put condition for multiday Shift
-					addActionError(getText("error.schedule.addshift.weekly.out__of_range_hours", buildValidationErrorParameters(row, entry, dayIndex)));
-				}
+			if(!CalendarUtils.equalsTime(selectedDayStartTime, selectedDayEndTime) && (!CalendarUtils.inRange(entry.getInHour(), selectedDayStartTime, selectedDayEndTime) || !CalendarUtils.inRange(entry.getOutHour(), selectedDayStartTime, selectedDayEndTime))) {
+				addActionError(getText("error.schedule.addshift.weekly.out_of_range_hours", buildValidationErrorParameters(row, entry, dayIndex)));
 			}
 		}
 	}
