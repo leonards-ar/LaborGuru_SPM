@@ -365,11 +365,11 @@ public class CalendarUtils {
 			long t2 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(endTime));
 			
 			if(t1 <= t2) {
-				return t >= t1 && t < t2;
+				return t >= t1 && t <= t2;
 			} else {
 				// Multi day range
 				final long midnight = 2400L;
-				return t >= t1 && t < midnight || t < t2;
+				return t >= t1 && t < midnight || t <= t2;
 			}
 		} catch(Throwable ex) {
 			return false;
