@@ -12,6 +12,7 @@ import com.laborguru.model.PositionGroup;
 import com.laborguru.model.Store;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.model.report.TotalHourByPosition;
+import com.laborguru.util.CalendarUtils;
 
 public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao {
 	private static final Logger log = Logger.getLogger(SqlMapReportDao.class);
@@ -71,23 +72,49 @@ public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao
 			log.debug("getHalfHourlySchedule: before select params: store_id: " + store.getId() + " date: " + date);
 		}
 		
-		return getSqlMapClient().queryForList("getScheduleHalfHourlyTotalHours", ReportDaoHelper.mapHalfHoursReport(store, date));
+		Date openHour= ReportDaoHelper.getOpenHour(store, date);
+		Date closeHour = ReportDaoHelper.getCloseHour(store, date);
+		String namedQuery = "getScheduleHalfHourlyTotalHours";
+		
+		//if close hour is smaller or equals  than open hour, it means that its opens on one day and closes on the following day.		
+		if(CalendarUtils.equalsOrSmallerTime(closeHour, openHour)) {
+			namedQuery = "getScheduleHalfHourlyTotalHoursSplitInTwoDays";
+		}
+		
+		return getSqlMapClient().queryForList(namedQuery, ReportDaoHelper.mapHalfHoursReport(store, date));
 	}
 	
 	public List<TotalHour> getHalfHourlyMinimumStaffing(Store store, Date date) throws SQLException{
 		if(log.isDebugEnabled()){
 			log.debug("getHalfHourlyMinimumStaffing: before select params: store_id: " + store.getId() + " date: " + date);
 		}
+
+		Date openHour = ReportDaoHelper.getOpenHour(store, date);
+		Date closeHour = ReportDaoHelper.getCloseHour(store, date);
+		String namedQuery = "getTargetHalfHourlyTotalHours";
 		
-		return getSqlMapClient().queryForList("getTargetHalfHourlyTotalHours", ReportDaoHelper.mapHalfHoursReport(store, date));
+		//if close hour is smaller or equals  than open hour, it means that its opens on one day and closes on the following day.		
+		if(CalendarUtils.equalsOrSmallerTime(closeHour, openHour)) {
+			namedQuery = "getTargetHalfHourlyTotalHoursSplitInTwoDays";
+		}
+		
+		return getSqlMapClient().queryForList(namedQuery, ReportDaoHelper.mapHalfHoursReport(store, date));
 	}
 	
 	public List<TotalHour> getHalfHourlyScheduleByPosition(Store store, Position position, Date date) throws SQLException{
 		if(log.isDebugEnabled()){
 			log.debug("getHalfHourlyScheduleByPosition: before select params: store_id: " + store.getId() + " position_id: " + position.getId() + " date: " + date );
 		}
+
+		Date openHour = ReportDaoHelper.getOpenHour(store, date);
+		Date closeHour = ReportDaoHelper.getCloseHour(store, date);
+		String namedQuery = "getScheduleHalfHourlyTotalHoursByPosition"; 
 		
-		return getSqlMapClient().queryForList("getScheduleHalfHourlyTotalHoursByPosition", ReportDaoHelper.mapHalfHoursReportByPosition(store, position, date));
+		//if close hour is smaller or equals  than open hour, it means that its opens on one day and closes on the following day. 
+		if(CalendarUtils.equalsOrSmallerTime(closeHour, openHour)) {
+			namedQuery = "getScheduleHalfHourlyTotalHoursByPositionSplitInTwoDays";
+		}
+		return getSqlMapClient().queryForList(namedQuery, ReportDaoHelper.mapHalfHoursReportByPosition(store, position, date));
 	}
 	
 	public List<TotalHour> getHalfHourlyMinimumStaffingByPosition(Store store, Position position, Date date) throws SQLException{
@@ -95,23 +122,50 @@ public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao
 			log.debug("getHalfHourlyTargetByPosition: before select params: store_id: " + store.getId() + " position_id: " + position.getId() + " date: " + date );
 		}
 		
-		return getSqlMapClient().queryForList("getTargetHalfHourlyTotalHoursByPosition", ReportDaoHelper.mapHalfHoursReportByPosition(store, position, date));
+		Date openHour = ReportDaoHelper.getOpenHour(store, date);
+		Date closeHour = ReportDaoHelper.getCloseHour(store, date);
+		String namedQuery = "getTargetHalfHourlyTotalHoursByPosition";
+		
+		//if close hour is smaller or equals  than open hour, it means that its opens on one day and closes on the following day. 
+		if(CalendarUtils.equalsOrSmallerTime(closeHour, openHour)) {
+			namedQuery = "getTargetHalfHourlyTotalHoursByPositionSplitInTwoDays";
+		}
+		
+		return getSqlMapClient().queryForList(namedQuery, ReportDaoHelper.mapHalfHoursReportByPosition(store, position, date));
 	}
 
 	public List<TotalHour> getHalfHourlyScheduleByService(Store store, PositionGroup positionGroup, Date date) throws SQLException{
 		if(log.isDebugEnabled()){
 			log.debug("getHalfHourlyScheduleByService: before select params: store_id: " + store.getId() + " position_id: " + positionGroup.getId() + " date: " + date );
 		}
+
+		Date openHour = ReportDaoHelper.getOpenHour(store, date);
+		Date closeHour = ReportDaoHelper.getCloseHour(store, date);
+		String namedQuery = "getScheduleHalfHourlyTotalHoursByService";
 		
-		return getSqlMapClient().queryForList("getScheduleHalfHourlyTotalHoursByService", ReportDaoHelper.mapHalfHoursReportByService(store, positionGroup, date));
+		//if close hour is smaller or equals  than open hour, it means that its opens on one day and closes on the following day. 
+		if(CalendarUtils.equalsOrSmallerTime(closeHour, openHour)) {
+			namedQuery = "getScheduleHalfHourlyTotalHoursByServiceSplitInTwoDays";
+		}
+		
+		return getSqlMapClient().queryForList(namedQuery, ReportDaoHelper.mapHalfHoursReportByService(store, positionGroup, date));
 	}
 	
 	public List<TotalHour> getHalfHourlyMinimumStaffingByService(Store store, PositionGroup positionGroup, Date date) throws SQLException{
 		if(log.isDebugEnabled()){
 			log.debug("getHalfHourlyTargetByService: before select params: store_id: " + store.getId() + " position_id: " + positionGroup.getId() + " date: " + date );
 		}
+
+		Date openHour = ReportDaoHelper.getOpenHour(store, date);
+		Date closeHour = ReportDaoHelper.getCloseHour(store, date);
+		String namedQuery = "getTargetHalfHourlyTotalHoursByService";
 		
-		return getSqlMapClient().queryForList("getTargetHalfHourlyTotalHoursByService", ReportDaoHelper.mapHalfHoursReportByService(store, positionGroup, date));
+		//if close hour is smaller or equals  than open hour, it means that its opens on one day and closes on the following day. 
+		if(CalendarUtils.equalsOrSmallerTime(closeHour, openHour)) {
+			namedQuery = "getTargetHalfHourlyTotalHoursByServiceSplitInTwoDays";
+		}
+
+		return getSqlMapClient().queryForList(namedQuery, ReportDaoHelper.mapHalfHoursReportByService(store, positionGroup, date));
 	}
 	
 	public List<TotalHourByPosition> getScheduleForecastByPosition(Store store, Date startDate, Date endDate) throws SQLException {
