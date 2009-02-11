@@ -182,4 +182,41 @@ public class WeeklyScheduleData implements Serializable {
 	private void resetScheduleData() {
 		setScheduleData(null);
 	}
+	
+	/**
+	 * 
+	 * @param employeeId
+	 * @return
+	 */
+	public List<WeeklyScheduleRow> getEmployeeScheduleData(Integer employeeId) {
+		List<WeeklyScheduleRow> employeeData = new ArrayList<WeeklyScheduleRow>();
+		
+		if(employeeId != null) {
+			for(WeeklyScheduleRow row : getScheduleData()) {
+				if(employeeId.equals(row.getEmployeeId())) {
+					employeeData.add(row);
+				}
+			}
+		}
+		
+		return employeeData;
+	}
+	
+	/**
+	 * 
+	 * @param employeeId
+	 * @param dayIndex
+	 * @return
+	 */
+	public List<WeeklyScheduleDailyEntry> getEmployeeDailyScheduleData(Integer employeeId, int dayIndex) {
+		List<WeeklyScheduleDailyEntry> employeeData = new ArrayList<WeeklyScheduleDailyEntry>();
+		
+		for(WeeklyScheduleRow row : getEmployeeScheduleData(employeeId)) {
+			if(dayIndex >=0 && dayIndex < row.getWeeklySchedule().size() && row.getWeeklySchedule().get(dayIndex).isShift()) {
+				employeeData.add(row.getWeeklySchedule().get(dayIndex));
+			}
+		}
+		
+		return employeeData;
+	}
 }
