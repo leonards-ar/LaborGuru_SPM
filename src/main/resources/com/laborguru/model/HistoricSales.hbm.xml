@@ -30,8 +30,7 @@
 		<return-scalar column="hhDate" type="string"/>
 		
 		<![CDATA[
-		SELECT 
-		if(MINUTE(hs.date_time) >= 30, CONCAT(HOUR(hs.date_time), ':30'), CONCAT(HOUR(hs.date_time),':00')) as hhTime, 
+		SELECT if(MINUTE(hs.date_time) >= 30, CONCAT(HOUR(hs.date_time), ':30'), CONCAT(HOUR(hs.date_time),':00')) as hhTime, 
 		SUM(hs.main_value) as value,
 		DATE(hs.date_time) as hhDate
 		FROM tbl_historic_sales hs 
@@ -39,8 +38,8 @@
 		AND hs.date_time BETWEEN STR_TO_DATE(:startDate,'%Y-%m-%d %H:%i:%s') AND STR_TO_DATE(:endDate,'%Y-%m-%d %H:%i:%s') 
 		AND day_of_week=:dayOfWeek 
 		AND hs.main_value > 0 
-		GROUP BY hhDate, hhTime
-		ORDER BY STR_TO_DATE(hhTime, GET_FORMAT(TIME,'ISO')) ASC]]>
+		GROUP BY hhDate, if(MINUTE(hs.date_time) >= 30, CONCAT(HOUR(hs.date_time), ':30'), CONCAT(HOUR(hs.date_time),':00'))
+		ORDER BY STR_TO_DATE(if(MINUTE(hs.date_time) >= 30, CONCAT(HOUR(hs.date_time), ':30'), CONCAT(HOUR(hs.date_time),':00')), GET_FORMAT(TIME,'ISO')) ASC]]>
 	</sql-query> 
 	
 	<database-object>
