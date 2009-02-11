@@ -30,6 +30,7 @@ public class WeeklyScheduleDailyEntry implements Serializable {
 	private Double totalHours;
 	private boolean multipleShifts = false;
 	private List<String> shiftHours;
+	private WeeklyScheduleRow row;
 	
 	/**
 	 * 
@@ -204,6 +205,21 @@ public class WeeklyScheduleDailyEntry implements Serializable {
 		cloned.setOutHour(getOutHour());
 		cloned.setMultipleShifts(isMultipleShifts());
 		cloned.setTotalHours(getTotalHours());
+		cloned.setRow(getRow());
 		return cloned;
+	}
+
+	/**
+	 * @return the row
+	 */
+	public WeeklyScheduleRow getRow() {
+		return row;
+	}
+
+	/**
+	 * @param row the row to set
+	 */
+	public void setRow(WeeklyScheduleRow row) {
+		this.row = row;
 	}
 }

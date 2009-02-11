@@ -8,10 +8,9 @@ package com.laborguru.action.schedule;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -1354,57 +1353,80 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 * @param dayIndex
 	 */
 	private void validateOverlappingShifts() {
-		getDifferentEmployeeIds();
+		 for(Integer employeeId : getDifferentEmployeeIds()) {
+			 List<List<WeeklyScheduleDailyEntry>> weeklyScheduleToValidate = getEmployeeWeeklyScheduleToValidate(employeeId);
+			 for(int dayIndex = 0; dayIndex < weeklyScheduleToValidate.size(); dayIndex++) {
+				 List<WeeklyScheduleDailyEntry> dailySchedule = weeklyScheduleToValidate.get(dayIndex);
+				 if(!dailySchedule.isEmpty()) {
+					 validateEmployeeDailyOverlapingShifts(employeeId, dailySchedule, dayIndex);
+				 }
+			 }
+		 }
 	}
 
 	/**
 	 * 
-	 * @return
+	 * @param employeeId
+	 * @param dailySchedule
 	 */
-	private List<Map<Integer, List<WeeklyScheduleDailyEntry>>> buildWeeklyDailyEntries() {
-		List<Map<Integer, List<WeeklyScheduleDailyEntry>>> entries = new ArrayList<Map<Integer, List<WeeklyScheduleDailyEntry>>>();
-		WeeklyScheduleDailyEntry entry;
-		List<WeeklyScheduleDailyEntry> splittedEntries;
-		List<WeeklyScheduleDailyEntry> employeeEntries;
-		
-		for(WeeklyScheduleRow row : getWeeklyScheduleData().getScheduleData()) {
-			int size = row.getWeeklySchedule().size();
-
-			for(int dayIndex = 0; dayIndex < size; dayIndex++) {
-				entry = row.getWeeklySchedule().get(dayIndex);
-				
-				if(entries.size() <= dayIndex) {
-					while(entries.size() <= dayIndex) {
-						entries.add(new HashMap<Integer, List<WeeklyScheduleDailyEntry>>());
+	private void validateEmployeeDailyOverlapingShifts(Integer employeeId, List<WeeklyScheduleDailyEntry> dailySchedule, int dayIndex) {
+		int size = dailySchedule != null ? dailySchedule.size() : 0;
+		for(int i = 0; i < size; i++) {
+			WeeklyScheduleDailyEntry entryToValidate = dailySchedule.get(i);
+			if(entryToValidate.getRow() != null) {
+				for(int j = i + 1; j > size; j++) {
+					WeeklyScheduleDailyEntry entry = dailySchedule.get(j);
+					if(CalendarUtils.isOverlappingTimePeriod(entryToValidate.getInHour(), entryToValidate.getOutHour(), entry.getInHour(), entry.getOutHour())) {
+						addActionError(getText("error.schedule.addshift.weekly.employee_shift_collision", buildValidationErrorParameters(entryToValidate.getRow(), entryToValidate, dayIndex)));
 					}
-				}
-				employeeEntries = entries.get(dayIndex).get(row.getEmployeeId());
-				if(employeeEntries == null) {
-					employeeEntries = new ArrayList<WeeklyScheduleDailyEntry>();
-					entries.get(dayIndex).put(row.getEmployeeId(), employeeEntries);
-				}
-				splittedEntries = splitEntries(entry, dayIndex);
-				
-				if(splittedEntries.size() > 0) {
-					employeeEntries.add(splittedEntries.get(0));
-				}
-				
-				if(splittedEntries.size() > 1) {
-					int nextDayIndex = dayIndex + 1;
-					while(entries.size() <= nextDayIndex) {
-						entries.add(new HashMap<Integer, List<WeeklyScheduleDailyEntry>>());
-					}		
-					employeeEntries = entries.get(nextDayIndex).get(row.getEmployeeId());	
-					if(employeeEntries == null) {
-						employeeEntries = new ArrayList<WeeklyScheduleDailyEntry>();
-						entries.get(nextDayIndex).put(row.getEmployeeId(), employeeEntries);
-					}			
-					employeeEntries.add(splittedEntries.get(1));
 				}
 			}
 		}
+	}
+	
+	/**
+	 * 
+	 * @param employeeId
+	 * @return
+	 */
+	private List<List<WeeklyScheduleDailyEntry>> getEmployeeWeeklyScheduleToValidate(Integer employeeId) {
+		int size = getWeekDays().size() + 1;
+		List<List<WeeklyScheduleDailyEntry>> weeklySchedule = new ArrayList<List<WeeklyScheduleDailyEntry>>(size);
+
+		// Initialize
+		for(int i = 0; i < size; i++) {
+			weeklySchedule.add(new ArrayList<WeeklyScheduleDailyEntry>());
+		}
 		
-		return entries;
+		List<WeeklyScheduleDailyEntry> employeeData;
+		Iterator<WeeklyScheduleDailyEntry> splittedEntries;
+		
+		for(int dayIndex = 0; dayIndex < size - 1; dayIndex++) {
+			employeeData = getWeeklyScheduleData().getEmployeeDailyScheduleData(employeeId, dayIndex);
+			for(WeeklyScheduleDailyEntry entry : employeeData) {
+				splittedEntries = breakIntoDailyShifts(entry, dayIndex).iterator();
+				if(splittedEntries.hasNext()) {
+					weeklySchedule.get(dayIndex).add(splittedEntries.next());
+				}
+				if(splittedEntries.hasNext()) {
+					weeklySchedule.get(dayIndex + 1).add(splittedEntries.next());
+				}				
+			}
+		}
+		
+		// Must load shifts for next week first day
+		if(!weeklySchedule.get(size - 1).isEmpty()) {
+			EmployeeSchedule schedule = getFirstDayNextWeekStoreSchedule().getEmployeeSchedule(new Employee(employeeId));
+			for(Shift shift : schedule.getShifts()) {
+				WeeklyScheduleDailyEntry entry = new WeeklyScheduleDailyEntry();
+				entry.setOutHour(shift.getToHour());
+				entry.setInHour(shift.getFromHour());
+				entry.setDay(getDay(size - 1));
+				weeklySchedule.get(size - 1).add(entry);
+			}
+		}
+		
+		return weeklySchedule;
 	}
 
 	/**
@@ -1413,7 +1435,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 * @param dayIndex
 	 * @return
 	 */
-	private List<WeeklyScheduleDailyEntry> splitEntries(WeeklyScheduleDailyEntry entry, int dayIndex) {
+	private List<WeeklyScheduleDailyEntry> breakIntoDailyShifts(WeeklyScheduleDailyEntry entry, int dayIndex) {
 		List<WeeklyScheduleDailyEntry> splittedEntries = new ArrayList<WeeklyScheduleDailyEntry>(2);
 		Date selectedDayEndTime = getStoreScheduleEndHour(getOperationTime(getDay(dayIndex)));
 		Date selectedDayNextDayStartTime = getStoreScheduleStartHour(getOperationTime(getDay(dayIndex + 1)));

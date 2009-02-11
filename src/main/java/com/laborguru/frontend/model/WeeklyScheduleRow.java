@@ -128,6 +128,11 @@ public class WeeklyScheduleRow implements Serializable {
 	 * @param weeklySchedule the weeklySchedule to set
 	 */
 	public void setWeeklySchedule(List<WeeklyScheduleDailyEntry> weeklySchedule) {
+		if(weeklySchedule != null) {
+			for(WeeklyScheduleDailyEntry entry : weeklySchedule) {
+				entry.setRow(this);
+			}
+		}
 		this.weeklySchedule = weeklySchedule;
 	}
 

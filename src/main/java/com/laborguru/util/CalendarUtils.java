@@ -377,6 +377,18 @@ public class CalendarUtils {
 	}
 	
 	/**
+	 * 
+	 * @param startTime1
+	 * @param endTime1
+	 * @param startTime2
+	 * @param endTime2
+	 * @return
+	 */
+	public static boolean isOverlappingTimePeriod(Date startTime1, Date endTime1, Date startTime2, Date endTime2) {
+		return inRange(startTime1, startTime2, endTime2) || inRange(endTime1, startTime2, endTime2);
+	}
+	
+	/**
 	 * Returns if time1 is smaller than time2
 	 * @param time1
 	 * @param time2
