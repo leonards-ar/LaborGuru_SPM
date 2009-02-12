@@ -237,6 +237,7 @@
 				    <!-- Employees -->
 				    <s:iterator id="dataRow" value="weeklyScheduleData.scheduleData" status="itScheduleData">
 				    <tr class="scheduleMainTableEmployeeRow">
+				        <s:hidden id="scheduleIsFirstRow_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].firstRow"/>
 						<s:hidden id="scheduleOriginalEmployeeId_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].originalEmployeeId"/>
 						<s:hidden id="scheduleEmployeeMaxHoursDay_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].employeeMaxHoursDay"/>
 						<s:hidden id="scheduleEmployeeMaxHoursWeek_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].employeeMaxHoursWeek"/>
@@ -259,6 +260,9 @@
 				    		<s:hidden name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].positionName"/>						
 						</td>    
 				    	</s:if>
+				    	<s:else>
+				    		<s:hidden id="scheduleposition_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].positionId"/>
+				    	</s:else>				    	
 				    	<td class="weekScheduleNameCell" id="scheduleEmployee_<s:property value="#itScheduleData.index"/>">
 				    		<s:if test="%{editable}">
 							<s:url id="employeeList" action="scheduleemployeeautocomplete" includeParams="none"/>

@@ -237,6 +237,7 @@
 				    <!-- Employees -->
 				    <s:iterator id="dataRow" value="weeklyScheduleData.scheduleData" status="itScheduleData">
 				    <tr class="scheduleMainTableEmployeeRow">
+						<s:hidden id="scheduleIsFirstRow_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].firstRow"/>
 						<s:hidden id="scheduleOriginalEmployeeId_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].originalEmployeeId"/>
 						<s:hidden id="scheduleEmployeeMaxHoursDay_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].employeeMaxHoursDay"/>
 						<s:hidden id="scheduleEmployeeMaxHoursWeek_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].employeeMaxHoursWeek"/>
@@ -254,6 +255,9 @@
 							</s:else>
 				    	</td>
 				    	</s:if>
+				    	<s:else>
+				    		<s:hidden id="scheduleEmployee_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].employeeName"/>
+				    	</s:else>
 						<td class="weekScheduleNameCell" id="schedulePositionTD_<s:property value="#itScheduleData.index"/>">
 							<s:if test="%{editable}">
 					    		<s:if test="%{position == null}">

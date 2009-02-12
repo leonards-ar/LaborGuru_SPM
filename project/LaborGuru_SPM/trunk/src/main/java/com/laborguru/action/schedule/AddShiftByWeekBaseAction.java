@@ -1336,7 +1336,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 			addActionError(getText("error.schedule.addshift.weekly.no_in_hour", buildValidationErrorParameters(row, entry, dayIndex)));
 		} else if(entry.getOutHour() == null && entry.getInHour() != null) {
 			addActionError(getText("error.schedule.addshift.weekly.no_out_hour", buildValidationErrorParameters(row, entry, dayIndex)));
-		} else {
+		} else if(entry.isShift()) {
 			// Validate start and end time is inside the operation hours
 			Date selectedDayStartTime = getStoreScheduleStartHour(getOperationTime(getDay(dayIndex)));
 			Date selectedDayEndTime = getStoreScheduleEndHour(getOperationTime(getDay(dayIndex)));
