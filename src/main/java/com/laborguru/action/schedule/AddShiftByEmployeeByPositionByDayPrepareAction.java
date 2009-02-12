@@ -411,4 +411,29 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftByDa
 		setSelectView("addshiftbyemployeebyposition_selectView.action");
 	}
 	
+	/**
+	 * 
+	 * @see com.opensymphony.xwork2.ActionSupport#validate()
+	 */
+	@Override
+	public void validate() {
+		if(getSaveSchedule() != null) {
+			initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
+			
+			validateScheduleByPosition(getPositionScheduleData());
+		}
+	}	
+	
+	/**
+	 * 
+	 * @param schedule
+	 */
+	protected void validateScheduleByPosition(List<ScheduleByPositionEntry> schedule) {
+		List<ScheduleRow> allInOneSchedule = new ArrayList<ScheduleRow>();
+		for(ScheduleByPositionEntry posSchedule : schedule) {
+			allInOneSchedule.addAll(posSchedule.getScheduleData());
+		}
+		validateSchedule(allInOneSchedule);
+		
+	}	
 }
