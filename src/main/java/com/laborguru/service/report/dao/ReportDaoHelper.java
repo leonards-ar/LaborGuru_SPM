@@ -46,7 +46,6 @@ public class ReportDaoHelper {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("store_id", store.getId());
 		map.put("date", date);
-		
 		map.put("open_hour", getOpenHour(store, date));
 		map.put("close_hour", getCloseHour(store, date));
 		
@@ -63,7 +62,6 @@ public class ReportDaoHelper {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("store_id", store.getId());
 		map.put("date", date);
-		
 		map.put("open_hour", getOpenHour(store, date));
 		map.put("close_hour", getCloseHour(store, date));
 		map.put("position_id", position.getId());
@@ -102,6 +100,33 @@ public class ReportDaoHelper {
 		
 		return map;
 	}
+
+	public static Map<String, Object> mapActualSalesReport(Store store, Date startDate, Date endDate){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("store_id", store.getId());
+		map.put("start_date", startDate);
+		map.put("end_date", endDate);
+		
+		return map;
+	}
+	
+	public static Map<String, Object> mapActualHoursReport(Store store, Date startDate, Date endDate){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("store_id", store.getId());
+		map.put("start_date", startDate);
+		map.put("end_date", endDate);
+		
+		return map;
+	}	
+
+	public static Map<String, Object> mapMinimumStaffingReport(Store store, Date startDate, Date endDate){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("store_id", store.getId());
+		map.put("start_date", startDate);
+		map.put("end_date", endDate);
+		
+		return map;
+	}	
 	
 	public static Date getOpenHour(Store store, Date date) {
 		

@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+import com.laborguru.model.HistoricSales;
 import com.laborguru.model.Position;
 import com.laborguru.model.PositionGroup;
 import com.laborguru.model.Store;
@@ -156,5 +157,37 @@ public interface ReportDao {
 	 * @return
 	 * @throws SQLException
 	 */
-	List<TotalHour> getHalfHourlyMinimumStaffingByService(Store store, PositionGroup positionGroup, Date date) throws SQLException;	
+	List<TotalHour> getHalfHourlyMinimumStaffingByService(Store store, PositionGroup positionGroup, Date date) throws SQLException;
+	
+	/**
+	 * Retrieves the sales for a Store
+	 * @param store
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @throws SQLException
+	 */
+	List<HistoricSales> getActualSales(Store store, Date startDate, Date endDate) throws SQLException;
+	
+	/**
+	 * Retrieves the Hours worked during a week for that store.
+	 * @param store
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @throws SQLException
+	 */
+	List<TotalHour> getActualHours(Store store, Date startDate, Date endDate) throws SQLException;
+	
+	/**
+	 * Retrieves the minimum staffing needed for those days. 
+	 * This minimum staffing is according to the projections for those days.
+	 * @param store
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @throws SQLException
+	 */
+	List<TotalHour> getMinimumStaffing(Store store, Date startDate, Date endDate) throws SQLException;
+	
 }

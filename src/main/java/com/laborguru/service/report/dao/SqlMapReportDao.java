@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
+import com.laborguru.model.HistoricSales;
 import com.laborguru.model.Position;
 import com.laborguru.model.PositionGroup;
 import com.laborguru.model.Store;
@@ -183,6 +184,31 @@ public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao
 		}
 		
 		return getSqlMapClient().queryForList("getTargetForecastByPosition", ReportDaoHelper.mapTotalHoursReport(store, startDate, endDate));
+	}
+	
+	public List<HistoricSales> getActualSales(Store store, Date startDate, Date endDate) throws SQLException {
+		if(log.isDebugEnabled()) {
+			log.debug("getActualSales: before select params: store_id: " + store.getId() + " startDate: " + startDate + " endDate: " + endDate);
+		}
+		
+		return getSqlMapClient().queryForList("getActualSales", ReportDaoHelper.mapActualSalesReport(store, startDate, endDate));
+	}
+	
+	public List<TotalHour> getActualHours(Store store, Date startDate, Date endDate) throws SQLException{
+		if(log.isDebugEnabled()) {
+			log.debug("getActualHours: before select params: store_id: " + store.getId() + " startDate: " + startDate + " endDate: " + endDate);
+		}
+		
+		return getSqlMapClient().queryForList("getActualHours", ReportDaoHelper.mapActualHoursReport(store, startDate, endDate));
+	}
+	
+	public List<TotalHour> getMinimumStaffing(Store store, Date startDate, Date endDate) throws SQLException{
+		if(log.isDebugEnabled()) {
+			log.debug("getActualHours: before select params: store_id: " + store.getId() + " startDate: " + startDate + " endDate: " + endDate);
+		}
+		
+		return getSqlMapClient().queryForList("getMinimumStaffing", ReportDaoHelper.mapMinimumStaffingReport(store, startDate, endDate));
+		
 	}
 	
 	

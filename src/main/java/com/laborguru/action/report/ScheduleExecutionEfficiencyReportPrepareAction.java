@@ -13,26 +13,18 @@ public class ScheduleExecutionEfficiencyReportPrepareAction extends
 
 	@Override
 	protected void getReport() {
-		setTotalHours(getReportService().getScheduleExecutionEfficiency(
+		setTotalHours(getReportService().getScheduleExecutionEfficiencyReport(
 				getEmployeeStore(), getWeekDaySelector().getSelectedDay()));
 	}
 
 	@Override
 	protected void getReportByPosition() {
-		Position position = new Position();
-		position.setId(getItemId());
-		setTotalHours(getReportService()
-				.getScheduleExecutionEfficiencyByPosition(getEmployeeStore(),
-						position, getWeekDaySelector().getSelectedDay()));
+		//Not Implemented in this version
 	}
 
 	@Override
 	protected void getReportByService() {
-		PositionGroup positionGroup = new PositionGroup();
-		positionGroup.setId(getItemId());
-		setTotalHours(getReportService()
-				.getScheduleExecutionEfficiencyByService(getEmployeeStore(),
-						positionGroup, getWeekDaySelector().getSelectedDay()));
+		//Not Implemented in this version
 	}
 
 }

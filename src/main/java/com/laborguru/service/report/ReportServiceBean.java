@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.SpmUncheckedException;
 import com.laborguru.model.DailyProjection;
+import com.laborguru.model.HistoricSales;
 import com.laborguru.model.Position;
 import com.laborguru.model.PositionGroup;
 import com.laborguru.model.Store;
@@ -188,98 +189,49 @@ public class ReportServiceBean implements ReportService {
 	}
 	
 	public List<TotalHour> getPerformanceEfficiencyReport(Store store, Date startingWeekDate) {
-
-			/**
-			 * TODO
-			 * 1.- Get historic sales for a week
-			 * 2.- Get (Schedule Hours) Hours Worked (This is a select to that new table)
-			 * 3.- Get (Target Hours) This is the ideal hours. 
-			 *     This means the minimum staffing you need for the number of tickets sold. 
-			 */
-
-		return new ArrayList<TotalHour>();
-	}
-	
-	public List<TotalHour> getPerformanceEfficiencyReportByPosition(Store store, Position position, Date startingWeekDate) {
-
 		/**
-		 * Same as getPerformanceEfficiencyReport filtered by Position.
-		 * TODO
+		 * 
 		 * 1.- Get historic sales for a week
-		 * 2.- Get (Schedule Hours) Hours Worked (This is a select to that new table) filtered by position
-		 * 3.- Get (Target Hours) This is the ideal hours filtered by position.
-		 *     This means the minimum staffing you need for the number of tickets sold. 
+		 * 2.- Get Hours worked for a week
+		 * 3.- Get Minimus Staffing needed for the number of 
 		 */
-
-		return new ArrayList<TotalHour>();
+		try{
+			Date endingWeekDate = CalendarUtils.addOrSubstractDays(startingWeekDate, 6);
+			List<HistoricSales> actualSales = reportDao.getActualSales(store, startingWeekDate, endingWeekDate);
+			List<TotalHour> actualHours = reportDao.getActualHours(store, startingWeekDate, endingWeekDate);			
+			List<TotalHour> minimumStaffing = reportDao.getMinimumStaffing(store, startingWeekDate, endingWeekDate);
+			
+			return getMergedTotalEfficiencyHours(actualSales, actualHours, minimumStaffing, startingWeekDate, endingWeekDate);
+			
+		} catch(SQLException e) {
+			log.error("An SQLError has occurred", e);
+			throw new SpmUncheckedException(e.getCause(), e.getMessage(),
+					ErrorEnum.GENERIC_DATABASE_ERROR);
+		}
+		
 	}
 	
-	public List<TotalHour> getPerformanceEfficiencyReportByService(Store store, PositionGroup positionGroup, Date startingWeekDate) {   
+	public List<TotalHour> getScheduleExecutionEfficiencyReport(Store store, Date startingWeekDate){
 		/**
-		 * Same as getPerformanceEfficiencyReport filtered by Position Group. 
-		 * TODO
-		 * 1.- Get historic sales for a week
-		 * 2.- Get (Schedule Hours) Hours Worked (This is a select to that new table) filtered by position group
-		 * 3.- Get (Target Hours) This is the ideal hours filtered by position group. 
-		 *     This means the minimum staffing you need for the number of tickets sold. 
-		 */
-
-		return new ArrayList<TotalHour>();
-	}
-	
-	public List<TotalHour> getScheduleExecutionEfficiency(Store store, Date startingWeekDate){
-		/**
-		 * TODO
+		 *
 		 * 1.- Get historic sales for a week
 		 * 2.- Get schedule hours. (Already done) List<TotalHour> scheduleTotalHours = reportDao.getScheduleWeeklyTotalHour(store, startingWeekDate, endingWeekDate);
 		 * 3.- Get Hours Worked (This is a select to that new table).
 		 */
 		try{
 		Date endingWeekDate = CalendarUtils.addOrSubstractDays(startingWeekDate, 6);
+		List<HistoricSales> actualSales = reportDao.getActualSales(store, startingWeekDate, endingWeekDate);
 		List<TotalHour> scheduleTotalHours = reportDao.getScheduleWeeklyTotalHour(store, startingWeekDate, endingWeekDate);
-		return new ArrayList<TotalHour>();
+		List<TotalHour> actualHours = reportDao.getActualHours(store, startingWeekDate, endingWeekDate);
+		
+		
+		return getMergedTotalEfficiencyHours(actualSales, scheduleTotalHours, actualHours, startingWeekDate, endingWeekDate);
 		} catch (SQLException e) {
 			log.error("An SQLError has occurred", e);
 			throw new SpmUncheckedException(e.getCause(), e.getMessage(),
 					ErrorEnum.GENERIC_DATABASE_ERROR);
 		}
 	}
-	
-	public List<TotalHour> getScheduleExecutionEfficiencyByPosition(Store store, Position position, Date startingWeekDate){
-		/**
-		 * TODO
-		 * 1.- Get historic sales for a week
-		 * 2.- Get schedule hours. (Already done) List<TotalHour> scheduleTotalHours = reportDao.getScheduleWeeklyTotalHour(store, startingWeekDate, endingWeekDate);
-		 * 3.- Get Hours Worked (This is a select to that new table).
-		 */
-		try{
-		Date endingWeekDate = CalendarUtils.addOrSubstractDays(startingWeekDate, 6);
-		List<TotalHour> scheduleTotalHours = reportDao.getScheduleWeeklyTotalHourByPosition(store, position, startingWeekDate, endingWeekDate);
-		return new ArrayList<TotalHour>();
-		} catch (SQLException e) {
-			log.error("An SQLError has occurred", e);
-			throw new SpmUncheckedException(e.getCause(), e.getMessage(),
-					ErrorEnum.GENERIC_DATABASE_ERROR);
-		}
-	}
-	
-	public List<TotalHour> getScheduleExecutionEfficiencyByService(Store store, PositionGroup positionGroup, Date startingWeekDate){
-		/**
-		 * TODO
-		 * 1.- Get historic sales for a week
-		 * 2.- Get schedule hours. (Already done) List<TotalHour> scheduleTotalHours = reportDao.getScheduleWeeklyTotalHour(store, startingWeekDate, endingWeekDate);
-		 * 3.- Get Hours Worked (This is a select to that new table).
-		 */
-		try{
-		Date endingWeekDate = CalendarUtils.addOrSubstractDays(startingWeekDate, 6);
-		List<TotalHour> scheduleTotalHours = reportDao.getScheduleWeeklyTotalHourByService(store, positionGroup, startingWeekDate, endingWeekDate);
-		return new ArrayList<TotalHour>();
-		} catch (SQLException e) {
-			log.error("An SQLError has occurred", e);
-			throw new SpmUncheckedException(e.getCause(), e.getMessage(),
-					ErrorEnum.GENERIC_DATABASE_ERROR);
-		}
-	}	
 	
 	private TotalHour getTotalHourByDay(Date day, List<TotalHour> list) {
 		for(TotalHour th: list) {
@@ -346,12 +298,55 @@ public class ReportServiceBean implements ReportService {
 		return target;
 	}
 	
+	private List<TotalHour> getMergedTotalEfficiencyHours(List<HistoricSales> actualSales, List<TotalHour>scheduleTotalHours, List<TotalHour> targetTotalHours, Date startDate, Date endDate) {
+		List<TotalHour> totalHours = new ArrayList<TotalHour>();
+		
+		for (Date date=startDate; date.compareTo(endDate) <= 0; date=CalendarUtils.addOrSubstractDays(date, 1)) {
+			
+			TotalHour totalhour = new TotalHour();
+			totalhour.setDay(date);
+			HistoricSales hs = getHistoricSalesByDate(date, actualSales);
+			if(hs != null){
+				totalhour.setSales(hs.getMainValue());
+			} else {
+				totalhour.setSales(SpmConstants.BD_ZERO_VALUE);
+			}
+
+			TotalHour scheduleTotalHour = getTotalHourByDay(date, scheduleTotalHours);
+			if(scheduleTotalHour != null) {
+				totalhour.setSchedule(scheduleTotalHour.getSchedule());
+			} else {
+				totalhour.setSchedule(SpmConstants.BD_ZERO_VALUE);
+			}
+			
+			TotalHour targetTotalHour = getTotalHourByDay(date, targetTotalHours);
+			if(targetTotalHour != null) {
+				totalhour.setTarget(targetTotalHour.getTarget());
+			} else {
+				totalhour.setTarget(SpmConstants.BD_ZERO_VALUE);
+			}
+			
+			totalHours.add(totalhour);
+		}
+		
+		return totalHours;
+	}
 	private DailyProjection getDailyProjectionByDate(Date date, List<DailyProjection> projections) {
 		for(DailyProjection dp: projections) {
 			if(date.equals(dp.getProjectionDate())) {
 				return dp;
 			}
 		
+		}
+		return null;
+	}
+	
+	private HistoricSales getHistoricSalesByDate(Date date, List<HistoricSales> historicSales){
+		for(HistoricSales hs: historicSales) {
+			Date hsDate = CalendarUtils.removeTimeFromDate(hs.getDateTime());
+			if(date.equals(hsDate)) {
+				return hs;
+			}
 		}
 		return null;
 	}

@@ -170,6 +170,7 @@
 				AND TIME(h.time) <![CDATA[ >= ]]> TIME('1970-01-01 00:00:00') 
 				AND TIME(h.time) <![CDATA[ < ]]>  TIME(#close_hour#)
 			)
+		)
 		AND p.store_id=#store_id# 
 		GROUP BY s.staffing_date, h.time 
 		ORDER BY s.staffing_date, TIME(h.time)
@@ -265,6 +266,7 @@
 				AND TIME(h.time) <![CDATA[ >= ]]> TIME('1970-01-01 00:00:00') 
 				AND TIME(h.time) <![CDATA[ < ]]>  TIME(#close_hour#)
 			)
+		)
 		AND p.store_id=#store_id# 
 		AND p.position_id=#position_id#
 		GROUP BY s.staffing_date, h.time 
@@ -364,6 +366,7 @@
 				AND TIME(h.time) <![CDATA[ >= ]]> TIME('1970-01-01 00:00:00') 
 				AND TIME(h.time) <![CDATA[ < ]]>  TIME(#close_hour#)
 			)
+		)
 		AND p.store_id=#store_id# 
 		AND p.position_group_id=#position_group_id#
 		GROUP BY s.staffing_date, h.time 
@@ -402,5 +405,42 @@
 		AND s.staffing_date BETWEEN STR_TO_DATE(#start_date#,'%Y-%m-%d') AND STR_TO_DATE(#end_date#,'%Y-%m-%d')
 		AND p.store_id = #store_id#
 		GROUP BY p.position_id
-	</select>	
+	</select>
+	
+	<select id="getActualSales" parameterClass="java.util.Map" resultClass="com.laborguru.model.HistoricSales">
+		SELECT
+		DATE(hs.date_time) as dateTime, 
+		hs.day_of_week as dayOfWeek, 
+		sum(hs.main_value) as mainValue,
+		sum(hs.second_value) as secondValue, 
+		sum(hs.third_value) as thirdValue, 
+		sum(hs.fourth_value) as fourthValue
+		FROM tbl_historic_sales as hs
+		WHERE DATE(hs.date_time) BETWEEN STR_TO_DATE(#start_date#, '%Y-%m-%d') AND STR_TO_DATE(#end_date#, '%Y-%m-%d')
+		AND hs.store_id = #store_id#
+		GROUP BY DATE(hs.date_time), hs.day_of_week
+		ORDER BY DATE(hs.date_time), hs.day_of_week;
+	</select>
+	
+	<select id="getActualHours" parameterClass="java.util.Map" resultClass="com.laborguru.model.report.TotalHour">
+		SELECT
+		a.date as day,
+		a.hours as schedule
+		FROM tbl_actual_hours a
+		WHERE a.date BETWEEN STR_TO_DATE(#start_date#, '%Y-%m-%d') AND STR_TO_DATE(#end_date#, '%Y-%m-%d')
+		AND a.store_id = #store_id# 
+	</select>
+	
+	<select id="getMinimumStaffing" parameterClass="java.util.Map" resultClass="com.laborguru.model.report.TotalHour">
+		SELECT
+		s.staffing_date as day, 
+		sum(s.total_minimum_staffing) as schedule,
+		sum(s.total_minimum_staffing) as target
+		FROM tbl_staffing s, tbl_positions p
+		WHERE s.position_id = p.position_id
+		AND s.staffing_date BETWEEN STR_TO_DATE(#start_date#, '%Y-%m-%d') AND STR_TO_DATE(#end_date#, '%Y-%m-%d')
+		AND p.store_id = #store_id#
+		GROUP BY s.staffing_date
+		ORDER BY s.staffing_date;
+	</select>		
 </sqlMap>
