@@ -660,9 +660,9 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 			   // Case 1: 24hs shift and limit between them
 			   (CalendarUtils.equalsTime(shift.getFromHour(), shift.getToHour()) && !CalendarUtils.equalsTime(shift.getFromHour(), selectedDayEndTime)) ||
 			   // Case 2: To Hour is greater than From Hour and limit is between them
-			   (CalendarUtils.greaterTime(shift.getToHour(), shift.getFromHour()) && CalendarUtils.inRange(selectedDayEndTime, shift.getFromHour(), shift.getToHour())) ||
+			   (CalendarUtils.greaterTime(shift.getToHour(), shift.getFromHour()) && CalendarUtils.inRangeNotIncludingEndTime(selectedDayEndTime, shift.getFromHour(), shift.getToHour())) ||
 			   // Case 3: From Hours is greater than To Hour and limit is between them
-			   (CalendarUtils.greaterTime(shift.getFromHour(), shift.getToHour()) && CalendarUtils.inRange(selectedDayEndTime, shift.getFromHour(), shift.getToHour()))
+			   (CalendarUtils.greaterTime(shift.getFromHour(), shift.getToHour()) && CalendarUtils.inRangeNotIncludingEndTime(selectedDayEndTime, shift.getFromHour(), shift.getToHour()))
 			   );
 	}
 	
@@ -1295,6 +1295,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 
 			int rowCount = 1;
 			for(WeeklyScheduleRow row : getWeeklyScheduleData().getScheduleData()) {
+				row.updateEntries();
 				if(row.getEmployeeId() == null || row.getEmployeeId().intValue() <= 0) {
 					addActionError(getText("error.schedule.addshift.weekly_employee_missing", new String[]{String.valueOf(rowCount)}));
 				}
@@ -1340,7 +1341,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 			// Validate start and end time is inside the operation hours
 			Date selectedDayStartTime = getStoreScheduleStartHour(getOperationTime(getDay(dayIndex)));
 			Date selectedDayEndTime = getStoreScheduleEndHour(getOperationTime(getDay(dayIndex)));
-			if(!CalendarUtils.equalsTime(selectedDayStartTime, selectedDayEndTime) && (!CalendarUtils.inRange(entry.getInHour(), selectedDayStartTime, selectedDayEndTime) || !CalendarUtils.inRange(entry.getOutHour(), selectedDayStartTime, selectedDayEndTime))) {
+			if(!CalendarUtils.equalsTime(selectedDayStartTime, selectedDayEndTime) && (!CalendarUtils.inRangeIncludingEndTime(entry.getInHour(), selectedDayStartTime, selectedDayEndTime) || !CalendarUtils.inRangeIncludingEndTime(entry.getOutHour(), selectedDayStartTime, selectedDayEndTime))) {
 				addActionError(getText("error.schedule.addshift.weekly.out_of_range_hours", buildValidationErrorParameters(row, entry, dayIndex)));
 			}
 		}
@@ -1374,7 +1375,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		for(int i = 0; i < size; i++) {
 			WeeklyScheduleDailyEntry entryToValidate = dailySchedule.get(i);
 			if(entryToValidate.getRow() != null) {
-				for(int j = i + 1; j > size; j++) {
+				for(int j = i + 1; j < size; j++) {
 					WeeklyScheduleDailyEntry entry = dailySchedule.get(j);
 					if(CalendarUtils.isOverlappingTimePeriod(entryToValidate.getInHour(), entryToValidate.getOutHour(), entry.getInHour(), entry.getOutHour())) {
 						addActionError(getText("error.schedule.addshift.weekly.employee_shift_collision", buildValidationErrorParameters(entryToValidate.getRow(), entryToValidate, dayIndex)));
@@ -1464,9 +1465,9 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 			   // Case 1: 24hs shift and limit between them
 			   (CalendarUtils.equalsTime(entry.getInHour(), entry.getOutHour()) && !CalendarUtils.equalsTime(entry.getInHour(), selectedDayEndTime)) ||
 			   // Case 2: To Hour is greater than From Hour and limit is between them
-			   (CalendarUtils.greaterTime(entry.getOutHour(), entry.getInHour()) && CalendarUtils.inRange(selectedDayEndTime, entry.getInHour(), entry.getOutHour())) ||
+			   (CalendarUtils.greaterTime(entry.getOutHour(), entry.getInHour()) && CalendarUtils.inRangeNotIncludingEndTime(selectedDayEndTime, entry.getInHour(), entry.getOutHour())) ||
 			   // Case 3: From Hours is greater than To Hour and limit is between them
-			   (CalendarUtils.greaterTime(entry.getInHour(), entry.getOutHour()) && CalendarUtils.inRange(selectedDayEndTime, entry.getInHour(), entry.getOutHour()))
+			   (CalendarUtils.greaterTime(entry.getInHour(), entry.getOutHour()) && CalendarUtils.inRangeNotIncludingEndTime(selectedDayEndTime, entry.getInHour(), entry.getOutHour()))
 			   );
 	}	
 }

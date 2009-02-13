@@ -219,4 +219,13 @@ public class WeeklyScheduleRow implements Serializable {
 	public void setFirstRow(boolean firstRow) {
 		this.firstRow = firstRow;
 	}
+	
+	/**
+	 * 
+	 */
+	public void updateEntries() {
+		for(WeeklyScheduleDailyEntry entry : getWeeklySchedule()) {
+			entry.setRow(this);
+		}
+	}
 }

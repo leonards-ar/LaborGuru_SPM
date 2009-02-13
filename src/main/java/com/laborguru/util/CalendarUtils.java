@@ -358,7 +358,7 @@ public class CalendarUtils {
 	 * @param endTime
 	 * @return
 	 */
-	public static boolean inRange(Date time, Date startTime, Date endTime) {
+	public static boolean inRangeIncludingEndTime(Date time, Date startTime, Date endTime) {
 		try {
 			long t = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(time));
 			long t1 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(startTime));
@@ -377,6 +377,31 @@ public class CalendarUtils {
 	}
 	
 	/**
+	 * Returns if time is greater or equal than startTime and less than endTime
+	 * @param time
+	 * @param startTime
+	 * @param endTime
+	 * @return
+	 */
+	public static boolean inRangeNotIncludingEndTime(Date time, Date startTime, Date endTime) {
+		try {
+			long t = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(time));
+			long t1 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(startTime));
+			long t2 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(endTime));
+			
+			if(t1 <= t2) {
+				return t >= t1 && t < t2;
+			} else {
+				// Multi day range
+				final long midnight = 2400L;
+				return t >= t1 && t < midnight || t < t2;
+			}
+		} catch(Throwable ex) {
+			return false;
+		}		
+	}
+	
+	/**
 	 * 
 	 * @param startTime1
 	 * @param endTime1
@@ -385,7 +410,7 @@ public class CalendarUtils {
 	 * @return
 	 */
 	public static boolean isOverlappingTimePeriod(Date startTime1, Date endTime1, Date startTime2, Date endTime2) {
-		return inRange(startTime1, startTime2, endTime2) || inRange(endTime1, startTime2, endTime2);
+		return inRangeIncludingEndTime(startTime1, startTime2, endTime2) || inRangeIncludingEndTime(endTime1, startTime2, endTime2) || inRangeIncludingEndTime(startTime2, startTime1, endTime1) || inRangeIncludingEndTime(endTime2, startTime1, endTime1);
 	}
 	
 	/**
