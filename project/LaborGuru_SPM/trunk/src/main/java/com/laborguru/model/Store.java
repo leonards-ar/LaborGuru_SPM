@@ -587,16 +587,22 @@ public class Store extends SpmObject {
 	 */
 	public DayPart getDayPartFor(Date time) {
 		if(time != null) {
-			DayPart dayPart;
-			for(int i = getDayParts().size() - 1; i >= 0; i--) {
-				dayPart = getDayParts().get(i);
-				if(CalendarUtils.equalsOrGreaterTime(time, dayPart.getStartHour())) {
-					return dayPart;
+			DayPart dayPart, nextDayPart;
+			if(getDayParts().size() > 1) {
+				for(int i = 0; i < getDayParts().size(); i++) {
+					dayPart = getDayParts().get(i);
+					nextDayPart = i + 1 < getDayParts().size() ? getDayParts().get(i + 1) : getDayParts().get(0);
+					if(dayPart != null && nextDayPart != null) {
+						if(CalendarUtils.inRangeNotIncludingEndTime(time, dayPart.getStartHour(), nextDayPart.getStartHour())) {
+							return dayPart;
+						}
+					}
 				}
+			} else {
+				// For sure time is before the first day part
+				dayPart = getDayParts().size() > 0 ? getDayParts().get(0) : null;
+				return dayPart != null && dayPart.getStartHour() != null ? dayPart : null;
 			}
-			// For sure time is before the first day part
-			dayPart = getDayParts().size() > 0 ? getDayParts().get(0) : null;
-			return dayPart != null && dayPart.getStartHour() != null ? dayPart : null;
 		}
 		return null;
 	}
