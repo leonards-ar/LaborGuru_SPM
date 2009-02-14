@@ -56,10 +56,16 @@
 		</interceptors>
 
 		<default-interceptor-ref name="spmStack" />
-		
+
         <global-results>
             <result name="login" type="tiles">loginPage</result>
+            <result name="unhandled_error" type="tiles">errorPage</result>
         </global-results>		
+
+		<global-exception-mappings>
+			<exception-mapping name="ex" result="unhandled_error" exception="java.lang.Exception"/>
+			<exception-mapping name="rtex" result="unhandled_error" exception="java.lang.RuntimeException"/>
+		</global-exception-mappings>        
 	</package>
 
 	<include file="action/login.xml" />

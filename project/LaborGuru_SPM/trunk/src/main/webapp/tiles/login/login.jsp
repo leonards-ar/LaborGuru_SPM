@@ -67,7 +67,7 @@
 				<td align="right" colspan="2"><input type="submit" value="<s:text name="login.submit"/>" class="button" /></td>
 			</tr>
 			<tr>
-				<td align="left" colspan="2"><a href="#" onClick="forgotPassword();" class="link">Forgot your password?</a></td>
+				<td align="left" colspan="2"><a href="#" onClick="forgotPassword();" class="link"><s:text name="login.forgot_password.label"/></a></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center">

@@ -21,6 +21,11 @@
 		<put-attribute name="popUpFooter" value="/tiles/popup_footer.jsp" />
 	</definition>
 
+	<!--  Error -->
+	<definition name="errorPage" extends="baseLayout">
+		<put-attribute name="body" value="/tiles/error.jsp" />
+	</definition>
+
 	<!--  Login and Security -->
 	<definition name="loginPage" extends="baseLayout">
 		<put-attribute name="body" value="/tiles/login/login.jsp" />
