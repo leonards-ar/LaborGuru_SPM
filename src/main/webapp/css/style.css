@@ -366,6 +366,11 @@ table.results th a {
 	font-family: trebuchet ms, arial, sans-serif;
 	color: red;
 }
+.errorContactMessage {
+	font-size: 10px;
+	font-family: trebuchet ms, arial, sans-serif;
+	color: #E6E6E6;
+}
 
 .actionMessage {
 	font-size: 11px;

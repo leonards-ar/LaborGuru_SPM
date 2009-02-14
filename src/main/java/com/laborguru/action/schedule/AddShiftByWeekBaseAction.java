@@ -342,26 +342,19 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 * @param storeSchedule
 	 */
 	private void processShiftsFromPreviousDay(List<Shift> shiftsFromPreviousDay, StoreSchedule storeSchedule) {
-		if(storeSchedule != null && shiftsFromPreviousDay != null && shiftsFromPreviousDay.size() > 0) {
+		if (storeSchedule != null && shiftsFromPreviousDay != null && shiftsFromPreviousDay.size() > 0) {
 			EmployeeSchedule schedule;
-			Shift firstShift;
-			for(Shift shift : shiftsFromPreviousDay) {
+			for (Shift shift : shiftsFromPreviousDay) {
 				schedule = storeSchedule.getEmployeeSchedule(shift.getEmployeeSchedule().getEmployee());
-				if(schedule == null) {
+				if (schedule == null) {
 					schedule = new EmployeeSchedule();
 					schedule.setEmployee(getEmployeeService().getEmployeeById(shift.getEmployeeSchedule().getEmployee()));
 					schedule.setStoreSchedule(storeSchedule);
 					storeSchedule.getEmployeeSchedules().add(schedule);
 				}
-				firstShift = schedule.getFirstShiftFor(shift.getPosition());
-				if(firstShift == null || CalendarUtils.equalsOrGreaterTime(firstShift.getFromHour(), shift.getToHour())) {
-					shift.setEmployeeSchedule(schedule);
-					schedule.addFirstShift(shift);
-				} else {
-					// Error! There is already an overlapping shift!
-				}
+				shift.setEmployeeSchedule(schedule);
+				schedule.addFirstShift(shift);
 			}
-			
 		}
 	}
 	
