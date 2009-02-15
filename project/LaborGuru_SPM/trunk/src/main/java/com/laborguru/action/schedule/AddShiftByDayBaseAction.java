@@ -94,8 +94,8 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 		if(this.scheduleIndividualHours == null) {
 			if(getStoreSchedule() != null && getStoreSchedule().getStore() != null) {
 				OperationTime operationTime = getStoreSchedule().getStore().getOperationTime(getWeekDaySelector().getSelectedDayOfWeek());
-				Date closeHour = getScheduleCloseHour(getStoreScheduleEndHour(operationTime));
-				Date d = operationTime != null ? getScheduleOpenHour(getStoreScheduleStartHour(operationTime)) : null;
+				Date closeHour = getScheduleCloseHour(getStoreScheduleEndHour(getWeekDaySelector().getSelectedDay()));
+				Date d = operationTime != null ? getScheduleOpenHour(getStoreScheduleStartHour(getWeekDaySelector().getSelectedDay())) : null;
 
 				List<Date> hours = new ArrayList<Date>();
 
@@ -178,8 +178,6 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	 */
 	public List<ScheduleHourLabelElement> getScheduleLabelHours() {
 		if(this.scheduleLabelHours == null) {
-			OperationTime operationTime = getStoreSchedule().getStore().getOperationTime(getWeekDaySelector().getSelectedDayOfWeek());
-			
 			List<ScheduleHourLabelElement> hours = new ArrayList<ScheduleHourLabelElement>();
 			
 			int size = getScheduleIndividualHours().size();
@@ -208,7 +206,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 				}
 				
 				// Close hour
-				hours.add(new ScheduleHourLabelElement(lastHourBase, getHourColspan(lastHourBase), getCloseHourSelectable(getStoreScheduleEndHour(operationTime))));
+				hours.add(new ScheduleHourLabelElement(lastHourBase, getHourColspan(lastHourBase), getCloseHourSelectable(getStoreScheduleEndHour(getWeekDaySelector().getSelectedDay()))));
 
 			}
 			this.scheduleLabelHours = hours;
@@ -527,7 +525,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	 * @param shiftsWithContiguous
 	 */
 	protected List<Shift> updateShiftsWithContiguous(Map<Integer, List<Shift>> shiftsWithContiguous) {
-		Date selectedDayEndHour = getStoreScheduleEndHour(getOperationTime(getWeekDaySelector().getSelectedDay()));
+		Date selectedDayEndHour = getStoreScheduleEndHour(getWeekDaySelector().getSelectedDay());
 		List<Shift> referencedShiftToUpdate = new ArrayList<Shift>();
 		
 		for(EmployeeSchedule schedule : getStoreSchedule().getEmployeeSchedules()) {
@@ -588,7 +586,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 		EmployeeSchedule schedule;
 		Shift referencingShift, currentFirstShift;
 		List<Shift> referencedShiftToUpdate = new ArrayList<Shift>();
-		Date selectedDayStartHour = getStoreScheduleStartHour(getOperationTime(getWeekDaySelector().getSelectedDay()));
+		Date selectedDayStartHour = getStoreScheduleStartHour(getWeekDaySelector().getSelectedDay());
 		
 		for(Integer employeeId : referencedShifts.keySet()) {
 			schedule = getStoreSchedule().getEmployeeSchedule(new Employee(employeeId));

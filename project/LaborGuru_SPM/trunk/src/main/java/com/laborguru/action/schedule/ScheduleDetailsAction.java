@@ -14,7 +14,6 @@ import com.laborguru.frontend.model.ScheduleDetailRow;
 import com.laborguru.frontend.model.WeekDaySelector;
 import com.laborguru.model.DailyStaffing;
 import com.laborguru.model.HalfHourStaffing;
-import com.laborguru.model.OperationTime;
 import com.laborguru.model.Position;
 import com.laborguru.model.StoreDailyStaffing;
 import com.laborguru.service.staffing.StaffingService;
@@ -112,8 +111,7 @@ public class ScheduleDetailsAction extends ScheduleBaseAction {
 	 * @return
 	 */
 	private Date getStoreCloseTime() {
-		OperationTime opTime = getEmployeeStore().getOperationTime(CalendarUtils.getDayOfWeek(getSelectedDayAsDate()));
-		return getStoreScheduleEndHour(opTime);
+		return getStoreScheduleEndHour(getSelectedDayAsDate());
 	}
 	
 	/**
@@ -121,8 +119,7 @@ public class ScheduleDetailsAction extends ScheduleBaseAction {
 	 * @return
 	 */
 	private Date getStoreOpenTime() {
-		OperationTime opTime = getEmployeeStore().getOperationTime(CalendarUtils.getDayOfWeek(getSelectedDayAsDate()));
-		return getStoreScheduleStartHour(opTime);
+		return getStoreScheduleStartHour(getSelectedDayAsDate());
 	}
 	
 	/**
@@ -130,8 +127,7 @@ public class ScheduleDetailsAction extends ScheduleBaseAction {
 	 * @return
 	 */
 	private boolean isStoreOpen(Date time) {
-		OperationTime opTime = getEmployeeStore().getOperationTime(CalendarUtils.getDayOfWeek(getSelectedDayAsDate()));
-		return CalendarUtils.equalsOrGreaterTime(time, getStoreScheduleStartHour(opTime)) &&  CalendarUtils.equalsOrSmallerTime(time, getStoreScheduleEndHour(opTime));
+		return CalendarUtils.equalsOrGreaterTime(time, getStoreScheduleStartHour(getSelectedDayAsDate())) &&  CalendarUtils.equalsOrSmallerTime(time, getStoreScheduleEndHour(getSelectedDayAsDate()));
 	}
 	
 	/**
