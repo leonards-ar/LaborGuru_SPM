@@ -622,4 +622,74 @@ public class Store extends SpmObject {
 	public void setExtraScheduleHours(Integer extraScheduleHours) {
 		this.extraScheduleHours = extraScheduleHours;
 	}
+	
+	/**
+	 * 
+	 * @param dayOfWeek
+	 * @return
+	 */
+	public Date getStoreScheduleStartHour(DayOfWeek dayOfWeek) {
+		OperationTime operationTime = getOperationTime(dayOfWeek);
+		return CalendarUtils.addOrSubstractHours(operationTime.getOpenHour(), (-1) * getCalculatedExtraHours(operationTime.getOpenHour(), operationTime.getCloseHour(), true));
+	}
+
+	/**
+	 * 
+	 * @param open
+	 * @param close
+	 * @return
+	 */
+	private int getCalculatedExtraHours(Date open, Date close, boolean isCeil) {
+		if(CalendarUtils.equalsTime(open, close)) {
+			// 24hs store
+			return 0;
+		} else {
+			double diff = CalendarUtils.differenceInHours(close, open).doubleValue();
+			int extraHours = getExtraHoursAsInt();
+			if(diff + extraHours > 24) {
+				double hs = (diff + extraHours - 24) / 2;
+				return (int) (isCeil ? Math.ceil(hs) : Math.floor(hs));
+			} else {
+				// Normal case
+				return extraHours;
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	private int getExtraHoursAsInt() {
+		return getExtraScheduleHours() != null ? getExtraScheduleHours().intValue() : 0;
+	}
+	
+	/**
+	 * 
+	 * @param dayOfWeek
+	 * @return
+	 */
+	public Date getStoreScheduleEndHour(DayOfWeek dayOfWeek) {
+		OperationTime operationTime = getOperationTime(dayOfWeek);
+		return CalendarUtils.addOrSubstractHours(operationTime.getCloseHour(), getCalculatedExtraHours(operationTime.getOpenHour(), operationTime.getCloseHour(), false));
+	}
+	
+	/**
+	 * 
+	 * @param dayOfWeek
+	 * @return
+	 */
+	public boolean isMultiDaySchedule(DayOfWeek dayOfWeek) {
+		OperationTime operationTime = getOperationTime(dayOfWeek);
+		return CalendarUtils.equalsOrGreaterTime(operationTime.getOpenHour(), operationTime.getCloseHour());
+	}	
+
+	/**
+	 * 
+	 * @param dayOfWeek
+	 * @return
+	 */
+	public boolean isMultiDayScheduleWithExtraHours(DayOfWeek dayOfWeek) {
+		return CalendarUtils.equalsOrGreaterTime(getStoreScheduleStartHour(dayOfWeek), getStoreScheduleEndHour(dayOfWeek));
+	}	
 }

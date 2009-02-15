@@ -617,8 +617,8 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 * @return
 	 */
 	private Shift breakAndUpdateContiguousShift(Shift shift, int dayIndex, EmployeeSchedule employeeSchedule) {
-		Date selectedDayEndTime = getStoreScheduleEndHour(getOperationTime(getDay(dayIndex)));
-		Date selectedDayNextDayStartTime = getStoreScheduleStartHour(getOperationTime(getDay(dayIndex + 1)));
+		Date selectedDayEndTime = getStoreScheduleEndHour(getDay(dayIndex));
+		Date selectedDayNextDayStartTime = getStoreScheduleStartHour(getDay(dayIndex + 1));
 		Shift contiguousShift = null;
 		if(breakIntoContiguousShift(shift, selectedDayEndTime, selectedDayNextDayStartTime)) {
 			contiguousShift = getCandidateContiguousShift(shift, dayIndex, employeeSchedule);
@@ -1332,8 +1332,8 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 			addActionError(getText("error.schedule.addshift.weekly.no_out_hour", buildValidationErrorParameters(row, entry, dayIndex)));
 		} else if(entry.isShift()) {
 			// Validate start and end time is inside the operation hours
-			Date selectedDayStartTime = getStoreScheduleStartHour(getOperationTime(getDay(dayIndex)));
-			Date selectedDayEndTime = getStoreScheduleEndHour(getOperationTime(getDay(dayIndex)));
+			Date selectedDayStartTime = getStoreScheduleStartHour(getDay(dayIndex));
+			Date selectedDayEndTime = getStoreScheduleEndHour(getDay(dayIndex));
 			if(!CalendarUtils.equalsTime(selectedDayStartTime, selectedDayEndTime) && (!CalendarUtils.inRangeIncludingEndTime(entry.getInHour(), selectedDayStartTime, selectedDayEndTime) || !CalendarUtils.inRangeIncludingEndTime(entry.getOutHour(), selectedDayStartTime, selectedDayEndTime))) {
 				addActionError(getText("error.schedule.addshift.weekly.out_of_range_hours", buildValidationErrorParameters(row, entry, dayIndex)));
 			}
@@ -1431,8 +1431,8 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 */
 	private List<WeeklyScheduleDailyEntry> breakIntoDailyShifts(WeeklyScheduleDailyEntry entry, int dayIndex) {
 		List<WeeklyScheduleDailyEntry> splittedEntries = new ArrayList<WeeklyScheduleDailyEntry>(2);
-		Date selectedDayEndTime = getStoreScheduleEndHour(getOperationTime(getDay(dayIndex)));
-		Date selectedDayNextDayStartTime = getStoreScheduleStartHour(getOperationTime(getDay(dayIndex + 1)));
+		Date selectedDayEndTime = getStoreScheduleEndHour(getDay(dayIndex));
+		Date selectedDayNextDayStartTime = getStoreScheduleStartHour(getDay(dayIndex + 1));
 		if(CalendarUtils.equalsTime(selectedDayEndTime, selectedDayNextDayStartTime) && splitEntries(entry, selectedDayEndTime, selectedDayNextDayStartTime)) {
 			WeeklyScheduleDailyEntry current = entry.clone();
 			WeeklyScheduleDailyEntry next = new WeeklyScheduleDailyEntry();
