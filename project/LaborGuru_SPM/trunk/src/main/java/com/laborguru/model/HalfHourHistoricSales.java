@@ -24,7 +24,6 @@ public class HalfHourHistoricSales extends SpmObject implements Comparable<HalfH
 	
 	private Long id;
 	private BigDecimal value;
-	private Integer index;
 	private DailyHistoricSales dailyHistoricSales;
 	private Date time;
 	
@@ -54,7 +53,7 @@ public class HalfHourHistoricSales extends SpmObject implements Comparable<HalfH
 		
 		return new EqualsBuilder()
 		.append(getValue(), other.getValue())
-		.append(getIndex(), other.getIndex())
+		.append(getTime(), other.getTime())
 		.isEquals();	
 	}
 
@@ -66,7 +65,7 @@ public class HalfHourHistoricSales extends SpmObject implements Comparable<HalfH
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37)
 		.append(getValue())
-		.append(getIndex())
+		.append(getTime())
 		.toHashCode();
 	}
 
@@ -79,7 +78,7 @@ public class HalfHourHistoricSales extends SpmObject implements Comparable<HalfH
 		return new ToStringBuilder(this, DEFAULT_TO_STRING_STYLE)
 	   	.append("id" , getId())
 	   	.append("value",getValue())
-	   	.append("index",getIndex())
+	   	.append("time",getTime())
 	   	.toString();	
 	}
 
@@ -125,20 +124,6 @@ public class HalfHourHistoricSales extends SpmObject implements Comparable<HalfH
 		this.value = value;
 	}
 	
-	/**
-	 * @return the index
-	 */
-	public Integer getIndex() {
-		return index;
-	}
-
-	/**
-	 * @param index the index to set
-	 */
-	public void setIndex(Integer index) {
-		this.index = index;
-	}
-
 	/**
 	 * @return the time
 	 */
