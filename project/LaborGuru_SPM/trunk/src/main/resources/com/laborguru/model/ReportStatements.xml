@@ -39,7 +39,7 @@
 		AND s.position_id = #position_id#
 		AND ss.day BETWEEN STR_TO_DATE(#start_date#,'%Y-%m-%d %H:%i:%s') AND STR_TO_DATE(#end_date#,'%Y-%m-%d %H:%i:%s')
 		AND ss.store_id = #store_id#
-		GROUP BY s.position_id, ss.day
+		GROUP BY s.position	_id, ss.day
 		ORDER BY s.position_id, ss.day
 	</select>
 
@@ -132,20 +132,19 @@
 		AND(	
 			(
 				TIME(h.time) <![CDATA[ >= ]]> TIME(#open_hour#) 
-				AND TIME(h.time) <![CDATA[ < ]]>  TIME('1970-01-01 23:59:59')
+				AND TIME(h.time) <![CDATA[ <= ]]>  TIME('1970-01-01 23:59:59')
 				AND TIME(h.time) <![CDATA[ >= ]]>TIME(s.from_hour) 
-				AND TIME(h.time) <![CDATA[ < ]]> TIME(s.to_hour)
-				AND ss.day = STR_TO_DATE('2009-02-10','%Y-%m-%d')
+				AND TIME(h.time) <![CDATA[ <= ]]> TIME('1970-01-01 23:59:59')
 			)
 			OR
 			(
 				TIME(h.time) <![CDATA[ >= ]]> TIME('1970-01-01 00:00:00') 
 				AND TIME(h.time) <![CDATA[ < ]]>  TIME(#close_hour#)
-				AND TIME(h.time) <![CDATA[ >= ]]>TIME(s.from_hour) 
+				AND TIME(h.time) <![CDATA[ >= ]]>TIME('1970-01-01 00:00:00') 
 				AND TIME(h.time) <![CDATA[ < ]]> TIME(s.to_hour)
-				AND ss.day = DATE_ADD(STR_TO_DATE(#date#,'%Y-%m-%d'),INTERVAL 1 DAY )
 			)
 		)
+		AND ss.day = STR_TO_DATE(#date#,'%Y-%m-%d')		
 		AND ss.store_id = #store_id#		
 		GROUP BY ss.day, h.time
 		ORDER BY ss.day, TIME(h.time);
@@ -160,17 +159,16 @@
 		AND s.staffing_id = h.staffing_id
 		AND(
 			( 
-				s.staffing_date = STR_TO_DATE(#date#,'%Y-%m-%d')
-				AND TIME(h.time) <![CDATA[ >= ]]> TIME(#open_hour#) 
-				AND TIME(h.time) <![CDATA[ < ]]>  TIME('1970-01-01 23:59:59')
+				TIME(h.time) <![CDATA[ >= ]]> TIME(#open_hour#) 
+				AND TIME(h.time) <![CDATA[ <= ]]>  TIME('1970-01-01 23:59:59')
 			)
 			OR
 			(
-				s.staffing_date = DATE_ADD(STR_TO_DATE(#date#,'%Y-%m-%d'),INTERVAL 1 DAY )
-				AND TIME(h.time) <![CDATA[ >= ]]> TIME('1970-01-01 00:00:00') 
+				TIME(h.time) <![CDATA[ >= ]]> TIME('1970-01-01 00:00:00') 
 				AND TIME(h.time) <![CDATA[ < ]]>  TIME(#close_hour#)
 			)
 		)
+		AND s.staffing_date = STR_TO_DATE(#date#,'%Y-%m-%d')		
 		AND p.store_id=#store_id# 
 		GROUP BY s.staffing_date, h.time 
 		ORDER BY s.staffing_date, TIME(h.time)
@@ -227,20 +225,19 @@
 		AND(	
 			(
 				TIME(h.time) <![CDATA[ >= ]]> TIME(#open_hour#) 
-				AND TIME(h.time) <![CDATA[ < ]]>  TIME('1970-01-01 23:59:59')
+				AND TIME(h.time) <![CDATA[ <= ]]>  TIME('1970-01-01 23:59:59')
 				AND TIME(h.time) <![CDATA[ >= ]]>TIME(s.from_hour) 
-				AND TIME(h.time) <![CDATA[ < ]]> TIME(s.to_hour)
-				AND ss.day = STR_TO_DATE('2009-02-10','%Y-%m-%d')
+				AND TIME(h.time) <![CDATA[ <= ]]> TIME('1970-01-01 23:59:59')
 			)
 			OR
 			(
 				TIME(h.time) <![CDATA[ >= ]]> TIME('1970-01-01 00:00:00') 
 				AND TIME(h.time) <![CDATA[ < ]]>  TIME(#close_hour#)
-				AND TIME(h.time) <![CDATA[ >= ]]>TIME(s.from_hour) 
+				AND TIME(h.time) <![CDATA[ >= ]]>TIME('1970-01-01 00:00:00') 
 				AND TIME(h.time) <![CDATA[ < ]]> TIME(s.to_hour)
-				AND ss.day = DATE_ADD(STR_TO_DATE(#date#,'%Y-%m-%d'),INTERVAL 1 DAY )
 			)
 		)
+		AND ss.day = STR_TO_DATE(#date#,'%Y-%m-%d')
 		AND ss.store_id = #store_id#
 		GROUP BY ss.day, h.time
 		ORDER BY ss.day, TIME(h.time);
@@ -256,17 +253,16 @@
 		AND s.staffing_date = STR_TO_DATE(#date#,'%Y-%m-%d')
 		AND(
 			( 
-				s.staffing_date = STR_TO_DATE(#date#,'%Y-%m-%d')
-				AND TIME(h.time) <![CDATA[ >= ]]> TIME(#open_hour#) 
-				AND TIME(h.time) <![CDATA[ < ]]>  TIME('1970-01-01 23:59:59')
+				TIME(h.time) <![CDATA[ >= ]]> TIME(#open_hour#) 
+				AND TIME(h.time) <![CDATA[ <= ]]>  TIME('1970-01-01 23:59:59')
 			)
 			OR
 			(
-				s.staffing_date = DATE_ADD(STR_TO_DATE(#date#,'%Y-%m-%d'),INTERVAL 1 DAY )
-				AND TIME(h.time) <![CDATA[ >= ]]> TIME('1970-01-01 00:00:00') 
+				TIME(h.time) <![CDATA[ >= ]]> TIME('1970-01-01 00:00:00') 
 				AND TIME(h.time) <![CDATA[ < ]]>  TIME(#close_hour#)
 			)
 		)
+		AND 				s.staffing_date = STR_TO_DATE(#date#,'%Y-%m-%d')
 		AND p.store_id=#store_id# 
 		AND p.position_id=#position_id#
 		GROUP BY s.staffing_date, h.time 
@@ -327,20 +323,20 @@
 		AND(	
 			(
 				TIME(h.time) <![CDATA[ >= ]]> TIME(#open_hour#) 
-				AND TIME(h.time) <![CDATA[ < ]]>  TIME('1970-01-01 23:59:59')
+				AND TIME(h.time) <![CDATA[ <= ]]>  TIME('1970-01-01 23:59:59')
 				AND TIME(h.time) <![CDATA[ >= ]]>TIME(s.from_hour) 
-				AND TIME(h.time) <![CDATA[ < ]]> TIME(s.to_hour)
-				AND ss.day = STR_TO_DATE('2009-02-10','%Y-%m-%d')
+				AND TIME(h.time) <![CDATA[ <= ]]> TIME('1970-01-01 23:59:59')
+
 			)
 			OR
 			(
 				TIME(h.time) <![CDATA[ >= ]]> TIME('1970-01-01 00:00:00') 
 				AND TIME(h.time) <![CDATA[ < ]]>  TIME(#close_hour#)
-				AND TIME(h.time) <![CDATA[ >= ]]>TIME(s.from_hour) 
+				AND TIME(h.time) <![CDATA[ >= ]]>TIME('1970-01-01 00:00:00') 
 				AND TIME(h.time) <![CDATA[ < ]]> TIME(s.to_hour)
-				AND ss.day = DATE_ADD(STR_TO_DATE(#date#,'%Y-%m-%d'),INTERVAL 1 DAY )
 			)
 		)
+		AND ss.day = STR_TO_DATE(#date#,'%Y-%m-%d')		
 		AND ss.store_id = #store_id#
 		GROUP BY ss.day, h.time
 		ORDER BY ss.day, TIME(h.time);
@@ -356,17 +352,16 @@
 		AND s.staffing_date = STR_TO_DATE(#date#,'%Y-%m-%d')
 		AND(
 			( 
-				s.staffing_date = STR_TO_DATE(#date#,'%Y-%m-%d')
-				AND TIME(h.time) <![CDATA[ >= ]]> TIME(#open_hour#) 
-				AND TIME(h.time) <![CDATA[ < ]]>  TIME('1970-01-01 23:59:59')
+				TIME(h.time) <![CDATA[ >= ]]> TIME(#open_hour#) 
+				AND TIME(h.time) <![CDATA[ <= ]]>  TIME('1970-01-01 23:59:59')
 			)
 			OR
 			(
-				s.staffing_date = DATE_ADD(STR_TO_DATE(#date#,'%Y-%m-%d'),INTERVAL 1 DAY )
-				AND TIME(h.time) <![CDATA[ >= ]]> TIME('1970-01-01 00:00:00') 
+				TIME(h.time) <![CDATA[ >= ]]> TIME('1970-01-01 00:00:00') 
 				AND TIME(h.time) <![CDATA[ < ]]>  TIME(#close_hour#)
 			)
 		)
+		AND s.staffing_date = STR_TO_DATE(#date#,'%Y-%m-%d')
 		AND p.store_id=#store_id# 
 		AND p.position_group_id=#position_group_id#
 		GROUP BY s.staffing_date, h.time 

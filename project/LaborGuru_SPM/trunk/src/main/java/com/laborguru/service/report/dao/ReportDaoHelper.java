@@ -42,12 +42,12 @@ public class ReportDaoHelper {
 	 * @param date
 	 * @return
 	 */
-	public static Map<String, Object> mapHalfHoursReport(Store store, Date date){
+	public static Map<String, Object> mapHalfHoursReport(Store store, Date date, Date openHour, Date closeHour){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("store_id", store.getId());
 		map.put("date", date);
-		map.put("open_hour", getOpenHour(store, date));
-		map.put("close_hour", getCloseHour(store, date));
+		map.put("open_hour", openHour);
+		map.put("close_hour", closeHour);
 		
 		return map;
 	}
@@ -58,24 +58,24 @@ public class ReportDaoHelper {
 	 * @param date
 	 * @return
 	 */
-	public static Map<String, Object> mapHalfHoursReportByPosition(Store store, Position position, Date date){
+	public static Map<String, Object> mapHalfHoursReportByPosition(Store store, Position position, Date date, Date openHour, Date closeHour){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("store_id", store.getId());
 		map.put("date", date);
-		map.put("open_hour", getOpenHour(store, date));
-		map.put("close_hour", getCloseHour(store, date));
+		map.put("open_hour", openHour);
+		map.put("close_hour", closeHour);
 		map.put("position_id", position.getId());
 		
 		return map;
 	}
 
-	public static Map<String, Object> mapHalfHoursReportByService(Store store, PositionGroup positionGroup, Date date){
+	public static Map<String, Object> mapHalfHoursReportByService(Store store, PositionGroup positionGroup, Date date, Date openHour, Date closeHour){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("store_id", store.getId());
 		map.put("date", date);
 		
-		map.put("open_hour", getOpenHour(store, date));
-		map.put("close_hour", getCloseHour(store, date));
+		map.put("open_hour", openHour);
+		map.put("close_hour", closeHour);
 		map.put("position_group_id", positionGroup.getId());
 		
 		return map;
@@ -127,23 +127,5 @@ public class ReportDaoHelper {
 		
 		return map;
 	}	
-	
-	public static Date getOpenHour(Store store, Date date) {
 		
-		Date openHour = store.getOperationTime(CalendarUtils.getDayOfWeek(date)).getOpenHour();
-		int extraHour = getExtraHours(store);
-		return CalendarUtils.addOrSubstractHours(openHour, (-1)*extraHour);
-	}
-	
-	public static Date getCloseHour(Store store, Date date) {
-		Date closeHour = store.getOperationTime(CalendarUtils.getDayOfWeek(date)).getCloseHour();
-		int extraHour = getExtraHours(store);
-		return CalendarUtils.addOrSubstractHours(closeHour, extraHour);
-	}
-	
-	private static int getExtraHours(Store store){
-		return (store.getExtraScheduleHours() != null)?store.getExtraScheduleHours() : DELTA_HOUR; 
-	}
-	
-	
 }

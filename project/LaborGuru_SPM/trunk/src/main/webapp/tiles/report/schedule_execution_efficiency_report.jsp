@@ -82,9 +82,11 @@
 												value="weekDaySelector.nextStartingWeekDays"
 												status="itNextDate">
 												<td class="calendarTableColumn" width="10%" nowrap="nowrap">
-												 <s:text name='report.weekdayselector.availableweek.dateformat'>
-													<s:param value='nextDate' />
-												</s:text>
+												<a href="<s:url value="#" includeParams="none"/>" class="calendarUnselectedWeekLink"> 
+													<s:text	name='report.weekdayselector.availableweek.dateformat'>
+														<s:param value='nextDate' />
+													</s:text> 
+												</a>
 												</td>
 
 												<s:if test="!#itNextDate.last">
@@ -120,17 +122,19 @@
 								list="reportMap" listKey="key" listValue="%{getText(value)}"
 								onchange="report_form.action=report_form.selectedReport.value; report_form.submit()" theme="simple" /></td>
 							<td>&nbsp;</td>
-							<td align="right" class="form_label"><s:text
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<!-- td align="right" class="form_label"><s:text
 								name="report.reportGrouping.label" /></td>
 							<td align="left"><s:select id="selectGrouping"
 								name="selectedGrouping" list="groupingMap" listKey="key"
 								listValue="%{getText(value)}" onchange="controller.changed()"
-								theme="simple" /></td>
+								theme="simple" /></td-->
 							<td>&nbsp;</td>
-							<td align="left"><s:div id="selectItemDiv"
+							<td>&nbsp;</td>
+							<!-- td align="left"><s:div id="selectItemDiv"
 								formId="report_form" href="%{positionAutoCompleter}"
-								theme="ajax" listenTopics="/Changed" /></td>
-
+								theme="ajax" listenTopics="/Changed" /></td-->
 						</tr>
 					</table>
 					</td>
