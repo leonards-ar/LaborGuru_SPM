@@ -23,9 +23,7 @@ public class DailyHistoricSales extends SpmObject {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
-	private Date historicSalesDate;
-	private Date startingTime;
-	
+	private Date historicSalesDate;	
 	private Store store;
 	
 	private List<HalfHourHistoricSales> halfHourHistoricSales = new ArrayList<HalfHourHistoricSales>();
@@ -62,7 +60,6 @@ public class DailyHistoricSales extends SpmObject {
 		
 		return new EqualsBuilder()
 		.append(getHistoricSalesDate(), other.getHistoricSalesDate())
-		.append(getStartingTime(), other.getStartingTime())
 		.isEquals();		
 	}
 
@@ -74,7 +71,6 @@ public class DailyHistoricSales extends SpmObject {
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37)
 		.append(getHistoricSalesDate())
-		.append(getStartingTime())
 		.toHashCode();
 	}
 
@@ -87,7 +83,7 @@ public class DailyHistoricSales extends SpmObject {
 		return new ToStringBuilder(this, DEFAULT_TO_STRING_STYLE)
 	   	.append("id" , getId())
 	   	.append("date",getHistoricSalesDate())
-	   	.append("startingTime",getStartingTime())
+	   	.append("Store Id",getStore()!= null?getStore().getId():null)
 	   	.toString();		
 	}
 
@@ -120,19 +116,6 @@ public class DailyHistoricSales extends SpmObject {
 		this.historicSalesDate = historicSalesDate;
 	}
 
-	/**
-	 * @return the startingTime
-	 */
-	public Date getStartingTime() {
-		return startingTime;
-	}
-
-	/**
-	 * @param startingTime the startingTime to set
-	 */
-	public void setStartingTime(Date startingTime) {
-		this.startingTime = startingTime;
-	}
 
 	/**
 	 * @return the store
