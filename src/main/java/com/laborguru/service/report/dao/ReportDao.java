@@ -108,7 +108,7 @@ public interface ReportDao {
 	 * @return
 	 * @throws SQLException
 	 */
-	List<TotalHour> getHalfHourlySchedule(Store store, Date date) throws SQLException;
+	List<TotalHour> getHalfHourlySchedule(Store store, Date date, Date startHour, Date endHour) throws SQLException;
 
 	/**
 	 * Retrieves the target half hours for a Store on a selected date
@@ -117,7 +117,7 @@ public interface ReportDao {
 	 * @return
 	 * @throws SQLException
 	 */
-	List<TotalHour> getHalfHourlyMinimumStaffing(Store store, Date date) throws SQLException;
+	List<TotalHour> getHalfHourlyMinimumStaffing(Store store, Date date, Date startHour, Date endHour) throws SQLException;
 	
 	/**
 	 * Retrieves the scheduled hours for a Store on a selected date filtered by a Position
@@ -127,7 +127,7 @@ public interface ReportDao {
 	 * @return
 	 * @throws SQLException
 	 */
-	List<TotalHour> getHalfHourlyScheduleByPosition(Store store, Position position, Date date) throws SQLException;
+	List<TotalHour> getHalfHourlyScheduleByPosition(Store store, Position position, Date date, Date startHour, Date endHour) throws SQLException;
 	
 	/**
 	 * Retrieves the target hours for a Store on a selected date filtered by a Position
@@ -137,7 +137,7 @@ public interface ReportDao {
 	 * @return
 	 * @throws SQLException
 	 */
-	List<TotalHour> getHalfHourlyMinimumStaffingByPosition(Store store, Position position, Date date) throws SQLException;
+	List<TotalHour> getHalfHourlyMinimumStaffingByPosition(Store store, Position position, Date date, Date startHour, Date endHour) throws SQLException;
 	
 	/**
 	 * Retrieves the scheduled hours for a Store on a selected date filtered by a Position
@@ -147,7 +147,7 @@ public interface ReportDao {
 	 * @return
 	 * @throws SQLException
 	 */
-	List<TotalHour> getHalfHourlyScheduleByService(Store store, PositionGroup positionGroup, Date date) throws SQLException;
+	List<TotalHour> getHalfHourlyScheduleByService(Store store, PositionGroup positionGroup, Date date, Date startHour, Date endHour) throws SQLException;
 	
 	/**
 	 * Retrieves the target hours for a Store on a selected date filtered by a Position
@@ -157,7 +157,7 @@ public interface ReportDao {
 	 * @return
 	 * @throws SQLException
 	 */
-	List<TotalHour> getHalfHourlyMinimumStaffingByService(Store store, PositionGroup positionGroup, Date date) throws SQLException;
+	List<TotalHour> getHalfHourlyMinimumStaffingByService(Store store, PositionGroup positionGroup, Date date, Date startHour, Date endHour) throws SQLException;
 	
 	/**
 	 * Retrieves the sales for a Store
