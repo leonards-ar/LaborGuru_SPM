@@ -1,8 +1,12 @@
 package com.laborguru.service.historicsales.dao;
 
+import java.util.Date;
+
 import org.apache.log4j.Logger;
 
+import com.laborguru.model.DailyHistoricSales;
 import com.laborguru.model.HistoricSales;
+import com.laborguru.model.Store;
 import com.laborguru.service.dao.hibernate.SpmHibernateDao;
 
 /**
@@ -27,6 +31,17 @@ public class HistoricSalesDaoHibernate extends SpmHibernateDao implements Histor
 		}
 		
 		getHibernateTemplate().saveOrUpdate(hs);
+	}
+
+	/**
+	 * 
+	 * @param store
+	 * @param date
+	 * @return
+	 * @see com.laborguru.service.historicsales.dao.HistoricSalesDao#getDailyHistoricSales(com.laborguru.model.Store, java.util.Date)
+	 */
+	public DailyHistoricSales getDailyHistoricSales(Store store, Date date) {
+		return null;
 	}
 
 }
