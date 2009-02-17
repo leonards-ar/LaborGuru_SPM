@@ -646,7 +646,7 @@ public class Store extends SpmObject {
 		} else {
 			double diff = CalendarUtils.differenceInHours(close, open).doubleValue();
 			int extraHours = getExtraHoursAsInt();
-			if(diff + extraHours > 24) {
+			if(diff + extraHours >= 24) {
 				double hs = (diff + extraHours - 24) / 2;
 				return (int) (isCeil ? Math.ceil(hs) : Math.floor(hs));
 			} else {
