@@ -1,6 +1,10 @@
 package com.laborguru.service.historicsales.dao;
 
+import java.util.Date;
+
+import com.laborguru.model.DailyHistoricSales;
 import com.laborguru.model.HistoricSales;
+import com.laborguru.model.Store;
 
 /**
  * Defines the data access operations for a sales record on SPM
@@ -16,4 +20,12 @@ public interface HistoricSalesDao {
 	 * @param The record to store.
 	 */
 	void saveOrUpdate(HistoricSales hs);
+	
+	/**
+	 * 
+	 * @param store
+	 * @param date
+	 * @return
+	 */
+	DailyHistoricSales getDailyHistoricSales(Store store, Date date);
 }
