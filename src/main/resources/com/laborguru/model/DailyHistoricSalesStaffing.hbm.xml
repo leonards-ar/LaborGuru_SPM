@@ -28,7 +28,7 @@
 	
 		<many-to-one name="position" class="Position" column="position_id" not-null="true" foreign-key="fk_hsstaffing_positions" />
 
-	    <list name="halfHourProjectedStaffing" cascade="all-delete-orphan" table="tbl_halfhour_historic_sales_staffing" lazy="true" inverse="true">
+	    <list name="halfHourHistoricSalesStaffing" cascade="all-delete-orphan" table="tbl_halfhour_historic_sales_staffing" lazy="true" inverse="true">
 	        <key column="staffing_id" foreign-key="fk_halfhours_hsstaffing"/>
 	        <list-index column="half_hour_index"/>
 	        <one-to-many class="HalfHourHistoricSalesStaffing"/>
