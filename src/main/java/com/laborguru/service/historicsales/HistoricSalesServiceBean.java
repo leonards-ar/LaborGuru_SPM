@@ -3,8 +3,8 @@ package com.laborguru.service.historicsales;
 import java.util.Date;
 
 import com.laborguru.model.DailyHistoricSales;
-import com.laborguru.model.HistoricSales;
 import com.laborguru.model.Store;
+import com.laborguru.service.historicsales.dao.HistoricSalesDao;
 
 /**
  * Historic Sales Services Bean
@@ -16,12 +16,26 @@ import com.laborguru.model.Store;
  */
 public class HistoricSalesServiceBean implements HistoricSalesService {
 
+	HistoricSalesDao historicSalesDao;
+	
 
-	public void save(HistoricSales hs) {
+	/**
+	 * @param store
+	 * @param date
+	 * @return
+	 * @see com.laborguru.service.historicsales.HistoricSalesService#getDailyHistoricSalesByDate(com.laborguru.model.Store, java.util.Date)
+	 */
+	public DailyHistoricSales getDailyHistoricSalesByDate(Store store, Date date) {
+		return historicSalesDao.getDailyHistoricSales(store, date);
 	}
 
-	public DailyHistoricSales getDailyHistoricSalesByDate(Store store, Date date) {
-		return null;
+
+	/**
+	 * @param dao
+	 * @see com.laborguru.service.historicsales.HistoricSalesService#setHistoricSalesDao(com.laborguru.service.historicsales.dao.HistoricSalesDao)
+	 */
+	public void setHistoricSalesDao(HistoricSalesDao dao) {
+		this.historicSalesDao = dao;
 	}
 
 }

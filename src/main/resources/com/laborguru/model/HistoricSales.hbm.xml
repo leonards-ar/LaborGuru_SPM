@@ -42,6 +42,22 @@
 		ORDER BY STR_TO_DATE(if(MINUTE(hs.date_time) >= 30, CONCAT(HOUR(hs.date_time), ':30'), CONCAT(HOUR(hs.date_time),':00')), GET_FORMAT(TIME,'ISO')) ASC]]>
 	</sql-query> 
 	
+	<sql-query name="halfHourByDate">
+	
+		<return-scalar column="hhTime" type="string"/>
+		<return-scalar column="value" type="big_decimal"/>
+		
+		<![CDATA[
+		SELECT if(MINUTE(hs.date_time) >= 30, CONCAT(HOUR(hs.date_time), ':30'), CONCAT(HOUR(hs.date_time),':00')) as hhTime, 
+		SUM(hs.main_value) as value
+		FROM tbl_historic_sales hs 
+		WHERE hs.store_id=:storeId 
+		AND DATE(hs.date_time) = STR_TO_DATE(:selectedDate,'%Y-%m-%d')
+		GROUP BY if(MINUTE(hs.date_time) >= 30, CONCAT(HOUR(hs.date_time), ':30'), CONCAT(HOUR(hs.date_time),':00'))
+		ORDER BY STR_TO_DATE(if(MINUTE(hs.date_time) >= 30, CONCAT(HOUR(hs.date_time), ':30'), CONCAT(HOUR(hs.date_time),':00')), GET_FORMAT(TIME,'ISO')) ASC]]>
+	</sql-query> 
+	
+	
 	<database-object>
 		<create>ALTER TABLE tbl_historic_sales AUTO_INCREMENT=10000</create>
 		<drop></drop>
