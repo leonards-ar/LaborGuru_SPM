@@ -69,7 +69,7 @@ public class HistoricSalesDaoHibernate extends SpmHibernateDao implements Histor
 		DailyHistoricSales retValue = new DailyHistoricSales();
 		
 		retValue.setStore(store);
-		retValue.setHistoricSalesDate(date);
+		retValue.setSalesDate(date);
 	
 		int size = halfHourSales.size();
 	
