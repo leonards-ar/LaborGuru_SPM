@@ -18,7 +18,7 @@ import com.laborguru.util.CalendarUtils;
  * @since SPM 1.0
  *
  */
-public class HalfHourHistoricSales extends SpmObject implements Comparable<HalfHourHistoricSales> {
+public class HalfHourHistoricSales extends HalfHourSalesValue implements Comparable<HalfHourHistoricSales> {
 	
 	private static final long serialVersionUID = 1L;
 	

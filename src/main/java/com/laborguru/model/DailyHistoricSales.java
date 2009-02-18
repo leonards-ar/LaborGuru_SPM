@@ -8,6 +8,9 @@ import java.util.List;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.joda.time.DateTime;
+
+import com.laborguru.util.SpmConstants;
 
 /**
  * Deals with the Daily projection behaviour.
@@ -18,13 +21,11 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @since SPM 1.0
  *
  */
-public class DailyHistoricSales extends SpmObject {
+public class DailyHistoricSales extends DailySalesValue {
 
 	private static final long serialVersionUID = 1L;
 
-	private Date historicSalesDate;	
-	private Store store;
-	
+
 	private List<HalfHourHistoricSales> halfHourHistoricSales = new ArrayList<HalfHourHistoricSales>();
 		
 	
@@ -43,6 +44,12 @@ public class DailyHistoricSales extends SpmObject {
 		return getHalfHourHistoricSales().isEmpty()? null : retValue;
 	}
 	
+	/**
+	 * 
+	 * @param obj
+	 * @return
+	 * @see com.laborguru.model.SpmObject#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 
@@ -58,7 +65,7 @@ public class DailyHistoricSales extends SpmObject {
 		final DailyHistoricSales other = (DailyHistoricSales) obj;
 		
 		return new EqualsBuilder()
-		.append(getHistoricSalesDate(), other.getHistoricSalesDate())
+		.append(getSalesDate(), other.getSalesDate())
 		.isEquals();		
 	}
 
@@ -69,7 +76,7 @@ public class DailyHistoricSales extends SpmObject {
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37)
-		.append(getHistoricSalesDate())
+		.append(getSalesDate())
 		.toHashCode();
 	}
 
@@ -80,40 +87,10 @@ public class DailyHistoricSales extends SpmObject {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, DEFAULT_TO_STRING_STYLE)
-	   	.append("date",getHistoricSalesDate())
+	   	.append("id" , getId())
+	   	.append("date",getSalesDate())
 	   	.append("Store Id",getStore()!= null?getStore().getId():null)
 	   	.toString();		
-	}
-
-
-
-	/**
-	 * @return the historicSalesDate
-	 */
-	public Date getHistoricSalesDate() {
-		return historicSalesDate;
-	}
-
-	/**
-	 * @param historicSalesDate the historicSalesDate to set
-	 */
-	public void setHistoricSalesDate(Date historicSalesDate) {
-		this.historicSalesDate = historicSalesDate;
-	}
-
-
-	/**
-	 * @return the store
-	 */
-	public Store getStore() {
-		return store;
-	}
-
-	/**
-	 * @param store the store to set
-	 */
-	public void setStore(Store store) {
-		this.store = store;
 	}
 
 	/**
@@ -168,4 +145,41 @@ public class DailyHistoricSales extends SpmObject {
 			halfHourHistoricSales.setDailyHistoricSales(null);
 		}
 	}
+	
+	/**
+	 * Returns an empty instance of this class.
+	 * :TODO: Move to another class and/or package? Too many logic for a model class??
+	 * @param store
+	 * @param date
+	 * @return
+	 */
+	public static DailyHistoricSales getEmptyDailyHistoricSalesInstance(Store store, Date date) {
+		DailyHistoricSales dailyHistoricSales = new DailyHistoricSales();
+		dailyHistoricSales.setSalesDate(date);
+		dailyHistoricSales.setStore(store);
+		
+		HalfHourHistoricSales aHalfHourHistoricSales;
+		DateTime nextTime = new DateTime().withDate(1970, 1, 1).withTime(0,30,0,0);
+		
+		for(int i = 0; i < SpmConstants.HALF_HOURS_IN_A_DAY; i++) {
+			aHalfHourHistoricSales = new HalfHourHistoricSales();
+			aHalfHourHistoricSales.setTime(nextTime.toDate());
+			aHalfHourHistoricSales.setValue(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
+			dailyHistoricSales.addHalfHourHistoricSales(aHalfHourHistoricSales);
+			
+			nextTime = nextTime.plusMinutes(SpmConstants.HALF_HOUR);
+		}
+		
+		return dailyHistoricSales;
+	}
+
+	/**
+	 * 
+	 * @return
+	 * @see com.laborguru.model.DailySalesValue#getHalfHourSalesValues()
+	 */
+	@Override
+	public List<? extends HalfHourSalesValue> getHalfHourSalesValues() {
+		return getHalfHourHistoricSales();
+	}	
 }

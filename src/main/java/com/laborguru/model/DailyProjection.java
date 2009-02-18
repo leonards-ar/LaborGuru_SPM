@@ -21,16 +21,10 @@ import com.laborguru.util.SpmConstants;
  * @since SPM 1.0
  *
  */
-public class DailyProjection extends SpmObject {
+public class DailyProjection extends DailySalesValue {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
-	private Date projectionDate;
-	private Date startingTime;
-	
-	private Store store;
-	
 	private BigDecimal dailyProjectionVariable2;
 	private BigDecimal dailyProjectionVariable3;
 	
@@ -68,7 +62,7 @@ public class DailyProjection extends SpmObject {
 		final DailyProjection other = (DailyProjection) obj;
 		
 		return new EqualsBuilder()
-		.append(getProjectionDate(), other.getProjectionDate())
+		.append(getSalesDate(), other.getSalesDate())
 		.append(getStartingTime(), other.getStartingTime())
 		.isEquals();		
 	}
@@ -80,7 +74,7 @@ public class DailyProjection extends SpmObject {
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37)
-		.append(getProjectionDate())
+		.append(getSalesDate())
 		.append(getStartingTime())
 		.toHashCode();
 	}
@@ -93,66 +87,9 @@ public class DailyProjection extends SpmObject {
 	public String toString() {
 		return new ToStringBuilder(this, DEFAULT_TO_STRING_STYLE)
 	   	.append("id" , getId())
-	   	.append("date",getProjectionDate())
+	   	.append("date",getSalesDate())
 	   	.append("startingTime",getStartingTime())
 	   	.toString();		
-	}
-
-
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	/**
-	 * @return the projectionDate
-	 */
-	public Date getProjectionDate() {
-		return projectionDate;
-	}
-
-	/**
-	 * @param projectionDate the projectionDate to set
-	 */
-	public void setProjectionDate(Date projectionDate) {
-		this.projectionDate = projectionDate;
-	}
-
-	/**
-	 * @return the startingTime
-	 */
-	public Date getStartingTime() {
-		return startingTime;
-	}
-
-	/**
-	 * @param startingTime the startingTime to set
-	 */
-	public void setStartingTime(Date startingTime) {
-		this.startingTime = startingTime;
-	}
-
-	/**
-	 * @return the store
-	 */
-	public Store getStore() {
-		return store;
-	}
-
-	/**
-	 * @param store the store to set
-	 */
-	public void setStore(Store store) {
-		this.store = store;
 	}
 
 	/**
@@ -217,7 +154,7 @@ public class DailyProjection extends SpmObject {
 	 */
 	public static DailyProjection getEmptyDailyProjectionInstance(Store store, Date date) {
 		DailyProjection dailyProjection = new DailyProjection();
-		dailyProjection.setProjectionDate(date);
+		dailyProjection.setSalesDate(date);
 		dailyProjection.setStore(store);
 		dailyProjection.setStartingTime(store.getStoreOperationTimeByDate(date).getOpenHour());
 		
@@ -269,5 +206,31 @@ public class DailyProjection extends SpmObject {
 	 */
 	public void setDailyProjectionVariable2(BigDecimal dailyProjectionVariable2) {
 		this.dailyProjectionVariable2 = dailyProjectionVariable2;
+	}
+
+	/**
+	 * 
+	 * @return
+	 * @see com.laborguru.model.DailySalesValue#getHalfHourSalesValues()
+	 */
+	@Override
+	public List<? extends HalfHourSalesValue> getHalfHourSalesValues() {
+		return getHalfHourProjections();
 	}	
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Date getProjectionDate() {
+		return getSalesDate();
+	}
+	
+	/**
+	 * 
+	 * @param projectionDate
+	 */
+	public void setProjectionDate(Date projectionDate) {
+		setSalesDate(projectionDate);
+	}
 }

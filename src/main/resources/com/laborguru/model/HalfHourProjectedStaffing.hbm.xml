@@ -4,7 +4,7 @@
     "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="com.laborguru.model">
-	<class name="HalfHourStaffing" table="tbl_halfhour_staffing">
+	<class name="HalfHourProjectedStaffing" table="tbl_halfhour_staffing">
 	
 		<id name="id" type="long" unsaved-value="null" column="halfhour_staffing_id">
 			<generator class="identity" />
@@ -14,7 +14,7 @@
 		<property name="index" column="half_hour_index" type="int" />
 		<property name="time" column="time" type="timestamp" />
 		
-		<many-to-one name="dailyStaffing" class="DailyStaffing" column="staffing_id" not-null="true" foreign-key="fk_halfhours_staffing" />
+		<many-to-one name="dailyStaffing" class="DailyProjectedStaffing" column="staffing_id" not-null="true" foreign-key="fk_halfhours_staffing" />
 	</class>  	
 	
 	<database-object>

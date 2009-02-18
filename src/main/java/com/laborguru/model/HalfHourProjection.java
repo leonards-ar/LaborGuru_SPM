@@ -7,8 +7,6 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-import com.laborguru.util.CalendarUtils;
-
 
 /**
  * Deals with Half an hour projection behaviour.
@@ -18,15 +16,12 @@ import com.laborguru.util.CalendarUtils;
  * @since SPM 1.0
  *
  */
-public class HalfHourProjection extends SpmObject implements Comparable<HalfHourProjection> {
+public class HalfHourProjection extends HalfHourSalesValue implements Comparable<HalfHourProjection> {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private Long id;
-	private BigDecimal adjustedValue;
-	private Integer index;
+
 	private DailyProjection projection;
-	private Date time;
 	
 	
 	public HalfHourProjection(){
@@ -98,80 +93,17 @@ public class HalfHourProjection extends SpmObject implements Comparable<HalfHour
 	}	
 	
 	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	/**
 	 * @return the adjustedValue
 	 */
 	public BigDecimal getAdjustedValue() {
-		return adjustedValue;
+		return getValue();
 	}
 
 	/**
 	 * @param adjustedValue the adjustedValue to set
 	 */
 	public void setAdjustedValue(BigDecimal adjustedValue) {
-		this.adjustedValue = adjustedValue;
-	}
-	
-	/**
-	 * @return the index
-	 */
-	public Integer getIndex() {
-		return index;
-	}
-
-	/**
-	 * @param index the index to set
-	 */
-	public void setIndex(Integer index) {
-		this.index = index;
-	}
-
-	/**
-	 * @return the time
-	 */
-	public Date getTime() {
-		return time;
-	}
-
-	/**
-	 * @param time the time to set
-	 */
-	public void setTime(Date time) {
-		this.time = time;
-	}
-
-	
-	/**
-	 * Sets time 
-	 * @param time the time to set
-	 */
-	public void setTime(String time) {
-		setTime(CalendarUtils.displayTimeToDate(time));
-	}	
-	
-	/**
-	 * Returns time as string if not null.
-	 * @return the time as string
-	 */
-	public String getTimeAsString(){
-		
-		if (time != null)
-			return CalendarUtils.dateToDisplayTime(this.getTime());
-		
-		return null;
+		setValue(adjustedValue);
 	}
 
 	/**

@@ -5,7 +5,6 @@
  */
 package com.laborguru.model;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +19,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @since SPM 1.0
  *
  */
-public class DailyStaffing extends SpmObject {
+public abstract class DailyStaffing extends SpmObject {
 	/**
 	 * 
 	 */
@@ -50,7 +49,7 @@ public class DailyStaffing extends SpmObject {
 	
 	private Double totalDailyTarget = new Double(0.0);
 	
-	private List<HalfHourStaffing> halfHourStaffing;
+	
 	
 	
 	/**
@@ -124,14 +123,14 @@ public class DailyStaffing extends SpmObject {
 	}
 
 	/**
-	 * @return the projectionDate
+	 * @return the date
 	 */
 	public Date getDate() {
 		return date;
 	}
 
 	/**
-	 * @param projectionDate the projectionDate to set
+	 * @param date the date to set
 	 */
 	public void setDate(Date date) {
 		this.date = date;
@@ -165,22 +164,7 @@ public class DailyStaffing extends SpmObject {
 		this.position = position;
 	}
 
-	/**
-	 * @return the halfHourStaffing
-	 */
-	public List<HalfHourStaffing> getHalfHourStaffing() {
-		if(halfHourStaffing == null) {
-			halfHourStaffing = new ArrayList<HalfHourStaffing>();
-		}
-		return halfHourStaffing;
-	}
 
-	/**
-	 * @param halfHourStaffing the halfHourStaffing to set
-	 */
-	public void setHalfHourStaffing(List<HalfHourStaffing> halfHourStaffing) {
-		this.halfHourStaffing = halfHourStaffing;
-	}
 
 
 	/**
@@ -231,6 +215,12 @@ public class DailyStaffing extends SpmObject {
 	
 	/**
 	 * 
+	 * @return
+	 */
+	public abstract List<? extends HalfHourStaffing> getHalfHourStaffing();
+	
+	/**
+	 * 
 	 * @param time
 	 * @return
 	 */
@@ -247,22 +237,12 @@ public class DailyStaffing extends SpmObject {
 			return new Integer(0);
 		}		
 	}
-	
+
 	/**
-	 * Adds a HalfHourStaffing. Handles the bi-directional
-	 * relation.
-	 * @param halfHourStaffing The HalfHourStaffing to add
+	 * 
+	 * @param halfHourStaffing
 	 */
-	public void addHalfHourStaffing(HalfHourStaffing halfHourStaffing){
-		
-		if (halfHourStaffing == null){
-			throw new IllegalArgumentException("Null halfHourStaffing passed in as parameter");
-		}
-		
-		halfHourStaffing.setDailyStaffing(this);
-		getHalfHourStaffing().add(halfHourStaffing);
-		halfHourStaffing.setIndex(getHalfHourStaffing().size() - 1);
-	}
+	public abstract void addHalfHourStaffing(HalfHourStaffing halfHourStaffing);
 	
 	/**
 	 * Removes halfHourCalculatedPositionStaff from the HalfHourCalculatedPositionStaffing list. Handles the bi-directional

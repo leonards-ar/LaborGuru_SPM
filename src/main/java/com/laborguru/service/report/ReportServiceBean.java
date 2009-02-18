@@ -339,7 +339,7 @@ public class ReportServiceBean implements ReportService {
 	
 	private DailyProjection getDailyProjectionByDate(Date date, List<DailyProjection> projections) {
 		for(DailyProjection dp: projections) {
-			if(date.equals(dp.getProjectionDate())) {
+			if(date.equals(dp.getSalesDate())) {
 				return dp;
 			}
 		

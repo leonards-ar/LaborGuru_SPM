@@ -18,7 +18,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @since SPM 1.0
  *
  */
-public class HalfHourStaffing extends SpmObject {
+public abstract class HalfHourStaffing extends SpmObject {
 	/**
 	 * 
 	 */
@@ -28,7 +28,7 @@ public class HalfHourStaffing extends SpmObject {
 	private Integer calculatedStaff = new Integer(0);
 	private Double workContent = new Double(0.0);
 	private Integer index;
-	private DailyStaffing dailyStaffing;
+
 	private Date time;
 	
 	/**
@@ -131,19 +131,6 @@ public class HalfHourStaffing extends SpmObject {
 		this.index = index;
 	}
 
-	/**
-	 * @return the dailyStaffing
-	 */
-	public DailyStaffing getDailyStaffing() {
-		return dailyStaffing;
-	}
-
-	/**
-	 * @param dailyStaffing the dailyStaffing to set
-	 */
-	public void setDailyStaffing(DailyStaffing dailyStaffing) {
-		this.dailyStaffing = dailyStaffing;
-	}
 
 	/**
 	 * @return the time
@@ -173,4 +160,15 @@ public class HalfHourStaffing extends SpmObject {
 		this.workContent = workContent;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public abstract DailyStaffing getDailyStaffing();
+	
+	/**
+	 * 
+	 * @param dailyStaffing
+	 */
+	public abstract void setDailyStaffing(DailyStaffing dailyStaffing);
 }

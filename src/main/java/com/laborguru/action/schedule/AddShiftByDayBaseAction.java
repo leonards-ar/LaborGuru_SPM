@@ -22,7 +22,7 @@ import org.apache.log4j.Logger;
 import com.laborguru.frontend.model.ScheduleHourLabelElement;
 import com.laborguru.frontend.model.ScheduleRow;
 import com.laborguru.model.DailyProjection;
-import com.laborguru.model.DailyStaffing;
+import com.laborguru.model.DailyProjectedStaffing;
 import com.laborguru.model.Employee;
 import com.laborguru.model.EmployeeSchedule;
 import com.laborguru.model.OperationTime;
@@ -1142,7 +1142,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	private int getTotalPositionTargetInMinutes(Position position) {
 		StoreDailyStaffing storeDailyStaffing = getSelectedDayDailyStaffing();
 		if(storeDailyStaffing != null) {
-			DailyStaffing dailyStaffing = storeDailyStaffing.getDailyStaffing(position);
+			DailyProjectedStaffing dailyStaffing = storeDailyStaffing.getDailyStaffing(position);
 			return getTotalDailyStaffingInMinutes(dailyStaffing);
 		} else {
 			return 0;

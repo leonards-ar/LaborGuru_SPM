@@ -90,7 +90,7 @@ public class ProjectionServiceBean implements ProjectionService {
 		
 		if (projection == null){
 			projection = new DailyProjection();
-			projection.setProjectionDate(selectedDate);
+			projection.setSalesDate(selectedDate);
 			projection.setStore(store);
 
 			for (HalfHourProjection aHalfHour: halfHourProjectionList){
