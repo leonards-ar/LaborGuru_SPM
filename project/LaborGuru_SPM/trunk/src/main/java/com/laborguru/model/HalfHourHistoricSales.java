@@ -22,7 +22,6 @@ public class HalfHourHistoricSales extends SpmObject implements Comparable<HalfH
 	
 	private static final long serialVersionUID = 1L;
 	
-	private Long id;
 	private BigDecimal value;
 	private DailyHistoricSales dailyHistoricSales;
 	private Date time;
@@ -76,7 +75,6 @@ public class HalfHourHistoricSales extends SpmObject implements Comparable<HalfH
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, DEFAULT_TO_STRING_STYLE)
-	   	.append("id" , getId())
 	   	.append("value",getValue())
 	   	.append("time",getTime())
 	   	.toString();	
@@ -95,20 +93,7 @@ public class HalfHourHistoricSales extends SpmObject implements Comparable<HalfH
 	public DailyHistoricSales getDailyHistoricSales() {
 		return dailyHistoricSales;
 	}	
-	
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
 
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	/**
 	 * @return the value

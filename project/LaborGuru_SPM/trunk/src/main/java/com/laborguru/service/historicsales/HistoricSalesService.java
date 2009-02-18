@@ -3,8 +3,8 @@ package com.laborguru.service.historicsales;
 import java.util.Date;
 
 import com.laborguru.model.DailyHistoricSales;
-import com.laborguru.model.HistoricSales;
 import com.laborguru.model.Store;
+import com.laborguru.service.historicsales.dao.HistoricSalesDao;
 
 /**
  * Handles historic sales services
@@ -15,12 +15,6 @@ import com.laborguru.model.Store;
  *
  */
 public interface HistoricSalesService {
-
-	/**
-	 * Save a sales record into the database
-	 * @param The record to store.
-	 */
-	void save(HistoricSales hs);
 	
 	/**
 	 * Returns a DailyHistoricSales object populated with the sales information for the date passed as parameter.
@@ -30,4 +24,6 @@ public interface HistoricSalesService {
 	 * @return The DailyHistoricSales
 	 */
 	DailyHistoricSales getDailyHistoricSalesByDate(Store store, Date date);
+
+	void setHistoricSalesDao(HistoricSalesDao dao);
 }

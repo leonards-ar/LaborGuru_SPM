@@ -22,7 +22,6 @@ public class DailyHistoricSales extends SpmObject {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
 	private Date historicSalesDate;	
 	private Store store;
 	
@@ -81,26 +80,12 @@ public class DailyHistoricSales extends SpmObject {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, DEFAULT_TO_STRING_STYLE)
-	   	.append("id" , getId())
 	   	.append("date",getHistoricSalesDate())
 	   	.append("Store Id",getStore()!= null?getStore().getId():null)
 	   	.toString();		
 	}
 
 
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	/**
 	 * @return the historicSalesDate
