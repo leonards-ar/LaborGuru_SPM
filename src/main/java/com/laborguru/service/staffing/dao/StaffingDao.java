@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.laborguru.model.DailyHistoricSalesStaffing;
-import com.laborguru.model.DailyStaffing;
+import com.laborguru.model.DailyProjectedStaffing;
 import com.laborguru.model.Position;
 import com.laborguru.model.Store;
 
@@ -28,20 +28,20 @@ public interface StaffingDao {
 	 * @param date
 	 * @return
 	 */
-	DailyStaffing getDailyStaffingByDate(Position position, Date date);
+	DailyProjectedStaffing getDailyStaffingByDate(Position position, Date date);
 	
 	/**
 	 * 
 	 * @param dailyStaffing
 	 * @return
 	 */
-	DailyStaffing save(DailyStaffing dailyStaffing);	
+	DailyProjectedStaffing save(DailyProjectedStaffing dailyStaffing);	
 	
 	/**
 	 * 
 	 * @param storeDailyStaffing
 	 */
-	void deleteAll(List<DailyStaffing> storeDailyStaffing);	
+	void deleteAll(List<DailyProjectedStaffing> storeDailyStaffing);	
 	
 	/**
 	 * 
@@ -49,7 +49,7 @@ public interface StaffingDao {
 	 * @param date
 	 * @return
 	 */
-	List<DailyStaffing> getStoreDailyStaffingByDate(Store store, Date date);
+	List<DailyProjectedStaffing> getStoreDailyStaffingByDate(Store store, Date date);
 	
 	/**
 	 * 
@@ -73,5 +73,18 @@ public interface StaffingDao {
 	 * @param date
 	 * @return
 	 */
-	List<DailyStaffing> getStoreDailyStaffingFromDate(Store store, Date date);
+	List<DailyProjectedStaffing> getStoreDailyStaffingFromDate(Store store, Date date);
+	
+	/**
+	 * 
+	 * @param dailyStaffing
+	 * @return
+	 */
+	DailyHistoricSalesStaffing save(DailyHistoricSalesStaffing dailyStaffing);
+	
+	/**
+	 * 
+	 * @param storeDailyStaffing
+	 */
+	void deleteAllHistoricSalesStaffing(List<DailyHistoricSalesStaffing> storeDailyStaffing);		
 }

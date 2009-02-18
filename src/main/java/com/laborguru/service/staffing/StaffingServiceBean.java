@@ -677,7 +677,7 @@ public class StaffingServiceBean implements StaffingService {
 	 */
 	public StoreDailyStaffing save(StoreDailyStaffing dailyStaffing) {
 		// Transactional behaviour given by Spring
-		for(DailyStaffing ds : dailyStaffing.getStoreDailyStaffing()) {
+		for(DailyProjectedStaffing ds : dailyStaffing.getStoreDailyStaffing()) {
 			getStaffingDao().save(ds);
 		}
 		return dailyStaffing;
@@ -690,7 +690,7 @@ public class StaffingServiceBean implements StaffingService {
 	 * @see com.laborguru.service.staffing.StaffingService#deleteDailyStaffingForDate(com.laborguru.model.Store, java.util.Date)
 	 */
 	public void deleteDailyStaffingForDate(Store store, Date date) {
-		List<DailyStaffing> storeDailyStaffing = getStaffingDao().getStoreDailyStaffingByDate(store, date);
+		List<DailyProjectedStaffing> storeDailyStaffing = getStaffingDao().getStoreDailyStaffingByDate(store, date);
 		if(storeDailyStaffing != null && !storeDailyStaffing.isEmpty()) {
 			getStaffingDao().deleteAll(storeDailyStaffing);
 		}
@@ -703,7 +703,7 @@ public class StaffingServiceBean implements StaffingService {
 	 * @see com.laborguru.service.staffing.StaffingService#deleteDailyStaffingFromDate(com.laborguru.model.Store, java.util.Date)
 	 */
 	public void deleteDailyStaffingFromDate(Store store, Date date) {
-		List<DailyStaffing> storeDailyStaffing = getStaffingDao().getStoreDailyStaffingFromDate(store, date);
+		List<DailyProjectedStaffing> storeDailyStaffing = getStaffingDao().getStoreDailyStaffingFromDate(store, date);
 		if(storeDailyStaffing != null && !storeDailyStaffing.isEmpty()) {
 			getStaffingDao().deleteAll(storeDailyStaffing);
 		}
@@ -760,7 +760,7 @@ public class StaffingServiceBean implements StaffingService {
 	 */
 	public StoreDailyHistoricSalesStaffing save(StoreDailyHistoricSalesStaffing dailyStaffing) {
 		// Transactional behaviour given by Spring
-		for(DailyStaffing ds : dailyStaffing.getStoreDailyStaffing()) {
+		for(DailyHistoricSalesStaffing ds : dailyStaffing.getStoreDailyStaffing()) {
 			getStaffingDao().save(ds);
 		}
 		return dailyStaffing;
