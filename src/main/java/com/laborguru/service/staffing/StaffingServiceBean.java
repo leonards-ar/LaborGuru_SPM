@@ -745,26 +745,9 @@ public class StaffingServiceBean implements StaffingService {
 		}
 		
 		applyOtherFactorsToManagerPositions(managerDailyStaffings, store, nonManagerTargetAddition);
-
-		// :TODO: Detect only when there are changes
-		save(storeDailyStaffing);
 		
 		return storeDailyStaffing;
 	}	
-	
-	/**
-	 * 
-	 * @param dailyStaffing
-	 * @return
-	 * @see com.laborguru.service.staffing.StaffingService#save(com.laborguru.model.StoreDailyHistoricSalesStaffing)
-	 */
-	public StoreDailyHistoricSalesStaffing save(StoreDailyHistoricSalesStaffing dailyStaffing) {
-		// Transactional behaviour given by Spring
-		for(DailyHistoricSalesStaffing ds : dailyStaffing.getStoreDailyStaffing()) {
-			getStaffingDao().save(ds);
-		}
-		return dailyStaffing;
-	}
 	
 	/**
 	 * 

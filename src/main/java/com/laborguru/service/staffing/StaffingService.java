@@ -57,11 +57,4 @@ public interface StaffingService extends Service {
 	 * @return
 	 */
 	StoreDailyHistoricSalesStaffing getDailyHistoricSalesStaffingByDate(Store store, Date date);	
-	
-	/**
-	 * 
-	 * @param dailyStaffing
-	 * @return
-	 */
-	StoreDailyHistoricSalesStaffing save(StoreDailyHistoricSalesStaffing dailyStaffing);	
 }
