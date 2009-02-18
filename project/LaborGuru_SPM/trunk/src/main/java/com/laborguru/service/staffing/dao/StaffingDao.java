@@ -8,6 +8,7 @@ package com.laborguru.service.staffing.dao;
 import java.util.Date;
 import java.util.List;
 
+import com.laborguru.model.DailyHistoricSalesStaffing;
 import com.laborguru.model.DailyStaffing;
 import com.laborguru.model.Position;
 import com.laborguru.model.Store;
@@ -49,6 +50,22 @@ public interface StaffingDao {
 	 * @return
 	 */
 	List<DailyStaffing> getStoreDailyStaffingByDate(Store store, Date date);
+	
+	/**
+	 * 
+	 * @param store
+	 * @param date
+	 * @return
+	 */
+	List<DailyHistoricSalesStaffing> getDailyHistoricSalesStaffingByDate(Store store, Date date);
+	
+	/**
+	 * 
+	 * @param position
+	 * @param date
+	 * @return
+	 */
+	DailyHistoricSalesStaffing getDailyHistoricSalesStaffingByDate(Position position, Date date);
 	
 	/**
 	 * 

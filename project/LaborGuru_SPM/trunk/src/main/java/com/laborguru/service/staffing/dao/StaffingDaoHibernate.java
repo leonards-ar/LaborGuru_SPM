@@ -11,6 +11,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import com.laborguru.model.DailyHistoricSalesStaffing;
 import com.laborguru.model.DailyStaffing;
 import com.laborguru.model.Position;
 import com.laborguru.model.Store;
@@ -117,5 +118,27 @@ public class StaffingDaoHibernate extends HibernateDaoSupport implements Staffin
 	 */
 	public void deleteAll(List<DailyStaffing> storeDailyStaffing) {
 		getHibernateTemplate().deleteAll(storeDailyStaffing);
+	}
+
+	/**
+	 * 
+	 * @param store
+	 * @param date
+	 * @return
+	 * @see com.laborguru.service.staffing.dao.StaffingDao#getDailyHistoricSalesStaffingByDate(com.laborguru.model.Store, java.util.Date)
+	 */
+	public List<DailyHistoricSalesStaffing> getDailyHistoricSalesStaffingByDate(Store store, Date date) {
+		return null;
+	}
+
+	/**
+	 * 
+	 * @param position
+	 * @param date
+	 * @return
+	 * @see com.laborguru.service.staffing.dao.StaffingDao#getDailyHistoricSalesStaffingByDate(com.laborguru.model.Position, java.util.Date)
+	 */
+	public DailyHistoricSalesStaffing getDailyHistoricSalesStaffingByDate(Position position, Date date) {
+		return null;
 	}
 }

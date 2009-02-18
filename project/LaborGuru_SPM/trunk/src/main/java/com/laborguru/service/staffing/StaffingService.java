@@ -8,6 +8,7 @@ package com.laborguru.service.staffing;
 import java.util.Date;
 
 import com.laborguru.model.Store;
+import com.laborguru.model.StoreDailyHistoricSalesStaffing;
 import com.laborguru.model.StoreDailyStaffing;
 import com.laborguru.service.Service;
 
@@ -48,4 +49,19 @@ public interface StaffingService extends Service {
 	 * @param date
 	 */
 	void deleteDailyStaffingFromDate(Store store, Date date);
+	
+	/**
+	 * 
+	 * @param store
+	 * @param date
+	 * @return
+	 */
+	StoreDailyHistoricSalesStaffing getDailyHistoricSalesStaffingByDate(Store store, Date date);	
+	
+	/**
+	 * 
+	 * @param dailyStaffing
+	 * @return
+	 */
+	StoreDailyHistoricSalesStaffing save(StoreDailyHistoricSalesStaffing dailyStaffing);	
 }

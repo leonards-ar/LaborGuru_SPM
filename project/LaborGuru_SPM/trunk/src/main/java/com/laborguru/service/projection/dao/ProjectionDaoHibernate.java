@@ -79,7 +79,7 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 					DailyProjection auxProj = new DailyProjection();
 					
 					if(j < projections.size() ){
-						DateTime elementDateTime = new DateTime(projections.get(j).getProjectionDate()).withTime(0, 0, 0, 0);						
+						DateTime elementDateTime = new DateTime(projections.get(j).getSalesDate()).withTime(0, 0, 0, 0);						
 						if (elementDateTime.getDayOfWeek() == auxDateTime.getDayOfWeek()){
 							auxProj = projections.get(j++);
 						}	
@@ -303,9 +303,9 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 	 */
 	public void save(DailyProjection projection) {
 		
-		DateTime dt = new DateTime(projection.getProjectionDate());
+		DateTime dt = new DateTime(projection.getSalesDate());
 		dt = dt.withTime(0, 0, 0, 0);
-		projection.setProjectionDate(dt.toDate());
+		projection.setSalesDate(dt.toDate());
 		
 		getHibernateTemplate().save(projection);
 	}

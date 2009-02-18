@@ -4,7 +4,7 @@
     "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="com.laborguru.model">
-	<class name="DailyStaffing" table="tbl_staffing">
+	<class name="DailyHistoricSalesStaffing" table="tbl_historic_sales_staffing">
 	
 		<id name="id" type="long" unsaved-value="null" column="staffing_id">
 			<generator class="identity" />
@@ -26,16 +26,16 @@
 		<property name="fixedClosing" column="fixed_closing" type="double" />
 		<property name="totalDailyTarget" column="total_daily_target" type="double" />
 	
-		<many-to-one name="position" class="Position" column="position_id" not-null="true" foreign-key="fk_staffing_positions" />
+		<many-to-one name="position" class="Position" column="position_id" not-null="true" foreign-key="fk_hsstaffing_positions" />
 
-	    <list name="halfHourStaffing" cascade="all-delete-orphan" table="tbl_halfhour_staffing" lazy="true" inverse="true">
-	        <key column="staffing_id" foreign-key="fk_halfhours_staffing"/>
+	    <list name="halfHourProjectedStaffing" cascade="all-delete-orphan" table="tbl_halfhour_historic_sales_staffing" lazy="true" inverse="true">
+	        <key column="staffing_id" foreign-key="fk_halfhours_hsstaffing"/>
 	        <list-index column="half_hour_index"/>
-	        <one-to-many class="HalfHourStaffing"/>
+	        <one-to-many class="HalfHourHistoricSalesStaffing"/>
 	    </list>
 	</class>
 	<database-object>
-		<create>ALTER TABLE tbl_staffing AUTO_INCREMENT=1000</create>
+		<create>ALTER TABLE tbl_historic_sales_staffing AUTO_INCREMENT=1000</create>
 		<drop></drop>
 	</database-object>   	
 </hibernate-mapping>

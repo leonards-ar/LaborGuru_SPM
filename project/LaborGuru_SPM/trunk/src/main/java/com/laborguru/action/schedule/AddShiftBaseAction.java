@@ -13,7 +13,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import com.laborguru.model.DailyStaffing;
+import com.laborguru.model.DailyProjectedStaffing;
 import com.laborguru.model.Position;
 import com.laborguru.model.Shift;
 import com.laborguru.service.data.ReferenceDataService;
@@ -326,7 +326,7 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 	 * @param dailyStaffing
 	 * @return
 	 */
-	protected int getTotalDailyStaffingInMinutes(DailyStaffing dailyStaffing) {
+	protected int getTotalDailyStaffingInMinutes(DailyProjectedStaffing dailyStaffing) {
 		Integer mins = CalendarUtils.hoursToMinutes(dailyStaffing != null ? dailyStaffing.getTotalDailyTarget() : new Double(0.0));
 		return mins != null ? mins.intValue() : 0;
 	}
@@ -335,10 +335,10 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 	 * 
 	 * @return
 	 */
-	protected int getTotalTargetInMinutes(Collection<DailyStaffing> storeDailyStaffing) {
+	protected int getTotalTargetInMinutes(Collection<DailyProjectedStaffing> storeDailyStaffing) {
 		int total = 0;
 		
-		for(DailyStaffing dailyStaffing : storeDailyStaffing) {
+		for(DailyProjectedStaffing dailyStaffing : storeDailyStaffing) {
 			total += getTotalDailyStaffingInMinutes(dailyStaffing);
 		}
 		

@@ -20,7 +20,7 @@ import com.laborguru.frontend.model.WeeklyScheduleDailyEntry;
 import com.laborguru.frontend.model.WeeklyScheduleData;
 import com.laborguru.frontend.model.WeeklyScheduleRow;
 import com.laborguru.model.DailyProjection;
-import com.laborguru.model.DailyStaffing;
+import com.laborguru.model.DailyProjectedStaffing;
 import com.laborguru.model.Employee;
 import com.laborguru.model.EmployeeSchedule;
 import com.laborguru.model.Position;
@@ -1099,7 +1099,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		int total = 0;
 		for(StoreDailyStaffing storeDailyStaffing : getDailyStaffings()) {
 			if(storeDailyStaffing != null) {
-				DailyStaffing dailyStaffing = storeDailyStaffing.getDailyStaffing(position);
+				DailyProjectedStaffing dailyStaffing = storeDailyStaffing.getDailyStaffing(position);
 				total += getTotalDailyStaffingInMinutes(dailyStaffing);
 			}
 		}
