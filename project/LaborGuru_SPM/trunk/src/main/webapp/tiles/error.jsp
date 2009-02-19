@@ -18,13 +18,23 @@
 		</td>
 	</tr>
 	<tr>
+		<td align="center">
+			<br/>
+		</td>
+	</tr>	
+	<tr>
 		<td align="center" class="errorMessage">
 			<s:text name="error.contact.message" />
 		</td>
 	</tr>
 	<tr>
 		<td align="center">
-			<table border="0" cellspacing="2" cellpadding="2" align="center">
+			<br/><br/>
+		</td>
+	</tr>	
+	<tr>
+		<td align="center">
+			<table border="0" cellspacing="2" cellpadding="2" align="center" width="100%">
 				<tr>
 					<td align="center"><a href="javascript:history.back(1)" class="link"><s:text name="error.back.label" /></a></td>
 					<td align="center"><a href="<s:url namespace="/home" action="home" includeParams="none"/>" class="link"><s:text name="error.home.label" /></a></td>
