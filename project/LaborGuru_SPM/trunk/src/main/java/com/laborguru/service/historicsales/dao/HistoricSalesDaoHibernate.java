@@ -1,6 +1,7 @@
 package com.laborguru.service.historicsales.dao;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import com.laborguru.model.HalfHourHistoricSales;
 import com.laborguru.model.HistoricSales;
 import com.laborguru.model.Store;
 import com.laborguru.service.dao.hibernate.SpmHibernateDao;
+import com.laborguru.util.SpmConstants;
 
 /**
  * Hibernate implementation for Historic Sales Dao
@@ -72,7 +74,13 @@ public class HistoricSalesDaoHibernate extends SpmHibernateDao implements Histor
 		retValue.setSalesDate(date);
 	
 		int size = halfHourSales.size();
-	
+		
+		if (size == 0){
+			return null;
+		}
+		
+		List<HalfHourHistoricSales> halfHoursList = new ArrayList<HalfHourHistoricSales>(size);	
+
 		for (int i=0; i < size; i++){
 			Object[] row = (Object[])halfHourSales.get(i);			
 			String time = (String) row[0];
@@ -82,10 +90,50 @@ public class HistoricSalesDaoHibernate extends SpmHibernateDao implements Histor
 			halfHour.setTime(time);
 			halfHour.setValue(value);
 			
-			retValue.addHalfHourHistoricSales(halfHour);
+			halfHoursList.add(halfHour);
 		}
+		
+		setTimeDailyHistoricSales(halfHoursList, retValue);
 		
 		return retValue;
 	}
+	
+	/**
+	 * @param avgProjections
+	 * @param store
+	 */
+	private void setTimeDailyHistoricSales(List<HalfHourHistoricSales> halfHoursList, DailyHistoricSales dailyHistoricSales) {
+		
+		DateTime openHour = new DateTime().withDate(1970, 1, 1).withTime(0,0,0,0);
+		DateTime closeHour = new DateTime().withDate(1970, 1, 1).withTime(23,30,0,0);
+		
+		DateTime nextTime = new DateTime(openHour);
+				
+		for(HalfHourHistoricSales currentHalfHour: halfHoursList) {
+			DateTime currentTime = new DateTime(currentHalfHour.getTime().getTime());
+			
+			while(currentTime.isAfter(nextTime)) {				
+				HalfHourHistoricSales aHalfHour = new HalfHourHistoricSales();
+				aHalfHour.setTime(nextTime.toDate());
+				aHalfHour.setValue(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
+				
+				dailyHistoricSales.addHalfHourHistoricSales(aHalfHour);
+				nextTime = nextTime.plusMinutes(SpmConstants.HALF_HOUR);
+			}
+			
+			dailyHistoricSales.addHalfHourHistoricSales(currentHalfHour);
+			nextTime = nextTime.plusMinutes(SpmConstants.HALF_HOUR);
+		}
+				
+		while(nextTime.isBefore(closeHour) || nextTime.isEqual(closeHour)){
+			HalfHourHistoricSales aHalfHour = new HalfHourHistoricSales();
+			aHalfHour.setTime(nextTime.toDate());
+			aHalfHour.setValue(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
+
+			dailyHistoricSales.addHalfHourHistoricSales(aHalfHour);			
+			nextTime = nextTime.plusMinutes(SpmConstants.HALF_HOUR);
+		}		
+	}
+
 
 }
