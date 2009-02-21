@@ -6,7 +6,7 @@
 	<package name="home" namespace="/home" extends="spm-default">
 		<action name="home" class="com.laborguru.action.home.HomeAction">
 			<result name="employee" type="redirectAction">employee_home</result>
-			<result name="employee" type="redirectAction">admin_home</result>
+			<result name="administrator" type="redirectAction">admin_home</result>
 			<result name="success" type="tiles">homePage</result>			
 		</action>	
 
