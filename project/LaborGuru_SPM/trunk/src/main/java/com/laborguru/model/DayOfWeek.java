@@ -39,4 +39,23 @@ public enum DayOfWeek {
 	public Integer getDayOfWeek() {
 		return this.dayOfWeek;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public DayOfWeek getPreviousDayOfWeek() {
+		int newOrdinal = ordinal() - 1;
+		return newOrdinal >= 0 ? values()[newOrdinal] : values()[values().length - 1];
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public DayOfWeek getNextDayOfWeek() {
+		int newOrdinal = ordinal() + 1;
+		return newOrdinal < values().length ? values()[newOrdinal] : values()[0];
+	}
+	
 }

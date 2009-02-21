@@ -165,9 +165,7 @@ public class PrintTotalHoursByPositionByWeekPrepareAction extends PrintShiftBase
 		
 		if(shifts != null) {
 			for(Shift shift : shifts) {
-				if(!shift.isReferencedShift()) {
-					total += shift.getTotalShiftHoursWithContiguous().doubleValue();
-				}
+				total += shift.getTotalShiftHours().doubleValue();
 			}
 		}
 		
