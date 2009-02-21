@@ -102,9 +102,9 @@
   <tbl_positions position_id="4" name="porter" manager="0" position_index="3" store_id="1" guest_service="true"/>
   <tbl_positions position_id="5" name="manager" manager="1" position_index="4" store_id="1" guest_service="true"/>
   
-  <tbl_profiles profile_id="1" name="Administrator" description="Administrator of the application" home_result="success"/>
-  <tbl_profiles profile_id="2" name="Store_Manager" description="Manager of a Store" home_result="success"/>
-  <tbl_profiles profile_id="3" name="Employee" description="Employee of a Store" home_result="success"/>
+  <tbl_profiles profile_id="1" name="Administrator" description="Administrator of the application" home_result="administrator"/>
+  <tbl_profiles profile_id="2" name="Store_Manager" description="Manager of a Store" home_result="employee"/>
+  <tbl_profiles profile_id="3" name="Employee" description="Employee of a Store" home_result="employee"/>
   <tbl_profiles profile_id="4" name="Customer_Manager" description="User with a Client associated" home_result="success"/>
   <tbl_profiles profile_id="5" name="Regional_Manager" description="User with a Region associated" home_result="success"/>
   <tbl_profiles profile_id="6" name="Area_Manager" description="User with an Area associated" home_result="success"/>
