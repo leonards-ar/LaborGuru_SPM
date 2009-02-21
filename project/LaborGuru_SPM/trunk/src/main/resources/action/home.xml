@@ -5,7 +5,18 @@
 <struts>
 	<package name="home" namespace="/home" extends="spm-default">
 		<action name="home" class="com.laborguru.action.home.HomeAction">
+			<result name="employee" type="redirectAction">employee_home</result>
+			<result name="employee" type="redirectAction">admin_home</result>
 			<result name="success" type="tiles">homePage</result>			
-		</action>		
+		</action>	
+
+		<action name="employee_home" class="com.laborguru.action.home.EmployeeHomeAction">
+			<result name="success" type="tiles">employeeHomePage</result>			
+		</action>	
+
+		<action name="admin_home" class="com.laborguru.action.home.AdministratorHomeAction">
+			<result name="success" type="tiles">adminHomePage</result>			
+		</action>	
+			
 	</package>
 </struts>

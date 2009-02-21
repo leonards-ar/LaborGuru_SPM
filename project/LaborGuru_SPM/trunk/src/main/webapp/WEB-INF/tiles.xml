@@ -31,10 +31,18 @@
 		<put-attribute name="body" value="/tiles/login/login.jsp" />
 	</definition>
 
-	<definition name="homePage" extends="baseLayoutWithMenu">
-		<put-attribute name="body" value="/tiles/home/home.jsp" />
+	<definition name="employeeHomePage" extends="baseLayoutWithMenu">
+		<put-attribute name="body" value="/tiles/home/employee_home.jsp" />
+	</definition>
+
+	<definition name="adminHomePage" extends="baseLayoutWithMenu">
+		<put-attribute name="body" value="/tiles/home/admin_home.jsp" />
 	</definition>
 	
+	<definition name="homePage" extends="baseLayoutWithMenu">
+		<put-attribute name="body" value="/tiles/home/default_home.jsp" />
+	</definition>
+		
 	<definition name="accessDeniedPage" extends="baseLayoutWithMenu">
 		<put-attribute name="body" value="/tiles/security/accessdenied.jsp" />
 	</definition>
