@@ -79,8 +79,6 @@
 				<value>com/laborguru/model/Shift.hbm.xml</value>
 				<value>com/laborguru/model/HalfHourProjectedStaffing.hbm.xml</value>
 				<value>com/laborguru/model/DailyProjectedStaffing.hbm.xml</value>
-				<value>com/laborguru/model/HalfHourHistoricSalesStaffing.hbm.xml</value>
-				<value>com/laborguru/model/DailyHistoricSalesStaffing.hbm.xml</value>
 				<value>com/laborguru/model/UploadFile.hbm.xml</value>				
 				<value>com/laborguru/model/ActualHours.hbm.xml</value>
 			</list>
