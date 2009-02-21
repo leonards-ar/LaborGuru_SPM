@@ -24,9 +24,9 @@ import com.laborguru.util.SpmConstants;
 public class DailyHistoricSales extends DailySalesValue {
 
 	private static final long serialVersionUID = 1L;
+	private static final int NUMBER_OF_HALF_HOURS = 48;
 
-
-	private List<HalfHourHistoricSales> halfHourHistoricSales = new ArrayList<HalfHourHistoricSales>();
+	private List<HalfHourHistoricSales> halfHourHistoricSales = new ArrayList<HalfHourHistoricSales>(NUMBER_OF_HALF_HOURS);
 		
 	
 	/**
