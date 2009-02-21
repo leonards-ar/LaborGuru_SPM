@@ -630,7 +630,29 @@ public class Store extends SpmObject {
 	 */
 	public Date getStoreScheduleStartHour(DayOfWeek dayOfWeek) {
 		OperationTime operationTime = getOperationTime(dayOfWeek);
-		return CalendarUtils.addOrSubstractHours(operationTime.getOpenHour(), (-1) * getCalculatedExtraHours(operationTime.getOpenHour(), operationTime.getCloseHour(), true));
+		Date startTime = CalendarUtils.addOrSubstractHours(operationTime.getOpenHour(), (-1) * getCalculatedExtraHours(operationTime.getOpenHour(), operationTime.getCloseHour(), false));
+		Date previuosCloseTime = getStoreScheduleEndHour(dayOfWeek.getPreviousDayOfWeek());
+		OperationTime previousOperationTime = getOperationTime(dayOfWeek.getPreviousDayOfWeek());
+		
+		if(CalendarUtils.greaterTime(startTime, operationTime.getOpenHour())) {
+			// Case 1: Real start time is yesterday.
+			if(CalendarUtils.smallerTime(previuosCloseTime, previousOperationTime.getCloseHour())) {
+				// Case 1.1: Yesterday's real close hour is today
+				return CalendarUtils.greaterTime(startTime, previuosCloseTime) ? previuosCloseTime : startTime;
+			} else {
+				// Case 1.2: Real previous close hour and today's open hour are yesterday
+				return CalendarUtils.smallerTime(startTime, previuosCloseTime) ? previuosCloseTime : startTime;
+			}
+		} else {
+			// Case 2: Real start time is still today. 
+			if(CalendarUtils.greaterTime(previuosCloseTime, previousOperationTime.getCloseHour())) {
+				// Case 2.1: Real previous close hour is yerterday but today's open hour is today
+				return startTime;
+			} else {
+				// Case 2.2: Yesterday's real close hour is today and real open hour is today
+				return CalendarUtils.smallerTime(startTime, previuosCloseTime) ? previuosCloseTime : startTime;
+			}
+		}
 	}
 
 	/**
