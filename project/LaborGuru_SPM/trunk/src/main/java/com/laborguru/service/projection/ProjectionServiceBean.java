@@ -200,8 +200,8 @@ public class ProjectionServiceBean implements ProjectionService {
 	 * @param store
 	 */
 	private List<HalfHourProjection> completeTimeHalfHourProjectionsList(List<HalfHourProjection> avgProjections) {
-		DateTime openHour = new DateTime().withDate(1970, 1, 1).withTime(0,30,0,0);
-		DateTime closeHour = new DateTime().withDate(1970, 1, 2).withTime(0,0,0,0);
+		DateTime openHour = new DateTime().withDate(1970, 1, 1).withTime(0,0,0,0);
+		DateTime closeHour = new DateTime().withDate(1970, 1, 1).withTime(23,30,0,0);
 				
 		List<HalfHourProjection> retList = new ArrayList<HalfHourProjection>(SpmConstants.HALF_HOURS_IN_A_DAY);
 
