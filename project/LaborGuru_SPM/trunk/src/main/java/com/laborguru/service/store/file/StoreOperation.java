@@ -3,7 +3,9 @@ package com.laborguru.service.store.file;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -37,6 +39,8 @@ public class StoreOperation extends BaseStoreSection {
 	private static final String FIRST_DAY_OF_WEEK = "First day of week";
 	private static final String OPEN = "Open";
 	private static final String CLOSE = "Close";
+	private static final String HOURS_BEFORE_AND_AFTER = "Hours before and after";
+
 	
 	//Projections Defaults
 	//TODO:Include this on the upload file
@@ -49,7 +53,9 @@ public class StoreOperation extends BaseStoreSection {
 		DAYPART_DEFINITION("Daypart definition"),
 		POSITION_NAMES("Position names"),
 		GROUP_NAMES("Group names"),		
-		VARIABLE_DEFINITION("Variable definition");
+		VARIABLE_DEFINITION("Variable definition"),
+		GUEST_SERVICE("Guest Service"),
+		MANAGER("Manager");
 		
 		private String fieldName;
 				
@@ -83,7 +89,10 @@ public class StoreOperation extends BaseStoreSection {
 	private List<String> positionNames = new ArrayList<String>();
 	private List<String> groupNames = new ArrayList<String>();
 	private List<String> variableDefinitions = new ArrayList<String>();
+	private Set<String> managerSet = new HashSet<String>();
+	private Set<String> guestServiceSet = new HashSet<String>();
 	private DayOfWeek firstDayOfWeek;	
+	private Integer hoursBeforeAndAfter;
 	
 	/**
 	 * Default Constructor
@@ -119,6 +128,12 @@ public class StoreOperation extends BaseStoreSection {
 				break;
 			case VARIABLE_DEFINITION:
 				addVariableDefinitions(row);
+				break;
+			case MANAGER:
+				addManager(row);
+				break;
+			case GUEST_SERVICE:
+				addGuestService(row);
 				break;
 			default: throw new IllegalArgumentException("The type passed as parameter is wrong");			
 		}
@@ -168,6 +183,23 @@ public class StoreOperation extends BaseStoreSection {
 	/**
 	 * @param row
 	 */
+	private void addGuestService(HSSFRow row) {
+		String fieldValue = PoiUtils.getStringValue(row.getCell((short)4));
+		getGuestServiceSet().add(fieldValue.trim());
+
+	}
+
+	/**
+	 * @param row
+	 */
+	private void addManager(HSSFRow row) {
+		String fieldValue = PoiUtils.getStringValue(row.getCell((short)4));
+		getManagerSet().add(fieldValue.trim());
+	}	
+		
+	/**
+	 * @param row
+	 */
 	private void addDaypartDefinition(HSSFRow row) {		
 		String fieldName = PoiUtils.getStringValue(row.getCell((short)2));
 		Date startTime = PoiUtils.getDateValue(row.getCell((short)4));
@@ -203,6 +235,12 @@ public class StoreOperation extends BaseStoreSection {
 				setFirstDayOfWeek(firstDay.getDayOfWeek());
 			}
 			
+			return;
+		}
+				
+		if (HOURS_BEFORE_AND_AFTER.equalsIgnoreCase(fieldName)){
+			Integer fieldValue = PoiUtils.getIntegerValue(row.getCell((short)4));
+			setHoursBeforeAndAfter(fieldValue);
 			return;
 		}
 		
@@ -275,6 +313,12 @@ public class StoreOperation extends BaseStoreSection {
 			position.setPositionIndex(index++);
 			position.setName(positionName);
 			
+			boolean isManager = getManagerSet().contains(positionName);
+			position.setManager(isManager);
+			
+			boolean isGuestService = getGuestServiceSet().contains(positionName);
+			position.setGuestService(isGuestService);
+			
 			//Building the dayparts data
 			for (DayPart dayPart: store.getDayParts()){
 				DayPartData dayPartData = new DayPartData();
@@ -306,6 +350,11 @@ public class StoreOperation extends BaseStoreSection {
 		//Setting first day of the week
 		if (getFirstDayOfWeek() != null){
 			store.setFirstDayOfWeek(getFirstDayOfWeek());
+		}
+
+		//Setting extra scheduler hours
+		if (getHoursBeforeAndAfter() != null){
+			store.setExtraScheduleHours(getHoursBeforeAndAfter());
 		}
 		
 		//Setting default projection values
@@ -392,4 +441,31 @@ public class StoreOperation extends BaseStoreSection {
 		this.firstDayOfWeek = firstDayOfWeek;
 	}
 
+	/**
+	 * @return the hoursBeforeAndAfter
+	 */
+	public Integer getHoursBeforeAndAfter() {
+		return hoursBeforeAndAfter;
+	}
+
+	/**
+	 * @param hoursBeforeAndAfter the hoursBeforeAndAfter to set
+	 */
+	public void setHoursBeforeAndAfter(Integer hoursBeforeAndAfter) {
+		this.hoursBeforeAndAfter = hoursBeforeAndAfter;
+	}
+
+	/**
+	 * @return the managerList
+	 */
+	public Set<String> getManagerSet() {
+		return managerSet;
+	}
+
+	/**
+	 * @return the guestServiceList
+	 */
+	public Set<String> getGuestServiceSet() {
+		return guestServiceSet;
+	}
 }
