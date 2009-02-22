@@ -32,6 +32,7 @@
 	</definition>
 
 	<definition name="employeeHomePage" extends="baseLayoutWithMenu">
+		<put-attribute name="htmlExtHeader" value="/tiles/dojoHtmlExtHeader.jsp" />
 		<put-attribute name="body" value="/tiles/home/employee_home.jsp" />
 	</definition>
 

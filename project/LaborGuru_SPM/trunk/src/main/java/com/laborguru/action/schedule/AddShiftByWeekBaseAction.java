@@ -1048,7 +1048,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 			//:TODO: Retrieve the SUM in only one query
 			List<DailyProjection> dailyProjections = getProjectionService().getDailyProjections(getEmployeeStore(), getWeekDays().get(0), getWeekDays().get(getWeekDays().size() - 1));
 			if(dailyProjections != null) {
-				BigDecimal total = SpmConstants.BD_ZERO_VALUE;
+				BigDecimal total = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
 				for(DailyProjection dp : dailyProjections) {
 					total = total.add(dp.getDailyProjectionValue());
 				}

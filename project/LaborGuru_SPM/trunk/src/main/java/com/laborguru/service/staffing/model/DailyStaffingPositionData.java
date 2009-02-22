@@ -26,7 +26,7 @@ public class DailyStaffingPositionData implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -2629969275009440055L;
-	private BigDecimal dayPartTotalProjection = SpmConstants.BD_ZERO_VALUE;
+	private BigDecimal dayPartTotalProjection = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
 	private DayPartData dayPartData = null;
 	private Position position = null;
 	private Store store = null;
