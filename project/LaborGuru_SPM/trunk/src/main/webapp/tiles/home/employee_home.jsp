@@ -59,33 +59,9 @@
 						
 						<td valign="top" align="right">
 							<!-- Right column -->
-							<table id="windowTable">
-								<tr>
-									<td class="windowTableHeader"><s:text name='home.weekday.position.dateformat'><s:param value='%{new java.util.Date()}'/></s:text></td>
-									<td class="windowTableHeader"><s:text name="home.scheduled.label"/></td>
-									<td class="windowTableHeader"><s:text name="home.target.label"/></td>
-									<td class="windowTableHeader"><s:text name="home.difference.label"/></td>
-								</tr>
-								
-								<!--  For each position -->
-								<s:iterator value="positions" id="pos">
-								<tr>
-									<td class="windowTableValue"><s:property value="name"/></td>
-									<td class="windowTableValue">0</td>
-									<td class="windowTableValue">0</td>
-									<td class="windowTableValue">0</td>
-								</tr>
-								</s:iterator>
-								<!-- For each position -->
-								
-								<tr>
-									<td class="windowTableValue"><b><s:text name="home.total.label"/></b></td>
-									<td class="windowTableValue"><b>0</b></td>
-									<td class="windowTableValue"><b>0</b></td>
-									<td class="windowTableValue"><b>0</b></td>
-								</tr>
-								
-							</table>
+							<center><img id="currentDayPositionSummaryIndicator" style="display: none;" src="<s:url value="/images/wait.gif" includeParams="none"/>" alt="<s:text name="wait.message"/>" title="<s:text name="wait.message"/>" border="0"/></center>
+							<s:url id="currentDayPositionSummaryUrl" action="showCurrentDayPositionSummary" namespace="/home" includeParams="none" />
+							<s:div id="currentDayPositionSummaryFrame" executeScripts="true" theme="ajax" href="%{currentDayPositionSummaryUrl}" indicator="currentDayPositionSummaryIndicator" cssClass="waitMessage" loadingText='%{getText("wait.message")}'/>
 							<!-- Right column -->
 						</td>
 					</tr>
@@ -99,4 +75,5 @@
 		djConfig.searchIds.push("currentWeekSummaryFrame");	
 		djConfig.searchIds.push("pastWeeksSummaryFrame");	
 		djConfig.searchIds.push("nextWeeksSummaryFrame");	
+		djConfig.searchIds.push("currentDayPositionSummaryFrame");	
 	</script>
