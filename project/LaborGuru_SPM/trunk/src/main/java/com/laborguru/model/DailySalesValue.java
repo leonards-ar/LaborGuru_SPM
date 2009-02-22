@@ -5,8 +5,11 @@
  */
 package com.laborguru.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+
+import com.laborguru.util.SpmConstants;
 
 /**
  *
@@ -89,5 +92,20 @@ public abstract class DailySalesValue extends SpmObject {
 	public void setSalesDate(Date salesDate) {
 		this.salesDate = salesDate;
 	}
+	
+	/**
+	 * Returns the sum of all the halfhours defined for the projection.
+	 * If there is no halfhours returns NULL
+	 * @return the projection value or null
+	 */
+	public BigDecimal getDailySalesValue(){
+		BigDecimal retValue = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
+		
+		for (HalfHourSalesValue aHalfHourSalesValue: getHalfHourSalesValues()){
+			retValue = retValue.add(aHalfHourSalesValue.getValue());
+		}
+		
+		return getHalfHourSalesValues().isEmpty()? null : retValue;
+	}	
 
 }
