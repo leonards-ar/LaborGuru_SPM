@@ -217,4 +217,12 @@ public class PerformanceSummaryRow implements Serializable {
 		return CalendarUtils.hoursToTime(getActualDifference());
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isProjectedVolumeSet() {
+		return NumberUtils.getDoubleValue(getProjectedVolume()) > 0.0;
+	}
+	
 }

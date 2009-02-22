@@ -729,10 +729,7 @@ public class StaffingServiceBean implements StaffingService {
 		
 		//:TODO: Improve performance? Or complicate coding?
 		for(Position position : store.getPositions()) {
-			DailyStaffing dailyStaffing = getStaffingDao().getDailyStaffingByDate(position, date);
-			if(dailyStaffing == null) {
-				dailyStaffing = calculateDailyStaffing(position, date, dailySalesValue, staffingData);
-			}
+			DailyStaffing dailyStaffing = calculateDailyStaffing(position, date, dailySalesValue, staffingData);
 			if(dailyStaffing != null) {
 				storeDailyStaffing.addDailyStaffing((DailyHistoricSalesStaffing)dailyStaffing);
 				

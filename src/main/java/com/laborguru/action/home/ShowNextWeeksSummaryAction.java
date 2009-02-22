@@ -21,21 +21,21 @@ import com.laborguru.frontend.model.PerformanceSummaryRow;
  * @since SPM 1.0
  *
  */
-public class ShowPastWeeksSummaryAction extends EmployeeHomeSummaryBaseAction {
-	private static final Logger log = Logger.getLogger(ShowPastWeeksSummaryAction.class);
+public class ShowNextWeeksSummaryAction extends EmployeeHomeSummaryBaseAction {
+	private static final Logger log = Logger.getLogger(ShowNextWeeksSummaryAction.class);
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8935610718218090851L;
-	private List<PerformanceSummaryRow> pastWeeksSummary;
+	private List<PerformanceSummaryRow> nextWeeksSummary;
 	
-	private static final int PAST_WEEKS_QTY = 2;
+	private static final int NEXT_WEEKS_QTY = 2;
 	
 	/**
 	 * 
 	 */
-	public ShowPastWeeksSummaryAction() {
+	public ShowNextWeeksSummaryAction() {
 	}
 
 
@@ -47,16 +47,15 @@ public class ShowPastWeeksSummaryAction extends EmployeeHomeSummaryBaseAction {
 	@Override
 	public String execute() throws Exception {
 		try {
-			getWeekDaySelector().setWeeksToShow(PAST_WEEKS_QTY);
+			getWeekDaySelector().setWeeksToShow(NEXT_WEEKS_QTY);
 			
-			List<Date> days = getWeekDaySelector().getPreviousStartingWeekDays();
-			for(int i = days.size() - 1; i >= 0; i--) {
-				getPastWeeksSummary().add(buildPerformanceSummaryRow(days.get(i)));
-				
+			List<Date> days = getWeekDaySelector().getNextStartingWeekDays();
+			for(int i = 0; i < days.size(); i++) {
+				getNextWeeksSummary().add(buildPerformanceSummaryRow(days.get(i)));
 			}
 		} catch(Throwable ex) {
 			initializeEmptyPastWeeksSummary();
-			log.error("Could not retrieve past weeks performance summary", ex);
+			log.error("Could not retrieve next weeks performance summary", ex);
 		}
 		
 		return SpmActionResult.SUCCESS.getResult();
@@ -70,7 +69,6 @@ public class ShowPastWeeksSummaryAction extends EmployeeHomeSummaryBaseAction {
 		PerformanceSummaryRow row = new PerformanceSummaryRow();
 		
 		buildProjectedPerformanceSummaryRow(startingWeekDay, row);
-		buildActualPerformanceSummaryRow(startingWeekDay, row);
 		
 		return row;
 	}
@@ -79,28 +77,28 @@ public class ShowPastWeeksSummaryAction extends EmployeeHomeSummaryBaseAction {
 	 * 
 	 */
 	private void initializeEmptyPastWeeksSummary() {
-		setPastWeeksSummary(null);
-		for(int i = 0; i < PAST_WEEKS_QTY; i++) {
-			getPastWeeksSummary().add(new PerformanceSummaryRow());
+		setNextWeeksSummary(null);
+		for(int i = 0; i < NEXT_WEEKS_QTY; i++) {
+			getNextWeeksSummary().add(new PerformanceSummaryRow());
 		}
 	}
 	
 	/**
-	 * @return the pastWeeksSummary
+	 * @return the nextWeeksSummary
 	 */
-	public List<PerformanceSummaryRow> getPastWeeksSummary() {
-		if(pastWeeksSummary == null) {
-			setPastWeeksSummary(new ArrayList<PerformanceSummaryRow>(PAST_WEEKS_QTY));
+	public List<PerformanceSummaryRow> getNextWeeksSummary() {
+		if(nextWeeksSummary == null) {
+			setNextWeeksSummary(new ArrayList<PerformanceSummaryRow>(NEXT_WEEKS_QTY));
 		}
-		return pastWeeksSummary;
+		return nextWeeksSummary;
 	}
 
 
 	/**
-	 * @param pastWeeksSummary the pastWeeksSummary to set
+	 * @param nextWeeksSummary the nextWeeksSummary to set
 	 */
-	public void setPastWeeksSummary(List<PerformanceSummaryRow> pastWeeksSummary) {
-		this.pastWeeksSummary = pastWeeksSummary;
+	public void setNextWeeksSummary(List<PerformanceSummaryRow> nextWeeksSummary) {
+		this.nextWeeksSummary = nextWeeksSummary;
 	}	
 
 	

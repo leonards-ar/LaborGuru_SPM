@@ -41,11 +41,8 @@ public class ShowCurrentWeekSummaryAction extends EmployeeHomeSummaryBaseAction 
 	public String execute() throws Exception {
 		Date startingWeekDay = getWeekDaySelector().getStartingWeekDay();
 		
-		getCurrentWeekSummary().setDate(startingWeekDay);
-		getCurrentWeekSummary().setProjectedVolume(calculateVolume(getDailyProjectionsForWeekStartingOn(startingWeekDay)));
-		getCurrentWeekSummary().setProjectedTarget(calculateProjectedTarget(getDailyStaffingForWeekStartingOn(startingWeekDay)));
-		getCurrentWeekSummary().setProjectedScheduled(calculateProjectedScheduled(getScheduleForWeekStartingOn(startingWeekDay)));
-		
+		buildProjectedPerformanceSummaryRow(startingWeekDay, getCurrentWeekSummary());
+
 		return SpmActionResult.SUCCESS.getResult();
 	}
 
