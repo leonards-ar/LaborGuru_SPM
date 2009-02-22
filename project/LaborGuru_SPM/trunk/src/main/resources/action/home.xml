@@ -21,7 +21,11 @@
 		<action name="showPastWeeksSummary" class="com.laborguru.action.home.ShowPastWeeksSummaryAction">
 			<result name="success">/tiles/home/past_weeks_summary.jsp</result>		
 		</action>
-		
+
+		<action name="showNextWeeksSummary" class="com.laborguru.action.home.ShowNextWeeksSummaryAction">
+			<result name="success">/tiles/home/next_weeks_summary.jsp</result>		
+		</action>
+				
 		<action name="admin_home" class="com.laborguru.action.home.AdministratorHomeAction">
 			<result name="success" type="tiles">adminHomePage</result>			
 		</action>	

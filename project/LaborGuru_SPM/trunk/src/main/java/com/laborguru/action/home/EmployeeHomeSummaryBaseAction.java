@@ -11,17 +11,23 @@ import java.util.Date;
 import java.util.List;
 
 import com.laborguru.action.SpmAction;
+import com.laborguru.frontend.model.PerformanceSummaryRow;
 import com.laborguru.frontend.model.WeekDaySelector;
+import com.laborguru.model.ActualHours;
+import com.laborguru.model.DailyHistoricSales;
 import com.laborguru.model.DailyProjection;
 import com.laborguru.model.DailySalesValue;
 import com.laborguru.model.DayOfWeek;
 import com.laborguru.model.StoreDailyHistoricSalesStaffing;
 import com.laborguru.model.StoreDailyStaffing;
 import com.laborguru.model.StoreSchedule;
+import com.laborguru.service.actualhours.ActualHoursService;
+import com.laborguru.service.historicsales.HistoricSalesService;
 import com.laborguru.service.projection.ProjectionService;
 import com.laborguru.service.schedule.ScheduleService;
 import com.laborguru.service.staffing.StaffingService;
 import com.laborguru.util.CalendarUtils;
+import com.laborguru.util.NumberUtils;
 import com.laborguru.util.SpmConstants;
 
 /**
@@ -37,6 +43,8 @@ public abstract class EmployeeHomeSummaryBaseAction extends SpmAction {
 	private ScheduleService scheduleService;
 	private StaffingService staffingService;
 	private ProjectionService projectionService;
+	private HistoricSalesService historicSalesService;
+	private ActualHoursService actualHoursService;
 	
 	/**
 	 * 
@@ -104,6 +112,34 @@ public abstract class EmployeeHomeSummaryBaseAction extends SpmAction {
 	}
 	
 	/**
+	 * @return the historicSalesService
+	 */
+	public HistoricSalesService getHistoricSalesService() {
+		return historicSalesService;
+	}
+
+	/**
+	 * @param historicSalesService the historicSalesService to set
+	 */
+	public void setHistoricSalesService(HistoricSalesService historicSalesService) {
+		this.historicSalesService = historicSalesService;
+	}	
+	
+	/**
+	 * @return the actualHoursService
+	 */
+	public ActualHoursService getActualHoursService() {
+		return actualHoursService;
+	}
+
+	/**
+	 * @param actualHoursService the actualHoursService to set
+	 */
+	public void setActualHoursService(ActualHoursService actualHoursService) {
+		this.actualHoursService = actualHoursService;
+	}
+
+	/**
 	 * 
 	 * @param day
 	 * @return
@@ -159,6 +195,53 @@ public abstract class EmployeeHomeSummaryBaseAction extends SpmAction {
 
 	/**
 	 * 
+	 * @param day
+	 * @return
+	 */
+	protected List<DailyHistoricSales> getDailyHistoricSalesForWeekStartingOn(Date day) {
+		List<DailyHistoricSales> dailySales = new ArrayList<DailyHistoricSales>(DayOfWeek.values().length);
+		
+		for(int i = 0; i < DayOfWeek.values().length; i++) {
+			dailySales.add(getHistoricSalesService().getDailyHistoricSalesByDate(getEmployeeStore(), CalendarUtils.addOrSubstractDays(day, i)));
+		}
+		
+		return dailySales;		
+	}
+	
+	/**
+	 * 
+	 * @param day
+	 * @return
+	 */
+	protected List<ActualHours> getDailyActualHoursForWeekStartingOn(Date day) {
+		List<ActualHours> actualHours = new ArrayList<ActualHours>(DayOfWeek.values().length);
+		
+		for(int i = 0; i < DayOfWeek.values().length; i++) {
+			actualHours.add(getActualHoursService().getActualHoursByDate(getEmployeeStore(), CalendarUtils.addOrSubstractDays(day, i)));
+		}
+		
+		return actualHours;				
+	}
+	
+	/**
+	 * 
+	 * @param actualHours
+	 * @return
+	 */
+	protected Double calculateActualScheduled(List<ActualHours> actualHours) {
+		double total = 0.0;
+		if(actualHours != null) {
+			for(ActualHours ah : actualHours) {
+				if(ah != null) {
+					total += NumberUtils.getDoubleValue(ah.getHours());
+				}
+			}
+		}
+		return new Double(total);
+	}
+	
+	/**
+	 * 
 	 * @param salesValues
 	 * @return
 	 */
@@ -166,7 +249,9 @@ public abstract class EmployeeHomeSummaryBaseAction extends SpmAction {
 		if(salesValues != null) {
 			BigDecimal total = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
 			for(DailySalesValue sv : salesValues) {
-				total = total.add(sv.getDailySalesValue());
+				if(sv != null) {
+					total = total.add(sv.getDailySalesValue());
+				}
 			}
 			return total;
 		} else {
@@ -184,7 +269,9 @@ public abstract class EmployeeHomeSummaryBaseAction extends SpmAction {
 		
 		if(dailyStaffings != null) {
 			for(StoreDailyStaffing dailyStaffing : dailyStaffings) {
-				total += dailyStaffing.getTotalDailyTarget().doubleValue();
+				if(dailyStaffing != null) {
+					total += dailyStaffing.getTotalDailyTarget().doubleValue();
+				}
 			}
 		}
 		
@@ -201,7 +288,9 @@ public abstract class EmployeeHomeSummaryBaseAction extends SpmAction {
 		
 		if(dailyStaffings != null) {
 			for(StoreDailyHistoricSalesStaffing dailyStaffing : dailyStaffings) {
-				total += dailyStaffing.getTotalDailyTarget().doubleValue();
+				if(dailyStaffing != null) {
+					total += dailyStaffing.getTotalDailyTarget().doubleValue();
+				}
 			}
 		}
 		
@@ -218,11 +307,44 @@ public abstract class EmployeeHomeSummaryBaseAction extends SpmAction {
 		
 		if(schedules != null) {
 			for(StoreSchedule schedule : schedules) {
-				//:TODO: Confirm if getTotalShiftHoursWithContiguous should be used instead
-				total += schedule.getTotalShiftHours().doubleValue();
+				if(schedule != null) {
+					//:TODO: Confirm if getTotalShiftHoursWithContiguous should be used instead
+					total += schedule.getTotalShiftHours().doubleValue();
+				}
 			}
 		}
 		
 		return new Double(total);
+	}
+
+	/**
+	 * 
+	 * @param startingWeekDay
+	 * @param row
+	 * @return
+	 */
+	protected PerformanceSummaryRow buildProjectedPerformanceSummaryRow(Date startingWeekDay, PerformanceSummaryRow row) {
+		row.setDate(startingWeekDay);
+		
+		row.setProjectedVolume(calculateVolume(getDailyProjectionsForWeekStartingOn(startingWeekDay)));
+		row.setProjectedTarget(calculateProjectedTarget(getDailyStaffingForWeekStartingOn(startingWeekDay)));
+		row.setProjectedScheduled(calculateProjectedScheduled(getScheduleForWeekStartingOn(startingWeekDay)));
+		
+		return row;
 	}	
+
+	/**
+	 * 
+	 * @param startingWeekDay
+	 * @return
+	 */
+	protected PerformanceSummaryRow buildActualPerformanceSummaryRow(Date startingWeekDay, PerformanceSummaryRow row) {
+		row.setDate(startingWeekDay);
+		
+		row.setActualVolume(calculateVolume(getDailyHistoricSalesForWeekStartingOn(startingWeekDay)));
+		row.setActualTarget(calculateHistoricSalesTarget(getDailyHistoricSalesStaffingForWeekStartingOn(startingWeekDay)));
+		row.setActualScheduled(calculateActualScheduled(getDailyActualHoursForWeekStartingOn(startingWeekDay)));
+		
+		return row;
+	}		
 }

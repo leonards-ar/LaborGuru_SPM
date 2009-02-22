@@ -45,31 +45,9 @@
 											</tr>
 											<tr>
 												<td>
-													<table border="0" cellpadding="2" cellspacing="1" colspan="0" cellspan="0">
-														<tr>
-															<td class="windowTableLabel">&nbsp;</td>
-															<td class="windowTableLabel"><s:text name="home.week.label"/></td>
-															<td class="windowTableLabel"><s:text name="home.volume.label"/></td>
-															<td class="windowTableLabel"><s:text name="home.target.label"/></td>
-															<td class="windowTableLabel"><s:text name="home.scheduled.label"/></td>
-															<td class="windowTableLabel"><s:text name="home.difference.label"/></td>
-															<td class="windowTableLabel"><s:text name="home.percentage.label"/></td>
-														</tr>
-														<tr>
-															<td class="windowTableLabel"><s:text name="home.next_week.label"/></td>
-															<td class="windowTableValue">12-02-08</td>
-															<td class="windowTableValue">12,000</td>
-															<td class="windowTableValue">1,353</td>
-															<td class="windowTableValue">1,483</td>
-															<td class="windowTableValue">130</td>
-															<td class="windowTableValue">10%</td>
-														</tr>
-														<tr>
-															<td class="windowTableLabel"><s:text name="home.next_two_weeks.label"/></td>
-															<td class="windowTableValue">12-09-08</td>
-															<td class="windowTableValue" colspan="5"><span class="infoMessage"><s:text name="home.no_projection.message"/></span></td>
-														</tr>
-													</table>
+													<center><img id="nextWeeksSummaryIndicator" style="display: none;" src="<s:url value="/images/wait.gif" includeParams="none"/>" alt="<s:text name="wait.message"/>" title="<s:text name="wait.message"/>" border="0"/></center>
+													<s:url id="nextWeeksSummaryUrl" action="showNextWeeksSummary" namespace="/home" includeParams="none" />
+													<s:div id="nextWeeksSummaryFrame" executeScripts="true" theme="ajax" href="%{nextWeeksSummaryUrl}" indicator="nextWeeksSummaryIndicator" cssClass="waitMessage" loadingText='%{getText("wait.message")}'/>
 												</td>
 											</tr>
 										</table>
@@ -120,4 +98,5 @@
 	<script language="javascript" type="text/javascript">
 		djConfig.searchIds.push("currentWeekSummaryFrame");	
 		djConfig.searchIds.push("pastWeeksSummaryFrame");	
+		djConfig.searchIds.push("nextWeeksSummaryFrame");	
 	</script>

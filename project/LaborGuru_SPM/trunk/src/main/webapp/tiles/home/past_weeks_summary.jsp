@@ -18,26 +18,28 @@
 		<td class="windowTableLabel"><s:text name="home.target.label"/></td>
 		<td class="windowTableLabel"><s:text name="home.scheduled.label"/></td>
 	</tr>
+	
 	<tr>
 		<td class="windowTableLabel"><s:text name="home.last_week.label"/></td>
-		<td class="windowTableValue">11-18-08</td>
-		<td class="windowTableValue">12,000</td>
-		<td class="windowTableValue">720</td>
-		<td class="windowTableValue">750</td>
-		<td class="windowTableValue">11,725</td>
-		<td class="windowTableValue">716</td>
-		<td class="windowTableValue">753</td>
+		<td class="windowTableValue"><s:text name="home.weekday.performance.dateformat"><s:param value="pastWeeksSummary[0].date"/></s:text></td>
+		<td class="windowTableValue"><s:text name="currency"><s:param value="pastWeeksSummary[0].projectedVolume"/></s:text></td>
+		<td class="windowTableValue"><s:text name="total.hours"><s:param value="pastWeeksSummary[0].projectedTarget"/></s:text></td>
+		<td class="windowTableValue"><s:text name="total.hours"><s:param value="pastWeeksSummary[0].projectedScheduled"/></s:text></td>
+		<td class="windowTableValue"><s:text name="currency"><s:param value="pastWeeksSummary[0].actualVolume"/></s:text></td>
+		<td class="windowTableValue"><s:text name="total.hours"><s:param value="pastWeeksSummary[0].actualTarget"/></s:text></td>
+		<td class="windowTableValue"><s:text name="total.hours"><s:param value="pastWeeksSummary[0].actualScheduled"/></s:text></td>
 	</tr>
 	<tr>
 		<td class="windowTableLabel"><s:text name="home.two_weeks.label"/></td>
-		<td class="windowTableValue">11-11-08</td>
-		<td class="windowTableValue">12,000</td>
-		<td class="windowTableValue">730</td>
-		<td class="windowTableValue">750</td>
-		<td class="windowTableValue">11,725</td>
-		<td class="windowTableValue">742</td>
-		<td class="windowTableValue">753</td>
+		<td class="windowTableValue"><s:text name="home.weekday.performance.dateformat"><s:param value="pastWeeksSummary[1].date"/></s:text></td>
+		<td class="windowTableValue"><s:text name="currency"><s:param value="pastWeeksSummary[1].projectedVolume"/></s:text></td>
+		<td class="windowTableValue"><s:text name="total.hours"><s:param value="pastWeeksSummary[1].projectedTarget"/></s:text></td>
+		<td class="windowTableValue"><s:text name="total.hours"><s:param value="pastWeeksSummary[1].projectedScheduled"/></s:text></td>
+		<td class="windowTableValue"><s:text name="currency"><s:param value="pastWeeksSummary[1].actualVolume"/></s:text></td>
+		<td class="windowTableValue"><s:text name="total.hours"><s:param value="pastWeeksSummary[1].actualTarget"/></s:text></td>
+		<td class="windowTableValue"><s:text name="total.hours"><s:param value="pastWeeksSummary[1].actualScheduled"/></s:text></td>
 	</tr>
+	
 	<tr>
 		<td class="windowTableLabel">&nbsp;</td>
 		<td class="windowTableLabel"><s:text name="home.week.label"/></td>
@@ -50,7 +52,7 @@
 	</tr>
 	<tr>
 		<td class="windowTableLabel"><s:text name="home.last_week.label"/></td>
-		<td class="windowTableValue">11-18-08</td>
+		<td class="windowTableValue"><s:text name="home.weekday.performance.dateformat"><s:param value="pastWeeksSummary[0].date"/></s:text></td>
 		<td class="windowTableValue">-15%</td>
 		<td class="windowTableValue">-8%</td>
 		<td class="windowTableValue">7%</td>
@@ -60,7 +62,7 @@
 	</tr>
 	<tr>
 		<td class="windowTableLabel"><s:text name="home.two_weeks.label"/></td>
-		<td class="windowTableValue">11-11-08</td>
+		<td class="windowTableValue"><s:text name="home.weekday.performance.dateformat"><s:param value="pastWeeksSummary[1].date"/></s:text></td>
 		<td class="windowTableValue">-20%</td>
 		<td class="windowTableValue">-10%</td>
 		<td class="windowTableValue">10%</td>
@@ -71,5 +73,5 @@
 </table>
 
 <script language="javascript" type="text/javascript">
-	setObjectByIDClass('currentWeekSummaryFrame', '');
+	setObjectByIDClass('pastWeeksSummaryFrame', '');
 </script>

@@ -1,12 +1,21 @@
 package com.laborguru.service.actualhours;
 
+import java.util.Date;
+
 import com.laborguru.model.ActualHours;
+import com.laborguru.model.Store;
 import com.laborguru.service.actualhours.dao.ActualHoursDao;
 
 public class ActualHoursServiceBean implements ActualHoursService{
 
 	private ActualHoursDao actualHoursDao;
 	
+	/**
+	 * 
+	 * @param objectToPersist
+	 * @return
+	 * @see com.laborguru.service.actualhours.ActualHoursService#saveOrUpdate(com.laborguru.model.ActualHours)
+	 */
 	public ActualHours saveOrUpdate(ActualHours objectToPersist){
 		
 		if (objectToPersist == null){
@@ -31,6 +40,27 @@ public class ActualHoursServiceBean implements ActualHoursService{
 	 */
 	public void setActualHoursDao(ActualHoursDao actualHoursDao) {
 		this.actualHoursDao = actualHoursDao;
+	}
+
+	/**
+	 * @return the actualHoursDao
+	 */
+	public ActualHoursDao getActualHoursDao() {
+		return actualHoursDao;
+	}
+
+	/**
+	 * 
+	 * @param store
+	 * @param date
+	 * @return
+	 * @see com.laborguru.service.actualhours.ActualHoursService#getActualHoursByDate(com.laborguru.model.Store, java.util.Date)
+	 */
+	public ActualHours getActualHoursByDate(Store store, Date date) {
+		ActualHours ah = new ActualHours();
+		ah.setDate(date);
+		ah.setStore(store);
+		return getActualHoursDao().getActualHoursByDateAndStore(ah);
 	}
 
 }
