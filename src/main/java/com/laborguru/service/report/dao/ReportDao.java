@@ -179,15 +179,5 @@ public interface ReportDao {
 	 */
 	List<TotalHour> getActualHours(Store store, Date startDate, Date endDate) throws SQLException;
 	
-	/**
-	 * Retrieves the minimum staffing needed for those days. 
-	 * This minimum staffing is according to the projections for those days.
-	 * @param store
-	 * @param startDate
-	 * @param endDate
-	 * @return
-	 * @throws SQLException
-	 */
-	List<TotalHour> getMinimumStaffing(Store store, Date startDate, Date endDate) throws SQLException;
 	
 }

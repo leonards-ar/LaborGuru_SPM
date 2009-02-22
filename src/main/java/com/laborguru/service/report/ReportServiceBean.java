@@ -15,6 +15,7 @@ import com.laborguru.model.HistoricSales;
 import com.laborguru.model.Position;
 import com.laborguru.model.PositionGroup;
 import com.laborguru.model.Store;
+import com.laborguru.model.StoreDailyHistoricSalesStaffing;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.model.report.TotalHourByPosition;
 import com.laborguru.service.projection.ProjectionService;
@@ -210,8 +211,8 @@ public class ReportServiceBean implements ReportService {
 			Date endingWeekDate = CalendarUtils.addOrSubstractDays(startingWeekDate, 6);
 			List<HistoricSales> actualSales = reportDao.getActualSales(store, startingWeekDate, endingWeekDate);
 			List<TotalHour> actualHours = reportDao.getActualHours(store, startingWeekDate, endingWeekDate);			
-			List<TotalHour> minimumStaffing = reportDao.getMinimumStaffing(store, startingWeekDate, endingWeekDate);
-			
+			List<TotalHour> minimumStaffing = getActualMinimumStaffing(store, startingWeekDate, endingWeekDate);
+			 
 			return getMergedTotalEfficiencyHours(actualSales, actualHours, minimumStaffing, startingWeekDate, endingWeekDate);
 			
 		} catch(SQLException e) {
@@ -242,6 +243,22 @@ public class ReportServiceBean implements ReportService {
 			throw new SpmUncheckedException(e.getCause(), e.getMessage(),
 					ErrorEnum.GENERIC_DATABASE_ERROR);
 		}
+	}
+	
+	private List<TotalHour> getActualMinimumStaffing(Store store, Date startDate, Date endDate){
+		List<TotalHour> totalHours = new ArrayList<TotalHour>();
+		for(Date date = startDate; !endDate.after(date); date = CalendarUtils.addOrSubstractDays(date,1)){
+			TotalHour totalhour = new TotalHour();
+			
+			StoreDailyHistoricSalesStaffing saleStaffing = getStaffingService().getDailyHistoricSalesStaffingByDate(store, date);
+			
+			totalhour.setDay(date);
+			totalhour.setTarget(new BigDecimal(saleStaffing.getTotalDailyTarget()));
+			
+			totalHours.add(totalhour);
+			
+		}
+		return totalHours;
 	}
 	
 	private TotalHour getTotalHourByDay(Date day, List<TotalHour> list) {

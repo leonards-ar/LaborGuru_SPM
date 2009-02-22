@@ -190,16 +190,6 @@ public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao
 		return getSqlMapClient().queryForList("getActualHours", ReportDaoHelper.mapActualHoursReport(store, startDate, endDate));
 	}
 	
-	public List<TotalHour> getMinimumStaffing(Store store, Date startDate, Date endDate) throws SQLException{
-		if(log.isDebugEnabled()) {
-			log.debug("getActualHours: before select params: store_id: " + store.getId() + " startDate: " + startDate + " endDate: " + endDate);
-		}
-		
-		return getSqlMapClient().queryForList("getMinimumStaffing", ReportDaoHelper.mapMinimumStaffingReport(store, startDate, endDate));
-		
-	}
-	
-	
 	private boolean isNextDay(Date startHour, Date endHour){
 		return CalendarUtils.equalsOrSmallerTime(endHour, startHour);
 	}

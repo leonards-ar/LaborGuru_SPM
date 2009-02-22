@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 import org.dom4j.Document;
@@ -25,7 +26,7 @@ public class FusionXmlDataConverter {
 	private static final String WEEKLY_TOTAL_HOURS_REPORT = "weeklyTotalHoursReport";
 	private static final String DAILY_HALFHOUR_REPORT = "dailyHalfhourReport";
 	
-	public String weeklyTotalHoursXmlConverter(List<TotalHour> totalHours) {
+	public String weeklyTotalHoursXmlConverter(List<TotalHour> totalHours, ResourceBundle bundle) {
 
 		Document document = DocumentHelper.createDocument();
 		Element graph = document.addElement("graph");
@@ -42,13 +43,13 @@ public class FusionXmlDataConverter {
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat(props.getProperty("dateFormat"));
 
-		graph.addAttribute("caption", "Total Hours (Weekly)");
+		graph.addAttribute("caption", bundle.getString("weeklyTotalHours.title"));
 		graph.addAttribute("PYAxisMinValue", props.getProperty("defaultPYAxisMinValue"));
 		graph.addAttribute("SYAxisMinValue", props.getProperty("defaultSYAxisMinValue"));
 		graph.addAttribute("PYAxisMaxValue", props.getProperty("defaultPYAxisMaxValue"));
 		graph.addAttribute("SYAxisMaxValue", props.getProperty("defaultSYAxisMaxValue"));
-		graph.addAttribute("PYAxisName", "Hours");
-		graph.addAttribute("SYAxisName", "Hours");
+		graph.addAttribute("PYAxisName", bundle.getString("weeklyTotalHour.axisname"));
+		graph.addAttribute("SYAxisName", bundle.getString("weeklyTotalHour.axisname"));
 		graph.addAttribute("showvalues", props.getProperty("showvalues"));
 		graph.addAttribute("numDivLines", props.getProperty("numDivLines"));
 		graph.addAttribute("formatNumberScale", props.getProperty("formatNumberScale"));
@@ -57,11 +58,11 @@ public class FusionXmlDataConverter {
 		graph.addAttribute("anchorRadius", props.getProperty("anchorRadius"));
 		graph.addAttribute("anchorBorderColor", props.getProperty("anchorBorderColor"));
 
-		scheduleDataset.addAttribute("seriesName", "Schedule");
-		scheduleDataset.addAttribute("color", props.getProperty("scheduleColor"));
+		scheduleDataset.addAttribute("seriesName", bundle.getString("weeklyTotalHours.series.schedule"));
+		scheduleDataset.addAttribute("color", props.getProperty("weeklyTotalHours.scheduleColor"));
 		scheduleDataset.addAttribute("showValues", props.getProperty("scheduleShowValues"));
 
-		targetDataset.addAttribute("seriesName", "Target");
+		targetDataset.addAttribute("seriesName", bundle.getString("weeklyTotalHours.series.target"));
 		targetDataset.addAttribute("color", props.getProperty("targetColor"));
 		targetDataset.addAttribute("showValues", props.getProperty("targetShowValues"));
 		targetDataset.addAttribute("parentYAxis", "S");
@@ -88,7 +89,7 @@ public class FusionXmlDataConverter {
 		return document.asXML();
 	}
 
-	public String halfHoursXmlConverter(List<TotalHour> totalHours) {
+	public String halfHoursXmlConverter(List<TotalHour> totalHours, ResourceBundle bundle) {
 
 		Document document = DocumentHelper.createDocument();
 		Element graph = document.addElement("graph");
@@ -105,13 +106,13 @@ public class FusionXmlDataConverter {
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat(props.getProperty("dateFormat"));
 
-		graph.addAttribute("caption", "Day By Half Hour");
+		graph.addAttribute("caption", bundle.getString("dailyHalfHour.title"));
 		graph.addAttribute("PYAxisMinValue", props.getProperty("defaultPYAxisMinValue"));
 		graph.addAttribute("SYAxisMinValue", props.getProperty("defaultSYAxisMinValue"));
 		graph.addAttribute("PYAxisMaxValue", props.getProperty("defaultPYAxisMaxValue"));
 		graph.addAttribute("SYAxisMaxValue", props.getProperty("defaultSYAxisMaxValue"));
-		graph.addAttribute("PYAxisName", "Hours");
-		graph.addAttribute("SYAxisName", "Hours");
+		graph.addAttribute("PYAxisName", bundle.getString("dailyHalfHour.axisname"));
+		graph.addAttribute("SYAxisName", bundle.getString("dailyHalfHour.axisname"));
 		graph.addAttribute("showvalues", props.getProperty("showvalues"));
 		graph.addAttribute("numDivLines", props.getProperty("numDivLines"));
 		graph.addAttribute("formatNumberScale", props.getProperty("formatNumberScale"));
@@ -121,11 +122,11 @@ public class FusionXmlDataConverter {
 		graph.addAttribute("anchorBorderColor", props.getProperty("anchorBorderColor"));
 		graph.addAttribute("rotateNames", "1");
 
-		scheduleDataset.addAttribute("seriesName", "Schedule");
+		scheduleDataset.addAttribute("seriesName", bundle.getString("dailyHalfHour.series.schedule"));
 		scheduleDataset.addAttribute("color", props.getProperty("scheduleColor"));
 		scheduleDataset.addAttribute("showValues", props.getProperty("scheduleShowValues"));
 
-		targetDataset.addAttribute("seriesName", "Target");
+		targetDataset.addAttribute("seriesName", bundle.getString("dailyHalfHour.series.target"));
 		targetDataset.addAttribute("color", props.getProperty("targetColor"));
 		targetDataset.addAttribute("showValues", props.getProperty("targetShowValues"));
 		targetDataset.addAttribute("parentYAxis", "S");

@@ -82,7 +82,7 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 	
 	private void generateXmlGraph(){
 		setXmlValues(getFusionXmlDataConverter().weeklyTotalHoursXmlConverter(
-				getTotalHours()));
+				getTotalHours(), getTexts("reportmessages")));
 	}
 	
 	protected abstract void getReport();
