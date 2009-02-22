@@ -47,15 +47,6 @@ public class StoreDailyStaffing extends SpmObject {
 	
 	/**
 	 * 
-	 * @param position
-	 * @return
-	 */
-	public DailyProjectedStaffing getDailyStaffing(Position position) {
-		return storeDailyStaffing.get(position);
-	}
-	
-	/**
-	 * 
 	 * @return
 	 */
 	public Collection<DailyProjectedStaffing> getStoreDailyStaffing() {

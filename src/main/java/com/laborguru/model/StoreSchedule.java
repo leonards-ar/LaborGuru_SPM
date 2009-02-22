@@ -188,6 +188,21 @@ public class StoreSchedule extends SpmObject {
 	
 	/**
 	 * 
+	 * @param position
+	 * @return
+	 */
+	public Double getTotalShiftHoursWithContiguous(Position position) {
+		double total = 0.0;
+		
+		for(EmployeeSchedule employeeSchedule : getEmployeeSchedules()) {
+			total += employeeSchedule.getTotalShiftHoursWithContiguous(position).doubleValue();
+		}
+		
+		return new Double(total);
+	}	
+	
+	/**
+	 * 
 	 * @return
 	 */
 	public Double getTotalShiftHours() {
@@ -199,6 +214,21 @@ public class StoreSchedule extends SpmObject {
 		
 		return new Double(total);
 	}	
+
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 */
+	public Double getTotalShiftHours(Position position) {
+		double total = 0.0;
+		
+		for(EmployeeSchedule employeeSchedule : getEmployeeSchedules()) {
+			total += employeeSchedule.getTotalShiftHours(position).doubleValue();
+		}
+		
+		return new Double(total);
+	}
 	
 	/**
 	 * 

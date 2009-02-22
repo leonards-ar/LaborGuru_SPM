@@ -1099,7 +1099,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		int total = 0;
 		for(StoreDailyStaffing storeDailyStaffing : getDailyStaffings()) {
 			if(storeDailyStaffing != null) {
-				DailyProjectedStaffing dailyStaffing = storeDailyStaffing.getDailyStaffing(position);
+				DailyProjectedStaffing dailyStaffing = storeDailyStaffing.getDailyStaffingFor(position);
 				total += getTotalDailyStaffingInMinutes(dailyStaffing);
 			}
 		}

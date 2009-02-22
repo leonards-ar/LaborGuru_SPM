@@ -1142,7 +1142,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	private int getTotalPositionTargetInMinutes(Position position) {
 		StoreDailyStaffing storeDailyStaffing = getSelectedDayDailyStaffing();
 		if(storeDailyStaffing != null) {
-			DailyProjectedStaffing dailyStaffing = storeDailyStaffing.getDailyStaffing(position);
+			DailyProjectedStaffing dailyStaffing = storeDailyStaffing.getDailyStaffingFor(position);
 			return getTotalDailyStaffingInMinutes(dailyStaffing);
 		} else {
 			return 0;
