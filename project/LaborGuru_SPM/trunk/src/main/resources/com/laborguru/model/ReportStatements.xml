@@ -426,16 +426,4 @@
 		AND a.store_id = #store_id# 
 	</select>
 	
-	<select id="getMinimumStaffing" parameterClass="java.util.Map" resultClass="com.laborguru.model.report.TotalHour">
-		SELECT
-		s.staffing_date as day, 
-		sum(s.total_minimum_staffing) as schedule,
-		sum(s.total_minimum_staffing) as target
-		FROM tbl_staffing s, tbl_positions p
-		WHERE s.position_id = p.position_id
-		AND s.staffing_date BETWEEN STR_TO_DATE(#start_date#, '%Y-%m-%d') AND STR_TO_DATE(#end_date#, '%Y-%m-%d')
-		AND p.store_id = #store_id#
-		GROUP BY s.staffing_date
-		ORDER BY s.staffing_date;
-	</select>		
 </sqlMap>

@@ -93,7 +93,7 @@ public class HalfHoursReportPrepareAction extends ScheduleReportPrepareAction im
 	
 	public void generateXmlGraph(){
 		setXmlValues(getFusionXmlDataConverter().halfHoursXmlConverter(
-				getTotalHours()));
+				getTotalHours(), getTexts("reportmessages")));
 	}
 	
 	/**
