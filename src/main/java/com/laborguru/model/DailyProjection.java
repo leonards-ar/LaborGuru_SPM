@@ -37,16 +37,16 @@ public class DailyProjection extends DailySalesValue {
 	 * If there is no halfhours returns NULL
 	 * @return the projection value or null
 	 */
-	public BigDecimal getDailyProjectionValue(){
-		BigDecimal retValue = new BigDecimal("0.00");
-		
-		for (HalfHourProjection aHalfHourProjection: getHalfHourProjections()){
-			retValue = retValue.add(aHalfHourProjection.getAdjustedValue());
-		}
-		
-		return getHalfHourProjections().isEmpty()? null:retValue;
+	public BigDecimal getDailyProjectionValue() {
+		return getDailySalesValue();
 	}
 	
+	/**
+	 * 
+	 * @param obj
+	 * @return
+	 * @see com.laborguru.model.SpmObject#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 

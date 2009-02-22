@@ -83,7 +83,7 @@ public class EmployeeSchedule extends SpmObject {
 	 * @param position
 	 * @return
 	 */
-	public boolean hasMultipleShiftsXXX(Position position) {
+	public boolean hasMultipleShifts(Position position) {
 		int count = 0;
 		if(position != null && position.getId() != null) {
 			for(Shift shift : getShifts()) {
@@ -150,6 +150,34 @@ public class EmployeeSchedule extends SpmObject {
 			}
 		}
 		return new Double(total);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getTotalShiftHoursWithContiguous() {
+		double total = 0.0;
+		for(Shift shift : getShifts()) {
+			if(!shift.isBreak() && !shift.isReferencedShift()) {
+				total += shift.getTotalShiftHoursWithContiguous().doubleValue();
+			}
+		}
+		return new Double(total);		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getTotalShiftHours() {
+		double total = 0.0;
+		for(Shift shift : getShifts()) {
+			if(!shift.isBreak()) {
+				total += shift.getTotalShiftHours().doubleValue();
+			}
+		}
+		return new Double(total);		
 	}
 	
 	/**

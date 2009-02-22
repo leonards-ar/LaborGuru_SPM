@@ -14,6 +14,14 @@
 			<result name="success" type="tiles">employeeHomePage</result>			
 		</action>	
 
+		<action name="showCurrentWeekSummary" class="com.laborguru.action.home.ShowCurrentWeekSummaryAction">
+			<result name="success">/tiles/home/current_week_summary.jsp</result>		
+		</action>
+
+		<action name="showPastWeeksSummary" class="com.laborguru.action.home.ShowPastWeeksSummaryAction">
+			<result name="success">/tiles/home/past_weeks_summary.jsp</result>		
+		</action>
+		
 		<action name="admin_home" class="com.laborguru.action.home.AdministratorHomeAction">
 			<result name="success" type="tiles">adminHomePage</result>			
 		</action>	
