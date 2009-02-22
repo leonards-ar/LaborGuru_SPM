@@ -23,26 +23,9 @@
 											</tr>
 											<tr>
 												<td>
-													<table border="0" cellpadding="2" cellspacing="1" colspan="0" cellspan="0">
-														<tr>
-															<td class="windowTableLabel">&nbsp;</td>
-															<td class="windowTableLabel"><s:text name="home.week.label"/></td>
-															<td class="windowTableLabel"><s:text name="home.volume.label"/></td>
-															<td class="windowTableLabel"><s:text name="home.target.label"/></td>
-															<td class="windowTableLabel"><s:text name="home.scheduled.label"/></td>
-															<td class="windowTableLabel"><s:text name="home.difference.label"/></td>
-															<td class="windowTableLabel"><s:text name="home.percentage.label"/></td>
-														</tr>
-														<tr>
-															<td class="windowTableLabel"><s:text name="home.this_week.label"/></td>
-															<td class="windowTableValue">11-25-08</td>
-															<td class="windowTableValue">12,000</td>
-															<td class="windowTableValue">1,353</td>
-															<td class="windowTableValue">1,483</td>
-															<td class="windowTableValue">130</td>
-															<td class="windowTableValue">10%</td>
-														</tr>
-													</table>
+													<center><img id="currentWeekSummaryIndicator" style="display: none;" src="<s:url value="/images/wait.gif" includeParams="none"/>" alt="<s:text name="wait.message"/>" title="<s:text name="wait.message"/>" border="0"/></center>
+													<s:url id="currentWeekSummaryUrl" action="showCurrentWeekSummary" namespace="/home" includeParams="none" />
+													<s:div id="currentWeekSummaryFrame" executeScripts="true" theme="ajax" href="%{currentWeekSummaryUrl}" indicator="currentWeekSummaryIndicator" cssClass="waitMessage" loadingText='%{getText("wait.message")}'/>
 												</td>
 											</tr>
 
@@ -51,74 +34,9 @@
 											</tr>
 											<tr>
 												<td>
-													<table border="0" cellpadding="2" cellspacing="1" colspan="0" cellspan="0">
-														<tr>
-															<td class="windowTableLabel">&nbsp;</td>
-															<td class="windowTableLabel">&nbsp;</td>
-															<td class="windowTableLabel" colspan="3"><s:text name="home.projection_labor.label"/></td>
-															<td class="windowTableLabel" colspan="3"><s:text name="home.actual_labor.label"/></td>
-														</tr>
-														<tr>
-															<td class="windowTableLabel">&nbsp;</td>
-															<td class="windowTableLabel"><s:text name="home.week.label"/></td>
-															<td class="windowTableLabel"><s:text name="home.volume.label"/></td>
-															<td class="windowTableLabel"><s:text name="home.target.label"/></td>
-															<td class="windowTableLabel"><s:text name="home.scheduled.label"/></td>
-															<td class="windowTableLabel"><s:text name="home.volume.label"/></td>
-															<td class="windowTableLabel"><s:text name="home.target.label"/></td>
-															<td class="windowTableLabel"><s:text name="home.scheduled.label"/></td>
-														</tr>
-														<tr>
-															<td class="windowTableLabel"><s:text name="home.last_week.label"/></td>
-															<td class="windowTableValue">11-18-08</td>
-															<td class="windowTableValue">12,000</td>
-															<td class="windowTableValue">720</td>
-															<td class="windowTableValue">750</td>
-															<td class="windowTableValue">11,725</td>
-															<td class="windowTableValue">716</td>
-															<td class="windowTableValue">753</td>
-														</tr>
-														<tr>
-															<td class="windowTableLabel"><s:text name="home.two_weeks.label"/></td>
-															<td class="windowTableValue">11-11-08</td>
-															<td class="windowTableValue">12,000</td>
-															<td class="windowTableValue">730</td>
-															<td class="windowTableValue">750</td>
-															<td class="windowTableValue">11,725</td>
-															<td class="windowTableValue">742</td>
-															<td class="windowTableValue">753</td>
-														</tr>
-														<tr>
-															<td class="windowTableLabel">&nbsp;</td>
-															<td class="windowTableLabel"><s:text name="home.week.label"/></td>
-															<td class="windowTableLabel"><s:text name="home.performance.label"/></td>
-															<td class="windowTableLabel"><s:text name="home.scheduled.label"/></td>
-															<td class="windowTableLabel"><s:text name="home.projection.label"/></td>
-															<td class="windowTableLabel"><s:text name="home.execution.label"/></td>
-															<td class="windowTableLabel">&nbsp;</td>
-															<td class="windowTableLabel">&nbsp;</td>
-														</tr>
-														<tr>
-															<td class="windowTableLabel"><s:text name="home.last_week.label"/></td>
-															<td class="windowTableValue">11-18-08</td>
-															<td class="windowTableValue">-15%</td>
-															<td class="windowTableValue">-8%</td>
-															<td class="windowTableValue">7%</td>
-															<td class="windowTableValue">-1%</td>
-															<td class="windowTableValue">&nbsp;</td>
-															<td class="windowTableValue">&nbsp;</td>
-														</tr>
-														<tr>
-															<td class="windowTableLabel"><s:text name="home.two_weeks.label"/></td>
-															<td class="windowTableValue">11-11-08</td>
-															<td class="windowTableValue">-20%</td>
-															<td class="windowTableValue">-10%</td>
-															<td class="windowTableValue">10%</td>
-															<td class="windowTableValue">-5%</td>
-															<td class="windowTableValue">&nbsp;</td>
-															<td class="windowTableValue">&nbsp;</td>
-														</tr>
-													</table>
+													<center><img id="pastWeeksSummaryIndicator" style="display: none;" src="<s:url value="/images/wait.gif" includeParams="none"/>" alt="<s:text name="wait.message"/>" title="<s:text name="wait.message"/>" border="0"/></center>
+													<s:url id="pastWeeksSummaryUrl" action="showPastWeeksSummary" namespace="/home" includeParams="none" />
+													<s:div id="pastWeeksSummaryFrame" executeScripts="true" theme="ajax" href="%{pastWeeksSummaryUrl}" indicator="pastWeeksSummaryIndicator" cssClass="waitMessage" loadingText='%{getText("wait.message")}'/>
 												</td>
 											</tr>
 											
@@ -165,7 +83,7 @@
 							<!-- Right column -->
 							<table id="windowTable">
 								<tr>
-									<td class="windowTableHeader"><s:text name='home.weekday.dateformat'><s:param value='%{new java.util.Date()}'/></s:text></td>
+									<td class="windowTableHeader"><s:text name='home.weekday.position.dateformat'><s:param value='%{new java.util.Date()}'/></s:text></td>
 									<td class="windowTableHeader"><s:text name="home.scheduled.label"/></td>
 									<td class="windowTableHeader"><s:text name="home.target.label"/></td>
 									<td class="windowTableHeader"><s:text name="home.difference.label"/></td>
@@ -199,4 +117,7 @@
 		</tr>
 	</table>
 
-
+	<script language="javascript" type="text/javascript">
+		djConfig.searchIds.push("currentWeekSummaryFrame");	
+		djConfig.searchIds.push("pastWeeksSummaryFrame");	
+	</script>

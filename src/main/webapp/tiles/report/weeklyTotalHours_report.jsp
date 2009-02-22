@@ -3,8 +3,6 @@
 
 <br />
 
-<script language="javascript" type="text/javascript"
-	src="<s:url value="/js/spmcommon.js" includeParams="none" />"></script>
 <table cellspacing="0" align="center">
 
 

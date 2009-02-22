@@ -74,5 +74,5 @@ public class EmployeeHomeAction extends SpmAction implements Preparable {
 	 */
 	public void setPositionService(PositionService positionService) {
 		this.positionService = positionService;
-	}	
+	}
 }
