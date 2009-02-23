@@ -1,6 +1,7 @@
 package com.laborguru.service.store;
 
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -112,6 +113,12 @@ public class StoreServiceBean implements StoreService {
 			throw new IllegalArgumentException(STORE_NULL);
 		}
 		
+		Date now = new Date();
+		if(store.getId() == null || store.getId().intValue() <= 0) {
+			store.setCreationDate(now);
+		}
+		store.setLastUpdateDate(now);
+		
 		return storeDao.save(store);
 	}
 
@@ -161,12 +168,9 @@ public class StoreServiceBean implements StoreService {
 			storeToSave = storeListAux.get(0);
 			updateStoreInUpload(store, storeToSave);
 		}
-		
-		storeDao.save(storeToSave);
-		
-		return storeToSave;
+
+		return save(storeToSave);
 	}
-	
 	
 	/**
 	 * @param source

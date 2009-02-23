@@ -18,7 +18,7 @@
         <property name="surname" column="surname" type="string" length="100" />
 		<property name="lastLogon" column="last_logon" type="timestamp" />
 		<property name="loginCount" column="login_count" type="int"/>
-		<property name="creationDate" column="creation_date" type="date"/>
+		<property name="creationDate" column="creation_date" type="timestamp"/>
 		<property name="lastUpdateDate" column="last_update_date" type="timestamp"/>
 	    <set name="profiles" table="tbl_users_profiles" lazy="true">
 	        <key column="user_id" foreign-key="fk_users_profiles"/>

@@ -30,6 +30,9 @@ public class Store extends SpmObject {
 	private Integer dailyProjectionsWeeksDefault;
 	private Integer halfHourProjectionsWeeksDefault;
 
+	private Date creationDate;
+	private Date lastUpdateDate;
+	
 	private List<Position> positions;
 	private List<OperationTime> operationTimes;
 	private List<DayPart> dayParts;
@@ -713,5 +716,37 @@ public class Store extends SpmObject {
 	 */
 	public boolean isMultiDayScheduleWithExtraHours(DayOfWeek dayOfWeek) {
 		return CalendarUtils.equalsOrGreaterTime(getStoreScheduleStartHour(dayOfWeek), getStoreScheduleEndHour(dayOfWeek));
+	}
+
+
+	/**
+	 * @return the creationDate
+	 */
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+
+	/**
+	 * @param creationDate the creationDate to set
+	 */
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+
+
+	/**
+	 * @return the lastUpdateDate
+	 */
+	public Date getLastUpdateDate() {
+		return lastUpdateDate;
+	}
+
+
+	/**
+	 * @param lastUpdateDate the lastUpdateDate to set
+	 */
+	public void setLastUpdateDate(Date lastUpdateDate) {
+		this.lastUpdateDate = lastUpdateDate;
 	}	
 }
