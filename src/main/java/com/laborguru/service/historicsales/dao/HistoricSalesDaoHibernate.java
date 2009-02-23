@@ -30,7 +30,11 @@ public class HistoricSalesDaoHibernate extends SpmHibernateDao implements Histor
 	private static final String STORE_NULL = "The store passed in as parameter is null";
 	private static final String DATE_NULL = "The date passed in as parameter is null";
 
-	
+	/**
+	 * 
+	 * @param hs
+	 * @see com.laborguru.service.historicsales.dao.HistoricSalesDao#saveOrUpdate(com.laborguru.model.HistoricSales)
+	 */
 	public void saveOrUpdate(HistoricSales hs) {
 		
 		if (hs == null){
@@ -41,6 +45,38 @@ public class HistoricSalesDaoHibernate extends SpmHibernateDao implements Histor
 		getHibernateTemplate().saveOrUpdate(hs);
 	}
 
+	/**
+	 * 
+	 * @param store
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @see com.laborguru.service.historicsales.dao.HistoricSalesDao#getTotalHistoricSalesForTimePeriod(com.laborguru.model.Store, java.util.Date, java.util.Date)
+	 */
+	public BigDecimal getTotalHistoricSalesForTimePeriod(Store store, Date startDate, Date endDate) {
+		if(store == null) {
+			log.error(STORE_NULL);
+			throw new IllegalArgumentException(STORE_NULL);			
+		}
+		
+		DateTime from = startDate != null ? new DateTime(startDate).withTime(0, 0, 0, 0) : new DateTime(0L);
+		DateTime to = endDate != null ? new DateTime(endDate).withTime(23, 59, 59, 999) : new DateTime(Long.MAX_VALUE);
+		
+		if(log.isDebugEnabled()){
+			log.debug("Before getting total historic sales for time period - Parameters: Store Id: "+ store.getId() + ", from date: " + from.toDate() + ", to date: " + to.toDate());
+		}
+	
+		List<BigDecimal> totalResult = getHibernateTemplate().findByNamedParam("select sum(hs.mainValue) from HistoricSales hs " +
+				"where hs.store.id=:storeId AND hs.dateTime >= :startDate AND hs.dateTime <= :endDate",
+				new String[] {"storeId", "startDate", "endDate"}, new Object[] {store.getId(), from.toDate(), to.toDate()});
+		
+		if(log.isDebugEnabled()){
+			log.debug("After getting total historic sales for time period - Result List size: Store Id: " + (totalResult != null ? totalResult.size() : "null"));
+		}		
+
+		return totalResult != null && totalResult.size() > 0 && totalResult.get(0) != null ? totalResult.get(0) : new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
+	}
+	
 	/**
 	 * 
 	 * @param store

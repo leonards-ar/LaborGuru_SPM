@@ -309,5 +309,4 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 		
 		getHibernateTemplate().save(projection);
 	}
-
 }

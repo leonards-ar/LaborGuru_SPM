@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.laborguru.model.DailyProjectedStaffing;
@@ -118,4 +119,31 @@ public class StaffingDaoHibernate extends HibernateDaoSupport implements Staffin
 	public void deleteAll(List<DailyProjectedStaffing> storeDailyStaffing) {
 		getHibernateTemplate().deleteAll(storeDailyStaffing);
 	}
+	
+	/**
+	 * 
+	 * @param store
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @see com.laborguru.service.staffing.dao.StaffingDao#getTotalProjectedStaffingForTimePeriod(com.laborguru.model.Store, java.util.Date, java.util.Date)
+	 */
+	public Double getTotalProjectedStaffingForTimePeriod(Store store, Date startDate, Date endDate) {
+		DateTime from = startDate != null ? new DateTime(startDate).withTime(0, 0, 0, 0) : new DateTime(0L);
+		DateTime to = endDate != null ? new DateTime(endDate).withTime(23, 59, 59, 999) : new DateTime(Long.MAX_VALUE);
+		
+		if(log.isDebugEnabled()){
+			log.debug("Before getting total projected staffing for time period - Parameters: Store Id: "+ store.getId() + ", from date: " + from.toDate() + ", to date: " + to.toDate());
+		}
+	
+		List<Double> totalResult = getHibernateTemplate().findByNamedParam("select sum(ds.totalDailyTarget) from DailyProjectedStaffing ds " +
+				"where ds.position.store.id=:storeId AND ds.date >= :startDate AND ds.date <= :endDate",
+				new String[] {"storeId", "startDate", "endDate"}, new Object[] {store.getId(), from.toDate(), to.toDate()});
+		
+		if(log.isDebugEnabled()){
+			log.debug("After getting total projected staffing for time period - Result List size: Store Id: " + (totalResult != null ? totalResult.size() : "null"));
+		}		
+
+		return totalResult != null && totalResult.size() > 0 && totalResult.get(0) != null ? totalResult.get(0) : new Double(0.0);
+	}	
 }

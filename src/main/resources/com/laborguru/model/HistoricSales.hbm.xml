@@ -57,7 +57,6 @@
 		ORDER BY STR_TO_DATE(if(MINUTE(hs.date_time) >= 30, CONCAT(HOUR(hs.date_time), ':30'), CONCAT(HOUR(hs.date_time),':00')), GET_FORMAT(TIME,'ISO')) ASC]]>
 	</sql-query> 
 	
-	
 	<database-object>
 		<create>ALTER TABLE tbl_historic_sales AUTO_INCREMENT=10000</create>
 		<drop></drop>

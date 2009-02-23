@@ -28,4 +28,13 @@ public interface ActualHoursService {
 	 * @return
 	 */
 	ActualHours getActualHoursByDate(Store store, Date date);
+	
+	/**
+	 * 
+	 * @param store
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	Double getTotalActualHoursForTimePeriod(Store store, Date startDate, Date endDate);
 }

@@ -63,4 +63,16 @@ public class ActualHoursServiceBean implements ActualHoursService{
 		return getActualHoursDao().getActualHoursByDateAndStore(ah);
 	}
 
+	/**
+	 * 
+	 * @param store
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @see com.laborguru.service.actualhours.ActualHoursService#getTotalActualHoursForTimePeriod(com.laborguru.model.Store, java.util.Date, java.util.Date)
+	 */
+	public Double getTotalActualHoursForTimePeriod(Store store, Date startDate, Date endDate) {
+		return getActualHoursDao().getTotalActualHoursForTimePeriod(store, startDate, endDate);
+	}
+
 }

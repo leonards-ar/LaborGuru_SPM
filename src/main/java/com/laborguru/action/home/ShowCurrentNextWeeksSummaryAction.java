@@ -21,8 +21,8 @@ import com.laborguru.frontend.model.PerformanceSummaryRow;
  * @since SPM 1.0
  *
  */
-public class ShowNextWeeksSummaryAction extends EmployeeHomeSummaryBaseAction {
-	private static final Logger log = Logger.getLogger(ShowNextWeeksSummaryAction.class);
+public class ShowCurrentNextWeeksSummaryAction extends EmployeeHomeSummaryBaseAction {
+	private static final Logger log = Logger.getLogger(ShowCurrentNextWeeksSummaryAction.class);
 
 	/**
 	 * 
@@ -30,12 +30,12 @@ public class ShowNextWeeksSummaryAction extends EmployeeHomeSummaryBaseAction {
 	private static final long serialVersionUID = 8935610718218090851L;
 	private List<PerformanceSummaryRow> nextWeeksSummary;
 	
-	private static final int NEXT_WEEKS_QTY = 2;
+	private static final int NEXT_WEEKS_QTY = 1;
 	
 	/**
 	 * 
 	 */
-	public ShowNextWeeksSummaryAction() {
+	public ShowCurrentNextWeeksSummaryAction() {
 	}
 
 
@@ -47,6 +47,10 @@ public class ShowNextWeeksSummaryAction extends EmployeeHomeSummaryBaseAction {
 	@Override
 	public String execute() throws Exception {
 		try {
+			// Current weeks
+			getNextWeeksSummary().add(buildPerformanceSummaryRow(getWeekDaySelector().getStartingWeekDay()));
+			
+			// Next Weeks
 			getWeekDaySelector().setWeeksToShow(NEXT_WEEKS_QTY);
 			
 			List<Date> days = getWeekDaySelector().getNextStartingWeekDays();
@@ -55,7 +59,7 @@ public class ShowNextWeeksSummaryAction extends EmployeeHomeSummaryBaseAction {
 			}
 		} catch(Throwable ex) {
 			initializeEmptyPastWeeksSummary();
-			log.error("Could not retrieve next weeks performance summary", ex);
+			log.error("Could not retrieve current or next weeks performance summary", ex);
 		}
 		
 		return SpmActionResult.SUCCESS.getResult();

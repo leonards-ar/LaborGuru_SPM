@@ -613,8 +613,20 @@ input.text, input.password, textarea {
 	text-align: center;
 }
 
+.windowGreyTableTitleRow {
+}
+
+.windowGreyTableTitle {
+	color: #333333;
+	text-align: left;
+	font-family: trebuchet ms, arial, sans-serif;
+	font-weight: bold;	
+	font-size: 12px;	
+	background-color: #DEDDDB;
+}
+
 .windowGreyTableLabel {
-	background-color: #C0C0C0;
+	background-color: #DEDDDB;
 	color: #666666;
 	text-align: center;
 	font-family: trebuchet ms, arial, sans-serif;
