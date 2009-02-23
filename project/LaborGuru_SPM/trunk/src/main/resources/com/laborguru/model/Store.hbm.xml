@@ -11,7 +11,9 @@
 		<property name="name" column="name" type="string" length="150" />
 		<property name="code" column="code" type="string" length="150" />
 		<property name="firstDayOfWeekAsInteger" column="first_day_of_week" type="int"/>
-
+		<property name="creationDate" column="creation_date" type="timestamp"/>
+		<property name="lastUpdateDate" column="last_update_date" type="timestamp"/>
+		
 		<property name="dailyProjectionsWeeksDefault" column="daily_projections_weeks_default" type="int"/>
 		<property name="halfHourProjectionsWeeksDefault" column="half_hour_projections_weeks_default" type="int"/>
 
