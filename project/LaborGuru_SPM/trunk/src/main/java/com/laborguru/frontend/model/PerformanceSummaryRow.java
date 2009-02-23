@@ -138,13 +138,7 @@ public class PerformanceSummaryRow implements Serializable {
 	 * @return
 	 */
 	public Double getProjectedDifferencePercentage() {
-		double target = NumberUtils.getDoubleValue(getProjectedTarget());
-		if(target != 0.0) {
-			double diff = getProjectedDifference().doubleValue();
-			return new Double(diff / target * 100);
-		} else {
-			return new Double(0.0);
-		}
+		return percentage(getProjectedDifference(), getProjectedTarget());
 	}	
 
 	/**
@@ -156,14 +150,23 @@ public class PerformanceSummaryRow implements Serializable {
 	}
 	
 	/**
-	 * 
+	 * Performance
 	 * @return
 	 */
 	public Double getActualDifferencePercentage() {
-		double target = NumberUtils.getDoubleValue(getActualTarget());
-		if(target != 0.0) {
-			double diff = getActualDifference().doubleValue();
-			return new Double(diff / target * 100);
+		return percentage(getActualDifference(), getActualTarget());
+	}
+
+	/**
+	 * 
+	 * @param num
+	 * @param den
+	 * @return
+	 */
+	private Double percentage(Double num, Double den) {
+		double d = NumberUtils.getDoubleValue(den);
+		if(d != 0.0) {
+			return new Double(NumberUtils.getDoubleValue(num) / d * 100);
 		} else {
 			return new Double(0.0);
 		}
@@ -225,4 +228,35 @@ public class PerformanceSummaryRow implements Serializable {
 		return NumberUtils.getDoubleValue(getProjectedVolume()) > 0.0;
 	}
 	
+	/**
+	 * actual hours – scheduled hours
+	 * @return
+	 */
+	public Double getExecutionDifference() {
+		return new Double(NumberUtils.getDoubleValue(getActualScheduled()) - NumberUtils.getDoubleValue(getProjectedScheduled()));
+	}
+	
+	/**
+	 * actual hours – scheduled hours) /scheduled hours
+	 * @return
+	 */
+	public Double getExecutionDifferencePercentage() {
+		return percentage(getExecutionDifference(), getProjectedScheduled());
+	}	
+	
+	/**
+	 * (projection – actual)/ actual
+	 * @return
+	 */
+	public Double getProjectionDifference() {
+		return new Double(NumberUtils.getDoubleValue(getProjectedVolume()) - NumberUtils.getDoubleValue(getActualVolume()));
+	}
+	
+	/**
+	 * (projection – actual)/ actual
+	 * @return
+	 */
+	public Double getProjectionDifferencePercentage() {
+		return percentage(getProjectionDifference(), new Double(NumberUtils.getDoubleValue(getActualVolume())));
+	}		
 }

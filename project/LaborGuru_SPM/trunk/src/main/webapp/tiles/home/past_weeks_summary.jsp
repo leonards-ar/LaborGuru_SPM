@@ -53,20 +53,20 @@
 	<tr>
 		<td class="windowTableLabel"><s:text name="home.last_week.label"/></td>
 		<td class="windowTableValue"><s:text name="home.weekday.performance.dateformat"><s:param value="pastWeeksSummary[0].date"/></s:text></td>
-		<td class="windowTableValue">-15%</td>
-		<td class="windowTableValue">-8%</td>
-		<td class="windowTableValue">7%</td>
-		<td class="windowTableValue">-1%</td>
+		<td class="windowTableValue"><s:text name="percentage"><s:param value="pastWeeksSummary[0].actualDifferencePercentage"/></s:text>%</td>
+		<td class="windowTableValue"><s:text name="percentage"><s:param value="pastWeeksSummary[0].projectedDifferencePercentage"/></s:text>%</td>
+		<td class="windowTableValue"><s:text name="percentage"><s:param value="pastWeeksSummary[0].projectionDifferencePercentage"/></s:text>%</td>
+		<td class="windowTableValue"><s:text name="percentage"><s:param value="pastWeeksSummary[0].executionDifferencePercentage"/></s:text>%</td>
 		<td class="windowTableValue">&nbsp;</td>
 		<td class="windowTableValue">&nbsp;</td>
 	</tr>
 	<tr>
 		<td class="windowTableLabel"><s:text name="home.two_weeks.label"/></td>
 		<td class="windowTableValue"><s:text name="home.weekday.performance.dateformat"><s:param value="pastWeeksSummary[1].date"/></s:text></td>
-		<td class="windowTableValue">-20%</td>
-		<td class="windowTableValue">-10%</td>
-		<td class="windowTableValue">10%</td>
-		<td class="windowTableValue">-5%</td>
+		<td class="windowTableValue"><s:text name="percentage"><s:param value="pastWeeksSummary[1].actualDifferencePercentage"/></s:text>%</td>
+		<td class="windowTableValue"><s:text name="percentage"><s:param value="pastWeeksSummary[1].projectedDifferencePercentage"/></s:text>%</td>
+		<td class="windowTableValue"><s:text name="percentage"><s:param value="pastWeeksSummary[1].projectionDifferencePercentage"/></s:text>%</td>
+		<td class="windowTableValue"><s:text name="percentage"><s:param value="pastWeeksSummary[1].executionDifferencePercentage"/></s:text>%</td>
 		<td class="windowTableValue">&nbsp;</td>
 		<td class="windowTableValue">&nbsp;</td>
 	</tr>
