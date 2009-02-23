@@ -1,5 +1,6 @@
 package com.laborguru.service.historicsales;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import com.laborguru.model.DailyHistoricSales;
@@ -36,6 +37,18 @@ public class HistoricSalesServiceBean implements HistoricSalesService {
 	 */
 	public void setHistoricSalesDao(HistoricSalesDao dao) {
 		this.historicSalesDao = dao;
+	}
+
+	/**
+	 * 
+	 * @param store
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @see com.laborguru.service.historicsales.HistoricSalesService#getTotalHistoricSalesForTimePeriod(com.laborguru.model.Store, java.util.Date, java.util.Date)
+	 */
+	public BigDecimal getTotalHistoricSalesForTimePeriod(Store store, Date startDate, Date endDate) {
+		return historicSalesDao.getTotalHistoricSalesForTimePeriod(store, startDate, endDate);
 	}
 
 }

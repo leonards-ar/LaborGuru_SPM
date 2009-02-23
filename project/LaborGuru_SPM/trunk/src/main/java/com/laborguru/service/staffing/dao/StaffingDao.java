@@ -57,4 +57,13 @@ public interface StaffingDao {
 	 * @return
 	 */
 	List<DailyProjectedStaffing> getStoreDailyStaffingFromDate(Store store, Date date);
+	
+	/**
+	 * 
+	 * @param store
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	Double getTotalProjectedStaffingForTimePeriod(Store store, Date startDate, Date endDate);
 }

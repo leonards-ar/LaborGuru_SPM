@@ -14,16 +14,12 @@
 			<result name="success" type="tiles">employeeHomePage</result>			
 		</action>	
 
-		<action name="showCurrentWeekSummary" class="com.laborguru.action.home.ShowCurrentWeekSummaryAction">
-			<result name="success">/tiles/home/current_week_summary.jsp</result>		
-		</action>
-
 		<action name="showPastWeeksSummary" class="com.laborguru.action.home.ShowPastWeeksSummaryAction">
 			<result name="success">/tiles/home/past_weeks_summary.jsp</result>		
 		</action>
 
-		<action name="showNextWeeksSummary" class="com.laborguru.action.home.ShowNextWeeksSummaryAction">
-			<result name="success">/tiles/home/next_weeks_summary.jsp</result>		
+		<action name="showCurrentNextWeeksSummary" class="com.laborguru.action.home.ShowCurrentNextWeeksSummaryAction">
+			<result name="success">/tiles/home/current_next_weeks_summary.jsp</result>		
 		</action>
 
 		<action name="showCurrentDayPositionSummary" class="com.laborguru.action.home.ShowCurrentDayPositionSummaryAction">

@@ -773,4 +773,16 @@ public class StaffingServiceBean implements StaffingService {
 	public void setHistoricSalesDao(HistoricSalesDao historicSalesDao) {
 		this.historicSalesDao = historicSalesDao;
 	}
+
+	/**
+	 * 
+	 * @param store
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @see com.laborguru.service.staffing.StaffingService#getTotalProjectedStaffingForTimePeriod(com.laborguru.model.Store, java.util.Date, java.util.Date)
+	 */
+	public Double getTotalProjectedStaffingForTimePeriod(Store store, Date startDate, Date endDate) {
+		return getStaffingDao().getTotalProjectedStaffingForTimePeriod(store, startDate, endDate);
+	}
 }
