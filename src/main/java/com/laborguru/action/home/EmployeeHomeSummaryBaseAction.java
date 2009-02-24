@@ -184,7 +184,7 @@ public abstract class EmployeeHomeSummaryBaseAction extends SpmAction {
 	 * @param startingDayOfWeek
 	 * @return
 	 */
-	private Date getEndOfWeekDay(Date startingDayOfWeek) {
+	protected Date getEndOfWeekDay(Date startingDayOfWeek) {
 		return CalendarUtils.addOrSubstractDays(startingDayOfWeek, DayOfWeek.values().length - 1);
 	}
 	

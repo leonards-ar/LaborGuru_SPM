@@ -7,6 +7,7 @@ package com.laborguru.service.schedule;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Map;
 
 import com.laborguru.model.Store;
 import com.laborguru.model.StoreSchedule;
@@ -59,6 +60,15 @@ public interface ScheduleService extends Service {
 	 * @param endDate
 	 * @return
 	 */
-	BigDecimal getTotalScheduledLaborCostForTimePeriod(Store store, Date startDate, Date endDate);	
+	BigDecimal getTotalScheduledLaborCostForTimePeriod(Store store, Date startDate, Date endDate);
+	
+	/**
+	 * 
+	 * @param store
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	Map<Integer, BigDecimal> getTotalScheduledHoursByPositionForTimePeriod(Store store, Date startDate, Date endDate);	
 }
  

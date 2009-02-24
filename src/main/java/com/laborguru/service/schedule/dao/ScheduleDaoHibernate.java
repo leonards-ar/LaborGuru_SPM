@@ -7,7 +7,9 @@ package com.laborguru.service.schedule.dao;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
@@ -140,5 +142,47 @@ public class ScheduleDaoHibernate extends HibernateDaoSupport implements Schedul
 
 		return totalResult != null && totalResult.size() > 0 && totalResult.get(0) != null ? totalResult.get(0) : new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
 	}
+	
+	/**
+	 * 
+	 * @param store
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @see com.laborguru.service.schedule.dao.ScheduleDao#getTotalScheduledHoursByPositionForTimePeriod(com.laborguru.model.Store, java.util.Date, java.util.Date)
+	 */
+	public Map<Integer, BigDecimal> getTotalScheduledHoursByPositionForTimePeriod(Store store, Date startDate, Date endDate) {
+		if(store == null) {
+			log.error(STORE_NULL);
+			throw new IllegalArgumentException(STORE_NULL);			
+		}
+		
+		DateTime from = startDate != null ? new DateTime(startDate).withTime(0, 0, 0, 0) : new DateTime(0L);
+		DateTime to = endDate != null ? new DateTime(endDate).withTime(23, 59, 59, 999) : new DateTime(Long.MAX_VALUE);
+		
+		if(log.isDebugEnabled()){
+			log.debug("Before getting total scheduled hours by position for time period - Parameters: Store Id: "+ store.getId() + ", from date: " + from.toDate() + ", to date: " + to.toDate());
+		}
+	
+		List<Object[]> totalResult = getHibernateTemplate().findByNamedQueryAndNamedParam("totalScheduledHoursByPositionByDate",
+				new String[] {"storeId", "startDate", "endDate"}, new Object[] {store.getId(), from.toDate(), to.toDate()});
+		
+		if(log.isDebugEnabled()){
+			log.debug("After getting total scheduled hours by position for time period - Result List size: Store Id: " + (totalResult != null ? totalResult.size() : "null"));
+		}
+		
+		Map<Integer, BigDecimal> totalHoursByPosition;
+		if(totalResult != null && totalResult.size() > 0) {
+			totalHoursByPosition = new HashMap<Integer, BigDecimal>(totalResult.size());
+			
+			for(Object[] row : totalResult) {
+				totalHoursByPosition.put((Integer) row[0], (BigDecimal)row[1]);
+			}
+		} else {
+			totalHoursByPosition = new HashMap<Integer, BigDecimal>();
+		}
+		
+		return totalHoursByPosition;
+	}	
 	
 }
