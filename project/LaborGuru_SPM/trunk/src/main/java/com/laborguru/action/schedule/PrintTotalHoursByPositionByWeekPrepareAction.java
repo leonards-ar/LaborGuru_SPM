@@ -169,7 +169,7 @@ public class PrintTotalHoursByPositionByWeekPrepareAction extends PrintShiftBase
 			}
 		}
 		
-		return total > 0.0 ? CalendarUtils.hoursToTime(new Double(total)) : "";
+		return total > 0.0 ? CalendarUtils.hoursToTime(new Double(total)) : "&nbsp;";
 	}
 	
 	/**

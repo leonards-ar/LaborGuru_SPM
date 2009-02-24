@@ -134,7 +134,7 @@
 							<td class="printScheduleValueCell"><s:property value="fullName"/></td>
 							<s:iterator id="weekDay" value="weekDaySelector.weekDays" status="itDayStatus">
 							<td class="printScheduleValueCell" align="center">
-							<s:property value="%{getTotalHoursFor(#pos, #employee, #itDayStatus.index)}"/>
+							<s:property escape="false" value="%{getTotalHoursFor(#pos, #employee, #itDayStatus.index)}"/>
 							</td>
 							</s:iterator>
 							<td class="printScheduleValueCell"><s:property value="%{getWeekTotalHoursFor(#pos, #employee)}"/></td>
