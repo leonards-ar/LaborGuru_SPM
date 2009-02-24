@@ -6,7 +6,9 @@
 package com.laborguru.service.staffing.dao;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
@@ -145,5 +147,43 @@ public class StaffingDaoHibernate extends HibernateDaoSupport implements Staffin
 		}		
 
 		return totalResult != null && totalResult.size() > 0 && totalResult.get(0) != null ? totalResult.get(0) : new Double(0.0);
+	}	
+	
+	/**
+	 * 
+	 * @param store
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @see com.laborguru.service.staffing.dao.StaffingDao#getTotalProjectedStaffingByPositionForTimePeriod(com.laborguru.model.Store, java.util.Date, java.util.Date)
+	 */
+	public Map<Integer, Double> getTotalProjectedStaffingByPositionForTimePeriod(Store store, Date startDate, Date endDate) {
+		DateTime from = startDate != null ? new DateTime(startDate).withTime(0, 0, 0, 0) : new DateTime(0L);
+		DateTime to = endDate != null ? new DateTime(endDate).withTime(23, 59, 59, 999) : new DateTime(Long.MAX_VALUE);
+		
+		if(log.isDebugEnabled()){
+			log.debug("Before getting total projected staffing by position for time period - Parameters: Store Id: "+ store.getId() + ", from date: " + from.toDate() + ", to date: " + to.toDate());
+		}
+	
+		List<Object[]> totalResult = getHibernateTemplate().findByNamedParam("select ds.position.id, sum(ds.totalDailyTarget) from DailyProjectedStaffing ds " +
+				"where ds.position.store.id=:storeId AND ds.date >= :startDate AND ds.date <= :endDate group by ds.position.id",
+				new String[] {"storeId", "startDate", "endDate"}, new Object[] {store.getId(), from.toDate(), to.toDate()});
+		
+		if(log.isDebugEnabled()){
+			log.debug("After getting total projected staffing by position for time period - Result List size: Store Id: " + (totalResult != null ? totalResult.size() : "null"));
+		}		
+
+		Map<Integer, Double> totalHoursByPosition;
+		if(totalResult != null && totalResult.size() > 0) {
+			totalHoursByPosition = new HashMap<Integer, Double>(totalResult.size());
+			
+			for(Object[] row : totalResult) {
+				totalHoursByPosition.put((Integer) row[0], (Double)row[1]);
+			}
+		} else {
+			totalHoursByPosition = new HashMap<Integer, Double>();
+		}
+
+		return totalHoursByPosition;
 	}	
 }

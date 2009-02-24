@@ -7,6 +7,7 @@ package com.laborguru.service.schedule;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Map;
 
 import com.laborguru.model.Store;
 import com.laborguru.model.StoreSchedule;
@@ -95,5 +96,18 @@ public class ScheduleServiceBean implements ScheduleService {
 	public BigDecimal getTotalScheduledLaborCostForTimePeriod(Store store,
 			Date startDate, Date endDate) {
 		return getScheduleDao().getTotalScheduledLaborCostForTimePeriod(store, startDate, endDate);
+	}
+
+	/**
+	 * 
+	 * @param store
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @see com.laborguru.service.schedule.ScheduleService#getTotalScheduledHoursByPositionForTimePeriod(com.laborguru.model.Store, java.util.Date, java.util.Date)
+	 */
+	public Map<Integer, BigDecimal> getTotalScheduledHoursByPositionForTimePeriod(
+			Store store, Date startDate, Date endDate) {
+		return getScheduleDao().getTotalScheduledHoursByPositionForTimePeriod(store, startDate, endDate);
 	}
 }

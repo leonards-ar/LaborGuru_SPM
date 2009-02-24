@@ -7,6 +7,7 @@ package com.laborguru.service.staffing.dao;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.laborguru.model.DailyProjectedStaffing;
 import com.laborguru.model.Position;
@@ -66,4 +67,13 @@ public interface StaffingDao {
 	 * @return
 	 */
 	Double getTotalProjectedStaffingForTimePeriod(Store store, Date startDate, Date endDate);
+	
+	/**
+	 * 
+	 * @param store
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	Map<Integer, Double> getTotalProjectedStaffingByPositionForTimePeriod(Store store, Date startDate, Date endDate);
 }

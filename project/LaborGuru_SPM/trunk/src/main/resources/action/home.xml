@@ -22,8 +22,8 @@
 			<result name="success">/tiles/home/current_next_weeks_summary.jsp</result>		
 		</action>
 
-		<action name="showCurrentDayPositionSummary" class="com.laborguru.action.home.ShowCurrentDayPositionSummaryAction">
-			<result name="success">/tiles/home/current_day_position_summary.jsp</result>		
+		<action name="showCurrentWeekPositionSummary" class="com.laborguru.action.home.ShowCurrentWeekPositionSummaryAction">
+			<result name="success">/tiles/home/current_week_position_summary.jsp</result>		
 		</action>
 				
 		<action name="admin_home" class="com.laborguru.action.home.AdministratorHomeAction">

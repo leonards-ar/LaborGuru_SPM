@@ -5,22 +5,18 @@
  */
 package com.laborguru.action.home;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.PositionPerformanceSummaryRow;
-import com.laborguru.model.DailyProjectedStaffing;
 import com.laborguru.model.Position;
-import com.laborguru.model.StoreDailyStaffing;
-import com.laborguru.model.StoreSchedule;
 import com.laborguru.service.position.PositionService;
-import com.laborguru.service.schedule.ScheduleService;
-import com.laborguru.service.staffing.StaffingService;
 import com.laborguru.util.NumberUtils;
 
 /**
@@ -30,8 +26,8 @@ import com.laborguru.util.NumberUtils;
  * @since SPM 1.0
  *
  */
-public class ShowCurrentDayPositionSummaryAction extends SpmAction {
-	private static final Logger log = Logger.getLogger(ShowCurrentDayPositionSummaryAction.class);
+public class ShowCurrentWeekPositionSummaryAction extends EmployeeHomeSummaryBaseAction {
+	private static final Logger log = Logger.getLogger(ShowCurrentWeekPositionSummaryAction.class);
 	
 	/**
 	 * 
@@ -39,10 +35,7 @@ public class ShowCurrentDayPositionSummaryAction extends SpmAction {
 	private static final long serialVersionUID = -3248835945937051460L;
 	
 	private PositionService positionService;
-	private ScheduleService scheduleService;
-	private StaffingService staffingService;
 	
-	private Date day;
 	private List<PositionPerformanceSummaryRow> currentDayPositionSummary;
 	private Double totalProjectedScheduled;
 	private Double totalProjectedTarget;
@@ -51,7 +44,7 @@ public class ShowCurrentDayPositionSummaryAction extends SpmAction {
 	/**
 	 * 
 	 */
-	public ShowCurrentDayPositionSummaryAction() {
+	public ShowCurrentWeekPositionSummaryAction() {
 	}
 
 	/**
@@ -72,24 +65,30 @@ public class ShowCurrentDayPositionSummaryAction extends SpmAction {
 	 * 
 	 */
 	private void buildPositionSummary() {
-		List<Position> positions = getPositionService().getPositionsByStore(getEmployeeStore());
-		StoreDailyStaffing dailyStaffing = getStaffingService().getDailyStaffingByDate(getEmployeeStore(), getDay());
-		StoreSchedule schedule = getScheduleService().getStoreScheduleByDate(getEmployeeStore(), getDay());
+		Date start = getWeekDaySelector().getStartingWeekDay();
+		Date end = getEndOfWeekDay(start);
 		
+		List<Position> positions = getPositionService().getPositionsByStore(getEmployeeStore());
+		Map<Integer, Double> staffingTotals = getStaffingService().getTotalProjectedStaffingByPositionForTimePeriod(getEmployeeStore(), start, end);
+		Map<Integer, BigDecimal> scheduleTotals = getScheduleService().getTotalScheduledHoursByPositionForTimePeriod(getEmployeeStore(), start, end); 
+
 		PositionPerformanceSummaryRow row;
 		for(Position position : positions) {
 			row = new PositionPerformanceSummaryRow();
 			
 			row.setPosition(position);
-			if(schedule != null) {
-				row.setProjectedScheduled(schedule.getTotalShiftHours(position));
+			if(scheduleTotals != null && scheduleTotals.containsKey(position.getId())) {
+				row.setProjectedScheduled(new Double(NumberUtils.getDoubleValue(scheduleTotals.get(position.getId()))));
 			} else {
 				row.setProjectedScheduled(new Double(0.0));
 			}
 
-			DailyProjectedStaffing staffing = dailyStaffing.getDailyStaffingFor(position);
-			row.setProjectedTarget(staffing != null ? staffing.getTotalDailyTarget() : new Double(0.0));
-			
+			if(staffingTotals != null && staffingTotals.containsKey(position.getId())) {
+				row.setProjectedTarget(new Double(NumberUtils.getDoubleValue(staffingTotals.get(position.getId()))));
+			} else {
+				row.setProjectedTarget(new Double(0.0));
+			}
+
 			getCurrentDayPositionSummary().add(row);
 		}
 	}
@@ -116,7 +115,6 @@ public class ShowCurrentDayPositionSummaryAction extends SpmAction {
 	 */
 	@Override
 	public String execute() throws Exception {
-		setDay(new Date());
 		try {
 			buildPositionSummary();
 		} catch(Throwable ex) {
@@ -125,48 +123,6 @@ public class ShowCurrentDayPositionSummaryAction extends SpmAction {
 		setPositionTotals();
 		
 		return SpmActionResult.SUCCESS.getResult();
-	}
-
-	/**
-	 * @return the scheduleService
-	 */
-	public ScheduleService getScheduleService() {
-		return scheduleService;
-	}
-
-	/**
-	 * @param scheduleService the scheduleService to set
-	 */
-	public void setScheduleService(ScheduleService scheduleService) {
-		this.scheduleService = scheduleService;
-	}
-
-	/**
-	 * @return the staffingService
-	 */
-	public StaffingService getStaffingService() {
-		return staffingService;
-	}
-
-	/**
-	 * @param staffingService the staffingService to set
-	 */
-	public void setStaffingService(StaffingService staffingService) {
-		this.staffingService = staffingService;
-	}
-
-	/**
-	 * @return the day
-	 */
-	public Date getDay() {
-		return day;
-	}
-
-	/**
-	 * @param day the day to set
-	 */
-	public void setDay(Date day) {
-		this.day = day;
 	}
 
 	/**
