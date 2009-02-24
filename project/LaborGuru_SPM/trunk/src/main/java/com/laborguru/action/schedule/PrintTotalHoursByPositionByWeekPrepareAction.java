@@ -169,7 +169,7 @@ public class PrintTotalHoursByPositionByWeekPrepareAction extends PrintShiftBase
 			}
 		}
 		
-		return CalendarUtils.hoursToTime(new Double(total));
+		return total > 0.0 ? CalendarUtils.hoursToTime(new Double(total)) : "";
 	}
 	
 	/**
@@ -182,9 +182,7 @@ public class PrintTotalHoursByPositionByWeekPrepareAction extends PrintShiftBase
 		double total = 0.0;
 		for(int i=0; i < getWeekDays().size(); i++) {
 			for(Shift shift : getShiftsFor(position, employee, i)) {
-				if(!shift.isReferencedShift()) {
-					total += shift.getTotalShiftHoursWithContiguous().doubleValue();
-				}
+				total += shift.getTotalShiftHours().doubleValue();
 			}
 		}
 		return CalendarUtils.hoursToTime(new Double(total));
