@@ -17,13 +17,13 @@ import com.laborguru.model.DailyProjection;
 import com.laborguru.model.DailySalesValue;
 import com.laborguru.model.DayOfWeek;
 import com.laborguru.model.StoreDailyHistoricSalesStaffing;
-import com.laborguru.model.StoreSchedule;
 import com.laborguru.service.actualhours.ActualHoursService;
 import com.laborguru.service.historicsales.HistoricSalesService;
 import com.laborguru.service.projection.ProjectionService;
 import com.laborguru.service.schedule.ScheduleService;
 import com.laborguru.service.staffing.StaffingService;
 import com.laborguru.util.CalendarUtils;
+import com.laborguru.util.NumberUtils;
 import com.laborguru.util.SpmConstants;
 
 /**
@@ -140,14 +140,10 @@ public abstract class EmployeeHomeSummaryBaseAction extends SpmAction {
 	 * @param day
 	 * @return
 	 */
-	private List<StoreSchedule> getScheduleForWeekStartingOn(Date day) {
-		List<StoreSchedule> schedules = new ArrayList<StoreSchedule>(DayOfWeek.values().length);
+	private Double getScheduleForWeekStartingOn(Date day) {
+		BigDecimal total =getScheduleService().getTotalScheduledHoursForTimePeriod(getEmployeeStore(), day, getEndOfWeekDay(day));
 		
-		for(int i = 0; i < DayOfWeek.values().length; i++) {
-			schedules.add(getScheduleService().getStoreScheduleByDate(getEmployeeStore(), CalendarUtils.addOrSubstractDays(day, i)));
-		}
-		
-		return schedules;
+		return new Double(NumberUtils.getDoubleValue(total));
 	}
 	
 	/**
@@ -212,6 +208,15 @@ public abstract class EmployeeHomeSummaryBaseAction extends SpmAction {
 	
 	/**
 	 * 
+	 * @param day
+	 * @return
+	 */
+	private BigDecimal getLaborCostForWeekStartingOn(Date day) {
+		return getScheduleService().getTotalScheduledLaborCostForTimePeriod(getEmployeeStore(), day, getEndOfWeekDay(day));
+	}
+	
+	/**
+	 * 
 	 * @param salesValues
 	 * @return
 	 */
@@ -250,26 +255,6 @@ public abstract class EmployeeHomeSummaryBaseAction extends SpmAction {
 	
 	/**
 	 * 
-	 * @param dailyStaffings
-	 * @return
-	 */
-	private Double calculateProjectedScheduled(List<StoreSchedule> schedules) {
-		double total = 0.0;
-		
-		if(schedules != null) {
-			for(StoreSchedule schedule : schedules) {
-				if(schedule != null) {
-					//:TODO: Confirm if getTotalShiftHoursWithContiguous should be used instead
-					total += schedule.getTotalShiftHours().doubleValue();
-				}
-			}
-		}
-		
-		return new Double(total);
-	}
-
-	/**
-	 * 
 	 * @param startingWeekDay
 	 * @param row
 	 * @return
@@ -279,7 +264,7 @@ public abstract class EmployeeHomeSummaryBaseAction extends SpmAction {
 		
 		row.setProjectedVolume(calculateVolume(getDailyProjectionsForWeekStartingOn(startingWeekDay)));
 		row.setProjectedTarget(getDailyStaffingForWeekStartingOn(startingWeekDay));
-		row.setProjectedScheduled(calculateProjectedScheduled(getScheduleForWeekStartingOn(startingWeekDay)));
+		row.setProjectedScheduled(getScheduleForWeekStartingOn(startingWeekDay));
 		
 		return row;
 	}	
@@ -295,6 +280,8 @@ public abstract class EmployeeHomeSummaryBaseAction extends SpmAction {
 		row.setActualVolume(getDailyHistoricSalesForWeekStartingOn(startingWeekDay));
 		row.setActualTarget(calculateHistoricSalesTarget(getDailyHistoricSalesStaffingForWeekStartingOn(startingWeekDay)));
 		row.setActualScheduled(getDailyActualHoursForWeekStartingOn(startingWeekDay));
+		
+		row.setLaborCost(getLaborCostForWeekStartingOn(startingWeekDay));
 		
 		return row;
 	}		

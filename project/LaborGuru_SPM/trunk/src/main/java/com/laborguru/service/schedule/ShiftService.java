@@ -5,11 +5,7 @@
  */
 package com.laborguru.service.schedule;
 
-import java.util.Date;
-
 import com.laborguru.model.Shift;
-import com.laborguru.model.Store;
-import com.laborguru.model.StoreSchedule;
 import com.laborguru.service.Service;
 
 /**

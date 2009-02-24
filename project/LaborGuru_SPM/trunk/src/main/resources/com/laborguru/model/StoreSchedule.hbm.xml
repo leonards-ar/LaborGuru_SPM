@@ -20,6 +20,34 @@
 	        <one-to-many class="EmployeeSchedule"/>
 	    </set>
 	</class>
+
+	<sql-query name="totalScheduledHoursByDate">
+	
+		<return-scalar column="totalHours" type="big_decimal"/>
+		
+		<![CDATA[SELECT SUM(TIME_TO_SEC(TIMEDIFF(s.to_hour, s.from_hour)))/3600 as totalHours
+		FROM tbl_store_schedules as ss, tbl_employee_schedules as es, tbl_shifts as s
+		WHERE ss.store_schedule_id = es.store_schedule_id
+		AND es.employee_schedule_id = s.employee_schedule_id
+		AND s.position_id IS NOT NULL
+		AND ss.day BETWEEN STR_TO_DATE(:startDate,'%Y-%m-%d %H:%i:%s') AND STR_TO_DATE(:endDate,'%Y-%m-%d %H:%i:%s')
+		AND ss.store_id = :storeId]]>
+	</sql-query> 	
+
+	<sql-query name="totalScheduledLaborCostByDate">
+	
+		<return-scalar column="totalLaborCost" type="big_decimal"/>
+		
+		<![CDATA[SELECT SUM(TIME_TO_SEC(TIMEDIFF(s.to_hour, s.from_hour)) / 3600 * e.wage) as totalLaborCost
+		FROM tbl_store_schedules as ss, tbl_employee_schedules as es, tbl_shifts as s, tbl_employees as e
+		WHERE ss.store_schedule_id = es.store_schedule_id
+		AND es.employee_schedule_id = s.employee_schedule_id
+		AND es.employee_id = e.user_id
+		AND s.position_id IS NOT NULL
+		AND ss.day BETWEEN STR_TO_DATE(:startDate,'%Y-%m-%d %H:%i:%s') AND STR_TO_DATE(:endDate,'%Y-%m-%d %H:%i:%s')
+		AND ss.store_id = :storeId]]>
+	</sql-query> 	
+	
 	<database-object>
 		<create>ALTER TABLE tbl_store_schedules AUTO_INCREMENT=1000</create>
 		<drop></drop>
