@@ -35,6 +35,8 @@ public class PerformanceSummaryRow implements Serializable {
 	private Double actualTarget;
 	private Double actualScheduled;	
 	
+	private BigDecimal laborCost;
+	
 	/**
 	 * 
 	 */
@@ -258,5 +260,67 @@ public class PerformanceSummaryRow implements Serializable {
 	 */
 	public Double getProjectionDifferencePercentage() {
 		return percentage(getProjectionDifference(), new Double(NumberUtils.getDoubleValue(getActualVolume())));
+	}
+	/**
+	 * @return the laborCost
+	 */
+	public BigDecimal getLaborCost() {
+		return laborCost;
+	}
+	/**
+	 * @param laborCost the laborCost to set
+	 */
+	public void setLaborCost(BigDecimal laborCost) {
+		this.laborCost = laborCost;
 	}		
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getVolumeLaborTarget() {
+		double volume = NumberUtils.getDoubleValue(getActualVolume());
+		double target = NumberUtils.getDoubleValue(getActualTarget());
+		return target != 0.0 ? new Double(volume / target) : new Double(0.0);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getVolumeLaborActual() {
+		double volume = NumberUtils.getDoubleValue(getActualVolume());
+		double scheduled = NumberUtils.getDoubleValue(getActualScheduled());
+		return scheduled != 0.0 ? new Double(volume / scheduled) : new Double(0.0);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getLaborPercentageOfSalesTarget() {
+		double targetLaborCost = NumberUtils.getDoubleValue(getActualTarget()) * getAverageWage();
+		double volume = NumberUtils.getDoubleValue(getActualVolume());
+		return volume != 0.0 ? new Double(targetLaborCost / volume) : new Double(0.0);
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getLaborPercentageOfSalesScheduled() {
+		double laborCost = NumberUtils.getDoubleValue(getLaborCost());
+		double volume = NumberUtils.getDoubleValue(getActualVolume());
+		return volume != 0.0 ? new Double(laborCost / volume) : new Double(0.0);
+	}	
+	
+	/**
+	 * 
+	 * @return
+	 */
+	private double getAverageWage() {
+		double laborCost = NumberUtils.getDoubleValue(getLaborCost());
+		double scheduled = NumberUtils.getDoubleValue(getProjectedScheduled());
+		return scheduled != 0.0 ? laborCost / scheduled : 0.0;
+	}
 }

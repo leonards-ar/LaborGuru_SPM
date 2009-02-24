@@ -5,6 +5,7 @@
  */
 package com.laborguru.service.schedule.dao;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import com.laborguru.model.Store;
@@ -39,5 +40,23 @@ public interface ScheduleDao {
 	 * @param schedule
 	 * @return
 	 */
-	StoreSchedule detach(StoreSchedule schedule);		
+	StoreSchedule detach(StoreSchedule schedule);
+	
+	/**
+	 * 
+	 * @param store
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	BigDecimal getTotalScheduledHoursForTimePeriod(Store store, Date startDate, Date endDate);
+	
+	/**
+	 * 
+	 * @param store
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	BigDecimal getTotalScheduledLaborCostForTimePeriod(Store store, Date startDate, Date endDate);
 }

@@ -5,14 +5,17 @@
  */
 package com.laborguru.service.schedule.dao;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.laborguru.model.Store;
 import com.laborguru.model.StoreSchedule;
+import com.laborguru.util.SpmConstants;
 
 /**
  *
@@ -24,6 +27,7 @@ import com.laborguru.model.StoreSchedule;
 public class ScheduleDaoHibernate extends HibernateDaoSupport implements ScheduleDao {
 	private static final Logger log = Logger.getLogger(ScheduleDaoHibernate.class);	
 
+	private static final String STORE_NULL = "The store passed in as parameter is null";
 	/**
 	 * 
 	 */
@@ -75,4 +79,66 @@ public class ScheduleDaoHibernate extends HibernateDaoSupport implements Schedul
 		return schedule;
 	}
 
+	/**
+	 * 
+	 * @param store
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @see com.laborguru.service.schedule.dao.ScheduleDao#getTotalScheduledHoursForTimePeriod(com.laborguru.model.Store, java.util.Date, java.util.Date)
+	 */
+	public BigDecimal getTotalScheduledHoursForTimePeriod(Store store, Date startDate, Date endDate) {
+		if(store == null) {
+			log.error(STORE_NULL);
+			throw new IllegalArgumentException(STORE_NULL);			
+		}
+		
+		DateTime from = startDate != null ? new DateTime(startDate).withTime(0, 0, 0, 0) : new DateTime(0L);
+		DateTime to = endDate != null ? new DateTime(endDate).withTime(23, 59, 59, 999) : new DateTime(Long.MAX_VALUE);
+		
+		if(log.isDebugEnabled()){
+			log.debug("Before getting total scheduled hours for time period - Parameters: Store Id: "+ store.getId() + ", from date: " + from.toDate() + ", to date: " + to.toDate());
+		}
+	
+		List<BigDecimal> totalResult = getHibernateTemplate().findByNamedQueryAndNamedParam("totalScheduledHoursByDate",
+				new String[] {"storeId", "startDate", "endDate"}, new Object[] {store.getId(), from.toDate(), to.toDate()});
+		
+		if(log.isDebugEnabled()){
+			log.debug("After getting total scheduled hours for time period - Result List size: Store Id: " + (totalResult != null ? totalResult.size() : "null"));
+		}		
+
+		return totalResult != null && totalResult.size() > 0 && totalResult.get(0) != null ? totalResult.get(0) : new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
+	}
+
+	/**
+	 * 
+	 * @param store
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @see com.laborguru.service.schedule.dao.ScheduleDao#getTotalScheduledLaborCostForTimePeriod(com.laborguru.model.Store, java.util.Date, java.util.Date)
+	 */
+	public BigDecimal getTotalScheduledLaborCostForTimePeriod(Store store, Date startDate, Date endDate) {
+		if(store == null) {
+			log.error(STORE_NULL);
+			throw new IllegalArgumentException(STORE_NULL);			
+		}
+		
+		DateTime from = startDate != null ? new DateTime(startDate).withTime(0, 0, 0, 0) : new DateTime(0L);
+		DateTime to = endDate != null ? new DateTime(endDate).withTime(23, 59, 59, 999) : new DateTime(Long.MAX_VALUE);
+		
+		if(log.isDebugEnabled()){
+			log.debug("Before getting total scheduled labor cost for time period - Parameters: Store Id: "+ store.getId() + ", from date: " + from.toDate() + ", to date: " + to.toDate());
+		}
+	
+		List<BigDecimal> totalResult = getHibernateTemplate().findByNamedQueryAndNamedParam("totalScheduledLaborCostByDate",
+				new String[] {"storeId", "startDate", "endDate"}, new Object[] {store.getId(), from.toDate(), to.toDate()});
+		
+		if(log.isDebugEnabled()){
+			log.debug("After getting total scheduled labor cost for time period - Result List size: Store Id: " + (totalResult != null ? totalResult.size() : "null"));
+		}		
+
+		return totalResult != null && totalResult.size() > 0 && totalResult.get(0) != null ? totalResult.get(0) : new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
+	}
+	
 }
