@@ -102,7 +102,8 @@ public interface ReportDao {
 	List<TotalHour> getTargetWeeklyTotalHourByService(Store store, PositionGroup positionGroup, Date startDate, Date endDate) throws SQLException;
 	
 	/**
-	 * Retrieves the scheduled half hours for a Store on a selected date
+	 * Retrieves the scheduled half hours for a Store on a selected date. It's calculated from the time is opened
+	 * to the time is closed (included extra time). 
 	 * @param store
 	 * @param date
 	 * @return
@@ -111,16 +112,18 @@ public interface ReportDao {
 	List<TotalHour> getHalfHourlySchedule(Store store, Date date, Date startHour, Date endHour) throws SQLException;
 
 	/**
-	 * Retrieves the target half hours for a Store on a selected date
+	 * Retrieves the target half hours for a Store on a selected date. It's calculated from the time is opened
+	 * to the time is closed. In these kind of reports it's not included the extra time because employees shouldn't be working.
 	 * @param store
 	 * @param date
 	 * @return
 	 * @throws SQLException
 	 */
-	List<TotalHour> getHalfHourlyMinimumStaffing(Store store, Date date, Date startHour, Date endHour) throws SQLException;
+	List<TotalHour> getHalfHourlyMinimumStaffing(Store store, Date date) throws SQLException;
 	
 	/**
-	 * Retrieves the scheduled hours for a Store on a selected date filtered by a Position
+	 * Retrieves the scheduled hours for a Store on a selected date filtered by a Position. It's calculated from the time is opened
+	 * to the time is closed (included extra time).
 	 * @param store
 	 * @param position
 	 * @param date
@@ -130,34 +133,39 @@ public interface ReportDao {
 	List<TotalHour> getHalfHourlyScheduleByPosition(Store store, Position position, Date date, Date startHour, Date endHour) throws SQLException;
 	
 	/**
-	 * Retrieves the target hours for a Store on a selected date filtered by a Position
+	 * Retrieves the target hours for a Store on a selected date filtered by a Position. It's calculated from the time 
+	 * to the time is closed. In these kind of reports it's not included the extra time because employees shouldn't be working.
 	 * @param store
 	 * @param position
 	 * @param date
 	 * @return
 	 * @throws SQLException
 	 */
-	List<TotalHour> getHalfHourlyMinimumStaffingByPosition(Store store, Position position, Date date, Date startHour, Date endHour) throws SQLException;
+	List<TotalHour> getHalfHourlyMinimumStaffingByPosition(Store store, Position position, Date date) throws SQLException;
 	
 	/**
-	 * Retrieves the scheduled hours for a Store on a selected date filtered by a Position
-	 * @param store
-	 * @param position
+	 * Retrieves the scheduled hours for a Store on a selected date filtered by a Position. It's calculated from the time is opened
+	 * to the time is closed. (included extra time)
+	 * @param store 
+	 * @param positionGroup
 	 * @param date
+	 * @param startHour
+	 * @param endHour
 	 * @return
 	 * @throws SQLException
 	 */
 	List<TotalHour> getHalfHourlyScheduleByService(Store store, PositionGroup positionGroup, Date date, Date startHour, Date endHour) throws SQLException;
 	
 	/**
-	 * Retrieves the target hours for a Store on a selected date filtered by a Position
+	 * Retrieves the target hours for a Store on a selected date filtered by a Position. It's calculated from the time is opened
+	 * to the time is closed. In these kind of reports it's not included the extra time because employees shouldn't be working.
 	 * @param store
 	 * @param position
 	 * @param date
 	 * @return
 	 * @throws SQLException
 	 */
-	List<TotalHour> getHalfHourlyMinimumStaffingByService(Store store, PositionGroup positionGroup, Date date, Date startHour, Date endHour) throws SQLException;
+	List<TotalHour> getHalfHourlyMinimumStaffingByService(Store store, PositionGroup positionGroup, Date date) throws SQLException;
 	
 	/**
 	 * Retrieves the sales for a Store
