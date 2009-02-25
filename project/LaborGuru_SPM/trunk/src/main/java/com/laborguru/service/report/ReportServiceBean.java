@@ -150,7 +150,7 @@ public class ReportServiceBean implements ReportService {
 			Date endHour = store.getStoreScheduleEndHour(CalendarUtils.getDayOfWeek(date));
 			
 			List<TotalHour> schedule = reportDao.getHalfHourlySchedule(store, date, startHour, endHour);
-			List<TotalHour> target = reportDao.getHalfHourlyMinimumStaffing(store, date, startHour, endHour);
+			List<TotalHour> target = reportDao.getHalfHourlyMinimumStaffing(store, date);
 			
 			
 			return getMergedHalfHours(startHour, endHour, schedule, target);
@@ -171,7 +171,7 @@ public class ReportServiceBean implements ReportService {
 			Date endHour = store.getStoreScheduleEndHour(CalendarUtils.getDayOfWeek(date));
 			
 			List<TotalHour> schedule = reportDao.getHalfHourlyScheduleByPosition(store, position, date, startHour, endHour);
-			List<TotalHour> target = reportDao.getHalfHourlyMinimumStaffingByPosition(store, position, date, startHour, endHour);
+			List<TotalHour> target = reportDao.getHalfHourlyMinimumStaffingByPosition(store, position, date);
 			return getMergedHalfHours(startHour, endHour, schedule, target);
 		} catch(SQLException e){
 			log.error("An SQLError has occurred", e);
@@ -189,7 +189,7 @@ public class ReportServiceBean implements ReportService {
 			Date endHour = store.getStoreScheduleEndHour(CalendarUtils.getDayOfWeek(date));
 			
 			List<TotalHour> schedule = reportDao.getHalfHourlyScheduleByService(store, positionGroup, date, startHour, endHour);
-			List<TotalHour> target = reportDao.getHalfHourlyMinimumStaffingByService(store, positionGroup, date, startHour, endHour);
+			List<TotalHour> target = reportDao.getHalfHourlyMinimumStaffingByService(store, positionGroup, date);
 			
 			return getMergedHalfHours(startHour, endHour, schedule, target);
 			
