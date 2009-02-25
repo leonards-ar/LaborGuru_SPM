@@ -89,6 +89,9 @@ public class HalfHoursReportPrepareAction extends ScheduleReportPrepareAction im
 			setTotalTarget(getTotalTarget().add(th.getTarget()));
 			setTotalDifference(getTotalDifference().add(th.getDifference()));
 		}
+		setTotalSchedule(getTotalSchedule().divide(new BigDecimal(2)));
+		setTotalTarget(getTotalTarget().divide(new BigDecimal(2)));
+		setTotalDifference(getTotalDifference().add(new BigDecimal(2)));
 	}
 	
 	public void generateXmlGraph(){
