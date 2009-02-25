@@ -39,7 +39,7 @@
 		AND s.position_id = #position_id#
 		AND ss.day BETWEEN STR_TO_DATE(#start_date#,'%Y-%m-%d %H:%i:%s') AND STR_TO_DATE(#end_date#,'%Y-%m-%d %H:%i:%s')
 		AND ss.store_id = #store_id#
-		GROUP BY s.position	_id, ss.day
+		GROUP BY s.position_id, ss.day
 		ORDER BY s.position_id, ss.day
 	</select>
 
