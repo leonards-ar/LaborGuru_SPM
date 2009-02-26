@@ -21,8 +21,8 @@
 										</tr>
 										<tr>
 											<td align="center">
-					 							<s:set name="latestStores" value="uploadFileList" scope="request"/>
-												<display:table name="latestStores" sort="list" defaultsort="2" defaultorder="descending" cellpadding="3" cellspacing="3">
+					 							<s:set name="latestStores" value="latestStores" scope="request"/>
+												<display:table name="latestStores" sort="list" defaultsort="3" defaultorder="descending" cellpadding="3" cellspacing="3">
 												    <display:column class="windowTableValue" headerClass="windowTableLabel" property="area.region.customer.name" titleKey="home.admin.store.customer.label"/>
 												    <display:column class="windowTableValue" headerClass="windowTableLabel" property="name" titleKey="home.admin.store.store.label"/>
 												    <display:column class="windowTableValue" headerClass="windowTableLabel" property="lastUpdateDate" titleKey="home.admin.store.lastupdate.label" format="{0,date,MM/dd/yyyy h:mm:ss a}"/>
@@ -37,8 +37,8 @@
 										</tr>
 										<tr>
 											<td align="center">
-					 							<s:set name="oldestStores" value="uploadFileList" scope="request"/>
-												<display:table name="oldestStores" sort="list" defaultsort="2" defaultorder="descending" cellpadding="3" cellspacing="3">		    
+					 							<s:set name="oldestStores" value="oldestStores" scope="request"/>
+												<display:table name="oldestStores" sort="list" defaultsort="3" defaultorder="ascending" cellpadding="3" cellspacing="3">		    
 												    <display:column class="windowTableValue" headerClass="windowTableLabel" property="area.region.customer.name" titleKey="home.admin.store.customer.label"/>
 												    <display:column class="windowTableValue" headerClass="windowTableLabel" property="name" titleKey="home.admin.store.store.label"/>
 												    <display:column class="windowTableValue" headerClass="windowTableLabel" property="lastUpdateDate" titleKey="home.admin.store.lastupdate.label" format="{0,date,MM/dd/yyyy h:mm:ss a}"/>
