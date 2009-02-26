@@ -142,8 +142,12 @@ public class CalendarUtils {
 	 */
 	public static Date removeTimeFromDate(Date d) {
 		try {
-			String str = SpmConstants.REMOVE_TIME_FORMAT.format(d);
-			return SpmConstants.REMOVE_TIME_FORMAT.parse(str);
+			if(d != null) {
+				String str = SpmConstants.REMOVE_TIME_FORMAT.format(d);
+				return SpmConstants.REMOVE_TIME_FORMAT.parse(str);
+			} else { 
+				return null;
+			}
 		} catch(ParseException ex) {
 			// Should never happen
 			return null;

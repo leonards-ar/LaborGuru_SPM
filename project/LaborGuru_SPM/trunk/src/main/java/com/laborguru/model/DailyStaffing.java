@@ -12,6 +12,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import com.laborguru.util.CalendarUtils;
+
 /**
  *
  * @author <a href="mcapurro@gmail.com">Mariano Capurro</a>
@@ -133,7 +135,7 @@ public abstract class DailyStaffing extends SpmObject {
 	 * @param date the date to set
 	 */
 	public void setDate(Date date) {
-		this.date = date;
+		this.date = CalendarUtils.removeTimeFromDate(date);
 	}
 
 	/**

@@ -10,7 +10,9 @@
 			<generator class="identity" />
 		</id>
 		
-		<property name="date" column="staffing_date" type="timestamp"/>
+		<property name="date" type="date">
+			<column name="staffing_date" unique-key="date_position"/>
+		</property>
 		<property name="startingTime" column="starting_time" type="timestamp" />
 		
 		<property name="totalWorkContent" column="total_work_content" type="double" />
@@ -26,7 +28,7 @@
 		<property name="fixedClosing" column="fixed_closing" type="double" />
 		<property name="totalDailyTarget" column="total_daily_target" type="double" />
 	
-		<many-to-one name="position" class="Position" column="position_id" not-null="true" foreign-key="fk_staffing_positions" />
+		<many-to-one name="position" class="Position" column="position_id" not-null="true" foreign-key="fk_staffing_positions" unique-key="date_position"/>
 
 	    <list name="halfHourProjectedStaffing" cascade="all-delete-orphan" table="tbl_halfhour_staffing" lazy="true" inverse="true">
 	        <key column="staffing_id" foreign-key="fk_halfhours_staffing"/>

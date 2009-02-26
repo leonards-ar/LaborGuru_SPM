@@ -17,6 +17,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import com.laborguru.model.DailyProjectedStaffing;
 import com.laborguru.model.Position;
 import com.laborguru.model.Store;
+import com.laborguru.util.CalendarUtils;
 
 
 /**
@@ -43,6 +44,8 @@ public class StaffingDaoHibernate extends HibernateDaoSupport implements Staffin
 	 * @see com.laborguru.service.staffing.dao.StaffingDao#getDailyStaffingByDate(com.laborguru.model.Position, java.util.Date)
 	 */
 	public DailyProjectedStaffing getDailyStaffingByDate(Position position, Date date) {
+		date = CalendarUtils.removeTimeFromDate(date);
+		
 		if(log.isDebugEnabled()) {
 			log.debug("Searching staffing for day [" + date + "] and for position [" + position + "]");
 		}
@@ -63,6 +66,8 @@ public class StaffingDaoHibernate extends HibernateDaoSupport implements Staffin
 	 * @see com.laborguru.service.staffing.dao.StaffingDao#getStoreDailyStaffingByDate(com.laborguru.model.Store, java.util.Date)
 	 */
 	public List<DailyProjectedStaffing> getStoreDailyStaffingByDate(Store store, Date date) {
+		date = CalendarUtils.removeTimeFromDate(date);
+		
 		if(log.isDebugEnabled()) {
 			log.debug("Searching staffing for day [" + date + "] and for store [" + store + "]");
 		}
@@ -84,6 +89,8 @@ public class StaffingDaoHibernate extends HibernateDaoSupport implements Staffin
 	 * @see com.laborguru.service.staffing.dao.StaffingDao#getStoreDailyStaffingFromDate(com.laborguru.model.Store, java.util.Date)
 	 */
 	public List<DailyProjectedStaffing> getStoreDailyStaffingFromDate(Store store, Date date) {
+		date = CalendarUtils.removeTimeFromDate(date);
+		
 		if(log.isDebugEnabled()) {
 			log.debug("Searching staffing starting from day [" + date + "] and for store [" + store + "]");
 		}
