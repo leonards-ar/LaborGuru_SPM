@@ -653,3 +653,11 @@ input.text, input.password, textarea {
 	font-family: trebuchet ms, arial, sans-serif;
 	font-weight: bold	
 }
+
+.windowTableLeftLabel {
+	color: #666666;
+	text-align: left;
+	font-family: trebuchet ms, arial, sans-serif;
+	font-weight: bold;	
+	font-size: 11px;	
+}

@@ -115,4 +115,15 @@ public class CustomerDaoHibernate extends SpmHibernateDao implements CustomerDao
 		
 		return null;
 	}
+
+	/**
+	 * @return
+	 * @see com.laborguru.service.customer.dao.CustomerDao#getNumberOfCustomers()
+	 */
+	public Integer getNumberOfCustomers() {
+		List<Long> results = (List<Long>)getHibernateTemplate().find("select count(*) from Customer");
+		Long retVal = results.get(0);
+		
+		return Integer.valueOf(retVal.intValue());
+	}	
 }

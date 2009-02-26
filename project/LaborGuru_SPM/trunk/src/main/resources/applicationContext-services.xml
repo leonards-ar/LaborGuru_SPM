@@ -4,14 +4,39 @@
     xsi:schemaLocation="
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
+
+	<bean id="storeService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.laborguru.service.store.StoreService</value>
+			</list>
+		</property>	
+	
+		<property name="target">
+			<ref bean="storeServiceTarget"/>
+		</property>		
+		
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>	
+		
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributeSourceDefault"/>
+		</property>	
+ 	</bean>
+
+ 	<bean id="storeServiceTarget" class="com.laborguru.service.store.StoreServiceBean">
+ 		<property name="storeDao" ref="storeDao"/>
+ 	</bean>
+
 	<!-- Bean's wiring declaration -->
-	<bean id="salesFileParser" class="com.laborguru.service.dataimport.csv.SalesCSVFileParserBean">
+	<bean id="salesFileParser" class="com.laborguru.service.dataimport.csv.SalesCSVFileParserBean" autowire="no">
 		<property name="storeService" ref="storeService"/>
 	</bean>
 
 	<bean id="storeDefinitionFileParser" class="com.laborguru.service.store.file.StoreDefinitionFileParserBean" autowire="byType"/>
 
-	<bean id="actualHoursFileParser" class="com.laborguru.service.dataimport.actualhours.csv.ActualHoursSimpleCSVParserBean">
+	<bean id="actualHoursFileParser" class="com.laborguru.service.dataimport.actualhours.csv.ActualHoursSimpleCSVParserBean" autowire="no">
 		<property name="storeService" ref="storeService"/>
 		<property name="assembler" ref="actualHoursAssembler"/>
 	</bean>
@@ -41,10 +66,6 @@
 		</property>	
  	</bean>
 	
-	<bean id="actualHoursFileProcessorTarget" class="com.laborguru.service.dataimport.actualhours.csv.ActualHoursFileProcessorBean">
-	  <property name="fileParser" ref="actualHoursFileParser"/>
-  	  <property name="actualHoursService" ref="actualHoursService"/>
-	</bean>
 
 	<bean id="actualHoursFileProcessor" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		<property name="proxyInterfaces">
@@ -66,8 +87,11 @@
 		</property>			
 	</bean>
 	
-	
-	<bean id="uploadFileServiceTarget" class="com.laborguru.service.uploadfile.UploadFileServiceBean" autowire="byType"/>
+	<bean id="actualHoursFileProcessorTarget" class="com.laborguru.service.dataimport.actualhours.csv.ActualHoursFileProcessorBean" autowire="no">
+	  <property name="fileParser" ref="actualHoursFileParser"/>
+  	  <property name="actualHoursService" ref="actualHoursService"/>
+	</bean>
+		
 	
 	<bean id="uploadFileService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		<property name="proxyInterfaces">
@@ -88,6 +112,9 @@
 			<ref bean="transactionAttributeSourceDefault"/>
 		</property>			
 	</bean>	
+	
+		<bean id="uploadFileServiceTarget" class="com.laborguru.service.uploadfile.UploadFileServiceBean" autowire="byType"/>
+	
 	
 	<bean id="salesFileProcessorServiceTarget" class="com.laborguru.service.dataimport.csv.SalesCSVFileProcessorBean">
 	  <property name="fileParser" ref="salesFileParser"/>
@@ -162,9 +189,7 @@
 			<ref bean="transactionAttributeSourceDefault"/>
 		</property>			
 	</bean>
-	
-	<bean id="customerServiceTarget" class="com.laborguru.service.customer.CustomerServiceBean" autowire="byType"/>
-	
+		
 	<bean id="customerService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		<property name="proxyInterfaces">
 			<list>
@@ -185,6 +210,7 @@
 		</property>			
 	</bean>
 
+	<bean id="customerServiceTarget" class="com.laborguru.service.customer.CustomerServiceBean" autowire="byType"/>
 	
 	<bean id="regionServiceTarget" class="com.laborguru.service.region.RegionServiceBean" autowire="byType"/>
 	
@@ -292,16 +318,16 @@
 		<property name="service" ref="userService" />
 		<property name="loginTries" value="${conn.max_login_times}"/>
 	</bean>
-
-	<bean id="storeService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+	
+	<bean id="uploadStoreDefinitionService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		<property name="proxyInterfaces">
 			<list>
-				<value>com.laborguru.service.store.StoreService</value>
+				<value>com.laborguru.service.store.file.UploadStoreDefinitionService</value>
 			</list>
 		</property>	
 	
 		<property name="target">
-			<ref bean="storeServiceTarget"/>
+			<ref bean="uploadStoreDefinitionServiceTarget"/>
 		</property>		
 		
 		<property name="transactionManager">
@@ -313,11 +339,12 @@
 		</property>	
  	</bean>
 
- 	<bean id="storeServiceTarget" class="com.laborguru.service.store.StoreServiceBean">
+ 	<bean id="uploadStoreDefinitionServiceTarget" class="com.laborguru.service.store.file.UploadStoreDefinitionServiceBean">
  		<property name="customerService" ref="customerService"/>
- 	 	<property name="storeDefinitionFileParser" ref="storeDefinitionFileParser"/> 		
- 		<property name="storeDao" ref="storeDao"/>
- 	</bean>
+ 	 	<property name="storeDefinitionFileParser" ref="storeDefinitionFileParser"/>
+ 	 	<property name="storeService" ref="storeService"/>
+ 	</bean>	
+	
 				
 	<bean id="scheduleService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		<property name="proxyInterfaces">

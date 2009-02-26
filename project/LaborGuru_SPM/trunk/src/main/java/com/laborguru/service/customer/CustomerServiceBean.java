@@ -75,5 +75,15 @@ public class CustomerServiceBean implements CustomerService {
 	public void delete(Customer customer) {
 		this.customerDao.delete(customer);
 	}
+
+	/**
+	 * Retrieves the number of customers in the system
+	 * @return
+	 * @see com.laborguru.service.customer.CustomerService#getNumberOfCustomers()
+	 */
+	public Integer getNumberOfCustomers() {
+		Integer customers = getCustomerDao().getNumberOfCustomers();		
+		return customers;
+	}
 	
 }

@@ -14,6 +14,10 @@ import com.laborguru.model.filter.SearchStoreFilter;
  */
 public interface StoreDao {
 
+	public enum OrderFindN{
+		LASTEST, OLDEST
+	}
+	
 	/**
 	 * Saves or updates a store
 	 * @param store store to save
@@ -47,5 +51,20 @@ public interface StoreDao {
 	 * @return a list of stores
 	 */
 	List<Store> findAll();
+
+	/**
+	 * Retrieves the number of stores
+	 * @return the number of stores in the system.
+	 * @see com.laborguru.service.store.StoreService#getNumberOfStores()
+	 */
+	Integer getNumberOfStores();
+
+	/**
+	 * Retrieves the n oldest/latest updated stores in the system 
+	 * @param n The number of stores to retrieve
+	 * @param order The order (latest/oldest)
+	 * @return the list of stores
+	 */
+	List<Store> findNStores(Integer n, OrderFindN order);
 
 }

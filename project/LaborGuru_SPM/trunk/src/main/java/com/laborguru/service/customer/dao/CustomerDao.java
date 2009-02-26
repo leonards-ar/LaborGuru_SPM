@@ -44,4 +44,10 @@ public interface CustomerDao {
 	 * @return Customer
 	 */
 	Customer getCustomerByCode(Customer customer);
+
+	/**
+	 * Retrieves the number of customers in the system
+	 * @return
+	 */
+	Integer getNumberOfCustomers();
 }

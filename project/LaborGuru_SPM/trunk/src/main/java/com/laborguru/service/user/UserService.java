@@ -70,4 +70,17 @@ public interface UserService extends Service {
 	 * @param userDao UserDao
 	 */
 	void setUserDao(UserDao userDao);
+
+	/**
+	 * Get number of users
+	 * @return
+	 */
+	Integer getNumberOfUsers();
+
+	/**
+	 * Retrieve the number of enabled users that are available in the system
+	 * 
+	 * @return the number of enabled users
+	 */
+	Integer getNumberOfEnabledUsers();
 }

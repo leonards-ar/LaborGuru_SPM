@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.laborguru.model.Customer;
 import com.laborguru.service.Service;
+import com.laborguru.service.customer.dao.CustomerDao;
 
 
 /**
@@ -62,4 +63,13 @@ public interface CustomerService extends Service {
 	 * @param customer The customer
 	 */
 	void delete(Customer customer);
+
+	/**
+	 * Retrieves the number of customers in the system
+	 * @return
+	 */
+	Integer getNumberOfCustomers();
+	
+	void setCustomerDao(CustomerDao customerDao);
+
 }
