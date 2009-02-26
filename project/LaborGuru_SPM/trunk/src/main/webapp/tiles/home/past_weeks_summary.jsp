@@ -113,23 +113,23 @@
 					<td class="windowTableLabel"><s:text name="home.week.label"/></td>
 					<td class="windowTableLabel"><s:text name="home.target.label"/></td>
 					<td class="windowTableLabel"><s:text name="home.actual.label"/></td>
-					<td class="windowTableLabel"><s:text name="home.target.label"/></td>
-					<td class="windowTableLabel"><s:text name="home.scheduled.label"/></td>
+					<td class="windowTableLabel"><s:text name="home.ideal.label"/></td>
+					<td class="windowTableLabel"><s:text name="home.actual.label"/></td>
 				</tr>
 				
 				<tr>
 					<td class="windowTableValue"><s:text name="home.weekday.performance.dateformat"><s:param value="pastWeeksSummary[0].date"/></s:text></td>
 					<td class="windowTableValue"><s:text name="total.hours"><s:param value="pastWeeksSummary[0].volumeLaborTarget"/></s:text></td>
 					<td class="windowTableValue"><s:text name="total.hours"><s:param value="pastWeeksSummary[0].volumeLaborActual"/></s:text></td>
-					<td class="windowTableValue"><s:text name="percentage"><s:param value="pastWeeksSummary[0].laborPercentageOfSalesTarget"/></s:text>%</td>
-					<td class="windowTableValue"><s:text name="percentage"><s:param value="pastWeeksSummary[0].laborPercentageOfSalesScheduled"/></s:text>%</td>
+					<td class="windowTableValue"><s:text name="percentage"><s:param value="pastWeeksSummary[0].laborPercentageOfSalesIdeal"/></s:text>%</td>
+					<td class="windowTableValue"><s:text name="percentage"><s:param value="pastWeeksSummary[0].laborPercentageOfSalesActual"/></s:text>%</td>
 				</tr>
 				<tr>
 					<td class="windowTableValue"><s:text name="home.weekday.performance.dateformat"><s:param value="pastWeeksSummary[1].date"/></s:text></td>
 					<td class="windowTableValue"><s:text name="total.hours"><s:param value="pastWeeksSummary[1].volumeLaborTarget"/></s:text></td>
 					<td class="windowTableValue"><s:text name="total.hours"><s:param value="pastWeeksSummary[1].volumeLaborActual"/></s:text></td>
-					<td class="windowTableValue"><s:text name="percentage"><s:param value="pastWeeksSummary[1].laborPercentageOfSalesTarget"/></s:text>%</td>
-					<td class="windowTableValue"><s:text name="percentage"><s:param value="pastWeeksSummary[1].laborPercentageOfSalesScheduled"/></s:text>%</td>
+					<td class="windowTableValue"><s:text name="percentage"><s:param value="pastWeeksSummary[1].laborPercentageOfSalesIdeal"/></s:text>%</td>
+					<td class="windowTableValue"><s:text name="percentage"><s:param value="pastWeeksSummary[1].laborPercentageOfSalesActual"/></s:text>%</td>
 				</tr>
 			</table>
 		</td>
