@@ -298,7 +298,7 @@ public class PerformanceSummaryRow implements Serializable {
 	 * 
 	 * @return
 	 */
-	public Double getLaborPercentageOfSalesTarget() {
+	public Double getLaborPercentageOfSalesIdeal() {
 		double targetLaborCost = NumberUtils.getDoubleValue(getActualTarget()) * getAverageWage();
 		double volume = NumberUtils.getDoubleValue(getActualVolume());
 		return volume != 0.0 ? new Double(targetLaborCost / volume) : new Double(0.0);
@@ -308,10 +308,10 @@ public class PerformanceSummaryRow implements Serializable {
 	 * 
 	 * @return
 	 */
-	public Double getLaborPercentageOfSalesScheduled() {
-		double laborCost = NumberUtils.getDoubleValue(getLaborCost());
+	public Double getLaborPercentageOfSalesActual() {
+		double actualLaborCost = NumberUtils.getDoubleValue(getActualScheduled()) * getAverageWage();
 		double volume = NumberUtils.getDoubleValue(getActualVolume());
-		return volume != 0.0 ? new Double(laborCost / volume) : new Double(0.0);
+		return volume != 0.0 ? new Double(actualLaborCost / volume) : new Double(0.0);
 	}	
 	
 	/**
