@@ -161,11 +161,11 @@ public class StoreDaoHibernate extends SpmHibernateDao implements StoreDao {
 	 */
 	public List<Store> findNStores(Integer n, OrderFindN order) {
 		
-		String orderFlag = "asc";
+		String orderFlag = "desc";
 		
 		
 		if(OrderFindN.OLDEST.equals(order)){
-			orderFlag = "desc";
+			orderFlag = "asc";
 		}
 		
 		List<Store> results = (List<Store>)getSession().createQuery("from Store order by creationDate "+orderFlag).setFirstResult(0).setMaxResults(n).list();
