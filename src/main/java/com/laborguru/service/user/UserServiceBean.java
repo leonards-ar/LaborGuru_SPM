@@ -195,4 +195,25 @@ public class UserServiceBean implements UserService {
 		
 		return newPassword.toString();
 	}
+
+
+	/**
+	 * Retrieve the number of users that are available in the system
+	 * @return
+	 * @see com.laborguru.service.user.UserService#getNumberOfUsers()
+	 */
+	public Integer getNumberOfUsers() {
+		return userDao.getNumberOfUsers();
+	}
+
+
+	/**
+	 * Retrieve the number of enabled users that are available in the system
+	 * 
+	 * @return the number of enabled users
+	 * @see com.laborguru.service.user.UserService#getNumberOfEnabledUsers()
+	 */
+	public Integer getNumberOfEnabledUsers() {
+		return userDao.getNumberOfEnabledUsers();
+	}
 }

@@ -9,7 +9,7 @@ import com.laborguru.exception.InvalidFieldUploadFileException;
 import com.laborguru.exception.InvalidUploadFileException;
 import com.laborguru.exception.SpmUncheckedException;
 import com.laborguru.model.Store;
-import com.laborguru.service.store.StoreService;
+import com.laborguru.service.store.file.UploadStoreDefinitionService;
 
 public class UploadDefinitionPrepareAction extends SpmAction{
 
@@ -21,7 +21,7 @@ public class UploadDefinitionPrepareAction extends SpmAction{
 	private String storeDefinitionContentType;
 	private String storeDefinitionFileName;
 	
-	private StoreService storeService;
+	private UploadStoreDefinitionService uploadStoreDefinitionService;
 	
 	/**
 	 * @return
@@ -36,7 +36,7 @@ public class UploadDefinitionPrepareAction extends SpmAction{
 	public String upload(){
 		
 		try{		
-			Store store = storeService.processStoreDefinitionAndSave(storeDefinition);
+			Store store = uploadStoreDefinitionService.processStoreDefinitionAndSave(storeDefinition);
 			this.addActionMessage(getText("store.storeDefinition.file.upload.success", new String[]{store.getName()}));		
 		}catch(InvalidFieldUploadFileException invalidFieldException){
 			ErrorMessage errorMessage = new ErrorMessage("error.store.storeDefinition.file", new String[] {storeDefinitionFileName});
@@ -107,16 +107,16 @@ public class UploadDefinitionPrepareAction extends SpmAction{
 	}
 
 	/**
-	 * @return the storeService
+	 * @return the uploadStoreDefinitionService
 	 */
-	public StoreService getStoreService() {
-		return storeService;
+	public UploadStoreDefinitionService getUploadStoreDefinitionService() {
+		return uploadStoreDefinitionService;
 	}
 
 	/**
-	 * @param storeService the storeService to set
+	 * @param uploadStoreDefinitionService the uploadStoreDefinitionService to set
 	 */
-	public void setStoreService(StoreService storeService) {
-		this.storeService = storeService;
+	public void setUploadStoreDefinitionService(UploadStoreDefinitionService uploadStoreDefinitionService) {
+		this.uploadStoreDefinitionService = uploadStoreDefinitionService;
 	}
 }

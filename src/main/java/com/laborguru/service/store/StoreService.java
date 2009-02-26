@@ -1,6 +1,5 @@
 package com.laborguru.service.store;
 
-import java.io.File;
 import java.util.List;
 
 import com.laborguru.model.Store;
@@ -50,15 +49,26 @@ public interface StoreService extends Service {
 	 */
 	List<Store> findAll();
 	
+
 	/**
-	 * This method uploads a store definition to the SPM
-	 * The file passed as parameter contains the parameters to create an store.
-	 * 
-	 * New Store: If the file passed as paramater defines a new store. A new store is created.
-	 * Update Store: If the file passed as parameter defines an existing store, the existing store is updated with the new values.
-	 * 
-	 * @param storeDefinition
-	 * @return the store created
+	 * Retrieves the n latest stores in the system
+	 * @param n The number of stores to retrieve
+	 * @return store list
 	 */
-	Store processStoreDefinitionAndSave(File storeDefinition);
+	List<Store> findLatestStores(Integer n);
+
+
+	/**
+	 * Retrieves the n oldest updated stores in the system 
+	 * @param n The number of stores to retrieve
+	 * @return store list
+	 */
+	List<Store> findOldestStores(int n);
+
+
+	/**
+	 * Retrieves the number of stores
+	 * @return the number of stores in the system.
+	 */
+	Integer getNumberOfStores();
 }

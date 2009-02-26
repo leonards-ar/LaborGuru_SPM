@@ -139,4 +139,37 @@ public class StoreDaoHibernate extends SpmHibernateDao implements StoreDao {
 	public List<Store> findAll() {
 		return (List<Store>)getHibernateTemplate().find("from Store");
 	}
+
+	/**
+	 * Retrieves the number of stores
+	 * @return the number of stores in the system.
+	 * @see com.laborguru.service.store.dao.StoreDao#getNumberOfStores()
+	 */
+	public Integer getNumberOfStores() {
+		List<Long> results = (List<Long>)getHibernateTemplate().find("select count(*) from Store");
+		Long retVal = results.get(0);
+		
+		return Integer.valueOf(retVal.intValue());
+	}
+
+
+	/**
+	 * Retrieves the n oldest/latest updated stores in the system 
+	 * @param n The number of stores to retrieve
+	 * @param order The order (latest/oldest)
+	 * @return the list of stores
+	 */
+	public List<Store> findNStores(Integer n, OrderFindN order) {
+		
+		String orderFlag = "asc";
+		
+		
+		if(OrderFindN.OLDEST.equals(order)){
+			orderFlag = "desc";
+		}
+		
+		List<Store> results = (List<Store>)getSession().createQuery("from Store order by creationDate "+orderFlag).setFirstResult(0).setMaxResults(n).list();
+		
+		return results;
+	}
 }

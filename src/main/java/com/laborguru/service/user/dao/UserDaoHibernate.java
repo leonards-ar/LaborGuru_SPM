@@ -136,5 +136,30 @@ public class UserDaoHibernate extends SpmHibernateDao implements UserDao {
 	public void delete(User user){
 		getHibernateTemplate().delete(user);
 	}
+
+	/**
+	 * Retrieve the number of users that are available in the system
+	 * 
+	 * @return the number of users
+	 * @see com.laborguru.service.user.dao.UserDao#getNumberOfUsers()
+	 */
+	public Integer getNumberOfUsers() {
+		List<Long> results = (List<Long>)getHibernateTemplate().find("select count(*) from User");
+		Long retVal = results.get(0);
+		
+		return Integer.valueOf(retVal.intValue());
+	}
 	
+	/**
+	 * Retrieve the number of enabled users that are available in the system
+	 * 
+	 * @return the number of enabled users
+	 * @see com.laborguru.service.user.dao.UserDao#getNumberOfUsers()
+	 */
+	public Integer getNumberOfEnabledUsers() {
+		List<Long> results = (List<Long>)getHibernateTemplate().find("select count(*) from User where status = 0");
+		Long retVal = results.get(0);
+		
+		return Integer.valueOf(retVal.intValue());
+	}
 }

@@ -70,5 +70,20 @@ public interface UserDao {
 	 */
 	void delete(User user);
 	
-
+	
+	/**
+	 * Retrieve the number of users that are available in the system
+	 * 
+	 * @return the number of users
+	 */
+	Integer getNumberOfUsers();
+	
+	
+	/**
+	 * Retrieve the number of enabled users that are available in the system
+	 * 
+	 * @return the number of enabled users
+	 * @see com.laborguru.service.user.dao.UserDao#getNumberOfUsers()
+	 */
+	Integer getNumberOfEnabledUsers();
 }
