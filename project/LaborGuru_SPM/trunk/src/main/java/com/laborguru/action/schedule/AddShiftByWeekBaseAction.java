@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -20,7 +21,6 @@ import com.laborguru.frontend.model.WeeklyScheduleDailyEntry;
 import com.laborguru.frontend.model.WeeklyScheduleData;
 import com.laborguru.frontend.model.WeeklyScheduleRow;
 import com.laborguru.model.DailyProjection;
-import com.laborguru.model.DailyProjectedStaffing;
 import com.laborguru.model.Employee;
 import com.laborguru.model.EmployeeSchedule;
 import com.laborguru.model.Position;
@@ -28,6 +28,7 @@ import com.laborguru.model.Shift;
 import com.laborguru.model.StoreDailyStaffing;
 import com.laborguru.model.StoreSchedule;
 import com.laborguru.util.CalendarUtils;
+import com.laborguru.util.NumberUtils;
 import com.laborguru.util.SpmConstants;
 import com.opensymphony.xwork2.Preparable;
 
@@ -53,6 +54,8 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	private Integer newEmployeePositionId;
 	
 	private BigDecimal weeklyVolume;
+	
+	private Map<Integer, Double> positionWeeklyTarget;
 	
 	/**
 	 * 
@@ -1073,7 +1076,11 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 * @return
 	 */
 	public String getTotalPositionTarget(Position position) {
-		return CalendarUtils.minutesToTime(new Integer(getTotalPositionTargetInMinutes(position)));
+		double total = 0.0;
+		if(position != null && position.getId() != null) {
+			total = NumberUtils.getDoubleValue(getPositionWeeklyTarget().get(position.getId()));
+		}
+		return CalendarUtils.hoursToTime(new Double(total));
 	}
 	
 	/**
@@ -1081,31 +1088,13 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 * @return
 	 */
 	public String getTotalTarget() {
-		int total = 0;
-		for(StoreDailyStaffing storeDailyStaffing : getDailyStaffings()) {
-			if(storeDailyStaffing != null) {
-				total += getTotalTargetInMinutes(storeDailyStaffing.getStoreDailyStaffing());
-			}
+		double total = 0.0;
+		for(Double d : getPositionWeeklyTarget().values()) {
+			total += NumberUtils.getDoubleValue(d);
 		}
-		return CalendarUtils.minutesToTime(new Integer(total));
+		return CalendarUtils.hoursToTime(new Double(total));
 	}
 	
-	/**
-	 * 
-	 * @param position
-	 * @return
-	 */
-	private int getTotalPositionTargetInMinutes(Position position) {
-		int total = 0;
-		for(StoreDailyStaffing storeDailyStaffing : getDailyStaffings()) {
-			if(storeDailyStaffing != null) {
-				DailyProjectedStaffing dailyStaffing = storeDailyStaffing.getDailyStaffingFor(position);
-				total += getTotalDailyStaffingInMinutes(dailyStaffing);
-			}
-		}
-		return total;
-	}
-
 	/**
 	 * @return the dailyStaffings
 	 */
@@ -1462,5 +1451,22 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 			   // Case 3: From Hours is greater than To Hour and limit is between them
 			   (CalendarUtils.greaterTime(entry.getInHour(), entry.getOutHour()) && CalendarUtils.inRangeNotIncludingEndTime(selectedDayEndTime, entry.getInHour(), entry.getOutHour()))
 			   );
+	}
+
+	/**
+	 * @return the positionWeeklyTarget
+	 */
+	public Map<Integer, Double> getPositionWeeklyTarget() {
+		if(positionWeeklyTarget == null) {
+			setPositionWeeklyTarget(getStaffingService().getTotalProjectedStaffingByPositionForTimePeriod(getEmployeeStore(), getWeekDays().get(0), getWeekDays().get(getWeekDays().size() - 1)));
+		}
+		return positionWeeklyTarget;
+	}
+
+	/**
+	 * @param positionWeeklyTarget the positionWeeklyTarget to set
+	 */
+	public void setPositionWeeklyTarget(Map<Integer, Double> positionWeeklyTarget) {
+		this.positionWeeklyTarget = positionWeeklyTarget;
 	}	
 }
