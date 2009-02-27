@@ -11,6 +11,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import com.laborguru.util.CalendarUtils;
+
 /**
  * This class is the abstraction of a store day part.
  * @author <a href="mcapurro@gmail.com">Mariano Capurro</a>
@@ -126,7 +128,7 @@ public class DayPart extends SpmObject {
 	 * @param startHour the startHour to set
 	 */
 	public void setStartHour(Date startHour) {
-		this.startHour = startHour;
+		this.startHour = CalendarUtils.removeDateFromTime(startHour);
 	}
 
 	/**
