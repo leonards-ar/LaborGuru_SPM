@@ -12,6 +12,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import com.laborguru.util.CalendarUtils;
+
 /**
  * This class holds the start and close hours on a daily basis for Stores.
  * @author <a href="mcapurro@gmail.com">Mariano Capurro</a>
@@ -52,7 +54,7 @@ public class OperationTime extends SpmObject {
 	 * @param openHour the openHour to set
 	 */
 	public void setOpenHour(Date openHour) {
-		this.openHour = openHour;
+		this.openHour = CalendarUtils.removeDateFromTime(openHour);
 	}
 
 	/**
@@ -66,7 +68,7 @@ public class OperationTime extends SpmObject {
 	 * @param closeHour the closeHour to set
 	 */
 	public void setCloseHour(Date closeHour) {
-		this.closeHour = closeHour;
+		this.closeHour = CalendarUtils.removeDateFromTime(closeHour);
 	}
 
 	/**
