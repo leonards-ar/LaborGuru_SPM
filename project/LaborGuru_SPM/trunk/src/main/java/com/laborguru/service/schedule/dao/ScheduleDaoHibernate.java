@@ -17,6 +17,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.laborguru.model.Store;
 import com.laborguru.model.StoreSchedule;
+import com.laborguru.util.CalendarUtils;
 import com.laborguru.util.SpmConstants;
 
 /**
@@ -43,6 +44,7 @@ public class ScheduleDaoHibernate extends HibernateDaoSupport implements Schedul
 	 * @see com.laborguru.service.schedule.dao.ScheduleDao#getStoreScheduleByDate(com.laborguru.model.Store, java.util.Date)
 	 */
 	public StoreSchedule getStoreScheduleByDate(Store store, Date date) {
+		date = CalendarUtils.removeTimeFromDate(date);
 		if(log.isDebugEnabled()) {
 			log.debug("Searching schedule for day [" + date + "] for store [" + store + "]");
 		}

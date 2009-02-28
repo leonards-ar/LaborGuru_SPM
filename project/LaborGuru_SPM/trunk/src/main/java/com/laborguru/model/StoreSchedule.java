@@ -14,6 +14,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import com.laborguru.util.CalendarUtils;
+
 /**
  *
  * @author <a href="mcapurro@gmail.com">Mariano Capurro</a>
@@ -63,7 +65,7 @@ public class StoreSchedule extends SpmObject {
 	 * @param day the day to set
 	 */
 	public void setDay(Date day) {
-		this.day = day;
+		this.day = CalendarUtils.removeDateFromTime(day);
 	}
 
 	/**
