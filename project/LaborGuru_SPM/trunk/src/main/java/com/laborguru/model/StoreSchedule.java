@@ -65,7 +65,7 @@ public class StoreSchedule extends SpmObject {
 	 * @param day the day to set
 	 */
 	public void setDay(Date day) {
-		this.day = CalendarUtils.removeDateFromTime(day);
+		this.day = CalendarUtils.removeTimeFromDate(day);
 	}
 
 	/**
