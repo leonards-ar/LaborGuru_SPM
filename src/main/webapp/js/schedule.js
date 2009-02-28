@@ -441,7 +441,7 @@ function refreshStaffing(scheduleId) {
 		for(var i=0; i < getTotalRows(scheduleId); i++) {
 			var inputObj = getObjectByID(scheduleId + 'schedule_' + i + '_' + j);
 			if(inputObj) {
-				value = inputObj.value;
+				var value = inputObj.value;
 				if(value != null && value != '' && value != BREAK) {
 					rowTotal += 1;
 				}
