@@ -164,8 +164,8 @@ public class CalendarUtils {
 		try {
 			String str = SpmConstants.REMOVE_DATE_FORMAT.format(time);
 			return SpmConstants.REMOVE_DATE_FORMAT.parse(str);
-		} catch(ParseException ex) {
-			// Should never happen
+		} catch(Throwable ex) {
+			// Null or invalid time
 			return null;
 		}		
 	}
