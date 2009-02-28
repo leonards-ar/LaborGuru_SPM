@@ -20,7 +20,7 @@
 	<select id="getTargetWeeklyTotalHours" parameterClass='java.util.Map' resultClass="com.laborguru.model.report.TotalHour">
 		SELECT
 		s.staffing_date as day,
-		SUM(total_service_hours) as target
+		SUM(total_daily_target) as target
 		FROM tbl_staffing as s, tbl_positions as p
 		WHERE s.position_id = p.position_id
 		AND s.staffing_date BETWEEN STR_TO_DATE(#start_date#,'%Y-%m-%d %H:%i:%s') AND STR_TO_DATE(#end_date#,'%Y-%m-%d %H:%i:%s')
@@ -46,7 +46,7 @@
 	<select id="getTargetWeeklyTotalHoursByPosition" parameterClass='java.util.Map' resultClass="com.laborguru.model.report.TotalHour">
 		SELECT
 		s.staffing_date as day,
-		SUM(total_service_hours) as target
+		SUM(total_daily_target) as target
 		FROM tbl_staffing as s, tbl_positions as p
 		WHERE s.position_id = p.position_id
 		AND s.staffing_date BETWEEN STR_TO_DATE(#start_date#,'%Y-%m-%d %H:%i:%s') AND STR_TO_DATE(#end_date#,'%Y-%m-%d %H:%i:%s')
@@ -74,7 +74,7 @@
 	<select id="getTargetWeeklyTotalHoursByService" parameterClass='java.util.Map' resultClass="com.laborguru.model.report.TotalHour">
 		SELECT
 		s.staffing_date as day,
-		SUM(total_service_hours) as target
+		SUM(total_daily_target) as target
 		FROM tbl_staffing as s, tbl_positions as p
 		WHERE s.position_id = p.position_id
 		AND s.staffing_date BETWEEN STR_TO_DATE(#start_date#,'%Y-%m-%d %H:%i:%s') AND STR_TO_DATE(#end_date#,'%Y-%m-%d %H:%i:%s')
