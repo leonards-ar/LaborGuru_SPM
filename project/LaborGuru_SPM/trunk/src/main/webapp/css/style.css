@@ -94,7 +94,24 @@ a.footerLink:hover {
 	color: #333333;
 	padding-left: 7px;
 	font-size: 13px;
-	text-align: center; background-position-y:50%
+	text-align: center;
+	background-position-y:50%
+}
+.headerTopMessage {
+	font: 13px trebuchet ms, arial, sans-serif;
+	color: #FFFFFF;
+}
+
+a.logoutLink {
+	font-family: trebuchet ms, arial, sans-serif;
+	font-size: 11px;
+	color: #FFFFFF;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+a.logoutLink:hover {
+	text-decoration: underline;
 }
 
 #subtitleBar {
@@ -451,6 +468,11 @@ a.availableMenuItemAnchor:hover {
 	padding-left: 10px;
 }
 
+.selectedSubMenuItem {
+	padding-right: 10px;
+	padding-left: 10px;
+}
+	
 .subMenuItemAnchor {
 	font-size: 11px;
 	font-family: trebuchet ms, arial, sans-serif;
@@ -461,6 +483,17 @@ a.availableMenuItemAnchor:hover {
 
 .subMenuItemAnchor:hover {
 	text-decoration: underline;
+}
+
+.subMenuSelectedItemAnchor {
+	font-size: 11px;
+	font-family: trebuchet ms, arial, sans-serif;
+	color: #333333;
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+.subMenuSelectedItemAnchor:hover {
 }
 
 img {

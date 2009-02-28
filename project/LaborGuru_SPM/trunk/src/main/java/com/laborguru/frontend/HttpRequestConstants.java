@@ -45,4 +45,10 @@ public interface HttpRequestConstants {
 	 * The request key holding the newly selected item index
 	 */
 	String MENU_ITEM_INDEX = "menuItemIndex";
+	
+	/**
+	 * The request key holding the newly selected sub item index
+	 */
+	String SUB_MENU_ITEM_INDEX = "subMenuItemIndex";
+	
 }
