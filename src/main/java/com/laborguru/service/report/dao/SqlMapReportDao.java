@@ -134,16 +134,12 @@ public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao
 
 	public List<TotalHour> getHalfHourlyScheduleByService(Store store, PositionGroup positionGroup, Date date, Date startHour, Date endHour) throws SQLException{
 		if(log.isDebugEnabled()){
-			log.debug("getHalfHourlyScheduleByService: before select params: store_id: " + store.getId() + " position_id: " + positionGroup.getId() + " date: " + date + " startHour: " + CalendarUtils.removeDateFromTime(startHour) + "endHour: " + CalendarUtils.removeDateFromTime(endHour));
+			log.debug("getHalfHourlyScheduleByService: before select params: store_id: " + store.getId() + " positionGroup_id: " + positionGroup.getId() + " date: " + date + " startHour: " + CalendarUtils.removeDateFromTime(startHour) + "endHour: " + CalendarUtils.removeDateFromTime(endHour));
 		}
 
 		String namedQuery = "getScheduleHalfHourlyTotalHoursByService";
 		
-		//if close hour is smaller or equals  than open hour, it means that its opens on one day and closes on the following day.
-		Date openHour = store.getOperationTime(CalendarUtils.getDayOfWeek(date)).getOpenHour();
-		Date closeHour = store.getOperationTime(CalendarUtils.getDayOfWeek(date)).getCloseHour();
-
-		if(isNextDay(openHour, closeHour)) {
+		if(isNextDay(startHour, endHour)) {
 			namedQuery = "getScheduleHalfHourlyTotalHoursByServiceSplitInTwoDays";
 		}
 		
