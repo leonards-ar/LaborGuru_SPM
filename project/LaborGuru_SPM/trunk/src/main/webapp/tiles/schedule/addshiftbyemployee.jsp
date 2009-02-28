@@ -271,6 +271,7 @@
 					    	<td class="scheduleNameCell">
 					    	<s:if test="%{weekDaySelector.isSelectedDateBeforeToday()}">
 					    		<s:property value="#data.positionName"/>
+					    		<s:hidden id="scheduleposition_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].positionId" value="%{positionId}"/>
 					    	</s:if>
 					    	<s:else>
 					    		<s:if test="%{position == null}">
@@ -278,7 +279,7 @@
 					    		</s:if>
 					    		<s:else>
 					    			<s:property value="position.name"/>
-					    			<s:hidden id="scheduleposition_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].positionId" value="%{position.id}"/>
+					    			<s:hidden id="scheduleposition_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].positionId" value="%{positionId}"/>
 					    		</s:else>
 					    		<s:hidden name="scheduleData[%{#itScheduleData.index}].positionName"/>
 					    	</s:else>
