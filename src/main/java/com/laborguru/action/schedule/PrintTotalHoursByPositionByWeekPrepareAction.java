@@ -86,6 +86,8 @@ public class PrintTotalHoursByPositionByWeekPrepareAction extends PrintShiftBase
 	 * @return
 	 */
 	public String view() {
+		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
+
 		return SpmActionResult.SUCCESS.getResult();
 	}
 

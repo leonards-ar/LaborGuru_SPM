@@ -86,6 +86,8 @@ public class PrintShiftByPositionByWeekPrepareAction extends PrintShiftBaseActio
 	 * @return
 	 */
 	public String view() {
+		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
+
 		return SpmActionResult.SUCCESS.getResult();
 	}
 
