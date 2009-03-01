@@ -189,7 +189,7 @@
 									                	</tr>
 														<s:if test="%{isTotalRevisedValuesGreaterThanZero()}">
 									                    <tr>
-									                		<td align="center"><s:submit id="saveButton" key="save.button" theme="simple" cssClass="button"/></td>
+									                		<td align="center"><s:submit id="saveButton" onclick="return showWaitSplash();" key="save.button" theme="simple" cssClass="button"/></td>
 									                	</tr>
 														</s:if>
 									                	<tr>
