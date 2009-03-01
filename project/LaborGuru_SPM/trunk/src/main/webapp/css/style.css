@@ -694,3 +694,27 @@ input.text, input.password, textarea {
 	font-weight: bold;	
 	font-size: 11px;	
 }
+
+.homeAdminGreyTableLabel {
+	background-color: #E6E6E6;
+	color: #333333;
+	text-align: center;
+	font-family: trebuchet ms, arial, sans-serif;
+	font-weight: bold;	
+	font-size: 11px;	
+}
+
+.homeAdminTableEvenRow {
+	background-color: #F7F7F7;
+	color: #333333;
+	font-family: trebuchet ms, arial, sans-serif;
+	font-size: 11px;	
+	text-align: center;
+}
+
+.homeAdminTableOddRow {
+	color: #333333;
+	font-family: trebuchet ms, arial, sans-serif;
+	font-size: 11px;	
+	text-align: center;
+}
