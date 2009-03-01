@@ -109,7 +109,7 @@ public class ProjectionServiceBean implements ProjectionService {
 		projectionDao.save(projection);
 		
 		//Delete staffing calculations associated with the projection saved.
-		staffingService.deleteDailyStaffingForDate(store,selectedDate);
+		staffingService.updateDailyStaffingForDate(store,selectedDate);
 	}
 	
 	

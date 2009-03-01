@@ -798,4 +798,16 @@ public class StaffingServiceBean implements StaffingService {
 			Store store, Date startDate, Date endDate) {
 		return getStaffingDao().getTotalProjectedStaffingByPositionForTimePeriod(store, startDate, endDate);
 	}
+
+	/**
+	 * 
+	 * @param store
+	 * @param date
+	 * @see com.laborguru.service.staffing.StaffingService#updateDailyStaffingForDate(com.laborguru.model.Store, java.util.Date)
+	 */
+	public void updateDailyStaffingForDate(Store store, Date date) {
+		//:TODO: Probably update without deleting?
+		deleteDailyStaffingForDate(store, date);
+		getDailyStaffingByDate(store, date);
+	}
 }

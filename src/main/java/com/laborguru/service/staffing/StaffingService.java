@@ -42,6 +42,13 @@ public interface StaffingService extends Service {
 	 * @param store
 	 * @param date
 	 */
+	void updateDailyStaffingForDate(Store store, Date date);	
+	
+	/**
+	 * 
+	 * @param store
+	 * @param date
+	 */
 	void deleteDailyStaffingForDate(Store store, Date date);	
 	
 	/**
