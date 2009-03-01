@@ -497,7 +497,7 @@ public class StaffingServiceBean implements StaffingService {
 		halfHourStaffing.setIndex(halfHourSalesValue.getIndex());
 	
 		HalfHourStaffingPositionData staffingData = getHalfHourStaffingPositionData(data, position);
-		if(data != null) {
+		if(staffingData != null) {
 			halfHourStaffing.setCalculatedStaff(new Integer(staffingData.getMinimumStaffing()));
 			halfHourStaffing.setWorkContent(new Double(staffingData.getWorkContent()));
 		}
