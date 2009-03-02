@@ -8,7 +8,6 @@ package com.laborguru.action.store;
 import org.apache.log4j.Logger;
 
 import com.laborguru.action.SpmActionResult;
-import com.laborguru.exception.SpmCheckedException;
 
 /**
  *
@@ -90,7 +89,6 @@ public class OtherFactorsPrepareAction extends StoreAdministrationBaseAction {
 	 * @throws Exception
 	 */
 	public String save() throws Exception {
-		try {
 			
 			if(log.isDebugEnabled()) {
 				log.debug("About to save store: " + getStore());
@@ -110,10 +108,6 @@ public class OtherFactorsPrepareAction extends StoreAdministrationBaseAction {
 			}
 			
 			return SpmActionResult.SUCCESS.getResult();
-		} catch (SpmCheckedException e) {
-			addActionError(e.getErrorMessage());
-			return SpmActionResult.INPUT.getResult();
-		}
 	}
 
 	/**

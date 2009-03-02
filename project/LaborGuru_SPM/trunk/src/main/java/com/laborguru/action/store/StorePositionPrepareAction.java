@@ -136,7 +136,7 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 			log.debug("About to save store: " + getStore());
 		}
 		
-		getStoreService().save(getStore());
+		this.saveStoreAndLoadItIntoSession(getStore());
 		
 		if(log.isInfoEnabled()) {
 			log.info("Store positions successfully updated for store with id [" + getStoreId() + "]");
