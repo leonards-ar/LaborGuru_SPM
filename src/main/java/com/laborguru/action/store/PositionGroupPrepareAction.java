@@ -1,11 +1,14 @@
 package com.laborguru.action.store;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import com.laborguru.action.SpmActionResult;
+import com.laborguru.exception.ErrorEnum;
+import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.PositionGroup;
 
 /**
@@ -62,7 +65,13 @@ public class PositionGroupPrepareAction extends StoreAdministrationBaseAction {
 	 */
 	public String addPositionGroup() {
 		if(!"".equals(getNewPositionGroup().trim())){
-			addNewPositionGroup();
+			try{
+				addNewPositionGroup();
+			} catch (SpmCheckedException e) {
+				addActionError(e.getErrorMessage());
+				return SpmActionResult.INPUT.getResult();
+			}
+
 			setNewPositionGroup(null);
 		}
 		return SpmActionResult.EDIT.getResult();
@@ -88,13 +97,18 @@ public class PositionGroupPrepareAction extends StoreAdministrationBaseAction {
 	 */
 	public String save() {
 		
-		setStorePositionGroups();
-		
+		try{
+			setStorePositionGroups();
+		} catch (SpmCheckedException e) {
+			addActionError(e.getErrorMessage());
+			return SpmActionResult.INPUT.getResult();
+		}
+			
 		if(log.isDebugEnabled()) {
 			log.debug("About to save store: " + getStore());
 		}
 		
-		getStoreService().save(getStore());
+		this.saveStoreAndLoadItIntoSession(getStore());
 		
 		if(log.isInfoEnabled()) {
 			log.info("Store positions successfully updated for store with id [" + getStoreId() + "]");
@@ -113,18 +127,32 @@ public class PositionGroupPrepareAction extends StoreAdministrationBaseAction {
 	}
 	
 	/**
+	 * @throws SpmCheckedException 
 	 * 
 	 */
-	private void setStorePositionGroups(){
+	private void setStorePositionGroups() throws SpmCheckedException{
 		if (!"".equals(getNewPositionGroup().trim())) {
 			addNewPositionGroup();
 		}
 
+		int positionGroupsSize = getPositionGroups().size();
+		PositionGroup[] positionGroupArray = (PositionGroup[])getPositionGroups().toArray(new PositionGroup[positionGroupsSize]);
+		
 		// Add or update existing positions
-		for (PositionGroup positionGroup: getPositionGroups()) {
+		for (PositionGroup positionGroup: positionGroupArray) {
 			PositionGroup storePositionGroup = getPositionGroupById(positionGroup.getId());
+						
 			if (storePositionGroup != null) {
-				storePositionGroup.setName(positionGroup.getName());
+				String groupName = positionGroup.getName();
+
+				if (!storePositionGroup.getName().equals(groupName))					
+					//Checking if the name is not repeted
+					if (Collections.frequency(getPositionGroups(), positionGroup) > 1){
+						String exMessage = "PositionGroup name "+groupName+" is duplicated";
+						log.error(exMessage);
+						throw new SpmCheckedException(exMessage, ErrorEnum.DUPLICATED_POSITION_GROUP, new String[]{groupName});						
+					}
+					storePositionGroup.setName(groupName);
 			} else {
 				getStore().addPositionGroup(positionGroup);
 			}
@@ -132,20 +160,41 @@ public class PositionGroupPrepareAction extends StoreAdministrationBaseAction {
 
 		// Delete positions
 		for (PositionGroup positionGroup: getRemovePositionGroups()) {
-			positionGroup.setStore(getStore());
-			getStore().getPositionGroups().remove(positionGroup);
+			if (!doesGroupExistInRequest(positionGroup.getName())){
+				positionGroup.setStore(getStore());
+				getStore().getPositionGroups().remove(positionGroup);
+			}
 		}
-
 	}
 
 	/**
+	 * @throws SpmCheckedException 
 	 * 
 	 */
-	private void addNewPositionGroup() {
+	private void addNewPositionGroup() throws SpmCheckedException {
 		PositionGroup newPositionGroup = new PositionGroup();
-		newPositionGroup.setName(getNewPositionGroup());
-		newPositionGroup.setStore(getStore());
-		getPositionGroups().add(newPositionGroup);
+		String groupName = getNewPositionGroup();
+		
+		if (!doesGroupExistInRequest(groupName)){		
+			newPositionGroup.setName(getNewPositionGroup());
+			newPositionGroup.setStore(getStore());
+			getPositionGroups().add(newPositionGroup);
+		}else{
+			String exMessage = "PositionGroup name "+groupName+" is duplicated";
+			log.error(exMessage);
+			throw new SpmCheckedException(exMessage, ErrorEnum.DUPLICATED_POSITION_GROUP, new String[]{groupName});
+		}		
+	}
+	
+	private boolean doesGroupExistInRequest(final String groupName) {
+		
+		for(PositionGroup positionGroup: getPositionGroups()){
+			if (positionGroup.getName().equals(groupName)){
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	/**

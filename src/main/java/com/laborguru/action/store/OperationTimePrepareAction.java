@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.action.utils.CustomValidators;
-import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.DayOfWeek;
 import com.laborguru.model.OperationTime;
 
@@ -124,7 +123,6 @@ public class OperationTimePrepareAction extends StoreAdministrationBaseAction {
 	 * @throws Exception
 	 */
 	public String save() throws Exception {
-		try {
 			setOperationTimes();
 			getStore().setFirstDayOfWeekAsInteger(getFirstDayOfWeek());
 			getStore().setExtraScheduleHours(getExtraScheduleHours());
@@ -139,10 +137,6 @@ public class OperationTimePrepareAction extends StoreAdministrationBaseAction {
 			}
 			
 			return SpmActionResult.SUCCESS.getResult();
-		} catch (SpmCheckedException e) {
-			addActionError(e.getErrorMessage());
-			return SpmActionResult.INPUT.getResult();
-		}
 	}
 
 	/**

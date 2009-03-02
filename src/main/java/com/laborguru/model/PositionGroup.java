@@ -140,12 +140,16 @@ public class PositionGroup extends SpmObject implements ComparableObject {
 		
 		PositionGroup other = (PositionGroup)obj;
 		
-		return new EqualsBuilder().append(this.name, other.name).append(this.getStore() != null ? this.getStore().getId() : null, other.getStore() != null ? other.getStore().getId() : null).isEquals();
+		return new EqualsBuilder().append(this.name, other.name)
+		.append(this.getStore() != null ? this.getStore().getId() : null, other.getStore() != null ? other.getStore().getId() : null)
+		.isEquals();
 	}
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).append(this.name).append(this.store != null ? this.store.getId() : null).toHashCode();
+		return new HashCodeBuilder(17, 37).append(this.name)
+		.append(this.store != null ? this.store.getId() : null)
+		.toHashCode();
 	}
 
 	/**

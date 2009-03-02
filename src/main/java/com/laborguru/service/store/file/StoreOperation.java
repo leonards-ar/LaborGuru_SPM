@@ -86,8 +86,8 @@ public class StoreOperation extends BaseStoreSection {
 	
 	private OperationTime[] hoursOfOperation = new OperationTime[7];
 	private List<DayPart> dayPartDefinitions = new ArrayList<DayPart>();
-	private List<String> positionNames = new ArrayList<String>();
-	private List<String> groupNames = new ArrayList<String>();
+	private Set<String> positionNames = new HashSet<String>();
+	private Set<String> groupNames = new HashSet<String>();
 	private List<String> variableDefinitions = new ArrayList<String>();
 	private Set<String> managerSet = new HashSet<String>();
 	private Set<String> guestServiceSet = new HashSet<String>();
@@ -167,7 +167,7 @@ public class StoreOperation extends BaseStoreSection {
 	 * @param row
 	 */
 	private void addGroupNames(HSSFRow row) {
-		String fieldValue = PoiUtils.getStringValue(row.getCell((short)4));
+		String fieldValue = PoiUtils.getStringValue(row.getCell((short)4));		
 		getGroupNames().add(fieldValue.trim());
 	}
 
@@ -388,28 +388,28 @@ public class StoreOperation extends BaseStoreSection {
 	/**
 	 * @return the positionNames
 	 */
-	public List<String> getPositionNames() {
+	public Set<String> getPositionNames() {
 		return positionNames;
 	}
 
 	/**
 	 * @param positionNames the positionNames to set
 	 */
-	public void setPositionNames(List<String> positionNames) {
+	public void setPositionNames(Set<String> positionNames) {
 		this.positionNames = positionNames;
 	}
 
 	/**
 	 * @return the groupNames
 	 */
-	public List<String> getGroupNames() {
+	public Set<String> getGroupNames() {
 		return groupNames;
 	}
 
 	/**
 	 * @param groupNames the groupNames to set
 	 */
-	public void setGroupNames(List<String> groupNames) {
+	public void setGroupNames(Set<String> groupNames) {
 		this.groupNames = groupNames;
 	}
 

@@ -157,7 +157,7 @@ public abstract class StoreUtilizationBaseAction extends StoreAdministrationBase
 			log.debug("About to save store: " + getStore());
 		}
 		
-		getStoreService().save(getStore());
+		this.saveStoreAndLoadItIntoSession(getStore());
 
 		if(log.isInfoEnabled()) {
 			log.info("Store utilization successfully updated for store with id [" + getStoreId() + "]");

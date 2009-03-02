@@ -149,7 +149,7 @@ public abstract class StorePositionDayPartDataBaseAction extends StoreAdministra
 			log.debug("About to save store: " + getStore());
 		}
 		
-		getStoreService().save(getStore());
+		this.saveStoreAndLoadItIntoSession(getStore());
 
 		if(log.isInfoEnabled()) {
 			log.info("Store position/day part data successfully updated for store with id [" + getStoreId() + "]");

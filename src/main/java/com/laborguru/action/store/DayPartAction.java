@@ -200,7 +200,7 @@ public class DayPartAction extends StoreAdministrationBaseAction {
 		
 		setDayPartsToStore();
 
-		getStoreService().save(getStore());
+		this.saveStoreAndLoadItIntoSession(getStore());
 
 		if(log.isInfoEnabled()) {
 			log.info("Store dayparts successfully updated for store with id [" + getStoreId() + "]");
