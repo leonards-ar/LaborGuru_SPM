@@ -792,10 +792,14 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 		for(int i = 0; i < buckets && !collision; i++) {
 			quantity = 0;
 			for(int j = 0; j < employeeSchedules.size() && !collision; j++) {
-				if(!SpmConstants.SCHEDULE_FREE.equals(employeeSchedules.get(j).getSchedule().get(i))) {
-					quantity++;
+				if(i < employeeSchedules.get(j).getSchedule().size()) {
+					if(!SpmConstants.SCHEDULE_FREE.equals(employeeSchedules.get(j).getSchedule().get(i))) {
+						quantity++;
+					}
+					collision = quantity > 1;
+				} else {
+					log.warn("Buckets size " + buckets + " is greater than schedule length " + employeeSchedules.get(j).getSchedule().size() + " for employee schedule " + employeeSchedules.get(j));
 				}
-				collision = quantity > 1;
 			}
 		}
 		
