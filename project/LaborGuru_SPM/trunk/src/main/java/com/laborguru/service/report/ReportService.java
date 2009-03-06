@@ -6,6 +6,7 @@ import java.util.List;
 import com.laborguru.model.Position;
 import com.laborguru.model.PositionGroup;
 import com.laborguru.model.Store;
+import com.laborguru.model.report.FixedLaborHoursReport;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.model.report.TotalHourByPosition;
 import com.laborguru.service.Service;
@@ -93,5 +94,29 @@ public interface ReportService extends Service {
 	 * @return
 	 */
 	List<TotalHour> getScheduleExecutionEfficiencyReport(Store store, Date startingWeekDate);
+	
+	/**
+	 * Retrieves the Fixed Labor Hours for a store.
+	 * @param store
+	 * @param date
+	 * @return
+	 */
+	FixedLaborHoursReport getFixedLaborHoursReport(Store store, Date date);
+	
+	/**
+	 * Retrieves the Fixed Labor Hours for a store filtered by position.
+	 * @param store
+	 * @param date
+	 * @return
+	 */
+	FixedLaborHoursReport getFixedLaborHoursReportByPosition(Store store, Date date, Position position);	
+	
+	/**
+	 * Retrieves the Fixed Labor Hours for a store filtered by position group.
+	 * @param store
+	 * @param date
+	 * @return
+	 */
+	FixedLaborHoursReport getFixedLaborHoursReportByService(Store store, Date date, PositionGroup positionGroup);
 	
 }
