@@ -16,6 +16,7 @@ import com.laborguru.model.Position;
 import com.laborguru.model.PositionGroup;
 import com.laborguru.model.Store;
 import com.laborguru.model.StoreDailyHistoricSalesStaffing;
+import com.laborguru.model.report.FixedLaborHoursReport;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.model.report.TotalHourByPosition;
 import com.laborguru.service.projection.ProjectionService;
@@ -201,12 +202,6 @@ public class ReportServiceBean implements ReportService {
 	}
 	
 	public List<TotalHour> getPerformanceEfficiencyReport(Store store, Date startingWeekDate) {
-		/**
-		 * 
-		 * 1.- Get historic sales for a week
-		 * 2.- Get Hours worked for a week
-		 * 3.- Get Minimus Staffing needed for the number of 
-		 */
 		try{
 			Date endingWeekDate = CalendarUtils.addOrSubstractDays(startingWeekDate, 6);
 			List<HistoricSales> actualSales = reportDao.getActualSales(store, startingWeekDate, endingWeekDate);
@@ -224,12 +219,6 @@ public class ReportServiceBean implements ReportService {
 	}
 	
 	public List<TotalHour> getScheduleExecutionEfficiencyReport(Store store, Date startingWeekDate){
-		/**
-		 *
-		 * 1.- Get historic sales for a week
-		 * 2.- Get schedule hours. (Already done) List<TotalHour> scheduleTotalHours = reportDao.getScheduleWeeklyTotalHour(store, startingWeekDate, endingWeekDate);
-		 * 3.- Get Hours Worked (This is a select to that new table).
-		 */
 		try{
 		Date endingWeekDate = CalendarUtils.addOrSubstractDays(startingWeekDate, 6);
 		List<HistoricSales> actualSales = reportDao.getActualSales(store, startingWeekDate, endingWeekDate);
@@ -244,6 +233,55 @@ public class ReportServiceBean implements ReportService {
 					ErrorEnum.GENERIC_DATABASE_ERROR);
 		}
 	}
+
+	public FixedLaborHoursReport getFixedLaborHoursReport(Store store, Date date) {
+		try{
+		FixedLaborHoursReport fixedLaborHoursReport = new FixedLaborHoursReport();
+		
+		fixedLaborHoursReport.setSchedule(reportDao.getScheduleFixedLaborHours(store, date));
+		
+		fixedLaborHoursReport.setTarget(reportDao.getTargetFixedLaborHours(store, date));
+		
+		return fixedLaborHoursReport;
+		} catch (SQLException e) {
+			log.error("An SQLError has occurred", e);
+			throw new SpmUncheckedException(e.getCause(), e.getMessage(),
+					ErrorEnum.GENERIC_DATABASE_ERROR);
+		}
+	}
+	
+	public FixedLaborHoursReport getFixedLaborHoursReportByPosition(Store store, Date date, Position position) {
+		try{
+		FixedLaborHoursReport fixedLaborHoursReport = new FixedLaborHoursReport();
+		
+		fixedLaborHoursReport.setSchedule(reportDao.getScheduleFixedLaborHoursByPosition(store, date, position));
+		
+		fixedLaborHoursReport.setTarget(reportDao.getTargetFixedLaborHoursByPosition(store, date, position));
+		
+		return fixedLaborHoursReport;
+		} catch (SQLException e) {
+			log.error("An SQLError has occurred", e);
+			throw new SpmUncheckedException(e.getCause(), e.getMessage(),
+					ErrorEnum.GENERIC_DATABASE_ERROR);
+		}
+	}
+	
+	public FixedLaborHoursReport getFixedLaborHoursReportByService(Store store, Date date, PositionGroup positionGroup) {
+		try{
+		FixedLaborHoursReport fixedLaborHoursReport = new FixedLaborHoursReport();
+		
+		fixedLaborHoursReport.setSchedule(reportDao.getScheduleFixedLaborHoursByService(store, date, positionGroup));
+		
+		fixedLaborHoursReport.setTarget(reportDao.getTargetFixedLaborHoursByService(store, date, positionGroup));
+		
+		return fixedLaborHoursReport;
+		} catch (SQLException e) {
+			log.error("An SQLError has occurred", e);
+			throw new SpmUncheckedException(e.getCause(), e.getMessage(),
+					ErrorEnum.GENERIC_DATABASE_ERROR);
+		}
+	}	
+	
 	
 	private List<TotalHour> getActualMinimumStaffing(Store store, Date startDate, Date endDate){
 		List<TotalHour> totalHours = new ArrayList<TotalHour>();

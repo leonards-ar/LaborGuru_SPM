@@ -8,9 +8,17 @@ import com.laborguru.model.HistoricSales;
 import com.laborguru.model.Position;
 import com.laborguru.model.PositionGroup;
 import com.laborguru.model.Store;
+import com.laborguru.model.report.FixedLaborHours;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.model.report.TotalHourByPosition;
 
+/**
+ *
+ * @author <a href="fbarreraoro@gmail.com">Federico Barrera Oro</a>
+ * @version 1.0
+ * @since SPM 1.0
+ *
+ */
 /**
  *
  * @author <a href="fbarreraoro@gmail.com">Federico Barrera Oro</a>
@@ -186,6 +194,58 @@ public interface ReportDao {
 	 * @throws SQLException
 	 */
 	List<TotalHour> getActualHours(Store store, Date startDate, Date endDate) throws SQLException;
+
+	/**
+	 * Retrieves the Scheduled FixedLaborHours
+	 * @param store
+	 * @param date
+	 * @return
+	 * @throws SQLException
+	 */
+	FixedLaborHours getScheduleFixedLaborHours(Store store, Date date) throws SQLException;
 	
+	/**
+	 * Retrieves the Scheduled FixedLaborHours
+	 * @param store
+	 * @param date
+	 * @return
+	 * @throws SQLException
+	 */
+	FixedLaborHours getTargetFixedLaborHours(Store store, Date date) throws SQLException;
 	
+	/**
+	 * Retrieves the Scheduled FixedLaborHours by Position
+	 * @param store
+	 * @param date
+	 * @return
+	 * @throws SQLException
+	 */
+	FixedLaborHours getScheduleFixedLaborHoursByPosition(Store store, Date date, Position position) throws SQLException;
+	
+	/**
+	 * Retrieves the Scheduled FixedLaborHours By Position
+	 * @param store
+	 * @param date
+	 * @return
+	 * @throws SQLException
+	 */
+	FixedLaborHours getTargetFixedLaborHoursByPosition(Store store, Date date, Position position) throws SQLException;
+	
+	/**
+	 * Retrieves the Scheduled FixedLaborHours by Position group
+	 * @param store
+	 * @param date
+	 * @return
+	 * @throws SQLException
+	 */
+	FixedLaborHours getScheduleFixedLaborHoursByService(Store store, Date date, PositionGroup positionGroup) throws SQLException;
+	
+	/**
+	 * Retrieves the Scheduled FixedLaborHours by Position group
+	 * @param store
+	 * @param date
+	 * @return
+	 * @throws SQLException
+	 */
+	FixedLaborHours getTargetFixedLaborHoursByService(Store store, Date date, PositionGroup positionGroup) throws SQLException;	
 }

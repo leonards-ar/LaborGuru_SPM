@@ -32,6 +32,11 @@
 			<result name="show">/tiles/report/halfhour_table_report.jsp</result>
 		</action>
 		
+		<action name="fixedLaborReport_*" method="{1}" class="com.laborguru.action.report.FixedLaborHoursReportPrepareAction">
+			<result name="show">/tiles/report/fixed_labor_hours_report.jsp</result>
+		</action>
+		
+		
 	</package>
 	
 </struts>
