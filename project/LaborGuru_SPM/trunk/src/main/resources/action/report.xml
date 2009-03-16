@@ -36,7 +36,10 @@
 			<result name="show">/tiles/report/fixed_labor_hours_report.jsp</result>
 		</action>
 		
-		
+		<action name="historicalComparisonReport_*" method="{1}" class="com.laborguru.action.report.HistoricalComparisonPrepareAction">
+			<result name="input" type="tiles">showHistoricalComparisonReport</result>
+			<result name="show">/tiles/report/historical_comparison_table.jsp</result>
+		</action>
 	</package>
 	
 </struts>

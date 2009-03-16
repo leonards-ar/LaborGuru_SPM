@@ -39,36 +39,50 @@
 			  <s:text name="report.weeklytotalhours.scheduled.label" />
 			</td>
 			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
-			  <td class="windowTableValue"><s:property value="schedule"/></td>
+			  <td class="windowTableValue">
+			   <s:text name="total.hours"><s:param value="schedule"/></s:text></td>
 			</s:iterator>
-			<td class="windowTableValue"><s:property value="totalSchedule"/></td>
+			<td class="windowTableValue">
+			   <s:text name="total.hours"><s:param value="totalSchedule"/></s:text></td>
 		  </tr>
 		  <tr>
 			<td class="windowTableLabel">
 			  <s:text name="report.weeklytotalhours.target.label" />
 			</td>
 			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
-			  <td class="windowTableValue"><s:property value="target"/></td>
+			  <td class="windowTableValue">
+			   <s:text name="total.hours"><s:param value="target"/></s:text>
+        </td>
 			</s:iterator>
-			<td class="windowTableValue"><s:property value="totalTarget"/></td>
+			<td class="windowTableValue">
+			   <s:text name="total.hours"><s:param value="totalTarget"/></s:text>
+      </td>
 		  </tr>
 		  <tr>
 			<td class="windowTableLabel">
 			  <s:text name="report.weeklytotalhours.difference.label" />
 			</td>
 			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
-			  <td class="windowTableValue"><s:property value="difference"/></td>
+			  <td class="windowTableValue">
+			   <s:text name="total.hours"><s:param value="difference"/></s:text>
+        </td>
 			</s:iterator>
-			<td class="windowTableValue"><s:property value="totalDifference"/></td>
+			<td class="windowTableValue">
+			   <s:text name="total.hours"><s:param value="totalDifference"/></s:text>
+      </td>
 		  </tr>
 		  <tr>
 			<td class="windowTableLabel">
 			  <s:text name="report.weeklytotalhours.percentaje.label" />
 			</td>
 			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
-			  <td class="windowTableValue"><s:property value="percentaje"/></td>
+			  <td class="windowTableValue">
+			     <s:text name="percentage"><s:param value="percentaje"/></s:text>
+        </td>
 			</s:iterator>
-			<td class="windowTableValue"><s:property value="totalPercentaje"/></td>
+			<td class="windowTableValue">
+			     <s:text name="percentage"><s:param value="totalPercentaje"/></s:text>
+      </td>
 		  </tr>
 		</table>
       </td>
