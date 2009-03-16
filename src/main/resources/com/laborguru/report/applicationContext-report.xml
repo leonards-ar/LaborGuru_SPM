@@ -17,6 +17,9 @@
 			<entry key="dailyHalfhourReport">
 				<value>/com/laborguru/report/dailyHalfhourReport.properties</value>
 			</entry>
+			<entry key="historicalComparisonReport">
+				<value>/com/laborguru/report/historicalComparisonReport.properties</value>
+			</entry>			
 		</map>
 	</constructor-arg>
 	</bean>

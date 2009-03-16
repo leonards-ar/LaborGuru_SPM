@@ -23,28 +23,33 @@ public interface ReportService extends Service {
 	/**
 	 * Retrieves the Hours that has been projected and the hours that has been consumed.
 	 * @param store
-	 * @param startingWeekDate
+	 * @param start
+	 * @param end
+	 * @param getProjections
 	 * @return
 	 */
-	List<TotalHour> getWeeklyTotalHours(Store store, Date startingWeekDate);
+	List<TotalHour> getWeeklyTotalHours(Store store, Date start, Date end, boolean getProjections);
 	
 	/**
 	 * Retrieves the Hours that has been projected and the hours that has been consumed by position.
 	 * @param store
 	 * @param position
-	 * @param startingWeekDate
+	 * @param start
+	 * @param end
 	 * @return
 	 */
-	List<TotalHour> getWeeklyTotalHoursByPosition(Store store, Position position, Date startingWeekDate);
+	List<TotalHour> getWeeklyTotalHoursByPosition(Store store, Position position, Date start, Date end);
 	
 	/**
 	 * Retrieves the Hours that has been projected and the hours that has been consumed by position group.
 	 * @param store
 	 * @param positiongroup
-	 * @param startingWeekDate
+	 * @param start
+	 * @param end
 	 * @return
 	 */
-	List<TotalHour> getWeeklyTotalHoursByService(Store store, PositionGroup positiongroup, Date startingWeekDate);	
+	List<TotalHour> getWeeklyTotalHoursByService(Store store, PositionGroup positiongroup, Date start, Date end);
+	
 	/**
 	 * Retrieves the total forecast for each position in the store.
 	 * @param store
@@ -82,18 +87,22 @@ public interface ReportService extends Service {
 	/**
 	 * Retrieves the Performance Efficiency Report
 	 * @param store
-	 * @param startingWeekDate
+	 * @param start
+	 * @param end
+	 * @param getSales
 	 * @return
 	 */
-	List<TotalHour> getPerformanceEfficiencyReport(Store store, Date startingWeekDate);
+	List<TotalHour> getPerformanceEfficiencyReport(Store store, Date start, Date end, boolean getSales);
 	
 	/**
 	 * Retrieves the Schedule Execution Efficiency
 	 * @param store
-	 * @param startingWeekDate
+	 * @param start
+	 * @param end
+	 * @param getSales
 	 * @return
 	 */
-	List<TotalHour> getScheduleExecutionEfficiencyReport(Store store, Date startingWeekDate);
+	List<TotalHour> getScheduleExecutionEfficiencyReport(Store store, Date start, Date end, boolean getSales);
 	
 	/**
 	 * Retrieves the Fixed Labor Hours for a store.
@@ -119,4 +128,13 @@ public interface ReportService extends Service {
 	 */
 	FixedLaborHoursReport getFixedLaborHoursReportByService(Store store, Date date, PositionGroup positionGroup);
 	
+	/**
+	 * Retrieves the Forecast Efficiency for a Store
+	 * @param store
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	List<TotalHour> getForecastEfficiencyReport(Store store, Date start, Date end);
+		
 }

@@ -1,7 +1,10 @@
 package com.laborguru.action.report;
 
-import com.laborguru.model.Position;
-import com.laborguru.model.PositionGroup;
+import java.util.Date;
+
+import com.laborguru.exception.ErrorEnum;
+import com.laborguru.exception.SpmUncheckedException;
+import com.laborguru.util.CalendarUtils;
 
 public class ScheduleExecutionEfficiencyReportPrepareAction extends
 		WeeklyReportBaseAction {
@@ -13,18 +16,19 @@ public class ScheduleExecutionEfficiencyReportPrepareAction extends
 
 	@Override
 	protected void getReport() {
+		Date end = CalendarUtils.addOrSubstractDays(getWeekDaySelector().getStartingWeekDay(), 6);
 		setTotalHours(getReportService().getScheduleExecutionEfficiencyReport(
-				getEmployeeStore(), getWeekDaySelector().getSelectedDay()));
+				getEmployeeStore(), getWeekDaySelector().getSelectedDay(), end, true));
 	}
 
 	@Override
 	protected void getReportByPosition() {
-		//Not Implemented in this version
+		throw new SpmUncheckedException("Method not implemented", ErrorEnum.NOT_IMPLEMENTED_METHOD);
 	}
 
 	@Override
 	protected void getReportByService() {
-		//Not Implemented in this version
+		throw new SpmUncheckedException("Method not implemented", ErrorEnum.NOT_IMPLEMENTED_METHOD);
 	}
 
 }
