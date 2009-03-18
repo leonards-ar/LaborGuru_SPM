@@ -92,7 +92,7 @@ public class TotalHour extends SpmObject{
 		if(target.compareTo(SpmConstants.BD_ZERO_VALUE) == 0) {
 			return SpmConstants.BD_ZERO_VALUE;
 		}
-		return getDifference().divide(target, 2, RoundingMode.HALF_UP).abs();
+		return getDifference().divide(target, 2, RoundingMode.HALF_UP);
 	}
 	
 	
