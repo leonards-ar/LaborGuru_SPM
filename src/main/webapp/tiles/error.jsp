@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ page import="org.apache.log4j.Logger" %>
 
 <script language="javascript" type="text/javascript">
 </script>
@@ -48,4 +49,11 @@
 <!--
 ********* ERROR ***********
 <s:property value="exceptionStack"/>
+
 -->
+<% private static Logger log = Logger.getLogger(super().getClass());
+ 
+ 	if(log.isDebugEnabled()){
+ 		logger.error(%> <s:property value="exceptionStack"/><% );
+ 	}
+ %>

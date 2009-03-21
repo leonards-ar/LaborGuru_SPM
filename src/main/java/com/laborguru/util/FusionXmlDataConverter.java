@@ -155,14 +155,13 @@ public class FusionXmlDataConverter {
 		return document.asXML();
 	}
 
-	public String historicalComparisonXmlConverter(List<TotalHour> totalHours, ResourceBundle bundle, String scheduleLegend, String targetLegend){
+	public String historicalComparisonXmlConverter(List<TotalHour> totalHours, ResourceBundle bundle, String scheduleLegend, String targetLegend, String yAxisName){
 
 		Document document = DocumentHelper.createDocument();
 		Element graph = document.addElement("graph");
 		Element categories = graph.addElement("categories");
 		Element scheduleDataset = graph.addElement("dataset");
-		Element targetDataset = graph.addElement("dataset");
-		Element dummyDataSet = graph.addElement("dataset");		
+		Element targetDataset = graph.addElement("dataset");		
 		Properties props = null;
 
 		try {
@@ -174,33 +173,27 @@ public class FusionXmlDataConverter {
 		SimpleDateFormat sdf = new SimpleDateFormat(props.getProperty("dateFormat"));
 
 		graph.addAttribute("caption", "");
-		graph.addAttribute("PYAxisMinValue", props.getProperty("defaultPYAxisMinValue"));
-		graph.addAttribute("SYAxisMinValue", props.getProperty("defaultSYAxisMinValue"));
-		graph.addAttribute("PYAxisMaxValue", props.getProperty("defaultPYAxisMaxValue"));
-		graph.addAttribute("SYAxisMaxValue", props.getProperty("defaultSYAxisMaxValue"));
-		graph.addAttribute("PYAxisName", "");
-		graph.addAttribute("SYAxisName", bundle.getString("report.historicalComparison.axisname"));
+		graph.addAttribute("yAxisMinValue", props.getProperty("defaultYAxisMinValue"));
+		graph.addAttribute("yAxisMaxValue", props.getProperty("defaultYAxisMaxValue"));
+		graph.addAttribute("yAxisName", bundle.getString(yAxisName));
 		graph.addAttribute("showvalues", props.getProperty("showvalues"));
 		graph.addAttribute("numDivLines", props.getProperty("numDivLines"));
 		graph.addAttribute("formatNumberScale", props.getProperty("formatNumberScale"));
 		graph.addAttribute("decimalPrecision", props.getProperty("decimalPrecision"));
+		graph.addAttribute("forceDecimals", props.getProperty("forceDecimals"));
 		graph.addAttribute("anchorSides", props.getProperty("anchorSides"));
 		graph.addAttribute("anchorRadius", props.getProperty("anchorRadius"));
 		graph.addAttribute("anchorBorderColor", props.getProperty("anchorBorderColor"));
 		graph.addAttribute("rotateNames", "1");
 
 		
-		dummyDataSet.addAttribute("showValues", "0");
-		
 		scheduleDataset.addAttribute("seriesName", bundle.getString(scheduleLegend));
 		scheduleDataset.addAttribute("color", props.getProperty("scheduleColor"));
 		scheduleDataset.addAttribute("showValues", props.getProperty("scheduleShowValues"));
-		scheduleDataset.addAttribute("parentYAxis", "S");
 
 		targetDataset.addAttribute("seriesName", bundle.getString(targetLegend));
 		targetDataset.addAttribute("color", props.getProperty("targetColor"));
 		targetDataset.addAttribute("showValues", props.getProperty("targetShowValues"));
-		targetDataset.addAttribute("parentYAxis", "S");
 
 		for (TotalHour th : totalHours) {
 			
@@ -217,9 +210,6 @@ public class FusionXmlDataConverter {
 			element = targetDataset.addElement("set");
 			element.addAttribute("value", th.getTarget().toPlainString());
 			//element.addAttribute("link", "http://www.google.com.ar");
-			
-			element = dummyDataSet.addElement("set");
-			element.addAttribute("value", "0");
 		}
 
 		if (log.isDebugEnabled()) {

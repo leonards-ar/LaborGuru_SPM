@@ -67,7 +67,7 @@ public class HistoricalComparisonPrepareAction extends SpmAction implements Prep
 	Date endDate;
 	
 	List<TotalHour> totalHours;
-	String scheduleHeader, targetHeader; 
+	String scheduleHeader, targetHeader, reportTitle; 
 	
 	String xmlValues;
 	
@@ -89,21 +89,25 @@ public class HistoricalComparisonPrepareAction extends SpmAction implements Prep
 		ReportTypes reportType = ReportTypes.getReportTypeByIndex(getIndex());
 		switch(reportType) {
 		case performanceEfficiency: setTotalHours(getReportService().getPerformanceEfficiencyReport(getEmployeeStore(), getStartDate(), getEndDate(), false));
+									setReportTitle("report.historicalcomparison.performanceEfficiency.title.label");
 									setScheduleHeader("report.historicalComparison.performanceEfficiency.schedule.label");
 									setTargetHeader("report.historicalComparison.performanceEfficiency.target.label");
 									break;
 		case schedulingEfficiency: setTotalHours(getReportService().getWeeklyTotalHours(getEmployeeStore(), getStartDate(), getEndDate(), false));
+									setReportTitle("report.historicalcomparison.scheduleEfficiency.title.label");
 									setScheduleHeader("report.historicalComparison.scheduleEfficiency.schedule.label");
 									setTargetHeader("report.historicalComparison.scheduleEfficiency.target.label");
 									break;
 		case scheduleExecutionEfficiency: setTotalHours(getReportService().getScheduleExecutionEfficiencyReport(getEmployeeStore(), getStartDate(), getEndDate(), false));
-									setScheduleHeader("report.historicalComparison.scheduleExecutionEfficiency.schedule.label");
+									setReportTitle("report.historicalcomparison.performanceEfficiency.title.label");
+									setScheduleHeader("report.historicalComparison.performanceEfficiency.schedule.label");
 									setTargetHeader("report.historicalComparison.scheduleExecutionEfficiency.target.label");
 									break;
 		case forecastEfficiency: setTotalHours(getReportService().getForecastEfficiencyReport(getEmployeeStore(), getStartDate(), getEndDate()));
-								 setScheduleHeader("report.historicalComparison.forecastEfficiency.schedule.label");
-								 setTargetHeader("report.historicalComparison.forecastEfficiency.target.label");
-								 break;
+								setReportTitle("report.historicalcomparison.forecastEfficiency.title.label");
+								setScheduleHeader("report.historicalComparison.forecastEfficiency.schedule.label");
+								setTargetHeader("report.historicalComparison.forecastEfficiency.target.label");
+								break;
 		default: setTotalHours(null);
 				 break;
 		}
@@ -114,7 +118,7 @@ public class HistoricalComparisonPrepareAction extends SpmAction implements Prep
 	
 	private void generateXmlGraph(){
 		
-		setXmlValues(getFusionXmlDataConverter().historicalComparisonXmlConverter(getTotalHours(), getTexts("defaultmessages"), getScheduleHeader(), getTargetHeader()));
+		setXmlValues(getFusionXmlDataConverter().historicalComparisonXmlConverter(getTotalHours(), getTexts("defaultmessages"), getScheduleHeader(), getTargetHeader(), getReportTitle()));
 	}
 	
 	public ReportTypes[] getReportTypes(){
@@ -162,6 +166,20 @@ public class HistoricalComparisonPrepareAction extends SpmAction implements Prep
 	 */
 	public void setTargetHeader(String targetHeader) {
 		this.targetHeader = targetHeader;
+	}
+
+	/**
+	 * @return the reportTitle
+	 */
+	public String getReportTitle() {
+		return reportTitle;
+	}
+
+	/**
+	 * @param reportTitle the reportTitle to set
+	 */
+	public void setReportTitle(String reportTitle) {
+		this.reportTitle = reportTitle;
 	}
 
 	/**
