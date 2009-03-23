@@ -55,9 +55,9 @@
 			  <s:text name="report.performance.difference.label" />
 			</td>
 			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
-			  <td class="windowTableValue"><s:property value="difference"/></td>
+			  <td class="<s:if test="difference < 0">windowTableNegative</s:if><s:else>windowTableValue</s:else>"><s:property value="difference"/></td>
 			</s:iterator>
-			<td class="windowTableValue"><s:property value="totalDifference"/></td>
+			<td class="<s:if test="totalDifference < 0">windowTableNegative</s:if><s:else>windowTableValue</s:else>"><s:property value="totalDifference"/></td>
 		  </tr>
 		  <tr>
 			<td class="windowTableLabel">

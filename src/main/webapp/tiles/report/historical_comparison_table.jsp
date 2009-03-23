@@ -36,7 +36,7 @@
 								<td class="windowTableValue"><s:text name="currency">
 									<s:param value="target" />
 								</s:text></td>
-								<td class="windowTableValue"><s:text name="currency">
+								<td class="<s:if test="difference < 0">windowTableNegative</s:if><s:else>windowTableValue</s:else>"><s:text name="currency">
 									<s:param value="difference" />
 								</s:text></td>
 								<td class="windowTableValue"><s:text
