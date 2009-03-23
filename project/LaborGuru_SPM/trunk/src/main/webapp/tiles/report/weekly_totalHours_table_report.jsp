@@ -63,11 +63,11 @@
 			  <s:text name="report.weeklytotalhours.difference.label" />
 			</td>
 			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
-			  <td class="windowTableValue">
+			  <td class="<s:if test="difference < 0">windowTableNegative</s:if><s:else>windowTableValue</s:else>">
 			   <s:text name="total.hours"><s:param value="difference"/></s:text>
         </td>
 			</s:iterator>
-			<td class="windowTableValue">
+			<td class="<s:if test="totalDifference < 0">windowTableNegative</s:if><s:else>windowTableValue</s:else>">
 			   <s:text name="total.hours"><s:param value="totalDifference"/></s:text>
       </td>
 		  </tr>

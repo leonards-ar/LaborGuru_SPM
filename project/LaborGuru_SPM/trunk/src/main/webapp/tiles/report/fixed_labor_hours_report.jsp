@@ -33,12 +33,12 @@
 	</tr>
 	<tr>
 		<td class="windowTableLabel"><s:text name="report.fixedlabor.difference.label" /></td>
-		<td class="windowTableValue"><s:text name="report.total.hours"><s:param value="fixedLaborHoursReport.totalDifference" /></s:text>
+		<td class="<s:if test="fixedLaborHoursReport.totalDifference < 0">windowTableNegative</s:if><s:else>windowTableValue</s:else>"><s:text name="report.total.hours"><s:param value="fixedLaborHoursReport.totalDifference" /></s:text>
 		<s:push value="fixedLaborHoursReport.difference">
-			<td class="windowTableValue"><s:text name="report.total.hours"><s:param value="serviceHours"/></s:text></td>
-			<td class="windowTableValue"><s:text name="report.total.hours"><s:param value="openHours"/></s:text></td>
-			<td class="windowTableValue"><s:text name="report.total.hours"><s:param value="flexHours"/></s:text></td>
-			<td class="windowTableValue"><s:text name="report.total.hours"><s:param value="closeHours"/></s:text></td>		
+			<td class="<s:if test="serviceHours < 0">windowTableNegative</s:if><s:else>windowTableValue</s:else>"><s:text name="report.total.hours"><s:param value="serviceHours"/></s:text></td>
+			<td class="<s:if test="openHours < 0">windowTableNegative</s:if><s:else>windowTableValue</s:else>"><s:text name="report.total.hours"><s:param value="openHours"/></s:text></td>
+			<td class="<s:if test="flexHours < 0">windowTableNegative</s:if><s:else>windowTableValue</s:else>"><s:text name="report.total.hours"><s:param value="flexHours"/></s:text></td>
+			<td class="<s:if test="closeHours < 0">windowTableNegative</s:if><s:else>windowTableValue</s:else>"><s:text name="report.total.hours"><s:param value="closeHours"/></s:text></td>		
 		</s:push>		
 	</tr>
 </table>
