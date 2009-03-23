@@ -3,17 +3,21 @@
 <validators> 
   <field name="reportName">
 	<field-validator type="required">
-		<message key="error.region.name.required" />
+		<message key="error.historicalComparison.reportType.required" />
 	</field-validator>
   </field> 
   <field name="startDate">
   	<field-validator type="required" >
-  		<message key="error.region.name.required" />
+  		<message key="error.historicalComparison.startDate.required" />
   	</field-validator>
   </field>
   <field name="endDate">
   	<field-validator type="requred">
-  		<message key="error.region.name.required" />
+  		<message key="error.historicalComparison.endDate.required" />
   	</field-validator>
   </field>
+  <validator type="expression">
+  	<param name="expression">startDate &lt; endDate</param>
+  	<message key="error.historicalcomparison.endDateGTstartDate" />
+  </validator>
 </validators> 
