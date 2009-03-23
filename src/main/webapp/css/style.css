@@ -718,3 +718,11 @@ input.text, input.password, textarea {
 	font-size: 11px;	
 	text-align: center;
 }
+
+.windowTableNegative {
+	background-color: #CCCCCC;
+	color: #FF0033;
+	text-align: center;
+	font-family: trebuchet ms, arial, sans-serif;
+	font-size: 11px;
+}
