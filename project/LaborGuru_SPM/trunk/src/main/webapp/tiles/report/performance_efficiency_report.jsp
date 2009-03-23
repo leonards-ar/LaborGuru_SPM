@@ -152,9 +152,10 @@
 			<tr>
 				<td><s:url id="performanceEfficiencyReportUrl"
 					action="performanceEfficiencyReport_showReport" namespace="/report"
-					includeParams="none" /> <s:div id="reportFrame" theme="ajax"
+					includeParams="none" /> 
+					<s:div id="reportFrame" theme="ajax"
 					href="%{performanceEfficiencyReportUrl}" formId="report_form"
-					listenTopics="/refresh" indicator="indicator" /></td>
+					listenTopics="/refresh" indicator="indicator" cssClass="waitMessage" loadingText='%{getText("wait.message")}'/></td>
 			</tr>
 		</table>
 
@@ -163,8 +164,10 @@
 </table>
 
 <center><img id="indicator"
-	src="<s:url value="/images/indicator.gif" includeParams="none" />"
-	alt="<s:text name="wait.message"/>" style="display: none" /></center>
+	style="display: none;"
+	src="<s:url value="/images/wait.gif" includeParams="none"/>"
+	alt="<s:text name="wait.message"/>"
+	title="<s:text name="wait.message"/>" border="0"  /></center>
 
 <script language="javascript" type="text/javascript">
 

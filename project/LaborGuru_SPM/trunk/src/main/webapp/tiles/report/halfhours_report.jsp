@@ -110,14 +110,16 @@
 							href="%{halfHourReportUrl}" 
 							formId="dailyReport_form"
 							listenTopics="/refresh"
-							indicator="indicator" />
+							indicator="indicator" cssClass="waitMessage" loadingText='%{getText("wait.message")}'/>
 			</td>
 		</tr>
 	</table>
 
 <center><img id="indicator"
-	src="<s:url value="/images/indicator.gif" includeParams="none" />"
-	alt="<s:text name="wait.message"/>" style="display: none; text-align: center" />
+	style="display: none;"
+	src="<s:url value="/images/wait.gif" includeParams="none"/>"
+	alt="<s:text name="wait.message"/>"
+	title="<s:text name="wait.message"/>" border="0" />
 </center>
 	
 
