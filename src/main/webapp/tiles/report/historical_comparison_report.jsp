@@ -8,11 +8,22 @@
 			name="report.historicalComparison.title" /></td>
 	</tr>
 	<tr>
+		<td class="errorMessage" align="center">
+		<table border="0" align="center" cellpadding="0" cellspacing="0"
+			colspan="0" cellspan="0">
+			<tr>
+				<td><s:fielderror theme="simple" /> <s:actionerror
+					theme="simple" /></td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
 		<td align="center">
 		<table border="0" cellspacing="0" align="center">
 			<tr>
-				<td>
-				<s:form id="historicalComparison_form"	name="historicalComparison_form" theme="simple" method="post"
+				<td><s:form id="historicalComparison_form"
+					name="historicalComparison_form" theme="simple" method="post"
 					action="historicalComparisonReport_showReport">
 					<table border="0" cellspacing="0" align="center">
 						<tr>
@@ -32,9 +43,12 @@
 					</table></td>
 			</tr>
 			<tr>
-				<td align="right">
-					<s:submit id="submit" key="report.historicalComparison.submit.label" type="button"	theme="ajax" targets="tableFrame" indicator="historicalComparisonIndicator" formId="historicalComparison_form" cssClass="button"/>
-				</td>
+				<td align="right"><s:submit id="submit"
+					key="report.historicalComparison.submit.label"
+					cssClass="waitMessage" loadingText='%{getText("wait.message")}'
+					title="wait.message" type="button" theme="ajax"
+					targets="tableFrame" indicator="historicalComparisonIndicator"
+					formId="historicalComparison_form" /></td>
 			</tr>
 			</s:form>
 			</td>

@@ -24,6 +24,17 @@
 		  </tr>
 		  <tr>
 			<td class="windowTableLabel">
+			  <s:text name="report.weeklytotalhours.sales.label" />
+			</td>
+			<td class="windowTableValue"><s:text name="currency"><s:param value="totalSales"/></s:text></td>
+			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
+			  <td class="windowTableValue"><s:text name="currency"><s:param value="sales"/></s:text></td>
+			</s:iterator>
+
+		  </tr>
+
+		  <tr>
+			<td class="windowTableLabel">
 			  <s:text name="report.weeklytotalhours.scheduled.label" />
 			</td>
 			<td class="windowTableValue"><s:property value="totalSchedule"/></td>
@@ -70,7 +81,7 @@
 								href="%{fixedLaborUrl}" 
 								formId="dailyReport_form"
 								listenTopics="/refresh"
-								indicator="indicator" />
+								indicator="indicator" cssClass="waitMessage" loadingText='%{getText("wait.message")}'/>
 					</td></tr>
 					</table>
 				</td>
