@@ -27,6 +27,7 @@ public class HalfHoursReportPrepareAction extends ScheduleReportPrepareAction im
 
 	List<TotalHour>totalHours;
 	
+	private BigDecimal totalSales = SpmConstants.BD_ZERO_VALUE;
 	private BigDecimal totalSchedule = SpmConstants.BD_ZERO_VALUE;
 	private BigDecimal totalTarget = SpmConstants.BD_ZERO_VALUE;
 	private BigDecimal totalDifference = SpmConstants.BD_ZERO_VALUE;
@@ -85,13 +86,14 @@ public class HalfHoursReportPrepareAction extends ScheduleReportPrepareAction im
 	private void calculateTotals() {
 
 		for (TotalHour th : getTotalHours()) {
+			setTotalSales(getTotalSales().add(th.getSales()));
 			setTotalSchedule(getTotalSchedule().add(th.getSchedule()));
 			setTotalTarget(getTotalTarget().add(th.getTarget()));
 			setTotalDifference(getTotalDifference().add(th.getDifference()));
 		}
 		setTotalSchedule(getTotalSchedule().divide(new BigDecimal(2)));
 		setTotalTarget(getTotalTarget().divide(new BigDecimal(2)));
-		setTotalDifference(getTotalDifference().add(new BigDecimal(2)));
+		setTotalDifference(getTotalDifference().divide(new BigDecimal(2)));
 	}
 	
 	public void generateXmlGraph(){
@@ -123,6 +125,20 @@ public class HalfHoursReportPrepareAction extends ScheduleReportPrepareAction im
 	 */
 	public void setTotalHours(List<TotalHour> totalHours) {
 		this.totalHours = totalHours;
+	}
+
+	/**
+	 * @return the totalSales
+	 */
+	public BigDecimal getTotalSales() {
+		return totalSales;
+	}
+
+	/**
+	 * @param totalSales the totalSales to set
+	 */
+	public void setTotalSales(BigDecimal totalSales) {
+		this.totalSales = totalSales;
 	}
 
 	/**
