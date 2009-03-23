@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.SpmUncheckedException;
 import com.laborguru.model.DailyProjection;
+import com.laborguru.model.HalfHourProjection;
 import com.laborguru.model.HistoricSales;
 import com.laborguru.model.Position;
 import com.laborguru.model.PositionGroup;
@@ -148,7 +149,7 @@ public class ReportServiceBean implements ReportService {
 		try{
 			//Initialize Minimum staffing in case it doesn't exist.
 			getStaffingService().getDailyStaffingByDate(store, date);
-			
+			DailyProjection projections = projectionService.getDailyProjection(store, date);
 			Date startHour = store.getStoreScheduleStartHour(CalendarUtils.getDayOfWeek(date));
 			Date endHour = store.getStoreScheduleEndHour(CalendarUtils.getDayOfWeek(date));
 			
@@ -156,7 +157,7 @@ public class ReportServiceBean implements ReportService {
 			List<TotalHour> target = reportDao.getHalfHourlyMinimumStaffing(store, date);
 			
 			
-			return getMergedHalfHours(startHour, endHour, schedule, target);
+			return getMergedHalfHours(startHour, endHour, projections.getHalfHourProjections(), schedule, target);
 			
 		}catch(SQLException e){
 			log.error("An SQLError has occurred", e);
@@ -170,12 +171,13 @@ public class ReportServiceBean implements ReportService {
 			//Initialize Minimum staffing in case it doesn't exist.			
 			getStaffingService().getDailyStaffingByDate(store, date);
 			
+			DailyProjection projections = projectionService.getDailyProjection(store, date);
 			Date startHour = store.getStoreScheduleStartHour(CalendarUtils.getDayOfWeek(date));
 			Date endHour = store.getStoreScheduleEndHour(CalendarUtils.getDayOfWeek(date));
 			
 			List<TotalHour> schedule = reportDao.getHalfHourlyScheduleByPosition(store, position, date, startHour, endHour);
 			List<TotalHour> target = reportDao.getHalfHourlyMinimumStaffingByPosition(store, position, date);
-			return getMergedHalfHours(startHour, endHour, schedule, target);
+			return getMergedHalfHours(startHour, endHour, projections.getHalfHourProjections(), schedule, target);
 		} catch(SQLException e){
 			log.error("An SQLError has occurred", e);
 			throw new SpmUncheckedException(e.getCause(), e.getMessage(),
@@ -188,13 +190,14 @@ public class ReportServiceBean implements ReportService {
 			//Initialize Minimum staffing in case it doesn't exist.			
 			getStaffingService().getDailyStaffingByDate(store, date);
 
+			DailyProjection projections = projectionService.getDailyProjection(store, date);
 			Date startHour = store.getStoreScheduleStartHour(CalendarUtils.getDayOfWeek(date));
 			Date endHour = store.getStoreScheduleEndHour(CalendarUtils.getDayOfWeek(date));
 			
 			List<TotalHour> schedule = reportDao.getHalfHourlyScheduleByService(store, positionGroup, date, startHour, endHour);
 			List<TotalHour> target = reportDao.getHalfHourlyMinimumStaffingByService(store, positionGroup, date);
 			
-			return getMergedHalfHours(startHour, endHour, schedule, target);
+			return getMergedHalfHours(startHour, endHour, projections.getHalfHourProjections(), schedule, target);
 			
 		} catch(SQLException e){
 			log.error("An SQLError has occurred", e);
@@ -401,7 +404,7 @@ public class ReportServiceBean implements ReportService {
 		return totalHours;
 		
 	}
-	private List<TotalHour> getMergedHalfHours(Date startHour, Date endHour, List<TotalHour> schedule, List<TotalHour> target){
+	private List<TotalHour> getMergedHalfHours(Date startHour, Date endHour, List<HalfHourProjection> halfHourProjections, List<TotalHour> schedule, List<TotalHour> target){
 		List <TotalHour> totalHours = new ArrayList<TotalHour>();
 		
 		for(Date hour = startHour; !CalendarUtils.equalsTime(hour, endHour); hour = CalendarUtils.addOrSubstractMinutes(hour, 30)) {
@@ -409,6 +412,12 @@ public class ReportServiceBean implements ReportService {
 			
 			TotalHour totalhour = new TotalHour();
 			totalhour.setDay(hour);
+			HalfHourProjection hp = getHalfHourProyectionByHour(hour, halfHourProjections);
+			if(hp != null){
+				totalhour.setSales(hp.getValue());
+			} else {
+				totalhour.setSales(SpmConstants.BD_ZERO_VALUE);
+			}
 			
 			totalhour.setSchedule(getScheduleValue(getTotalHourByTime(hour, schedule)));
 			totalhour.setTarget(getTargetValue(getTotalHourByTime(hour, target)));
@@ -462,6 +471,14 @@ public class ReportServiceBean implements ReportService {
 		return null;
 	}
 
+	private HalfHourProjection getHalfHourProyectionByHour(Date date, List<HalfHourProjection> halfHourProjections) {
+		for(HalfHourProjection hp: halfHourProjections) {
+			if(CalendarUtils.equalsTime(date, hp.getTime())) {
+				return hp;
+			}
+		}
+		return null;
+	}
 	private BigDecimal getScheduleValue(TotalHour th) {
 		if(th != null){
 			return th.getSchedule();
