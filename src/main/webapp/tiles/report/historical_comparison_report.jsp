@@ -45,7 +45,7 @@
 			<tr>
 				<td align="right"><s:submit id="submit"
 					key="report.historicalComparison.submit.label"
-					cssClass="waitMessage" loadingText='%{getText("wait.message")}'
+					cssClass="button" loadingText='%{getText("wait.message")}'
 					title="wait.message" type="button" theme="ajax"
 					targets="tableFrame" indicator="historicalComparisonIndicator"
 					formId="historicalComparison_form" /></td>

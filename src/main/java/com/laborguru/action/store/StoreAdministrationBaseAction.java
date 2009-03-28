@@ -61,6 +61,7 @@ public abstract class StoreAdministrationBaseAction extends SpmAction implements
 	 */
 	protected void saveStoreAndLoadItIntoSession(Store store){
 		Store auxStore = getStoreService().save(store);
+		setStore(auxStore);
 		getSession().put(HttpRequestConstants.STORE,auxStore);
 	}
 	
