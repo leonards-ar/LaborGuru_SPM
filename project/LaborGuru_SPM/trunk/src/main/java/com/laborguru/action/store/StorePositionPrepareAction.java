@@ -1,11 +1,14 @@
 package com.laborguru.action.store;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import com.laborguru.action.SpmActionResult;
+import com.laborguru.exception.ErrorEnum;
+import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.Position;
 import com.opensymphony.xwork2.Preparable;
 
@@ -101,7 +104,7 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 	/**
 	 * 
 	 */
-	private void setStorePositionsName() {
+	private void setStorePositionsName() throws SpmCheckedException{
 		if (!"".equals(getNewPositionName().trim())) {
 			addNewPosition();
 		}
@@ -110,6 +113,14 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 		for (Position position : getPositions()) {
 			Position storePosition = getPositionById(position.getId());
 			if (storePosition != null) {
+				String positionName = position.getName();
+				if (!storePosition.getName().equals(positionName))					
+					//Checking if the name is not repeted
+					if (Collections.frequency(getPositions(), position) > 1){
+						String exMessage = "Position name "+positionName+" is duplicated";
+						log.error(exMessage);
+						throw new SpmCheckedException(exMessage, ErrorEnum.DUPLICATED_POSITION, new String[]{positionName});						
+					}
 				storePosition.setName(position.getName());
 				storePosition.setManager(position.isManager());
 				storePosition.setGuestService(position.isGuestService());
@@ -130,7 +141,12 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 	 * @return
 	 */
 	public String save() {
-		setStorePositionsName();
+		try{
+			setStorePositionsName();
+		}catch(SpmCheckedException e){
+			addActionError(e.getErrorMessage());
+			return SpmActionResult.INPUT.getResult();			
+		}
 		
 		if(log.isDebugEnabled()) {
 			log.debug("About to save store: " + getStore());
