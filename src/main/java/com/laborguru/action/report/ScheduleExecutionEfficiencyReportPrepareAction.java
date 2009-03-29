@@ -18,7 +18,7 @@ public class ScheduleExecutionEfficiencyReportPrepareAction extends
 	protected void getReport() {
 		Date end = CalendarUtils.addOrSubstractDays(getWeekDaySelector().getStartingWeekDay(), 6);
 		setTotalHours(getReportService().getScheduleExecutionEfficiencyReport(
-				getEmployeeStore(), getWeekDaySelector().getSelectedDay(), end, true));
+				getEmployeeStore(), getWeekDaySelector().getStartingWeekDay(), end, true));
 	}
 
 	@Override

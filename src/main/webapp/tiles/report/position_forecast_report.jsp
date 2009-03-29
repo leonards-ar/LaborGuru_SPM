@@ -35,10 +35,10 @@
 	</s:iterator>
 </tr>
 <tr>
-	<td class="windowGreyTableValue"><s:text name="report.weeklytotalhours.percentaje.label"/></td>
+	<td class="windowGreyTableValue"><s:text name="report.weeklytotalhours.percentage.label"/></td>
 	<s:iterator id="totalHourByPosition" value="totalHoursByPosition" status="itTotalHours">
 		<td class="windowGreyTableValue">
-			<s:text name="percentage"><s:param value="totalHour.percentaje"/></s:text></td>
+			<s:text name="percentage"><s:param value="totalHour.percentage"/></s:text></td>
 	</s:iterator>
 </tr>
 </table>

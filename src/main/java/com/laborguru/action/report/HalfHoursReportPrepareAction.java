@@ -31,7 +31,7 @@ public class HalfHoursReportPrepareAction extends ScheduleReportPrepareAction im
 	private BigDecimal totalSchedule = SpmConstants.BD_ZERO_VALUE;
 	private BigDecimal totalTarget = SpmConstants.BD_ZERO_VALUE;
 	private BigDecimal totalDifference = SpmConstants.BD_ZERO_VALUE;
-	private BigDecimal totalPercentaje = SpmConstants.BD_ZERO_VALUE;
+	private BigDecimal totalPercentage = SpmConstants.BD_ZERO_VALUE;
 	
 	private String xmlValues;
 	public void prepareShowReport(){
@@ -184,17 +184,17 @@ public class HalfHoursReportPrepareAction extends ScheduleReportPrepareAction im
 	}
 
 	/**
-	 * @return the totalPercentaje
+	 * @return the totalpercentage
 	 */
-	public BigDecimal getTotalPercentaje() {
-		return totalPercentaje;
+	public BigDecimal getTotalPercentage() {
+		return totalPercentage;
 	}
 
 	/**
-	 * @param totalPercentaje the totalPercentaje to set
+	 * @param totalpercentage the totalpercentage to set
 	 */
-	public void setTotalPercentaje(BigDecimal totalPercentaje) {
-		this.totalPercentaje = totalPercentaje;
+	public void setTotalPercentage(BigDecimal totalPercentage) {
+		this.totalPercentage = totalPercentage;
 	}
 
 	public void prepare() throws Exception {

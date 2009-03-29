@@ -86,13 +86,13 @@ public class TotalHour extends SpmObject{
 	}
 	
 	/**
-	 * @return the percentaje
+	 * @return the percentage
 	 */
-	public BigDecimal getPercentaje() {
+	public BigDecimal getPercentage() {
 		if(target.compareTo(SpmConstants.BD_ZERO_VALUE) == 0) {
 			return SpmConstants.BD_ZERO_VALUE;
 		}
-		return getDifference().divide(target, 2, RoundingMode.HALF_UP);
+		return getDifference().divide(target, 2, SpmConstants.ROUNDING_MODE).multiply(new BigDecimal(100));
 	}
 	
 	
@@ -134,7 +134,7 @@ public class TotalHour extends SpmObject{
 		.append(this.schedule)
 		.append(this.target)
 		.append(getDifference())
-		.append(getPercentaje())
+		.append(getPercentage())
 		.toString();
 	}
 	
