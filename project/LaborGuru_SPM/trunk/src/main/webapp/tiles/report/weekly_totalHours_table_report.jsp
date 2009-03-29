@@ -73,15 +73,15 @@
 		  </tr>
 		  <tr>
 			<td class="windowTableLabel">
-			  <s:text name="report.weeklytotalhours.percentaje.label" />
+			  <s:text name="report.weeklytotalhours.percentage.label" />
 			</td>
 			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
 			  <td class="windowTableValue">
-			     <s:text name="percentage"><s:param value="percentaje"/></s:text>
+			     <s:text name="percentage"><s:param value="percentage"/></s:text>
         </td>
 			</s:iterator>
 			<td class="windowTableValue">
-			     <s:text name="percentage"><s:param value="totalPercentaje"/></s:text>
+			     <s:text name="percentage"><s:param value="totalPercentage"/></s:text>
       </td>
 		  </tr>
 		</table>

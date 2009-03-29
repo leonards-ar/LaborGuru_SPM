@@ -41,7 +41,7 @@
 								</s:text></td>
 								<td class="windowTableValue"><s:text
 									name="report.historicalComparison.percentage">
-									<s:param value="percentaje" />
+									<s:param value="percentage" />
 								</s:text></td>
 							</tr>
 						</s:iterator>

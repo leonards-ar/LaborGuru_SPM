@@ -9,6 +9,7 @@ import com.laborguru.service.position.PositionService;
 import com.laborguru.util.SpmConstants;
 import com.opensymphony.xwork2.Preparable;
 
+@SuppressWarnings("serial")
 public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction implements Preparable{
 
 	private List<TotalHour> totalHours;
@@ -19,7 +20,7 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 	private BigDecimal totalSchedule = SpmConstants.BD_ZERO_VALUE;
 	private BigDecimal totalTarget = SpmConstants.BD_ZERO_VALUE;
 	private BigDecimal totalDifference = SpmConstants.BD_ZERO_VALUE;
-	private BigDecimal totalPercentaje = SpmConstants.BD_ZERO_VALUE;
+	private BigDecimal totalPercentage = SpmConstants.BD_ZERO_VALUE;
 	private BigDecimal totalSales = SpmConstants.BD_ZERO_VALUE;
 	
 	private String xmlValues;
@@ -70,12 +71,12 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 			setTotalTarget(getTotalTarget().add(th.getTarget()));
 			setTotalDifference(getTotalDifference().add(th.getDifference()));
 		}
-		// totalDifference/totalTarget * 100
+		// totalDifference/totalTarget
 		if (getTotalTarget().compareTo(SpmConstants.BD_ZERO_VALUE) == 0) {
-			setTotalPercentaje(SpmConstants.BD_ZERO_VALUE);
+			setTotalPercentage(SpmConstants.BD_ZERO_VALUE);
 		} else {
-			setTotalPercentaje(getTotalDifference().divide(getTotalTarget(), 2,
-					SpmConstants.ROUNDING_MODE));
+			setTotalPercentage(getTotalDifference().divide(getTotalTarget(), 2,
+					SpmConstants.ROUNDING_MODE).multiply(new BigDecimal(100)));
 		}
 	}
 	
@@ -173,17 +174,17 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 	}
 
 	/**
-	 * @return the totalPercentaje
+	 * @return the totalpercentage
 	 */
-	public BigDecimal getTotalPercentaje() {
-		return totalPercentaje;
+	public BigDecimal getTotalPercentage() {
+		return totalPercentage;
 	}
 
 	/**
-	 * @param totalPercentaje the totalPercentaje to set
+	 * @param totalpercentage the totalpercentage to set
 	 */
-	public void setTotalPercentaje(BigDecimal totalPercentaje) {
-		this.totalPercentaje = totalPercentaje;
+	public void setTotalPercentage(BigDecimal totalPercentage) {
+		this.totalPercentage = totalPercentage;
 	}
 
 	/**
