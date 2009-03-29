@@ -51,9 +51,3 @@
 <s:property value="exceptionStack"/>
 
 -->
-<% private static final Logger logger = Logger.getLogger("error.jsp");
- 
- 	if(logger.isDebugEnabled()){
- 		logger.error(%> <s:property value="exceptionStack"/><% );
- 	}
- %>
