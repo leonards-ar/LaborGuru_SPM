@@ -75,7 +75,7 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 			setTotalPercentaje(SpmConstants.BD_ZERO_VALUE);
 		} else {
 			setTotalPercentaje(getTotalDifference().divide(getTotalTarget(), 2,
-					SpmConstants.ROUNDING_MODE).abs());
+					SpmConstants.ROUNDING_MODE));
 		}
 	}
 	

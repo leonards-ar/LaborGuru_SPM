@@ -2,6 +2,9 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <br />
+<s:form id="report_form" name="report_form" theme="simple">
+	<s:hidden id="selectedDate" name="selectedDate" />
+	<s:hidden id="selectedWeekDay" name="selectedWeekDay" />
 
 <table cellspacing="0" align="center">
 
@@ -13,9 +16,6 @@
 	<tr>
 		<td>
 		<table cellspacing="0" align="center">
-			<s:form id="report_form" name="report_form" theme="simple">
-				<s:hidden id="selectedDate" name="selectedDate" />
-				<s:hidden id="selectedWeekDay" name="selectedWeekDay" />
 				<tr>
 					<td>
 					<table border="1" cellspacing="0" width="100%" align="center">
@@ -148,7 +148,10 @@
 				<s:url id="forecastReport"
 					action="foreCastReport_showTable.action" namespace="/report"
 					includeParams="none">
-				</s:url> <s:div id="foreCast" theme="ajax" formId="report_form" listenTopics="/refresh,/Changed" indicator="indicator" href="%{forecastReport}" cssClass="waitMessage" loadingText='%{getText("wait.message")}'/>
+				</s:url> <s:div id="foreCast" 
+					theme="ajax" formId="report_form" listenTopics="/refresh,/Changed" 
+					indicator="indicator" href="%{forecastReport}" cssClass="waitMessage" 
+					loadingText='%{getText("wait.message")}'/>
 			</td>
 			</tr>
 			
@@ -157,7 +160,8 @@
 					action="totalHoursReport_showReport" namespace="/report"
 					includeParams="none" /> <s:div id="reportFrame" theme="ajax"
 					href="%{totalHourReportUrl}" formId="report_form"
-					listenTopics="/refresh" indicator="indicator" cssClass="waitMessage" loadingText='%{getText("wait.message")}'/></td>
+					listenTopics="/refresh" indicator="indicator" cssClass="waitMessage" 
+					loadingText='%{getText("wait.message")}'/></td>
 			</tr>
 		</table>
 
