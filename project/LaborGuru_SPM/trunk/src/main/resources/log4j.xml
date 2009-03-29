@@ -108,7 +108,12 @@
 		<appender-ref ref="dataimport_appender"/>
 		<appender-ref ref="error_append"/>
 	</logger>
-			
+	
+	<logger name="com.ibatis" additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="STDOUT"/>
+	</logger> 		
+	
 	<root>
 		<priority value="WARN" />
 		<appender-ref ref="STDOUT" />

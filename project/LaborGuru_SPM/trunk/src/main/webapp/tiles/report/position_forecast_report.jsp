@@ -14,25 +14,31 @@
 <tr>
 	<td class="windowTableHeader"><s:text name="report.weeklytotalhours.scheduled.label"/></td>
 	<s:iterator id="totalHourByPosition" value="totalHoursByPosition" status="itTotalHours">
-		<td class="windowTableValue"><s:property value="totalHour.schedule"/></td>
+		<td class="windowTableValue">
+			<s:text name="total.hours"><s:param value="totalHour.schedule"/></s:text>
+		</td>
 	</s:iterator>
 </tr>
 <tr>
 	<td class="windowTableHeader"><s:text name="report.weeklytotalhours.target.label"/></td>
 	<s:iterator id="totalHourByPosition" value="totalHoursByPosition" status="itTotalHours">
-		<td class="windowTableValue"><s:property value="totalHour.target"/></td>
+		<td class="windowTableValue">
+			<s:text name="total.hours"><s:param value="totalHour.target"/></s:text>
+		</td>
 	</s:iterator>
 </tr>
 <tr>
 	<td class="windowGreyTableValue"><s:text name="report.weeklytotalhours.difference.label"/></td>
 	<s:iterator id="totalHourByPosition" value="totalHoursByPosition" status="itTotalHours">
-		<td class="windowGreyTableValue"><s:property value="totalHour.difference"/></td>
+		<td class="<s:if test="totalHour.difference < 0">windowTableNegative</s:if><s:else>windowGreyTableValue</s:else>">
+			<s:text name="total.hours"><s:param value="totalHour.difference"/></s:text></td>
 	</s:iterator>
 </tr>
 <tr>
 	<td class="windowGreyTableValue"><s:text name="report.weeklytotalhours.percentaje.label"/></td>
 	<s:iterator id="totalHourByPosition" value="totalHoursByPosition" status="itTotalHours">
-		<td class="windowGreyTableValue"><s:property value="totalHour.percentaje"/></td>
+		<td class="windowGreyTableValue">
+			<s:text name="percentage"><s:param value="totalHour.percentaje"/></s:text></td>
 	</s:iterator>
 </tr>
 </table>

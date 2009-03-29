@@ -23,7 +23,7 @@
 		SUM(total_daily_target) as target
 		FROM tbl_staffing as s, tbl_positions as p
 		WHERE s.position_id = p.position_id
-		AND s.staffing_date BETWEEN STR_TO_DATE(#start_date#,'%Y-%m-%d %H:%i:%s') AND STR_TO_DATE(#end_date#,'%Y-%m-%d %H:%i:%s')
+		AND s.staffing_date BETWEEN STR_TO_DATE(#start_date#,'%Y-%m-%d') AND STR_TO_DATE(#end_date#,'%Y-%m-%d')
 		AND p.store_id = #store_id#
 		GROUP BY s.staffing_date
 		ORDER BY s.staffing_date
@@ -47,13 +47,11 @@
 		SELECT
 		s.staffing_date as day,
 		SUM(total_daily_target) as target
-		FROM tbl_staffing as s, tbl_positions as p
-		WHERE s.position_id = p.position_id
-		AND s.staffing_date BETWEEN STR_TO_DATE(#start_date#,'%Y-%m-%d %H:%i:%s') AND STR_TO_DATE(#end_date#,'%Y-%m-%d %H:%i:%s')
-		AND p.store_id = #store_id#
-		AND p.position_id = #position_id#
-		GROUP BY p.position_id, s.staffing_date
-		ORDER BY p.position_id, s.staffing_date
+		FROM tbl_staffing as s
+		WHERE s.position_id = #position_id#
+		AND s.staffing_date BETWEEN STR_TO_DATE(#start_date#,'%Y-%m-%d') AND STR_TO_DATE(#end_date#,'%Y-%m-%d')
+		GROUP BY s.position_id, s.staffing_date
+		ORDER BY s.position_id, s.staffing_date
 	</select>
 	
 	<select id="getScheduleWeeklyTotalHoursByService" parameterClass='java.util.Map' resultClass="com.laborguru.model.report.TotalHour">
@@ -411,7 +409,7 @@
 	<select id="getTargetForecastByPosition" parameterClass='java.util.Map' resultMap="get-target-forecast-result">
 		SELECT
 		p.position_id as id, 
-		SUM(total_service_hours) as target
+		SUM(total_daily_target) as target
 		FROM tbl_staffing as s, tbl_positions as p
 		WHERE s.position_id = p.position_id
 		AND s.staffing_date BETWEEN STR_TO_DATE(#start_date#,'%Y-%m-%d') AND STR_TO_DATE(#end_date#,'%Y-%m-%d')
