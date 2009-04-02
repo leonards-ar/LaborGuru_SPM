@@ -382,7 +382,7 @@
 	
 	<!-- TotalHours page -->
 	<definition name="showWeeklyTotalHours" extends="baseLayoutWithMenu">
-		<put-attribute name="htmlExtHeader" value="/tiles/dojoHtmlExtHeader.jsp" />
+		<put-attribute name="htmlExtHeader" value="/tiles/reportHtmlExtHeader.jsp" />
 		<put-attribute name="body" value="/tiles/report/weeklyTotalHours_report.jsp" />
 	</definition>
 		
