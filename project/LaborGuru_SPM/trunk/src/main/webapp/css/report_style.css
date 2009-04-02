@@ -1,5 +1,7 @@
 #windowReportTable {
 	border: 1px solid #D6DE26;
+	width: 100%;
+	align: center;
 }
 
 td.greyTableLabel {
@@ -105,4 +107,20 @@ td.tableValueWithLeftBottomBorder {
 	text-align: center;
 	border-left: 1px solid #666666;
 	border-bottom: 1px solid #666666;
+}
+
+td.differenceNegativeWithLeftBorder {
+	background-color: #FFCC99;
+	color: #990000;
+	font-size: 11px;
+	text-align: center;
+	border-left: 1px solid #666666;
+}
+
+td.differencePositiveWithLeftBorder {
+	background-color: #FFFFCC;
+	color: #333333;
+	font-size: 11px;
+	text-align: center;
+	border-left: 1px solid #666666;
 }

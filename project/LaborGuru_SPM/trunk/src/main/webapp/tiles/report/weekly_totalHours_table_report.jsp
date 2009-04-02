@@ -11,7 +11,7 @@
    </tr>
     <tr>
       <td>
-		<table id="windowReportTable" width="100%" cellspacing="0" align="center">
+		<table id="windowReportTable" cellspacing="0">
 		  <tr>
 			<td class="tableLabel">
 			  <b><s:text name="report.weeklytotalhours.totalhours.label" /></b>

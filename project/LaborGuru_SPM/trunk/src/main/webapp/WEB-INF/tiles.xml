@@ -387,22 +387,22 @@
 	</definition>
 		
 	<definition name="showHalfHours" extends="baseLayoutWithMenu">
-		<put-attribute name="htmlExtHeader" value="/tiles/dojoHtmlExtHeader.jsp" />
+		<put-attribute name="htmlExtHeader" value="/tiles/reportHtmlExtHeader.jsp" />
 		<put-attribute name="body" value="/tiles/report/halfhours_report.jsp" />
 	</definition>
 
 	<definition name="showPerformanceEfficiencyReport" extends="baseLayoutWithMenu">
-		<put-attribute name="htmlExtHeader" value="/tiles/dojoHtmlExtHeader.jsp" />
+		<put-attribute name="htmlExtHeader" value="/tiles/reportHtmlExtHeader.jsp" />
 		<put-attribute name="body" value="/tiles/report/performance_efficiency_report.jsp" />
 	</definition>
 
 	<definition name="showScheduleExecutionEfficiencyReport" extends="baseLayoutWithMenu">
-		<put-attribute name="htmlExtHeader" value="/tiles/dojoHtmlExtHeader.jsp" />
+		<put-attribute name="htmlExtHeader" value="/tiles/reportHtmlExtHeader.jsp" />
 		<put-attribute name="body" value="/tiles/report/schedule_execution_efficiency_report.jsp" />
 	</definition>
 
 	<definition name="showHistoricalComparisonReport" extends="baseLayoutWithMenu">
-		<put-attribute name="htmlExtHeader" value="/tiles/dojoHtmlExtHeader.jsp" />
+		<put-attribute name="htmlExtHeader" value="/tiles/reportHtmlExtHeader.jsp" />
 		<put-attribute name="body" value="/tiles/report/historical_comparison_report.jsp"/>
 	</definition>
 	
