@@ -150,29 +150,33 @@ function getRegExpMatch(timeTxt) {
 } 
  
 function parseTime(timeTxt) {
-	var m = getRegExpMatch(timeTxt);
-	if(m == null || trim(m) == '') {
+	if(!hasValue(timeTxt)) {
 		return '';
 	} else {
-		var hs = 0;
-		var mins = 0
-		var d = null;
-		// Hours m[1]
-		if(m.length > 0 && m[1]) {
-			hs = toInt(m[1]);
-		}
-		// Minutes m[2]
-		if(m.length > 1 && m[2]) {
-			mins = toInt(m[2]);
-		}
-		// AM/PM m[3]
-		if(m.length > 2 && m[3]) {
-			d = m[3];
-			if(d && (d.toLowerCase() == 'p' || d.toLowerCase() == 'pm') && hs >= 0 && hs < 12) {
-				hs = hs + 12;
+		var m = getRegExpMatch(timeTxt);
+		if(m == null || trim(m) == '') {
+			return '';
+		} else {
+			var hs = 0;
+			var mins = 0
+			var d = null;
+			// Hours m[1]
+			if(m.length > 0 && m[1]) {
+				hs = toInt(m[1]);
 			}
+			// Minutes m[2]
+			if(m.length > 1 && m[2]) {
+				mins = toInt(m[2]);
+			}
+			// AM/PM m[3]
+			if(m.length > 2 && m[3]) {
+				d = m[3];
+				if(d && (d.toLowerCase() == 'p' || d.toLowerCase() == 'pm') && hs >= 0 && hs < 12) {
+					hs = hs + 12;
+				}
+			}
+			return formatTimeNumber(hs) + ':' + formatTimeNumber(mins);
 		}
-		return formatTimeNumber(hs) + ':' + formatTimeNumber(mins);
 	}
 }
 

@@ -80,6 +80,41 @@ public class EmployeeSchedule extends SpmObject {
 
 	/**
 	 * 
+	 * @param shiftsToRemove
+	 */
+	public void removeShifts(Set<Shift> shiftsToRemove) {
+		if(shiftsToRemove != null && !shiftsToRemove.isEmpty()) {
+			getShifts().removeAll(shiftsToRemove);
+			reindexShifts();
+		}
+	}
+	
+	/**
+	 * 
+	 * @param shiftIndex
+	 */
+	public void removeShift(int shiftIndex) {
+		if(shiftIndex >= 0 && shiftIndex < getShifts().size()) {
+			getShifts().remove(shiftIndex);
+			
+			if(shiftIndex < getShifts().size()) {
+				// The shift removed is not the last one. So reindex
+				reindexShifts();
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 */
+	public void reindexShifts() {
+		for(int i=0; i < getShifts().size(); i++) {
+			getShifts().get(i).setShiftIndex(new Integer(0));
+		}
+	}
+	
+	/**
+	 * 
 	 * @param position
 	 * @return
 	 */
