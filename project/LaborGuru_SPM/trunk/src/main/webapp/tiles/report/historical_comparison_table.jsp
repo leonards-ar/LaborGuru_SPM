@@ -5,44 +5,56 @@
 	<table border="0" width="100%" cellspacing="0" align="center">
 		<tr>
 			<td>
-			<table border="2" width="100%" cellspacing="0" align="center">
+			<table id="windowReportTable" cellspacing="0">
 				<tr>
 					<td id="titleBar"><s:property value="%{getText(reportTitle)}" />
 					</td>
 				</tr>
-
 				<tr>
 					<td>
-					<table border="2" width="100%" cellspacing="0" align="center">
+					<table  border="0" width="100%" cellspacing="0" align="center">
 						<tr>
-							<td class="windowTableLabel">&nbsp;</td>
-							<td class="windowTableLabel"><s:property
-								value="%{getText(scheduleHeader)}" /></td>
-							<td class="windowTableLabel"><s:property
-								value="%{getText(targetHeader)}" /></td>
-							<td class="windowTableLabel"><s:text
-								name="report.historicalComparison.difference.label" /></td>
-							<td class="windowTableLabel">&nbsp;</td>
+							<td class="greyCellLabel">&nbsp;</td>
+							<td class="cellLabel">
+							 <s:property value="%{getText(scheduleHeader)}" />
+              </td>
+							<td class="cellLabel">
+							 <s:property value="%{getText(targetHeader)}" />
+              </td>
+							<td class="greyCellLabel">
+							 <s:text name="report.historicalComparison.difference.label" />
+              </td>
+							<td class="cellLabel">
+                <s:text name="report.historicalComparison.difference.percentage" />
+              </td>
 						</tr>
 						<s:iterator id="totalHour" value="totalHours" status="itTotalHour">
 							<tr>
-								<td class="windowTableValue"><s:text
-									name="report.historicalComparison.date">
-									<s:param value="day" />
-								</s:text></td>
-								<td class="windowTableValue"><s:text name="currency">
-									<s:param value="schedule" />
-								</s:text></td>
-								<td class="windowTableValue"><s:text name="currency">
-									<s:param value="target" />
-								</s:text></td>
-								<td class="<s:if test="difference < 0">windowTableNegative</s:if><s:else>windowTableValue</s:else>"><s:text name="currency">
-									<s:param value="difference" />
-								</s:text></td>
-								<td class="windowTableValue"><s:text
-									name="report.historicalComparison.percentage">
-									<s:param value="percentage" />
-								</s:text></td>
+								<td class="greyCellValue">
+								  <s:text name="report.historicalComparison.date">
+									 <s:param value="day" />
+								  </s:text>
+                </td>
+								<td class="cellValue">
+								  <s:text name="currency">
+  									<s:param value="schedule" />
+	 							 </s:text>
+                </td>
+								<td class="cellValue">
+								  <s:text name="currency">
+									 <s:param value="target" />
+								  </s:text>
+                </td>
+								<td class="greyCellValue">
+								  <s:text name="currency">
+									 <s:param value="difference" />
+								  </s:text>
+                </td>
+								<td class="cellValue">
+								  <s:text name="report.historicalComparison.percentage">
+									 <s:param value="percentage" />
+								  </s:text>
+                </td>
 							</tr>
 						</s:iterator>
 					</table>

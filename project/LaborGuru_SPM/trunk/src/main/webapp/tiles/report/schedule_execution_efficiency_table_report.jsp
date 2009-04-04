@@ -11,71 +11,78 @@
    </tr>
     <tr>
       <td>
-		<table border="2" width="100%" cellspacing="0" align="center">
+		<table id="windowReportTable" cellspacing="0">
 		  <tr>
-			<td class="windowTableLabel">&nbsp;</td>
+			<td class="tableLabel">&nbsp;</td>
 			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
-			  <td class="windowTableValue"><s:text name="report.weeklytotalhours.dateformat"><s:param value="day"/></s:text></td>
+			  <td class="tableLabelWithLeftBorder">
+			   <s:text name="report.weeklytotalhours.dateformat"><s:param value="day"/></s:text>
+        </td>
 			</s:iterator>
-			<td class="windowTableLabel"><s:text name="report.schedule.execution.totalweek.label" /></td>
+			<td class="greyTableLabelWithLeftBorder">
+			   <s:text name="report.schedule.execution.totalweek.label" />
+      </td>
 		  </tr>
 		  <tr>
-			<td class="windowTableLabel">
+			<td class="greyTableLabel">
 			  <s:text name="report.schedule.execution.checks.label" />
 			</td>
 			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
-			  <td class="windowTableValue">
+			  <td class="greyTableValueWithLeftBorder">
 			  	<s:text name="currency"><s:param value="sales"/></s:text>
 			  </td>
 			</s:iterator>
-			<td class="windowTableValue">
+			<td class="tableValueWithLeftBorder">
 				<s:text name="currency"><s:param value="totalSales"/></s:text>
 			</td>
 		  </tr>
 		  <tr>
-			<td class="windowTableLabel">
-			  <s:text name="report.schedule.execution.scheduled.label" />
-			</td>
-			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
-			  <td class="windowTableValue">
-			  	<s:text name="total.hours"><s:param value="schedule"/></s:text></td>
-			</s:iterator>
-			<td class="windowTableValue"><s:property value="totalSchedule"/></td>
+				<td class="tableLabelWithBottomBorder">
+				  <s:text name="report.schedule.execution.scheduled.label" />
+				</td>
+				<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
+				  <td class="tableValueWithLeftBottomBorder">
+				  	<s:text name="total.hours"><s:param value="schedule"/></s:text></td>
+				</s:iterator>
+				<td class="greyTableValueWithLeftBottomBorder">
+				   <s:text name="total.hours"><s:param value="totalSchedule"/></s:text>
+	      </td>
 		  </tr>
 		  <tr>
-			<td class="windowTableLabel">
-			  <s:text name="report.schedule.execution.target.label" />
-			</td>
-			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
-			  <td class="windowTableValue">
-			  	<s:text name="total.hours"><s:param value="target"/></s:text></td>
-			</s:iterator>
-			<td class="windowTableValue">
-				<s:text name="total.hours"><s:param value="totalTarget"/></s:text></td>
+				<td class="tableLabel">
+				  <s:text name="report.schedule.execution.target.label" />
+				</td>
+				<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
+				  <td class="tableValueWithLeftBorder">
+				  	<s:text name="total.hours"><s:param value="target"/></s:text></td>
+				</s:iterator>
+				<td class="greyTableValueWithLeftBorder">
+					<s:text name="total.hours"><s:param value="totalTarget"/></s:text>
+	      </td>
 		  </tr>
 		  <tr>
-			<td class="windowTableLabel">
-			  <s:text name="report.schedule.execution.difference.label" />
-			</td>
-			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
-			  <td class="<s:if test="difference < 0">windowTableNegative</s:if><s:else>windowTableValue</s:else>">
-			  	<s:text name="total.hours"><s:param value="difference"/></s:text></td>
-			</s:iterator>
-			<td class="<s:if test="totalDifference < 0">windowTableNegative</s:if><s:else>windowTableValue</s:else>">
-				<s:text name="total.hours"><s:param value="totalDifference"/></s:text>
-			</td>
+				<td class="greyTableLabel">
+				  <s:text name="report.schedule.execution.difference.label" />
+				</td>
+				<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
+				  <td class="greyTableValueWithLeftBorder">
+				  	<s:text name="total.hours"><s:param value="difference"/></s:text></td>
+				</s:iterator>
+				<td class="tableValueWithLeftBorder">
+					<s:text name="total.hours"><s:param value="totalDifference"/></s:text>
+				</td>
 		  </tr>
 		  <tr>
-			<td class="windowTableLabel">
-			  <s:text name="report.schedule.execution.percentage.label" />
-			</td>
-			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
-			  <td class="windowTableValue">
-			  	<s:text name="percentage"><s:param value="percentage"/></s:text></td>
-			</s:iterator>
-			<td class="windowTableValue">
-				<s:text name="percentage"><s:param value="totalPercentage"/></s:text>
-			</td>
+				<td class="tableLabel">
+				  <s:text name="report.schedule.execution.percentage.label" />
+				</td>
+				<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
+				  <td class="tableValueWithLeftBorder">
+				  	<s:text name="percentage"><s:param value="percentage"/></s:text></td>
+				</s:iterator>
+				<td class="greyTableValueWithLeftBorder">
+					<s:text name="percentage"><s:param value="totalPercentage"/></s:text>
+				</td>
 		  </tr>
 		</table>
       </td>
