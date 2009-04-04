@@ -26,7 +26,7 @@
 	<tr>
 		<td class="tableLabel"><s:text name="report.fixedlabor.target.label" /></td>
 		<td class="greyTableValueWithLeftBorder">
-		  <s:text name="report.total.hours"><s:param value="fixedLaborHoursReport.totalTarget" /></s:text>
+		  <s:text name="total.hours"><s:param value="fixedLaborHoursReport.totalTarget" /></s:text>
 		</td>
 		<s:push value="fixedLaborHoursReport.target">
 			<td class="tableValueWithLeftBorder"><s:text name="total.hours"><s:param value="serviceHours"/></s:text></td>
@@ -38,7 +38,7 @@
 	<tr>
 		<td class="greyTableLabel"><s:text name="report.fixedlabor.difference.label" /></td>
 		<td class="tableValueWithLeftBorder">
-		  <s:text name="report.total.hours"><s:param value="fixedLaborHoursReport.totalDifference" /></s:text>
+		  <s:text name="total.hours"><s:param value="fixedLaborHoursReport.totalDifference" /></s:text>
 		</td>
 		<s:push value="fixedLaborHoursReport.difference">
 			<td class="greyTableValueWithLeftBorder"><s:text name="total.hours"><s:param value="serviceHours"/></s:text></td>
