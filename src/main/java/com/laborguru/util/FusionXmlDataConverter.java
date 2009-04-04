@@ -87,9 +87,10 @@ public class FusionXmlDataConverter {
 			maxValue = maxValue.max(th.getTarget());
 
 		}
-
-		graph.addAttribute("PYAxisMaxValue", (maxValue.equals(SpmConstants.BD_ZERO_VALUE))?props.getProperty("defaultPYAxisMaxValue"):maxValue.toPlainString());
-		graph.addAttribute("SYAxisMaxValue", (maxValue.equals(SpmConstants.BD_ZERO_VALUE))?props.getProperty("defaultSYAxisMaxValue"):maxValue.toPlainString());
+		
+		BigDecimal deltaMaxValue = new BigDecimal(props.getProperty("deltaMax"));
+		graph.addAttribute("PYAxisMaxValue", (maxValue.equals(SpmConstants.BD_ZERO_VALUE))?props.getProperty("defaultPYAxisMaxValue"):maxValue.add(deltaMaxValue).toPlainString());
+		graph.addAttribute("SYAxisMaxValue", (maxValue.equals(SpmConstants.BD_ZERO_VALUE))?props.getProperty("defaultSYAxisMaxValue"):maxValue.add(deltaMaxValue).toPlainString());
 		
 		if (log.isDebugEnabled()) {
 			log.debug(document.asXML());
@@ -158,8 +159,9 @@ public class FusionXmlDataConverter {
 			maxValue = maxValue.max(th.getTarget());
 		}
 
-		graph.addAttribute("PYAxisMaxValue", (maxValue.equals(SpmConstants.BD_ZERO_VALUE))?props.getProperty("defaultPYAxisMaxValue"):maxValue.toPlainString());
-		graph.addAttribute("SYAxisMaxValue", (maxValue.equals(SpmConstants.BD_ZERO_VALUE))?props.getProperty("defaultSYAxisMaxValue"):maxValue.toPlainString());
+		BigDecimal deltaMaxValue = new BigDecimal(props.getProperty("deltaMax"));
+		graph.addAttribute("PYAxisMaxValue", (maxValue.equals(SpmConstants.BD_ZERO_VALUE))?props.getProperty("defaultPYAxisMaxValue"):maxValue.add(deltaMaxValue).toPlainString());
+		graph.addAttribute("SYAxisMaxValue", (maxValue.equals(SpmConstants.BD_ZERO_VALUE))?props.getProperty("defaultSYAxisMaxValue"):maxValue.add(deltaMaxValue).toPlainString());
 		
 		if (log.isDebugEnabled()) {
 			log.debug(document.asXML());
