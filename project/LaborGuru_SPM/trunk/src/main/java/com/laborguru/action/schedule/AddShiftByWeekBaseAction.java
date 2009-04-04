@@ -110,7 +110,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 			aSchedule = getStoreSchedules().get(i);
 			for(EmployeeSchedule employeeSchedule : aSchedule.getEmployeeSchedules()) {
 				for(Shift shift : employeeSchedule.getShifts()) {
-					if(!shift.isBreak() && (position == null || (position != null && isEqualPosition(position, shift.getPosition()))) && !shift.isReferencedShift()) {
+					if(shift != null && !shift.isBreak() && (position == null || (position != null && isEqualPosition(position, shift.getPosition()))) && !shift.isReferencedShift()) {
 						aRow = getRowFor(employeeSchedule, shift);
 						if(aRow == null) {
 							aRow = buildRowFor(employeeSchedule, shift);
@@ -428,7 +428,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 								shiftsToRemove.add(shift);
 							}
 						}
-						employeeSchedule.getShifts().removeAll(shiftsToRemove);
+						employeeSchedule.removeShifts(shiftsToRemove);
 						// There are no more shifts, then remove the employee schedule
 						//:TODO: Should remove also all employee schedules with just break shifts???
 						if(employeeSchedule.getShifts().isEmpty()) {

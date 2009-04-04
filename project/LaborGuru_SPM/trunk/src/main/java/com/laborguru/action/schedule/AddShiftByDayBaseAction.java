@@ -679,7 +679,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 								shiftsToRemove.add(shift);
 							}
 						}
-						employeeSchedule.getShifts().removeAll(shiftsToRemove);
+						employeeSchedule.removeShifts(shiftsToRemove);
 						// There are no more shifts, then remove the employee schedule
 						//:TODO: Should remove also all employee schedules with just break shifts???
 						if(employeeSchedule.getShifts().isEmpty()) {
@@ -835,7 +835,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 		// Remove non-existing shifts
 		if(shiftPosition < currentShiftsSize) {
 			for(int i = currentShiftsSize - 1; i >= shiftPosition; i--)
-				employeeSchedule.getShifts().remove(i);
+				employeeSchedule.removeShift(i);
 		}
 	}
 	
@@ -1019,10 +1019,12 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 		
 		String value;
 		for(int i = from; i <= to; i++) {
-			value = occupation.get(i);
-			//Never override a shift with a break
-			if(!shift.isBreak() || (shift.isBreak() && SpmConstants.SCHEDULE_FREE.equals(value))) {
-				occupation.set(i, shift.isBreak() ? SpmConstants.SCHEDULE_BREAK : String.valueOf(shift.getPosition().getId()));
+			if(i < occupation.size()) {
+				value = occupation.get(i);
+				//Never override a shift with a break
+				if(!shift.isBreak() || (shift.isBreak() && SpmConstants.SCHEDULE_FREE.equals(value))) {
+					occupation.set(i, shift.isBreak() ? SpmConstants.SCHEDULE_BREAK : String.valueOf(shift.getPosition().getId()));
+				}
 			}
 		}
 	}
