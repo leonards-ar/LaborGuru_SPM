@@ -1,6 +1,7 @@
 package com.laborguru.util;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -47,8 +48,8 @@ public class FusionXmlDataConverter {
 		graph.addAttribute("caption", bundle.getString("weeklyTotalHours.title"));
 		graph.addAttribute("PYAxisMinValue", props.getProperty("defaultPYAxisMinValue"));
 		graph.addAttribute("SYAxisMinValue", props.getProperty("defaultSYAxisMinValue"));
-		graph.addAttribute("PYAxisMaxValue", props.getProperty("defaultPYAxisMaxValue"));
-		graph.addAttribute("SYAxisMaxValue", props.getProperty("defaultSYAxisMaxValue"));
+		//graph.addAttribute("PYAxisMaxValue", props.getProperty("defaultPYAxisMaxValue"));
+		//graph.addAttribute("SYAxisMaxValue", props.getProperty("defaultSYAxisMaxValue"));
 		graph.addAttribute("PYAxisName", bundle.getString("weeklyTotalHour.axisname"));
 		graph.addAttribute("SYAxisName", bundle.getString("weeklyTotalHour.axisname"));
 		graph.addAttribute("showvalues", props.getProperty("showvalues"));
@@ -67,7 +68,7 @@ public class FusionXmlDataConverter {
 		targetDataset.addAttribute("color", props.getProperty("targetColor"));
 		targetDataset.addAttribute("showValues", props.getProperty("targetShowValues"));
 		targetDataset.addAttribute("parentYAxis", "S");
-
+		BigDecimal maxValue = SpmConstants.BD_ZERO_VALUE;
 		for (TotalHour th : totalHours) {
 			// Add column
 			Element element = categories.addElement("category");
@@ -77,13 +78,19 @@ public class FusionXmlDataConverter {
 			element = scheduleDataset.addElement("set");
 			element.addAttribute("value", th.getSchedule().toPlainString());
 			//element.addAttribute("link", "http://www.google.com.ar");
+			maxValue = maxValue.max(th.getSchedule());
 
 			// Add target value
 			element = targetDataset.addElement("set");
 			element.addAttribute("value", th.getTarget().toPlainString());
 			//element.addAttribute("link", "http://www.google.com.ar");
+			maxValue = maxValue.max(th.getTarget());
+
 		}
 
+		graph.addAttribute("PYAxisMaxValue", (maxValue.equals(SpmConstants.BD_ZERO_VALUE))?props.getProperty("defaultPYAxisMaxValue"):maxValue.toPlainString());
+		graph.addAttribute("SYAxisMaxValue", (maxValue.equals(SpmConstants.BD_ZERO_VALUE))?props.getProperty("defaultSYAxisMaxValue"):maxValue.toPlainString());
+		
 		if (log.isDebugEnabled()) {
 			log.debug(document.asXML());
 		}
@@ -110,8 +117,8 @@ public class FusionXmlDataConverter {
 		graph.addAttribute("caption", bundle.getString("dailyHalfHour.title"));
 		graph.addAttribute("PYAxisMinValue", props.getProperty("defaultPYAxisMinValue"));
 		graph.addAttribute("SYAxisMinValue", props.getProperty("defaultSYAxisMinValue"));
-		graph.addAttribute("PYAxisMaxValue", props.getProperty("defaultPYAxisMaxValue"));
-		graph.addAttribute("SYAxisMaxValue", props.getProperty("defaultSYAxisMaxValue"));
+//		graph.addAttribute("PYAxisMaxValue", props.getProperty("defaultPYAxisMaxValue"));
+//		graph.addAttribute("SYAxisMaxValue", props.getProperty("defaultSYAxisMaxValue"));
 		graph.addAttribute("PYAxisName", bundle.getString("dailyHalfHour.axisname"));
 		graph.addAttribute("SYAxisName", bundle.getString("dailyHalfHour.axisname"));
 		graph.addAttribute("showvalues", props.getProperty("showvalues"));
@@ -132,6 +139,7 @@ public class FusionXmlDataConverter {
 		targetDataset.addAttribute("showValues", props.getProperty("targetShowValues"));
 		targetDataset.addAttribute("parentYAxis", "S");
 
+		BigDecimal maxValue = SpmConstants.BD_ZERO_VALUE;
 		for (int i=0; i < totalHours.size(); i++ ) {
 			// Add column
 			TotalHour th = totalHours.get(i);
@@ -142,13 +150,17 @@ public class FusionXmlDataConverter {
 			element = scheduleDataset.addElement("set");
 			element.addAttribute("value", th.getSchedule().toPlainString());
 			//element.addAttribute("link", "http://www.google.com.ar");
-
+			maxValue = maxValue.max(th.getSchedule());
 			// Add target value
 			element = targetDataset.addElement("set");
 			element.addAttribute("value", th.getTarget().toPlainString());
 			//element.addAttribute("link", "http://www.google.com.ar");
+			maxValue = maxValue.max(th.getTarget());
 		}
 
+		graph.addAttribute("PYAxisMaxValue", (maxValue.equals(SpmConstants.BD_ZERO_VALUE))?props.getProperty("defaultPYAxisMaxValue"):maxValue.toPlainString());
+		graph.addAttribute("SYAxisMaxValue", (maxValue.equals(SpmConstants.BD_ZERO_VALUE))?props.getProperty("defaultSYAxisMaxValue"):maxValue.toPlainString());
+		
 		if (log.isDebugEnabled()) {
 			log.debug(document.asXML());
 		}
