@@ -121,21 +121,20 @@ public class SpmInterceptor implements Interceptor {
 			}
 		}
 
-		// Set default selected child
-		if(menu != null) {
-			menu.updateSelectedSubItemIndex();
-		}
-		
 		params.remove(HttpRequestConstants.MENU_ITEM_INDEX);
 
 		idxObj = params.get(HttpRequestConstants.SUB_MENU_ITEM_INDEX);
-		if(	idxObj != null && menu != null) {
+		if(idxObj != null && menu != null) {
 			try {
 				String idx = (idxObj instanceof String[]) ? ((String[])idxObj)[0] : idxObj.toString();
 				menu.setSelectedSubItemIndex(Integer.parseInt(idx));
 			} catch(Throwable ex) {
 				// Invalid index! Someone is trying to hack us?
+				menu.setSelectedSubItemIndex(-1);
 			}
+		} else if(menu != null && !menu.isSubMenuItemSelected()) {
+			// Set default selected child
+			menu.updateSelectedSubItemIndex();
 		}
 		
 		params.remove(HttpRequestConstants.SUB_MENU_ITEM_INDEX);
