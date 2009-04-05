@@ -8,6 +8,7 @@ package com.laborguru.action.schedule;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -1275,12 +1276,25 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		if(getSaveSchedule() != null) {
 			initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
 
+			Map<String, Integer> employeesPositions = new HashMap<String, Integer>();
+			String key;
+			
 			int rowCount = 1;
 			for(WeeklyScheduleRow row : getWeeklyScheduleData().getScheduleData()) {
 				row.updateEntries();
+				
 				if(row.getEmployeeId() == null || row.getEmployeeId().intValue() <= 0) {
-					addActionError(getText("error.schedule.addshift.weekly_employee_missing", new String[]{String.valueOf(rowCount)}));
+					addActionError(getText("error.schedule.addshift.employee_missing", new String[]{String.valueOf(rowCount)}));
+				} else {
+					// Validate there is no other employeeId - positionId combination
+					key = row.getEmployeeId() + "_" + row.getPositionId();
+					if(employeesPositions.containsKey(key)) {
+						addActionError(getText("error.schedule.addshift.weekly_employee_position_exists", new String[]{String.valueOf(rowCount), String.valueOf(employeesPositions.get(key)), row.getEmployeeName(), row.getPositionName()}));
+					} else {
+						employeesPositions.put(key, new Integer(rowCount));
+					}
 				}
+				
 				rowCount++;
 				for(int i = 0; i < row.getWeeklySchedule().size(); i++) {
 					if(isEditable(i)) {
