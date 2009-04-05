@@ -110,14 +110,16 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		for(int i = 0; i < size; i++) {
 			aSchedule = getStoreSchedules().get(i);
 			for(EmployeeSchedule employeeSchedule : aSchedule.getEmployeeSchedules()) {
-				for(Shift shift : employeeSchedule.getShifts()) {
-					if(shift != null && !shift.isBreak() && (position == null || (position != null && isEqualPosition(position, shift.getPosition()))) && !shift.isReferencedShift()) {
-						aRow = getRowFor(employeeSchedule, shift);
-						if(aRow == null) {
-							aRow = buildRowFor(employeeSchedule, shift);
-							getWeeklyScheduleData().addScheduleRow(getGroupById(employeeSchedule.getEmployee(), shift), aRow);
+				if(employeeSchedule != null) {
+					for(Shift shift : employeeSchedule.getShifts()) {
+						if(shift != null && !shift.isBreak() && (position == null || (position != null && isEqualPosition(position, shift.getPosition()))) && !shift.isReferencedShift()) {
+							aRow = getRowFor(employeeSchedule, shift);
+							if(aRow == null) {
+								aRow = buildRowFor(employeeSchedule, shift);
+								getWeeklyScheduleData().addScheduleRow(getGroupById(employeeSchedule.getEmployee(), shift), aRow);
+							}
+							buildScheduleDataFor(aRow, employeeSchedule, shift, i);
 						}
-						buildScheduleDataFor(aRow, employeeSchedule, shift, i);
 					}
 				}
 			}			
