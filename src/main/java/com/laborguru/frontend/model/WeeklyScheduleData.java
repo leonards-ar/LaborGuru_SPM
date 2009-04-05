@@ -54,7 +54,6 @@ public class WeeklyScheduleData implements Serializable {
 		List<WeeklyScheduleRow> data = null;
 		
 		for(WeeklyScheduleRow aRow : getScheduleData()) {
-			aRow.setFirstRow(false);
 			if(aGroupById == null || !aGroupById.equals(aRow.getGroupById())) {
 				if(data != null && aGroupById != null) {
 					indexedData.put(aGroupById, data);
@@ -151,6 +150,9 @@ public class WeeklyScheduleData implements Serializable {
 		for(List<WeeklyScheduleRow> l : getIndexedScheduleData().values()) {
 			if(l != null && l.size() > 0) {
 				l.get(0).setFirstRow(true);
+				for(int i = 1; i < l.size(); i++) {
+					l.get(i).setFirstRow(false);
+				}
 				data.addAll(l);
 			}
 		}
