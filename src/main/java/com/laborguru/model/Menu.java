@@ -19,8 +19,8 @@ import org.apache.commons.lang.builder.ToStringStyle;
 public class Menu implements Serializable {
 	
 	private List<MenuItem> items;
-	private int selectedItemIndex = 0;
-	private int selectedSubItemIndex = 0;
+	private int selectedItemIndex = -1;
+	private int selectedSubItemIndex = -1;
 	
 	/**
 	 * 
@@ -146,5 +146,13 @@ public class Menu implements Serializable {
 				}
 			}
 		}
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isSubMenuItemSelected() {
+		return getSelectedSubItemIndex() >= 0;
 	}
 }
