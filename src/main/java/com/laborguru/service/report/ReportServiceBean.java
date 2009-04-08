@@ -156,8 +156,13 @@ public class ReportServiceBean implements ReportService {
 			List<TotalHour> schedule = reportDao.getHalfHourlySchedule(store, date, startHour, endHour);
 			List<TotalHour> target = reportDao.getHalfHourlyMinimumStaffing(store, date);
 			
+			List<HalfHourProjection> halfHourProjections = new ArrayList<HalfHourProjection>();
 			
-			return getMergedHalfHours(startHour, endHour, projections.getHalfHourProjections(), schedule, target);
+			if(projections != null) {
+				halfHourProjections = projections.getHalfHourProjections();
+			}
+			
+			return getMergedHalfHours(startHour, endHour, halfHourProjections, schedule, target);
 			
 		}catch(SQLException e){
 			log.error("An SQLError has occurred", e);
@@ -177,7 +182,14 @@ public class ReportServiceBean implements ReportService {
 			
 			List<TotalHour> schedule = reportDao.getHalfHourlyScheduleByPosition(store, position, date, startHour, endHour);
 			List<TotalHour> target = reportDao.getHalfHourlyMinimumStaffingByPosition(store, position, date);
-			return getMergedHalfHours(startHour, endHour, projections.getHalfHourProjections(), schedule, target);
+			
+			List<HalfHourProjection> halfHourProjections = new ArrayList<HalfHourProjection>();
+			
+			if(projections != null) {
+				halfHourProjections = projections.getHalfHourProjections();
+			}
+
+			return getMergedHalfHours(startHour, endHour, halfHourProjections, schedule, target);
 		} catch(SQLException e){
 			log.error("An SQLError has occurred", e);
 			throw new SpmUncheckedException(e.getCause(), e.getMessage(),
@@ -197,7 +209,13 @@ public class ReportServiceBean implements ReportService {
 			List<TotalHour> schedule = reportDao.getHalfHourlyScheduleByService(store, positionGroup, date, startHour, endHour);
 			List<TotalHour> target = reportDao.getHalfHourlyMinimumStaffingByService(store, positionGroup, date);
 			
-			return getMergedHalfHours(startHour, endHour, projections.getHalfHourProjections(), schedule, target);
+			List<HalfHourProjection> halfHourProjections = new ArrayList<HalfHourProjection>();
+			
+			if(projections != null) {
+				halfHourProjections = projections.getHalfHourProjections();
+			}
+	
+			return getMergedHalfHours(startHour, endHour, halfHourProjections, schedule, target);
 			
 		} catch(SQLException e){
 			log.error("An SQLError has occurred", e);
