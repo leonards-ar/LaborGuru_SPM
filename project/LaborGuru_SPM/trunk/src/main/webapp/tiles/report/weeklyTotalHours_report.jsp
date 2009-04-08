@@ -18,7 +18,7 @@
 		<table cellspacing="0" align="center">
 				<tr>
 					<td>
-					<table border="1" cellspacing="0" width="100%" align="center">
+					<table border="0" cellspacing="0" width="100%" align="center">
 						<tr>
 							<td align="center"><!-- Start week table -->
 							<table align="center" id="calendarTable" width="100%" border="0"
