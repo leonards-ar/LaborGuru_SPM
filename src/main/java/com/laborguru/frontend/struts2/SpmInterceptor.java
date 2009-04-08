@@ -112,9 +112,12 @@ public class SpmInterceptor implements Interceptor {
 		}
 
 		Object idxObj = params.get(HttpRequestConstants.MENU_ITEM_INDEX);
+		boolean changedMenuSelection = false;
 		if(	idxObj != null && menu != null) {
 			try {
 				String idx = (idxObj instanceof String[]) ? ((String[])idxObj)[0] : idxObj.toString();
+				changedMenuSelection = Integer.parseInt(idx) != menu.getSelectedItemIndex();
+				
 				menu.setSelectedItemIndex(Integer.parseInt(idx));
 			} catch(Throwable ex) {
 				// Invalid index! Someone is trying to hack us?
@@ -132,7 +135,7 @@ public class SpmInterceptor implements Interceptor {
 				// Invalid index! Someone is trying to hack us?
 				menu.setSelectedSubItemIndex(-1);
 			}
-		} else if(menu != null && !menu.isSubMenuItemSelected()) {
+		} else if((menu != null && !menu.isSubMenuItemSelected()) || changedMenuSelection) {
 			// Set default selected child
 			menu.updateSelectedSubItemIndex();
 		}
