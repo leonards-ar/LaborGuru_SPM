@@ -75,7 +75,7 @@
 		SUM(total_daily_target) as target
 		FROM tbl_staffing as s, tbl_positions as p
 		WHERE s.position_id = p.position_id
-		AND s.staffing_date BETWEEN STR_TO_DATE(#start_date#,'%Y-%m-%d %H:%i:%s') AND STR_TO_DATE(#end_date#,'%Y-%m-%d %H:%i:%s')
+		AND s.staffing_date BETWEEN STR_TO_DATE(#start_date#,'%Y-%m-%d') AND STR_TO_DATE(#end_date#,'%Y-%m-%d')
 		AND p.store_id = #store_id#
 		AND p.position_group_id = #position_group_id#
 		GROUP BY p.position_group_id, s.staffing_date
