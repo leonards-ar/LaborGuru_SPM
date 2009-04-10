@@ -34,4 +34,9 @@ public class SchedulingEfficiencyReportPrepareAction extends WeeklyReportBaseAct
 				getWeekDaySelector().getStartingWeekDay(), end));
 	}
 	
+	protected void setAxisLabels() {
+		setScheduleAxisName("report.weeklytotalhours.scheduled.label");
+		setTargetAxisName("report.weeklytotalhours.target.label");
+	}
+	
 }

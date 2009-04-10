@@ -23,6 +23,9 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 	private BigDecimal totalPercentage = SpmConstants.BD_ZERO_VALUE;
 	private BigDecimal totalSales = SpmConstants.BD_ZERO_VALUE;
 	
+	private String scheduleAxisName;
+	private String targetAxisName;
+	
 	private String xmlValues;
 
 	/**
@@ -60,6 +63,7 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 			}
 		}
 		calculateTotals();
+		setAxisLabels();
 		generateXmlGraph();
 		return SpmActionResult.SHOW.getResult();
 	}
@@ -82,12 +86,13 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 	
 	private void generateXmlGraph(){
 		setXmlValues(getFusionXmlDataConverter().weeklyTotalHoursXmlConverter(
-				getTotalHours(), getTexts("reportmessages")));
+				getTotalHours(), getScheduleAxisName(), getTargetAxisName(), getTexts("defaultmessages")));
 	}
 	
 	protected abstract void getReport();
 	protected abstract void getReportByPosition();
 	protected abstract void getReportByService();
+	protected abstract void setAxisLabels();
 
 	/**
 	 * @return the totalHours
@@ -213,6 +218,34 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 	 */
 	public void setXmlValues(String xmlValues) {
 		this.xmlValues = xmlValues;
+	}
+
+	/**
+	 * @return the scheduleAxisName
+	 */
+	public String getScheduleAxisName() {
+		return scheduleAxisName;
+	}
+
+	/**
+	 * @param scheduleAxisName the scheduleAxisName to set
+	 */
+	public void setScheduleAxisName(String scheduleAxisName) {
+		this.scheduleAxisName = scheduleAxisName;
+	}
+
+	/**
+	 * @return the targetAxisName
+	 */
+	public String getTargetAxisName() {
+		return targetAxisName;
+	}
+
+	/**
+	 * @param targetAxisName the targetAxisName to set
+	 */
+	public void setTargetAxisName(String targetAxisName) {
+		this.targetAxisName = targetAxisName;
 	}
 
 }

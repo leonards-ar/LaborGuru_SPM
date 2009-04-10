@@ -29,4 +29,9 @@ public class PerformanceEfficiencyReportPrepareAction extends WeeklyReportBaseAc
 		throw new SpmUncheckedException("Method not implemented", ErrorEnum.NOT_IMPLEMENTED_METHOD);
 	}
 	
+	protected void setAxisLabels() {
+		setScheduleAxisName("report.performance.scheduled.label");
+		setTargetAxisName("report.performance.target.label");
+	}
+	
 }

@@ -100,7 +100,7 @@ public class HistoricalComparisonPrepareAction extends SpmAction implements Prep
 									break;
 		case scheduleExecutionEfficiency: setTotalHours(getReportService().getScheduleExecutionEfficiencyReport(getEmployeeStore(), getStartDate(), getEndDate(), false));
 									setReportTitle("report.historicalcomparison.performanceEfficiency.title.label");
-									setScheduleHeader("report.historicalComparison.performanceEfficiency.schedule.label");
+									setScheduleHeader("report.historicalComparison.scheduleExecutionEfficiency.schedule.label");
 									setTargetHeader("report.historicalComparison.scheduleExecutionEfficiency.target.label");
 									break;
 		case forecastEfficiency: setTotalHours(getReportService().getForecastEfficiencyReport(getEmployeeStore(), getStartDate(), getEndDate()));

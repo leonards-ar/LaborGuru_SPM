@@ -6,7 +6,7 @@
 <table border="0" cellspacing="0" align="center">
   <tr>
     <td class="windowTableHeader">
-      <s:text name="report.weeklytotalhours.title" />
+      <s:text name="report.performance.title" />
     </td>
    </tr>
     <tr>
