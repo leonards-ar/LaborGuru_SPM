@@ -5,6 +5,8 @@
  */
 package com.laborguru.service.schedule.dao;
 
+import java.util.List;
+
 import com.laborguru.model.Shift;
 
 /**
@@ -29,4 +31,9 @@ public interface ShiftDao {
 	 * @return
 	 */
 	Shift save(Shift shift);
+	
+	/**
+	 * @return
+	 */
+	List<Shift> loadAll();
 }

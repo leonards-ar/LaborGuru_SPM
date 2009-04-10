@@ -5,6 +5,8 @@
  */
 package com.laborguru.service.schedule;
 
+import java.util.List;
+
 import com.laborguru.model.Shift;
 import com.laborguru.service.Service;
 
@@ -30,5 +32,10 @@ public interface ShiftService extends Service {
 	 * @return
 	 */
 	Shift save(Shift shift);
+	
+	/**
+	 * @return
+	 */
+	List<Shift> updateAll();
 }
  
