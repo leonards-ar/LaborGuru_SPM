@@ -201,7 +201,5 @@ public class OperationTime extends SpmObject {
 	   	.append("close hour", closeHour)
 	   	.toString();
 	}
-	
-	
 
 }

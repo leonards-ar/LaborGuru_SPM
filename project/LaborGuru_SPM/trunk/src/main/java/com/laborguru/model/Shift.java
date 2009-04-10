@@ -311,4 +311,116 @@ public class Shift extends SpmObject {
 	public void setReferencedShiftToKeep(boolean referencedShiftToKeep) {
 		this.referencedShiftToKeep = referencedShiftToKeep;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	private Store getStore() {
+		try {
+			return getEmployeeSchedule().getStoreSchedule().getStore();
+		} catch(NullPointerException ex) {
+			return null;
+		}
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	private DayOfWeek getDayOfWeek() {
+		try {
+			return CalendarUtils.getDayOfWeek(getEmployeeSchedule().getStoreSchedule().getDay());
+		} catch(Throwable ex) {
+			return null;
+		}
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	private OperationTime getStoreOperationTime() {
+		Store store = getStore();
+		DayOfWeek dof = getDayOfWeek();
+		if(store != null && dof != null) {
+			return getStore().getOperationTime(dof);
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getServiceHours() {
+		OperationTime opTime = getStoreOperationTime();
+		if(CalendarUtils.equalsTime(opTime.getOpenHour(), opTime.getCloseHour())) {
+			// Operation time is the whole day!
+			return CalendarUtils.differenceInHours(getFromHour(), getToHour());
+		} else {
+			Date from = CalendarUtils.smallerTime(getFromHour(), opTime.getOpenHour()) ? opTime.getOpenHour() : getFromHour();
+			Date to = CalendarUtils.greaterTime(getToHour(), opTime.getCloseHour()) ? opTime.getCloseHour() : getToHour();
+
+			return CalendarUtils.differenceInHours(to, from);
+		}
+	}
+
+	/**
+	 * 
+	 * @param serviceHours
+	 */
+	public void setServiceHours(Double serviceHours) {
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getOpeningHours() {
+		OperationTime opTime = getStoreOperationTime();
+		if(CalendarUtils.equalsTime(opTime.getOpenHour(), opTime.getCloseHour())) {
+			// Operation time is the whole day!
+			return new Double(0.0);
+		} else if(CalendarUtils.smallerTime(getFromHour(), opTime.getOpenHour())) {
+			return CalendarUtils.differenceInHours(opTime.getOpenHour(), getFromHour());
+		} else {
+			return new Double(0.0);
+		}
+	}
+
+	/**
+	 * 
+	 * @param openingHours
+	 */
+	public void setOpeningHours(Double openingHours) {
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getClosingHours() {
+		OperationTime opTime = getStoreOperationTime();
+		if(CalendarUtils.equalsTime(opTime.getOpenHour(), opTime.getCloseHour())) {
+			// Operation time is the whole day!
+			return new Double(0.0);
+		} else if(CalendarUtils.greaterTime(getToHour(), opTime.getCloseHour())) {
+			return CalendarUtils.differenceInHours(getToHour(), opTime.getCloseHour());
+		} else {
+			return new Double(0.0);
+		}
+	}
+
+	/**
+	 * 
+	 * @param closingHours
+	 */
+	public void setClosingHours(Double closingHours) {
+		
+	}
+	
 }
