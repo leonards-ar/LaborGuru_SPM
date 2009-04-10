@@ -30,5 +30,11 @@ public class ScheduleExecutionEfficiencyReportPrepareAction extends
 	protected void getReportByService() {
 		throw new SpmUncheckedException("Method not implemented", ErrorEnum.NOT_IMPLEMENTED_METHOD);
 	}
+	
+	@Override
+	protected void setAxisLabels() {
+		setScheduleAxisName("report.schedule.execution.scheduled.label");
+		setTargetAxisName("report.schedule.execution.target.label");
+	}
 
 }
