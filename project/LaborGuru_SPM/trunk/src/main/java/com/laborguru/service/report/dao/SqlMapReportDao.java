@@ -199,26 +199,13 @@ public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao
 	}
 	
 	public FixedLaborHours getScheduleFixedLaborHours(Store store, Date date) throws SQLException {
-		Date openHour = store.getOperationTime(CalendarUtils.getDayOfWeek(date)).getOpenHour();
-		Date closeHour = store.getOperationTime(CalendarUtils.getDayOfWeek(date)).getCloseHour();
-
-		// If the store opens one day and closes the other day the closeHour has to be '1970-01-02'
-		if(isNextDay(openHour, closeHour)){
-			closeHour = CalendarUtils.addOrSubstractDays(closeHour, 1);
-		}
 
 		if(log.isDebugEnabled()) {
-			log.debug("getScheduleFixedLaborHours: before select params: store_id: " + store.getId() + " date: " + date + " open_hour: " + openHour + " close_hour: " + closeHour);
+			log.debug("getScheduleFixedLaborHours: before select params: store_id: " + store.getId() + " date: " + date);
 		}
 
-		FixedLaborHours fixedLaborHours = new FixedLaborHours();
+		FixedLaborHours fixedLaborHours = (FixedLaborHours)getSqlMapClient().queryForObject("getScheduleFixedLaborHours", ReportDaoHelper.mapScheduleFixedLaborHours(store, date));
 		
-		fixedLaborHours.setServiceHours((Double)getSqlMapClient().queryForObject("getScheduleServiceHour", ReportDaoHelper.mapServiceHours(store, date, openHour, closeHour)));
-		
-		fixedLaborHours.setOpenHours((Double)getSqlMapClient().queryForObject("getScheduleOpenHour", ReportDaoHelper.mapOpenHours(store, date, openHour)));
-		
-		fixedLaborHours.setCloseHours((Double)getSqlMapClient().queryForObject("getScheduleCloseHour", ReportDaoHelper.mapCloseHours(store, date, closeHour)));
-
 		//It's always zero.
 		fixedLaborHours.setFlexHours(0.0);
 		
@@ -234,26 +221,12 @@ public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao
 	}
 	
 	public FixedLaborHours getScheduleFixedLaborHoursByPosition(Store store, Date date, Position position) throws SQLException {
-		Date openHour = store.getOperationTime(CalendarUtils.getDayOfWeek(date)).getOpenHour();
-		Date closeHour = store.getOperationTime(CalendarUtils.getDayOfWeek(date)).getCloseHour();
-		
-		// If the store opens one day and closes the other day the closeHour has to be '1970-01-02'
-		if(isNextDay(openHour, closeHour)){
-			closeHour = CalendarUtils.addOrSubstractDays(closeHour, 1);
-		}
-
 		if(log.isDebugEnabled()) {
-			log.debug("getScheduleFixedLaborHoursByPosition: before select params: store_id: " + store.getId() + " date: " + date + " open_hour: " + openHour + " close_hour: " + closeHour + " position: " + position);
+			log.debug("getScheduleFixedLaborHoursByPosition: before select params: store_id: " + store.getId() + " date: " + date + " position: " + position);
 		}
 
-		FixedLaborHours fixedLaborHours = new FixedLaborHours();
+		FixedLaborHours fixedLaborHours = (FixedLaborHours)getSqlMapClient().queryForObject("getScheduleFixedLaborHoursByPosition", ReportDaoHelper.mapScheduleFixedLaborHoursByPosition(store, date, position));
 		
-		fixedLaborHours.setServiceHours((Double)getSqlMapClient().queryForObject("getScheduleServiceHourByPosition", ReportDaoHelper.mapServiceHoursByPosition(store, date, openHour, closeHour, position)));
-		
-		fixedLaborHours.setOpenHours((Double)getSqlMapClient().queryForObject("getScheduleOpenHourByPosition", ReportDaoHelper.mapOpenHoursByPosition(store, date, openHour, position)));
-		
-		fixedLaborHours.setCloseHours((Double)getSqlMapClient().queryForObject("getScheduleCloseHourByPosition", ReportDaoHelper.mapCloseHoursByPosition(store, date, closeHour, position)));
-
 		//It's always zero.
 		fixedLaborHours.setFlexHours(0.0);
 		
@@ -269,26 +242,13 @@ public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao
 	}	
 
 	public FixedLaborHours getScheduleFixedLaborHoursByService(Store store, Date date, PositionGroup positionGroup) throws SQLException {
-		Date openHour = store.getOperationTime(CalendarUtils.getDayOfWeek(date)).getOpenHour();
-		Date closeHour = store.getOperationTime(CalendarUtils.getDayOfWeek(date)).getCloseHour();
-
-		// If the store opens one day and closes the other day the closeHour has to be '1970-01-02' 
-		if(isNextDay(openHour, closeHour)){
-			closeHour = CalendarUtils.addOrSubstractDays(closeHour, 1);
-		}
 
 		if(log.isDebugEnabled()) {
-			log.debug("getScheduleFixedLaborHoursByService: before select params: store_id: " + store.getId() + " date: " + date + " open_hour: " + openHour + " close_hour: " + closeHour + " positionGroup: " + positionGroup);
+			log.debug("getScheduleFixedLaborHoursByService: before select params: store_id: " + store.getId() + " date: " + date + " positionGroup: " + positionGroup);
 		}
 
-		FixedLaborHours fixedLaborHours = new FixedLaborHours();
+		FixedLaborHours fixedLaborHours = (FixedLaborHours)getSqlMapClient().queryForObject("getScheduleFixedLaborHoursByService", ReportDaoHelper.mapScheduleFixedLaborHoursByService(store, date, positionGroup));
 		
-		fixedLaborHours.setServiceHours((Double)getSqlMapClient().queryForObject("getScheduleServiceHourByService", ReportDaoHelper.mapServiceHoursByService(store, date, openHour, closeHour, positionGroup)));
-		
-		fixedLaborHours.setOpenHours((Double)getSqlMapClient().queryForObject("getScheduleOpenHourByService", ReportDaoHelper.mapOpenHoursByService(store, date, openHour, positionGroup)));
-		
-		fixedLaborHours.setCloseHours((Double)getSqlMapClient().queryForObject("getScheduleCloseHourByService", ReportDaoHelper.mapCloseHoursByService(store, date, closeHour, positionGroup)));
-
 		//It's always zero.
 		fixedLaborHours.setFlexHours(0.0);
 		

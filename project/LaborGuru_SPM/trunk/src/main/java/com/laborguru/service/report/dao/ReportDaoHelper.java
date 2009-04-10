@@ -128,30 +128,10 @@ public class ReportDaoHelper {
 		return map;
 	}
 	
-	public static Map<String, Object>mapOpenHours(Store store, Date date, Date openHour) {
+	public static Map<String, Object>mapScheduleFixedLaborHours(Store store, Date date) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("store_id", store.getId());
 		map.put("date", date);
-		map.put("open_hour", openHour);
-		
-		return map;
-	}
-	
-	public static Map<String, Object>mapCloseHours(Store store, Date date, Date closeHour) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("store_id", store.getId());
-		map.put("date", date);
-		map.put("close_hour", closeHour);
-		
-		return map;
-	}
-
-	public static Map<String, Object>mapServiceHours(Store store, Date date, Date openHour, Date closeHour) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("store_id", store.getId());
-		map.put("date", date);
-		map.put("open_hour", openHour);
-		map.put("close_hour", closeHour);
 		
 		return map;
 	}	
@@ -163,31 +143,10 @@ public class ReportDaoHelper {
 		return map;
 	}
 	
-	public static Map<String, Object>mapOpenHoursByPosition(Store store, Date date, Date openHour, Position position) {
+	public static Map<String, Object>mapScheduleFixedLaborHoursByPosition(Store store, Date date, Position position) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("store_id", store.getId());
 		map.put("date", date);
-		map.put("open_hour", openHour);
-		map.put("position_id", position.getId());
-		return map;
-	}
-	
-	public static Map<String, Object>mapCloseHoursByPosition(Store store, Date date, Date closeHour, Position position) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("store_id", store.getId());
-		map.put("date", date);
-		map.put("close_hour", closeHour);
-		map.put("position_id", position.getId());
-		
-		return map;
-	}
-
-	public static Map<String, Object>mapServiceHoursByPosition(Store store, Date date, Date openHour, Date closeHour, Position position) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("store_id", store.getId());
-		map.put("date", date);
-		map.put("open_hour", openHour);
-		map.put("close_hour", closeHour);
 		map.put("position_id", position.getId());
 		
 		return map;
@@ -201,35 +160,14 @@ public class ReportDaoHelper {
 		return map;
 	}	
 
-	public static Map<String, Object>mapOpenHoursByService(Store store, Date date, Date openHour, PositionGroup positionGroup) {
+	public static Map<String, Object>mapScheduleFixedLaborHoursByService(Store store, Date date, PositionGroup positionGroup) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("store_id", store.getId());
 		map.put("date", date);
-		map.put("open_hour", openHour);
 		map.put("position_group_id", positionGroup.getId());
 		return map;
 	}
 	
-	public static Map<String, Object>mapCloseHoursByService(Store store, Date date, Date closeHour, PositionGroup positionGroup) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("store_id", store.getId());
-		map.put("date", date);
-		map.put("close_hour", closeHour);
-		map.put("position_group_id", positionGroup.getId());
-		
-		return map;
-	}
-
-	public static Map<String, Object>mapServiceHoursByService(Store store, Date date, Date openHour, Date closeHour, PositionGroup positionGroup) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("store_id", store.getId());
-		map.put("date", date);
-		map.put("open_hour", openHour);
-		map.put("close_hour", closeHour);
-		map.put("position_group_id", positionGroup.getId());
-		
-		return map;
-	}	
 	public static Map<String, Object>mapTargetFixedLaborHoursByService(Store store, Date date, PositionGroup positionGroup) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("store_id", store.getId());
