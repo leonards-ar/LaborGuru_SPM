@@ -474,10 +474,11 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 				Shift shift = new Shift();
 				shift.setFromHour(entry.getInHour());
 				shift.setToHour(entry.getOutHour());
-				Position pos = new Position();
-				pos.setId(row.getPositionId());
-				
-				shift.setPosition(getPositionService().getPositionById(pos));
+				if(row.getPositionId() != null) {
+					Position pos = new Position();
+					pos.setId(row.getPositionId());
+					shift.setPosition(getPositionService().getPositionById(pos));
+				}
 				
 				return shift;
 			}
