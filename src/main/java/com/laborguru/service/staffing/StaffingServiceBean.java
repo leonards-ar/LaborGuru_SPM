@@ -477,11 +477,25 @@ public class StaffingServiceBean implements StaffingService {
 		String key = buildStaffingDataKey(position);
 		List<HalfHourStaffingPositionData> groupStaffingData = data.get(key);
 		if(groupStaffingData != null) {
-			int index = groupStaffingData.indexOf(new HalfHourStaffingPositionData(position));
-			return index >= 0 ? groupStaffingData.get(index) : null;
+			return searchHalfHourStaffingPositionData(groupStaffingData, position);
 		} else {
 			return null;
 		}
+	}
+
+	/**
+	 * 
+	 * @param groupStaffingData
+	 * @param position
+	 * @return
+	 */
+	private HalfHourStaffingPositionData searchHalfHourStaffingPositionData(List<HalfHourStaffingPositionData> groupStaffingData, Position position) {
+		for(HalfHourStaffingPositionData data : groupStaffingData) {
+			if(position != null && position.getId() != null && data.getPosition() != null && position.getId().equals(data.getPosition().getId())) {
+				return data;
+			}
+		}
+		return null;
 	}
 	
 	/**
