@@ -440,150 +440,48 @@
 		WHERE a.date BETWEEN STR_TO_DATE(#start_date#, '%Y-%m-%d') AND STR_TO_DATE(#end_date#, '%Y-%m-%d')
 		AND a.store_id = #store_id# 
 	</select>
-	
-	<select id="getScheduleOpenHour" parameterClass="java.util.Map" resultClass="java.lang.Double">
-		SELECT SUM(TIME_TO_SEC(IF(s.to_hour <![CDATA[ >= ]]> #open_hour#, TIMEDIFF(#open_hour#, s.from_hour), TIMEDIFF(s.to_hour, s.from_hour))))/3600 as opening_hour 
-		FROM tbl_store_schedules ss, tbl_employee_schedules es, tbl_shifts s 
+		
+	<select id="getScheduleFixedLaborHours" parameterClass="java.util.Map" resultClass="com.laborguru.model.report.FixedLaborHours">
+		SELECT 	SUM(service_hours) as serviceHours, 
+				SUM(opening_hours) as openHours,
+				SUM(closing_hours) as closeHours 
+		FROM tbl_store_schedules ss, tbl_employee_schedules es, tbl_shifts s
 		WHERE ss.store_schedule_id = es.store_schedule_id 
 		AND es.employee_schedule_id = s.employee_schedule_id 
 		AND ss.day = STR_TO_DATE(#date#,'%Y-%m-%d') 
 		AND ss.store_id=#store_id#
-		AND s.from_hour <![CDATA[ < ]]> #open_hour#
 		AND s.position_id is not null
-	</select>
-	
-	<select id="getScheduleCloseHour" parameterClass="java.util.Map" resultClass="java.lang.Double">
-		SELECT SUM(TIME_TO_SEC(IF(s.from_hour <![CDATA[ < ]]> #close_hour#, TIMEDIFF( s.to_hour, #close_hour#), TIMEDIFF(s.to_hour, s.from_hour))))/3600 as closing_hour 
-		FROM tbl_store_schedules ss, tbl_employee_schedules es, tbl_shifts s   
-		WHERE ss.store_schedule_id = es.store_schedule_id   
-		AND es.employee_schedule_id = s.employee_schedule_id   
-		AND ss.day = STR_TO_DATE(#date#,'%Y-%m-%d')   
-		AND ss.store_id=#store_id#  
-		AND #close_hour# <![CDATA[ < ]]> s.to_hour  
-		AND position_id is not null
-	</select>
-	
-	<select id="getScheduleServiceHour" parameterClass="java.util.Map" resultClass="java.lang.Double">
-    SELECT SUM(TIME_TO_SEC(sub.service_hour))/3600 as service_hour 
-    FROM(
-        SELECT TIMEDIFF(s.to_hour, #open_hour#) as service_hour 
-        FROM tbl_store_schedules ss, tbl_employee_schedules es, tbl_shifts s 
-        WHERE ss.store_schedule_id = es.store_schedule_id 
-        AND es.employee_schedule_id = s.employee_schedule_id 
-        AND ss.day = STR_TO_DATE(#date#,'%Y-%m-%d') 
-        AND ss.store_id=#store_id#
-        AND s.from_hour <![CDATA[ < ]]> #open_hour# AND s.to_hour <![CDATA[ <= ]]> #close_hour# AND s.to_hour <![CDATA[ > ]]> #open_hour# 
-        AND s.position_id is not null
-      union all
-        SELECT TIMEDIFF(s.to_hour, s.from_hour) as service_hour 
-        FROM tbl_store_schedules ss, tbl_employee_schedules es, tbl_shifts s 
-        WHERE ss.store_schedule_id = es.store_schedule_id 
-        AND es.employee_schedule_id = s.employee_schedule_id 
-        AND ss.day = STR_TO_DATE(#date#,'%Y-%m-%d') 
-        AND ss.store_id=#store_id#
-        AND s.from_hour <![CDATA[ >= ]]> #open_hour# AND s.to_hour <![CDATA[ <= ]]> #close_hour#
-        AND s.position_id is not null
-      union all
-        SELECT TIMEDIFF(#close_hour#, #open_hour#) as service_hour 
-        FROM tbl_store_schedules ss, tbl_employee_schedules es, tbl_shifts s 
-        WHERE ss.store_schedule_id = es.store_schedule_id 
-        AND es.employee_schedule_id = s.employee_schedule_id 
-        AND ss.day = STR_TO_DATE(#date#,'%Y-%m-%d') 
-        AND ss.store_id=#store_id#
-        AND s.from_hour <![CDATA[ < ]]> #open_hour# AND s.to_hour <![CDATA[ > ]]> #close_hour#
-        AND s.position_id is not null
-      union all
-        SELECT TIMEDIFF(#close_hour#, s.from_hour) as service_hour 
-        FROM tbl_store_schedules ss, tbl_employee_schedules es, tbl_shifts s 
-        WHERE ss.store_schedule_id = es.store_schedule_id 
-        AND es.employee_schedule_id = s.employee_schedule_id 
-        AND ss.day = STR_TO_DATE(#date#,'%Y-%m-%d') 
-        AND ss.store_id=#store_id#
-        AND s.from_hour <![CDATA[ >= ]]> #open_hour# AND s.to_hour <![CDATA[ > ]]>#close_hour# AND s.to_hour <![CDATA[ < ]]> #open_hour# 
-        AND s.position_id is not null
-    ) as sub;	  
 	</select>
 	
 	<select id="getTargetFixedLaborHours" parameterClass="java.util.Map" resultClass="com.laborguru.model.report.FixedLaborHours">
 		 select SUM(total_service_hours) as serviceHours, 
-		 SUM(total_opening) as openHours, 
-		 SUM(fixed_closing) as closeHours, 
-		 SUM(total_flexible) as flexHours
+		 		SUM(total_opening) as openHours, 
+		 		SUM(fixed_closing) as closeHours, 
+		 		SUM(total_flexible) as flexHours
 		 FROM tbl_staffing s, tbl_positions p  
 		 WHERE s.position_id = p.position_id
 		 AND s.staffing_date = STR_TO_DATE(#date#,'%Y-%m-%d')
 		 AND p.store_id=#store_id#
 	</select>
 	
-  <select id="getScheduleOpenHourByPosition" parameterClass="java.util.Map" resultClass="java.lang.Double">
-    SELECT SUM(TIME_TO_SEC(IF(s.to_hour <![CDATA[ >= ]]> #open_hour#, TIMEDIFF(#open_hour#, s.from_hour), TIMEDIFF(s.to_hour, s.from_hour))))/3600 as opening_hour 
-    FROM tbl_store_schedules ss, tbl_employee_schedules es, tbl_shifts s 
-    WHERE ss.store_schedule_id = es.store_schedule_id 
-    AND es.employee_schedule_id = s.employee_schedule_id 
-    AND ss.day = STR_TO_DATE(#date#,'%Y-%m-%d') 
-    AND ss.store_id=#store_id#
-    AND s.position_id = #position_id#
-    AND s.from_hour <![CDATA[ < ]]> #open_hour#
-    AND s.position_id is not null
+  <select id="getScheduleFixedLaborHoursByPosition" parameterClass="java.util.Map" resultClass="com.laborguru.model.report.FixedLaborHours">
+  		SELECT 	SUM(service_hours) as serviceHours, 
+				SUM(opening_hours) as openHours,
+				SUM(closing_hours) as closeHours 
+		FROM tbl_store_schedules ss, tbl_employee_schedules es, tbl_shifts s
+		WHERE ss.store_schedule_id = es.store_schedule_id 
+		AND es.employee_schedule_id = s.employee_schedule_id 
+		AND ss.day = STR_TO_DATE(#date#,'%Y-%m-%d') 
+		AND ss.store_id=#store_id#
+		AND s.position_id = #position_id#
+		AND s.position_id is not null
   </select>
-  
-  <select id="getScheduleCloseHourByPosition" parameterClass="java.util.Map" resultClass="java.lang.Double">
-    SELECT SUM(TIME_TO_SEC(IF(s.from_hour <![CDATA[ < ]]> #close_hour#, TIMEDIFF( s.to_hour, #close_hour#), TIMEDIFF(s.to_hour, s.from_hour))))/3600 as closing_hour 
-    FROM tbl_store_schedules ss, tbl_employee_schedules es, tbl_shifts s   
-    WHERE ss.store_schedule_id = es.store_schedule_id   
-    AND es.employee_schedule_id = s.employee_schedule_id   
-    AND ss.day = STR_TO_DATE(#date#,'%Y-%m-%d')   
-    AND ss.store_id=#store_id#
-    AND s.position_id = #position_id#  
-    AND #close_hour# <![CDATA[ < ]]> s.to_hour  
-  </select>
-  
-  <select id="getScheduleServiceHourByPosition" parameterClass="java.util.Map" resultClass="java.lang.Double">
-    SELECT SUM(TIME_TO_SEC(sub.service_hour))/3600 as service_hour 
-    FROM(
-        SELECT TIMEDIFF(s.to_hour, #open_hour#) as service_hour 
-        FROM tbl_store_schedules ss, tbl_employee_schedules es, tbl_shifts s 
-        WHERE ss.store_schedule_id = es.store_schedule_id 
-        AND es.employee_schedule_id = s.employee_schedule_id 
-        AND ss.day = STR_TO_DATE(#date#,'%Y-%m-%d') 
-        AND ss.store_id=#store_id#
-        AND s.position_id = #position_id#
-        AND s.from_hour <![CDATA[ < ]]> #open_hour# AND s.to_hour <![CDATA[ <= ]]> #close_hour# AND s.to_hour <![CDATA[ > ]]> #open_hour#
-      union all
-        SELECT TIMEDIFF(s.to_hour, s.from_hour) as service_hour 
-        FROM tbl_store_schedules ss, tbl_employee_schedules es, tbl_shifts s 
-        WHERE ss.store_schedule_id = es.store_schedule_id 
-        AND es.employee_schedule_id = s.employee_schedule_id 
-        AND ss.day = STR_TO_DATE(#date#,'%Y-%m-%d') 
-        AND ss.store_id=#store_id#
-        AND s.position_id = #position_id#
-        AND s.from_hour <![CDATA[ >= ]]> #open_hour# AND s.to_hour <![CDATA[ <= ]]> #close_hour#
-      union all
-        SELECT TIMEDIFF(#close_hour#, #open_hour#) as service_hour 
-        FROM tbl_store_schedules ss, tbl_employee_schedules es, tbl_shifts s 
-        WHERE ss.store_schedule_id = es.store_schedule_id 
-        AND es.employee_schedule_id = s.employee_schedule_id 
-        AND ss.day = STR_TO_DATE(#date#,'%Y-%m-%d') 
-        AND ss.store_id=#store_id#
-        AND s.position_id = #position_id#
-        AND s.from_hour <![CDATA[ < ]]> #open_hour# AND s.to_hour <![CDATA[ > ]]> #close_hour#
-      union all
-        SELECT TIMEDIFF(#close_hour#, s.from_hour) as service_hour 
-        FROM tbl_store_schedules ss, tbl_employee_schedules es, tbl_shifts s 
-        WHERE ss.store_schedule_id = es.store_schedule_id 
-        AND es.employee_schedule_id = s.employee_schedule_id 
-        AND ss.day = STR_TO_DATE(#date#,'%Y-%m-%d') 
-        AND ss.store_id=#store_id#
-        AND s.position_id = #position_id#
-        AND s.from_hour <![CDATA[ >= ]]> #open_hour# AND s.to_hour <![CDATA[ > ]]>#close_hour# AND s.to_hour <![CDATA[ < ]]> #open_hour#
-    ) as sub;    
-  </select>
-  
+    
   <select id="getTargetFixedLaborHoursByPosition" parameterClass="java.util.Map" resultClass="com.laborguru.model.report.FixedLaborHours">
      select SUM(total_service_hours) as serviceHours, 
-     SUM(total_opening) as openHours, 
-     SUM(fixed_closing) as closeHours, 
-     SUM(total_flexible) as flexHours
+     		SUM(total_opening) as openHours, 
+     		SUM(fixed_closing) as closeHours, 
+     		SUM(total_flexible) as flexHours
      FROM tbl_staffing s, tbl_positions p  
      WHERE s.position_id = p.position_id
      AND s.staffing_date = STR_TO_DATE(#date#,'%Y-%m-%d')
@@ -591,8 +489,10 @@
      AND p.position_id=#position_id#
   </select>
 
-  <select id="getScheduleOpenHourByService" parameterClass="java.util.Map" resultClass="java.lang.Double">
-    SELECT SUM(TIME_TO_SEC(IF(s.to_hour <![CDATA[ >= ]]> #open_hour#, TIMEDIFF(#open_hour#, s.from_hour), TIMEDIFF(s.to_hour, s.from_hour))))/3600 as opening_hour 
+  <select id="getScheduleFixedLaborHoursByService" parameterClass="java.util.Map" resultClass="com.laborguru.model.report.FixedLaborHours">
+    SELECT 	SUM(service_hours) as serviceHours, 
+			SUM(opening_hours) as openHours,
+			SUM(closing_hours) as closeHours 
     FROM tbl_store_schedules ss, tbl_employee_schedules es, tbl_shifts s, tbl_positions p 
     WHERE ss.store_schedule_id = es.store_schedule_id 
     AND es.employee_schedule_id = s.employee_schedule_id 
@@ -600,71 +500,13 @@
     AND ss.store_id=#store_id#
     AND s.position_id = p.position_id
     AND p.position_group_id = #position_group_id# 
-    AND s.from_hour <![CDATA[ < ]]> #open_hour#
-  </select>
-  
-  <select id="getScheduleCloseHourByService" parameterClass="java.util.Map" resultClass="java.lang.Double">
-    SELECT SUM(TIME_TO_SEC(IF(s.from_hour <![CDATA[ < ]]> #close_hour#, TIMEDIFF( s.to_hour, #close_hour#), TIMEDIFF(s.to_hour, s.from_hour))))/3600 as closing_hour 
-    FROM tbl_store_schedules ss, tbl_employee_schedules es, tbl_shifts s, tbl_positions p   
-    WHERE ss.store_schedule_id = es.store_schedule_id   
-    AND es.employee_schedule_id = s.employee_schedule_id   
-    AND ss.day = STR_TO_DATE(#date#,'%Y-%m-%d')   
-    AND ss.store_id=#store_id#
-    AND s.position_id = p.position_id
-    AND p.position_group_id = #position_group_id# 
-    AND #close_hour# <![CDATA[ < ]]> s.to_hour  
-  </select>
-  
-  <select id="getScheduleServiceHourByService" parameterClass="java.util.Map" resultClass="java.lang.Double">
-    SELECT SUM(TIME_TO_SEC(sub.service_hour))/3600 as service_hour 
-    FROM(
-        SELECT TIMEDIFF(s.to_hour, #open_hour#) as service_hour 
-        FROM tbl_store_schedules ss, tbl_employee_schedules es, tbl_shifts s, tbl_positions p 
-        WHERE ss.store_schedule_id = es.store_schedule_id 
-        AND es.employee_schedule_id = s.employee_schedule_id 
-        AND ss.day = STR_TO_DATE(#date#,'%Y-%m-%d') 
-        AND ss.store_id=#store_id#
-        AND s.position_id = p.position_id
-        AND p.position_group_id = #position_group_id# 
-        AND s.from_hour <![CDATA[ < ]]> #open_hour# AND s.to_hour <![CDATA[ <= ]]> #close_hour# AND s.to_hour <![CDATA[ > ]]> #open_hour#
-      union all
-        SELECT TIMEDIFF(s.to_hour, s.from_hour) as service_hour 
-        FROM tbl_store_schedules ss, tbl_employee_schedules es, tbl_shifts s, tbl_positions p 
-        WHERE ss.store_schedule_id = es.store_schedule_id 
-        AND es.employee_schedule_id = s.employee_schedule_id 
-        AND ss.day = STR_TO_DATE(#date#,'%Y-%m-%d') 
-        AND ss.store_id=#store_id#
-        AND s.position_id = p.position_id
-        AND p.position_group_id = #position_group_id# 
-        AND s.from_hour <![CDATA[ >= ]]> #open_hour# AND s.to_hour <![CDATA[ <= ]]> #close_hour#
-      union all
-        SELECT TIMEDIFF(#close_hour#, #open_hour#) as service_hour 
-        FROM tbl_store_schedules ss, tbl_employee_schedules es, tbl_shifts s, tbl_positions p 
-        WHERE ss.store_schedule_id = es.store_schedule_id 
-        AND es.employee_schedule_id = s.employee_schedule_id 
-        AND ss.day = STR_TO_DATE(#date#,'%Y-%m-%d') 
-        AND ss.store_id=#store_id#
-        AND s.position_id = p.position_id
-        AND p.position_group_id = #position_group_id# 
-        AND s.from_hour <![CDATA[ < ]]> #open_hour# AND s.to_hour <![CDATA[ > ]]> #close_hour#
-      union all
-        SELECT TIMEDIFF(#close_hour#, s.from_hour) as service_hour 
-        FROM tbl_store_schedules ss, tbl_employee_schedules es, tbl_shifts s, tbl_positions p 
-        WHERE ss.store_schedule_id = es.store_schedule_id 
-        AND es.employee_schedule_id = s.employee_schedule_id 
-        AND ss.day = STR_TO_DATE(#date#,'%Y-%m-%d') 
-        AND ss.store_id=#store_id#
-        AND s.position_id = p.position_id
-        AND p.position_group_id = #position_group_id# 
-        AND s.from_hour <![CDATA[ >= ]]> #open_hour# AND s.to_hour <![CDATA[ > ]]>#close_hour# AND s.to_hour <![CDATA[ < ]]> #open_hour#
-    ) as sub;    
   </select>
   
   <select id="getTargetFixedLaborHoursByService" parameterClass="java.util.Map" resultClass="com.laborguru.model.report.FixedLaborHours">
      select SUM(total_service_hours) as serviceHours, 
-     SUM(total_opening) as openHours, 
-     SUM(fixed_closing) as closeHours, 
-     SUM(total_flexible) as flexHours
+     		SUM(total_opening) as openHours, 
+     		SUM(fixed_closing) as closeHours, 
+     		SUM(total_flexible) as flexHours
      FROM tbl_staffing s, tbl_positions p  
      WHERE s.position_id = p.position_id
      AND s.staffing_date = STR_TO_DATE(#date#,'%Y-%m-%d')
