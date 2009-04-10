@@ -648,7 +648,7 @@ public class Store extends SpmObject {
 			}
 		} else {
 			// Case 2: Real start time is still today. 
-			if(CalendarUtils.greaterTime(previuosCloseTime, previousOperationTime.getCloseHour())) {
+			if(CalendarUtils.equalsOrGreaterTime(previuosCloseTime, previousOperationTime.getCloseHour())) {
 				// Case 2.1: Real previous close hour is yerterday but today's open hour is today
 				return startTime;
 			} else {
