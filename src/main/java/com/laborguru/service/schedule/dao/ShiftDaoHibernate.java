@@ -60,5 +60,9 @@ public class ShiftDaoHibernate extends HibernateDaoSupport implements ShiftDao {
 		
 		return shift;
 	}
+	
+	public List<Shift> loadAll() {
+		return (List<Shift>)getHibernateTemplate().loadAll(Shift.class);
+	}
 
 }

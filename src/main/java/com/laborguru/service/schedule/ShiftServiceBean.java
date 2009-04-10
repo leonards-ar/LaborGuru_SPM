@@ -5,6 +5,8 @@
  */
 package com.laborguru.service.schedule;
 
+import java.util.List;
+
 import com.laborguru.model.Shift;
 import com.laborguru.service.schedule.dao.ShiftDao;
 
@@ -42,6 +44,16 @@ public class ShiftServiceBean implements ShiftService {
 		return getShiftDao().save(shift);
 	}
 
+	public List<Shift> updateAll() {
+		List<Shift> shifts = getShiftDao().loadAll();
+		
+		for(Shift shift: shifts) {
+			getShiftDao().save(shift);
+		}
+		
+		return shifts;
+	}
+	
 	/**
 	 * @return the shiftDao
 	 */
