@@ -643,15 +643,17 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 		Set<Integer> employeeIds = getDifferentEmployeeIds(schedule);
 		Employee employee;
 		for(Integer employeeId : employeeIds) {
-			employee = getEmployeeService().getEmployeeById(new Employee(employeeId));
-			EmployeeSchedule employeeSchedule = getStoreSchedule().getEmployeeSchedule(employee);
-			if(employeeSchedule == null) {
-				employeeSchedule = new EmployeeSchedule();
-				employeeSchedule.setEmployee(employee);
-				employeeSchedule.setStoreSchedule(getStoreSchedule());
-				getStoreSchedule().getEmployeeSchedules().add(employeeSchedule);
+			if(employeeId != null) {
+				employee = getEmployeeService().getEmployeeById(new Employee(employeeId));
+				EmployeeSchedule employeeSchedule = getStoreSchedule().getEmployeeSchedule(employee);
+				if(employeeSchedule == null) {
+					employeeSchedule = new EmployeeSchedule();
+					employeeSchedule.setEmployee(employee);
+					employeeSchedule.setStoreSchedule(getStoreSchedule());
+					getStoreSchedule().getEmployeeSchedules().add(employeeSchedule);
+				}
+				setShifts(getEmployeeSchedule(employeeId, schedule), employeeSchedule, position);				
 			}
-			setShifts(getEmployeeSchedule(employeeId, schedule), employeeSchedule, position);
 		}
 		
 		// Remove non existing shifts for the employee and for a position
