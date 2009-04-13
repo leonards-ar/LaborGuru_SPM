@@ -41,7 +41,7 @@
 								<s:property value="%{name}"/>
 								</td>
 								<td class="editorTable<s:if test="#itPosition.even">Even</s:if><s:else>Odd</s:else>Row">
-								<s:select name="storePositions[%{#itPosition.index}].positionGroup.id" list="positionGroups" listKey="id" listValue="name" headerKey="" headerValue="%{getText('store.activitySharing.search.position.header.label')}" theme="simple" />
+								<s:select name="positionPositionGroups[%{#itPosition.index}]" list="positionGroups" listKey="name" listValue="name" headerKey="" headerValue="%{getText('store.activitySharing.search.position.header.label')}" theme="simple" />
 								</td>
 							</s:iterator>							
 						</table>
