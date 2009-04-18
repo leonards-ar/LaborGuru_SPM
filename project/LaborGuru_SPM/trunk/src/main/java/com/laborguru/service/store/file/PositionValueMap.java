@@ -2,6 +2,7 @@ package com.laborguru.service.store.file;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Utility class use to keep a hash map of <String, NumberMap>
@@ -61,6 +62,14 @@ public class PositionValueMap {
 			return numberMap.get(data);
 		
 		return null;
+	}
+	
+	/**
+	 * Return a set with all the position names contained by this map
+	 * @return
+	 */
+	public Set<String> getPositionNames(){
+		return this.positionData.keySet();
 	}
 	
 }
