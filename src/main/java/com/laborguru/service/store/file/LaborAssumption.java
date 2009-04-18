@@ -11,6 +11,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.InvalidFieldUploadFileException;
+import com.laborguru.model.DayPart;
 import com.laborguru.model.DayPartData;
 import com.laborguru.model.Position;
 import com.laborguru.model.PositionGroup;
@@ -367,13 +368,26 @@ public class LaborAssumption extends BaseStoreSection{
 		for(Position position: store.getPositions()){
 			storePositions.add(position.getName());
 		}
+
+		Set<String> storePositionGroups = new HashSet<String>(store.getPositionGroups().size());
 		
-		validatePositionError(storePositions, getUtilizationBottom(), LaborAssumptionField.UTILIZATION.getFieldName());
-		validatePositionError(storePositions, getUtilizationTop(), LaborAssumptionField.UTILIZATION.getFieldName());
-		validatePositionError(storePositions, getUtilizationLimitsMax(), LaborAssumptionField.UTILIZATION_LIMITS.getFieldName());
-		validatePositionError(storePositions, getUtilizationLimitsMin(), LaborAssumptionField.UTILIZATION_LIMITS.getFieldName());		
-		validatePositionError(storePositions, getActivitySharing(), LaborAssumptionField.ACTIVITY_SHARING.getFieldName());		
-		validatePositionError(storePositions, this.minimumStaffing, LaborAssumptionField.MINIMUM_STAFFING.getFieldName());		
+		for(PositionGroup positionGroup: store.getPositionGroups()){
+			storePositionGroups.add(positionGroup.getName());
+		}
+		
+		Set<String> storeDayParts = new HashSet<String>(store.getDayParts().size());
+		
+		for(DayPart dayPart: store.getDayParts()){
+			storeDayParts.add(dayPart.getName());
+		}
+				
+		validatePositionError(storePositions, getUtilizationBottom().keySet(), LaborAssumptionField.UTILIZATION.getFieldName());
+		validatePositionError(storePositions, getUtilizationTop().keySet(), LaborAssumptionField.UTILIZATION.getFieldName());
+		validatePositionError(storePositions, getUtilizationLimitsMax().keySet(), LaborAssumptionField.UTILIZATION_LIMITS.getFieldName());
+		validatePositionError(storePositions, getUtilizationLimitsMin().keySet(), LaborAssumptionField.UTILIZATION_LIMITS.getFieldName());		
+		validatePositionError(storePositions, getActivitySharing().keySet(), LaborAssumptionField.ACTIVITY_SHARING.getFieldName());
+		validateSetParameterError(storePositionGroups, getActivitySharing().values(), "Position Group", LaborAssumptionField.ACTIVITY_SHARING.getFieldName());
+		validatePositionAndDayPartParameter(storePositions, storeDayParts, this.minimumStaffing, LaborAssumptionField.MINIMUM_STAFFING.getFieldName());		
 	}
 
 

@@ -1,6 +1,7 @@
 package com.laborguru.service.store.file;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -68,8 +69,18 @@ public class PositionValueMap {
 	 * Return a set with all the position names contained by this map
 	 * @return
 	 */
-	public Set<String> getPositionNames(){
+	public Set<String> getKeyNames(){
 		return this.positionData.keySet();
 	}
 	
+	public Set<String> getMapDataKeySet(){
+		Set<String> keySet = new HashSet<String>();
+		
+		for (NumberMap aMap :this.positionData.values()){
+			keySet.addAll(aMap.getKeySet());
+		}
+		
+		return keySet;
+	}
+		
 }
