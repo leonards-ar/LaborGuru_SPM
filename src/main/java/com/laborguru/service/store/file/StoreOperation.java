@@ -295,6 +295,8 @@ public class StoreOperation extends BaseStoreSection {
 	 */
 	public void assembleStore(Store store) {
 		
+		validatePositions();
+		
 		for (OperationTime operationTime: getHoursOfOperation()){
 			if (operationTime != null){
 				store.addOperationTime(operationTime);
@@ -359,9 +361,15 @@ public class StoreOperation extends BaseStoreSection {
 		
 		//Setting default projection values
 		store.setDailyProjectionsWeeksDefault(DAILY_PROJECTION_WEEK_DEFAULT);
-		store.setHalfHourProjectionsWeeksDefault(HALF_HOUR_PROJECTION_WEEK_DEFAULT);
+		store.setHalfHourProjectionsWeeksDefault(HALF_HOUR_PROJECTION_WEEK_DEFAULT);		
 	}
 
+	
+	private void validatePositions(){
+		validatePositionError(getPositionNames(), getManagerSet(), StoreOperationField.MANAGER.getFieldName());
+		validatePositionError(getPositionNames(), getGuestServiceSet(), StoreOperationField.GUEST_SERVICE.getFieldName());		
+	}
+	
 	
 	/**
 	 * @return the hoursOfOperation

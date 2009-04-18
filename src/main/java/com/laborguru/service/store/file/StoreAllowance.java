@@ -1,6 +1,8 @@
 package com.laborguru.service.store.file;
 
 import java.util.EnumSet;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -168,6 +170,8 @@ public class StoreAllowance extends BaseStoreSection{
 	 */
 	public void assembleStore(Store store) {
 		
+		validatePositions(store);
+		
 		for(Position position: store.getPositions()){
 			
 			String positionName = position.getName();
@@ -188,6 +192,24 @@ public class StoreAllowance extends BaseStoreSection{
 		}		
 	}
 
+	private void validatePositions(Store store) {
+		Set<String> storePositions = new HashSet<String>(store.getPositions().size());
+		
+		for(Position position: store.getPositions()){
+			storePositions.add(position.getName());
+		}
+				
+		validatePositionError(storePositions, weekdayGuestService, StoreAllowanceField.WEEKDAY_GUEST_SERVICE.getFieldName());
+		validatePositionError(storePositions, weekendGuestService, StoreAllowanceField.WEEKEND_GUEST_SERVICE.getFieldName());
+		validatePositionError(storePositions, variableFlexible, StoreAllowanceField.VARIABLE_FLEXIBLE.getFieldName());
+		validatePositionError(storePositions, variableOpening, StoreAllowanceField.VARIABLE_OPENING.getFieldName());
+		validatePositionError(storePositions, fixedGuestService, StoreAllowanceField.FIXED_GUEST_SERVICE.getFieldName());
+		validatePositionError(storePositions, fixedFlexible, StoreAllowanceField.FIXED_FLEXIBLE.getFieldName());
+		validatePositionError(storePositions, fixedOpening, StoreAllowanceField.FIXED_OPENING.getFieldName());
+		validatePositionError(storePositions, fixedPostRush, StoreAllowanceField.FIXED_POST_RUSH.getFieldName());
+		validatePositionError(storePositions, fixedClosing, StoreAllowanceField.FIXED_CLOSING.getFieldName());		
+	}
+	
 	
 	/**
 	 * @param dayPartData

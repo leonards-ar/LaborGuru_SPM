@@ -2,7 +2,9 @@ package com.laborguru.service.store.file;
 
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -286,6 +288,8 @@ public class LaborAssumption extends BaseStoreSection{
 	 * @param store
 	 */
 	public void assembleStore(Store store) {
+		//Validate that the positions entered are valid
+		validatePositions(store);
 		
 		//Setting other factors
 		assembleFactorValue(store, OtherFactorsField.SCHEDULE_INEFFICENCY);
@@ -354,6 +358,25 @@ public class LaborAssumption extends BaseStoreSection{
 	}
 
 	
+	/**
+	 * @param store
+	 */
+	private void validatePositions(Store store) {		
+		Set<String> storePositions = new HashSet<String>(store.getPositions().size());
+		
+		for(Position position: store.getPositions()){
+			storePositions.add(position.getName());
+		}
+		
+		validatePositionError(storePositions, getUtilizationBottom(), LaborAssumptionField.UTILIZATION.getFieldName());
+		validatePositionError(storePositions, getUtilizationTop(), LaborAssumptionField.UTILIZATION.getFieldName());
+		validatePositionError(storePositions, getUtilizationLimitsMax(), LaborAssumptionField.UTILIZATION_LIMITS.getFieldName());
+		validatePositionError(storePositions, getUtilizationLimitsMin(), LaborAssumptionField.UTILIZATION_LIMITS.getFieldName());		
+		validatePositionError(storePositions, getActivitySharing(), LaborAssumptionField.ACTIVITY_SHARING.getFieldName());		
+		validatePositionError(storePositions, this.minimumStaffing, LaborAssumptionField.MINIMUM_STAFFING.getFieldName());		
+	}
+
+
 	/**
 	 * @param store
 	 * @param otherFactor

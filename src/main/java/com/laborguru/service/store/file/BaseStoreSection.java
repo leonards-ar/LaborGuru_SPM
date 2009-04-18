@@ -1,6 +1,8 @@
 package com.laborguru.service.store.file;
 
 import java.util.EnumSet;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -180,4 +182,27 @@ public abstract class BaseStoreSection {
 	protected Double makePercentage(Double value) {
 		return Double.valueOf(value.doubleValue() * PERCENTAGE_FACTOR);
 	}
+	
+	/**
+	 * @param message
+	 */
+	protected void validatePositionError(Set<String> storePositions, Set<String> parameterPositions, String fieldName) {
+		if (!storePositions.containsAll(parameterPositions)){
+			String message = "Error in "+fieldName+" definition - Position trying to configure does not exist";
+			log.error(message);
+			throw new InvalidFieldUploadFileException(message, new String[] {getSection().getStoreSection(), fieldName});
+		}
+	}
+	
+	protected void validatePositionError(Set<String> storePositions, PositionValueMap positionValueMap, String fieldName){
+		Set<String> parameterPositions = positionValueMap.getPositionNames();
+		validatePositionError(storePositions, parameterPositions, fieldName);
+	}	
+
+	protected void validatePositionError(Set<String> storePositions, Map<String,?> positionValueMap, String fieldName){
+		Set<String> parameterPositions = positionValueMap.keySet();
+		validatePositionError(storePositions, parameterPositions, fieldName);
+	}	
+
+	
 }
