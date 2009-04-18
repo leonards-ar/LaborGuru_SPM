@@ -10,6 +10,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.InvalidFieldUploadFileException;
 import com.laborguru.model.DayOfWeekData;
+import com.laborguru.model.DayPart;
 import com.laborguru.model.DayPartData;
 import com.laborguru.model.Position;
 import com.laborguru.model.Store;
@@ -198,12 +199,18 @@ public class StoreAllowance extends BaseStoreSection{
 		for(Position position: store.getPositions()){
 			storePositions.add(position.getName());
 		}
+		
+		Set<String> storeDayParts = new HashSet<String>(store.getDayParts().size());
+		
+		for(DayPart dayPart: store.getDayParts()){
+			storeDayParts.add(dayPart.getName());
+		}		
 				
-		validatePositionError(storePositions, weekdayGuestService, StoreAllowanceField.WEEKDAY_GUEST_SERVICE.getFieldName());
-		validatePositionError(storePositions, weekendGuestService, StoreAllowanceField.WEEKEND_GUEST_SERVICE.getFieldName());
-		validatePositionError(storePositions, variableFlexible, StoreAllowanceField.VARIABLE_FLEXIBLE.getFieldName());
-		validatePositionError(storePositions, variableOpening, StoreAllowanceField.VARIABLE_OPENING.getFieldName());
-		validatePositionError(storePositions, fixedGuestService, StoreAllowanceField.FIXED_GUEST_SERVICE.getFieldName());
+		validatePositionAndDayPartParameter(storePositions, storeDayParts, weekdayGuestService, StoreAllowanceField.WEEKDAY_GUEST_SERVICE.getFieldName());
+		validatePositionAndDayPartParameter(storePositions, storeDayParts, weekendGuestService, StoreAllowanceField.WEEKEND_GUEST_SERVICE.getFieldName());
+		validatePositionAndDayPartParameter(storePositions, storeDayParts, variableFlexible, StoreAllowanceField.VARIABLE_FLEXIBLE.getFieldName());
+		validatePositionAndDayPartParameter(storePositions, storeDayParts, variableOpening, StoreAllowanceField.VARIABLE_OPENING.getFieldName());
+		validatePositionAndDayPartParameter(storePositions, storeDayParts, fixedGuestService, StoreAllowanceField.FIXED_GUEST_SERVICE.getFieldName());
 		validatePositionError(storePositions, fixedFlexible, StoreAllowanceField.FIXED_FLEXIBLE.getFieldName());
 		validatePositionError(storePositions, fixedOpening, StoreAllowanceField.FIXED_OPENING.getFieldName());
 		validatePositionError(storePositions, fixedPostRush, StoreAllowanceField.FIXED_POST_RUSH.getFieldName());

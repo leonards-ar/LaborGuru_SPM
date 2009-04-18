@@ -1,7 +1,7 @@
 package com.laborguru.service.store.file;
 
+import java.util.Collection;
 import java.util.EnumSet;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -186,22 +186,29 @@ public abstract class BaseStoreSection {
 	/**
 	 * @param message
 	 */
-	protected void validatePositionError(Set<String> storePositions, Set<String> parameterPositions, String fieldName) {
-		if (!storePositions.containsAll(parameterPositions)){
-			String message = "Error in "+fieldName+" definition - Position trying to configure does not exist";
+
+	protected void validateSetParameterError(Set<String> storeParameter, Collection<String> parameters, String parameterName, String fieldName) {
+		if (!storeParameter.containsAll(parameters)){
+			String message = "Error in "+fieldName+" definition - "+parameterName+" trying to configure does not exist";
 			log.error(message);
 			throw new InvalidFieldUploadFileException(message, new String[] {getSection().getStoreSection(), fieldName});
 		}
-	}
+	}	
+		
+	protected void validatePositionAndDayPartParameter(Set<String> storePositions, Set<String> storeDayParts, PositionValueMap positionValueMap, String fieldName){
+		Set<String> parameterPositions = positionValueMap.getKeyNames();
+		validateSetParameterError(storePositions, parameterPositions,"Position", fieldName);
+		Set<String> parameterDayParts = positionValueMap.getMapDataKeySet();
+		validateSetParameterError(storeDayParts, parameterDayParts,"DayPart", fieldName);		
+	}	
 	
 	protected void validatePositionError(Set<String> storePositions, PositionValueMap positionValueMap, String fieldName){
-		Set<String> parameterPositions = positionValueMap.getPositionNames();
-		validatePositionError(storePositions, parameterPositions, fieldName);
+		Set<String> parameterPositions = positionValueMap.getKeyNames();
+		validateSetParameterError(storePositions, parameterPositions,"Position", fieldName);
 	}	
 
-	protected void validatePositionError(Set<String> storePositions, Map<String,?> positionValueMap, String fieldName){
-		Set<String> parameterPositions = positionValueMap.keySet();
-		validatePositionError(storePositions, parameterPositions, fieldName);
+	protected void validatePositionError(Set<String> storePositions, Collection<String> parameterPositions, String fieldName){
+		validateSetParameterError(storePositions, parameterPositions, fieldName, "Position");
 	}	
 
 	

@@ -2,6 +2,7 @@ package com.laborguru.service.store.file;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Utility class use to keep a hash map of <String, Number>
@@ -36,5 +37,9 @@ public class NumberMap {
 	 */
 	public Number get(String key){
 		return dataMap.get(key);
+	}
+	
+	public Set<String> getKeySet(){
+		return dataMap.keySet();
 	}
 }
