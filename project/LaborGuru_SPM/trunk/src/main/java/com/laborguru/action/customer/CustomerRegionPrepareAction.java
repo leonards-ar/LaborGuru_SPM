@@ -55,13 +55,6 @@ public class CustomerRegionPrepareAction extends SpmAction implements Preparable
 	public Integer getCustomerId() {
 		return customerId;
 	}
-
-	/**
-	 * 
-	 */
-	public void prepareEdit() {
-		loadRegionFromId();
-	}
 	
 	/**
 	 * Prepares the edit page
