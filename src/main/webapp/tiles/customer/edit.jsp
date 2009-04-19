@@ -74,19 +74,28 @@
 									</a>
 								</td>
 								<td>
-									<a href="<s:url value="#" includeParams="none"/>" onclick="customer_form.action='customerRegion_edit.action?regionId=<s:property value='id'/>'; customer_form.submit();">
-										<img src="<s:url value="/images/edit.png" includeParams="none"/>" />
-									</a>
+									<s:if test="id != null">
+										<a href="<s:url value="#" includeParams="none"/>" onclick="customer_form.action='customerRegion_edit.action?regionId=<s:property value='id'/>'; customer_form.submit();">										
+											<img src="<s:url value="/images/edit.png" includeParams="none"/>" />
+										</a>
+									</s:if>
+									<s:else>&nbsp;</s:else>
 								</td>
 								<td>
-									<a href="<s:url value="#" includeParams="none"/>" onclick="customer_form.action='regionalUser_add.action?paramId=<s:property value='id'/>'; customer_form.submit();">
-										<img src="<s:url value="/images/user_add.png" includeParams="none"/>" />
-									</a>
+									<s:if test="id != null">
+										<a href="<s:url value="#" includeParams="none"/>" onclick="customer_form.action='regionalUser_add.action?paramId=<s:property value='id'/>'; customer_form.submit();">
+											<img src="<s:url value="/images/user_add.png" includeParams="none"/>" />
+										</a>
+									</s:if>
+									<s:else>&nbsp;</s:else>
 								</td>
 								<td>
-									<a href="<s:url value="#" includeParams="none"/>" onclick="customer_form.action='regionalUser_list.action?paramId=<s:property value='id'/>'; customer_form.submit();">
-										<img src="<s:url value="/images/usergroup.png" includeParams="none"/>" />
-									</a>
+									<s:if test="id != null">
+										<a href="<s:url value="#" includeParams="none"/>" onclick="customer_form.action='regionalUser_list.action?paramId=<s:property value='id'/>'; customer_form.submit();">
+											<img src="<s:url value="/images/usergroup.png" includeParams="none"/>" />
+										</a>
+									</s:if>
+									<s:else>&nbsp;</s:else>
 								</td>
 							</tr>
 						</s:iterator>
