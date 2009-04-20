@@ -82,7 +82,7 @@ public class DailyStaffingPositionData implements Serializable {
 	 */
 	public double getVariableFlexible() {
 		if(getStore() != null) {
-			return NumberUtils.getDoubleValue(getDayPartTotalProjection()) * NumberUtils.getDoubleValue(getDayPartData().getVariableFlexible()) * NumberUtils.getDoubleValue(getStore().getAllPositionsUtilization()) / 100;
+			return NumberUtils.getDoubleValue(getDayPartTotalProjection()) * NumberUtils.getDoubleValue(getDayPartData().getVariableFlexible()) / (NumberUtils.getDoubleValue(getStore().getAllPositionsUtilization()) / 100);
 		} else {
 			return NumberUtils.getDoubleValue(getDayPartTotalProjection()) * NumberUtils.getDoubleValue(getDayPartData().getVariableFlexible());
 		}
@@ -94,7 +94,7 @@ public class DailyStaffingPositionData implements Serializable {
 	 */
 	public double getVariableOpening() {
 		if(getStore() != null) {
-			return NumberUtils.getDoubleValue(getDayPartTotalProjection()) * NumberUtils.getDoubleValue(getDayPartData().getVariableOpening()) * NumberUtils.getDoubleValue(getStore().getAllPositionsUtilization()) / 100;
+			return NumberUtils.getDoubleValue(getDayPartTotalProjection()) * NumberUtils.getDoubleValue(getDayPartData().getVariableOpening()) / (NumberUtils.getDoubleValue(getStore().getAllPositionsUtilization()) / 100);
 		} else {
 			return NumberUtils.getDoubleValue(getDayPartTotalProjection()) * NumberUtils.getDoubleValue(getDayPartData().getVariableOpening());
 		}
