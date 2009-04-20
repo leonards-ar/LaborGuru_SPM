@@ -117,7 +117,7 @@ public class StorePositionPrepareAction extends StoreAdministrationBaseAction
 				if (!storePosition.getName().equals(positionName))					
 					//Checking if the name is not repeted
 					if (Collections.frequency(getPositions(), position) > 1){
-						String exMessage = "Position name "+positionName+" is duplicated";
+						String exMessage = "Position name " + positionName + " is duplicated";
 						log.error(exMessage);
 						throw new SpmCheckedException(exMessage, ErrorEnum.DUPLICATED_POSITION, new String[]{positionName});						
 					}
