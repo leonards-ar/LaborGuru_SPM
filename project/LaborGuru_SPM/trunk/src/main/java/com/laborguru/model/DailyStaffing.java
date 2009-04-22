@@ -294,7 +294,7 @@ public abstract class DailyStaffing extends SpmObject {
 	 * @return
 	 */
 	public Double getBaseDailyTarget() {
-		return new Double(getTotalServiceHours().doubleValue() + getTotalFlexible().doubleValue() + getTotalOpening().doubleValue() + getFixedClosing().doubleValue() + getFixedPostRush().doubleValue());
+		return new Double(getTotalServiceHours().doubleValue() + getTotalFlexible().doubleValue() + getTotalOpening().doubleValue() + getFixedClosing().doubleValue());
 	}
 
 	/**
