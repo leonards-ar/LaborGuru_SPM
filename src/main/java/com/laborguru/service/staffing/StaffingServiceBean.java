@@ -120,7 +120,9 @@ public class StaffingServiceBean implements StaffingService {
 				int minFloorMgmt = NumberUtils.getIntegerValue(store.getMinimumFloorManagementHours());
 				floorMgmtFactor = Math.max(floorMgmtFactor, (double) minFloorMgmt);
 				
-				managerDailyStaffing.setTotalDailyTarget(new Double(NumberUtils.getDoubleValue(managerDailyStaffing.getBaseDailyTarget()) + floorMgmtFactor));
+				double managerTotal = NumberUtils.getDoubleValue(managerDailyStaffing.getTotalDailyTarget());
+				
+				managerDailyStaffing.setTotalDailyTarget(new Double(managerTotal + floorMgmtFactor));
 			}
 		}
 	}
@@ -239,10 +241,7 @@ public class StaffingServiceBean implements StaffingService {
 	 * @param position
 	 */
 	private void setTotalServiceHours(DailyStaffing dailyStaffing, Position position) {
-		int totalTarget = NumberUtils.getIntegerValue(dailyStaffing.getTotalHourStaffing());
-		double scheduleInefficiency = (position.getStore() != null ? NumberUtils.getDoubleValue(position.getStore().getScheduleInefficiency()) : 0.0) / 100;
-
-		dailyStaffing.setTotalServiceHours(totalTarget * (1 + scheduleInefficiency));
+		dailyStaffing.setTotalServiceHours((double) NumberUtils.getIntegerValue(dailyStaffing.getTotalHourStaffing()));
 	}
 	
 	/**
@@ -258,10 +257,10 @@ public class StaffingServiceBean implements StaffingService {
 		
 		setVariableTotals(dailyStaffing, dailyStaffingData);
 		setFixedValues(dailyStaffing, position, date);
-		setTotalFlexible(dailyStaffing, position);
 		setTotalOpening(dailyStaffing, position);
-		
-		applyOtherFactorsToPositionDailyTarget(dailyStaffing, position);
+		setTotalFlexible(dailyStaffing, position);
+
+		setTotalDailyTarget(dailyStaffing, position);
 	}
 
 	/**
@@ -269,15 +268,30 @@ public class StaffingServiceBean implements StaffingService {
 	 * @param dailyStaffing
 	 * @param position
 	 */
-	private void applyOtherFactorsToPositionDailyTarget(DailyStaffing dailyStaffing, Position position) {
-		// Managers Other Factors are tied to store totals
-		if(!position.isManager() && position != null && position.getStore() != null) {
-			double baseTarget = NumberUtils.getDoubleValue(dailyStaffing.getBaseDailyTarget());
-			double trainingFactor = baseTarget * NumberUtils.getDoubleValue(position.getStore().getTrainingFactor()) / 100;
-			double breakFactor = baseTarget * NumberUtils.getDoubleValue(position.getStore().getEarnedBreakFactor()) / 100;
-			
-			dailyStaffing.setTotalDailyTarget(new Double(baseTarget + trainingFactor + breakFactor));
-		}
+	private void setTotalDailyTarget(DailyStaffing dailyStaffing, Position position) {
+		double baseTarget = NumberUtils.getDoubleValue(dailyStaffing.getBaseDailyTarget());
+		double totalService = NumberUtils.getDoubleValue(dailyStaffing.getTotalServiceHours());
+		dailyStaffing.setTotalDailyTarget(new Double(baseTarget + totalService));
+		
+	}
+	
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 */
+	private double getTrainingFactor(Position position) {
+		return position != null ? NumberUtils.getDoubleValue(position.getStore().getTrainingFactor()) / 100 : 0.0;
+	}
+	
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 */
+	private double getBreakFactor(Position position) {
+		return 	position != null ? NumberUtils.getDoubleValue(position.getStore().getEarnedBreakFactor()) / 100 : 0.0;
+
 	}
 
 	/**
@@ -288,7 +302,7 @@ public class StaffingServiceBean implements StaffingService {
 	private void setTotalOpening(DailyStaffing dailyStaffing, Position position) {
 		double totalOpening = NumberUtils.getDoubleValue(dailyStaffing.getTotalVariableOpening()) + NumberUtils.getDoubleValue(dailyStaffing.getFixedOpening());
 		
-		dailyStaffing.setTotalFlexible(new Double(totalOpening));
+		dailyStaffing.setTotalOpening(new Double(totalOpening * (1 + getTrainingFactor(position)) * (1 + getBreakFactor(position))));
 		
 	}
 	
@@ -298,12 +312,22 @@ public class StaffingServiceBean implements StaffingService {
 	 * @param position
 	 */
 	private void setTotalFlexible(DailyStaffing dailyStaffing, Position position) {
-		double diffWorkContentService = NumberUtils.getDoubleValue(dailyStaffing.getTotalServiceHours()) - NumberUtils.getDoubleValue(dailyStaffing.getTotalWorkContent());
-		double available = diffWorkContentService * NumberUtils.getDoubleValue(position.getStore().getFillInefficiency()) / 100;
+		double totalService = NumberUtils.getDoubleValue(dailyStaffing.getTotalServiceHours());
+		double diffWorkContentService = totalService - NumberUtils.getDoubleValue(dailyStaffing.getTotalWorkContent());
+
 		double totalFlexible = NumberUtils.getDoubleValue(dailyStaffing.getTotalVariableFlexible()) + NumberUtils.getDoubleValue(dailyStaffing.getFixedFlexible());
+
+		double available = diffWorkContentService * NumberUtils.getDoubleValue(position.getStore().getFillInefficiency()) / 100;
 		double diff = totalFlexible - available;
+		diff = diff >= 0.0 ? diff : 0.0;
 		
-		dailyStaffing.setTotalFlexible(new Double(diff >= 0.0 ? diff : 0.0));
+		diff += NumberUtils.getDoubleValue(dailyStaffing.getFixedPostRush());
+		
+		double scheduleInefficiency = (position.getStore() != null ? NumberUtils.getDoubleValue(position.getStore().getScheduleInefficiency()) : 0.0) / 100;
+		double breakFactor = getBreakFactor(position);
+		double trainingFactor = getTrainingFactor(position);
+		
+		dailyStaffing.setTotalFlexible(new Double((diff * (1 + breakFactor) * (1 + trainingFactor))) + totalService * breakFactor + totalService * trainingFactor + totalService * scheduleInefficiency);
 	}
 	
 	/**
