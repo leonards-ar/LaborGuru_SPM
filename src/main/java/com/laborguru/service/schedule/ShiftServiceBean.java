@@ -44,6 +44,11 @@ public class ShiftServiceBean implements ShiftService {
 		return getShiftDao().save(shift);
 	}
 
+	/**
+	 * 
+	 * @return
+	 * @see com.laborguru.service.schedule.ShiftService#updateAll()
+	 */
 	public List<Shift> updateAll() {
 		List<Shift> shifts = getShiftDao().loadAll();
 		

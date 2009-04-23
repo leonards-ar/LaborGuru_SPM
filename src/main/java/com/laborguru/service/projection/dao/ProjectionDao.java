@@ -59,4 +59,9 @@ public interface ProjectionDao {
 	 */
 	List<DailyProjection> getDailyProjections(Store store, Date startDate, Date endDate);
 
+	/**
+	 * 
+	 * @return
+	 */
+	List<DailyProjection> loadAll();
 }
