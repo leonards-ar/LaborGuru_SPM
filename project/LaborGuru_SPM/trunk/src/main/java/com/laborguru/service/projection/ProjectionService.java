@@ -104,4 +104,10 @@ public interface ProjectionService extends Service {
 	 * @param staffingService
 	 */
 	void setStaffingService(StaffingService staffingService);
+	
+	/**
+	 * 
+	 * @return
+	 */
+	List<DailyProjection> updateAll();
 }

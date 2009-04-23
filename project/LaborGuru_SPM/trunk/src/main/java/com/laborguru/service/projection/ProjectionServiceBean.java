@@ -111,7 +111,22 @@ public class ProjectionServiceBean implements ProjectionService {
 		//Delete staffing calculations associated with the projection saved.
 		staffingService.updateDailyStaffingForDate(store,selectedDate);
 	}
-	
+	/**
+	 * 
+	 * @return
+	 * @see com.laborguru.service.projection.ProjectionService#updateAll()
+	 */
+	public List<DailyProjection> updateAll() {
+		List<DailyProjection> projections = getProjectionDao().loadAll();
+		
+		for(DailyProjection projection: projections) {
+			getStaffingService().deleteDailyStaffingForDate(projection.getStore(), projection.getProjectionDate());
+			getStaffingService().getDailyStaffingByDate(projection.getStore(), projection.getProjectionDate());
+			getProjectionDao().save(projection);
+		}
+		
+		return projections;
+	}
 	
 	
 

@@ -6,6 +6,9 @@
 	<package name="util"  namespace="/util" extends="spm-default">
 		<action name="updateSchedule" class="com.laborguru.action.util.UpdateSchedulesAction">
 			<result name="success">/tiles/util/updateSchedules.jsp</result>
-		</action>		
+		</action>
+		<action name="updateStaffing" class="com.laborguru.action.util.UpdateStaffingAction">
+			<result name="success">/tiles/util/updateSchedules.jsp</result>
+		</action>
 	</package>
 </struts>

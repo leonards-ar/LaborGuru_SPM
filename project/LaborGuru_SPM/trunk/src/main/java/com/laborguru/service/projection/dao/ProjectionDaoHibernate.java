@@ -309,4 +309,13 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 		
 		getHibernateTemplate().save(projection);
 	}
+
+	/**
+	 * 
+	 * @return
+	 * @see com.laborguru.service.projection.dao.ProjectionDao#loadAll()
+	 */
+	public List<DailyProjection> loadAll() {
+		return (List<DailyProjection>)getHibernateTemplate().loadAll(DailyProjection.class);
+	}	
 }

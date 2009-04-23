@@ -61,6 +61,11 @@ public class ShiftDaoHibernate extends HibernateDaoSupport implements ShiftDao {
 		return shift;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 * @see com.laborguru.service.schedule.dao.ShiftDao#loadAll()
+	 */
 	public List<Shift> loadAll() {
 		return (List<Shift>)getHibernateTemplate().loadAll(Shift.class);
 	}
