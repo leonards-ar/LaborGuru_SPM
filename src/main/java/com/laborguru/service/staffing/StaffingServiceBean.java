@@ -120,9 +120,11 @@ public class StaffingServiceBean implements StaffingService {
 				int minFloorMgmt = NumberUtils.getIntegerValue(store.getMinimumFloorManagementHours());
 				floorMgmtFactor = Math.max(floorMgmtFactor, (double) minFloorMgmt);
 				
-				double managerTotal = NumberUtils.getDoubleValue(managerDailyStaffing.getTotalDailyTarget());
+				double totalFlexible = NumberUtils.getDoubleValue(managerDailyStaffing.getTotalFlexible()) + floorMgmtFactor;
 				
-				managerDailyStaffing.setTotalDailyTarget(new Double(managerTotal + floorMgmtFactor));
+				managerDailyStaffing.setTotalFlexible(new Double(totalFlexible));
+				
+				managerDailyStaffing.setTotalDailyTarget(managerDailyStaffing.getBaseDailyTarget());
 			}
 		}
 	}
@@ -270,9 +272,7 @@ public class StaffingServiceBean implements StaffingService {
 	 */
 	private void setTotalDailyTarget(DailyStaffing dailyStaffing, Position position) {
 		double baseTarget = NumberUtils.getDoubleValue(dailyStaffing.getBaseDailyTarget());
-		double totalService = NumberUtils.getDoubleValue(dailyStaffing.getTotalServiceHours());
-		dailyStaffing.setTotalDailyTarget(new Double(baseTarget + totalService));
-		
+		dailyStaffing.setTotalDailyTarget(new Double(baseTarget));
 	}
 	
 	/**
@@ -326,8 +326,11 @@ public class StaffingServiceBean implements StaffingService {
 		double scheduleInefficiency = (position.getStore() != null ? NumberUtils.getDoubleValue(position.getStore().getScheduleInefficiency()) : 0.0) / 100;
 		double breakFactor = getBreakFactor(position);
 		double trainingFactor = getTrainingFactor(position);
-		
-		dailyStaffing.setTotalFlexible(new Double((diff * (1 + breakFactor) * (1 + trainingFactor))) + totalService * breakFactor + totalService * trainingFactor + totalService * scheduleInefficiency);
+		if(!position.isManager()) {
+			dailyStaffing.setTotalFlexible(new Double((diff * (1 + breakFactor) * (1 + trainingFactor))) + totalService * breakFactor + totalService * trainingFactor + totalService * scheduleInefficiency);
+		} else {
+			dailyStaffing.setTotalFlexible(new Double(diff));
+		}
 	}
 	
 	/**
