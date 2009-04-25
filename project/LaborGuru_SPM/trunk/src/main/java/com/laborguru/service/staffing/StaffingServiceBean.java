@@ -105,9 +105,10 @@ public class StaffingServiceBean implements StaffingService {
 			}
 		}
 
-		applyOtherFactorsToManagerPositions(managerDailyStaffings, store, nonManagerTargetAddition);
 
 		if(mustSave) {
+			applyOtherFactorsToManagerPositions(managerDailyStaffings, store, nonManagerTargetAddition);
+
 			save(storeDailyStaffing);
 		}
 		
