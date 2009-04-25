@@ -323,10 +323,11 @@ public class StaffingServiceBean implements StaffingService {
 		
 		diff += NumberUtils.getDoubleValue(dailyStaffing.getFixedPostRush());
 		
-		double scheduleInefficiency = (position.getStore() != null ? NumberUtils.getDoubleValue(position.getStore().getScheduleInefficiency()) : 0.0) / 100;
-		double breakFactor = getBreakFactor(position);
-		double trainingFactor = getTrainingFactor(position);
 		if(!position.isManager()) {
+			double scheduleInefficiency = (position.getStore() != null ? NumberUtils.getDoubleValue(position.getStore().getScheduleInefficiency()) : 0.0) / 100;
+			double breakFactor = getBreakFactor(position);
+			double trainingFactor = getTrainingFactor(position);
+
 			dailyStaffing.setTotalFlexible(new Double((diff * (1 + breakFactor) * (1 + trainingFactor))) + totalService * breakFactor + totalService * trainingFactor + totalService * scheduleInefficiency);
 		} else {
 			dailyStaffing.setTotalFlexible(new Double(diff));
