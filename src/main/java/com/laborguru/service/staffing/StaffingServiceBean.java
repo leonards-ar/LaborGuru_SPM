@@ -82,27 +82,32 @@ public class StaffingServiceBean implements StaffingService {
 		
 		List<Map<String, List<HalfHourStaffingPositionData>>> staffingData = initializeHalfHourStaffingData(store, date, dailySalesValue);
 		
+		boolean alreadyInDatabase = true;
 		//:TODO: Improve performance? Or complicate coding?
 		for(Position position : store.getPositions()) {
 			DailyStaffing dailyStaffing = getStaffingDao().getDailyStaffingByDate(position, date);
-			if(dailyStaffing == null) {
+			alreadyInDatabase = dailyStaffing != null;
+			if(!alreadyInDatabase) {
 				dailyStaffing = calculateDailyStaffing(position, date, dailySalesValue, staffingData);
+
+				if(dailyStaffing != null) {
+					if(isManagerDailyStaffing(dailyStaffing)) {
+						managerDailyStaffings.add(dailyStaffing);
+					} else {
+						nonManagerTargetAddition += NumberUtils.getDoubleValue(dailyStaffing.getTotalDailyTarget());
+					}
+				}
 			}
 			if(dailyStaffing != null) {
 				storeDailyStaffing.addDailyStaffing((DailyProjectedStaffing)dailyStaffing);
-				
-				if(isManagerDailyStaffing(dailyStaffing)) {
-					managerDailyStaffings.add(dailyStaffing);
-				} else {
-					nonManagerTargetAddition += NumberUtils.getDoubleValue(dailyStaffing.getTotalDailyTarget());
-				}
 			}
 		}
-		
-		applyOtherFactorsToManagerPositions(managerDailyStaffings, store, nonManagerTargetAddition);
 
-		// :TODO: Detect only when there are changes
-		save(storeDailyStaffing);
+		if(!alreadyInDatabase) {
+			applyOtherFactorsToManagerPositions(managerDailyStaffings, store, nonManagerTargetAddition);
+
+			save(storeDailyStaffing);
+		}
 		
 		return storeDailyStaffing;
 	}
