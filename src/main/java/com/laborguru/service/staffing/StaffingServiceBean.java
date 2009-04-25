@@ -82,30 +82,32 @@ public class StaffingServiceBean implements StaffingService {
 		
 		List<Map<String, List<HalfHourStaffingPositionData>>> staffingData = initializeHalfHourStaffingData(store, date, dailySalesValue);
 		
-		boolean alreadyInDatabase = true;
 		//:TODO: Improve performance? Or complicate coding?
+		boolean mustSave = false;
 		for(Position position : store.getPositions()) {
 			DailyStaffing dailyStaffing = getStaffingDao().getDailyStaffingByDate(position, date);
-			alreadyInDatabase = dailyStaffing != null;
-			if(!alreadyInDatabase) {
-				dailyStaffing = calculateDailyStaffing(position, date, dailySalesValue, staffingData);
 
-				if(dailyStaffing != null) {
-					if(isManagerDailyStaffing(dailyStaffing)) {
-						managerDailyStaffings.add(dailyStaffing);
-					} else {
-						nonManagerTargetAddition += NumberUtils.getDoubleValue(dailyStaffing.getTotalDailyTarget());
-					}
+			if(dailyStaffing == null) {
+				dailyStaffing = calculateDailyStaffing(position, date, dailySalesValue, staffingData);
+				mustSave = true;
+			}
+
+			if(dailyStaffing != null) {
+				if(isManagerDailyStaffing(dailyStaffing)) {
+					managerDailyStaffings.add(dailyStaffing);
+				} else {
+					nonManagerTargetAddition += NumberUtils.getDoubleValue(dailyStaffing.getTotalDailyTarget());
 				}
 			}
+			
 			if(dailyStaffing != null) {
 				storeDailyStaffing.addDailyStaffing((DailyProjectedStaffing)dailyStaffing);
 			}
 		}
 
-		if(!alreadyInDatabase) {
-			applyOtherFactorsToManagerPositions(managerDailyStaffings, store, nonManagerTargetAddition);
+		applyOtherFactorsToManagerPositions(managerDailyStaffings, store, nonManagerTargetAddition);
 
+		if(mustSave) {
 			save(storeDailyStaffing);
 		}
 		
@@ -124,7 +126,8 @@ public class StaffingServiceBean implements StaffingService {
 				double floorMgmtFactor = nonManagerTargetAddition * NumberUtils.getDoubleValue(store.getFloorManagementFactor()) / 100;
 				int minFloorMgmt = NumberUtils.getIntegerValue(store.getMinimumFloorManagementHours());
 				floorMgmtFactor = Math.max(floorMgmtFactor, (double) minFloorMgmt);
-				
+				//:TODO: Fix, if recalculation, floor management of the previous value must be ignored
+				//       TotalFlexible must be recalculated
 				double totalFlexible = NumberUtils.getDoubleValue(managerDailyStaffing.getTotalFlexible()) + floorMgmtFactor;
 				
 				managerDailyStaffing.setTotalFlexible(new Double(totalFlexible));
