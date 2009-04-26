@@ -17,6 +17,7 @@ import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.PositionPerformanceSummaryRow;
 import com.laborguru.model.Position;
 import com.laborguru.service.position.PositionService;
+import com.laborguru.util.CalendarUtils;
 import com.laborguru.util.NumberUtils;
 
 /**
@@ -66,7 +67,7 @@ public class ShowCurrentWeekPositionSummaryAction extends EmployeeHomeSummaryBas
 	 */
 	private void buildPositionSummary() {
 		Date start = getWeekDaySelector().getStartingWeekDay();
-		Date end = getEndOfWeekDay(start);
+		Date end = CalendarUtils.getEndOfWeekDay(start);
 		
 		List<Position> positions = getPositionService().getPositionsByStore(getEmployeeStore());
 		Map<Integer, Double> staffingTotals = getStaffingService().getTotalProjectedStaffingByPositionForTimePeriod(getEmployeeStore(), start, end);

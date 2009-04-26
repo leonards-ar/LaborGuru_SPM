@@ -11,27 +11,26 @@ public class SchedulingEfficiencyReportPrepareAction extends WeeklyReportBaseAct
 	private static final long serialVersionUID = 1L;
 
 	protected void getReport() {
-		Date end = CalendarUtils.addOrSubstractDays(getWeekDaySelector().getStartingWeekDay(), 6);
 		setTotalHours(getReportService().getWeeklyTotalHours(
-				getEmployeeStore(), getWeekDaySelector().getStartingWeekDay(), end, true));
+				getEmployeeStore(), getWeekDaySelector().getStartingWeekDay(), 
+				CalendarUtils.getEndOfWeekDay(getWeekDaySelector().getStartingWeekDay()), true));
 	}
 
 	protected void getReportByPosition() {
-		Date end = CalendarUtils.addOrSubstractDays(getWeekDaySelector().getStartingWeekDay(), 6);
+		
 		Position position = new Position();
 		position.setId(getItemId());
 		setTotalHours(getReportService().getWeeklyTotalHoursByPosition(
 				getEmployeeStore(), position,
-				getWeekDaySelector().getStartingWeekDay(), end));
+				getWeekDaySelector().getStartingWeekDay(), CalendarUtils.getEndOfWeekDay(getWeekDaySelector().getStartingWeekDay())));
 	}
 
 	protected void getReportByService() {
-		Date end = CalendarUtils.addOrSubstractDays(getWeekDaySelector().getStartingWeekDay(), 6);
 		PositionGroup positionGroup = new PositionGroup();
 		positionGroup.setId(getItemId());
 		setTotalHours(getReportService().getWeeklyTotalHoursByService(
 				getEmployeeStore(), positionGroup,
-				getWeekDaySelector().getStartingWeekDay(), end));
+				getWeekDaySelector().getStartingWeekDay(), CalendarUtils.getEndOfWeekDay(getWeekDaySelector().getStartingWeekDay())));
 	}
 	
 	protected void setAxisLabels() {

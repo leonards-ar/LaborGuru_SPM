@@ -615,4 +615,13 @@ public class CalendarUtils {
 	public static Date getMidnightTime() {
 		return MIDNIGHT_TIME;
 	}
+	
+	/**
+	 * 
+	 * @param endingDayOfWeek
+	 * @return
+	 */
+	public static Date getEndOfWeekDay(Date startingDayOfWeek) {
+		return addOrSubstractDays(startingDayOfWeek, DayOfWeek.values().length - 1);
+	}	
 }

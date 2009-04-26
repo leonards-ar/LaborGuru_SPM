@@ -141,7 +141,7 @@ public abstract class EmployeeHomeSummaryBaseAction extends SpmAction {
 	 * @return
 	 */
 	private Double getScheduleForWeekStartingOn(Date day) {
-		BigDecimal total =getScheduleService().getTotalScheduledHoursForTimePeriod(getEmployeeStore(), day, getEndOfWeekDay(day));
+		BigDecimal total =getScheduleService().getTotalScheduledHoursForTimePeriod(getEmployeeStore(), day, CalendarUtils.getEndOfWeekDay(day));
 		
 		return new Double(NumberUtils.getDoubleValue(total));
 	}
@@ -152,7 +152,7 @@ public abstract class EmployeeHomeSummaryBaseAction extends SpmAction {
 	 * @return
 	 */
 	private Double getDailyStaffingForWeekStartingOn(Date day) {
-		return getStaffingService().getTotalProjectedStaffingForTimePeriod(getEmployeeStore(), day, getEndOfWeekDay(day));
+		return getStaffingService().getTotalProjectedStaffingForTimePeriod(getEmployeeStore(), day, CalendarUtils.getEndOfWeekDay(day));
 	}
 	
 	/**
@@ -181,20 +181,11 @@ public abstract class EmployeeHomeSummaryBaseAction extends SpmAction {
 
 	/**
 	 * 
-	 * @param startingDayOfWeek
-	 * @return
-	 */
-	protected Date getEndOfWeekDay(Date startingDayOfWeek) {
-		return CalendarUtils.addOrSubstractDays(startingDayOfWeek, DayOfWeek.values().length - 1);
-	}
-	
-	/**
-	 * 
 	 * @param day
 	 * @return
 	 */
 	private BigDecimal getDailyHistoricSalesForWeekStartingOn(Date day) {
-		return getHistoricSalesService().getTotalHistoricSalesForTimePeriod(getEmployeeStore(), day, getEndOfWeekDay(day));		
+		return getHistoricSalesService().getTotalHistoricSalesForTimePeriod(getEmployeeStore(), day, CalendarUtils.getEndOfWeekDay(day));		
 	}
 	
 	/**
@@ -203,7 +194,7 @@ public abstract class EmployeeHomeSummaryBaseAction extends SpmAction {
 	 * @return
 	 */
 	private Double getDailyActualHoursForWeekStartingOn(Date day) {
-		return getActualHoursService().getTotalActualHoursForTimePeriod(getEmployeeStore(), day, getEndOfWeekDay(day));
+		return getActualHoursService().getTotalActualHoursForTimePeriod(getEmployeeStore(), day, CalendarUtils.getEndOfWeekDay(day));
 	}
 	
 	/**
@@ -212,7 +203,7 @@ public abstract class EmployeeHomeSummaryBaseAction extends SpmAction {
 	 * @return
 	 */
 	private BigDecimal getLaborCostForWeekStartingOn(Date day) {
-		return getScheduleService().getTotalScheduledLaborCostForTimePeriod(getEmployeeStore(), day, getEndOfWeekDay(day));
+		return getScheduleService().getTotalScheduledLaborCostForTimePeriod(getEmployeeStore(), day, CalendarUtils.getEndOfWeekDay(day));
 	}
 	
 	/**
