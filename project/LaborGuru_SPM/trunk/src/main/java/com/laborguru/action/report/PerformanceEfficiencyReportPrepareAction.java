@@ -16,9 +16,8 @@ public class PerformanceEfficiencyReportPrepareAction extends WeeklyReportBaseAc
 	private static final long serialVersionUID = 7643112299027218254L;
 
 	protected void getReport() {
-		Date end = CalendarUtils.addOrSubstractDays(getWeekDaySelector().getStartingWeekDay(), 6);
 		setTotalHours(getReportService().getPerformanceEfficiencyReport(
-				getEmployeeStore(), getWeekDaySelector().getStartingWeekDay(), end, true));		
+				getEmployeeStore(), getWeekDaySelector().getStartingWeekDay(), CalendarUtils.getEndOfWeekDay(getWeekDaySelector().getStartingWeekDay()), true));		
 	}
 
 	protected void getReportByPosition() {
