@@ -18,7 +18,7 @@
         	  </tr>
               <tr>
               <td>
-              <table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0">
+              <table id="editFormTable" border="0" cellpadding="3" cellspacing="0" colspan="0" cellspan="0">
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.firstname.label" /></td>
                     <td width="35%" align="left" class="value"><s:property value="manager.name"/></td>
