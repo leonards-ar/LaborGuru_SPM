@@ -32,7 +32,7 @@
               <s:form action="%{getText(actionName)}_save" theme="simple">
               <s:hidden name="user.id" theme="simple"/>
 			  <s:hidden name="paramId" theme="simple"/>
-              <table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0">
+              <table id="editFormTable" border="0" cellpadding="3" cellspacing="0" colspan="0" cellspan="0">
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="form_label" nowrap>* <s:text name="user.firstname.label" /></td>
                     <td width="35%" align="left" class="value"><s:textfield name="user.name" size="20" theme="simple"/></td>
