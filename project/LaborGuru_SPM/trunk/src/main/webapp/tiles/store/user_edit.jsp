@@ -33,7 +33,7 @@
               <s:hidden name="storeId" theme="simple"/>
               <s:hidden name="employee.id" theme="simple"/>
               <s:hidden name="employee.store.id" theme="simple"/>              
-              <table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0">
+              <table id="editFormTable" border="0" cellpadding="3" cellspacing="0" colspan="0" cellspan="0">
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="form_label" nowrap>* <s:text name="employee.firstname.label" /></td>
                     <td width="35%" align="left" class="value"><s:textfield name="employee.name" size="20" theme="simple"/></td>
@@ -65,21 +65,23 @@
                     <td width="35%" align="left" class="value"><s:textfield name="employee.wage" size="4" theme="simple"/></td>
                 </tr>
               	<tr class="editFormOddRow">
-              	<td colspan="4" align="center">
-					<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0"><tr>
-                    <td align="right" class="form_label" nowrap><s:text name="employee.maxdaysweek.label" /></td>
-                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
-                    <td align="left" class="value"><s:textfield name="employee.maxDaysWeek" size="2" theme="simple"/></td>
-                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
-                    <td align="right" class="form_label" nowrap><s:text name="employee.maxhoursday.label" /></td>
-                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
-                    <td align="left" class="value"><s:textfield name="employee.maxHoursDay" size="2" theme="simple"/></td>
-                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
-                    <td align="right" class="form_label" nowrap><s:text name="employee.maxhoursweek.label" /></td>
-                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
-                    <td align="left" class="value"><s:textfield name="employee.maxHoursWeek" size="3" theme="simple"/></td>
-					</tr></table>
-              	</td>
+	              	<td width="15%" align="right" class="form_label" nowrap><s:text name="employee.maxdaysweek.label" /></td>
+	              	<td colspan="3" width="85%" align="left">
+						<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0"><tr>
+	                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
+	                    <td align="left" class="value"><s:textfield name="employee.maxDaysWeek" size="2" theme="simple"/></td>
+	                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
+	                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
+	                    <td align="right" class="form_label" nowrap><s:text name="employee.maxhoursday.label" /></td>
+	                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
+	                    <td align="left" class="value"><s:textfield name="employee.maxHoursDay" size="2" theme="simple"/></td>
+	                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
+	                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
+	                    <td align="right" class="form_label" nowrap><s:text name="employee.maxhoursweek.label" /></td>
+	                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
+	                    <td align="left" class="value"><s:textfield name="employee.maxHoursWeek" size="3" theme="simple"/></td>
+						</tr></table>
+	              	</td>
                 </tr>
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.defaultposition.label" /></td>
@@ -95,39 +97,41 @@
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.ismanager.label" /></td>
                     <td width="35%" align="left" class="value"><s:checkbox name="employee.manager" fieldValue="true" theme="simple"/></td>
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.hiredate.label" /></td>
-                    <td width="35%" align="left" class="value"><s:datetimepicker displayFormat="MM/dd/yyyy" disabled="true" name="employee.hireDate" theme="simple"/></td>
+                    <td width="35%" align="left" class="value">
+                    	<s:datetimepicker id="hireDate" displayFormat="MM/dd/yyyy" disabled="true" name="employee.hireDate" theme="simple"/>
+                    	<script>djConfig.searchIds.push("hireDate");</script>
+                    </td>
                 </tr>
 
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.address.label" /></td>
-                    <td width="85%" align="left" class="value" colspan="3"><s:textfield name="employee.address" size="50" theme="simple"/></td>
+                    <td width="85%" align="left" class="value" colspan="3"><s:textfield name="employee.address" size="60" theme="simple"/></td>
                 </tr>
               	<tr class="editFormOddRow">
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.address2.label" /></td>
-                    <td width="85%" align="left" class="value" colspan="3"><s:textfield name="employee.address2" size="50" theme="simple"/></td>
+                    <td width="85%" align="left" class="value" colspan="3"><s:textfield name="employee.address2" size="60" theme="simple"/></td>
                 </tr>
               	<tr class="editFormEvenRow">
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.city.label" /></td>
-              	<td width="35%" align="left" class="value"><s:textfield name="employee.city" size="20" theme="simple"/></td>
-                    <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.state.label" /></td>
-              	<td width="35%" align="left">
-					<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0"><tr>
-                    <td align="left" class="value"><s:select name="employee.state" list="statesList" theme="simple" headerKey="" headerValue="%{getText('employee.state.header.label')}"/></td>
-                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
-                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
-                    <td align="right" class="form_label" nowrap><s:text name="employee.zip.label" /></td>
-                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
-                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
-                    <td align="left" class="value"><s:textfield name="employee.zip" size="5" theme="simple"/></td>
-					</tr></table>
-              	</td>
-              	
+              		<td colspan="3" width="85%" align="left">
+						<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0"><tr>
+						<td align="left" class="value"><s:textfield name="employee.city" size="20" theme="simple"/></td>
+	                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
+	                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
+                    	<td align="right" class="form_label" nowrap><s:text name="employee.state.label" /></td>
+	                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
+	                    <td align="left" class="value"><s:select name="employee.state" list="statesList" theme="simple" headerKey="" headerValue="%{getText('employee.state.header.label')}"/></td>
+	                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
+	                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
+	                    <td align="right" class="form_label" nowrap><s:text name="employee.zip.label" /></td>
+	                    <td><img src="<s:url value="/images/transp6x1.gif" includeParams="none"/>"/></td>
+	                    <td align="left" class="value"><s:textfield name="employee.zip" size="5" theme="simple"/></td>
+						</tr></table>
+					</td>              		
                 </tr>                
-              	<tr class="editFormEOddRow">
+              	<tr class="editFormOddRow">
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.comments.label" /></td>
-                    <td width="35%" align="left" class="value"><s:textarea name="employee.comments" cols="40" rows="2" theme="simple"/></td>
-                    <td width="15%" align="right" class="form_label" nowrap>&nbsp;</td>
-                    <td width="35%" align="left" class="value">&nbsp;</td>
+                    <td width="85%" align="left" class="value" colspan="3"><s:textfield name="employee.comments" size="60" theme="simple"/></td>
                 </tr>
               	<tr class="editFormEvenRow">
                     <td width="100%" align="right" colspan="4">
