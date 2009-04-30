@@ -406,8 +406,8 @@ public abstract class DailyStaffing extends SpmObject {
 			for(HalfHourStaffing aHalfHourStaffing : getHalfHourStaffing()) {
 				total += aHalfHourStaffing.getCalculatedStaff().intValue();
 			}
-			
-			totalMinimumStaffing = new Integer(total);			
+			// Half hours to hours
+			totalMinimumStaffing = new Integer(total / 2);			
 		}
 		return totalMinimumStaffing;
 	}
