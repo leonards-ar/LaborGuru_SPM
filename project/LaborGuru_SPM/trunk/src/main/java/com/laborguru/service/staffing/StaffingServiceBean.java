@@ -235,8 +235,9 @@ public class StaffingServiceBean implements StaffingService {
 				dailyStaffing.addHalfHourStaffing(aHalfHourStaffing);
 			}
 			
-			dailyStaffing.setTotalMinimumStaffing(totalMinimumStaffing);
-			dailyStaffing.setTotalWorkContent(totalWorkContent);
+			// Half hours to hours
+			dailyStaffing.setTotalMinimumStaffing(totalMinimumStaffing / 2);
+			dailyStaffing.setTotalWorkContent(totalWorkContent / 2);
 			
 			calculateDailyTarget(dailyStaffing, position, date, dailySalesValue, initializeDailyStaffingData(position, date, dailySalesValue));
 			
