@@ -54,7 +54,7 @@ public abstract class EmployeeBaseAction extends SpmAction implements Preparable
 	 * Prepare data to be used to display employee data
 	 */
 	public void prepareShow() {
-		//loadListsForAddEditPage();
+		this.setStatusMap(getReferenceDataService().getStatus());
 	}
 
 	/**
