@@ -179,7 +179,7 @@ public class EmployeeSchedule extends SpmObject {
 		double total = 0.0;
 		if(position != null && position.getId() != null) {
 			for(Shift shift : getShifts()) {
-				if(shift.getPosition() != null && position.getId().equals(shift.getPosition().getId()) && !shift.isReferencedShift()) {
+				if(shift.getPosition() != null && position.getId().equals(shift.getPosition().getId()) && !shift.isReferencedShift() && !shift.isBreak()) {
 					total += shift.getTotalShiftHoursWithContiguous().doubleValue();
 				}
 			}

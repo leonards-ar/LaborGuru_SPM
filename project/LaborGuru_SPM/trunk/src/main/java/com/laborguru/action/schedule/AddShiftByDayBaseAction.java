@@ -369,11 +369,13 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 			for(EmployeeSchedule employeeSchedule : getStoreSchedule().getEmployeeSchedules()) {
 				boolean isFirst = true;
 				for(Shift shift : employeeSchedule.getShifts()) {
-					if(!shift.isBreak() && (position == null || (position != null && isEqualPosition(position, shift.getPosition())))) {
-						aRow = buildScheduleRow(employeeSchedule, shift, schedule, isFirst);
-						isFirst = false;
-						if(aRow != null) {
-							schedule.add(aRow);
+					if(shift != null) {
+						if(!shift.isBreak() && (position == null || (position != null && isEqualPosition(position, shift.getPosition())))) {
+							aRow = buildScheduleRow(employeeSchedule, shift, schedule, isFirst);
+							isFirst = false;
+							if(aRow != null) {
+								schedule.add(aRow);
+							}
 						}
 					}
 				}
