@@ -123,6 +123,15 @@ function showSplash(splashId, contentId, message) {
 	return true;
 }
 
+function confirmAndWaitSpash(splashId, formObj, message) {
+	if(confirm(message)) {
+		return showWaitSplash();
+	} else {
+		return false;
+	}
+}
+
+
 /*
  * Parses the input time to the standard format HH:MM
  * The rules are the following:

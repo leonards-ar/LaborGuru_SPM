@@ -77,7 +77,7 @@
 													<s:datetimepicker id="copy_target_day" displayFormat="MM/dd/yyyy" disabled="true" name="copyTargetDay" theme="simple"/>
 													<script>djConfig.searchIds.push("copy_target_day");</script>
 												</td>
-												<td align="right"><s:submit id="copyButton" key="schedule.addshift.copy.button" action="addweeklyshiftbyposition_copySchedule" theme="simple" cssClass="button"/></td>
+												<td align="right"><s:submit id="copyButton" onclick="return confirmAndWaitSpash('confirm', this, '<s:text name='schedule.addshift.copy.schedule.confirm.msg'/>');" key="schedule.addshift.copy.button" action="addweeklyshiftbyposition_copySchedule" theme="simple" cssClass="button"/></td>
 											</tr>
 										</table>
 									</td>
