@@ -138,8 +138,10 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		WeeklyScheduleDailyEntry entry = getDailyEntry(row.getWeeklySchedule(), dayIndex);
 		if(!entry.isMultipleShifts()) {
 			entry.setMultipleShifts(employeeSchedule.hasMultipleShiftsWithoutContiguous(shift.getPosition()));
-			entry.setTotalHours(employeeSchedule.getTotalShiftHoursWithContiguous(shift.getPosition()));
+			
 		}
+		
+		entry.setTotalHours(employeeSchedule.getTotalShiftHoursWithContiguous(shift.getPosition()));
 		
 		if(entry.getInHour() == null) {
 			entry.setInHour(employeeSchedule.getFromHour(shift.getPosition()));
@@ -515,18 +517,20 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		List<Shift> shiftsToKeep = new ArrayList<Shift>();
 
 		for(Shift shift : employeeSchedule.getShifts()) {
-			if(shift.isBreak() || shift.isReferencedShiftToKeep()) {
-				processContiguousShiftToKeep(shift, employeeSchedule, dayIndex);
-				shiftsToKeep.add(shift);
-			} else if(dayIndex == 0 && shift.isReferencedShift()) {
-				// It's a referenced shift from the previous week
-				shiftsToKeep.add(shift);
-			} else {
-				// Check to see if from and to times change
-				Shift rowShift = retrieveShift(getWeeklyScheduleRowForPosition(source, shift.getPosition()), dayIndex);
-				if(rowShift != null && !changeShiftForPosition(rowShift, employeeSchedule)) {
+			if(shift != null) {
+				if(shift.isBreak() || shift.isReferencedShiftToKeep()) {
 					processContiguousShiftToKeep(shift, employeeSchedule, dayIndex);
 					shiftsToKeep.add(shift);
+				} else if(dayIndex == 0 && shift.isReferencedShift()) {
+					// It's a referenced shift from the previous week
+					shiftsToKeep.add(shift);
+				} else {
+					// Check to see if from and to times change
+					Shift rowShift = retrieveShift(getWeeklyScheduleRowForPosition(source, shift.getPosition()), dayIndex);
+					if(rowShift != null && !changeShiftForPosition(rowShift, employeeSchedule)) {
+						processContiguousShiftToKeep(shift, employeeSchedule, dayIndex);
+						shiftsToKeep.add(shift);
+					}
 				}
 			}
 		}
