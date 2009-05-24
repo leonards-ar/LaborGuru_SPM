@@ -42,10 +42,10 @@
 				</td>
 				<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
 				  <td class="tableValueWithLeftBottomBorder">
-				  	<s:text name="total.hours"><s:param value="schedule"/></s:text></td>
+				  	<s:text name="report.total.hours"><s:param value="schedule"/></s:text></td>
 				</s:iterator>
 				<td class="greyTableValueWithLeftBottomBorder">
-				   <s:text name="total.hours"><s:param value="totalSchedule"/></s:text>
+				   <s:text name="report.total.hours"><s:param value="totalSchedule"/></s:text>
 	      </td>
 		  </tr>
 		  <tr>
@@ -54,10 +54,10 @@
 				</td>
 				<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
 				  <td class="tableValueWithLeftBorder">
-				  	<s:text name="total.hours"><s:param value="target"/></s:text></td>
+				  	<s:text name="report.total.hours"><s:param value="target"/></s:text></td>
 				</s:iterator>
 				<td class="greyTableValueWithLeftBorder">
-					<s:text name="total.hours"><s:param value="totalTarget"/></s:text>
+					<s:text name="report.total.hours"><s:param value="totalTarget"/></s:text>
 	      </td>
 		  </tr>
 		  <tr>
@@ -66,10 +66,10 @@
 				</td>
 				<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
 				  <td class="greyTableValueWithLeftBorder">
-				  	<s:text name="total.hours"><s:param value="difference"/></s:text></td>
+				  	<s:text name="report.total.hours"><s:param value="difference"/></s:text></td>
 				</s:iterator>
 				<td class="tableValueWithLeftBorder">
-					<s:text name="total.hours"><s:param value="totalDifference"/></s:text>
+					<s:text name="report.total.hours"><s:param value="totalDifference"/></s:text>
 				</td>
 		  </tr>
 		  <tr>
@@ -78,10 +78,10 @@
 				</td>
 				<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
 				  <td class="tableValueWithLeftBorder">
-				  	<s:text name="percentage"><s:param value="percentage"/></s:text></td>
+				  	<s:text name="report.percentage"><s:param value="percentage"/></s:text></td>
 				</s:iterator>
 				<td class="greyTableValueWithLeftBorder">
-					<s:text name="percentage"><s:param value="totalPercentage"/></s:text>
+					<s:text name="report.percentage"><s:param value="totalPercentage"/></s:text>
 				</td>
 		  </tr>
 		</table>
