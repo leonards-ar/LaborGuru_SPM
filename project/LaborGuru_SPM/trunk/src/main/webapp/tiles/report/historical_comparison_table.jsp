@@ -51,7 +51,7 @@
 								  </s:text>
                 </td>
 								<td class="cellValue">
-								  <s:text name="report.historicalComparison.percentage">
+								  <s:text name="report.percentage">
 									 <s:param value="percentage" />
 								  </s:text>
                 </td>

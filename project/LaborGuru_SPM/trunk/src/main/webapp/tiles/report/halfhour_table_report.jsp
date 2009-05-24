@@ -38,10 +38,10 @@
 			  <s:text name="report.weeklytotalhours.scheduled.label" />
 			</td>
 			<td class="tableValueWithLeftBorder">
-			  <s:text name="total.hours"><s:param value="totalSchedule"/></s:text></td>
+			  <s:text name="report.total.hours"><s:param value="totalSchedule"/></s:text></td>
 			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
 			  <td class="tableValueWithLeftBorder">
-			  	<s:text name="total.hours"><s:param value="schedule"/></s:text>
+			  	<s:text name="report.total.hours"><s:param value="schedule"/></s:text>
 			  </td>
 			</s:iterator>
 		  </tr>
@@ -50,11 +50,11 @@
 			  <s:text name="report.weeklytotalhours.target.label" />
 			</td>
 			<td class="tableValueWithLeftBorder">
-			  <s:text name="total.hours"><s:param value="totalTarget"/></s:text>
+			  <s:text name="report.total.hours"><s:param value="totalTarget"/></s:text>
 			</td>
 			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
 			  <td class="tableValueWithLeftBorder">
-			  	<s:text name="total.hours"><s:param value="target"/></s:text>
+			  	<s:text name="report.total.hours"><s:param value="target"/></s:text>
 			  </td>
 			</s:iterator>
 		  </tr>
@@ -63,11 +63,11 @@
 			  <s:text name="report.weeklytotalhours.difference.label" />
 			</td>
 			<td class="greyTableValueWithLeftBorder">
-			  <s:text name="total.hours"><s:param value="totalDifference"/></s:text>
+			  <s:text name="report.total.hours"><s:param value="totalDifference"/></s:text>
 			</td>
 			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
 			  <td class="<s:if test="difference < 0">differenceNegativeWithLeftBorder</s:if><s:elseif test="difference > 0">differencePositiveWithLeftBorder</s:elseif><s:else>greyTableValueWithLeftBorder</s:else>">
-			    <s:text name="total.hours"><s:param value="difference"/></s:text>
+			    <s:text name="report.total.hours"><s:param value="difference"/></s:text>
 			  </td>
 			</s:iterator>
 		  </tr>
