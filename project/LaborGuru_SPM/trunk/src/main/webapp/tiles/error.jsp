@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ page import="org.apache.log4j.Logger" %>
 
 <script language="javascript" type="text/javascript">
 </script>
