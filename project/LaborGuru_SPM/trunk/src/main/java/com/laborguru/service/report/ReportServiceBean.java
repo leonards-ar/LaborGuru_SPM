@@ -329,7 +329,7 @@ public class ReportServiceBean implements ReportService {
 	
 	private List<TotalHour> getActualMinimumStaffing(Store store, Date startDate, Date endDate){
 		List<TotalHour> totalHours = new ArrayList<TotalHour>();
-		for(Date date = startDate; !endDate.after(date); date = CalendarUtils.addOrSubstractDays(date,1)){
+		for(Date date = startDate; endDate.after(date); date = CalendarUtils.addOrSubstractDays(date,1)){
 			TotalHour totalhour = new TotalHour();
 			
 			StoreDailyHistoricSalesStaffing saleStaffing = getStaffingService().getDailyHistoricSalesStaffingByDate(store, date);
