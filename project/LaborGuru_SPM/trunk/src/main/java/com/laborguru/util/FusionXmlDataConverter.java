@@ -51,7 +51,9 @@ public class FusionXmlDataConverter {
 		//graph.addAttribute("PYAxisMaxValue", props.getProperty("defaultPYAxisMaxValue"));
 		//graph.addAttribute("SYAxisMaxValue", props.getProperty("defaultSYAxisMaxValue"));
 		graph.addAttribute("PYAxisName", bundle.getString("report.weeklyTotalHour.axisname"));
-		graph.addAttribute("SYAxisName", bundle.getString("report.weeklyTotalHour.axisname"));
+		//graph.addAttribute("SYAxisName", bundle.getString("report.weeklyTotalHour.axisname"));
+		graph.addAttribute("showDivLineSecondaryValue", "0");
+		graph.addAttribute("showSecondaryLimits", "0");
 		graph.addAttribute("showvalues", props.getProperty("showvalues"));
 		graph.addAttribute("numDivLines", props.getProperty("numDivLines"));
 		graph.addAttribute("formatNumberScale", props.getProperty("formatNumberScale"));
@@ -59,6 +61,8 @@ public class FusionXmlDataConverter {
 		graph.addAttribute("anchorSides", props.getProperty("anchorSides"));
 		graph.addAttribute("anchorRadius", props.getProperty("anchorRadius"));
 		graph.addAttribute("anchorBorderColor", props.getProperty("anchorBorderColor"));
+		graph.addAttribute("showYAxisValues","1");
+		
 
 		scheduleDataset.addAttribute("seriesName", bundle.getString(scheduleAxisName));
 		scheduleDataset.addAttribute("color", props.getProperty("scheduleColor"));
@@ -88,9 +92,16 @@ public class FusionXmlDataConverter {
 
 		}
 		
-		BigDecimal deltaMaxValue = new BigDecimal(props.getProperty("deltaMax"));
-		graph.addAttribute("PYAxisMaxValue", (maxValue.equals(SpmConstants.BD_ZERO_VALUE))?props.getProperty("defaultPYAxisMaxValue"):maxValue.add(deltaMaxValue).toPlainString());
-		graph.addAttribute("SYAxisMaxValue", (maxValue.equals(SpmConstants.BD_ZERO_VALUE))?props.getProperty("defaultSYAxisMaxValue"):maxValue.add(deltaMaxValue).toPlainString());
+		BigDecimal defaultMaxValue = new BigDecimal(props.getProperty("defaultPYAxisMaxValue"));
+		if(maxValue.compareTo(defaultMaxValue) > 0) {
+			BigDecimal step = new BigDecimal(props.getProperty("step"));			
+			long graphMaxValue = calculateMaxValue(maxValue.longValue(), step.longValue());
+			graph.addAttribute("PYAxisMaxValue", String.valueOf(graphMaxValue));
+			graph.addAttribute("SYAxisMaxValue", String.valueOf(graphMaxValue));
+		} else {
+			graph.addAttribute("PYAxisMaxValue", props.getProperty("defaultPYAxisMaxValue"));
+			graph.addAttribute("SYAxisMaxValue", props.getProperty("defaultSYAxisMaxValue"));
+		}
 		
 		if (log.isDebugEnabled()) {
 			log.debug(document.asXML());
@@ -115,13 +126,16 @@ public class FusionXmlDataConverter {
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat(props.getProperty("dateFormat"));
 
-		graph.addAttribute("caption", bundle.getString("report.dailyHalfHour.title"));
+		graph.addAttribute("caption", bundle.getString("report.weeklyTotalHours.title"));
 		graph.addAttribute("PYAxisMinValue", props.getProperty("defaultPYAxisMinValue"));
 		graph.addAttribute("SYAxisMinValue", props.getProperty("defaultSYAxisMinValue"));
-//		graph.addAttribute("PYAxisMaxValue", props.getProperty("defaultPYAxisMaxValue"));
-//		graph.addAttribute("SYAxisMaxValue", props.getProperty("defaultSYAxisMaxValue"));
-		graph.addAttribute("PYAxisName", bundle.getString("report.dailyHalfHour.axisname"));
-		graph.addAttribute("SYAxisName", bundle.getString("report.dailyHalfHour.axisname"));
+		graph.addAttribute("showYAxisValue", "0");
+		//graph.addAttribute("PYAxisMaxValue", props.getProperty("defaultPYAxisMaxValue"));
+		//graph.addAttribute("SYAxisMaxValue", props.getProperty("defaultSYAxisMaxValue"));
+		graph.addAttribute("PYAxisName", bundle.getString("report.weeklyTotalHour.axisname"));
+		//graph.addAttribute("SYAxisName", bundle.getString("report.weeklyTotalHour.axisname"));
+		graph.addAttribute("showDivLineSecondaryValue", "0");
+		graph.addAttribute("showSecondaryLimits", "0");
 		graph.addAttribute("showvalues", props.getProperty("showvalues"));
 		graph.addAttribute("numDivLines", props.getProperty("numDivLines"));
 		graph.addAttribute("formatNumberScale", props.getProperty("formatNumberScale"));
@@ -129,6 +143,7 @@ public class FusionXmlDataConverter {
 		graph.addAttribute("anchorSides", props.getProperty("anchorSides"));
 		graph.addAttribute("anchorRadius", props.getProperty("anchorRadius"));
 		graph.addAttribute("anchorBorderColor", props.getProperty("anchorBorderColor"));
+		graph.addAttribute("showYAxisValues","1");
 		graph.addAttribute("rotateNames", "1");
 
 		scheduleDataset.addAttribute("seriesName", bundle.getString("report.dailyHalfHour.series.schedule"));
@@ -159,10 +174,16 @@ public class FusionXmlDataConverter {
 			maxValue = maxValue.max(th.getTarget());
 		}
 
-		BigDecimal deltaMaxValue = new BigDecimal(props.getProperty("deltaMax"));
-		graph.addAttribute("PYAxisMaxValue", (maxValue.equals(SpmConstants.BD_ZERO_VALUE))?props.getProperty("defaultPYAxisMaxValue"):maxValue.add(deltaMaxValue).toPlainString());
-		graph.addAttribute("SYAxisMaxValue", (maxValue.equals(SpmConstants.BD_ZERO_VALUE))?props.getProperty("defaultSYAxisMaxValue"):maxValue.add(deltaMaxValue).toPlainString());
-		
+		BigDecimal defaultMaxValue = new BigDecimal(props.getProperty("defaultPYAxisMaxValue"));
+		if(maxValue.compareTo(defaultMaxValue) > 0) {
+			BigDecimal step = new BigDecimal(props.getProperty("step"));			
+			long graphMaxValue = calculateMaxValue(maxValue.longValue(), step.longValue());
+			graph.addAttribute("PYAxisMaxValue", String.valueOf(graphMaxValue));
+			graph.addAttribute("SYAxisMaxValue", String.valueOf(graphMaxValue));
+		} else {
+			graph.addAttribute("PYAxisMaxValue", props.getProperty("defaultPYAxisMaxValue"));
+			graph.addAttribute("SYAxisMaxValue", props.getProperty("defaultSYAxisMaxValue"));
+		}
 		if (log.isDebugEnabled()) {
 			log.debug(document.asXML());
 		}
@@ -261,5 +282,14 @@ public class FusionXmlDataConverter {
 		this.reportConfigurations = reportConfigurations;
 	}
 
+	/**
+	 * This method returns a max value multiple of step.
+	 * @param maxValue
+	 * @param step
+	 * @return
+	 */
+	private static long calculateMaxValue(long maxValue, long step) {
+		return (maxValue /step) * step + step;
+	}	
 
 }
