@@ -74,5 +74,6 @@ public class NumberUtils {
 	 */
 	public static int getIntegerValue(Integer i) {
 		return i != null ? i.intValue() : 0;
-	}	
+	}
+	
 }

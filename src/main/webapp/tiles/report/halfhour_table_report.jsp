@@ -103,10 +103,10 @@
 						</td>
 						<td>
 							<OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase=http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" width="600" height="350" id="Column3D" >
-						   	<param name="movie" value="<s:url value='/fusionCharts/FCF_MSColumn3DLineDY.swf?chartWidth=600&chartHeight=300' includeParams="none"/>" />
+						   	<param name="movie" value="<s:url value='/fusionCharts/FCF_MSColumn2DLineDY.swf?chartWidth=600&chartHeight=300' includeParams="none"/>" />
 				   			<param name="FlashVars" value="&dataXML=<s:property value="xmlValues"/>">
 				   			<param name="quality" value="high" />
-				   			<embed src="<s:url value='/fusionCharts/FCF_MSColumn3DLineDY.swf?chartWidth=600&chartHeight=300' includeParams="none"/>" flashVars="&dataXML=<s:property value="xmlValues"/>" quality="high" width="600" height="300" name="Column3D" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
+				   			<embed src="<s:url value='/fusionCharts/FCF_MSColumn2DLineDY.swf?chartWidth=600&chartHeight=300' includeParams="none"/>" flashVars="&dataXML=<s:property value="xmlValues"/>" quality="high" width="600" height="300" name="Column3D" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
 							</object>
 						</td>
 					</tr>
