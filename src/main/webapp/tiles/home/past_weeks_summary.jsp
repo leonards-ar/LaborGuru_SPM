@@ -21,7 +21,7 @@
 					<td class="windowTableLabel"><s:text name="home.scheduled.label"/></td>
 					<td class="windowTableLabel"><s:text name="home.volume.label"/></td>
 					<td class="windowTableLabel"><s:text name="home.target.label"/></td>
-					<td class="windowTableLabel"><s:text name="home.scheduled.label"/></td>
+					<td class="windowTableLabel"><s:text name="home.actual.label"/></td>
 				</tr>
 				
 				<tr>
