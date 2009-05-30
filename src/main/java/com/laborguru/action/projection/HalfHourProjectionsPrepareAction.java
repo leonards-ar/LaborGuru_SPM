@@ -73,7 +73,7 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 		Date time = CalendarUtils.displayTimeToDate(halfHour.getHour());
 		OperationTime auxOperationTime = getStoreOperationTime();
 		
-		if (time.before(auxOperationTime.getOpenHour()) || time.after(auxOperationTime.getCloseHour())){
+		if (time.before(auxOperationTime.getOpenHour()) || (time.compareTo(auxOperationTime.getCloseHour()) >= 0)){
 			return (halfHour.getProjectedValue().doubleValue() > 0.00);
 		}
 		
