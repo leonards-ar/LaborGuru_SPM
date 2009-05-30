@@ -170,32 +170,66 @@ public class ProjectionServiceBean implements ProjectionService {
 		//If total avg projections is zero, set all the values with constant distribution.
 		if (totalAvgProjections.doubleValue() > 0.0){
 			for(HalfHourProjection halfHour: avgCalculatedHalfHourList){
-				halfHour.setAdjustedValue(projectionAmount.multiply(halfHour.getAdjustedValue().divide(totalAvgProjections, SpmConstants.DECIMAL_SCALE, SpmConstants.ROUNDING_MODE)));			
+				BigDecimal halfHourWeight = halfHour.getAdjustedValue().divide(totalAvgProjections, SpmConstants.DECIMAL_SCALE, SpmConstants.ROUNDING_MODE);
+				halfHour.setAdjustedValue(projectionAmount.multiply(halfHourWeight));			
 			}
 		}else{
 			//If the avg total is zero we distribute the projection constantly between the store open and close hours.
 			OperationTime operationTime = store.getStoreOperationTimeByDate(selectedDate);
-			DateTime openTime = new DateTime(operationTime.getOpenHour());
-			DateTime closeTime = new DateTime(operationTime.getCloseHour());
 			
-			int sizeListOfHalfHours = ((closeTime.getMinuteOfDay() - openTime.getMinuteOfDay())/SpmConstants.HALF_HOUR);			
+			BigDecimal avgProjectionValue = calculateAvgDistributionValue(operationTime, projectionAmount);
 			
-			BigDecimal numberOfHalfHours = new BigDecimal(sizeListOfHalfHours);
-			BigDecimal valueToSet = projectionAmount.divide(numberOfHalfHours, SpmConstants.DECIMAL_SCALE, SpmConstants.ROUNDING_MODE);
+			Date closeHour = operationTime.getCloseHour();
+			Date openHour = operationTime.getOpenHour();
 			
-			Date openTimeMinusOneDate = openTime.minusMinutes(1).toDate();
-			Date closeTimeDate = closeTime.toDate();
-			
-			for(HalfHourProjection halfHour: avgCalculatedHalfHourList){
-				if (halfHour.getTime().after(openTimeMinusOneDate) && halfHour.getTime().before(closeTimeDate))
-				halfHour.setAdjustedValue(new BigDecimal(valueToSet.toString()));			
-			}			
+			//Setting the values when open and close time are in the same day
+			if (!operationTime.endsTomorrow()){
+				for(HalfHourProjection halfHour: avgCalculatedHalfHourList){
+					if ((halfHour.getTime().compareTo(openHour) >=0) && halfHour.getTime().before(closeHour)){
+						halfHour.setAdjustedValue(new BigDecimal(avgProjectionValue.toString()));	
+					}
+				}
+			}else{			
+				//TODO: The values for the hours that falls in the following day are not set. This is because in projections we
+				//manage the calendar dates and not the operation defined day. Should we moved to the operation day? LOADS of Changes!!!
+				//The workaround is to complete the half hours list for the same day with the values that we were left behind.				
+				for(HalfHourProjection halfHour: avgCalculatedHalfHourList){
+					if ((halfHour.getTime().compareTo(openHour) >=0) || (halfHour.getTime().before(closeHour))){
+						halfHour.setAdjustedValue(new BigDecimal(avgProjectionValue.toString()));	
+					}
+				}
+			}
 		}
 				
 		//TODO:Put an assertion to check that the total is the same to projection amount.
 		return avgCalculatedHalfHourList;
 	}
 
+	
+	/**
+	 * @param operationTime
+	 * @param projectionAmount
+	 * @return
+	 */
+	private BigDecimal calculateAvgDistributionValue(OperationTime operationTime, BigDecimal projectionAmount){
+		DateTime openTime = new DateTime(operationTime.getOpenHour());			
+		DateTime closeTime = new DateTime(operationTime.getCloseHour());
+
+		int minutesOpenTime = openTime.getMinuteOfDay();
+		int minutesCloseTime = closeTime.getMinuteOfDay();
+		
+		//If the close time falls in the following day we have to add a day
+		if (operationTime.endsTomorrow()){
+			minutesCloseTime += SpmConstants.HALF_HOUR * SpmConstants.HALF_HOURS_IN_A_DAY;
+		}
+		
+		int sizeListOfHalfHours = ((minutesCloseTime - minutesOpenTime)/SpmConstants.HALF_HOUR);			
+		
+		BigDecimal numberOfHalfHours = new BigDecimal(sizeListOfHalfHours);
+		BigDecimal valueToSet = projectionAmount.divide(numberOfHalfHours, SpmConstants.DECIMAL_SCALE, SpmConstants.ROUNDING_MODE);
+		
+		return valueToSet;
+	}
 
 	/**
 	 * @param store

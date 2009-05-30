@@ -202,4 +202,15 @@ public class OperationTime extends SpmObject {
 	   	.toString();
 	}
 
+	/**
+	 * Returns whether this instance of operation time is spanned over 2 calendar days. 
+	 * @return
+	 */
+	public boolean endsTomorrow(){
+		if ((getOpenHour() == null) || (getCloseHour() == null)){
+			throw new IllegalArgumentException("openHour or closeHour is null");
+		}
+		
+		return CalendarUtils.equalsOrGreaterTime(getOpenHour(), getCloseHour());
+	}
 }
