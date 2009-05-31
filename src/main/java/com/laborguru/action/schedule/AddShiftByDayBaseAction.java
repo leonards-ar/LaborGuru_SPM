@@ -395,9 +395,9 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 		Date selectedDay = getWeekDaySelector().getSelectedDay();
 		OperationTime operationTime = getOperationTime(selectedDay);
 		if(isMultiDaySchedule(selectedDay)) {
-			return CalendarUtils.smallerTime(time, operationTime.getOpenHour()) && CalendarUtils.greaterTime(time, operationTime.getCloseHour());
+			return CalendarUtils.smallerTime(time, operationTime.getOpenHour()) && CalendarUtils.equalsOrGreaterTime(time, operationTime.getCloseHour());
 		} else {
-			return CalendarUtils.smallerTime(time, operationTime.getOpenHour()) || CalendarUtils.greaterTime(time, operationTime.getCloseHour());
+			return CalendarUtils.smallerTime(time, operationTime.getOpenHour()) || CalendarUtils.equalsOrGreaterTime(time, operationTime.getCloseHour());
 		}
 	}
 	

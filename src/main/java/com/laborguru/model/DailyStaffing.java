@@ -51,9 +51,6 @@ public abstract class DailyStaffing extends SpmObject {
 	
 	private Double totalDailyTarget = new Double(0.0);
 	
-	
-	
-	
 	/**
 	 * 
 	 */
@@ -165,9 +162,6 @@ public abstract class DailyStaffing extends SpmObject {
 	public void setPosition(Position position) {
 		this.position = position;
 	}
-
-
-
 
 	/**
 	 * 
