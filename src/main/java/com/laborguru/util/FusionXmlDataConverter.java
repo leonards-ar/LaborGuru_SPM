@@ -48,10 +48,7 @@ public class FusionXmlDataConverter {
 		graph.addAttribute("caption", bundle.getString("report.weeklyTotalHours.title"));
 		graph.addAttribute("PYAxisMinValue", props.getProperty("defaultPYAxisMinValue"));
 		graph.addAttribute("SYAxisMinValue", props.getProperty("defaultSYAxisMinValue"));
-		//graph.addAttribute("PYAxisMaxValue", props.getProperty("defaultPYAxisMaxValue"));
-		//graph.addAttribute("SYAxisMaxValue", props.getProperty("defaultSYAxisMaxValue"));
 		graph.addAttribute("PYAxisName", bundle.getString("report.weeklyTotalHour.axisname"));
-		//graph.addAttribute("SYAxisName", bundle.getString("report.weeklyTotalHour.axisname"));
 		graph.addAttribute("showDivLineSecondaryValue", "0");
 		graph.addAttribute("showSecondaryLimits", "0");
 		graph.addAttribute("showvalues", props.getProperty("showvalues"));
@@ -126,14 +123,11 @@ public class FusionXmlDataConverter {
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat(props.getProperty("dateFormat"));
 
-		graph.addAttribute("caption", bundle.getString("report.weeklyTotalHours.title"));
+		graph.addAttribute("caption", bundle.getString("report.dailyHalfHour.title"));
 		graph.addAttribute("PYAxisMinValue", props.getProperty("defaultPYAxisMinValue"));
 		graph.addAttribute("SYAxisMinValue", props.getProperty("defaultSYAxisMinValue"));
 		graph.addAttribute("showYAxisValue", "0");
-		//graph.addAttribute("PYAxisMaxValue", props.getProperty("defaultPYAxisMaxValue"));
-		//graph.addAttribute("SYAxisMaxValue", props.getProperty("defaultSYAxisMaxValue"));
 		graph.addAttribute("PYAxisName", bundle.getString("report.weeklyTotalHour.axisname"));
-		//graph.addAttribute("SYAxisName", bundle.getString("report.weeklyTotalHour.axisname"));
 		graph.addAttribute("showDivLineSecondaryValue", "0");
 		graph.addAttribute("showSecondaryLimits", "0");
 		graph.addAttribute("showvalues", props.getProperty("showvalues"));
@@ -283,7 +277,7 @@ public class FusionXmlDataConverter {
 	}
 
 	/**
-	 * This method returns a max value multiple of step.
+	 * This method returns a max value divisible by step.
 	 * @param maxValue
 	 * @param step
 	 * @return
