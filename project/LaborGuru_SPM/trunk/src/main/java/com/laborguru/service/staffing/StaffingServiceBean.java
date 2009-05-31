@@ -232,7 +232,7 @@ public class StaffingServiceBean implements StaffingService {
 				aHalfHourStaffing = calculateHalfHourStaffing(position, date, dailySalesValue.getHalfHourSalesValues().get(i), staffingData.get(i));
 
 				// Only take into account store opperation hours
-				if(CalendarUtils.inRangeIncludingEndTime(aHalfHourStaffing.getTime(), open, close)) {
+				if(CalendarUtils.inRangeNotIncludingEndTime(aHalfHourStaffing.getTime(), open, close)) {
 					//:TODO: Round up Work Content to 2 decimals????
 					totalWorkContent += NumberUtils.getDoubleValue(aHalfHourStaffing.getWorkContent());
 					totalMinimumStaffing += NumberUtils.getIntegerValue(aHalfHourStaffing.getCalculatedStaff());
