@@ -219,7 +219,9 @@ public class StaffingServiceBean implements StaffingService {
 			DailyStaffing dailyStaffing = getDailyStaffingInstance(dailySalesValue);
 			dailyStaffing.setDate(date);
 			dailyStaffing.setPosition(position);
-			dailyStaffing.setStartingTime(position.getStore().getOperationTime(CalendarUtils.getDayOfWeek(date)).getOpenHour());
+			Date open = position.getStore().getOperationTime(CalendarUtils.getDayOfWeek(date)).getOpenHour();
+			Date close = position.getStore().getOperationTime(CalendarUtils.getDayOfWeek(date)).getCloseHour();
+			dailyStaffing.setStartingTime(open);
 			
 			int size = dailySalesValue.getHalfHourSalesValues().size();
 			double totalWorkContent = 0.0;
@@ -228,16 +230,20 @@ public class StaffingServiceBean implements StaffingService {
 			HalfHourStaffing aHalfHourStaffing;
 			for(int i = 0; i < size; i++) {
 				aHalfHourStaffing = calculateHalfHourStaffing(position, date, dailySalesValue.getHalfHourSalesValues().get(i), staffingData.get(i));
-				//:TODO: Round up Work Content to 2 decimals????
-				totalWorkContent += NumberUtils.getDoubleValue(aHalfHourStaffing.getWorkContent());
-				totalMinimumStaffing += NumberUtils.getIntegerValue(aHalfHourStaffing.getCalculatedStaff());
+
+				// Only take into account store opperation hours
+				if(CalendarUtils.inRangeIncludingEndTime(aHalfHourStaffing.getTime(), open, close)) {
+					//:TODO: Round up Work Content to 2 decimals????
+					totalWorkContent += NumberUtils.getDoubleValue(aHalfHourStaffing.getWorkContent());
+					totalMinimumStaffing += NumberUtils.getIntegerValue(aHalfHourStaffing.getCalculatedStaff());
+				}
 				
 				dailyStaffing.addHalfHourStaffing(aHalfHourStaffing);
 			}
 			
 			// Half hours to hours
-			dailyStaffing.setTotalMinimumStaffing(totalMinimumStaffing / 2);
-			dailyStaffing.setTotalWorkContent(totalWorkContent / 2);
+			dailyStaffing.setTotalMinimumStaffing(totalMinimumStaffing);
+			dailyStaffing.setTotalWorkContent(totalWorkContent);
 			
 			calculateDailyTarget(dailyStaffing, position, date, dailySalesValue, initializeDailyStaffingData(position, date, dailySalesValue));
 			
