@@ -36,6 +36,8 @@
 		<db.validationQuery>select 1</db.validationQuery>
 		<db.defaultAutoCommit>false</db.defaultAutoCommit>
 		<db.schema>spm</db.schema>
+		<debug.level>DEBUG</debug.level>
+		<show_sql>true</show_sql>
 	</properties>
 	<profiles>
 		<profile>
@@ -60,6 +62,8 @@
 			<id>development</id>
 			<properties>
 				<db.url>jdbc:mysql://74.228.19.19:3306/spm</db.url>
+				<debug.level>WARN</debug.level>
+				<show_sql>false</show_sql>
 			</properties>
 		</profile>
 		<profile>
@@ -68,6 +72,8 @@
 				<db.url>jdbc:mysql://p3nl50mysql9.secureserver.net:3306/lbss</db.url>
 				<db.username>lbss</db.username>
 				<db.password>Java1234</db.password>
+				<debug.level>WARN</debug.level>
+				<show_sql>false</show_sql>
 			</properties>
 		</profile>		
 		<profile>
@@ -77,6 +83,8 @@
 				<db.username>laborgur_spm</db.username>
 				<db.password>java1234</db.password>
 				<db.schema>laborgur_spm</db.schema>
+				<debug.level>WARN</debug.level>
+				<show_sql>false</show_sql>
 			</properties>
 		</profile>		
 	</profiles>

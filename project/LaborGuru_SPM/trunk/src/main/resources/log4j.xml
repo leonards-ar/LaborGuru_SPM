@@ -72,13 +72,13 @@
 	</logger>
 	
 	<logger name="com.mindpool" additivity="false">
-		<level value="DEBUG"/>
+		<level value="${debug.level}"/>
 		<appender-ref ref="message_append"/>
 		<appender-ref ref="STDOUT"/>
 	</logger>
 
 	<logger name="com.laborguru" additivity="false">
-		<level value="DEBUG"/>
+		<level value="${debug.level}"/>
 		<appender-ref ref="message_append"/>
 		<appender-ref ref="STDOUT"/>
 	</logger>
