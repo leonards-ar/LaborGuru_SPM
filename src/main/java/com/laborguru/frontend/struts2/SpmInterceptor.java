@@ -155,8 +155,12 @@ public class SpmInterceptor implements Interceptor {
 		
 		if(auth instanceof JaasAuthenticationToken) {
 			JaasAuthenticationToken jaasAuth = (JaasAuthenticationToken) auth;
-			Set<Principal> principals = jaasAuth.getLoginContext().getSubject().getPrincipals();
-			principal = principals != null && !principals.isEmpty() ? principals.iterator().next() : null;
+			try {
+				Set<Principal> principals = jaasAuth.getLoginContext().getSubject().getPrincipals();
+				principal = principals != null && !principals.isEmpty() ? principals.iterator().next() : null;
+			} catch(NullPointerException ex) {
+				principal = null;
+			}
 		}
 		
 		if(principal == null) {
