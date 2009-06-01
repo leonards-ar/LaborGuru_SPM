@@ -358,7 +358,7 @@ public class Shift extends SpmObject {
 		OperationTime opTime = getStoreOperationTime();
 		if(CalendarUtils.equalsTime(opTime.getOpenHour(), opTime.getCloseHour())) {
 			// Operation time is the whole day!
-			return CalendarUtils.differenceInHours(getFromHour(), getToHour());
+			return CalendarUtils.differenceInHours(getToHour(), getFromHour());
 		} else {
 			Date from = CalendarUtils.smallerTime(getFromHour(), opTime.getOpenHour()) ? opTime.getOpenHour() : getFromHour();
 			Date to = CalendarUtils.greaterTime(getToHour(), opTime.getCloseHour()) ? opTime.getCloseHour() : getToHour();
