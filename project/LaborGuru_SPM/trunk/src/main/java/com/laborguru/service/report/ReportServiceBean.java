@@ -424,8 +424,11 @@ public class ReportServiceBean implements ReportService {
 	}
 	private List<TotalHour> getMergedHalfHours(Date startHour, Date endHour, List<HalfHourProjection> halfHourProjections, List<TotalHour> schedule, List<TotalHour> target){
 		List <TotalHour> totalHours = new ArrayList<TotalHour>();
+		if(CalendarUtils.equalsTime(startHour, endHour)) {
+			endHour = CalendarUtils.addOrSubstractDays(endHour, 1);
+		}
 		
-		for(Date hour = startHour; !CalendarUtils.equalsTime(hour, endHour); hour = CalendarUtils.addOrSubstractMinutes(hour, 30)) {
+		for(Date hour = startHour; hour.compareTo(endHour) <= 0; hour = CalendarUtils.addOrSubstractMinutes(hour, 30)) {
 			
 			
 			TotalHour totalhour = new TotalHour();
