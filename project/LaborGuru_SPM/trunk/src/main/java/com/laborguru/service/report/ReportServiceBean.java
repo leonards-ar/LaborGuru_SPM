@@ -424,7 +424,12 @@ public class ReportServiceBean implements ReportService {
 	}
 	private List<TotalHour> getMergedHalfHours(Date startHour, Date endHour, List<HalfHourProjection> halfHourProjections, List<TotalHour> schedule, List<TotalHour> target){
 		List <TotalHour> totalHours = new ArrayList<TotalHour>();
-		if(CalendarUtils.equalsTime(startHour, endHour)) {
+		
+		//if start hour is greater or equals than end hour, it means that 
+		//the store opens one day and closes the following date.
+		//So a day should be added to the endHour in order to iterate through
+		//all the hours the store is open.
+		if(CalendarUtils.equalsOrGreaterTime(startHour, endHour)) {
 			endHour = CalendarUtils.addOrSubstractDays(endHour, 1);
 		}
 		
