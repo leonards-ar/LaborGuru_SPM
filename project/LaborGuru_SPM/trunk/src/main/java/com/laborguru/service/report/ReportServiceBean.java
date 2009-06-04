@@ -429,7 +429,7 @@ public class ReportServiceBean implements ReportService {
 		//the store opens one day and closes the following date.
 		//So a day should be added to the endHour in order to iterate through
 		//all the hours the store is open.
-		if(CalendarUtils.equalsOrGreaterTime(startHour, endHour)) {
+		if(startHour.compareTo(endHour) >= 0) {
 			endHour = CalendarUtils.addOrSubstractDays(endHour, 1);
 		}
 		
