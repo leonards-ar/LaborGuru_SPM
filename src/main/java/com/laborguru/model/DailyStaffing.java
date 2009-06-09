@@ -13,6 +13,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.laborguru.util.CalendarUtils;
+import com.laborguru.util.NumberUtils;
 
 /**
  *
@@ -33,15 +34,15 @@ public abstract class DailyStaffing extends SpmObject {
 	
 	private Position position;
 	
-	private Double totalWorkContent = null;
-	private Integer totalMinimumStaffing = null;
+	private Double totalWorkContent = new Double(0.0);
+	private Integer totalMinimumStaffing = new Integer(0);
 	
-	private Double totalVariableFlexible = null;
-	private Double totalVariableOpening = null;
-	private Double fixedFlexible = null;
-	private Double fixedOpening = null;
+	private Double totalVariableFlexible = new Double(0.0);
+	private Double totalVariableOpening = new Double(0.0);
+	private Double fixedFlexible = new Double(0.0);
+	private Double fixedOpening = new Double(0.0);
 	
-	private Double totalServiceHours = null;
+	private Double totalServiceHours = new Double(0.0);
 
 	private Double totalFlexible = new Double(0.0);
 	private Double totalOpening = new Double(0.0);
@@ -264,7 +265,7 @@ public abstract class DailyStaffing extends SpmObject {
 	 * @return the totalWorkContent
 	 */
 	public Double getTotalWorkContent() {
-		if(totalWorkContent == null) {
+		if(!NumberUtils.isValid(totalWorkContent)) {
 			double total = 0.0;
 			
 			for(HalfHourStaffing aHalfHourStaffing : getHalfHourStaffing()) {
@@ -295,7 +296,7 @@ public abstract class DailyStaffing extends SpmObject {
 	 * @return the totalVariableFlexible
 	 */
 	public Double getTotalVariableFlexible() {
-		if(totalVariableFlexible == null) {
+		if(!NumberUtils.isValid(totalVariableFlexible)) {
 			setTotalVariableFlexible(new Double(0.0));
 		}
 		return totalVariableFlexible;
@@ -312,7 +313,7 @@ public abstract class DailyStaffing extends SpmObject {
 	 * @return the totalVariableOpening
 	 */
 	public Double getTotalVariableOpening() {
-		if(totalVariableOpening == null) {
+		if(!NumberUtils.isValid(totalVariableOpening)) {
 			setTotalVariableOpening(new Double(0.0));
 		}
 		return totalVariableOpening;
@@ -329,7 +330,7 @@ public abstract class DailyStaffing extends SpmObject {
 	 * @return the totalServiceHours
 	 */
 	public Double getTotalServiceHours() {
-		if(totalServiceHours == null) {
+		if(!NumberUtils.isValid(totalServiceHours)) {
 			setTotalServiceHours(new Double(0.0));
 		}
 		return totalServiceHours;
@@ -346,7 +347,7 @@ public abstract class DailyStaffing extends SpmObject {
 	 * @return the totalFlexible
 	 */
 	public Double getTotalFlexible() {
-		if(totalFlexible == null) {
+		if(!NumberUtils.isValid(totalFlexible)) {
 			setTotalFlexible(new Double(0.0));
 		}
 		return totalFlexible;
@@ -363,7 +364,7 @@ public abstract class DailyStaffing extends SpmObject {
 	 * @return the totalOpening
 	 */
 	public Double getTotalOpening() {
-		if(totalOpening == null) {
+		if(!NumberUtils.isValid(totalOpening)) {
 			setTotalOpening(new Double(0.0));
 		}
 		return totalOpening;
@@ -380,6 +381,9 @@ public abstract class DailyStaffing extends SpmObject {
 	 * @return the totalDailyTarget
 	 */
 	public Double getTotalDailyTarget() {
+		if(!NumberUtils.isValid(totalDailyTarget)) {
+			setTotalDailyTarget(new Double(0.0));
+		}		
 		return totalDailyTarget;
 	}
 
@@ -394,14 +398,14 @@ public abstract class DailyStaffing extends SpmObject {
 	 * @return the totalMinimumStaffing
 	 */
 	public Integer getTotalMinimumStaffing() {
-		if(totalMinimumStaffing == null) {
+		if(!NumberUtils.isValid(totalMinimumStaffing)) {
 			int total = 0;
 			
 			for(HalfHourStaffing aHalfHourStaffing : getHalfHourStaffing()) {
 				total += aHalfHourStaffing.getCalculatedStaff().intValue();
 			}
 			// Half hours to hours
-			totalMinimumStaffing = new Integer(total / 2);			
+			totalMinimumStaffing = new Integer(total);			
 		}
 		return totalMinimumStaffing;
 	}
@@ -431,6 +435,9 @@ public abstract class DailyStaffing extends SpmObject {
 	 * @return the fixedOpening
 	 */
 	public Double getFixedOpening() {
+		if(!NumberUtils.isValid(fixedOpening)) {
+			setFixedOpening(new Double(0.0));
+		}		
 		return fixedOpening;
 	}
 
@@ -445,7 +452,7 @@ public abstract class DailyStaffing extends SpmObject {
 	 * @return the fixedPostRush
 	 */
 	public Double getFixedPostRush() {
-		if(fixedPostRush == null) {
+		if(!NumberUtils.isValid(fixedPostRush)) {
 			setFixedPostRush(new Double(0.0));
 		}
 		return fixedPostRush;
@@ -462,7 +469,7 @@ public abstract class DailyStaffing extends SpmObject {
 	 * @return the fixedClosing
 	 */
 	public Double getFixedClosing() {
-		if(fixedClosing == null) {
+		if(!NumberUtils.isValid(fixedClosing)) {
 			setFixedClosing(new Double(0.0));
 		}
 		return fixedClosing;

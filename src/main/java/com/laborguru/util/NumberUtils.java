@@ -76,4 +76,22 @@ public class NumberUtils {
 		return i != null ? i.intValue() : 0;
 	}
 	
+	/**
+	 * 
+	 * @param d
+	 * @return
+	 */
+	public static boolean isValid(Double d) {
+		return d != null && !d.isNaN() && !d.isInfinite();
+	}
+
+	/**
+	 * 
+	 * @param i
+	 * @return
+	 */
+	public static boolean isValid(Integer i) {
+		return i != null;
+	}
+	
 }
