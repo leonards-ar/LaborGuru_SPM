@@ -329,7 +329,7 @@ public class StaffingServiceBean implements StaffingService {
 	 */
 	private void setTotalFlexible(DailyStaffing dailyStaffing, Position position) {
 		double totalService = NumberUtils.getDoubleValue(dailyStaffing.getTotalServiceHours());
-		double diffWorkContentService = totalService - (NumberUtils.getDoubleValue(dailyStaffing.getTotalWorkContent()) / 2);
+		double diffWorkContentService = totalService - NumberUtils.getDoubleValue(dailyStaffing.getTotalHourWorkContent());
 
 		double totalFlexible = NumberUtils.getDoubleValue(dailyStaffing.getTotalVariableFlexible()) + NumberUtils.getDoubleValue(dailyStaffing.getFixedFlexible());
 
