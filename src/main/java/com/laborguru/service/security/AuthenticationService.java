@@ -3,17 +3,17 @@ package com.laborguru.service.security;
 import java.security.Principal;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
 
 import com.laborguru.exception.SpmCheckedException;
-import com.laborguru.logger.DefaultSpmLogger;
 import com.laborguru.model.User;
 import com.laborguru.service.user.UserService;
 import com.mindpool.security.service.UserAuthenticationService;
 
 public class AuthenticationService implements UserAuthenticationService {
 
-	private static final DefaultSpmLogger log = DefaultSpmLogger.getInstance();
+	private static final Logger log = Logger.getLogger(AuthenticationService.class);
 
 	private static final int MAX_LOGIN_TRIES = 3;
 
@@ -35,7 +35,7 @@ public class AuthenticationService implements UserAuthenticationService {
 		try {
 			user = service.getUserByUserName(user);
 		} catch (DataAccessException e) {
-			log.errorLog("Error trying to get user...", e);
+			log.error("Error trying to get user [" + user.getUserName() + "]", e);
 			return null;
 		}
 
@@ -59,7 +59,7 @@ public class AuthenticationService implements UserAuthenticationService {
 			try {
 			service.save(user);
 			} catch(SpmCheckedException e){
-				log.errorLog("Error trying to save user.");
+				log.error("Error trying to save user [" + user + "]", e);
 			}
 		} else {
 			reason = UserAuthenticationService.UNKNOWN_USER_ERROR;
@@ -69,10 +69,19 @@ public class AuthenticationService implements UserAuthenticationService {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 * @see com.mindpool.security.service.UserAuthenticationService#getReason()
+	 */
 	public String getReason() {
 		return reason;
 	}
 	
+	/**
+	 * 
+	 * @param loginTries
+	 */
 	public void setLoginTries(int loginTries){
 		this.loginTries = loginTries;
 	}
