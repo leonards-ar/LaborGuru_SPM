@@ -3,9 +3,10 @@ package com.laborguru.service.employee;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.SpmCheckedException;
-import com.laborguru.logger.DefaultSpmLogger;
 import com.laborguru.model.Customer;
 import com.laborguru.model.Employee;
 import com.laborguru.model.Store;
@@ -16,7 +17,7 @@ import com.laborguru.service.user.dao.UserDao;
 
 public class EmployeeServiceBean implements EmployeeService {
 
-	private static final DefaultSpmLogger spmLog = DefaultSpmLogger.getInstance();
+	private static final Logger log = Logger.getLogger(EmployeeServiceBean.class);
 	
 	EmployeeDao employeeDao;
 	UserDao userDao;
@@ -26,7 +27,7 @@ public class EmployeeServiceBean implements EmployeeService {
 	 */
 	public void delete(Employee employee) {
 		if(employee == null) {
-			spmLog.errorLog("error.null.param", new Object[]{"employee"});
+			log.error("Employee passed as parameter is null");
 			throw new IllegalArgumentException("param is null");
 		}
 		employeeDao.delete(employee);
@@ -38,7 +39,7 @@ public class EmployeeServiceBean implements EmployeeService {
 	 */
 	public Employee getEmployeeById(Employee employee) {
 		if(employee == null) {
-			spmLog.errorLog("error.null.param", new Object[]{"employee"});
+			log.error("Employee passed as parameter is null");
 			throw new IllegalArgumentException("param is null");
 		}
 		return employeeDao.getEmployeeById(employee);
@@ -50,7 +51,7 @@ public class EmployeeServiceBean implements EmployeeService {
 	public List<Employee> getEmployeesByStore(Store store) {
 
 		if(store == null) {
-			spmLog.errorLog("error.null.param", new Object[]{"store"});
+			log.error("Store passed as parameter is null");
 			throw new IllegalArgumentException("param is null");
 		}
 		List<Employee> employees = employeeDao.getEmployeesByStore(store);
@@ -67,15 +68,15 @@ public class EmployeeServiceBean implements EmployeeService {
 		
 		if(employee == null) 
 		{
-			spmLog.errorLog("Employee passed in as parameter is null");
+			log.error("Employee passed in as parameter is null");
 			throw new IllegalArgumentException("Employee passed in as parameter is null");				
 		}
 		
-		spmLog.debugLog("before save employee:"+ employee);
+		log.debug("before save employee:"+ employee);
 
 		retEmployee = employee.getId()!= null? update(employee):create(employee);
 
-		spmLog.debugLog("after save employee:"+ retEmployee);
+		log.debug("after save employee:"+ retEmployee);
 		
 		return retEmployee;
 	}
@@ -89,7 +90,7 @@ public class EmployeeServiceBean implements EmployeeService {
 		if (userDao.existUser(employee.getUserName()))
 		{
 			String exMgs = "username: "+ employee.getUserName()+" already exist in the database";
-			spmLog.errorLog(exMgs);
+			log.error(exMgs);
 			throw new SpmCheckedException(exMgs, ErrorEnum.USERNAME_ALREADY_EXIST_ERROR, new String[]{employee.getUserName()});
 		}
 		employee.setCreationDate(new Date());
@@ -107,7 +108,7 @@ public class EmployeeServiceBean implements EmployeeService {
 		if ((auxUser != null) && !auxUser.getId().equals(employee.getId()))
 		{
 			String exMgs = "username: "+ employee.getUserName()+" already exist in the database";
-			spmLog.errorLog(exMgs);
+			log.error(exMgs);
 			throw new SpmCheckedException(exMgs, ErrorEnum.USERNAME_ALREADY_EXIST_ERROR, new String[]{employee.getUserName()});
 			
 		}
@@ -156,7 +157,7 @@ public class EmployeeServiceBean implements EmployeeService {
 	public List<Employee> filterEmployee(SearchEmployeeFilter searchEmployee) {
 		
 		if(searchEmployee == null) {
-			spmLog.errorLog("The filter passed as parameter is null");
+			log.error("The filter passed as parameter is null");
 			throw new IllegalArgumentException("The filter passed as parameter is null");
 		}
 		
