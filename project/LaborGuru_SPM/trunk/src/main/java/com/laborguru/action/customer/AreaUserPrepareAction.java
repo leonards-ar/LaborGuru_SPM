@@ -4,9 +4,6 @@ import java.util.List;
 
 import com.laborguru.model.Area;
 import com.laborguru.model.AreaUser;
-import com.laborguru.model.Area;
-import com.laborguru.model.Customer;
-import com.laborguru.model.CustomerUser;
 import com.laborguru.model.Manager;
 import com.laborguru.service.area.AreaService;
 import com.opensymphony.xwork2.Preparable;

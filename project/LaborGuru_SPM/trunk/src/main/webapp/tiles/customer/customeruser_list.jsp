@@ -1,8 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
-<br />
-<br />
 <table border="0" cellspacing="0" align="center">
 	<tr>
 		<td>&nbsp;</td>
@@ -53,7 +51,8 @@
     <tr>
      <td align="right">
      <s:form theme="simple">
-       <s:hidden name="storeId" theme="simple"/>
+	   <s:hidden name="paramId" theme="simple"/>
+       
        <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0"><tr>
        <td>
          <s:submit action="%{getText(actionName)}_add" key="employee.create.button" theme="simple" cssClass="button"/>

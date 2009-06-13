@@ -47,11 +47,13 @@ public class CustomerUserPrepareAction extends ManagerBaseAction implements Prep
 	protected void setExtraInformation() {
 		if(getParamId() != null) {
 			loadCustomer();
-		} else {
+		} else if (getManager() != null){
 			setCustomer(((CustomerUser)getManager()).getCustomer());
 		}
-		setParamId(getCustomer().getId());
 		
+		if(getCustomer() != null) {
+			setParamId(getCustomer().getId());
+		}
 	}
 
 	protected Manager getUserById() {

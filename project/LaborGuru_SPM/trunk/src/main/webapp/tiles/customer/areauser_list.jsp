@@ -1,8 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
-<br />
-<br />
+
 <table border="0" cellspacing="0" align="center">
 	<tr>
 		<td>&nbsp;</td>
