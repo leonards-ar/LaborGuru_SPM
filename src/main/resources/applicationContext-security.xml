@@ -122,6 +122,12 @@
 				/security/accessdenied.action=HOME_ACCESS
 				
 				/schedule/addshiftbyemployee_edit.action=ADD_SHIFT
+				/schedule/addshiftbyemployeebyposition_*.action=ADD_SHIFT
+				/schedule/addweeklyshiftbyemployee_*.action=ADD_SHIFT
+				/schedule/addweeklyshiftbyposition_*.action=ADD_SHIFT
+				/schedule/printweeklyshiftbyposition_*.action=PRINT_SHIFT
+				/schedule/printweeklytotalhoursbyposition_*.action=PRINT_SHIFT
+				/schedule/printweeklyshiftbreaks_*.action=PRINT_SHIFT
 				
 				/store/store_list.action=VIEW_STORE,EDIT_STORE,CREATE_STORE,REMOVE_STORE,ADD_EMPLOYEE_STORE,LIST_EMPLOYEE_STORE
 				/store/store_add.action=CREATE_STORE
