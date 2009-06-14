@@ -21,7 +21,7 @@ import com.laborguru.service.menu.dao.MenuDao;
  *
  */
 public class MenuServiceBean implements MenuService {
-	private static final Map<Profile, Menu> MENU_CACHE = new HashMap<Profile, Menu>();
+	private static final Map<String, Menu> MENU_CACHE = new HashMap<String, Menu>();
 	
 	private MenuDao menuDao;
 
@@ -52,13 +52,16 @@ public class MenuServiceBean implements MenuService {
 	public Menu getMenuFor(User user) {
 		/*
 		 * :TODO: Must support multiple profiles per user!
+		 * :TODO: Use ehcache for the MENU_CACHE so it can be refreshed
 		 */
-		Menu menu = MENU_CACHE.get(user.getProfiles().iterator().next());
+		String pk = getPrimaryKey(user.getProfiles());
+		Menu menu = MENU_CACHE.get(pk);
 		if(menu == null) {
 			List<MenuItem> completeMenu = getMenuDao().getMenu();
 			removeNotAllowedMenuItems(completeMenu, user.getProfiles());
 			menu = new Menu();
 			menu.setItems(completeMenu);
+			MENU_CACHE.put(pk, menu);
 		}
 		return menu;
 	}
@@ -86,5 +89,13 @@ public class MenuServiceBean implements MenuService {
 			}
 			menuItems.removeAll(itemsToRemove);
 		}
+	}
+	
+	private String getPrimaryKey(Set<Profile> profiles) {
+		StringBuilder primaryKey = new StringBuilder();
+		for(Profile profile: profiles){
+			primaryKey.append(profile.getId());
+		}
+		return primaryKey.toString();
 	}
 }

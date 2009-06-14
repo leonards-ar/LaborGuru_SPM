@@ -21,7 +21,7 @@
 								<td class="availableMenuItem"
 									onmouseover="className='availableMenuItemOver'"
 									onmouseout="className='availableMenuItem'">
-									<a onclick="return showWaitSplash();" href="<s:url value="%{target}" includeParams="none"><s:param name="menuItemIndex" value="#itCtx.index" /></s:url>"
+									<a onclick="return showWaitSplash();" href="<s:url value="%{menuTarget}" includeParams="none"><s:param name="menuItemIndex" value="#itCtx.index" /></s:url>"
 									class="availableMenuItemAnchor"><s:text name="%{labelKey}"/></a></td>						
 								</s:else>
 								<s:if test="!#itCtx.last">
@@ -59,10 +59,10 @@
 						<tr>
 						<s:iterator value="#session.spmMenu.selectedItem.orderedChildMenuItems" status="itCtx">
 							<s:if test="#session.spmMenu.selectedSubItemIndex == #itCtx.index">
-							<td class="selectedSubMenuItem"><a onclick="return showWaitSplash();" href="<s:url value="%{target}" includeParams="none"><s:param name="subMenuItemIndex" value="#itCtx.index" /></s:url>" class="subMenuSelectedItemAnchor"><s:text name="%{labelKey}"/></a></td>
+							<td class="selectedSubMenuItem"><a onclick="return showWaitSplash();" href="<s:url value="%{menuTarget}" includeParams="none"><s:param name="subMenuItemIndex" value="#itCtx.index" /></s:url>" class="subMenuSelectedItemAnchor"><s:text name="%{labelKey}"/></a></td>
 							</s:if>
 							<s:else>
-							<td class="subMenuItem"><a onclick="return showWaitSplash();" href="<s:url value="%{target}" includeParams="none"><s:param name="subMenuItemIndex" value="#itCtx.index" /></s:url>" class="subMenuItemAnchor"><s:text name="%{labelKey}"/></a></td>
+							<td class="subMenuItem"><a onclick="return showWaitSplash();" href="<s:url value="%{menuTarget}" includeParams="none"><s:param name="subMenuItemIndex" value="#itCtx.index" /></s:url>" class="subMenuItemAnchor"><s:text name="%{labelKey}"/></a></td>
 							</s:else>
 							<s:if test="!#itCtx.last">
 							<td>|</td>

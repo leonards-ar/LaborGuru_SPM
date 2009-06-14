@@ -199,4 +199,12 @@ public class MenuItem extends SpmObject {
 		childMenuItem.setParentMenuItem(this);
 		getChildMenuItems().add(childMenuItem);
 	}
+	
+	public String getMenuTarget() {
+		
+		if(target == null) {
+			return getOrderedChildMenuItems().get(0).target;
+		}
+		return target;
+	}
 }
