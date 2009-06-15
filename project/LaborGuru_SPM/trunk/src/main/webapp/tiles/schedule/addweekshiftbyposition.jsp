@@ -255,6 +255,7 @@
 					    		</s:else>
 				    		</s:if>
 				    		<s:else>
+				    		<s:hidden name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].positionId"/>						
 				    		<s:property value="#dataRow.positionName"/>
 				    		</s:else>
 				    		<s:hidden name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].positionName"/>						
