@@ -270,6 +270,7 @@
 				    		</s:if>
 				    		<s:else>
 				    		<s:property value="#dataRow.positionName"/>
+				    		<s:hidden name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].positionId"/>						
 				    		</s:else>
 				    		<s:hidden name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].positionName"/>						
 						</td>    
