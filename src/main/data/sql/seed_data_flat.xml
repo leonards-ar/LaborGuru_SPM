@@ -156,6 +156,7 @@
   <tbl_profiles_permissions profile_id="2" permission_id="12"/><!-- Edit Projections -->
   <tbl_profiles_permissions profile_id="2" permission_id="13"/><!-- Edit Half Hour Projections -->
   <tbl_profiles_permissions profile_id="2" permission_id="14"/><!-- Edit Projections Settings-->
+  <tbl_profiles_permissions profile_id="2" permission_id="42"/><!-- See Shift Main Menu -->
   <tbl_profiles_permissions profile_id="2" permission_id="15"/><!-- Add shift (TODO only see shifts) -->
   <tbl_profiles_permissions profile_id="2" permission_id="41"/><!-- Print shift -->
   <tbl_profiles_permissions profile_id="2" permission_id="19"/><!-- Reports -->
