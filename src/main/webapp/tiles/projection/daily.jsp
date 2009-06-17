@@ -133,6 +133,7 @@
                     			<!-- End Daily Projection -->
                     		</td>
 		                </tr>
+						<s:if test="%{getAllowToSaveWeek()}">
 		 		       	<tr class="editFormOddRow">
 							<td width="100%" align="left">
 								<table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
@@ -154,6 +155,7 @@
 			                    </table>                    
 		                    </td>
 		                </tr>
+						</s:if>
               		</table>
 	              </td>
               </tr>
