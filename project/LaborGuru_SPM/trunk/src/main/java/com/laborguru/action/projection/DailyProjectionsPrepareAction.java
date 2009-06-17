@@ -29,7 +29,10 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	
 	private BigDecimal totalProjected = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
 	private BigDecimal totalAdjusted = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
-		
+
+	//Flag that indicates wheter the projections view allows to save a new projection to the user.
+	//By default is true, the value is set in setupDailyProjectionData()
+	private Boolean allowToSaveWeek = true;
 	
 	/**
 	 * Prepare the data to be used on the edit page
@@ -78,6 +81,7 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 		setTotalProjected(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
 		
 		getDailyProjections().clear();
+		setAllowToSaveWeek(true);
 	}
 		
 	
@@ -127,12 +131,18 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 
 				
 		// calculate and set the total
+		boolean shouldAllowSave = false;
 		for (DailyProjectionElement projection : getDailyProjections()) {
 			this.totalProjected = totalProjected.add(projection.getCalculatedProjection());
 			this.totalAdjusted = totalAdjusted.add(projection.getAdjustedProjection());
-
+			
+			//If any of the projections for the weeks is editable 
+			//so the page should render the save/calculate bottom
+			if (!shouldAllowSave && projection.getEditable()){
+				shouldAllowSave = true;
+			}
 		}
-
+		setAllowToSaveWeek(shouldAllowSave);
 	}
 
 	/**
@@ -211,5 +221,19 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	 */
 	public void setDailyProjections(List<DailyProjectionElement> dailyProjections) {
 		this.dailyProjections = dailyProjections;
+	}
+
+	/**
+	 * @return the allowToSave
+	 */
+	public Boolean getAllowToSaveWeek() {
+		return allowToSaveWeek;
+	}
+
+	/**
+	 * @param allowToSave the allowToSave to set
+	 */
+	public void setAllowToSaveWeek(Boolean allowToSave) {
+		this.allowToSaveWeek = allowToSave;
 	}
 }
