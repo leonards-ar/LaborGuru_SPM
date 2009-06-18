@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="home" namespace="/home" extends="spm-default">
+		<action name="home" class="com.laborguru.action.home.HomeAction">
+			<result name="employee" type="redirectAction">employee_home</result>
+			<result name="administrator" type="redirectAction">admin_home</result>
+			<result name="success" type="tiles">homePage</result>			
+		</action>	
+
+		<action name="employee_home" class="com.laborguru.action.home.EmployeeHomeAction">
+			<result name="success" type="tiles">employeeHomePage</result>			
+		</action>	
+
+		<action name="showPastWeeksSummary" class="com.laborguru.action.home.ShowPastWeeksSummaryAction">
+			<result name="success">/tiles/home/past_weeks_summary.jsp</result>		
+		</action>
+
+		<action name="showCurrentNextWeeksSummary" class="com.laborguru.action.home.ShowCurrentNextWeeksSummaryAction">
+			<result name="success">/tiles/home/current_next_weeks_summary.jsp</result>		
+		</action>
+
+		<action name="showCurrentWeekPositionSummary" class="com.laborguru.action.home.ShowCurrentWeekPositionSummaryAction">
+			<result name="success">/tiles/home/current_week_position_summary.jsp</result>		
+		</action>
+				
+		<action name="admin_home" class="com.laborguru.action.home.AdministratorHomeAction">
+			<result name="success" type="tiles">adminHomePage</result>			
+		</action>	
+			
+	</package>
+</struts>
