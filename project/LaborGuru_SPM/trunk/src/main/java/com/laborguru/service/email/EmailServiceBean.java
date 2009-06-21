@@ -7,6 +7,8 @@ package com.laborguru.service.email;
 
 import java.util.Date;
 
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.log4j.Logger;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
@@ -18,8 +20,11 @@ import org.springframework.mail.javamail.JavaMailSender;
  *
  */
 public class EmailServiceBean implements EmailService {
+	private static final Logger log = Logger.getLogger(EmailServiceBean.class);
+
 	private JavaMailSender mailSender;
 	private SimpleMailMessage mailMessage;
+	private boolean enabled;
 	
 	/**
 	 * 
@@ -35,18 +40,48 @@ public class EmailServiceBean implements EmailService {
 	 * @see com.laborguru.service.email.EmailService#sendEmail(java.lang.String[], java.lang.String[], java.lang.String, java.lang.String)
 	 */
 	public void sendEmail(String[] to, String[] cc, String subject, String body) {
-		SimpleMailMessage msg = new SimpleMailMessage(getMailMessage());
-		msg.setTo(to);
-		if(cc != null) {
-			msg.setCc(cc);
+		if(isEnabled()) {
+			SimpleMailMessage msg = new SimpleMailMessage(getMailMessage());
+			msg.setTo(to);
+			if(cc != null) {
+				msg.setCc(cc);
+			}
+			msg.setSubject(subject);
+			msg.setText(body);
+			msg.setSentDate(new Date());
+			
+			if(log.isDebugEnabled()) {
+				log.debug("About to send message [" + printMessage(msg) + "]");
+			}
+			
+			getMailSender().send(msg);
+			
+			if(log.isDebugEnabled()) {
+				log.debug("Message [" + printMessage(msg) + "] sent");
+			}
+		} else {
+			log.warn("Email Service is disabled. Check configuration.");
 		}
-		msg.setSubject(subject);
-		msg.setText(body);
-		msg.setSentDate(new Date());
-		
-		getMailSender().send(msg);
 	}
 
+	/**
+	 * 
+	 * @param msg
+	 * @return
+	 */
+	private String printMessage(SimpleMailMessage msg) {
+		if(msg != null) {
+			try {
+				return ReflectionToStringBuilder.toString(msg);
+			} catch(Throwable ex) {
+				log.error("Error in reflection to string builder", ex);
+				return msg.toString();
+			}
+		} else {
+			return null;
+		}
+	}
+	
 	/**
 	 * @return the mailSender
 	 */
@@ -73,6 +108,20 @@ public class EmailServiceBean implements EmailService {
 	 */
 	public void setMailMessage(SimpleMailMessage mailMessage) {
 		this.mailMessage = mailMessage;
+	}
+
+	/**
+	 * @return the enabled
+	 */
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	/**
+	 * @param enabled the enabled to set
+	 */
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 }
