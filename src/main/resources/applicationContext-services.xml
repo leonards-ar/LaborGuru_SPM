@@ -466,6 +466,7 @@
  	<bean id="emailService" class="com.laborguru.service.email.EmailServiceBean" autowire="byType">
  		<property name="mailSender" ref="mailSender"/>
  		<property name="mailMessage" ref="mailMessage"/>
+ 		<property name="enabled" value="true"/>
  	</bean>
 	
 </beans>
