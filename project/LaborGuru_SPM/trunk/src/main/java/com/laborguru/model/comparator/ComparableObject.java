@@ -9,6 +9,9 @@ package com.laborguru.model.comparator;
  *
  */
 public interface ComparableObject {
-
+	/**
+	 * 
+	 * @return
+	 */
 	public Integer getId();
 }

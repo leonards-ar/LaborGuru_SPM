@@ -276,6 +276,8 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 		
 		getScheduleData().add(newRow);
 		
+		sortScheduleRows(getScheduleData());
+		
 		setNewEmployeeId(null);
 		setNewEmployeeName(null);
 		setNewEmployeePositionId(null);

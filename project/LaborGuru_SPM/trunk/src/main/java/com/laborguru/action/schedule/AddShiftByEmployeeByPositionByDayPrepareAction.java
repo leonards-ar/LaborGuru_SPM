@@ -238,6 +238,8 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftByDa
 			
 			entry.getScheduleData().add(newRow);
 			
+			sortScheduleRows(entry.getScheduleData());
+			
 			entry.setNewEmployeeId(null);
 			entry.setNewEmployeeName(null);
 			entry.setNewEmployeePositionId(null);
