@@ -16,7 +16,7 @@ import java.util.List;
  * @since SPM 1.0
  *
  */
-public class WeeklyScheduleRow implements Serializable {
+public class WeeklyScheduleRow implements Serializable, Comparable<WeeklyScheduleRow> {
 	/**
 	 * 
 	 */
@@ -226,6 +226,24 @@ public class WeeklyScheduleRow implements Serializable {
 	public void updateEntries() {
 		for(WeeklyScheduleDailyEntry entry : getWeeklySchedule()) {
 			entry.setRow(this);
+		}
+	}
+
+	/**
+	 * 
+	 * @param object
+	 * @return
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	public int compareTo(WeeklyScheduleRow object) {
+		if (object == null){
+			return 1;
+		}
+
+		if(getEmployeeName() != null) {
+			return object.getEmployeeName() != null ? getEmployeeName().compareToIgnoreCase(object.getEmployeeName()) : 1;
+		} else {
+			return object.getEmployeeName() != null ? -1 : 0;
 		}
 	}
 }

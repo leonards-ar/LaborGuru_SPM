@@ -11,7 +11,7 @@
 <s:form id="addweeklyshiftbyemployee_form" name="addweeklyshiftbyemployee_form" action="addweeklyshiftbyemployee_save" theme="simple">
 	<s:hidden id="selectedDate" name="selectedDate"/>
 	<s:hidden id="selectedWeekDay" name="selectedWeekDay"/>
-	<s:hidden id="dailyVolume" name="dailyVolume"/>
+	<s:hidden id="weeklyVolume" name="weeklyVolume"/>
 	
 	<table border="0" cellspacing="0" align="center">
 		<tr>
