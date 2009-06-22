@@ -84,7 +84,7 @@ public class ForgotPasswordAction extends SpmAction {
 		try {
 			String to = user.getEmail();
 			String subject = getText("login.forgot_password.email.subject", new String[] {user.getFullName(), user.getUserName()});
-			String body = getText("login.forgot_password.email.body", new String[] {user.getFullName(), user.getUserName(), user.getPassword(), getRemoteAddress()});
+			String body = getText("login.forgot_password.email.body", new String[] {user.getName(), user.getSurname(), user.getFullName(), user.getUserName(), user.getPassword(), getRemoteAddress()});
 			getEmailService().sendEmail(new String[]{to}, null, subject, body);
 		} catch(Throwable ex) {
 			log.error("Cannot send new password to user [" + user.getUserName() + "]", ex);
