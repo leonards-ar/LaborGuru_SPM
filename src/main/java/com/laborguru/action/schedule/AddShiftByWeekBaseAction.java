@@ -124,8 +124,8 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 				}
 			}			
 		}
+		getWeeklyScheduleData().sort();
 	}
-
 	
 	/**
 	 * 
@@ -887,6 +887,8 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		
 		getWeeklyScheduleData().addScheduleRow(getAddEmployeeGroupById(), newRow);
 
+		getWeeklyScheduleData().sort();
+		
 		setNewEmployeeId(null);
 		setNewEmployeeName(null);
 		setNewEmployeePositionId(null);

@@ -118,7 +118,7 @@ public class PrintShiftBreaksByWeekPrepareAction extends PrintShiftBaseAction {
 			employees.addAll(schedule.getScheduleEmployeesBreaks());
 		}
 		
-		return new ArrayList<Employee>(employees);		
+		return sortEmployees(new ArrayList<Employee>(employees));		
 	}
 	
 	/**

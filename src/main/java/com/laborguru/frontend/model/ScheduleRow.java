@@ -17,7 +17,7 @@ import com.laborguru.util.SpmConstants;
  * @since SPM 1.0
  *
  */
-public class ScheduleRow implements Serializable {
+public class ScheduleRow implements Serializable, Comparable<ScheduleRow> {
 
 	/**
 	 * 
@@ -266,6 +266,24 @@ public class ScheduleRow implements Serializable {
 	 */
 	public void setEmployeeMaxHoursDay(Integer employeeMaxHoursDay) {
 		this.employeeMaxHoursDay = employeeMaxHoursDay;
+	}
+	
+	/**
+	 * 
+	 * @param object
+	 * @return
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	public int compareTo(ScheduleRow object) {
+		if (object == null){
+			return 1;
+		}
+
+		if(getEmployeeName() != null) {
+			return object.getEmployeeName() != null ? getEmployeeName().compareToIgnoreCase(object.getEmployeeName()) : 1;
+		} else {
+			return object.getEmployeeName() != null ? -1 : 0;
+		}
 	}
 	
 }

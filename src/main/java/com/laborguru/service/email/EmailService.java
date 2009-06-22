@@ -14,5 +14,12 @@ package com.laborguru.service.email;
  */
 public interface EmailService {
 
+	/**
+	 * 
+	 * @param to
+	 * @param cc
+	 * @param subject
+	 * @param body
+	 */
 	void sendEmail(String[] to, String[] cc, String subject, String body);
 }
