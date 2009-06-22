@@ -7,6 +7,7 @@ package com.laborguru.frontend.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -110,7 +111,7 @@ public class WeeklyScheduleData implements Serializable {
 			getIndexedScheduleData().put(groupById, data);
 		}
 		data.add(row);
-		//:TODO: Sort???
+
 		resetScheduleData();
 	}
 	
@@ -220,5 +221,14 @@ public class WeeklyScheduleData implements Serializable {
 		}
 		
 		return employeeData;
+	}
+	
+	/**
+	 * 
+	 */
+	public void sort() {
+		if(getScheduleData() != null) {
+			Collections.sort(getScheduleData());
+		}
 	}
 }

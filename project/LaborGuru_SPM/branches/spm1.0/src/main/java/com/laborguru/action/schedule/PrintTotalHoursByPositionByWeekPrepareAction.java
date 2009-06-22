@@ -132,7 +132,7 @@ public class PrintTotalHoursByPositionByWeekPrepareAction extends PrintShiftBase
 			employees.addAll(schedule.getScheduleEmployeesFor(position));
 		}
 		
-		return new ArrayList<Employee>(employees);		
+		return sortEmployees(new ArrayList<Employee>(employees));
 	}
 	
 	/**

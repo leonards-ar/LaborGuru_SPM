@@ -8,9 +8,11 @@
 
 <script language="javascript" type="text/javascript">
 	function forgotPassword() {
-		document.login.action = '<s:url namespace="/login" action="forgotpassword" includeParams="none"/>';
-		document.login.username.value = document.login.j_username.value;
-		document.login.submit();
+		if(confirm('<s:text name="login.forgot_password.confirm.message" />')) {
+			document.login.action = '<s:url namespace="/login" action="forgotpassword" includeParams="none"/>';
+			document.login.username.value = document.login.j_username.value;
+			document.login.submit();
+		}
 	}
 </script>
 
