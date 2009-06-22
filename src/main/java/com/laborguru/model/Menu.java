@@ -19,8 +19,6 @@ import org.apache.commons.lang.builder.ToStringStyle;
 public class Menu implements Serializable {
 	
 	private List<MenuItem> items;
-	private int selectedItemIndex = -1;
-	private int selectedSubItemIndex = -1;
 	
 	/**
 	 * 
@@ -41,7 +39,6 @@ public class Menu implements Serializable {
 	public String toString()
 	{
 		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-	   	.append("selectedItemIndex" , selectedItemIndex)
 	   	.append("items",items)
 	   	.toString();		
 	}	
@@ -58,101 +55,5 @@ public class Menu implements Serializable {
 	 */
 	public void setItems(List<MenuItem> items) {
 		this.items = items;
-	}
-
-	/**
-	 * @return the selectedItem
-	 */
-	public MenuItem getSelectedItem() {
-		if(getItems() != null && getSelectedItemIndex() >= 0 && getSelectedItemIndex() < getItems().size()) {
-			return getItems().get(getSelectedItemIndex());
-		} else {
-			return null;
-		}
-	}
-
-	/**
-	 * 
-	 * @param index
-	 * @return
-	 */
-	public boolean isSelectedItemIndex(int index) {
-		return index >=0 && index == getSelectedItemIndex() && index < getItems().size();
-	}
-	/**
-	 * @return the selectedItemIndex
-	 */
-	public int getSelectedItemIndex() {
-		return selectedItemIndex;
-	}
-
-	/**
-	 * @param selectedItemIndex the selectedItemIndex to set
-	 */
-	public void setSelectedItemIndex(int selectedItemIndex) {
-		this.selectedItemIndex = selectedItemIndex;
-	}
-
-	/**
-	 * @return the selectedSubItemIndex
-	 */
-	public int getSelectedSubItemIndex() {
-		return selectedSubItemIndex;
-	}
-
-	/**
-	 * @param selectedSubItemIndex the selectedSubItemIndex to set
-	 */
-	public void setSelectedSubItemIndex(int selectedSubItemIndex) {
-		this.selectedSubItemIndex = selectedSubItemIndex;
-	}
-
-	/**
-	 * 
-	 * @param target1
-	 * @param target2
-	 * @return
-	 */
-	private boolean isEqualTarget(String target1, String target2) {
-		return target1 != null && target2 != null && removeParamsFromTarget(target1).equals(removeParamsFromTarget(target2));
-	}
-	
-	/**
-	 * 
-	 * @param target
-	 * @return
-	 */
-	private String removeParamsFromTarget(String target) {
-		if(target != null) {
-			int start = target.indexOf('?');
-			return start < 0 ? target : target.substring(0, start);
-		} else {
-			return "";
-		}
-	}
-	
-	/**
-	 * 
-	 */
-	public void updateSelectedSubItemIndex() {
-		MenuItem selected = getSelectedItem();
-		if(selected != null) {
-			List<MenuItem> childs = selected.getOrderedChildMenuItems();
-			MenuItem aChild;
-			for(int i = 0; i < childs.size(); i++) {
-				aChild = childs.get(i);
-				if(isEqualTarget(selected.getTarget(), aChild.getTarget())) {
-					setSelectedSubItemIndex(i);
-				}
-			}
-		}
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean isSubMenuItemSelected() {
-		return getSelectedSubItemIndex() >= 0;
 	}
 }

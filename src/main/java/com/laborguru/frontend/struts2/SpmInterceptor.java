@@ -17,8 +17,8 @@ import org.springframework.context.access.ContextSingletonBeanFactoryLocator;
 
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.HttpRequestConstants;
+import com.laborguru.frontend.model.SessionMenuWrapper;
 import com.laborguru.model.Employee;
-import com.laborguru.model.Menu;
 import com.laborguru.model.User;
 import com.laborguru.service.menu.MenuService;
 import com.laborguru.service.security.UserDetailsImpl;
@@ -105,9 +105,9 @@ public class SpmInterceptor implements Interceptor {
 			return SpmActionResult.LOGIN.getResult();
 		}
 
-		Menu menu = (Menu) session.get(HttpRequestConstants.MENU);
+		SessionMenuWrapper menu = (SessionMenuWrapper) session.get(HttpRequestConstants.MENU);
 		if(menu == null && user != null) {
-			menu = getMenuService().getMenuFor(user);
+			menu = new SessionMenuWrapper(getMenuService().getMenuFor(user));
 			session.put(HttpRequestConstants.MENU, menu);
 		}
 
