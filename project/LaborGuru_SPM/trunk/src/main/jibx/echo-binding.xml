@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<binding>
+  <namespace uri="http://www.laborguru.com/spm/webservices/sales" default="elements" prefix="sal" />
+	<mapping name="echo" class="com.laborguru.webservice.binding.EchoMessage">
+		<value name="message" field="message" />
+	</mapping>
+</binding>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:oxm="http://www.springframework.org/schema/oxm"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+    http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-1.5.xsd">
+
+
+  <bean id="sales" class="org.springframework.ws.wsdl.wsdl11.DynamicWsdl11Definition">
+    <property name="builder">
+      <bean class="org.springframework.ws.wsdl.wsdl11.builder.XsdBasedSoap11Wsdl4jDefinitionBuilder">
+        <property name="schema" value="/xsd/sales-schema.xsd"/>
+        <property name="portTypeName" value="sales"/>
+        <property name="locationUri" value="/ws/sales/"/>
+        <property name="requestSuffix" value=""/>
+      </bean>
+    </property>
+  </bean>
+  
+  <bean class="org.springframework.ws.server.endpoint.mapping.PayloadRootAnnotationMethodEndpointMapping"/>
+  
+  <bean id="salesEndPoint" class="com.laborguru.webservice.SalesEndPoint" />
+
+  <oxm:jibx-marshaller id="echoMessageMarshaller" target-class="com.laborguru.webservice.binding.EchoMessage"/>
+  
+  <bean class="org.springframework.ws.server.endpoint.adapter.GenericMarshallingMethodEndpointAdapter">
+    <constructor-arg ref="echoMessageMarshaller" />
+  </bean>
+  
+  <bean class="org.springframework.ws.server.endpoint.adapter.XPathParamAnnotationMethodEndpointAdapter">
+    <property name="namespaces">
+      <props>
+        <prop key="sal">http://www.laborguru.com/spm/webservices/sales</prop>
+      </props>
+    </property>
+  </bean>
+
+  
+</beans>
