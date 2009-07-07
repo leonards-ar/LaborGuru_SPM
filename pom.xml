@@ -386,19 +386,16 @@
 			<groupId>org.springframework.ws</groupId>
 			<artifactId>spring-oxm</artifactId>
 			<version>1.5.7</version>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.ws</groupId>
 			<artifactId>spring-oxm-tiger</artifactId>
 			<version>1.5.7</version>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.ws</groupId>
 			<artifactId>spring-xml</artifactId>
 			<version>1.5.7</version>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
