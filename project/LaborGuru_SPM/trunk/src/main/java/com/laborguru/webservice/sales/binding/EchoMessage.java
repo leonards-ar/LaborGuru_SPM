@@ -1,4 +1,4 @@
-package com.laborguru.webservice.binding;
+package com.laborguru.webservice.sales.binding;
 
 public class EchoMessage {
 
