@@ -19,21 +19,28 @@
   
   <bean class="org.springframework.ws.server.endpoint.mapping.PayloadRootAnnotationMethodEndpointMapping"/>
   
-  <bean id="salesEndPoint" class="com.laborguru.webservice.SalesEndPoint" />
+  <bean id="salesEndPoint" class="com.laborguru.webservice.sales.endpoint.SalesEndPoint">
+    <property name="storeService" ref="storeService"/>
+  </bean>
 
-  <oxm:jibx-marshaller id="echoMessageMarshaller" target-class="com.laborguru.webservice.binding.EchoMessage"/>
+  <oxm:jibx-marshaller id="echoMessageMarshaller" target-class="com.laborguru.webservice.sales.binding.EchoMessage"/>
+  <oxm:jibx-marshaller id="importSalesRequestMarshaller" target-class="com.laborguru.webservice.sales.binding.ImportSalesRequest"/>  
   
-  <bean class="org.springframework.ws.server.endpoint.adapter.GenericMarshallingMethodEndpointAdapter">
+  <!--  bean id="echoGenericMarshallingMethodEndPointAdapter" class="org.springframework.ws.server.endpoint.adapter.GenericMarshallingMethodEndpointAdapter">
     <constructor-arg ref="echoMessageMarshaller" />
   </bean>
   
-  <bean class="org.springframework.ws.server.endpoint.adapter.XPathParamAnnotationMethodEndpointAdapter">
-    <property name="namespaces">
-      <props>
-        <prop key="sal">http://www.laborguru.com/spm/webservices/sales</prop>
-      </props>
-    </property>
-  </bean>
-
+  <bean id="importSalesRequestGenericMarshallingMethodEndPointAdapter" class="org.springframework.ws.server.endpoint.adapter.GenericMarshallingMethodEndpointAdapter">
+    <constructor-arg ref="importSalesRequestMarshaller" />
+  </bean-->
   
+  <bean id="salesEndPointAdapter" class="com.laborguru.webservice.server.endpoint.adapter.PayloadRootAnnotationMethodEndPointAdapter">
+    <constructor-arg>
+      <map>
+        <entry key="echo" value-ref="echoMessageMarshaller" />
+        <entry key="importSalesRequest" value-ref="importSalesRequestMarshaller" />
+      </map>
+    </constructor-arg>
+  </bean>
+   
 </beans>
