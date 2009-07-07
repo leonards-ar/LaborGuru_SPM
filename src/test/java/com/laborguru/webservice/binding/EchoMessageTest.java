@@ -13,6 +13,8 @@ import org.jibx.runtime.IBindingFactory;
 import org.jibx.runtime.IMarshallingContext;
 import org.jibx.runtime.IUnmarshallingContext;
 
+import com.laborguru.webservice.sales.binding.EchoMessage;
+
 /**
  *
  * @author <a href="fbarreraoro@gmail.com">Federico Barrera Oro</a>
