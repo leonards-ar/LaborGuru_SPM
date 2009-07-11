@@ -6,6 +6,7 @@ import java.util.Date;
 import com.laborguru.model.DailyHistoricSales;
 import com.laborguru.model.HistoricSales;
 import com.laborguru.model.Store;
+import com.laborguru.service.dao.SpmDaoUtils;
 
 /**
  * Defines the data access operations for a sales record on SPM
@@ -14,7 +15,7 @@ import com.laborguru.model.Store;
  * @since SPM 1.0
  *
  */
-public interface HistoricSalesDao {
+public interface HistoricSalesDao extends SpmDaoUtils {
 
 	/**
 	 * Saves or updates a sales record into the database
