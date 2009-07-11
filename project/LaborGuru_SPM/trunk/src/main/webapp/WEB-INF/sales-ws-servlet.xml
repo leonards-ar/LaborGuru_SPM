@@ -12,35 +12,23 @@
         <property name="schema" value="/xsd/sales-schema.xsd"/>
         <property name="portTypeName" value="sales"/>
         <property name="locationUri" value="/ws/sales/"/>
-        <property name="requestSuffix" value=""/>
       </bean>
     </property>
   </bean>
   
-  <bean class="org.springframework.ws.server.endpoint.mapping.PayloadRootAnnotationMethodEndpointMapping"/>
-  
+ <bean class="org.springframework.ws.server.endpoint.mapping.PayloadRootAnnotationMethodEndpointMapping"/>
+   
   <bean id="salesEndPoint" class="com.laborguru.webservice.sales.endpoint.SalesEndPoint">
     <property name="storeService" ref="storeService"/>
+    <property name="historicSalesService" ref="historicSalesService"/>
   </bean>
 
-  <oxm:jibx-marshaller id="echoMessageMarshaller" target-class="com.laborguru.webservice.sales.binding.EchoMessage"/>
-  <oxm:jibx-marshaller id="importSalesRequestMarshaller" target-class="com.laborguru.webservice.sales.binding.ImportSalesRequest"/>  
+  <oxm:jibx-marshaller id="importSalesRequestMarshaller" target-class="com.laborguru.webservice.sales.binding.ImportSalesRequest"/>
+  <oxm:jibx-marshaller id="importSalesResponseMarshaller" target-class="com.laborguru.webservice.sales.binding.ImportSalesResponse"/>  
   
-  <!--  bean id="echoGenericMarshallingMethodEndPointAdapter" class="org.springframework.ws.server.endpoint.adapter.GenericMarshallingMethodEndpointAdapter">
-    <constructor-arg ref="echoMessageMarshaller" />
+  <bean id="salesEndPointAdapter" class="org.springframework.ws.server.endpoint.adapter.GenericMarshallingMethodEndpointAdapter">
+    <constructor-arg ref="importSalesResponseMarshaller"/>
+    <constructor-arg ref="importSalesRequestMarshaller"/>
   </bean>
-  
-  <bean id="importSalesRequestGenericMarshallingMethodEndPointAdapter" class="org.springframework.ws.server.endpoint.adapter.GenericMarshallingMethodEndpointAdapter">
-    <constructor-arg ref="importSalesRequestMarshaller" />
-  </bean-->
-  
-  <bean id="salesEndPointAdapter" class="com.laborguru.webservice.server.endpoint.adapter.PayloadRootAnnotationMethodEndPointAdapter">
-    <constructor-arg>
-      <map>
-        <entry key="echo" value-ref="echoMessageMarshaller" />
-        <entry key="importSalesRequest" value-ref="importSalesRequestMarshaller" />
-      </map>
-    </constructor-arg>
-  </bean>
-   
+
 </beans>

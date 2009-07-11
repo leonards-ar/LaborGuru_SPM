@@ -3,18 +3,20 @@ package com.laborguru.webservice.sales.endpoint;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.SpmUncheckedException;
 import com.laborguru.model.HistoricSales;
+import com.laborguru.model.UploadFile;
+import com.laborguru.service.historicsales.HistoricSalesService;
 import com.laborguru.service.store.StoreService;
-import com.laborguru.webservice.sales.binding.EchoMessage;
+import com.laborguru.service.uploadfile.UploadFileService;
+import com.laborguru.util.CalendarUtils;
 import com.laborguru.webservice.sales.binding.ImportSalesRequest;
-
-
-
+import com.laborguru.webservice.sales.binding.ImportSalesResponse;
 
 /**
  *
@@ -28,34 +30,32 @@ public class SalesEndPoint {
 	private static Logger logger = Logger.getLogger(SalesEndPoint.class);
 	
 	private StoreService storeService;
-	
-	
-	@PayloadRoot(localPart = "importSalesRequest", namespace = "http://www.laborguru.com/webservices/sales")
-	public void importSales(ImportSalesRequest importSales) {
+	private HistoricSalesService historicSalesService;
 		
+	@PayloadRoot(localPart = "importSalesRequest", namespace = "http://www.laborguru.com/webservices/sales")
+	public ImportSalesResponse importSales(ImportSalesRequest request) {
+		
+		if(logger.isDebugEnabled()) logger.debug("request: " + request);
 		try{
-			List<HistoricSales> historicSales = importSales.bindDb(getStoreService());
-			System.out.println(historicSales);
+			List<HistoricSales> historicSales = request.bindDb(getStoreService());
+			int processed = getHistoricSalesService().saveAll(historicSales, getUploadFile(request));
+			ImportSalesResponse response = new ImportSalesResponse(historicSales.size(), processed);
+		if(logger.isDebugEnabled()) logger.debug("response: " + response);
+			return response;
 		} catch(Exception e) {
 			throw new SpmUncheckedException(e.getMessage(), ErrorEnum.GENERIC_ERROR);
 		}
-		
-		
-		
 	}
 	
-	@PayloadRoot(localPart = "echo", namespace = "http://www.laborguru.com/webservices/sales")
-	public EchoMessage myEcho(EchoMessage echo) {
-
-		System.out.println("echo: " + echo.getMessage());
-		String message = "Response echo: " + echo.getMessage();
-		EchoMessage response = new EchoMessage();
-		response.setMessage(message);
-	
-		return response;
-		
+	private UploadFile getUploadFile(ImportSalesRequest request) {
+		UploadFile uploadFile = new UploadFile();
+		DateTime dateTime = new DateTime();
+		String fileName = "WS_" + request.getStoreCode() + "_" + request.getStoreLocation() + "_" +
+			dateTime.getHourOfDay() + dateTime.getMinuteOfDay() + dateTime.getSecondOfDay();
+		uploadFile.setFilename(fileName);
+		uploadFile.setUploadDate(dateTime.toDate());
+		return uploadFile;
 	}
-
 	/**
 	 * @return the storeService
 	 */
@@ -69,5 +69,19 @@ public class SalesEndPoint {
 	public void setStoreService(StoreService storeService) {
 		this.storeService = storeService;
 	}
-	
+
+	/**
+	 * @return the service
+	 */
+	public HistoricSalesService getHistoricSalesService() {
+		return historicSalesService;
+	}
+
+	/**
+	 * @param service the service to set
+	 */
+	public void setHistoricSalesService(HistoricSalesService historicSalesService) {
+		this.historicSalesService = historicSalesService;
+	}
+
 }

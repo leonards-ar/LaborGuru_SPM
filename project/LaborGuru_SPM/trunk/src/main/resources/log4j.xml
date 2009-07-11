@@ -115,7 +115,7 @@
 	</logger> 		
 	
 	<logger name="org.springframework.ws" additivity="false">
-		<level value="INFO"/>
+		<level value="debug"/>
 		<appender-ref ref="STDOUT"/>
 	</logger> 		
 	
