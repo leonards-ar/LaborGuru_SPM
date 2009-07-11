@@ -10,8 +10,11 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.apache.log4j.Logger;
 
+import com.laborguru.exception.ErrorEnum;
+import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.HistoricSales;
 import com.laborguru.model.Store;
+import com.laborguru.model.UploadFile;
 import com.laborguru.model.filter.SearchStoreFilter;
 import com.laborguru.service.store.StoreService;
 import com.laborguru.util.CalendarUtils;
@@ -34,11 +37,20 @@ import com.laborguru.util.SpmConstants;
  * </pre>
  */
 
+/**
+ *
+ * @author <a href="fbarreraoro@gmail.com">Federico Barrera Oro</a>
+ * @version 1.1
+ * @since SPM 1.1
+ *
+ */
 public class ImportSalesRequest {
 	private static final Logger logger = Logger.getLogger(ImportSalesRequest.class);
+	private static final String DEFAULT_DATE_FORMAT="yyyyMMdd";
     private String storeCode;
     private String storeLocation;
-    private Date salesDate;
+    private String salesDate;
+    private String salesDateFormat;
     
     private SalesItemList salesItemList;
 
@@ -83,7 +95,7 @@ public class ImportSalesRequest {
      * 
      * @return value
      */
-    public Date getSalesDate() {
+    public String getSalesDate() {
         return salesDate;
     }
 
@@ -92,9 +104,24 @@ public class ImportSalesRequest {
      * 
      * @param salesDate
      */
-    public void setSalesDate(Date salesDate) {
+    public void setSalesDate(String salesDate) {
         this.salesDate = salesDate;
-    }    
+    }  
+    
+	/**
+	 * @return the dateFormat
+	 */
+	public String getSalesDateFormat() {
+		return salesDateFormat != null ? salesDateFormat : DEFAULT_DATE_FORMAT;
+	}
+
+	/**
+	 * @param dateFormat the dateFormat to set
+	 */
+	public void setSalesDateFormat(String dateFormat) {
+		if(dateFormat != null) this.salesDateFormat = dateFormat;
+	}
+
 	/**
 	 * @return the salesItems
 	 */
@@ -121,7 +148,7 @@ public class ImportSalesRequest {
 		if(storeList == null || storeList.size() == 0){
 		    String message = "The store with store code:"+ storeCode+" and customer code:"+storeLocation+" does not exist";
 			logger.error(message);
-			//TODO: throw an exception throw new SpmUncheckedException(message);
+			throw new SpmCheckedException(message, ErrorEnum.STORE_DOES_NOT_EXIST);
 		}
 
 		store = storeList.get(0);
@@ -133,7 +160,8 @@ public class ImportSalesRequest {
 			historicSale.setStore(store);
 				
 			Date time = SpmConstants.TIME_FORMAT.parse(salesItem.getHalfHour());
-			Calendar calendarDate = CalendarUtils.getCalendar(salesDate);
+			Date date = CalendarUtils.stringToDate(salesDate, getSalesDateFormat());
+			Calendar calendarDate = CalendarUtils.getCalendar(date);
 			if (time != null){
 				Calendar calendarTime = CalendarUtils.getCalendar(time);		
 

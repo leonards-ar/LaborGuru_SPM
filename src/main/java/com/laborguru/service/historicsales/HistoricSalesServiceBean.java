@@ -2,10 +2,14 @@ package com.laborguru.service.historicsales;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import com.laborguru.model.DailyHistoricSales;
+import com.laborguru.model.HistoricSales;
 import com.laborguru.model.Store;
+import com.laborguru.model.UploadFile;
 import com.laborguru.service.historicsales.dao.HistoricSalesDao;
+import com.laborguru.service.uploadfile.dao.UploadFileDao;
 
 /**
  * Historic Sales Services Bean
@@ -17,7 +21,10 @@ import com.laborguru.service.historicsales.dao.HistoricSalesDao;
  */
 public class HistoricSalesServiceBean implements HistoricSalesService {
 
-	HistoricSalesDao historicSalesDao;
+	private static final int MAX_TRANSACTIONS = 20; 
+	private HistoricSalesDao historicSalesDao;
+	private UploadFileDao uploadFileDao;
+	private int maxTransactions = MAX_TRANSACTIONS;
 	
 
 	/**
@@ -40,6 +47,22 @@ public class HistoricSalesServiceBean implements HistoricSalesService {
 	}
 
 	/**
+	 * @param uploadFileDao the uploadFileDao to set
+	 */
+	public void setUploadFileDao(UploadFileDao uploadFileDao) {
+		this.uploadFileDao = uploadFileDao;
+	}
+
+
+	/**
+	 * @param maxTransactions the maxTransactions to set
+	 */
+	public void setMaxTransactions(int maxTransactions) {
+		this.maxTransactions = maxTransactions;
+	}
+
+
+	/**
 	 * 
 	 * @param store
 	 * @param startDate
@@ -49,6 +72,28 @@ public class HistoricSalesServiceBean implements HistoricSalesService {
 	 */
 	public BigDecimal getTotalHistoricSalesForTimePeriod(Store store, Date startDate, Date endDate) {
 		return historicSalesDao.getTotalHistoricSalesForTimePeriod(store, startDate, endDate);
+	}
+	
+	/**
+	 * Save HistoricSales
+	 * @param historicSales
+	 */
+	public int saveAll(List<HistoricSales> historicSales, UploadFile uploadFile){
+		int processed = 0;
+		
+		uploadFileDao.saveOrUpdate(uploadFile);
+		for(HistoricSales historicSale: historicSales){
+			historicSale.setUploadFile(uploadFile);
+			historicSalesDao.saveOrUpdate(historicSale);
+			processed++;
+			if(( processed % maxTransactions) == 0){
+				historicSalesDao.flushSession();
+				historicSalesDao.clearSession();
+			}
+		}
+		
+		return processed;
+		
 	}
 
 }

@@ -2,9 +2,12 @@ package com.laborguru.service.historicsales;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import com.laborguru.model.DailyHistoricSales;
+import com.laborguru.model.HistoricSales;
 import com.laborguru.model.Store;
+import com.laborguru.model.UploadFile;
 import com.laborguru.service.historicsales.dao.HistoricSalesDao;
 
 /**
@@ -40,4 +43,11 @@ public interface HistoricSalesService {
 	 * @param dao
 	 */
 	void setHistoricSalesDao(HistoricSalesDao dao);
+	
+	/**
+	 * @param historicSales
+	 * @return
+	 */
+	public int saveAll(List<HistoricSales> historicSales, UploadFile uploadFile);
+	
 }
