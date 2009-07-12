@@ -14,8 +14,6 @@ import com.laborguru.model.UploadFile;
 import com.laborguru.service.historicsales.HistoricSalesService;
 import com.laborguru.service.store.StoreService;
 import com.laborguru.service.uploadfile.UploadEnumType;
-import com.laborguru.service.uploadfile.UploadFileService;
-import com.laborguru.util.CalendarUtils;
 import com.laborguru.webservice.sales.binding.ImportSalesRequest;
 import com.laborguru.webservice.sales.binding.ImportSalesResponse;
 
