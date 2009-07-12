@@ -72,6 +72,11 @@
 		<filter-name>hibernateFilter</filter-name>
 		<url-pattern>/j_acegi_security_check</url-pattern>
 	</filter-mapping>
+
+  <filter-mapping>
+    <filter-name>hibernateFilter</filter-name>
+    <url-pattern>/ws/sales/*</url-pattern>
+  </filter-mapping>
 			
 	<!--filter-mapping>
 		<filter-name>Acegi Filter Chain Proxy</filter-name>
