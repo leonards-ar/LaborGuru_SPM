@@ -24,7 +24,7 @@
   
   <mapping name="importSalesResponse" class="com.laborguru.webservice.sales.binding.ImportSalesResponse">
     <value name="transactionsReceived" get-method="getTransactionsReceived" set-method="setTransactionsReceived"/>
-    <value name="transactionsReceived" get-method="getTransactionsProcessed" set-method="setTransactionsProcessed"/> 
+    <value name="transactionsProcessed" get-method="getTransactionsProcessed" set-method="setTransactionsProcessed"/> 
   </mapping>
   
 </binding>
