@@ -4,25 +4,18 @@
     xsi:schemaLocation="
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
+  <bean id="baseTransactionProxy" abstract="true" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    <property name="transactionManager">
+      <ref bean="transactionManager"/>
+    </property> 
+    <property name="transactionAttributeSource">
+      <ref bean="transactionAttributeSourceDefault"/>
+    </property> 
+  </bean>
 
-	<bean id="storeService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<list>
-				<value>com.laborguru.service.store.StoreService</value>
-			</list>
-		</property>	
-	
-		<property name="target">
-			<ref bean="storeServiceTarget"/>
-		</property>		
-		
-		<property name="transactionManager">
-			<ref bean="transactionManager"/>
-		</property>	
-		
-		<property name="transactionAttributeSource">
-			<ref bean="transactionAttributeSourceDefault"/>
-		</property>	
+	<bean id="storeService" parent="baseTransactionProxy">
+		<property name="proxyInterfaces" value="com.laborguru.service.store.StoreService"/>
+		<property name="target" ref="storeServiceTarget"/>
  	</bean>
 
  	<bean id="storeServiceTarget" class="com.laborguru.service.store.StoreServiceBean">
@@ -46,45 +39,15 @@
 	<!--  Transactional Services's declarations -->
  	<bean id="actualHoursServiceTarget" class="com.laborguru.service.actualhours.ActualHoursServiceBean" autowire="byType"/>
 
-	<bean id="actualHoursService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<list>
-				<value>com.laborguru.service.actualhours.ActualHoursService</value>
-			</list>
-		</property>	
-	
-		<property name="target">
-			<ref bean="actualHoursServiceTarget"/>
-		</property>		
-		
-		<property name="transactionManager">
-			<ref bean="transactionManager"/>
-		</property>	
-		
-		<property name="transactionAttributeSource">
-			<ref bean="transactionAttributeSourceDefault"/>
-		</property>	
+	<bean id="actualHoursService" parent="baseTransactionProxy">
+		<property name="proxyInterfaces" value="com.laborguru.service.actualhours.ActualHoursService"/>
+		<property name="target" ref="actualHoursServiceTarget"/>
  	</bean>
 	
 
-	<bean id="actualHoursFileProcessor" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<list>
-				<value>com.laborguru.service.dataimport.actualhours.ActualHoursFileProcessor</value>
-			</list>
-		</property>	
-	
-		<property name="target">
-			<ref bean="actualHoursFileProcessorTarget"/>
-		</property>		
-		
-		<property name="transactionManager">
-			<ref bean="transactionManager"/>
-		</property>	
-		
-		<property name="transactionAttributeSource">
-			<ref bean="transactionAttributeSourceDefault"/>
-		</property>			
+	<bean id="actualHoursFileProcessor" parent="baseTransactionProxy">
+		<property name="proxyInterfaces" value="com.laborguru.service.dataimport.actualhours.ActualHoursFileProcessor"/>
+		<property name="target" ref="actualHoursFileProcessorTarget"/>
 	</bean>
 	
 	<bean id="actualHoursFileProcessorTarget" class="com.laborguru.service.dataimport.actualhours.csv.ActualHoursFileProcessorBean" autowire="no">
@@ -93,28 +56,12 @@
 	</bean>
 		
 	
-	<bean id="uploadFileService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<list>
-				<value>com.laborguru.service.uploadfile.UploadFileService</value>
-			</list>
-		</property>	
-	
-		<property name="target">
-			<ref bean="uploadFileServiceTarget"/>
-		</property>		
-		
-		<property name="transactionManager">
-			<ref bean="transactionManager"/>
-		</property>	
-		
-		<property name="transactionAttributeSource">
-			<ref bean="transactionAttributeSourceDefault"/>
-		</property>			
+	<bean id="uploadFileService" parent="baseTransactionProxy">
+		<property name="proxyInterfaces" value="com.laborguru.service.uploadfile.UploadFileService"/>
+		<property name="target" ref="uploadFileServiceTarget"/>
 	</bean>	
 	
-		<bean id="uploadFileServiceTarget" class="com.laborguru.service.uploadfile.UploadFileServiceBean" autowire="byType"/>
-	
+	<bean id="uploadFileServiceTarget" class="com.laborguru.service.uploadfile.UploadFileServiceBean" autowire="byType"/>
 	
 	<bean id="salesFileProcessorServiceTarget" class="com.laborguru.service.dataimport.csv.SalesCSVFileProcessorBean">
 	  <property name="fileParser" ref="salesFileParser"/>
@@ -123,46 +70,16 @@
   	  <property name="spmDaoUtils" ref="spmDaoUtils"/>  	  	  
 	</bean>
 
-	<bean id="salesFileProcessorService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<list>
-				<value>com.laborguru.service.dataimport.csv.SalesFileProcessorService</value>
-			</list>
-		</property>	
-	
-		<property name="target">
-			<ref bean="salesFileProcessorServiceTarget"/>
-		</property>		
-		
-		<property name="transactionManager">
-			<ref bean="transactionManager"/>
-		</property>	
-		
-		<property name="transactionAttributeSource">
-			<ref bean="transactionAttributeSourceDefault"/>
-		</property>			
+	<bean id="salesFileProcessorService" parent="baseTransactionProxy">
+		<property name="proxyInterfaces" value="com.laborguru.service.dataimport.csv.SalesFileProcessorService"/>
+		<property name="target" ref="salesFileProcessorServiceTarget"/>
 	</bean>
 
 	<bean id="historicSalesServiceTarget" class="com.laborguru.service.historicsales.HistoricSalesServiceBean" autowire="byType"/>
 
-	<bean id="historicSalesService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<list>
-				<value>com.laborguru.service.historicsales.HistoricSalesService</value>
-			</list>
-		</property>	
-	
-		<property name="target">
-			<ref bean="historicSalesServiceTarget"/>
-		</property>		
-		
-		<property name="transactionManager">
-			<ref bean="transactionManager"/>
-		</property>	
-		
-		<property name="transactionAttributeSource">
-			<ref bean="transactionAttributeSourceDefault"/>
-		</property>			
+	<bean id="historicSalesService" parent="baseTransactionProxy">
+		<property name="proxyInterfaces" value="com.laborguru.service.historicsales.HistoricSalesService"/>
+		<property name="target" ref="historicSalesServiceTarget"/>
 	</bean>
 
 	<bean id="projectionServiceTarget" class="com.laborguru.service.projection.ProjectionServiceBean">
@@ -170,146 +87,65 @@
 		<property name="projectionDao" ref="projectionDao"/>		
 	</bean>
 
-	<bean id="projectionService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<list>
-				<value>com.laborguru.service.projection.ProjectionService</value>
-			</list>
-		</property>	
-	
-		<property name="target">
-			<ref bean="projectionServiceTarget"/>
-		</property>		
-		
-		<property name="transactionManager">
-			<ref bean="transactionManager"/>
-		</property>	
-		
-		<property name="transactionAttributeSource">
-			<ref bean="transactionAttributeSourceDefault"/>
-		</property>			
+	<bean id="projectionService" parent="baseTransactionProxy">
+		<property name="proxyInterfaces" value="com.laborguru.service.projection.ProjectionService"/>
+		<property name="target" ref="projectionServiceTarget"/>
 	</bean>
 		
-	<bean id="customerService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<list>
-				<value>com.laborguru.service.customer.CustomerService</value>
-			</list>
-		</property>	
-	
-		<property name="target">
-			<ref bean="customerServiceTarget"/>
-		</property>		
-		
-		<property name="transactionManager">
-			<ref bean="transactionManager"/>
-		</property>	
-		
-		<property name="transactionAttributeSource">
-			<ref bean="transactionAttributeSourceDefault"/>
-		</property>			
+	<bean id="customerService" parent="baseTransactionProxy">
+		<property name="proxyInterfaces" value="com.laborguru.service.customer.CustomerService"/>
+		<property name="target" ref="customerServiceTarget"/>
 	</bean>
 
 	<bean id="customerServiceTarget" class="com.laborguru.service.customer.CustomerServiceBean" autowire="byType"/>
 	
 	<bean id="regionServiceTarget" class="com.laborguru.service.region.RegionServiceBean" autowire="byType"/>
 	
-	<bean id="regionService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<list>
-				<value>com.laborguru.service.region.RegionService</value>
-			</list>
-		</property>	
-	
-		<property name="target">
-			<ref bean="regionServiceTarget"/>
-		</property>		
-		
-		<property name="transactionManager">
-			<ref bean="transactionManager"/>
-		</property>	
-		
-		<property name="transactionAttributeSource">
-			<ref bean="transactionAttributeSourceDefault"/>
-		</property>			
+	<bean id="regionService" parent="baseTransactionProxy">
+		<property name="proxyInterfaces" value="com.laborguru.service.region.RegionService"/>
+		<property name="target" ref="regionServiceTarget"/>
 	</bean>
 		
 	<bean id="areaService" class="com.laborguru.service.area.AreaServiceBean">
 		<property name="areaDao" ref="areaDao" />
 	</bean>
 	
-	<bean id="referenceDataService"
-		class="com.laborguru.service.data.ReferenceDataServiceBean">
+	<bean id="referenceDataService"	class="com.laborguru.service.data.ReferenceDataServiceBean">
 		<property name="referenceData" ref="referenceData"/>
 	</bean>
 
-	<bean id="positionService"
-		class="com.laborguru.service.position.PositionServiceBean">
+	<bean id="positionService" class="com.laborguru.service.position.PositionServiceBean">
 		<property name="positionDao" ref="positionDao" />
 	</bean>
 
-	<bean id="positionGroupService"
-		class="com.laborguru.service.positionGroup.PositionGroupServiceBean">
+	<bean id="positionGroupService" class="com.laborguru.service.positionGroup.PositionGroupServiceBean">
 		<property name="positionGroupDao" ref="positionGroupDao" />
 	</bean>
 
-	<bean id="menuService"
-		class="com.laborguru.service.menu.MenuServiceBean">
+	<bean id="menuService" class="com.laborguru.service.menu.MenuServiceBean">
 		<property name="menuDao" ref="menuDao" />
 	</bean>
 
-	<bean id="profileService"
-		class="com.laborguru.service.profile.ProfileServiceBean">
+	<bean id="profileService" class="com.laborguru.service.profile.ProfileServiceBean">
 		<property name="profileDao" ref="profileDao" />
 	</bean>
 	
-	<bean id="reportService" 
-	    class="com.laborguru.service.report.ReportServiceBean">
+	<bean id="reportService" class="com.laborguru.service.report.ReportServiceBean">
 	    <property name="reportDao" ref="reportDao"/>
 	    <property name="staffingService" ref="staffingService" />
 	    <property name="projectionService" ref="projectionService" />
 	</bean>
 	    
-	<bean id="userService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<list>
-				<value>com.laborguru.service.user.UserService</value>
-			</list>
-		</property>	
-	
-		<property name="target">
-			<ref bean="userServiceTarget"/>
-		</property>		
-		
-		<property name="transactionManager">
-			<ref bean="transactionManager"/>
-		</property>	
-		
-		<property name="transactionAttributeSource">
-			<ref bean="transactionAttributeSourceDefault"/>
-		</property>			
+	<bean id="userService" parent="baseTransactionProxy">
+		<property name="proxyInterfaces" value="com.laborguru.service.user.UserService"/>
+		<property name="target" ref="userServiceTarget"/>
 	</bean>
 
 	<bean id="userServiceTarget" class="com.laborguru.service.user.UserServiceBean" autowire="byType"/>
 
-	<bean id="employeeService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<list>
-				<value>com.laborguru.service.employee.EmployeeService</value>
-			</list>
-		</property>	
-	
-		<property name="target">
-			<ref bean="employeeServiceTarget"/>
-		</property>		
-		
-		<property name="transactionManager">
-			<ref bean="transactionManager"/>
-		</property>	
-		
-		<property name="transactionAttributeSource">
-			<ref bean="transactionAttributeSourceDefault"/>
-		</property>	
+	<bean id="employeeService" parent="baseTransactionProxy">
+		<property name="proxyInterfaces" value="com.laborguru.service.employee.EmployeeService"/>
+		<property name="target" ref="employeeServiceTarget"/>
  	</bean>
 
  	<bean id="employeeServiceTarget" class="com.laborguru.service.employee.EmployeeServiceBean" autowire="byType"/>
@@ -319,24 +155,9 @@
 		<property name="loginTries" value="${conn.max_login_times}"/>
 	</bean>
 	
-	<bean id="uploadStoreDefinitionService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<list>
-				<value>com.laborguru.service.store.file.UploadStoreDefinitionService</value>
-			</list>
-		</property>	
-	
-		<property name="target">
-			<ref bean="uploadStoreDefinitionServiceTarget"/>
-		</property>		
-		
-		<property name="transactionManager">
-			<ref bean="transactionManager"/>
-		</property>	
-		
-		<property name="transactionAttributeSource">
-			<ref bean="transactionAttributeSourceDefault"/>
-		</property>	
+	<bean id="uploadStoreDefinitionService" parent="baseTransactionProxy">
+		<property name="proxyInterfaces" value="com.laborguru.service.store.file.UploadStoreDefinitionService"/>
+		<property name="target" ref="uploadStoreDefinitionServiceTarget"/>
  	</bean>
 
  	<bean id="uploadStoreDefinitionServiceTarget" class="com.laborguru.service.store.file.UploadStoreDefinitionServiceBean">
@@ -344,94 +165,33 @@
  	 	<property name="storeDefinitionFileParser" ref="storeDefinitionFileParser"/>
  	 	<property name="storeService" ref="storeService"/>
  	</bean>	
-	
 				
-	<bean id="scheduleService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<list>
-				<value>com.laborguru.service.schedule.ScheduleService</value>
-			</list>
-		</property>	
-	
-		<property name="target">
-			<ref bean="scheduleServiceTarget"/>
-		</property>		
-		
-		<property name="transactionManager">
-			<ref bean="transactionManager"/>
-		</property>	
-		
-		<property name="transactionAttributeSource">
-			<ref bean="transactionAttributeSourceDefault"/>
-		</property>	
+	<bean id="scheduleService" parent="baseTransactionProxy">
+		<property name="proxyInterfaces" value="com.laborguru.service.schedule.ScheduleService"/>
+		<property name="target" ref="scheduleServiceTarget"/>
  	</bean>
 
  	<bean id="scheduleServiceTarget" class="com.laborguru.service.schedule.ScheduleServiceBean" autowire="byType"/>
  					
-	<bean id="shiftService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<list>
-				<value>com.laborguru.service.schedule.ShiftService</value>
-			</list>
-		</property>	
-	
-		<property name="target">
-			<ref bean="shiftServiceTarget"/>
-		</property>		
-		
-		<property name="transactionManager">
-			<ref bean="transactionManager"/>
-		</property>	
-		
-		<property name="transactionAttributeSource">
-			<ref bean="transactionAttributeSourceDefault"/>
-		</property>	
+	<bean id="shiftService" parent="baseTransactionProxy">
+		<property name="proxyInterfaces" value="com.laborguru.service.schedule.ShiftService"/>
+		<property name="target" ref="shiftServiceTarget"/>
  	</bean>
 
  	<bean id="shiftServiceTarget" class="com.laborguru.service.schedule.ShiftServiceBean" autowire="byType"/>
  					
 	<bean id="staffingServiceTarget" class="com.laborguru.service.staffing.StaffingServiceBean" autowire="byType"/>
 
-	<bean id="staffingService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<list>
-				<value>com.laborguru.service.staffing.StaffingService</value>
-			</list>
-		</property>	
-	
-		<property name="target">
-			<ref bean="staffingServiceTarget"/>
-		</property>		
-		
-		<property name="transactionManager">
-			<ref bean="transactionManager"/>
-		</property>	
-		
-		<property name="transactionAttributeSource">
-			<ref bean="transactionAttributeSourceDefault"/>
-		</property>			
+	<bean id="staffingService" parent="baseTransactionProxy">
+		<property name="proxyInterfaces" value="com.laborguru.service.staffing.StaffingService"/>
+		<property name="target" ref="staffingServiceTarget"/>
 	</bean>
 
 	<bean id="managerServiceTarget" class="com.laborguru.service.manager.ManagerServiceBean" autowire="byType"/>
  					
-	<bean id="managerService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<list>
-				<value>com.laborguru.service.manager.ManagerService</value>
-			</list>
-		</property>	
-	
-		<property name="target">
-			<ref bean="managerServiceTarget"/>
-		</property>		
-		
-		<property name="transactionManager">
-			<ref bean="transactionManager"/>
-		</property>	
-		
-		<property name="transactionAttributeSource">
-			<ref bean="transactionAttributeSourceDefault"/>
-		</property>			
+	<bean id="managerService" parent="baseTransactionProxy">
+		<property name="proxyInterfaces" value="com.laborguru.service.manager.ManagerService"/>
+		<property name="target" ref="managerServiceTarget"/>
 	</bean>
 	 					
 	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
