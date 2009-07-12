@@ -11,6 +11,7 @@ import com.laborguru.model.UploadFile;
 import com.laborguru.model.service.UploadFileProcessed;
 import com.laborguru.service.dao.SpmDaoUtils;
 import com.laborguru.service.historicsales.dao.HistoricSalesDao;
+import com.laborguru.service.uploadfile.UploadEnumType;
 import com.laborguru.service.uploadfile.dao.UploadFileDao;
 
 /**
@@ -56,6 +57,7 @@ public class SalesCSVFileProcessorBean implements SalesFileProcessorService {
 			
 			uploadToSave.setFilename(filename);
 			uploadToSave.setUploadDate(uploadDate);
+			uploadToSave.setUploadType(UploadEnumType.FILE);
 			
 			//Setting the uploadFile parameter values if present
 			if (uploadFile != null){

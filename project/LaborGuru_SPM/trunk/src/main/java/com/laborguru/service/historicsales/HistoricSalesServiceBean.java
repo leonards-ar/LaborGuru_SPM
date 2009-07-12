@@ -80,7 +80,6 @@ public class HistoricSalesServiceBean implements HistoricSalesService {
 	 */
 	public int saveAll(List<HistoricSales> historicSales, UploadFile uploadFile){
 		int processed = 0;
-		
 		uploadFileDao.saveOrUpdate(uploadFile);
 		for(HistoricSales historicSale: historicSales){
 			historicSale.setUploadFile(uploadFile);
@@ -91,7 +90,7 @@ public class HistoricSalesServiceBean implements HistoricSalesService {
 				historicSalesDao.clearSession();
 			}
 		}
-		
+
 		return processed;
 		
 	}

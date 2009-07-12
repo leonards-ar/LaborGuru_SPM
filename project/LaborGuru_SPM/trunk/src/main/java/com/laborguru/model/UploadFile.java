@@ -8,6 +8,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import com.laborguru.service.uploadfile.UploadEnumType;
+
 /**
  * This represent an Upload file entity.
  *
@@ -23,6 +25,7 @@ public class UploadFile extends SpmObject {
 	private Long id;
 	private Date uploadDate;
 	private String filename;
+	private UploadEnumType uploadType;
 	private Set<HistoricSales> salesRecords;
 	
 	
@@ -46,7 +49,20 @@ public class UploadFile extends SpmObject {
 		return getSalesRecords().size();
 	}
 	
-	
+	/**
+	 * @return the uploadType
+	 */
+	public UploadEnumType getUploadType() {
+		return uploadType;
+	}
+
+	/**
+	 * @param uploadType the uploadType to set
+	 */
+	public void setUploadType(UploadEnumType uploadType) {
+		this.uploadType = uploadType;
+	}
+
 	/**
 	 * Equals
 	 * @param other
@@ -69,6 +85,7 @@ public class UploadFile extends SpmObject {
 		return new EqualsBuilder()
 		.append(this.filename, aUploadFile.filename)
 		.append(this.uploadDate, aUploadFile.uploadDate)
+		.append(this.uploadType, aUploadFile.uploadType)
 		.isEquals();	
 	}
 
@@ -80,6 +97,7 @@ public class UploadFile extends SpmObject {
 		return new HashCodeBuilder(17, 37)
 		.append(this.filename)
 		.append(this.uploadDate)
+		.append(this.uploadType)
 		.toHashCode();	
 	}
 	
@@ -93,6 +111,7 @@ public class UploadFile extends SpmObject {
 	   	.append("id", this.id)
 	   	.append("filename", this.filename)
 	   	.append("uploadDate", this.uploadDate)
+	   	.append("uploadType", this.uploadType)
 	   	.toString();	
 	}
 

@@ -13,6 +13,7 @@ import com.laborguru.model.HistoricSales;
 import com.laborguru.model.UploadFile;
 import com.laborguru.service.historicsales.HistoricSalesService;
 import com.laborguru.service.store.StoreService;
+import com.laborguru.service.uploadfile.UploadEnumType;
 import com.laborguru.service.uploadfile.UploadFileService;
 import com.laborguru.util.CalendarUtils;
 import com.laborguru.webservice.sales.binding.ImportSalesRequest;
@@ -52,6 +53,7 @@ public class SalesEndPoint {
 		DateTime dateTime = new DateTime();
 		String fileName = "WS_" + request.getStoreCode() + "_" + request.getStoreLocation() + "_" +
 			dateTime.getHourOfDay() + dateTime.getMinuteOfDay() + dateTime.getSecondOfDay();
+		uploadFile.setUploadType(UploadEnumType.WEBSERVICE);
 		uploadFile.setFilename(fileName);
 		uploadFile.setUploadDate(dateTime.toDate());
 		return uploadFile;
