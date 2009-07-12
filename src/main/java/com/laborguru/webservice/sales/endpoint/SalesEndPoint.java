@@ -41,7 +41,8 @@ public class SalesEndPoint {
 			List<HistoricSales> historicSales = request.bindDb(getStoreService());
 			int processed = getHistoricSalesService().saveAll(historicSales, getUploadFile(request));
 			ImportSalesResponse response = new ImportSalesResponse(historicSales.size(), processed);
-		if(logger.isDebugEnabled()) logger.debug("response: " + response);
+			
+			if(logger.isDebugEnabled()) logger.debug("response: " + response);
 			return response;
 		} catch(Exception e) {
 			throw new SpmUncheckedException(e.getMessage(), ErrorEnum.GENERIC_ERROR);
