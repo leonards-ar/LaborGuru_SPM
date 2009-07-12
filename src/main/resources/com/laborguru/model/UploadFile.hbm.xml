@@ -4,6 +4,11 @@
     "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="com.laborguru.model">
+
+  <typedef name="üploadEnumType" class='com.laborguru.model.hibernate.EnumUserType'>
+      <param name="enumClassName">com.laborguru.service.uploadfile.UploadEnumType</param>
+  </typedef>
+
 	<class name="UploadFile" table="tbl_upload_files">
 	
 		<id name="id" type="long" unsaved-value="null" column="upload_file_id">
@@ -12,6 +17,8 @@
 
 		<property name="uploadDate" column="upload_date" type="timestamp"/>
 		<property name="filename" column="filename" type="string" length="150" />
+		<property name="uploadType" column="upload_type" type="üploadEnumType" />
+		
 		
 	    <set name="salesRecords" cascade="all-delete-orphan" table="tbl_historic_sales" lazy="true" inverse="true">
 	        <key column="upload_file_id" foreign-key="fk_uploadFiles_historicSales"/>
