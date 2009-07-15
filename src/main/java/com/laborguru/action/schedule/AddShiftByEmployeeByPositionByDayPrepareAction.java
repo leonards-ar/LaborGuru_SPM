@@ -60,6 +60,7 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftByDa
 	 */
 	private void loadPageData() {
 		loadPositions();
+		loadEmployees();
 		loadCalendarData();
 		loadCopyTargetDay();
 	}

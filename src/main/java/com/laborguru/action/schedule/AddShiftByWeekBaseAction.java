@@ -840,6 +840,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 */
 	private void loadPageData() {
 		loadPositions();
+		loadEmployees();
 	}
 
 	/**
