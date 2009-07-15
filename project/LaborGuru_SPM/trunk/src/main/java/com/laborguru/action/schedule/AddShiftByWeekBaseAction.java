@@ -124,7 +124,6 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 				}
 			}			
 		}
-		getWeeklyScheduleData().sort();
 	}
 	
 	/**
@@ -193,6 +192,8 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 			row.setEmployeeName(employee.getFullName());
 			row.setPositionId(position.getId());
 			row.setPositionName(position.getName());
+			row.setPositionIndex(position.getPositionIndex());
+			row.setOrderByEmployee(isOrderByEmployee());
 			row.setOriginalEmployeeId(employee.getId());
 			row.setGroupById(getGroupById(employeeSchedule.getEmployee(), shift));
 			
@@ -875,10 +876,13 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		newRow.setEmployeeId(getNewEmployeeId());
 		newRow.setOriginalEmployeeId(getNewEmployeeId());
 		newRow.setPositionId(getNewEmployeePositionId());
-		newRow.setPositionName(getPositionName(getNewEmployeePositionId()));
+		Position newPosition = getPosition(getNewEmployeePositionId());
+		newRow.setPositionName(newPosition != null ? newPosition.getName() : null);
+		newRow.setPositionIndex(newPosition != null ? newPosition.getPositionIndex() : null);
 		newRow.setEmployeeName(getNewEmployeeName());
 		newRow.setGroupById(getAddEmployeeGroupById());
 		newRow.setWeeklySchedule(initializeWeeklySchedule());
+		newRow.setOrderByEmployee(isOrderByEmployee());
 
 		if(newEmployee != null) {
 			newRow.setEmployeeMaxDaysWeek(newEmployee.getMaxDaysWeek());
@@ -888,8 +892,6 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		
 		getWeeklyScheduleData().addScheduleRow(getAddEmployeeGroupById(), newRow);
 
-		getWeeklyScheduleData().sort();
-		
 		setNewEmployeeId(null);
 		setNewEmployeeName(null);
 		setNewEmployeePositionId(null);
@@ -902,6 +904,12 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 * @return
 	 */
 	protected abstract Integer getAddEmployeeGroupById();
+	
+	/**
+	 * 
+	 * @return
+	 */
+	protected abstract boolean isOrderByEmployee();
 	
 	/**
 	 * Prepare the data to be used on the edit page

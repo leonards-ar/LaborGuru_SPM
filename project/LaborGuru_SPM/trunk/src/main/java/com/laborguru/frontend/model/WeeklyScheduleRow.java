@@ -23,6 +23,8 @@ public class WeeklyScheduleRow implements Serializable, Comparable<WeeklySchedul
 	private static final long serialVersionUID = 8384388191864678705L;
 	private Integer positionId;
 	private String positionName;
+	private Integer positionIndex;
+	
 	private Integer employeeId;
 	private Integer originalEmployeeId;
 	private String employeeName;
@@ -33,6 +35,8 @@ public class WeeklyScheduleRow implements Serializable, Comparable<WeeklySchedul
 	private Integer employeeMaxHoursDay;
 	
 	private Integer groupById;
+	
+	private boolean orderByEmployee;
 	
 	private boolean firstRow = false;
 	
@@ -240,10 +244,49 @@ public class WeeklyScheduleRow implements Serializable, Comparable<WeeklySchedul
 			return 1;
 		}
 
-		if(getEmployeeName() != null) {
-			return object.getEmployeeName() != null ? getEmployeeName().compareToIgnoreCase(object.getEmployeeName()) : 1;
+		if(isOrderByEmployee()) {
+			if(getEmployeeName() != null) {
+				return object.getEmployeeName() != null ? getEmployeeName().compareToIgnoreCase(object.getEmployeeName()) : 1;
+			} else {
+				return object.getEmployeeName() != null ? -1 : 0;
+			}
 		} else {
-			return object.getEmployeeName() != null ? -1 : 0;
+			// Default is ordering by positionIndex
+			if(getPositionIndex() != null) {
+				return object.getPositionIndex() != null ? getPositionIndex().compareTo( object.getPositionIndex()) : 1;
+			} else if(getPositionName() != null) {
+				return object.getPositionName() != null ? getPositionName().compareToIgnoreCase(object.getPositionName()) : 1;
+			} else {
+				return object.getPositionIndex() != null ? -1 : 0;
+			}
 		}
+	}
+
+	/**
+	 * @return the orderByEmployee
+	 */
+	public boolean isOrderByEmployee() {
+		return orderByEmployee;
+	}
+
+	/**
+	 * @param orderByEmployee the orderByEmployee to set
+	 */
+	public void setOrderByEmployee(boolean orderByEmployee) {
+		this.orderByEmployee = orderByEmployee;
+	}
+
+	/**
+	 * @return the positionIndex
+	 */
+	public Integer getPositionIndex() {
+		return positionIndex;
+	}
+
+	/**
+	 * @param positionIndex the positionIndex to set
+	 */
+	public void setPositionIndex(Integer positionIndex) {
+		this.positionIndex = positionIndex;
 	}
 }

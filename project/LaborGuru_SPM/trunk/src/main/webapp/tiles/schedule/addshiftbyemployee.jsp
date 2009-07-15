@@ -291,9 +291,9 @@
 							<s:else>
 								<s:hidden id="scheduleOriginalEmployeeId_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].originalEmployeeId"/>
 								<s:hidden id="scheduleEmployeeMaxWeekHours_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].employeeMaxHoursDay"/>
-								<!--s:url id="employeeList" action="scheduleemployeeautocomplete" includeParams="none"/>
-								<s:autocompleter id="scheduleEmployee_%{#itScheduleData.index}" onchange="reloadEmployeeMaxHoursDay('', %{#itScheduleData.index}); return true;" name="scheduleData[%{#itScheduleData.index}].employeeName" keyName="scheduleData[%{#itScheduleData.index}].employeeId" loadMinimumCount="3" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring"/>
-								<script>djConfig.searchIds.push("scheduleEmployee_<s:property value="#itScheduleData.index"/>");</script-->
+								<!--s:url id="employeeList" action="scheduleemployeeautocomplete" includeParams="none"/-->
+								<!--s:autocompleter id="scheduleEmployee_%{#itScheduleData.index}" onchange="reloadEmployeeMaxHoursDay('', %{#itScheduleData.index}); return true;" name="scheduleData[%{#itScheduleData.index}].employeeName" keyName="scheduleData[%{#itScheduleData.index}].employeeId" loadMinimumCount="3" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring"/-->
+								<!--script>djConfig.searchIds.push("scheduleEmployee_<s:property value="#itScheduleData.index"/>");</script-->
 				    			<s:select id="scheduleEmployee_%{#itScheduleData.index}" onchange="reloadEmployeeMaxHoursDay('', %{#itScheduleData.index}); return true;" name="scheduleData[%{#itScheduleData.index}].employeeId" list="employees" listKey="id" listValue="fullName" theme="simple"/>
 							</s:else> 
 							<s:hidden id="inHourInput_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].inHour"/>
@@ -343,9 +343,9 @@
 							<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 								<tr>
 									<td>
-										<!--s:url id="employeeList" action="scheduleemployeeautocomplete" includeParams="none"/>
-										<s:autocompleter id="newEmployeeName" name="newEmployeeName" loadMinimumCount="3" keyName="newEmployeeId" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring" />
-										<script>djConfig.searchIds.push("newEmployeeName");</script-->
+										<!--s:url id="employeeList" action="scheduleemployeeautocomplete" includeParams="none"/-->
+										<!--s:autocompleter id="newEmployeeName" name="newEmployeeName" loadMinimumCount="3" keyName="newEmployeeId" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring" /-->
+										<!--script>djConfig.searchIds.push("newEmployeeName");</script-->
 										<s:select id="newEmployeeName" name="newEmployeeId" list="employees" listKey="id" listValue="fullName" theme="simple"/>
 									</td>
 									<td>

@@ -83,12 +83,12 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 	 * 
 	 * @return
 	 */
-	protected String getPositionName(Integer positionId) {
+	protected Position getPosition(Integer positionId) {
 		if(positionId != null) {
 			Position position = new Position();
 			position.setId(positionId);
 			position = getPositionService().getPositionById(position);
-			return position != null ? position.getName() : null;
+			return position;
 		} else {
 			return null;
 		}
@@ -287,7 +287,8 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 		if(position != null && position.getId() == null) {
 			return null;
 		} else if(position != null && position.getId() != null && position.getName() == null) {
-			position.setName(getPositionName(position.getId()));
+			Position auxPosition = getPosition(position.getId());
+			position.setName(auxPosition != null ? auxPosition.getName() : null);
 		}
 		return position;
 	}

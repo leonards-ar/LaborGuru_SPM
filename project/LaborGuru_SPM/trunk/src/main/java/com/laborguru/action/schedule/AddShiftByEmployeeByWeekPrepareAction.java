@@ -73,5 +73,15 @@ public class AddShiftByEmployeeByWeekPrepareAction extends AddShiftByWeekBaseAct
 	@Override
 	protected void initializeSelectView() {
 		setSelectView("addweeklyshiftbyemployee_selectView.action");
+	}
+
+	/**
+	 * 
+	 * @return
+	 * @see com.laborguru.action.schedule.AddShiftByWeekBaseAction#isOrderByEmployee()
+	 */
+	@Override
+	protected boolean isOrderByEmployee() {
+		return true;
 	}	
 }
