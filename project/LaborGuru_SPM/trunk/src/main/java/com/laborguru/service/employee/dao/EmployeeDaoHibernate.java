@@ -31,7 +31,7 @@ public class EmployeeDaoHibernate extends SpmHibernateDao implements EmployeeDao
 	 * 
 	 */
 	public List<Employee> getEmployeesByStore(Store store) {
-		return (List<Employee>)getHibernateTemplate().findByNamedParam("from Employee employee where employee.store.id = :searchString", "searchString", store.getId());
+		return (List<Employee>)getHibernateTemplate().findByNamedParam("from Employee employee where employee.store.id = :searchString order by employee.name, employee.surname", "searchString", store.getId());
 	}
 
 	/**

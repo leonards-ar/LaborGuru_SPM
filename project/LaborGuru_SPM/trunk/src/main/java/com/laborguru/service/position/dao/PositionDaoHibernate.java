@@ -26,7 +26,7 @@ public class PositionDaoHibernate extends HibernateDaoSupport implements Positio
 	 */
 	public List<Position> getPositionsByStore(Store store) {
 		return (List<Position>)getHibernateTemplate().findByNamedParam(
-				"from Position position where position.store.id = :storeId", "storeId",store.getId());
+				"from Position position where position.store.id = :storeId order by position.positionIndex", "storeId",store.getId());
 	}
 
 	/**

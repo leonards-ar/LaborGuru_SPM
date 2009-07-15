@@ -266,9 +266,10 @@
 				    	</s:else>				    	
 				    	<td class="weekScheduleNameCell" id="scheduleEmployee_<s:property value="#itScheduleData.index"/>">
 				    		<s:if test="%{editable}">
-							<s:url id="employeeList" action="scheduleemployeeautocomplete" includeParams="none"/>
+							<!--s:url id="employeeList" action="scheduleemployeeautocomplete" includeParams="none"/>
 							<s:autocompleter id="scheduleEmployee_%{#itScheduleData.index}" onchange="XXXreloadEmployeeMaxHoursDay('', %{#itScheduleData.index}); return true;" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].employeeName" keyName="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].employeeId" loadMinimumCount="3" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring"/>
-							<script>djConfig.searchIds.push("scheduleEmployee_<s:property value="#itScheduleData.index"/>");</script>
+							<script>djConfig.searchIds.push("scheduleEmployee_<s:property value="#itScheduleData.index"/>");</script-->
+							<s:select id="scheduleEmployee_%{#itScheduleData.index}" onchange="reloadEmployeeMaxHoursDay('', %{#itScheduleData.index}); return true;" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].employeeId" list="employees" listKey="id" listValue="fullName" theme="simple"/>
 							</s:if>
 							<s:else>
 							<s:property value="#dataRow.employeeName"/>
@@ -322,9 +323,10 @@
 				    		</s:else>				    	
 				    	</td>
 				    	<td class="weekScheduleNameCell">
-							<s:url id="employeeList" action="scheduleemployeeautocomplete" includeParams="none"/>
+							<!--s:url id="employeeList" action="scheduleemployeeautocomplete" includeParams="none"/>
 							<s:autocompleter id="newEmployeeName" name="newEmployeeName" loadMinimumCount="3" keyName="newEmployeeId" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring" />
-							<script>djConfig.searchIds.push("newEmployeeName");</script>
+							<script>djConfig.searchIds.push("newEmployeeName");</script-->
+							<s:select id="newEmployeeName" name="newEmployeeId" list="employees" listKey="id" listValue="fullName" theme="simple"/>
 				    	</td>
 						<td class="weekScheduleNameCell" align="center"><a href="<s:url value="#" includeParams="none"/>" onclick="showWaitSplash(); addweeklyshiftbyposition_form.action='addweeklyshiftbyposition_addEmployee.action'; addweeklyshiftbyposition_form.submit();"><img src="<s:url value="/images/add.png" includeParams="none"/>" /></a></td>
 						<td class="weekScheduleValueCell" colspan="7">&nbsp;</td>

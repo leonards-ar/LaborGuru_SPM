@@ -7,6 +7,7 @@ package com.laborguru.action.schedule;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -14,8 +15,10 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import com.laborguru.model.DailyProjectedStaffing;
+import com.laborguru.model.Employee;
 import com.laborguru.model.Position;
 import com.laborguru.model.Shift;
+import com.laborguru.model.comparator.UserFullNameComparator;
 import com.laborguru.service.data.ReferenceDataService;
 import com.laborguru.service.employee.EmployeeService;
 import com.laborguru.service.position.PositionService;
@@ -51,6 +54,8 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 	private Date copyTargetDay;
 	
 	private List<Position> positions;
+	private List<Employee> employees;
+	
 	private Position position;
 	
 	/**
@@ -268,6 +273,14 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 	}
 	
 	/**
+	 * 
+	 */
+	protected void loadEmployees() {
+		setEmployees(getEmployeeService().getEmployeesByStore(getEmployeeStore()));
+		Collections.sort(getEmployees(), new UserFullNameComparator());
+	}
+	
+	/**
 	 * @return the position
 	 */
 	public Position getPosition() {
@@ -343,6 +356,23 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 		}
 		
 		return total;
+	}
+
+	/**
+	 * @return the employees
+	 */
+	public List<Employee> getEmployees() {
+		if(employees == null) {
+			setEmployees(new ArrayList<Employee>());
+		}
+		return employees;
+	}
+
+	/**
+	 * @param employees the employees to set
+	 */
+	public void setEmployees(List<Employee> employees) {
+		this.employees = employees;
 	}
 
 }
