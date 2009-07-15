@@ -89,7 +89,9 @@ public class ActivitySharingPrepareAction extends StoreAdministrationBaseAction 
 		for (int i=0; i< positionsSize; i++){
 			Position positionAux = getStorePositions().get(i);
 			PositionGroup positionGroupAux = positionAux.getPositionGroup();
-			getPositionPositionGroups().add(i, positionGroupAux.getName());
+			if(positionGroupAux != null) {
+				getPositionPositionGroups().add(i, positionGroupAux.getName());
+			}
 		}
 	}
 
