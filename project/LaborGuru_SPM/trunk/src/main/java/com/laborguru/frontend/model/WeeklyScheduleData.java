@@ -122,7 +122,7 @@ public class WeeklyScheduleData implements Serializable {
 	 * @return
 	 */
 	public List<WeeklyScheduleRow> getScheduleDataFor(Integer groupById) {
-		return getIndexedScheduleData().get(groupById);
+		return getIndexedScheduleData().get(new ScheduleDataKey(groupById));
 	}
 	
 	/**

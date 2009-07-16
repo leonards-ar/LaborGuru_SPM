@@ -243,6 +243,8 @@
 						<s:hidden id="scheduleEmployeeMaxHoursWeek_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].employeeMaxHoursWeek"/>
 						<s:hidden id="scheduleEmployeeMaxDaysWeek_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].employeeMaxDaysWeek"/>
 						<s:hidden id="scheduleGroupById_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].groupById"/>
+						<s:hidden id="scheduleOrderByEmployee_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].orderByEmployee"/>
+						<s:hidden id="schedulePositionIndex_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].positionIndex"/>
 				    	<s:if test="#dataRow.firstRow">
 						<td class="weekScheduleNameCell" id="schedulePosition_<s:property value="#itScheduleData.index"/>" rowspan="<s:property value="weeklyScheduleData.getCountFor(#dataRow.positionId)"/>" valign="top">
 							<s:if test="%{editable}">
@@ -269,7 +271,8 @@
 							<!--s:url id="employeeList" action="scheduleemployeeautocomplete" includeParams="none"/-->
 							<!--s:autocompleter id="scheduleEmployee_%{#itScheduleData.index}" onchange="XXXreloadEmployeeMaxHoursDay('', %{#itScheduleData.index}); return true;" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].employeeName" keyName="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].employeeId" loadMinimumCount="3" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring"/-->
 							<!--script>djConfig.searchIds.push("scheduleEmployee_<s:property value="#itScheduleData.index"/>");</script-->
-							<s:select id="scheduleEmployee_%{#itScheduleData.index}" onchange="XXXreloadEmployeeMaxHoursDay('', %{#itScheduleData.index}); return true;" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].employeeId" list="employees" listKey="id" listValue="fullName" theme="simple"/>
+							<s:hidden id="scheduleEmployeeName_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].employeeName"/>
+							<s:select id="scheduleEmployee_%{#itScheduleData.index}" onchange="setValueWithSelectedText('scheduleEmployee_%{#itScheduleData.index}', 'scheduleEmployeeName_%{#itScheduleData.index}'); return true;" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].employeeId" list="employees" listKey="id" listValue="fullName" theme="simple"/>
 							</s:if>
 							<s:else>
 							<s:property value="#dataRow.employeeName"/>
@@ -326,9 +329,10 @@
 							<!--s:url id="employeeList" action="scheduleemployeeautocomplete" includeParams="none"/-->
 							<!--s:autocompleter id="newEmployeeName" name="newEmployeeName" loadMinimumCount="3" keyName="newEmployeeId" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring" /-->
 							<!--script>djConfig.searchIds.push("newEmployeeName");</script-->
-							<s:select id="newEmployeeName" name="newEmployeeId" list="employees" listKey="id" listValue="fullName" theme="simple"/>
+							<s:hidden id="newEmployeeName" name="newEmployeeName" value="%{newEmployeeName}"/>
+							<s:select id="newEmployeeId" name="newEmployeeId" onchange="setValueWithSelectedText('newEmployeeId', 'newEmployeeName'); return true;" list="employees" listKey="id" listValue="fullName" theme="simple"/>
 				    	</td>
-						<td class="weekScheduleNameCell" align="center"><a href="<s:url value="#" includeParams="none"/>" onclick="showWaitSplash(); addweeklyshiftbyposition_form.action='addweeklyshiftbyposition_addEmployee.action'; addweeklyshiftbyposition_form.submit();"><img src="<s:url value="/images/add.png" includeParams="none"/>" /></a></td>
+						<td class="weekScheduleNameCell" align="center"><a href="<s:url value="#" includeParams="none"/>" onclick="showWaitSplash(); setValueWithSelectedText('newEmployeeId', 'newEmployeeName'); addweeklyshiftbyposition_form.action='addweeklyshiftbyposition_addEmployee.action'; addweeklyshiftbyposition_form.submit();"><img src="<s:url value="/images/add.png" includeParams="none"/>" /></a></td>
 						<td class="weekScheduleValueCell" colspan="7">&nbsp;</td>
 				    </tr>				    
 				    <!-- New Employee -->
