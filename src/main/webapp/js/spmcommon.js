@@ -29,9 +29,9 @@ function getObjectByIDValue(objectId, defaultValue) {
 	var obj = getObjectByID(objectId);
 	var val = defaultValue;
 	if(obj) {
-		if(obj.value) { 
+		if(obj.value != undefined) { 
 			val = obj.value;
-		} else if(obj.innerHTML) {
+		} else if(obj.innerHTML != undefined) {
 			val = obj.innerHTML;
 		}
 	}
@@ -41,9 +41,9 @@ function getObjectByIDValue(objectId, defaultValue) {
 function setObjectByIDValue(objectId, value) {
 	var obj = getObjectByID(objectId);
 	if(obj) {
-		if(obj.value) { 
+		if(obj.value != undefined) { 
 			obj.value = value;
-		} else if(obj.innerHTML) {
+		} else if(obj.innerHTML != undefined) {
 			obj.innerHTML = value;
 		}
 	}	
@@ -59,15 +59,31 @@ function setObjectByIDClass(objectId, className) {
 function setObjectByIDValueAndClass(objectId, value, className) {
 	var obj = getObjectByID(objectId);
 	if(obj) {
-		if(obj.value) { 
+		if(obj.value != undefined) { 
 			obj.value = value;
-		} else if(obj.innerHTML) {
+		} else if(obj.innerHTML != undefined) {
 			obj.innerHTML = value;
 		}
 		if(className) {
 			obj.className = className;
 		}
 	}	
+}
+
+function setValueWithSelectedText(srcComboId, destInputId) {
+	var txt = getSelectText(srcComboId);
+	setObjectByIDValue(destInputId, txt);
+}
+
+function getSelectText(objectId) {
+	var obj = getObjectByID(objectId);
+	var t = '';
+	if(obj != undefined) {
+		if(!isNaN(obj.selectedIndex)) {
+			t = obj.options[obj.selectedIndex].text;
+		}
+	}
+	return t;
 }
 
 function toInt(n) {

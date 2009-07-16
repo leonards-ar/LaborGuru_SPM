@@ -287,7 +287,8 @@
 								<!--s:url id="employeeList" action="scheduleemployeeautocomplete" includeParams="none"/-->
 								<!--s:autocompleter id="%{#itSchedule.index}scheduleEmployee_%{#itScheduleData.index}" onchange="reloadEmployeeMaxHoursDay('%{#itSchedule.index}', %{#itScheduleData.index}); return true;" name="positionScheduleData[%{#itSchedule.index}].scheduleData[%{#itScheduleData.index}].employeeName" keyName="positionScheduleData[%{#itSchedule.index}].scheduleData[%{#itScheduleData.index}].employeeId" loadMinimumCount="3" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring"/-->
 								<!--script>djConfig.searchIds.push("<s:property value="#itSchedule.index"/>scheduleEmployee_<s:property value="#itScheduleData.index"/>");</script-->
-								<s:select id="%{#itSchedule.index}scheduleEmployee_%{#itScheduleData.index}" onchange="reloadEmployeeMaxHoursDay('%{#itSchedule.index}', %{#itScheduleData.index}); return true;" name="positionScheduleData[%{#itSchedule.index}].scheduleData[%{#itScheduleData.index}].employeeId" list="employees" listKey="id" listValue="fullName" theme="simple"/>
+								<s:hidden id="%{#itSchedule.index}scheduleEmployeeName_%{#itScheduleData.index}" name="positionScheduleData[%{#itSchedule.index}].scheduleData[%{#itScheduleData.index}].employeeName" value="%{positionScheduleData[%{#itSchedule.index}].scheduleData[%{#itScheduleData.index}].employeeName}"/>
+								<s:select id="%{#itSchedule.index}scheduleEmployee_%{#itScheduleData.index}" onchange="setValueWithSelectedText('%{#itSchedule.index}scheduleEmployee_%{#itScheduleData.index}', '%{#itSchedule.index}scheduleEmployeeName_%{#itScheduleData.index}'); return true;" name="positionScheduleData[%{#itSchedule.index}].scheduleData[%{#itScheduleData.index}].employeeId" list="employees" listKey="id" listValue="fullName" theme="simple"/>
 							</s:else> 
 							<s:hidden id="%{#itSchedule.index}inHourInput_%{#itScheduleData.index}" name="positionScheduleData[%{#itSchedule.index}].scheduleData[%{#itScheduleData.index}].inHour"/>
 							<s:hidden id="%{#itSchedule.index}outHourInput_%{#itScheduleData.index}" name="positionScheduleData[%{#itSchedule.index}].scheduleData[%{#itScheduleData.index}].outHour"/>
@@ -331,12 +332,13 @@
 										<!--s:url id="employeeList" action="scheduleemployeeautocomplete" includeParams="none"/-->
 										<!--s:autocompleter id="%{#itSchedule.index}newEmployeeName" name="positionScheduleData[%{#itSchedule.index}].newEmployeeName" loadMinimumCount="3" keyName="positionScheduleData[%{#itSchedule.index}].newEmployeeId" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring" /-->
 										<!--script>djConfig.searchIds.push("<s:property value="#itSchedule.index"/>newEmployeeName");</script-->
-										<s:select id="%{#itSchedule.index}newEmployeeName" name="positionScheduleData[%{#itSchedule.index}].newEmployeeId" list="employees" listKey="id" listValue="fullName" theme="simple"/>
+										<s:hidden id="%{#itSchedule.index}newEmployeeName" name="positionScheduleData[%{#itSchedule.index}].newEmployeeName" value="%{positionScheduleData[%{#itSchedule.index}].newEmployeeName}"/>
+										<s:select id="%{#itSchedule.index}newEmployeeId" onchange="setValueWithSelectedText('%{#itSchedule.index}newEmployeeId', '%{#itSchedule.index}newEmployeeName'); return true;" name="positionScheduleData[%{#itSchedule.index}].newEmployeeId" list="employees" listKey="id" listValue="fullName" theme="simple"/>
 									</td>
 									<td>
 										&nbsp;
 									</td>
-									<td><a href="<s:url value="#" includeParams="none"/>" onclick="showWaitSplash(); addshiftbyemployeebyposition_form.action='addshiftbyemployeebyposition_addEmployee.action'; addshiftbyemployeebyposition_form.scheduleDataIndex.value='<s:property value="#itSchedule.index"/>' ;addshiftbyemployeebyposition_form.submit();"><img src="<s:url value="/images/add.png" includeParams="none"/>" /></a></td>
+									<td><a href="<s:url value="#" includeParams="none"/>" onclick="showWaitSplash(); setValueWithSelectedText('%{#itSchedule.index}newEmployeeId', '%{#itSchedule.index}newEmployeeName'); addshiftbyemployeebyposition_form.action='addshiftbyemployeebyposition_addEmployee.action'; addshiftbyemployeebyposition_form.scheduleDataIndex.value='<s:property value="#itSchedule.index"/>' ;addshiftbyemployeebyposition_form.submit();"><img src="<s:url value="/images/add.png" includeParams="none"/>" /></a></td>
 								</tr>
 							</table>
 						</td>    
