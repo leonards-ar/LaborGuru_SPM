@@ -89,9 +89,8 @@ public class ActivitySharingPrepareAction extends StoreAdministrationBaseAction 
 		for (int i=0; i< positionsSize; i++){
 			Position positionAux = getStorePositions().get(i);
 			PositionGroup positionGroupAux = positionAux.getPositionGroup();
-			if(positionGroupAux != null) {
-				getPositionPositionGroups().add(i, positionGroupAux.getName());
-			}
+			String groupNameAux = (positionGroupAux != null)? positionGroupAux.getName() : null;
+			getPositionPositionGroups().add(i, groupNameAux);
 		}
 	}
 
@@ -158,6 +157,16 @@ public class ActivitySharingPrepareAction extends StoreAdministrationBaseAction 
 		//Setting the group names into the store position list
 		int positionsSize = getStorePositions().size();
 		
+		for(String positionGroup:getPositionPositionGroups()){
+			if ((positionGroup == null) || "".equals(positionGroup.trim())){
+				addActionError(getText("error.activity.sharing.required"));
+			}
+		}
+		
+		if (this.hasActionErrors()){
+			return SpmActionResult.INPUT.getResult();
+		}
+				
 		for (int i=0; i< positionsSize; i++){
 			Position positionAux = getStorePositions().get(i);
 			String positionPositionGroupName = getPositionPositionGroups().get(i);
