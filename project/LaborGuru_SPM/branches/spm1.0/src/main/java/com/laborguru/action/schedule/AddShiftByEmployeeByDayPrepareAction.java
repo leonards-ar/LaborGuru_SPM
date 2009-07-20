@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.ScheduleRow;
 import com.laborguru.model.Employee;
+import com.laborguru.model.Position;
 import com.laborguru.model.Shift;
 import com.laborguru.util.CalendarUtils;
 import com.laborguru.util.SpmConstants;
@@ -61,6 +62,7 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 	 */
 	private void loadPageData() {
 		loadPositions();
+		loadEmployees();
 		loadCalendarData();
 		loadCopyTargetDay();
 	}
@@ -263,7 +265,8 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 		newRow.setEmployeeId(getNewEmployeeId());
 		newRow.setOriginalEmployeeId(getNewEmployeeId());
 		newRow.setPositionId(getNewEmployeePositionId());
-		newRow.setPositionName(getPositionName(getNewEmployeePositionId()));
+		Position newPosition = getPosition(getNewEmployeePositionId());
+		newRow.setPositionName(newPosition != null ? newPosition.getName() : null);
 		newRow.setEmployeeName(getNewEmployeeName());
 		newRow.setSchedule(initializeScheduleRow());
 		newRow.setHours(initializeScheduleHoursRow());

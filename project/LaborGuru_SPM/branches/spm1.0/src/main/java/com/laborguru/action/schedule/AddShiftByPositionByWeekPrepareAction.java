@@ -62,6 +62,7 @@ public class AddShiftByPositionByWeekPrepareAction extends AddShiftByWeekBaseAct
 		return employeeSchedule;
 	}
 
+	
 	/**
 	 * 
 	 * @return
@@ -80,5 +81,15 @@ public class AddShiftByPositionByWeekPrepareAction extends AddShiftByWeekBaseAct
 	@Override
 	protected void initializeSelectView() {
 		setSelectView("addweeklyshiftbyposition_selectView.action");
+	}
+
+	/**
+	 * 
+	 * @return
+	 * @see com.laborguru.action.schedule.AddShiftByWeekBaseAction#isOrderByEmployee()
+	 */
+	@Override
+	protected boolean isOrderByEmployee() {
+		return false;
 	}		
 }

@@ -354,16 +354,56 @@ public class Shift extends SpmObject {
 	 * 
 	 * @return
 	 */
+	private Date getStoreStartTime() {
+		Store store = getStore();
+		DayOfWeek dof = getDayOfWeek();
+		if(store != null && dof != null) {
+			return getStore().getStoreScheduleStartHour(dof);
+		} else {
+			return null;
+		}		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	private Date getStoreEndTime() {
+		Store store = getStore();
+		DayOfWeek dof = getDayOfWeek();
+		if(store != null && dof != null) {
+			return getStore().getStoreScheduleEndHour(dof);
+		} else {
+			return null;
+		}			
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public Double getServiceHours() {
 		OperationTime opTime = getStoreOperationTime();
 		if(CalendarUtils.equalsTime(opTime.getOpenHour(), opTime.getCloseHour())) {
 			// Operation time is the whole day!
 			return CalendarUtils.differenceInHours(getToHour(), getFromHour());
 		} else {
-			Date from = CalendarUtils.smallerTime(getFromHour(), opTime.getOpenHour()) ? opTime.getOpenHour() : getFromHour();
-			Date to = CalendarUtils.greaterTime(getToHour(), opTime.getCloseHour()) ? opTime.getCloseHour() : getToHour();
-
-			return CalendarUtils.differenceInHours(to, from);
+			if(CalendarUtils.inRangeIncludingEndTime(getFromHour(), opTime.getOpenHour(), opTime.getCloseHour()) && CalendarUtils.inRangeIncludingEndTime(getToHour(), opTime.getOpenHour(), opTime.getCloseHour())) {
+				// The whole shift is inside service period
+				return CalendarUtils.differenceInHours(getToHour(), getFromHour());
+			} else if(CalendarUtils.inRangeIncludingEndTime(getFromHour(), opTime.getOpenHour(), opTime.getCloseHour())) {
+				// The shift starts on service period
+				return CalendarUtils.differenceInHours(opTime.getCloseHour(), getFromHour());
+			} else if(CalendarUtils.inRangeIncludingEndTime(getToHour(), opTime.getOpenHour(), opTime.getCloseHour())) {
+				// The shift ends on service period
+				return CalendarUtils.differenceInHours(getToHour(), opTime.getOpenHour());
+			} else if(CalendarUtils.inRangeIncludingEndTime(opTime.getOpenHour(), getFromHour(), getToHour()) && CalendarUtils.inRangeIncludingEndTime(opTime.getCloseHour(), getFromHour(), getToHour())) {
+				// The shift occupies all the service period and more!
+				return CalendarUtils.differenceInHours(opTime.getCloseHour(), opTime.getOpenHour());
+			} else {
+				// No service hours
+				return new Double(0.0);
+			}
 		}
 	}
 
@@ -381,10 +421,21 @@ public class Shift extends SpmObject {
 	 */
 	public Double getOpeningHours() {
 		OperationTime opTime = getStoreOperationTime();
+		Date start = getStoreStartTime();
 		if(CalendarUtils.equalsTime(opTime.getOpenHour(), opTime.getCloseHour())) {
 			// Operation time is the whole day!
 			return new Double(0.0);
-		} else if(CalendarUtils.smallerTime(getFromHour(), opTime.getOpenHour())) {
+		} else if(CalendarUtils.equalsTime(opTime.getOpenHour(), start)) {
+			// There is no opening time configured
+			return new Double(0.0);
+		} else if(CalendarUtils.inRangeNotIncludingEndTime(getFromHour(), start, opTime.getOpenHour()) && CalendarUtils.inRangeNotIncludingEndTime(getToHour(), start, opTime.getOpenHour())) {
+			// The whole shift is inside the opening period
+			return CalendarUtils.differenceInHours(getToHour(), getFromHour());
+		} else if(CalendarUtils.inRangeNotIncludingEndTime(getToHour(), start, opTime.getOpenHour())) {
+			// The shifts ends in opening period
+			return CalendarUtils.differenceInHours(getToHour(), start);
+		} else if(CalendarUtils.inRangeNotIncludingEndTime(getFromHour(), start, opTime.getOpenHour())) {
+			// The shifts starts in openind period
 			return CalendarUtils.differenceInHours(opTime.getOpenHour(), getFromHour());
 		} else {
 			return new Double(0.0);
@@ -405,10 +456,22 @@ public class Shift extends SpmObject {
 	 */
 	public Double getClosingHours() {
 		OperationTime opTime = getStoreOperationTime();
+		Date end = getStoreEndTime();
+		
 		if(CalendarUtils.equalsTime(opTime.getOpenHour(), opTime.getCloseHour())) {
 			// Operation time is the whole day!
 			return new Double(0.0);
-		} else if(CalendarUtils.greaterTime(getToHour(), opTime.getCloseHour())) {
+		} else if(CalendarUtils.equalsTime(opTime.getCloseHour(), end)) {
+			// There is no closing time configured
+			return new Double(0.0);
+		} else if(CalendarUtils.inRangeNotIncludingStartTime(getFromHour(), opTime.getCloseHour(), end) && CalendarUtils.inRangeNotIncludingStartTime(getToHour(), opTime.getCloseHour(), end)) {
+			// The whole shift is inside the closing period
+			return CalendarUtils.differenceInHours(getToHour(), getFromHour());
+		} else if(CalendarUtils.inRangeNotIncludingStartTime(getFromHour(), opTime.getCloseHour(), end)) {
+			// The shifts starts in closing period
+			return CalendarUtils.differenceInHours(end, getFromHour());
+		} else if(CalendarUtils.inRangeNotIncludingStartTime(getToHour(), opTime.getCloseHour(), end)) {
+			// The shifts ends in closing period
 			return CalendarUtils.differenceInHours(getToHour(), opTime.getCloseHour());
 		} else {
 			return new Double(0.0);
