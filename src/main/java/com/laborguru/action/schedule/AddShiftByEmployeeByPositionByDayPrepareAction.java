@@ -60,6 +60,7 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftByDa
 	 */
 	private void loadPageData() {
 		loadPositions();
+		loadEmployees();
 		loadCalendarData();
 		loadCopyTargetDay();
 	}
@@ -225,7 +226,8 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftByDa
 			newRow.setEmployeeId(entry.getNewEmployeeId());
 			newRow.setOriginalEmployeeId(entry.getNewEmployeeId());
 			newRow.setPositionId(entry.getNewEmployeePositionId());
-			newRow.setPositionName(getPositionName(entry.getNewEmployeePositionId()));
+			Position newPosition = getPosition(entry.getNewEmployeePositionId());
+			newRow.setPositionName(newPosition != null ? newPosition.getName() : null);
 			newRow.setEmployeeName(entry.getNewEmployeeName());
 			newRow.setSchedule(initializeScheduleRow());
 			newRow.setHours(initializeScheduleHoursRow());

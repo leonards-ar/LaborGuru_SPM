@@ -26,7 +26,7 @@ public class WeeklyScheduleData implements Serializable {
 	 */
 	private static final long serialVersionUID = -7341616935357394374L;
 	
-	private Map<Integer, List<WeeklyScheduleRow>> indexedScheduleData = null;
+	private Map<ScheduleDataKey, List<WeeklyScheduleRow>> indexedScheduleData = null;
 
 	private List<WeeklyScheduleRow> scheduleData = null;
 	
@@ -39,7 +39,7 @@ public class WeeklyScheduleData implements Serializable {
 	/**
 	 * @return the indexedScheduleData
 	 */
-	private Map<Integer, List<WeeklyScheduleRow>> getIndexedScheduleData() {
+	private Map<ScheduleDataKey, List<WeeklyScheduleRow>> getIndexedScheduleData() {
 		if(indexedScheduleData == null) {
 			setIndexedScheduleData(buildIndexedScheduleData());
 		}
@@ -49,15 +49,15 @@ public class WeeklyScheduleData implements Serializable {
 	/**
 	 * 
 	 */
-	private Map<Integer, List<WeeklyScheduleRow>> buildIndexedScheduleData() {
-		Map<Integer, List<WeeklyScheduleRow>> indexedData = new HashMap<Integer, List<WeeklyScheduleRow>>();
+	private Map<ScheduleDataKey, List<WeeklyScheduleRow>> buildIndexedScheduleData() {
+		Map<ScheduleDataKey, List<WeeklyScheduleRow>> indexedData = new HashMap<ScheduleDataKey, List<WeeklyScheduleRow>>();
 		Integer aGroupById = null;
 		List<WeeklyScheduleRow> data = null;
 		
 		for(WeeklyScheduleRow aRow : getScheduleData()) {
 			if(aGroupById == null || !aGroupById.equals(aRow.getGroupById())) {
 				if(data != null && aGroupById != null) {
-					indexedData.put(aGroupById, data);
+					indexedData.put(new ScheduleDataKey(aGroupById, aRow.isOrderByEmployee() ? aRow.getEmployeeName() : aRow.getPositionIndex()), data);
 					data = null;
 				}
 				aGroupById = aRow.getGroupById();
@@ -66,8 +66,9 @@ public class WeeklyScheduleData implements Serializable {
 			data.add(aRow);
 		}
 		
-		if(data != null && aGroupById != null) {
-			indexedData.put(aGroupById, data);
+		if(data != null && aGroupById != null && !data.isEmpty()) {
+			WeeklyScheduleRow aRow = data.get(0);
+			indexedData.put(new ScheduleDataKey(aGroupById, aRow.isOrderByEmployee() ? aRow.getEmployeeName() : aRow.getPositionIndex()), data);
 			data = null;
 		}		
 		
@@ -95,7 +96,7 @@ public class WeeklyScheduleData implements Serializable {
 	/**
 	 * @param indexedScheduleData the indexedScheduleData to set
 	 */
-	private void setIndexedScheduleData(Map<Integer, List<WeeklyScheduleRow>> indexedScheduleData) {
+	private void setIndexedScheduleData(Map<ScheduleDataKey, List<WeeklyScheduleRow>> indexedScheduleData) {
 		this.indexedScheduleData = indexedScheduleData;
 	}	
 	
@@ -108,7 +109,7 @@ public class WeeklyScheduleData implements Serializable {
 		List<WeeklyScheduleRow> data = getScheduleDataFor(groupById);
 		if(data == null) {
 			data = new ArrayList<WeeklyScheduleRow>();
-			getIndexedScheduleData().put(groupById, data);
+			getIndexedScheduleData().put(new ScheduleDataKey(groupById, row.isOrderByEmployee() ? row.getEmployeeName() : row.getPositionIndex()), data);
 		}
 		data.add(row);
 
@@ -121,7 +122,7 @@ public class WeeklyScheduleData implements Serializable {
 	 * @return
 	 */
 	public List<WeeklyScheduleRow> getScheduleDataFor(Integer groupById) {
-		return getIndexedScheduleData().get(groupById);
+		return getIndexedScheduleData().get(new ScheduleDataKey(groupById));
 	}
 	
 	/**
@@ -148,7 +149,13 @@ public class WeeklyScheduleData implements Serializable {
 	 */
 	public List<WeeklyScheduleRow> getAllScheduleData() {
 		List<WeeklyScheduleRow> data = new ArrayList<WeeklyScheduleRow>();
-		for(List<WeeklyScheduleRow> l : getIndexedScheduleData().values()) {
+		
+		List<ScheduleDataKey> keys = new ArrayList<ScheduleDataKey>(getIndexedScheduleData().keySet());
+		Collections.sort(keys);
+		
+		for(ScheduleDataKey aKey : keys) {
+			List<WeeklyScheduleRow> l = getIndexedScheduleData().get(aKey);
+			Collections.sort(l);
 			if(l != null && l.size() > 0) {
 				l.get(0).setFirstRow(true);
 				for(int i = 1; i < l.size(); i++) {
@@ -221,14 +228,5 @@ public class WeeklyScheduleData implements Serializable {
 		}
 		
 		return employeeData;
-	}
-	
-	/**
-	 * 
-	 */
-	public void sort() {
-		if(getScheduleData() != null) {
-			Collections.sort(getScheduleData());
-		}
 	}
 }
