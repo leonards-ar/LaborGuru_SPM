@@ -174,7 +174,7 @@ public class ActivitySharingPrepareAction extends StoreAdministrationBaseAction 
 			PositionGroup positionGroupAux = getPositionGroupByName(positionPositionGroupName);
 			
 			if (positionGroupAux == null){
-				throw new IllegalArgumentException("PositionGroup with name:"+positionPositionGroupName+" was not found!!!");
+				throw new IllegalArgumentException("PositionGroup with name: " + positionPositionGroupName + " was not found.");
 			}
 			
 			Position positionToUpdate = getStore().getPositionByName(positionAux.getName());
