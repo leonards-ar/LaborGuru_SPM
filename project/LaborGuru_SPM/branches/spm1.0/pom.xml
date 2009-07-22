@@ -86,7 +86,18 @@
 				<debug.level>WARN</debug.level>
 				<show_sql>false</show_sql>
 			</properties>
-		</profile>		
+		</profile>
+		<profile>
+			<id>mp01</id>
+			<properties>
+				<db.url>jdbc:mysql://localhost:3306/spm</db.url>
+				<db.username>spm</db.username>
+				<db.password>java1234</db.password>
+				<db.schema>spm</db.schema>
+				<debug.level>WARN</debug.level>
+				<show_sql>false</show_sql>
+			</properties>
+		</profile>				
 	</profiles>
 	<build>
 		<finalName>spm</finalName>
