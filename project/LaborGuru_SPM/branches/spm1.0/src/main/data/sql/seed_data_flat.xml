@@ -80,13 +80,13 @@
   <tbl_menu_items menu_item_id="12" label_key="projection.submenu.daily" help_key="PROJECTION_DAILY_HELP" target="/projection/daily_edit.action" position="0" parent_id="11" permission_id="12"/>
   <tbl_menu_items menu_item_id="13" label_key="projection.submenu.halfhour" help_key="PROJECTION_HALFHOUR_HELP" target="/projection/halfhour_edit.action" position="1" parent_id="11" permission_id="13"/>
   <tbl_menu_items menu_item_id="14" label_key="projection.submenu.settings" help_key="PROJECTION_SETTINGS_HELP" target="/projection/settings_edit.action" position="2" parent_id="11" permission_id="14"/>
-  <tbl_menu_items menu_item_id="15" label_key="schedule.menu.label" help_key="SCHEDULE_MENU_HELP" position="6" permission_id="42"/>
+  <tbl_menu_items menu_item_id="15" label_key="schedule.menu.label" help_key="SCHEDULE_MENU_HELP" position="6" target="/schedule/addweeklyshiftbyemployee_edit.action?selectedDate=${selectedDate}&amp;selectedWeekDay=${selectedWeekDay}" permission_id="42"/>
   <tbl_menu_items menu_item_id="16" label_key="schedule.submenu.addshift" help_key="SCHEDULE_ADDSHIFT_HELP" target="/schedule/addweeklyshiftbyemployee_edit.action?selectedDate=${selectedDate}&amp;selectedWeekDay=${selectedWeekDay}" position="1" parent_id="15" permission_id="15"/>
   <tbl_menu_items menu_item_id="17" label_key="user.menu.label" help_key="USER_MENU_HELP" target="/user/user_list.action" position="2" permission_id="16"/>
   <tbl_menu_items menu_item_id="18" label_key="user.submenu.list" help_key="USER_LIST_HELP" target="/user/user_list.action" position="1" parent_id="17" permission_id="17"/>
   <tbl_menu_items menu_item_id="19" label_key="user.submenu.create" help_key="USER_ADD_HELP" target="/user/user_add.action" position="0" parent_id="17" permission_id="18"/>
   <tbl_menu_items menu_item_id="20" label_key="store.submenu.uploadsales" help_key="STORE_UPLOAD_SALES_HELP" target="/sales/sales_edit.action" position="3" parent_id="5" permission_id="6"/>
-  <tbl_menu_items menu_item_id="21" label_key="report.menu.label" help_key="REPORT_MENU_HELP" position="7" permission_id="19"/>
+  <tbl_menu_items menu_item_id="21" label_key="report.menu.label" help_key="REPORT_MENU_HELP" position="7"  target="/report/totalHoursReport_showFirstReport.action?selectedDate=${selectedDate}&amp;selectedWeekDay=${selectedWeekDay}" permission_id="19"/>
   <tbl_menu_items menu_item_id="22" label_key="store.submenu.uploadstoredefinition" help_key="STORE_UPLOAD_DEFINITION_HELP" target="/store/uploadDefinition_edit.action" position="2" parent_id="5" permission_id="6"/>
   <tbl_menu_items menu_item_id="23" label_key="report.weekByDay.title" help_key="WEEK_BY_DAY_REPORT_HELP" target="/report/totalHoursReport_showFirstReport.action?selectedDate=${selectedDate}&amp;selectedWeekDay=${selectedWeekDay}" position="1" parent_id="21" permission_id="19"/>
   <tbl_menu_items menu_item_id="24" label_key="report.dailyHours.title" help_key="DAY_BY_HALFHOUR_REPORT_HELP" target="/report/halfHourReport_showFirstReport.action?selectedDate=${selectedDate}&amp;selectedWeekDay=${selectedWeekDay}" position="2" parent_id="21" permission_id="19"/>
