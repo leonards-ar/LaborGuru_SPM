@@ -31,6 +31,13 @@ public interface EmployeeService extends Service {
 	 * @param employee Employee to Delete
 	 */
 	void delete(Employee employee);
+
+	/**
+	 * 
+	 * @param employee
+	 * @throws SpmCheckedException
+	 */
+	void logicalDelete(Employee employee) throws SpmCheckedException;
 	
 	/**
 	 * Retrieves an employee by Id

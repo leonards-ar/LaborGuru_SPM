@@ -112,7 +112,7 @@ public abstract class UserBaseAction extends SpmAction {
 	public String delete() throws Exception {		
 		//Getting user
 		User auxUser = getUserService().getUserById(getUser());		
-		getUserService().delete(auxUser);
+		getUserService().logicalDelete(auxUser);
 		
 		return SpmActionResult.LISTACTION.getResult();
 	}	
