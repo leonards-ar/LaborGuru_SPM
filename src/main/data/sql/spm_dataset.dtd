@@ -179,7 +179,6 @@
 	upload_file_id CDATA #REQUIRED
 	upload_date CDATA #IMPLIED
 	filename CDATA #IMPLIED
-	upload_type CDATA #REQUIRED
 >
 
 <!ELEMENT tbl_historic_sales EMPTY>

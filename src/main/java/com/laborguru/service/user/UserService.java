@@ -53,6 +53,13 @@ public interface UserService extends Service {
 	void delete(User user);
 	
 	/**
+	 * 
+	 * @param user
+	 * @throws SpmCheckedException
+	 */
+	void logicalDelete(User user) throws SpmCheckedException;
+	
+	/**
 	 * Retrieves a user by id
 	 * @param user
 	 * @return

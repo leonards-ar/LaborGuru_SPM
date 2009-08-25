@@ -31,7 +31,7 @@ public class EmployeeDaoHibernate extends SpmHibernateDao implements EmployeeDao
 	 * 
 	 */
 	public List<Employee> getEmployeesByStore(Store store) {
-		return (List<Employee>)getHibernateTemplate().findByNamedParam("from Employee employee where employee.store.id = :searchString order by employee.name, employee.surname", "searchString", store.getId());
+		return (List<Employee>)getHibernateTemplate().findByNamedParam("from Employee employee where employee.store.id = :searchString and employee.status != 2", "searchString", store.getId());
 	}
 
 	/**
@@ -63,10 +63,10 @@ public class EmployeeDaoHibernate extends SpmHibernateDao implements EmployeeDao
 		
 		log.debug("In applyFilter with search employee filter:"+ searchEmployee);
 		
-		StringBuilder sb = new StringBuilder("from Employee employee where");
+		StringBuilder sb = new StringBuilder("from Employee employee where employee.status != 2");
 
 		if (includeInFilter(searchEmployee.getStore())){
-			sb.append(" employee.store.id = " + searchEmployee.getStore().getId());
+			sb.append(" and employee.store.id = " + searchEmployee.getStore().getId());
 		}
 		
 		if (includeInFilter(searchEmployee.getEmployeeId())){

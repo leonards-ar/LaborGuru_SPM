@@ -143,7 +143,7 @@ public class SessionMenuWrapper implements Serializable {
 	 */
 	public void updateSelectedSubItemIndex() {
 		MenuItem selected = getSelectedItem();
-		if(selected != null) {
+		if(selected != null && selected.getTarget() != null) {
 			List<MenuItem> childs = selected.getOrderedChildMenuItems();
 			MenuItem aChild;
 			for(int i = 0; i < childs.size(); i++) {
@@ -152,6 +152,8 @@ public class SessionMenuWrapper implements Serializable {
 					setSelectedSubItemIndex(i);
 				}
 			}
+		} else {
+			setSelectedSubItemIndex(0);
 		}
 	}
 	
