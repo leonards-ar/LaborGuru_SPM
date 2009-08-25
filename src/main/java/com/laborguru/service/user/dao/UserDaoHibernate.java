@@ -41,7 +41,7 @@ public class UserDaoHibernate extends SpmHibernateDao implements UserDao {
 	public User getUserByUsername(User user) {
 
 		List<User> result = (List<User>)getHibernateTemplate().findByNamedParam(
-				"from User user where user.userName = :searchString", "searchString",user.getUserName());
+				"from User user where user.userName = :searchString and user.status != 2", "searchString",user.getUserName());
 
 		User retUser = null;
 		
@@ -59,7 +59,7 @@ public class UserDaoHibernate extends SpmHibernateDao implements UserDao {
 	 */
 	public Boolean existUser(String username){
 		List<String> result = (List<String>)getHibernateTemplate().findByNamedParam(
-				"select user.userName from User user where user.userName = :searchString", "searchString",username);
+				"select user.userName from User user where user.userName = :searchString and user.status != 2", "searchString",username);
 				
 		return result.size() != 0;
 	}
@@ -89,7 +89,7 @@ public class UserDaoHibernate extends SpmHibernateDao implements UserDao {
 	 * @see com.laborguru.service.user.dao.UserDao#findAdminUsers()
 	 */
 	public List<User> findUsersByProfile(Profile profile){
-		return (List<User>)getHibernateTemplate().findByNamedParam("select u from User as u join u.profiles as profile where profile.id = :searchString", "searchString", profile.getId());
+		return (List<User>)getHibernateTemplate().findByNamedParam("select u from User as u join u.profiles as profile where profile.id = :searchString  and u.status != 2", "searchString", profile.getId());
 	}
 
 	/**
@@ -118,7 +118,11 @@ public class UserDaoHibernate extends SpmHibernateDao implements UserDao {
 			}
 			sb.append(" or user.surname like '%" + searchUserFilter.getFullName() + "%')");
 		}
-		
+
+		if(sb.indexOf("where") >= 0) {
+			sb.append(" and");
+		}
+		sb.append(" user.status != 2");
 		
 
 		if(log.isDebugEnabled()) {
@@ -144,7 +148,7 @@ public class UserDaoHibernate extends SpmHibernateDao implements UserDao {
 	 * @see com.laborguru.service.user.dao.UserDao#getNumberOfUsers()
 	 */
 	public Integer getNumberOfUsers() {
-		List<Long> results = (List<Long>)getHibernateTemplate().find("select count(*) from User");
+		List<Long> results = (List<Long>)getHibernateTemplate().find("select count(*) from User where status != 2");
 		Long retVal = results.get(0);
 		
 		return Integer.valueOf(retVal.intValue());

@@ -8,6 +8,7 @@ import org.springframework.dao.DataAccessException;
 
 import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.User;
+import com.laborguru.model.UserStatus;
 import com.laborguru.service.user.UserService;
 import com.mindpool.security.service.UserAuthenticationService;
 
@@ -40,7 +41,7 @@ public class AuthenticationService implements UserAuthenticationService {
 		}
 
 		if (user != null) {
-			if (user.getStatus() == 1) {
+			if (!user.isEnabled()) {
 				reason = UserAuthenticationService.USER_DISABLED_ERROR;
 			} else if (password.equals(user.getPassword())) {
 				user.setLastLogon(new Date());
@@ -50,7 +51,7 @@ public class AuthenticationService implements UserAuthenticationService {
 				int loginCount = user.getLoginCount();
 				user.setLoginCount(++loginCount);
 				if (loginCount == loginTries) {
-					user.setStatus(1);
+					user.setUserStatus(UserStatus.DISABLED);
 					reason = UserAuthenticationService.USER_DISABLED_ERROR;
 				} else {
 					reason = UserAuthenticationService.BAD_PASSWORD;

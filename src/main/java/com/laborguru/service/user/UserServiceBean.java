@@ -10,6 +10,7 @@ import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.Profile;
 import com.laborguru.model.User;
+import com.laborguru.model.UserStatus;
 import com.laborguru.model.filter.SearchUserFilter;
 import com.laborguru.service.user.dao.UserDao;
 
@@ -215,5 +216,24 @@ public class UserServiceBean implements UserService {
 	 */
 	public Integer getNumberOfEnabledUsers() {
 		return userDao.getNumberOfEnabledUsers();
+	}
+
+	/**
+	 * 
+	 * @param user
+	 * @throws SpmCheckedException
+	 * @see com.laborguru.service.user.UserService#logicalDelete(com.laborguru.model.User)
+	 */
+	public void logicalDelete(User user) throws SpmCheckedException {
+		if(user == null) {
+			log.error("User passed as parameter is null");
+			throw new IllegalArgumentException("param is null");
+		}
+		if(log.isDebugEnabled()) {
+			log.debug("About to logically delete user " + user);
+		}
+		user.setUserStatus(UserStatus.DELETED);
+		user.setUserName(user.getUserName() + "_" + user.getId());
+		save(user);
 	}
 }
