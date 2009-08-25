@@ -27,7 +27,7 @@ public class User extends SpmObject {
 	
 	private String userName;
 	private String password;
-	private Integer status;
+	private UserStatus userStatus;
 	private String email;
 	private String name;
 	private String surname;
@@ -37,15 +37,19 @@ public class User extends SpmObject {
 	private Date lastUpdateDate;
 	private Set<Profile> profiles;
 	
-	public User(){
+	public User() {
 		
 	}
 	
+	/**
+	 * 
+	 * @param user
+	 */
 	public User(User user){
 		this.id = user.getId();
 		this.userName = user.getUserName();
 		this.password = user.getPassword();
-		this.status = user.getStatus();
+		this.userStatus = user.getUserStatus();
 		this.email = user.getEmail();
 		this.name = user.getName();
 		this.surname = user.getSurname();
@@ -208,13 +212,17 @@ public class User extends SpmObject {
 	 * @return the status
 	 */
 	public Integer getStatus() {
-		return status;
+		return getUserStatus() != null ? getUserStatus().getStatus() : UserStatus.ENABLED.getStatus();
 	}
 	/**
 	 * @param status the status to set
 	 */
 	public void setStatus(Integer status) {
-		this.status = status;
+		if(status != null && status.intValue() >= 0 && status.intValue() < UserStatus.values().length) {
+			setUserStatus(UserStatus.values()[status.intValue()]);
+		} else {
+			setUserStatus(UserStatus.ENABLED);
+		}
 	}
 	/**
 	 * @return the email
@@ -313,5 +321,44 @@ public class User extends SpmObject {
 			fullName.append(getSurname());
 		}
 		return fullName.toString().trim();
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isEnabled() {
+		return UserStatus.ENABLED.equals(getUserStatus());
+	}
+
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isDisabled() {
+		return UserStatus.DISABLED.equals(getUserStatus());
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isDeleted() {
+		return UserStatus.DELETED.equals(getUserStatus());
+	}
+
+	/**
+	 * @return the userStatus
+	 */
+	public UserStatus getUserStatus() {
+		return userStatus;
+	}
+
+	/**
+	 * @param userStatus the userStatus to set
+	 */
+	public void setUserStatus(UserStatus userStatus) {
+		this.userStatus = userStatus;
 	}
 }

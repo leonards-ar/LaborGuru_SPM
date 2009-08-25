@@ -11,6 +11,7 @@ import com.laborguru.model.Customer;
 import com.laborguru.model.Employee;
 import com.laborguru.model.Store;
 import com.laborguru.model.User;
+import com.laborguru.model.UserStatus;
 import com.laborguru.model.filter.SearchEmployeeFilter;
 import com.laborguru.service.employee.dao.EmployeeDao;
 import com.laborguru.service.user.dao.UserDao;
@@ -169,5 +170,24 @@ public class EmployeeServiceBean implements EmployeeService {
 	
 	public List<Employee> getEmployeeByCustomer(Customer customer){
 		return null;
+	}
+
+	/**
+	 * 
+	 * @param employee
+	 * @throws SpmCheckedException
+	 * @see com.laborguru.service.employee.EmployeeService#logicalDelete(com.laborguru.model.Employee)
+	 */
+	public void logicalDelete(Employee employee) throws SpmCheckedException {
+		if(employee == null) {
+			log.error("Employee passed as parameter is null");
+			throw new IllegalArgumentException("param is null");
+		}
+		if(log.isDebugEnabled()) {
+			log.debug("About to logically delete employee " + employee);
+		}
+		employee.setUserStatus(UserStatus.DELETED);
+		employee.setUserName(employee.getUserName() + "_" + employee.getId());
+		save(employee);
 	}
 }

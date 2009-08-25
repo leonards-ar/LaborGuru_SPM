@@ -155,7 +155,7 @@ public abstract class EmployeeBaseAction extends SpmAction implements Preparable
 	public String delete() throws Exception {		
 		//Getting employee
 		Employee auxEmployee = getEmployeeService().getEmployeeById(getEmployee());		
-		getEmployeeService().delete(auxEmployee);
+		getEmployeeService().logicalDelete(auxEmployee);
 		setExtraInformation();
 		return SpmActionResult.LISTACTION.getResult();
 	}
