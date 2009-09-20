@@ -9,6 +9,7 @@ import java.util.List;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.DailyProjectionElement;
 import com.laborguru.model.DailyProjection;
+import com.laborguru.model.Store;
 import com.laborguru.util.CalendarUtils;
 import com.laborguru.util.SpmConstants;
 import com.opensymphony.xwork2.Preparable;
@@ -106,9 +107,11 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 		//calculatedDate = CalendarUtils.addOrSubstractDays(calculatedDate, -7);			
 		
 		
-		// Get calculated projections		
-		List<BigDecimal> calculatedProjections = getProjectionService().getAvgDailyProjectionForAWeek(getUsedWeeks(), this.getEmployeeStore(), calculatedDate);		
-		List<DailyProjection> adjustedProjections = getProjectionService().getAdjustedDailyProjectionForAWeek(this.getEmployeeStore(), getWeekDaySelector().getStartingWeekDay());
+		// Get calculated projections depending on the projection type
+		Store employeeStore = this.getEmployeeStore();
+		List<BigDecimal> calculatedProjections = getProjectionService().calculateWeeklyProjectionValues(getUsedWeeks(), employeeStore, calculatedDate);
+		
+		List<DailyProjection> adjustedProjections = getProjectionService().getAdjustedDailyProjectionForAWeek(employeeStore, getWeekDaySelector().getStartingWeekDay());
 
 		Calendar  auxCalendar = Calendar.getInstance();
 		// Set default adjusted values
@@ -235,5 +238,5 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	 */
 	public void setAllowToSaveWeek(Boolean allowToSave) {
 		this.allowToSaveWeek = allowToSave;
-	}
+	}	
 }

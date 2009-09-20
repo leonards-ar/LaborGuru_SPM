@@ -135,6 +135,7 @@
 		                </tr>
 						<s:if test="%{getAllowToSaveWeek()}">
 		 		       	<tr class="editFormOddRow">
+							<s:if test="%{getDisplayWeekUsed()}">
 							<td width="100%" align="left">
 								<table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
 									<tr>
@@ -145,6 +146,7 @@
 									</tr>
 								</table>
 							</td>
+							</s:if>
 		                    <td width="100%" align="right">
 			                    <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
 				                    <tr>

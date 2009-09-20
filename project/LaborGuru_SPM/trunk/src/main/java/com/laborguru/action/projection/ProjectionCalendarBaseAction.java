@@ -11,6 +11,7 @@ import java.util.TreeMap;
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.WeekDaySelector;
+import com.laborguru.model.DistributionType;
 import com.laborguru.service.data.ReferenceDataService;
 import com.laborguru.service.projection.ProjectionService;
 
@@ -219,6 +220,12 @@ public abstract class ProjectionCalendarBaseAction extends SpmAction {
 		this.referenceDataService = referenceDataService;
 	}
 
-
+	/**
+	 * Returns whether the week used listbox should be displayed
+	 * @return
+	 */
+	public Boolean getDisplayWeekUsed(){
+		return !DistributionType.PREVIOUS_WEEK.equals(getEmployeeStore().getDistributionType());
+	}
 
 }

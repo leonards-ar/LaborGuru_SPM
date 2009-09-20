@@ -204,5 +204,14 @@
 			<result name="input" type="tiles">storeDefinitionUploadPage</result>
 			<result name="cancel" type="redirectAction">store_list</result>						
 		</action>
+
+		<action name="projectionSettings_*" method="{1}" class="com.laborguru.action.store.ProjectionSettingsPrepareAction">
+			<result name="edit" type="tiles">editStoreProjectionSettings</result>
+			<result name="show" type="tiles">showStoreProjectionSettings</result>
+			<result name="cancelEdit" type="redirectAction">store_edit</result>
+			<result name="cancelShow" type="redirectAction">store_show</result>
+			<result name="input" type="tiles">editStoreProjectionSettings</result>
+			<result name="success" type="redirectAction">store_edit</result>
+		</action>		
 	</package>
 </struts>

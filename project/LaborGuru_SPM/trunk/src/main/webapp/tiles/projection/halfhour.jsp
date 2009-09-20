@@ -108,13 +108,15 @@
               <tr>                            
               	<td>              
              		<table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0">
-		              	<tr class="editFormEvenRow">
-		                    <td width="15%" align="right" class="form_label" nowrap="nowrap"><s:text name="projection.halfhour.weeksused.label" /></td>
-		                    <td width="25%" align="left" class="value">						
-								<s:select name="usedWeeks" list="usedWeeksMap" listKey="key" listValue="%{getText(value)}" theme="simple" disabled="%{!isEditable()}" onchange="halfhour_form.action='halfhour_reviseUsedWeeks.action';halfhour_form.submit();" />
-							</td>
-							<td width="60%" align="left"><s:text name='projection.weekdayselector.selectedday.dateformat.long'><s:param value="weekDaySelector.selectedDay"/></s:text></td>
-		                </tr>
+						<s:if test="%{getDisplayWeekUsed()}">
+							<tr class="editFormEvenRow">
+			                    <td width="15%" align="right" class="form_label" nowrap="nowrap"><s:text name="projection.halfhour.weeksused.label" /></td>
+			                    <td width="25%" align="left" class="value">						
+									<s:select name="usedWeeks" list="usedWeeksMap" listKey="key" listValue="%{getText(value)}" theme="simple" disabled="%{!isEditable()}" onchange="halfhour_form.action='halfhour_reviseUsedWeeks.action';halfhour_form.submit();" />
+								</td>
+								<td width="60%" align="left"><s:text name='projection.weekdayselector.selectedday.dateformat.long'><s:param value="weekDaySelector.selectedDay"/></s:text></td>
+			                </tr>
+						</s:if>
 		              	<tr class="editFormOddRow">
                     		<td width="100%" align="center" colspan="3">
                     			<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0" align="center">

@@ -231,6 +231,14 @@
 	<definition name="showOtherFactorsPage" extends="storeExtendedCRUD">
 		<put-attribute name="storeExtDataBody" value="/tiles/store/otherfactors_view.jsp" />
 	</definition>
+
+	<definition name="editStoreProjectionSettings" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/projectionsettings_edit.jsp" />
+	</definition>
+
+	<definition name="showStoreProjectionSettings" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/projectionsettings_view.jsp" />
+	</definition>	
 		
 	<!-- Customer tiles definition -->
 	<definition name="listCustomersPage" extends="baseLayoutWithMenu">
