@@ -30,6 +30,15 @@
 			<result name="success" type="redirectAction">store_edit</result>
 		</action>		
 
+		<action name="storeVariableDefinitions_*" method="{1}" class="com.laborguru.action.store.StoreVariableDefinitionPrepareAction">
+			<result name="edit" type="tiles">editVariableDefinitions</result>
+			<result name="show" type="tiles">showVariableDefinitions</result>
+			<result name="cancelEdit" type="redirectAction">store_edit</result>
+			<result name="cancelShow" type="redirectAction">store_show</result>
+			<result name="input" type="tiles">editVariableDefinitions</result>
+			<result name="success" type="redirectAction">store_edit</result>
+		</action>	
+
 		<action name="storeDayPartDefinition_*" method="{1}" class="com.laborguru.action.store.DayPartAction">
 			<result name="edit" type="tiles">editDaypartDefinition</result>
 			<result name="show" type="tiles">showDaypartDefinition</result>

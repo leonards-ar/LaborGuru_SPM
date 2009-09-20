@@ -38,6 +38,12 @@
 	        <one-to-many class="Position"/>
 	    </list>
 	    		
+	    <list name="variableDefinitions" cascade="all-delete-orphan" table="tbl_store_variable_definitions" lazy="true" inverse="true">
+	        <key column="store_id" foreign-key="fk_stores_variable_definitions"/>
+	        <list-index column="variable_index"/>
+	        <one-to-many class="StoreVariableDefinition"/>
+	    </list>
+	    	    		
 	    <list name="operationTimes" cascade="all-delete-orphan" table="tbl_operation_times" lazy="false" inverse="true">
 	        <key column="store_id" foreign-key="fk_stores_operationtimes"/>
 	        <list-index column="day_of_week"/>

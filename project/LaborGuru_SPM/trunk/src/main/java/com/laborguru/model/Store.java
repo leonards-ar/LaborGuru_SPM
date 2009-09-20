@@ -47,6 +47,8 @@ public class Store extends SpmObject {
 	private Integer minimumFloorManagementHours = null;
 	private Integer extraScheduleHours = null;
 	
+	private List<StoreVariableDefinition> variableDefinitions;
+	
 	/**
 	 * Store toString
 	 * @return string version of the object 
@@ -232,6 +234,24 @@ public class Store extends SpmObject {
 		getPositions().add(position);
 	}	
 	
+	/**
+	 * 
+	 * @param variableDefinition
+	 */
+	public void addVariableDefinition(StoreVariableDefinition variableDefinition) {
+		
+		if (variableDefinition == null){
+			throw new IllegalArgumentException("Null variableDefinition passed in as parameter");
+		}
+		
+		if (variableDefinition.getStore() != null){
+			variableDefinition.getStore().getVariableDefinitions().remove(variableDefinition);
+		}
+		
+		variableDefinition.setStore(this);
+		getVariableDefinitions().add(variableDefinition);		
+	}
+	 
 	/**
 	 * @return
 	 * @see java.lang.Object#hashCode()
@@ -748,5 +768,39 @@ public class Store extends SpmObject {
 	 */
 	public void setLastUpdateDate(Date lastUpdateDate) {
 		this.lastUpdateDate = lastUpdateDate;
-	}	
+	}
+
+
+	/**
+	 * @return the variableDefinitions
+	 */
+	public List<StoreVariableDefinition> getVariableDefinitions() {
+		if(variableDefinitions == null) {
+			setVariableDefinitions(new ArrayList<StoreVariableDefinition>());
+		}
+		// Main variable always exists!
+		if(variableDefinitions.size() <= 0) {
+			StoreVariableDefinition varDef = new StoreVariableDefinition();
+			varDef.setVariableIndex(new Integer(0));
+			varDef.setStore(this);
+			variableDefinitions.add(varDef);
+		}
+		return variableDefinitions;		
+	}
+
+
+	/**
+	 * @param variableDefinitions the variableDefinitions to set
+	 */
+	public void setVariableDefinitions(List<StoreVariableDefinition> variableDefinitions) {
+		this.variableDefinitions = variableDefinitions;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public StoreVariableDefinition getMainVariableDefinition() {
+		return getVariableDefinitions().size() > 0 ? getVariableDefinitions().get(0) : null;
+	}
 }
