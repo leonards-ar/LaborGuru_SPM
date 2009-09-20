@@ -102,6 +102,15 @@
 	<definition name="showPositionNames" extends="storeExtendedCRUD">
 		<put-attribute name="storeExtDataBody" value="/tiles/store/positionnames_view.jsp" />
 	</definition>	
+
+	<definition name="editVariableDefinitions" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/variabledefinitions_edit.jsp" />
+	</definition>
+
+	<definition name="showVariableDefinitions" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/variabledefinitions_view.jsp" />
+	</definition>	
+
 	
 	<definition name="editDaypartDefinition" extends="storeExtendedCRUD">
 		<put-attribute name="storeExtDataBody" value="/tiles/store/daypartdefinition_edit.jsp" />

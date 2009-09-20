@@ -81,6 +81,7 @@
 				<value>com/laborguru/model/DailyProjectedStaffing.hbm.xml</value>
 				<value>com/laborguru/model/UploadFile.hbm.xml</value>				
 				<value>com/laborguru/model/ActualHours.hbm.xml</value>
+				<value>com/laborguru/model/StoreVariableDefinition.hbm.xml</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
