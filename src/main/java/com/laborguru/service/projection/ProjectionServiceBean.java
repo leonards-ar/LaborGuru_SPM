@@ -5,15 +5,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 
 import com.laborguru.frontend.model.HalfHourElement;
 import com.laborguru.model.DailyProjection;
+import com.laborguru.model.DistributionType;
 import com.laborguru.model.HalfHourProjection;
 import com.laborguru.model.OperationTime;
 import com.laborguru.model.Store;
 import com.laborguru.service.projection.dao.ProjectionDao;
 import com.laborguru.service.staffing.StaffingService;
+import com.laborguru.util.CalendarUtils;
 import com.laborguru.util.SpmConstants;
 
 /**
@@ -25,6 +28,8 @@ import com.laborguru.util.SpmConstants;
  */
 public class ProjectionServiceBean implements ProjectionService {
 
+	private static final Logger log = Logger.getLogger(ProjectionServiceBean.class);
+	
 	private ProjectionDao projectionDao;
 	private StaffingService staffingService;
 	
@@ -39,12 +44,69 @@ public class ProjectionServiceBean implements ProjectionService {
 	 */
 	public List<BigDecimal> getAvgDailyProjectionForAWeek(Integer numberOfWeeks, Store store, Date startWeekDate) {
 		
+		log.debug("getAvgDailyProjectionForAWeek - Before to call projectionDao.getAvgDailyProjectionForAWeek with: Number of weeks:"+numberOfWeeks+" Store name:"+store.getName()+" Date:"+startWeekDate);
 		List<BigDecimal> retProjections = projectionDao.getAvgDailyProjectionForAWeek(numberOfWeeks, store, startWeekDate);
 				
 		return retProjections;
 	}
 
+	/**
+	 * This methods returns a list with the adjusted daily projections values for a complete week (7 days) starting from the week before to the date
+	 * passed as parameter. 
+	 * @param store
+	 * @param startWeekDate
+	 * @return
+	 * @see com.laborguru.service.projection.ProjectionService#getAdjustedDailyProjectionForAWeek(com.laborguru.model.Store, java.util.Date)
+	 */
+	public List<BigDecimal> getWeeklyProjectionForLastWeek(Store store, Date startWeekDate) {		
+		
+		List<BigDecimal> retList = new ArrayList<BigDecimal>(SpmConstants.DAILY_PROJECTION_PERIOD_DAYS);
+		
+		Date lastWeekDate = CalendarUtils.addOrSubstractDays(startWeekDate,-7);
 
+		log.debug("getWeeklyProjectionForLastWeek - Before to call projectionDao.getAdjustedDailyProjectionForAWeek with: Store name:"+store.getName()+" Last week date:"+lastWeekDate+" Date:"+startWeekDate);
+		
+		List<DailyProjection> lastWeekProjections = projectionDao.getAdjustedDailyProjectionForAWeek(store, lastWeekDate);
+		
+		for(DailyProjection dailyProjection: lastWeekProjections){
+			if (dailyProjection.getDailyProjectionValue()!=null){				
+				retList.add(dailyProjection.getDailyProjectionValue()); 
+			}
+			retList.add(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
+		}
+		
+		return retList;
+	}	
+	
+	/**
+	 * This method returns the projection value for a week, starting since the "startWeekDate" and using "numberOfWeeks" weeks as source for the
+	 * calculations. It takes the distribution to used in the calculations form the store field distribution type. 
+	 * TODO: if more optional paramaters depending on the projection are needed, consider refactor and introduce a parameterObject or
+	 * a builder.
+	 * @param numberOfWeeks This field is optional depending on the distribution type of the store.
+	 * @param store
+	 * @param startWeekDate
+	 * @return
+	 * @see com.laborguru.service.projection.ProjectionService#getAvgDailyProjectionForAWeek(java.lang.Integer, com.laborguru.model.Store, java.util.Date)
+	 */
+	public List<BigDecimal> calculateWeeklyProjectionValues(Integer numberOfWeeks, Store store, Date startWeekDate) {
+
+		List<BigDecimal> retProjections = null;
+		
+		if (DistributionType.PREVIOUS_WEEK.equals(store.getDistributionType())){
+			retProjections =  getWeeklyProjectionForLastWeek(store,startWeekDate);
+		}else{
+			if (numberOfWeeks == null){
+				numberOfWeeks = store.getDailyProjectionsWeeksDefault();
+			}
+			retProjections = projectionDao.getAvgDailyProjectionForAWeek(numberOfWeeks, store, startWeekDate);
+		}
+		
+		
+		return retProjections;
+	}
+	
+	
 	/**
 	 * This methods returns a list with the adjusted daily projections values for a complete week (7 days) starting since the parameter "startWeekDate" 
 	 * @param store
@@ -148,6 +210,7 @@ public class ProjectionServiceBean implements ProjectionService {
 		List<HalfHourProjection> calculatedHalfHourList = calculateDailyHalfHourProjection(store, projectionAmount, dateForCalculation, store.getHalfHourProjectionsWeeksDefault());		
 		saveProjection(store, calculatedHalfHourList, selectedDate);
 	}	
+		
 	
 	/**
 	 * @param projectionAmount
@@ -156,8 +219,14 @@ public class ProjectionServiceBean implements ProjectionService {
 	 */
 	public List<HalfHourProjection> calculateDailyHalfHourProjection(Store store, BigDecimal projectionAmount, Date selectedDate, Integer numberOfWeeks){		
 		
-		//Getting the average half hours values for the last "numberOfWeeks" weeks.
-		List<HalfHourProjection> avgCalculatedHalfHourList = getAvgHalfHourListByStoreAndDate(store, selectedDate, numberOfWeeks);
+		List<HalfHourProjection> avgCalculatedHalfHourList = null;
+
+		if (DistributionType.PREVIOUS_WEEK.equals(store.getDistributionType())){
+			avgCalculatedHalfHourList = getLastWeekHalfHourProjectionList(store, selectedDate);			
+		}else{
+			//Getting the average half hours values for the last "numberOfWeeks" weeks.
+			avgCalculatedHalfHourList = getAvgHalfHourListByStoreAndDate(store, selectedDate, numberOfWeeks);			
+		}
 		
 		BigDecimal totalAvgProjections = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
 		
@@ -243,6 +312,29 @@ public class ProjectionServiceBean implements ProjectionService {
 		
 		return completeTimeHalfHourProjectionsList(avgProjections);		
 	}
+	
+	/**
+	 * @param store
+	 * @param selectedDate
+	 * @param numberOfWeeks
+	 * @return
+	 */
+	public List<HalfHourProjection> getLastWeekHalfHourProjectionList(Store store, Date selectedDate) {
+		
+		Date lastWeekDate = CalendarUtils.addOrSubstractDays(selectedDate,-7);
+		log.debug("getLastWeekHalfHourProjectionList - Before to call getDailyProjection with: Store name:"+store.getName()+" Last week date:"+lastWeekDate+" Date:"+selectedDate);
+				
+		DailyProjection dailyProjection = getDailyProjection(store, selectedDate);
+		List<HalfHourProjection> halfHourProjections = null;
+		
+		if (dailyProjection != null){
+			halfHourProjections = dailyProjection.getHalfHourProjections();
+		}else{
+			halfHourProjections = new ArrayList<HalfHourProjection>();
+		}
+		
+		return completeTimeHalfHourProjectionsList(halfHourProjections);		
+	}	
 	
 	/**
 	 * @param avgProjections

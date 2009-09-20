@@ -4,6 +4,11 @@
     "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="com.laborguru.model">
+
+	  <typedef name="distributionEnumType" class='com.laborguru.model.hibernate.EnumUserType'>
+	      <param name="enumClassName">com.laborguru.model.DistributionType</param>
+	  </typedef>
+
 	<class name="Store" table="tbl_stores">
 		<id name="id" type="int" unsaved-value="null" column="store_id">
 			<generator class="identity" />
@@ -31,6 +36,8 @@
 		<property name="trainingFactor" column="training_factor" type="double"/>
 		<property name="earnedBreakFactor" column="earned_break_factor" type="double"/>
 		<property name="floorManagementFactor" column="floor_management_factor" type="double"/>
+
+		<property name="distributionType" column="distribution_type" type="distributionEnumType"/>
 
 	    <list name="positions" cascade="all-delete-orphan" table="tbl_positions" lazy="true" inverse="true">
 	        <key column="store_id" foreign-key="fk_stores_positions"/>

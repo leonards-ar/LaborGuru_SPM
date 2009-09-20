@@ -28,7 +28,7 @@ public interface ProjectionService extends Service {
 	 * @param startWeekDate
 	 * @return
 	 */
-	List<BigDecimal> getAvgDailyProjectionForAWeek(Integer numberOfWeeks, Store store, Date startWeekDate);
+	List<BigDecimal> getAvgDailyProjectionForAWeek(Integer numberOfWeeks, Store store, Date startWeekDate); 
 
 	/**
 	 * 
@@ -46,6 +46,19 @@ public interface ProjectionService extends Service {
 	 */
 	DailyProjection getDailyProjection(Store store, Date selectedDate);
 
+	/**
+	 * This method returns the projection value for a week, starting since the "startWeekDate" and using "numberOfWeeks" weeks as source for the
+	 * calculations. It takes the distribution to used in the calculations form the store field distribution type. 
+	 * TODO: if more optional paramaters depending on the projection are needed, consider refactor and introduce a parameterObject or
+	 * a builder.
+	 * @param numberOfWeeks This field is optional depending on the distribution type of the store.
+	 * @param store
+	 * @param startWeekDate
+	 * @return
+	 * @see com.laborguru.service.projection.ProjectionService#getAvgDailyProjectionForAWeek(java.lang.Integer, com.laborguru.model.Store, java.util.Date)
+	 */
+	List<BigDecimal> calculateWeeklyProjectionValues(Integer numberOfWeeks, Store store, Date startWeekDate);
+	
 	/**
 	 * 
 	 * @param halfHourElement

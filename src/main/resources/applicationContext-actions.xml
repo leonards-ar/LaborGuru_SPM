@@ -24,8 +24,14 @@
 		<property name="firstDayOfWeekAsInteger" value="0"/>
 		<property name="dailyProjectionsWeeksDefault" value="4"/>
 		<property name="halfHourProjectionsWeeksDefault" value="4"/>
-	</bean>
-		
+		<property name="distributionType">
+			<bean class="com.laborguru.model.DistributionType" factory-method="valueOf">
+				<constructor-arg>
+				<value>HISTORIC_AVG</value>
+				</constructor-arg>
+			</bean>		
+		</property>
+	</bean>		
 	<bean id="dateTemplateToday" class="java.util.Date"/>
 </beans>
 

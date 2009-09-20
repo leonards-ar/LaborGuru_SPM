@@ -48,6 +48,7 @@ public class Store extends SpmObject {
 	private Integer extraScheduleHours = null;
 	
 	private List<StoreVariableDefinition> variableDefinitions;
+	private DistributionType distributionType;
 	
 	/**
 	 * Store toString
@@ -802,5 +803,39 @@ public class Store extends SpmObject {
 	 */
 	public StoreVariableDefinition getMainVariableDefinition() {
 		return getVariableDefinitions().size() > 0 ? getVariableDefinitions().get(0) : null;
+	}	
+	
+	/**
+	 * @return the distributionType
+	 */
+	public DistributionType getDistributionType() {
+		return distributionType;
 	}
+
+
+	/**
+	 * @param distributionType the projectionType to set
+	 */
+	public void setDistributionType(DistributionType projectionType) {
+		this.distributionType = projectionType;
+	}
+	
+	/**
+	 * @return the distributionType
+	 */
+	public String getDistributionTypeAsString() {
+		if (getDistributionType() != null)
+		{
+			return getDistributionType().name();
+		}else{
+			return DistributionType.HISTORIC_AVG.name();
+		}		
+	}
+	
+	/**
+	 * @param distributionType the projectionType to set
+	 */
+	public void setDistributionType(String projectionType) {
+		this.distributionType = Enum.valueOf(DistributionType.class, projectionType);
+	}	
 }
