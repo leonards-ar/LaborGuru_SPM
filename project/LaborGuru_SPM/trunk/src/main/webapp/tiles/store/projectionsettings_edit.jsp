@@ -6,7 +6,7 @@
 <s:hidden name="storeId" theme="simple"/>
 <table border="0" cellspacing="0" align="center">
 	<tr>
-		<td id="subtitleBar" nowrap><s:text name="store.storesettings.title" /> - <s:text name="store.storesettings.projections.title" /></td>
+		<td id="subtitleBar" nowrap><s:text name="store.storeoperations.title" /> - <s:text name="store.storesettings.projections.title" /></td>
 	</tr>
 
 	<tr>
@@ -15,7 +15,7 @@
 				<tr class="editFormOddRow">
                     <td align="right" class="form_label" nowrap><s:text name="store.storesettings.distributiontype.label" /></td>
                     <td align="left" class="value">
-                    	<s:select name="distributionType" list="{'HISTORIC_AVG','PREVIOUS_WEEK'}" listValue="%{getText('distributionType.'+toString())}"/>
+                    	<s:select name="distributionType" list="{'HISTORIC_AVG','STATIC'}" listValue="%{getText('distributionType.'+toString())}"/>
                     </td>
 				</tr>				
 			</table>

@@ -189,7 +189,7 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 		//Calendar initialization
 		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
 
-		getProjectionService().saveProjection(this.getEmployeeStore(), getElementsAsHalfHourProjectionList(getProjectionElements()), getWeekDaySelector().getSelectedDay());
+		getProjectionService().updateHalfHourProjection(this.getEmployeeStore(), getElementsAsHalfHourProjectionList(getProjectionElements()), getWeekDaySelector().getSelectedDay());
 
 		return SpmActionResult.EDIT.getResult();
 	}

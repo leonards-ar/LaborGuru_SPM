@@ -9,5 +9,5 @@ package com.laborguru.model;
  */
 public enum DistributionType {
 	HISTORIC_AVG,
-	PREVIOUS_WEEK;		
+	STATIC;		
 }

@@ -19,6 +19,9 @@ import com.laborguru.util.SpmConstants;
  *
  */
 public abstract class DailySalesValue extends SpmObject {
+
+	private static final long serialVersionUID = 1L;
+	
 	private Long id;
 	private Date salesDate;
 	private Date startingTime;

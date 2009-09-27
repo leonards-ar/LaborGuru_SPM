@@ -27,6 +27,7 @@ public class DailyProjection extends DailySalesValue {
 
 	private BigDecimal dailyProjectionVariable2;
 	private BigDecimal dailyProjectionVariable3;
+	private BigDecimal dailyProjectionVariable4;
 	
 	
 	private List<HalfHourProjection> halfHourProjections = new ArrayList<HalfHourProjection>();
@@ -102,8 +103,7 @@ public class DailyProjection extends DailySalesValue {
 	/**
 	 * @param halfHourProjections the halfHourProjections to set
 	 */
-	@SuppressWarnings("unused")
-	private void setHalfHourProjections(List<HalfHourProjection> halfHourProjections) {
+	public void setHalfHourProjections(List<HalfHourProjection> halfHourProjections) {
 		this.halfHourProjections = halfHourProjections;
 	}
 	
@@ -178,8 +178,9 @@ public class DailyProjection extends DailySalesValue {
 	 * @return the dailyProjectionVariable3
 	 */
 	public BigDecimal getDailyProjectionVariable3() {
+		
 		if(dailyProjectionVariable3 == null) {
-			setDailyProjectionVariable3(SpmConstants.BD_ZERO_VALUE);
+			setDailyProjectionVariable3(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
 		}
 		return dailyProjectionVariable3;
 	}
@@ -195,8 +196,9 @@ public class DailyProjection extends DailySalesValue {
 	 * @return the dailyProjectionVariable2
 	 */
 	public BigDecimal getDailyProjectionVariable2() {
-		if(dailyProjectionVariable2 == null) {
-			setDailyProjectionVariable2(SpmConstants.BD_ZERO_VALUE);
+		
+		if(dailyProjectionVariable2 == null) {			
+			setDailyProjectionVariable2(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
 		}
 		return dailyProjectionVariable2;
 	}
@@ -232,5 +234,23 @@ public class DailyProjection extends DailySalesValue {
 	 */
 	public void setProjectionDate(Date projectionDate) {
 		setSalesDate(projectionDate);
+	}
+
+	/**
+	 * @return the dailyProjectionVariable4
+	 */
+	public BigDecimal getDailyProjectionVariable4() {
+		if(dailyProjectionVariable4 == null) {			
+			setDailyProjectionVariable4(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
+		}
+		
+		return dailyProjectionVariable4;
+	}
+
+	/**
+	 * @param dailyProjectionVariable4 the dailyProjectionVariable4 to set
+	 */
+	public void setDailyProjectionVariable4(BigDecimal dailyProjectionVariable4) {
+		this.dailyProjectionVariable4 = dailyProjectionVariable4;
 	}
 }

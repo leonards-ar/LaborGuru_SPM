@@ -93,7 +93,7 @@ public class ProjectionServiceBean implements ProjectionService {
 
 		List<BigDecimal> retProjections = null;
 		
-		if (DistributionType.PREVIOUS_WEEK.equals(store.getDistributionType())){
+		if (DistributionType.STATIC.equals(store.getDistributionType())){
 			retProjections =  getWeeklyProjectionForLastWeek(store,startWeekDate);
 		}else{
 			if (numberOfWeeks == null){
@@ -140,14 +140,47 @@ public class ProjectionServiceBean implements ProjectionService {
 	public List<DailyProjection> getDailyProjections(Store store, Date startDate, Date endDate) {
 		return getProjectionDao().getDailyProjections(store, startDate, endDate);
 	}
-	
 
+	
 	/**
+	 * Updates only half hour projection list of a projection.
+	 * 
 	 * @param store
 	 * @param halfHourProjectionList
 	 * @param selectedDate
+	 * @see com.laborguru.service.projection.ProjectionService#updateHalfHourProjection(com.laborguru.model.Store, java.util.List, java.util.Date)
 	 */
-	public void saveProjection(Store store, List<HalfHourProjection> halfHourProjectionList, Date selectedDate){
+	public void updateHalfHourProjection(Store store, List<HalfHourProjection> halfHourProjectionList, Date selectedDate) {
+
+		DailyProjection projection =  projectionDao.getDailyProjection(store, selectedDate);
+
+		if (projection == null){
+			String errorMsg = "A projection does not exist for store ["+store+"] and date ["+selectedDate+"]." ;
+			log.error(errorMsg);
+			throw new IllegalArgumentException(errorMsg);
+		}
+		
+		int i=0;
+		for (HalfHourProjection aHalfHour: projection.getHalfHourProjections()){
+			aHalfHour.setAdjustedValue(halfHourProjectionList.get(i).getAdjustedValue());
+			i++;
+		}		
+
+		projection.setStartingTime(store.getStoreOperationTimeByDate(selectedDate).getOpenHour());
+
+		saveProjection(projection);		
+	}
+	
+	/**
+	 * Saves or updates the dailyProjections passed as parameter.
+	 * @param dailyProjectionData
+	 */
+	public void saveOrUpdateDailyProjection(DailyProjection dailyProjectionData){
+		
+		Store store = dailyProjectionData.getStore();
+		List<HalfHourProjection> halfHourProjectionList = dailyProjectionData.getHalfHourProjections();
+		Date selectedDate = dailyProjectionData.getProjectionDate();
+		
 		DailyProjection projection =  projectionDao.getDailyProjection(store, selectedDate);
 		
 		if (projection == null){
@@ -166,13 +199,29 @@ public class ProjectionServiceBean implements ProjectionService {
 			}		
 		}
 		
+		//Updating the additional variable values.
+		projection.setDailyProjectionVariable2(dailyProjectionData.getDailyProjectionVariable2());
+		projection.setDailyProjectionVariable3(dailyProjectionData.getDailyProjectionVariable3());
+		projection.setDailyProjectionVariable4(dailyProjectionData.getDailyProjectionVariable4());		
+				
 		projection.setStartingTime(store.getStoreOperationTimeByDate(selectedDate).getOpenHour());
 
+		saveProjection(projection);		
+	}
+	
+	/**
+	 * Saves or updates the dailyProjections passed as parameter.
+	 * 
+	 * @param dailyProjectionData
+	 */
+	private void saveProjection(DailyProjection projection){		
+		
 		projectionDao.save(projection);
 		
 		//Delete staffing calculations associated with the projection saved.
-		staffingService.updateDailyStaffingForDate(store,selectedDate);
+		//staffingService.updateDailyStaffingForDate(projection.getStore(), projection.getProjectionDate());
 	}
+	
 	/**
 	 * 
 	 * @return
@@ -191,24 +240,24 @@ public class ProjectionServiceBean implements ProjectionService {
 	}
 	
 	
-
 	/**
 	 * This method calculate and saves the set of half hour projections for a day.
 	 * 
-	 * @param store the store
-	 * @param projectionAmount total amount for the day
-	 * @param selectedDate save projection date
-	 * @param dateForCalculation date in which we based the avg calculation for the projection
-	 * @see com.laborguru.service.projection.ProjectionService#saveDailyProjection(com.laborguru.model.Store, java.math.BigDecimal, java.util.Date, java.util.Date)
+	 * @param dailyProjectionData
+	 * @param projectionAmount
+	 * @param dateForCalculation
+	 * @see com.laborguru.service.projection.ProjectionService#calculateAndSaveDailyProjection(com.laborguru.model.DailyProjection, java.math.BigDecimal, java.util.Date)
 	 */
-	public void saveDailyProjection(Store store, BigDecimal projectionAmount, Date selectedDate, Date dateForCalculation) {
+	public void calculateAndSaveDailyProjection(DailyProjection dailyProjectionData, BigDecimal projectionAmount, Date dateForCalculation) {
 		
-		if (store.getHalfHourProjectionsWeeksDefault() == null){
+		if (dailyProjectionData.getStore().getHalfHourProjectionsWeeksDefault() == null){
 			throw new IllegalArgumentException("HalfHourProjectionsWeeksDefault cannot be null");
 		}
 		
-		List<HalfHourProjection> calculatedHalfHourList = calculateDailyHalfHourProjection(store, projectionAmount, dateForCalculation, store.getHalfHourProjectionsWeeksDefault());		
-		saveProjection(store, calculatedHalfHourList, selectedDate);
+		List<HalfHourProjection> calculatedHalfHourList = calculateDailyHalfHourProjection(dailyProjectionData.getStore(), projectionAmount, dateForCalculation, dailyProjectionData.getStore().getHalfHourProjectionsWeeksDefault());		
+		dailyProjectionData.setHalfHourProjections(calculatedHalfHourList);
+		
+		saveOrUpdateDailyProjection(dailyProjectionData);
 	}	
 		
 	
@@ -221,7 +270,7 @@ public class ProjectionServiceBean implements ProjectionService {
 		
 		List<HalfHourProjection> avgCalculatedHalfHourList = null;
 
-		if (DistributionType.PREVIOUS_WEEK.equals(store.getDistributionType())){
+		if (DistributionType.STATIC.equals(store.getDistributionType())){
 			avgCalculatedHalfHourList = getLastWeekHalfHourProjectionList(store, selectedDate);			
 		}else{
 			//Getting the average half hours values for the last "numberOfWeeks" weeks.

@@ -5,7 +5,7 @@
         variable_index integer not null,
         primary key (variable_definition_id)
     );
-    ALTER TABLE tbl_store_variable_definitions AUTO_INCREMENT=1000;
+    alter table tbl_store_variable_definitions AUTO_INCREMENT=1000;
 
     alter table tbl_store_variable_definitions
         add index fk_stores_variable_definitions (store_id),
@@ -14,4 +14,7 @@
         references tbl_stores (store_id);
 
 
-ALTER TABLE tbl_stores ADD distribution_type varchar(255);
+alter table tbl_stores add distribution_type varchar(255);
+alter table tbl_projections add daily_projection_variable2 numeric(19,2);
+alter table tbl_projections add daily_projection_variable3 numeric(19,2);
+alter table tbl_projections add daily_projection_variable4 numeric(19,2);

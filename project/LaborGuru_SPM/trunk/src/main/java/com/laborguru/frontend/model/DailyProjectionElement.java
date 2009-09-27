@@ -3,12 +3,19 @@ package com.laborguru.frontend.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.laborguru.model.DailyProjection;
 import com.laborguru.util.CalendarUtils;
 
 public class DailyProjectionElement {
 	
 	private BigDecimal calculatedProjection;
+	
 	private BigDecimal adjustedProjection;
+	private BigDecimal projectionVariable2;
+	private BigDecimal projectionVariable3;
+	private BigDecimal projectionVariable4;
+
+	
 	private Date projectionDate;
 	
 	/**
@@ -51,5 +58,55 @@ public class DailyProjectionElement {
 	public Boolean getEditable(){
 		return (CalendarUtils.todayWithoutTime().compareTo(getProjectionDate()) < 0);
 	}
+	/**
+	 * @return the projectionVariable2
+	 */
+	public BigDecimal getProjectionVariable2() {
+		return projectionVariable2;
+	}
+	/**
+	 * @param projectionVariable2 the projectionVariable2 to set
+	 */
+	public void setProjectionVariable2(BigDecimal projectionVariable2) {
+		this.projectionVariable2 = projectionVariable2;
+	}
+	/**
+	 * @return the projectionVariable3
+	 */
+	public BigDecimal getProjectionVariable3() {
+		return projectionVariable3;
+	}
+	/**
+	 * @param projectionVariable3 the projectionVariable3 to set
+	 */
+	public void setProjectionVariable3(BigDecimal projectionVariable3) {
+		this.projectionVariable3 = projectionVariable3;
+	}
+	/**
+	 * @return the projectionVariable4
+	 */
+	public BigDecimal getProjectionVariable4() {
+		return projectionVariable4;
+	}
+	/**
+	 * @param projectionVariable4 the projectionVariable4 to set
+	 */
+	public void setProjectionVariable4(BigDecimal projectionVariable4) {
+		this.projectionVariable4 = projectionVariable4;
+	}
 
+	/**
+	 * @return
+	 */
+	public DailyProjection createDailyProjection(){
+		DailyProjection dailyProjection = new DailyProjection();
+		
+		dailyProjection.setProjectionDate(getProjectionDate());
+		
+		dailyProjection.setDailyProjectionVariable3(getProjectionVariable3());
+		dailyProjection.setDailyProjectionVariable2(getProjectionVariable2());
+		dailyProjection.setDailyProjectionVariable4(getProjectionVariable4());
+		
+		return dailyProjection;
+	}
 }
