@@ -398,10 +398,13 @@ public class ProjectionServiceBean implements ProjectionService {
 		DateTime nextTime = new DateTime(openHour);
 		
 		int index=0;
-		
+
+		//Filling up the return list with: 
+		//1.- The list of half hours passed as parameter.
+		//2.- The halfhours from open time and close time of the store, that are not in the list. 
 		for(HalfHourProjection currentHalfHour: avgProjections) {
 			DateTime currentTime = new DateTime(currentHalfHour.getTime().getTime());
-			
+
 			while(currentTime.isAfter(nextTime)) {
 				HalfHourProjection aHalfHourProjection = new HalfHourProjection();
 				aHalfHourProjection.setTime(nextTime.toDate());
@@ -411,8 +414,13 @@ public class ProjectionServiceBean implements ProjectionService {
 				nextTime = nextTime.plusMinutes(SpmConstants.HALF_HOUR);
 			}
 			
-			currentHalfHour.setIndex(index++);
-			retList.add(currentHalfHour);
+			//Adding current Half hour to return list.
+			HalfHourProjection aHalfHourProjection = new HalfHourProjection();
+			aHalfHourProjection.setTime(currentTime.toDate());			
+			aHalfHourProjection.setAdjustedValue(new BigDecimal(currentHalfHour.getAdjustedValue().toString()));
+			aHalfHourProjection.setIndex(index++);
+
+			retList.add(aHalfHourProjection);			
 
 			nextTime = nextTime.plusMinutes(SpmConstants.HALF_HOUR);
 		}
