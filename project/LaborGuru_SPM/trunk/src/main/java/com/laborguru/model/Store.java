@@ -804,6 +804,32 @@ public class Store extends SpmObject {
 	public StoreVariableDefinition getMainVariableDefinition() {
 		return getVariableDefinitions().size() > 0 ? getVariableDefinitions().get(0) : null;
 	}	
+
+	/**
+	 * 
+	 * @param index
+	 * @return
+	 */
+	public StoreVariableDefinition getSecondaryVariableDefinition(int index) {
+		return getVariableDefinitions().size() > index ? getVariableDefinitions().get(index) : null;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isVariableDefinitionConfigured() {
+		return getVariableDefinitions().size() > 1;
+	}
+	
+	/**
+	 * 
+	 * @param index
+	 * @return
+	 */
+	public boolean isVariableDefinitionConfigured(int index) {
+		return getSecondaryVariableDefinition(index) != null;
+	}
 	
 	/**
 	 * @return the distributionType

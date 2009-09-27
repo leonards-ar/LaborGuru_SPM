@@ -111,6 +111,13 @@
 		<put-attribute name="storeExtDataBody" value="/tiles/store/variabledefinitions_view.jsp" />
 	</definition>	
 
+	<definition name="editSecondaryVariables" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/secondaryvariables_edit.jsp" />
+	</definition>
+
+	<definition name="showSecondaryVariables" extends="storeExtendedCRUD">
+		<put-attribute name="storeExtDataBody" value="/tiles/store/secondaryvariables_view.jsp" />
+	</definition>	
 	
 	<definition name="editDaypartDefinition" extends="storeExtendedCRUD">
 		<put-attribute name="storeExtDataBody" value="/tiles/store/daypartdefinition_edit.jsp" />

@@ -273,7 +273,7 @@ public class StaffingServiceBean implements StaffingService {
 	private void calculateDailyTarget(DailyStaffing dailyStaffing, Position position, Date date, DailySalesValue dailySalesValue, Map<DayPart, DailyStaffingPositionData> dailyStaffingData) {
 		setTotalServiceHours(dailyStaffing, position);
 		
-		setVariableTotals(dailyStaffing, dailyStaffingData);
+		setVariableTotals(dailyStaffing, dailyStaffingData, position, dailySalesValue);
 		setFixedValues(dailyStaffing, position, date);
 		setTotalOpening(dailyStaffing, position);
 		setTotalFlexible(dailyStaffing, position);
@@ -316,10 +316,10 @@ public class StaffingServiceBean implements StaffingService {
 	 * @param position
 	 */
 	private void setTotalOpening(DailyStaffing dailyStaffing, Position position) {
-		double totalOpening = NumberUtils.getDoubleValue(dailyStaffing.getTotalVariableOpening()) + NumberUtils.getDoubleValue(dailyStaffing.getFixedOpening());
+		double totalOpening = NumberUtils.getDoubleValue(dailyStaffing.getTotalVariableOpening()) +
+		                      NumberUtils.getDoubleValue(dailyStaffing.getFixedOpening());
 		
 		dailyStaffing.setTotalOpening(new Double(totalOpening * (1 + getTrainingFactor(position)) * (1 + getBreakFactor(position))));
-		
 	}
 	
 	/**
@@ -370,18 +370,30 @@ public class StaffingServiceBean implements StaffingService {
 	 * 
 	 * @param dailyStaffing
 	 * @param dailyStaffingData
+	 * @param position
+	 * @param dailySalesValue
 	 */
-	private void setVariableTotals(DailyStaffing dailyStaffing, Map<DayPart, DailyStaffingPositionData> dailyStaffingData) {
+	private void setVariableTotals(DailyStaffing dailyStaffing, Map<DayPart, DailyStaffingPositionData> dailyStaffingData, Position position, DailySalesValue dailySalesValue) {
 		double totalVariableFlexible = 0.0;
 		double totalVariableOpening = 0.0;
 		for(DailyStaffingPositionData dailyData : dailyStaffingData.values()) {
 			totalVariableFlexible += dailyData.getVariableFlexible();
+
 			totalVariableOpening += dailyData.getVariableOpening();
 		}
+
+		totalVariableFlexible = totalVariableFlexible +
+			(NumberUtils.getDoubleValue(dailySalesValue.getDailyProjectionVariable2()) * NumberUtils.getDoubleValue(position.getVariable2Flexible())) +
+			(NumberUtils.getDoubleValue(dailySalesValue.getDailyProjectionVariable3()) * NumberUtils.getDoubleValue(position.getVariable3Flexible())) +
+			(NumberUtils.getDoubleValue(dailySalesValue.getDailyProjectionVariable4()) * NumberUtils.getDoubleValue(position.getVariable4Flexible()));
+		
+		totalVariableOpening = totalVariableOpening +
+        	(NumberUtils.getDoubleValue(dailySalesValue.getDailyProjectionVariable2()) * NumberUtils.getDoubleValue(position.getVariable2Opening())) +
+        	(NumberUtils.getDoubleValue(dailySalesValue.getDailyProjectionVariable3()) * NumberUtils.getDoubleValue(position.getVariable3Opening())) +
+        	(NumberUtils.getDoubleValue(dailySalesValue.getDailyProjectionVariable4()) * NumberUtils.getDoubleValue(position.getVariable4Opening()));
+		
 		dailyStaffing.setTotalVariableFlexible(new Double(totalVariableFlexible));
 		dailyStaffing.setTotalVariableOpening(new Double(totalVariableOpening));
-		
-		
 	}
 	
 	/**
@@ -748,10 +760,7 @@ public class StaffingServiceBean implements StaffingService {
 	 * @see com.laborguru.service.staffing.StaffingService#deleteDailyStaffingForDate(com.laborguru.model.Store, java.util.Date)
 	 */
 	public void deleteDailyStaffingForDate(Store store, Date date) {
-		List<DailyProjectedStaffing> storeDailyStaffing = getStaffingDao().getStoreDailyStaffingByDate(store, date);
-		if(storeDailyStaffing != null && !storeDailyStaffing.isEmpty()) {
-			getStaffingDao().deleteAll(storeDailyStaffing);
-		}
+		getStaffingDao().deleteStoreDailyStaffingByDate(store, date);
 	}
 
 	/**

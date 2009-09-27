@@ -317,5 +317,5 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 	 */
 	public List<DailyProjection> loadAll() {
 		return (List<DailyProjection>)getHibernateTemplate().loadAll(DailyProjection.class);
-	}	
+	}
 }

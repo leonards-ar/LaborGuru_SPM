@@ -14,6 +14,7 @@
 		<property name="manager" column="manager" not-null="true" type="boolean"/>
 		<property name="guestService" column="guest_service" not-null="true" type="boolean"/>
 		
+		
 		<property name="utilizationBottom" type="double">
 			<column name="utilization_bottom" not-null="false" default="65.00" />
 		</property>
@@ -29,6 +30,13 @@
 		<property name="utilizationMaximum" type="integer">
 			<column name="utilization_max" not-null="false" default="0" />
 		</property>
+
+        <property name="variable2Opening" column="variable2_opening" type="double" not-null="false"/>       
+        <property name="variable2Flexible" column="variable2_flexible" type="double" not-null="false"/>       
+        <property name="variable3Opening" column="variable3_opening" type="double" not-null="false"/>       
+        <property name="variable3Flexible" column="variable3_flexible" type="double" not-null="false"/>       
+        <property name="variable4Opening" column="variable4_opening" type="double" not-null="false"/>       
+        <property name="variable4Flexible" column="variable4_flexible" type="double" not-null="false"/>       
 		
 		<many-to-one name="store" class="Store" foreign-key="fk_positions_stores">
 			<column name="store_id"/>
