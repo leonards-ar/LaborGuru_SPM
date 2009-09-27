@@ -6,6 +6,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.DailyProjectionElement;
 import com.laborguru.model.DailyProjection;
@@ -52,13 +54,30 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	}
 	
 	/**
+	 * 
+	 * @return
+	 */
+	public boolean isSecondaryVariablesConfigured() {
+		return getEmployeeStore().isVariableDefinitionConfigured();
+	}
+	
+	/**
+	 * 
+	 * @param index
+	 * @return
+	 */
+	public boolean isSecondaryVariablesConfigured(int index) {
+		return getEmployeeStore().isVariableDefinitionConfigured(index);
+	}
+	
+	/**
 	 * Sets the variable noames to display at projections page 
 	 */
 	private void setProjectionVariablesNames() {
 		List<StoreVariableDefinition> variableDefinitions = getEmployeeStore().getVariableDefinitions();
 		
 		for (StoreVariableDefinition variableDef: variableDefinitions){
-			getVariableNames().add(variableDef.getVariableIndex(), variableDef.getName());
+			getVariableNames().add(variableDef.getVariableIndex(), !StringUtils.isEmpty(variableDef.getName()) ? variableDef.getName() : getText("store.secondary.variable" + variableDef.getVariableIndex() + ".label"));
 		}
 		
 		if (getVariableNames().size() < StoreVariableDefinition.MAX_VARIABLE_DEFINITIONS_QUANTITY){

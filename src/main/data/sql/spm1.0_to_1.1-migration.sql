@@ -18,3 +18,10 @@ alter table tbl_stores add distribution_type varchar(255);
 alter table tbl_projections add daily_projection_variable2 numeric(19,2);
 alter table tbl_projections add daily_projection_variable3 numeric(19,2);
 alter table tbl_projections add daily_projection_variable4 numeric(19,2);
+
+alter table tbl_positions add variable2_flexible double;
+alter table tbl_positions add variable2_opening double;
+alter table tbl_positions add variable3_flexible double;
+alter table tbl_positions add variable3_opening double;
+alter table tbl_positions add variable4_flexible double;
+alter table tbl_positions add variable4_opening double;

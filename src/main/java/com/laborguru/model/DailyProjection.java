@@ -24,11 +24,6 @@ import com.laborguru.util.SpmConstants;
 public class DailyProjection extends DailySalesValue {
 
 	private static final long serialVersionUID = 1L;
-
-	private BigDecimal dailyProjectionVariable2;
-	private BigDecimal dailyProjectionVariable3;
-	private BigDecimal dailyProjectionVariable4;
-	
 	
 	private List<HalfHourProjection> halfHourProjections = new ArrayList<HalfHourProjection>();
 		
@@ -175,42 +170,6 @@ public class DailyProjection extends DailySalesValue {
 	}
 
 	/**
-	 * @return the dailyProjectionVariable3
-	 */
-	public BigDecimal getDailyProjectionVariable3() {
-		
-		if(dailyProjectionVariable3 == null) {
-			setDailyProjectionVariable3(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
-		}
-		return dailyProjectionVariable3;
-	}
-
-	/**
-	 * @param dailyProjectionVariable3 the dailyProjectionVariable3 to set
-	 */
-	public void setDailyProjectionVariable3(BigDecimal dailyProjectionVariable3) {
-		this.dailyProjectionVariable3 = dailyProjectionVariable3;
-	}
-
-	/**
-	 * @return the dailyProjectionVariable2
-	 */
-	public BigDecimal getDailyProjectionVariable2() {
-		
-		if(dailyProjectionVariable2 == null) {			
-			setDailyProjectionVariable2(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
-		}
-		return dailyProjectionVariable2;
-	}
-
-	/**
-	 * @param dailyProjectionVariable2 the dailyProjectionVariable2 to set
-	 */
-	public void setDailyProjectionVariable2(BigDecimal dailyProjectionVariable2) {
-		this.dailyProjectionVariable2 = dailyProjectionVariable2;
-	}
-
-	/**
 	 * 
 	 * @return
 	 * @see com.laborguru.model.DailySalesValue#getHalfHourSalesValues()
@@ -234,23 +193,5 @@ public class DailyProjection extends DailySalesValue {
 	 */
 	public void setProjectionDate(Date projectionDate) {
 		setSalesDate(projectionDate);
-	}
-
-	/**
-	 * @return the dailyProjectionVariable4
-	 */
-	public BigDecimal getDailyProjectionVariable4() {
-		if(dailyProjectionVariable4 == null) {			
-			setDailyProjectionVariable4(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
-		}
-		
-		return dailyProjectionVariable4;
-	}
-
-	/**
-	 * @param dailyProjectionVariable4 the dailyProjectionVariable4 to set
-	 */
-	public void setDailyProjectionVariable4(BigDecimal dailyProjectionVariable4) {
-		this.dailyProjectionVariable4 = dailyProjectionVariable4;
 	}
 }

@@ -62,6 +62,34 @@ public class StaffingDaoHibernate extends HibernateDaoSupport implements Staffin
 	 * 
 	 * @param store
 	 * @param date
+	 * @see com.laborguru.service.staffing.dao.StaffingDao#deleteStoreDailyStaffingByDate(com.laborguru.model.Store, java.util.Date)
+	 */
+	public void deleteStoreDailyStaffingByDate(Store store, Date date) {
+		date = CalendarUtils.removeTimeFromDate(date);
+		
+		if(log.isDebugEnabled()) {
+			log.debug("Deleting staffing for day [" + date + "] and for store [" + store + "]");
+		}
+		getHibernateTemplate().flush();
+		
+		List<DailyProjectedStaffing> staffing = (List<DailyProjectedStaffing>) getHibernateTemplate().findByNamedParam("from DailyProjectedStaffing staff where staff.position.store.id = :storeId and staff.date = :date", new String[]{"storeId", "date"}, new Object[] {store.getId(),date});
+		
+		if(staffing != null && staffing.size() > 0) {
+
+			getHibernateTemplate().deleteAll(staffing);
+
+			if(log.isDebugEnabled()) {
+				log.debug("Deleted staffing for day [" + date + "] and for store [" + store + "]. Total records: " + staffing.size());
+			}		
+		}
+		
+		
+	}
+	
+	/**
+	 * 
+	 * @param store
+	 * @param date
 	 * @return
 	 * @see com.laborguru.service.staffing.dao.StaffingDao#getStoreDailyStaffingByDate(com.laborguru.model.Store, java.util.Date)
 	 */

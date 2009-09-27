@@ -76,4 +76,11 @@ public interface StaffingDao {
 	 * @return
 	 */
 	Map<Integer, Double> getTotalProjectedStaffingByPositionForTimePeriod(Store store, Date startDate, Date endDate);
+	
+	/**
+	 * 
+	 * @param store
+	 * @param date
+	 */
+	void deleteStoreDailyStaffingByDate(Store store, Date date);	
 }

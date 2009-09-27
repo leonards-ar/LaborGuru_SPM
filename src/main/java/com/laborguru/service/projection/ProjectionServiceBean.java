@@ -371,7 +371,7 @@ public class ProjectionServiceBean implements ProjectionService {
 	public List<HalfHourProjection> getLastWeekHalfHourProjectionList(Store store, Date selectedDate) {
 		
 		Date lastWeekDate = CalendarUtils.addOrSubstractDays(selectedDate,-7);
-		log.debug("getLastWeekHalfHourProjectionList - Before to call getDailyProjection with: Store name:"+store.getName()+" Last week date:"+lastWeekDate+" Date:"+selectedDate);
+		log.debug("getLastWeekHalfHourProjectionList - Before to call getDailyProjection with: Store name: " + store.getName() + " Last week date: " + lastWeekDate + " Date: " + selectedDate);
 				
 		DailyProjection dailyProjection = getDailyProjection(store, selectedDate);
 		List<HalfHourProjection> halfHourProjections = null;

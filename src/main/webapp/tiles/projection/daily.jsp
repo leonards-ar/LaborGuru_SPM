@@ -131,10 +131,15 @@
 										<td class="editorTableEvenRow" id="totalAdjusted"><b><s:text name="currency"><s:param value="totalAdjusted"/></s:text></b></td>
 									</tr>
                     			<!-- End Daily Projection -->
-		                    	<!-- Additional Variables -->
+                    			
+                    			<!-- Additional Variables -->
+                    				<s:if test="secondaryVariablesConfigured">
 									<tr>
 										<td colspan="9" class="editorTableOddRow" style="font-weight: bold;"><s:text name="projection.daily.additionalvariables.label" /></td>
-									</tr>								 
+									</tr>
+									</s:if>
+									
+									<s:if test="%{isSecondaryVariablesConfigured(1)}">								 
 									<tr>
 										<td class="editorTableFirstColumn"><s:property value="getVariableNames().get(1)"/></td>
 										<s:iterator id="dailyProjection" value="dailyProjections" status="itProjection">
@@ -153,6 +158,14 @@
 										</s:iterator>
 										<td class="editorTableEvenRow" id="totalVariable2"><s:if test="totalVariable2 != null"><b><s:text name="currency"><s:param value="totalVariable2"/></s:text></b></s:if><s:else>&nbsp;</s:else></td>
 									</tr>
+									</s:if>
+									<s:else>
+										<s:iterator id="dailyProjection" value="dailyProjections" status="itProjection">
+											<s:hidden name="dailyProjections[%{#itProjection.index}].projectionVariable2" value="0"/>
+										</s:iterator>
+									</s:else>
+									
+									<s:if test="%{isSecondaryVariablesConfigured(2)}">
 									<tr>
 										<td class="editorTableFirstColumn"><s:property value="getVariableNames().get(2)"/></td>
 										<s:iterator id="dailyProjection" value="dailyProjections" status="itProjection">
@@ -171,6 +184,14 @@
 										</s:iterator>
 										<td class="editorTableEvenRow" id="totalVariable3"><s:if test="totalVariable3 != null"><b><s:text name="currency"><s:param value="totalVariable3"/></s:text></b></s:if><s:else>&nbsp;</s:else></td>
 									</tr>
+									</s:if>
+									<s:else>
+										<s:iterator id="dailyProjection" value="dailyProjections" status="itProjection">
+											<s:hidden name="dailyProjections[%{#itProjection.index}].projectionVariable3" value="0"/>
+										</s:iterator>
+									</s:else>
+
+									<s:if test="%{isSecondaryVariablesConfigured(3)}">																		
 									<tr>
 										<td class="editorTableFirstColumn"><s:property value="getVariableNames().get(3)"/></td>
 										<s:iterator id="dailyProjection" value="dailyProjections" status="itProjection">
@@ -189,6 +210,12 @@
 										</s:iterator>
 										<td class="editorTableEvenRow" id="totalVariable4"><s:if test="totalVariable4 != null"><b><s:text name="currency"><s:param value="totalVariable4"/></s:text></b></s:if><s:else>&nbsp;</s:else></td>
 									</tr>
+									</s:if>
+									<s:else>
+										<s:iterator id="dailyProjection" value="dailyProjections" status="itProjection">
+											<s:hidden name="dailyProjections[%{#itProjection.index}].projectionVariable4" value="0"/>
+										</s:iterator>
+									</s:else>									
 		                    	<!-- End of Additional variables -->
 								</table>                    			
                     		</td>

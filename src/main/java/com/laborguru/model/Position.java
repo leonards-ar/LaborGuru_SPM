@@ -39,6 +39,13 @@ public class Position extends SpmObject implements ComparableObject{
 	private boolean manager;
 	private boolean guestService;
 	
+	private Double variable2Opening;
+	private Double variable2Flexible;
+	private Double variable3Opening;
+	private Double variable3Flexible;
+	private Double variable4Opening;
+	private Double variable4Flexible;
+	
 	private Integer positionIndex;
 	
 	/**
@@ -341,5 +348,107 @@ public class Position extends SpmObject implements ComparableObject{
 	 */
 	public void setGuestService(boolean guestService) {
 		this.guestService = guestService;
+	}
+
+	/**
+	 * @return the variable2Opening
+	 */
+	public Double getVariable2Opening() {
+		if(getStore() != null && !getStore().isVariableDefinitionConfigured(1)) {
+			return new Double(0);
+		}
+		return variable2Opening;
+	}
+
+	/**
+	 * @param variable2Opening the variable2Opening to set
+	 */
+	public void setVariable2Opening(Double variable2Opening) {
+		this.variable2Opening = variable2Opening;
+	}
+
+	/**
+	 * @return the variable2Flexible
+	 */
+	public Double getVariable2Flexible() {
+		if(getStore() != null && !getStore().isVariableDefinitionConfigured(1)) {
+			return new Double(0);
+		}
+		return variable2Flexible;
+	}
+
+	/**
+	 * @param variable2Flexible the variable2Flexible to set
+	 */
+	public void setVariable2Flexible(Double variable2Flexible) {
+		this.variable2Flexible = variable2Flexible;
+	}
+
+	/**
+	 * @return the variable3Opening
+	 */
+	public Double getVariable3Opening() {
+		if(getStore() != null && !getStore().isVariableDefinitionConfigured(2)) {
+			return new Double(0);
+		}
+		return variable3Opening;
+	}
+
+	/**
+	 * @param variable3Opening the variable3Opening to set
+	 */
+	public void setVariable3Opening(Double variable3Opening) {
+		this.variable3Opening = variable3Opening;
+	}
+
+	/**
+	 * @return the variable3Flexible
+	 */
+	public Double getVariable3Flexible() {
+		if(getStore() != null && !getStore().isVariableDefinitionConfigured(2)) {
+			return new Double(0);
+		}
+		return variable3Flexible;
+	}
+
+	/**
+	 * @param variable3Flexible the variable3Flexible to set
+	 */
+	public void setVariable3Flexible(Double variable3Flexible) {
+		this.variable3Flexible = variable3Flexible;
+	}
+
+	/**
+	 * @return the variable4Opening
+	 */
+	public Double getVariable4Opening() {
+		if(getStore() != null && !getStore().isVariableDefinitionConfigured(3)) {
+			return new Double(0);
+		}
+		return variable4Opening;
+	}
+
+	/**
+	 * @param variable4Opening the variable4Opening to set
+	 */
+	public void setVariable4Opening(Double variable4Opening) {
+		this.variable4Opening = variable4Opening;
+	}
+
+	/**
+	 * @return the variable4Flexible
+	 */
+	public Double getVariable4Flexible() {
+		if(getStore() != null && !getStore().isVariableDefinitionConfigured(3)) {
+			return new Double(0);
+		}
+		return variable4Flexible;
+	}
+
+	/**
+	 * @param variable4Flexible the variable4Flexible to set
+	 */
+	public void setVariable4Flexible(Double variable4Flexible) {
+		this.variable4Flexible = variable4Flexible;
 	}
 }
