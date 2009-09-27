@@ -3,7 +3,6 @@
 <validators>	    	
 	<field name="adjustedProjection">
 	   <field-validator type="conversion" short-circuit="true">
-	        <param name="repopulateField">true</param>
 	   		<message key="error.projection.daily.nonvalidnumber"/>	   		
 	    </field-validator>
 

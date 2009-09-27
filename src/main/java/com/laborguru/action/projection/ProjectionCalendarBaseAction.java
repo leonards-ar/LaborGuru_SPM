@@ -225,7 +225,7 @@ public abstract class ProjectionCalendarBaseAction extends SpmAction {
 	 * @return
 	 */
 	public Boolean getDisplayWeekUsed(){
-		return !DistributionType.PREVIOUS_WEEK.equals(getEmployeeStore().getDistributionType());
+		return !DistributionType.STATIC.equals(getEmployeeStore().getDistributionType());
 	}
 
 }

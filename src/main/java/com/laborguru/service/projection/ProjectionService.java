@@ -82,21 +82,31 @@ public interface ProjectionService extends Service {
 	/**
 	 * This method calculate and saves the set of half hour projections for a day.
 	 * 
-	 * @param store the store
-	 * @param projectionAmount total amount for the day
-	 * @param selectedDate save projection date
-	 * @param dateForCalculation date in which we based the avg calculation for the projection
+	 * @param dailyProjectionData
+	 * @param projectionAmount
+	 * @param dateForCalculation
 	 */
-	void saveDailyProjection(Store store, BigDecimal projectionAmount, Date selectedDate, Date dateForCalculation);
+	void calculateAndSaveDailyProjection(DailyProjection dailyProjectionData, BigDecimal projectionAmount, Date dateForCalculation);
+
 	
 	/**
+	 * Saves or update daily projection passed as parameter
+	 * 
+	 * @param dailyProjectionData
+	 */
+	public void saveOrUpdateDailyProjection(DailyProjection dailyProjectionData);
+	
+
+	/**
+	 * Updates only half hour projection list of a projection.
 	 * 
 	 * @param store
 	 * @param halfHourProjectionList
 	 * @param selectedDate
 	 */
-	void saveProjection(Store store, List<HalfHourProjection> halfHourProjectionList, Date selectedDate);
-
+	void updateHalfHourProjection(Store store, List<HalfHourProjection> halfHourProjectionList, Date selectedDate);
+	
+	
 	/**
 	 * 
 	 * @param projectionDao
@@ -123,4 +133,5 @@ public interface ProjectionService extends Service {
 	 * @return
 	 */
 	List<DailyProjection> updateAll();
+
 }

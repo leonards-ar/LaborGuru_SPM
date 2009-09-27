@@ -7,6 +7,7 @@ import com.laborguru.action.SpmActionResult;
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.ErrorMessage;
 import com.laborguru.frontend.model.DailyProjectionElement;
+import com.laborguru.model.DailyProjection;
 import com.laborguru.model.OperationTime;
 import com.laborguru.model.Store;
 import com.laborguru.util.CalendarUtils;
@@ -64,7 +65,12 @@ public class DailyProjectionsSaveAction extends DailyProjectionsPrepareAction {
 		for (DailyProjectionElement dailyProjection: getDailyProjections()){
 			if (dailyProjection.getEditable()){			
 				Date calculatedDate = CalendarUtils.addOrSubstractDays(currentStartWeekDate, i);
-				getProjectionService().saveDailyProjection(this.getEmployeeStore(), dailyProjection.getAdjustedProjection(),weekDates.get(i),calculatedDate);
+				
+				DailyProjection dailyProjectionToUpdate = dailyProjection.createDailyProjection();
+				dailyProjectionToUpdate.setStore(this.getEmployeeStore());
+				dailyProjectionToUpdate.setProjectionDate(weekDates.get(i));
+				
+				getProjectionService().calculateAndSaveDailyProjection(dailyProjectionToUpdate, dailyProjection.getAdjustedProjection(),calculatedDate);
 			}
 			i++;
 		}
