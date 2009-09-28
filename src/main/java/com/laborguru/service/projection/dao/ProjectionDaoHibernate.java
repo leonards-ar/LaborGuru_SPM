@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -48,7 +49,7 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 		
 		DateTime startDate = new DateTime(startWeekDate);
 		
-		DateTime startTime = startDate.withTime(0, 0, 0, 0);
+		DateTime startTime = new DateMidnight(startDate).toDateTime();
 		DateTime endTime = startDate.plusDays(6).withTime(23, 59, 59, 999);
 		if(log.isDebugEnabled()){
 			log.debug("Before getting adjusted daily projections - Parameters: Store Id:"+ store.getId()+" startDate:"+startTime.toString()+" endDate:"+endTime.toString());
@@ -79,7 +80,7 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 					DailyProjection auxProj = new DailyProjection();
 					
 					if(j < projections.size() ){
-						DateTime elementDateTime = new DateTime(projections.get(j).getSalesDate()).withTime(0, 0, 0, 0);						
+						DateTime elementDateTime = new DateMidnight(projections.get(j).getSalesDate()).toDateTime();
 						if (elementDateTime.getDayOfWeek() == auxDateTime.getDayOfWeek()){
 							auxProj = projections.get(j++);
 						}	
@@ -110,7 +111,7 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 		
 		DateTime startDate = new DateTime(startWeekDate);
 		
-		DateTime startTime = startDate.minusWeeks(numberOfWeeks).withTime(0, 0, 0, 0);
+		DateTime startTime = new DateMidnight(startDate).toDateTime();
 		DateTime endTime = startDate.minusDays(1).withTime(23, 59, 59, 999);
 		
 		if(log.isDebugEnabled()){
@@ -177,9 +178,7 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 	 * @see com.laborguru.service.projection.dao.ProjectionDao#getDailyProjection(com.laborguru.model.Store, java.util.Date)
 	 */
 	public DailyProjection getDailyProjection(Store store, Date selectedDate) {
-		
-		DateTime dt = new DateTime(selectedDate);
-		dt = dt.withTime(0, 0, 0, 0);
+		DateTime dt = new DateMidnight(selectedDate).toDateTime();
 
 		if(log.isDebugEnabled()) {
 			log.debug("Before getting daily projections - Parameters: Store Id:"+ store.getId()+" selectedDate:"+dt.toString());
@@ -209,7 +208,7 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 	 * @see com.laborguru.service.projection.dao.ProjectionDao#getDailyProjections(com.laborguru.model.Store, java.util.Date, java.util.Date)
 	 */
 	public List<DailyProjection> getDailyProjections(Store store, Date startDate, Date endDate) {
-		DateTime from = new DateTime(startDate).withTime(0, 0, 0, 0);
+		DateTime from = new DateMidnight(startDate).toDateTime();
 		DateTime to = new DateTime(endDate).withTime(23, 59, 59, 999);
 		
 		if(log.isDebugEnabled()){
@@ -239,7 +238,7 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 		
 		DateTime startDate = new DateTime(selectedDate);
 		
-		DateTime startTime = startDate.minusWeeks(numberOfWeeks).withTime(0, 0, 0, 0);
+		DateTime startTime = new DateMidnight(startDate.minusWeeks(numberOfWeeks)).toDateTime();
 		DateTime endTime = startDate.minusDays(1).withTime(23, 59, 59, 999);
 		
 		Calendar calendarDate = Calendar.getInstance();
@@ -303,8 +302,7 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 	 */
 	public void save(DailyProjection projection) {
 		
-		DateTime dt = new DateTime(projection.getSalesDate());
-		dt = dt.withTime(0, 0, 0, 0);
+		DateTime dt = new DateMidnight(projection.getSalesDate()).toDateTime();
 		projection.setSalesDate(dt.toDate());
 		
 		getHibernateTemplate().save(projection);

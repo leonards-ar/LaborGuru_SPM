@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -166,7 +167,7 @@ public class StaffingDaoHibernate extends HibernateDaoSupport implements Staffin
 	 * @see com.laborguru.service.staffing.dao.StaffingDao#getTotalProjectedStaffingForTimePeriod(com.laborguru.model.Store, java.util.Date, java.util.Date)
 	 */
 	public Double getTotalProjectedStaffingForTimePeriod(Store store, Date startDate, Date endDate) {
-		DateTime from = startDate != null ? new DateTime(startDate).withTime(0, 0, 0, 0) : new DateTime(0L);
+		DateTime from = startDate != null ? new DateMidnight(startDate).toDateTime() : new DateTime(0L);
 		DateTime to = endDate != null ? new DateTime(endDate).withTime(23, 59, 59, 999) : new DateTime(Long.MAX_VALUE);
 		
 		if(log.isDebugEnabled()){
@@ -193,7 +194,7 @@ public class StaffingDaoHibernate extends HibernateDaoSupport implements Staffin
 	 * @see com.laborguru.service.staffing.dao.StaffingDao#getTotalProjectedStaffingByPositionForTimePeriod(com.laborguru.model.Store, java.util.Date, java.util.Date)
 	 */
 	public Map<Integer, Double> getTotalProjectedStaffingByPositionForTimePeriod(Store store, Date startDate, Date endDate) {
-		DateTime from = startDate != null ? new DateTime(startDate).withTime(0, 0, 0, 0) : new DateTime(0L);
+		DateTime from = startDate != null ? new DateMidnight(startDate).toDateTime() : new DateTime(0L);
 		DateTime to = endDate != null ? new DateTime(endDate).withTime(23, 59, 59, 999) : new DateTime(Long.MAX_VALUE);
 		
 		if(log.isDebugEnabled()){

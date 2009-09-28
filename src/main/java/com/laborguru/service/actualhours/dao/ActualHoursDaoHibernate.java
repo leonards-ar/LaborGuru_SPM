@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 
 import com.laborguru.model.ActualHours;
@@ -75,7 +76,7 @@ public class ActualHoursDaoHibernate extends SpmHibernateDao implements ActualHo
 	 * @see com.laborguru.service.actualhours.dao.ActualHoursDao#getTotalActualHoursForTimePeriod(com.laborguru.model.Store, java.util.Date, java.util.Date)
 	 */
 	public Double getTotalActualHoursForTimePeriod(Store store, Date startDate, Date endDate) {
-		DateTime from = startDate != null ? new DateTime(startDate).withTime(0, 0, 0, 0) : new DateTime(0L);
+		DateTime from = startDate != null ? new DateMidnight(startDate).toDateTime() : new DateTime(0L);
 		DateTime to = endDate != null ? new DateTime(endDate).withTime(23, 59, 59, 999) : new DateTime(Long.MAX_VALUE);
 		
 		if(log.isDebugEnabled()){
