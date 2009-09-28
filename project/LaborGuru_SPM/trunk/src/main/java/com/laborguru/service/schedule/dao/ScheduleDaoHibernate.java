@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -115,7 +116,7 @@ public class ScheduleDaoHibernate extends HibernateDaoSupport implements Schedul
 			throw new IllegalArgumentException(STORE_NULL);			
 		}
 		
-		DateTime from = startDate != null ? new DateTime(startDate).withTime(0, 0, 0, 0) : new DateTime(0L);
+		DateTime from = startDate != null ? new DateMidnight(startDate).toDateTime() : new DateTime(0L);
 		DateTime to = endDate != null ? new DateTime(endDate).withTime(23, 59, 59, 999) : new DateTime(Long.MAX_VALUE);
 		
 		if(log.isDebugEnabled()){
@@ -146,7 +147,7 @@ public class ScheduleDaoHibernate extends HibernateDaoSupport implements Schedul
 			throw new IllegalArgumentException(STORE_NULL);			
 		}
 		
-		DateTime from = startDate != null ? new DateTime(startDate).withTime(0, 0, 0, 0) : new DateTime(0L);
+		DateTime from = startDate != null ? new DateMidnight(startDate).toDateTime() : new DateTime(0L);
 		DateTime to = endDate != null ? new DateTime(endDate).withTime(23, 59, 59, 999) : new DateTime(Long.MAX_VALUE);
 		
 		if(log.isDebugEnabled()){
@@ -177,7 +178,7 @@ public class ScheduleDaoHibernate extends HibernateDaoSupport implements Schedul
 			throw new IllegalArgumentException(STORE_NULL);			
 		}
 		
-		DateTime from = startDate != null ? new DateTime(startDate).withTime(0, 0, 0, 0) : new DateTime(0L);
+		DateTime from = startDate != null ? new DateMidnight(startDate).toDateTime() : new DateTime(0L);
 		DateTime to = endDate != null ? new DateTime(endDate).withTime(23, 59, 59, 999) : new DateTime(Long.MAX_VALUE);
 		
 		if(log.isDebugEnabled()){

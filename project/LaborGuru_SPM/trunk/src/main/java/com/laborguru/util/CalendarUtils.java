@@ -623,5 +623,5 @@ public class CalendarUtils {
 	 */
 	public static Date getEndOfWeekDay(Date startingDayOfWeek) {
 		return addOrSubstractDays(startingDayOfWeek, DayOfWeek.values().length - 1);
-	}	
+	}
 }
