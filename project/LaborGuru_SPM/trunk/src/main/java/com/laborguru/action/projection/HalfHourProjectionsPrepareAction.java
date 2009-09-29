@@ -191,6 +191,8 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 
 		getProjectionService().updateHalfHourProjection(this.getEmployeeStore(), getElementsAsHalfHourProjectionList(getProjectionElements()), getWeekDaySelector().getSelectedDay());
 
+		edit();
+		
 		return SpmActionResult.EDIT.getResult();
 	}
 	
@@ -230,7 +232,7 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 			auxTotal = dailyProjection.getDailyProjectionValue();
 		}
 		
-		List<HalfHourProjection> projections = getProjectionService().calculateDailyHalfHourProjection(getEmployeeStore(), auxTotal, calculatedDate, getUsedWeeks());
+		List<HalfHourProjection> projections = getProjectionService().calculateHistoricHalfHourProjections(getEmployeeStore(), auxTotal, calculatedDate, getUsedWeeks());
 		BigDecimal totalProjections = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
 
 		//Get the new total;

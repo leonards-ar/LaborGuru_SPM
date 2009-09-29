@@ -107,7 +107,6 @@
 											<td class="editorTableOddRow"><s:text name="currency"><s:param value="calculatedProjection"/></s:text></td>
 										</s:iterator>
 										<!-- End Iterate week days -->
-										<s:hidden name="totalProjected" theme="simple"/>
 										<td class="editorTableOddRow"><b><s:text name="currency"><s:param value="totalProjected"/></s:text></b></td>
 									</tr>
 									<tr>
@@ -123,12 +122,11 @@
 												</s:if>
 												<s:else>
 													<s:text name="currency"><s:param value="adjustedProjection"/></s:text>
-													<s:hidden name="dailyProjections[%{#itProjection.index}].adjustedProjection" value="%{adjustedProjection}" theme="simple"/>
+													<s:hidden id="adjustedProjection[%{#itProjection.index}]" name="dailyProjections[%{#itProjection.index}].adjustedProjection" value="%{adjustedProjection}" theme="simple"/>
 												</s:else>
 												</td>										
 										</s:iterator>
-										<s:hidden name="totalAdjusted" theme="simple"/>
-										<td class="editorTableEvenRow" id="totalAdjusted"><b><s:text name="currency"><s:param value="totalAdjusted"/></s:text></b></td>
+										<td class="editorTableEvenRowTotal" id="totalAdjusted"><s:text name="currency"><s:param value="totalAdjusted"/></s:text></td>
 									</tr>
                     			<!-- End Daily Projection -->
                     			
@@ -152,11 +150,11 @@
 												</s:if>
 												<s:else>
 													<s:if test="projectionVariable2 != null"><s:text name="currency"><s:param value="projectionVariable2"/></s:text></s:if><s:else>&nbsp;</s:else>
-													<s:hidden name="dailyProjections[%{#itProjection.index}].projectionVariable2" value="%{projectionVariable2}" theme="simple"/>
+													<s:hidden id="projectionVariable2[%{#itProjection.index}]" name="dailyProjections[%{#itProjection.index}].projectionVariable2" value="%{projectionVariable2}" theme="simple"/>
 												</s:else>
 											</td>										
 										</s:iterator>
-										<td class="editorTableEvenRow" id="totalVariable2"><s:if test="totalVariable2 != null"><b><s:text name="currency"><s:param value="totalVariable2"/></s:text></b></s:if><s:else>&nbsp;</s:else></td>
+										<td class="editorTableEvenRowTotal" id="totalVariable2"><s:if test="totalVariable2 != null"><s:text name="currency"><s:param value="totalVariable2"/></s:text></s:if><s:else>&nbsp;</s:else></td>
 									</tr>
 									</s:if>
 									<s:else>
@@ -178,11 +176,11 @@
 												</s:if>
 												<s:else>
 													<s:if test="projectionVariable3 != null"><s:text name="currency"><s:param value="projectionVariable3"/></s:text></s:if><s:else>&nbsp;</s:else>
-													<s:hidden name="dailyProjections[%{#itProjection.index}].projectionVariable3" value="%{projectionVariable3}" theme="simple"/>
+													<s:hidden id="projectionVariable3[%{#itProjection.index}]" name="dailyProjections[%{#itProjection.index}].projectionVariable3" value="%{projectionVariable3}" theme="simple"/>
 												</s:else>
 											</td>										
 										</s:iterator>
-										<td class="editorTableEvenRow" id="totalVariable3"><s:if test="totalVariable3 != null"><b><s:text name="currency"><s:param value="totalVariable3"/></s:text></b></s:if><s:else>&nbsp;</s:else></td>
+										<td class="editorTableEvenRowTotal" id="totalVariable3"><s:if test="totalVariable3 != null"><s:text name="currency"><s:param value="totalVariable3"/></s:text></s:if><s:else>&nbsp;</s:else></td>
 									</tr>
 									</s:if>
 									<s:else>
@@ -204,11 +202,11 @@
 												</s:if>
 												<s:else>
 													<s:if test="projectionVariable4 != null"><s:text name="currency"><s:param value="projectionVariable4"/></s:text></s:if><s:else>&nbsp;</s:else>
-													<s:hidden name="dailyProjections[%{#itProjection.index}].projectionVariable4" value="%{projectionVariable4}" theme="simple"/>
+													<s:hidden id="projectionVariable4[%{#itProjection.index}]" name="dailyProjections[%{#itProjection.index}].projectionVariable4" value="%{projectionVariable4}" theme="simple"/>
 												</s:else>
 											</td>										
 										</s:iterator>
-										<td class="editorTableEvenRow" id="totalVariable4"><s:if test="totalVariable4 != null"><b><s:text name="currency"><s:param value="totalVariable4"/></s:text></b></s:if><s:else>&nbsp;</s:else></td>
+										<td class="editorTableEvenRowTotal" id="totalVariable4"><s:if test="totalVariable4 != null"><s:text name="currency"><s:param value="totalVariable4"/></s:text></s:if><s:else>&nbsp;</s:else></td>
 									</tr>
 									</s:if>
 									<s:else>
@@ -238,7 +236,7 @@
 			                    <table border="0" cellpadding="1" cellspacing="5">
 				                    <tr>
 				                		<td><s:submit id="saveButton" onclick="return showWaitSplash();" key="save.button" action="dailySave" theme="simple" cssClass="button"/></td>
-				                    	<td><s:reset id="resetButton" key="reset.button" theme="simple" cssClass="button"/></td>
+				                    	<td><s:reset id="resetButton" key="reset.button" theme="simple" cssClass="button" onclick="updateAllPageTotals()"/></td>
 				                    	<td><s:submit id="cancelButton" key="cancel.button" action="daily_edit" theme="simple" cssClass="button"/></td>		                    
 				                    </tr>
 			                    </table>                    
@@ -251,6 +249,21 @@
           </table>
 </s:form>
 <script language="javascript" type="text/javascript">
+
+	function updateAllPageTotals(){
+        document.daily_form.reset();
+		updateTotalRow('adjustedProjection', 'totalAdjusted');	
+		<s:if test="%{isSecondaryVariablesConfigured(1)}">		
+			updateTotalRow('projectionVariable2', 'totalVariable2');
+		</s:if>
+		<s:if test="%{isSecondaryVariablesConfigured(2)}">					
+			updateTotalRow('projectionVariable3', 'totalVariable3');
+		</s:if>
+		<s:if test="%{isSecondaryVariablesConfigured(3)}">					
+			updateTotalRow('projectionVariable4', 'totalVariable4');	
+		</s:if>
+	}
+
 	function updateProjectionRowValue(objectId, variableName, totalId){
 		truncateDailyProjectionValue(objectId);
 		updateTotalRow(variableName, totalId);
@@ -277,6 +290,6 @@
 			
 			totalValue += dailyValue;		
 		}
-		setObjectByIDValue(totalId, totalValue);
+		setObjectByIDValueAndClass(totalId, totalValue, 'editorTableEvenRowTotal');
 	}
 </script>
