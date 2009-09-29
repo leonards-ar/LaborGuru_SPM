@@ -11,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.DailyProjectionElement;
 import com.laborguru.model.DailyProjection;
+import com.laborguru.model.DistributionType;
 import com.laborguru.model.Store;
 import com.laborguru.model.StoreVariableDefinition;
 import com.laborguru.util.CalendarUtils;
@@ -29,12 +30,14 @@ import com.opensymphony.xwork2.Preparable;
 public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction implements Preparable {
 
 	private List<DailyProjectionElement> dailyProjections = new ArrayList<DailyProjectionElement>(SpmConstants.DAILY_PROJECTION_PERIOD_DAYS);
-		
-	private BigDecimal totalProjected = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
-	private BigDecimal totalAdjusted = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
-	private BigDecimal totalVariable2 = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
-	private BigDecimal totalVariable3 = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
-	private BigDecimal totalVariable4= new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
+	
+	//The totals are only used for presentation.
+	//The real values for each daily projection (not Integer if not BigDecimal) are kept in dailyProjections list.
+	private Integer totalProjected = 0;
+	private Integer totalAdjusted = 0;
+	private Integer totalVariable2 = 0;
+	private Integer totalVariable3 = 0;
+	private Integer totalVariable4= 0;
 
 	
 	private List<String> variableNames = new ArrayList<String>(StoreVariableDefinition.MAX_VARIABLE_DEFINITIONS_QUANTITY);
@@ -128,8 +131,8 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	 * Clear the totals for the page
 	 */
 	private void clearPageValues() {
-		setTotalAdjusted(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
-		setTotalProjected(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
+		setTotalAdjusted(0);
+		setTotalProjected(0);
 		
 		getDailyProjections().clear();
 		setAllowToSaveWeek(true);
@@ -145,20 +148,25 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 
 		clearPageValues();
 
+		Store employeeStore = this.getEmployeeStore();
+
 		//Setting the date for the weekly calculation
 		Date calculatedDate = getWeekDaySelector().getStartingWeekDay();
-		Date firstDayThisWeek =  getWeekDaySelector().getFirstDayOfWeek(CalendarUtils.todayWithoutTime());
-
-		if (calculatedDate.compareTo(firstDayThisWeek) >= 0){
-			calculatedDate = firstDayThisWeek;			
-		} 
+		
+		if (!DistributionType.STATIC.equals(employeeStore.getDistributionType()))
+		{
+			Date firstDayThisWeek =  getWeekDaySelector().getFirstDayOfWeek(CalendarUtils.todayWithoutTime());
+	
+			if (calculatedDate.compareTo(firstDayThisWeek) >= 0){
+				calculatedDate = firstDayThisWeek;			
+			}
+		}
 		
 		//TODO: confirm that there is no need of substracting the week
 		//calculatedDate = CalendarUtils.addOrSubstractDays(calculatedDate, -7);			
 		
 		
-		// Get calculated projections depending on the projection type
-		Store employeeStore = this.getEmployeeStore();
+		// Get calculated projections		
 		List<BigDecimal> calculatedProjections = getProjectionService().calculateWeeklyProjectionValues(getUsedWeeks(), employeeStore, calculatedDate);
 		
 		List<DailyProjection> adjustedProjections = getProjectionService().getAdjustedDailyProjectionForAWeek(employeeStore, getWeekDaySelector().getStartingWeekDay());
@@ -190,11 +198,11 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 		// calculate and set the total
 		boolean shouldAllowSave = false;
 		for (DailyProjectionElement projection : getDailyProjections()) {
-			this.totalProjected = totalProjected.add(projection.getCalculatedProjection());
-			this.totalAdjusted = totalAdjusted.add(projection.getAdjustedProjection());
-			this.totalVariable2 = totalVariable2.add(projection.getProjectionVariable2());
-			this.totalVariable3 = totalVariable3.add(projection.getProjectionVariable3());
-			this.totalVariable4 = totalVariable4.add(projection.getProjectionVariable4());
+			this.totalProjected += projection.getCalculatedProjection().intValue();
+			this.totalAdjusted += projection.getAdjustedProjection().intValue();
+			this.totalVariable2 += projection.getProjectionVariable2().intValue();
+			this.totalVariable3 += projection.getProjectionVariable3().intValue();
+			this.totalVariable4 += projection.getProjectionVariable4().intValue();
 			
 			//If any of the projections for the weeks is editable 
 			//so the page should render the save/calculate bottom
@@ -242,7 +250,7 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	/**
 	 * @return the totalProjected
 	 */
-	public BigDecimal getTotalProjected() {
+	public Integer getTotalProjected() {
 		return totalProjected;
 	}
 
@@ -250,14 +258,14 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	 * @param totalProjected
 	 *            the totalProjected to set
 	 */
-	public void setTotalProjected(BigDecimal totalProjected) {
+	public void setTotalProjected(Integer totalProjected) {
 		this.totalProjected = totalProjected;
 	}
 
 	/**
 	 * @return the totalAdjusted
 	 */
-	public BigDecimal getTotalAdjusted() {
+	public Integer getTotalAdjusted() {
 		return totalAdjusted;
 	}
 
@@ -265,7 +273,7 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	 * @param totalAdjusted
 	 *            the totalAdjusted to set
 	 */
-	public void setTotalAdjusted(BigDecimal totalAdjusted) {
+	public void setTotalAdjusted(Integer totalAdjusted) {
 		this.totalAdjusted = totalAdjusted;
 	}
 
@@ -300,21 +308,21 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	/**
 	 * @return the totalVariable2
 	 */
-	public BigDecimal getTotalVariable2() {
+	public Integer getTotalVariable2() {
 		return totalVariable2;
 	}
 
 	/**
 	 * @return the totalVariable3
 	 */
-	public BigDecimal getTotalVariable3() {
+	public Integer getTotalVariable3() {
 		return totalVariable3;
 	}
 
 	/**
 	 * @return the totalVariable4
 	 */
-	public BigDecimal getTotalVariable4() {
+	public Integer getTotalVariable4() {
 		return totalVariable4;
 	}	
 }
