@@ -27,7 +27,7 @@ public interface HistoricSalesService {
 	 * @param date
 	 * @return The DailyHistoricSales
 	 */
-	DailyHistoricSales getDailyHistoricSalesByDate(Store store, Date date);
+	DailyHistoricSales getDailyHistoricSales(Store store, Date date);
 
 	/**
 	 * 
@@ -48,6 +48,10 @@ public interface HistoricSalesService {
 	 * @param historicSales
 	 * @return
 	 */
-	public int saveAll(List<HistoricSales> historicSales, UploadFile uploadFile);
+	int saveAll(List<HistoricSales> historicSales, UploadFile uploadFile);
+
+	DailyHistoricSales calculateHistoricSalesStaticProjection(DailyHistoricSales dailyHistoricSales, BigDecimal projectionAmount);
+
+	void saveDailyHistoricSales(DailyHistoricSales dailyHistoricSales);
 	
 }

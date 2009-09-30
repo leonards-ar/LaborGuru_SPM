@@ -276,7 +276,10 @@
 	<definition name="editSettingsPage" extends="baseLayoutWithMenu">
 		<put-attribute name="body" value="/tiles/projection/settings.jsp" />
 	</definition>
-	
+
+	<definition name="editActualValuesPage" extends="baseLayoutWithMenu">
+		<put-attribute name="body" value="/tiles/projection/actualHistoricValues.jsp" />
+	</definition>			
 	<!-- Schedule -->
 	<definition name="editShiftByEmployeeByDatePage" extends="baseLayoutWithMenu">
 		<put-attribute name="htmlExtHeader" value="/tiles/scheduleHtmlExtHeader.jsp" />

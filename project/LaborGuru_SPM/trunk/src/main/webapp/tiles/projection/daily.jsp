@@ -236,7 +236,7 @@
 			                    <table border="0" cellpadding="1" cellspacing="5">
 				                    <tr>
 				                		<td><s:submit id="saveButton" onclick="return showWaitSplash();" key="save.button" action="dailySave" theme="simple" cssClass="button"/></td>
-				                    	<td><s:reset id="resetButton" key="reset.button" theme="simple" cssClass="button" onclick="updateAllPageTotals()"/></td>
+				                    	<td><s:reset id="resetButton" key="reset.button" theme="simple" cssClass="button" onclick="updateAllPageTotalsReset()"/></td>
 				                    	<td><s:submit id="cancelButton" key="cancel.button" action="daily_edit" theme="simple" cssClass="button"/></td>		                    
 				                    </tr>
 			                    </table>                    
@@ -250,7 +250,7 @@
 </s:form>
 <script language="javascript" type="text/javascript">
 
-	function updateAllPageTotals(){
+	function updateAllPageTotalsReset(){
         document.daily_form.reset();
 		updateTotalRow('adjustedProjection', 'totalAdjusted');	
 		<s:if test="%{isSecondaryVariablesConfigured(1)}">		
@@ -269,25 +269,26 @@
 		updateTotalRow(variableName, totalId);
 	}
 
-	function truncateDailyProjectionValue(objectId){
-		var truncatedValue = toInt(getObjectByIDValue(objectId,0));
+	function getNumberFromObject(objectId){		
+		var number = getObjectByIDValue(objectId,0).replace(/\,/, "");
+		var truncatedValue = toInt(number);
 
 		if(isNaN(truncatedValue)) {
 			truncatedValue = 0;
 		}
 
+		return truncatedValue;
+	}
+	
+	function truncateDailyProjectionValue(objectId){
+		var truncatedValue = getNumberFromObject(objectId);
 		setObjectByIDValue(objectId, truncatedValue);				
 	}
 		
 	function updateTotalRow(variableName, totalId){
 		var totalValue = 0;
 		for (projectionIndexRow=0; projectionIndexRow < 7; projectionIndexRow++){
-			var dailyValue = toInt(getObjectByIDValue(variableName+'['+projectionIndexRow+']',0));
-
-			if(isNaN(dailyValue)) {
-				dailyValue = 0;
-			}
-			
+			var dailyValue = getNumberFromObject(variableName+'['+projectionIndexRow+']');
 			totalValue += dailyValue;		
 		}
 		setObjectByIDValueAndClass(totalId, totalValue, 'editorTableEvenRowTotal');

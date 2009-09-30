@@ -39,4 +39,11 @@ public interface HistoricSalesDao extends SpmDaoUtils {
 	 * @return
 	 */
 	BigDecimal getTotalHistoricSalesForTimePeriod(Store store, Date startDate, Date endDate);
+	
+	/**
+	 * @param store
+	 * @param datime
+	 * @return
+	 */
+	HistoricSales getHistoricSales(Store store, Date datime);
 }

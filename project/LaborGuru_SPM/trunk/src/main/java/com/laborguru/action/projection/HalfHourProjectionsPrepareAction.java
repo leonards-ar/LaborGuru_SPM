@@ -33,7 +33,6 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	private BigDecimal totalAdjustedValues = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
 	private BigDecimal totalRevisedValues = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
 
-	private Boolean projectionError = false;
 	private OperationTime storeOperationTime;
 	
 	/**
@@ -437,13 +436,5 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	 */
 	public void setTotalRevisedValues(BigDecimal totalRevisedValues) {
 		this.totalRevisedValues = totalRevisedValues;
-	}
-
-	public void setProjectionError(Boolean projectionError) {
-		this.projectionError = projectionError;
-	}
-
-	public Boolean getProjectionError() {
-		return projectionError;
 	}
 }

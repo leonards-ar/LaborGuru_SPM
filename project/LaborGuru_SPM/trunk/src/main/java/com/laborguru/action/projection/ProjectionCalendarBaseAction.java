@@ -40,6 +40,7 @@ public abstract class ProjectionCalendarBaseAction extends SpmAction {
 
 	private Integer usedWeeks;
 
+	private Boolean projectionError = false;
 	
 	/**
 	 * 
@@ -228,4 +229,12 @@ public abstract class ProjectionCalendarBaseAction extends SpmAction {
 		return !DistributionType.STATIC.equals(getEmployeeStore().getDistributionType());
 	}
 
+	public void setProjectionError(Boolean projectionError) {
+		this.projectionError = projectionError;
+	}
+
+	public Boolean getProjectionError() {
+		return projectionError;
+	}
+	
 }

@@ -24,6 +24,13 @@
 			<interceptor-ref name="spmStackWithoutConversionError"/>			
 		</action>		
 
+		<action name="actualValues_*" method="{1}" class="com.laborguru.action.projection.ActualValuesPrepareAction">
+			<result name="edit" type="tiles">editActualValuesPage</result>
+			<result name="input" type="tiles">editActualValuesPage</result>			
+			<result name="success" type="tiles">editActualValuesPage</result>
+		</action>		
+
+
 		<action name="settings_*" method="{1}" class="com.laborguru.action.projection.ProjectionSettingsPrepareAction">
 			<result name="edit" type="tiles">editSettingsPage</result>
 			<result name="input" type="tiles">editSettingsPage</result>			
