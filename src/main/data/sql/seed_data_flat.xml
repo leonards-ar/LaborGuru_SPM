@@ -95,6 +95,9 @@
   <tbl_menu_items menu_item_id="27" label_key="schedule.submenu.printtotalhours" help_key="SCHEDULE_PRINTTOTALHOURS_HELP" target="/schedule/printweeklytotalhoursbyposition_view.action?selectedDate=${selectedDate}&amp;selectedWeekDay=${selectedWeekDay}" position="4" parent_id="15" permission_id="41"/>
   <tbl_menu_items menu_item_id="28" label_key="store.submenu.uploadactualhours" help_key="UPLOAD_ACTUAL_HOURS" target="/actualhours/actual_hours_edit.action" position="4" parent_id="5" permission_id="6"/>
   <tbl_menu_items menu_item_id="29" label_key="report.historicalComparison.title" help_key="HISTORICAL_COMPARISON_REPORT_HELP" target="/report/historicalComparisonReport_showFirstReport.action" position="3" parent_id="21" permission_id="19"/>
+  <tbl_menu_items menu_item_id="30" label_key="projection.submenu.actualvalues" help_key="PROJECTION_ACTUAL_VALUES_HELP" target="/projection/actualValues_edit.action" position="3" parent_id="11" permission_id="11"/>
+ 
+  
   
   <tbl_stores store_id="1" name="microcentro" area_id="1" half_hour_projections_weeks_default="4" daily_projections_weeks_default="4" code="MD0001"/>
   <tbl_positions position_id="1" name="chef" manager="0" position_index="0" store_id="1" guest_service="true"/>

@@ -75,7 +75,11 @@
 		<property name="target" ref="salesFileProcessorServiceTarget"/>
 	</bean>
 
-	<bean id="historicSalesServiceTarget" class="com.laborguru.service.historicsales.HistoricSalesServiceBean" autowire="byType"/>
+	<bean id="historicSalesServiceTarget" class="com.laborguru.service.historicsales.HistoricSalesServiceBean">
+		<property name="projectionService" ref="projectionService"/>
+		<property name="uploadFileDao" ref="uploadFileDao"/>			
+		<property name="historicSalesDao" ref="historicSalesDao"/>			
+	</bean>
 
 	<bean id="historicSalesService" parent="baseTransactionProxy">
 		<property name="proxyInterfaces" value="com.laborguru.service.historicsales.HistoricSalesService"/>

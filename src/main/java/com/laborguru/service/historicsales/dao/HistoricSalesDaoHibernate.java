@@ -46,6 +46,21 @@ public class HistoricSalesDaoHibernate extends SpmHibernateDao implements Histor
 		getHibernateTemplate().saveOrUpdate(hs);
 	}
 
+	
+	public HistoricSales getHistoricSales(Store store, Date datime){
+
+		List<HistoricSales> hsResult = (List<HistoricSales>) getHibernateTemplate().findByNamedParam("from HistoricSales hs " +
+				"where hs.store.id=:storeId AND hs.dateTime = :dateTime",
+				new String[] {"storeId", "dateTime"}, new Object[] {store.getId(), datime});
+		
+		if(hsResult.isEmpty()){
+			return null;
+		}
+		
+		return hsResult.get(0);
+	}
+	
+	
 	/**
 	 * 
 	 * @param store

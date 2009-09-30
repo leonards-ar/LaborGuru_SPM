@@ -25,3 +25,5 @@ alter table tbl_positions add variable3_flexible double;
 alter table tbl_positions add variable3_opening double;
 alter table tbl_positions add variable4_flexible double;
 alter table tbl_positions add variable4_opening double;
+
+insert into tbl_menu_items (menu_item_id, label_key, help_key, parent_id, permission_id, position, target) values (null, 'projection.submenu.actualvalues', 'PROJECTION_ACTUAL_VALUES_HELP', 11, 11, 3, '/projection/actualValues_edit.action');

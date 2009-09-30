@@ -10,7 +10,8 @@ package com.laborguru.service.uploadfile;
 public enum UploadEnumType {
 
 	FILE,
-	WEBSERVICE;
+	WEBSERVICE,
+	WEB_UI;
 	
 	public String getName() {
 		return this.getName();

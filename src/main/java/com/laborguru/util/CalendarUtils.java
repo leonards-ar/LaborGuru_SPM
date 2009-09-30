@@ -624,4 +624,20 @@ public class CalendarUtils {
 	public static Date getEndOfWeekDay(Date startingDayOfWeek) {
 		return addOrSubstractDays(startingDayOfWeek, DayOfWeek.values().length - 1);
 	}
+	
+	/**
+	 * Adds hour and minutes to a date.
+	 * @param date
+	 * @param time
+	 * @return
+	 */
+	public static Date setTimeToDate(Date date, Date time){
+		Calendar calendarDate = CalendarUtils.getCalendar(date);
+		Calendar calendarTime = CalendarUtils.getCalendar(time);		
+
+		calendarDate.set(Calendar.HOUR, calendarTime.get(Calendar.HOUR_OF_DAY));
+		calendarDate.set(Calendar.MINUTE, calendarTime.get(Calendar.MINUTE));
+		
+		return calendarDate.getTime();
+	}
 }
