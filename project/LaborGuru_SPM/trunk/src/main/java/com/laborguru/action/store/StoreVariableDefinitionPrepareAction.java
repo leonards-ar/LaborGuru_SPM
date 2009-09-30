@@ -110,8 +110,8 @@ public class StoreVariableDefinitionPrepareAction extends StoreAdministrationBas
 
 		// Delete variable definitions
 		for (StoreVariableDefinition variableDefinition : getRemoveVariableDefinitions()) {
-			variableDefinition.setStore(getStore());
-			getStore().getVariableDefinitions().remove(variableDefinition);
+			StoreVariableDefinition variableDefinitionToRemove = getVariableDefinitionById(variableDefinition.getId());
+			getStore().getVariableDefinitions().remove(variableDefinitionToRemove);
 		}
 	}
 	/**
