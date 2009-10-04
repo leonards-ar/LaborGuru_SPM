@@ -270,6 +270,7 @@
 	</definition>
 	
 	<definition name="editDailyPage" extends="baseLayoutWithMenu">
+		<put-attribute name="htmlExtHeader" value="/tiles/projectionsHtmlExtHeader.jsp" />
 		<put-attribute name="body" value="/tiles/projection/daily.jsp" />
 	</definition>		
 
@@ -278,6 +279,7 @@
 	</definition>
 
 	<definition name="editActualValuesPage" extends="baseLayoutWithMenu">
+		<put-attribute name="htmlExtHeader" value="/tiles/projectionsExtHeader.jsp" />	
 		<put-attribute name="body" value="/tiles/projection/actualHistoricValues.jsp" />
 	</definition>			
 	<!-- Schedule -->

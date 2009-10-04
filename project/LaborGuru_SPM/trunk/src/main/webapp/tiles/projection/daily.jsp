@@ -2,7 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <br/>
-<s:form id="daily_form" name="daily_form" action="dailySave" theme="simple">
+<s:form id="daily_form" name="daily_form" action="daily_save" theme="simple">
 <s:hidden id="selectedDate" name="selectedDate"/>
 <s:hidden id="selectedWeekDay" name="selectedWeekDay"/>
 	      <table border="0" cellspacing="0" align="center">
@@ -87,6 +87,7 @@
                     			<!-- Daily Projection -->
 								<table border="0" cellpadding="3" cellspacing="1" align="center">
 									<tr class="editorTableHeader">
+										<s:hidden name="variableNames[0]"/>
 										<td><s:property value="getVariableNames().get(0)"/></td>
 										<!-- Iterate week days -->
 										<s:iterator id="weekDay" value="weekDaySelector.weekDays">
@@ -107,6 +108,7 @@
 											<td class="editorTableOddRow"><s:text name="currency"><s:param value="calculatedProjection"/></s:text></td>
 										</s:iterator>
 										<!-- End Iterate week days -->
+										<s:hidden name="totalProjected"/>
 										<td class="editorTableOddRow"><b><s:text name="currency"><s:param value="totalProjected"/></s:text></b></td>
 									</tr>
 									<tr>
@@ -126,6 +128,9 @@
 												</s:else>
 												</td>										
 										</s:iterator>
+										<!--  We need these hidden fields for totals and variable names, so input values are retained for rendering the page in the case of a validation error 
+											By convention the total inputs id must finish in 'Input'. They are updated by the js that calculates and updates the row-->
+										<s:hidden id="totalAdjustedInput" name="totalAdjusted"/>
 										<td class="editorTableEvenRowTotal" id="totalAdjusted"><s:text name="currency"><s:param value="totalAdjusted"/></s:text></td>
 									</tr>
                     			<!-- End Daily Projection -->
@@ -139,6 +144,7 @@
 									
 									<s:if test="%{isSecondaryVariablesConfigured(1)}">								 
 									<tr>
+										<s:hidden name="variableNames[1]"/>
 										<td class="editorTableFirstColumn"><s:property value="getVariableNames().get(1)"/></td>
 										<s:iterator id="dailyProjection" value="dailyProjections" status="itProjection">
 											<td class="editorTableEvenRow">
@@ -154,7 +160,8 @@
 												</s:else>
 											</td>										
 										</s:iterator>
-										<td class="editorTableEvenRowTotal" id="totalVariable2"><s:if test="totalVariable2 != null"><s:text name="currency"><s:param value="totalVariable2"/></s:text></s:if><s:else>&nbsp;</s:else></td>
+										<s:hidden id="totalVariable2Input" name="totalVariable2"/>
+										<td class="editorTableEvenRowTotal" id="totalVariable2"><s:text name="currency"><s:param value="totalVariable2"/></s:text></td>
 									</tr>
 									</s:if>
 									<s:else>
@@ -165,6 +172,7 @@
 									
 									<s:if test="%{isSecondaryVariablesConfigured(2)}">
 									<tr>
+										<s:hidden name="variableNames[2]"/>
 										<td class="editorTableFirstColumn"><s:property value="getVariableNames().get(2)"/></td>
 										<s:iterator id="dailyProjection" value="dailyProjections" status="itProjection">
 											<td class="editorTableEvenRow">
@@ -180,7 +188,8 @@
 												</s:else>
 											</td>										
 										</s:iterator>
-										<td class="editorTableEvenRowTotal" id="totalVariable3"><s:if test="totalVariable3 != null"><s:text name="currency"><s:param value="totalVariable3"/></s:text></s:if><s:else>&nbsp;</s:else></td>
+										<s:hidden id="totalVariable3Input" name="totalVariable3"/>
+										<td class="editorTableEvenRowTotal" id="totalVariable3"><s:text name="currency"><s:param value="totalVariable3"/></s:text></td>
 									</tr>
 									</s:if>
 									<s:else>
@@ -191,6 +200,7 @@
 
 									<s:if test="%{isSecondaryVariablesConfigured(3)}">																		
 									<tr>
+										<s:hidden name="variableNames[3]"/>
 										<td class="editorTableFirstColumn"><s:property value="getVariableNames().get(3)"/></td>
 										<s:iterator id="dailyProjection" value="dailyProjections" status="itProjection">
 											<td class="editorTableEvenRow">
@@ -206,7 +216,8 @@
 												</s:else>
 											</td>										
 										</s:iterator>
-										<td class="editorTableEvenRowTotal" id="totalVariable4"><s:if test="totalVariable4 != null"><s:text name="currency"><s:param value="totalVariable4"/></s:text></s:if><s:else>&nbsp;</s:else></td>
+										<s:hidden id="totalVariable4Input" name="totalVariable4"/>
+										<td class="editorTableEvenRowTotal" id="totalVariable4"><s:text name="currency"><s:param value="totalVariable4"/></s:text></td>
 									</tr>
 									</s:if>
 									<s:else>
@@ -235,7 +246,7 @@
 		                    <td width="100%" align="right">
 			                    <table border="0" cellpadding="1" cellspacing="5">
 				                    <tr>
-				                		<td><s:submit id="saveButton" onclick="return showWaitSplash();" key="save.button" action="dailySave" theme="simple" cssClass="button"/></td>
+				                		<td><s:submit id="saveButton" onclick="return showWaitSplash();" key="save.button" action="daily_save" theme="simple" cssClass="button"/></td>
 				                    	<td><s:reset id="resetButton" key="reset.button" theme="simple" cssClass="button" onclick="updateAllPageTotalsReset()"/></td>
 				                    	<td><s:submit id="cancelButton" key="cancel.button" action="daily_edit" theme="simple" cssClass="button"/></td>		                    
 				                    </tr>
@@ -262,35 +273,5 @@
 		<s:if test="%{isSecondaryVariablesConfigured(3)}">					
 			updateTotalRow('projectionVariable4', 'totalVariable4');	
 		</s:if>
-	}
-
-	function updateProjectionRowValue(objectId, variableName, totalId){
-		truncateDailyProjectionValue(objectId);
-		updateTotalRow(variableName, totalId);
-	}
-
-	function getNumberFromObject(objectId){		
-		var number = getObjectByIDValue(objectId,0).replace(/\,/, "");
-		var truncatedValue = toInt(number);
-
-		if(isNaN(truncatedValue)) {
-			truncatedValue = 0;
-		}
-
-		return truncatedValue;
-	}
-	
-	function truncateDailyProjectionValue(objectId){
-		var truncatedValue = getNumberFromObject(objectId);
-		setObjectByIDValue(objectId, truncatedValue);				
-	}
-		
-	function updateTotalRow(variableName, totalId){
-		var totalValue = 0;
-		for (projectionIndexRow=0; projectionIndexRow < 7; projectionIndexRow++){
-			var dailyValue = getNumberFromObject(variableName+'['+projectionIndexRow+']');
-			totalValue += dailyValue;		
-		}
-		setObjectByIDValueAndClass(totalId, totalValue, 'editorTableEvenRowTotal');
 	}
 </script>

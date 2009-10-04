@@ -8,10 +8,6 @@
 		<action name="daily_*" method="{1}" class="com.laborguru.action.projection.DailyProjectionsPrepareAction">
 			<result name="edit" type="tiles">editDailyPage</result>
 			<result name="input" type="tiles">editDailyPage</result>			
-		</action>
-
-		<action name="dailySave" class="com.laborguru.action.projection.DailyProjectionsSaveAction">
-			<result name="input" type="tiles">editDailyPage</result>			
 			<result name="success" type="tiles">editDailyPage</result>				
 			<interceptor-ref name="spmStackWithoutConversionError"/>
 		</action>
@@ -20,7 +16,6 @@
 			<result name="edit" type="tiles">editHalfHourPage</result>
 			<result name="input" type="tiles">editHalfHourPage</result>			
 			<result name="success" type="tiles">editHalfHourPage</result>
-			
 			<interceptor-ref name="spmStackWithoutConversionError"/>			
 		</action>		
 
