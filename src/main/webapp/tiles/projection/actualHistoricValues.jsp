@@ -87,6 +87,7 @@
                     			<!-- Daily Projection -->
 								<table border="0" cellpadding="3" cellspacing="1" align="center">
 									<tr class="editorTableHeader">
+										<s:hidden name="variableNames[0]"/>
 										<td><s:property value="getVariableNames().get(0)"/></td>
 										<!-- Iterate week days -->
 										<s:iterator id="weekDay" value="weekDaySelector.weekDays">
@@ -119,7 +120,10 @@
 												</s:else>
 											</td>										
 										</s:iterator>
-										<td class="editorTableEvenRowTotal" id="totalMainValue"><s:text name="currency"><s:param value="totalMainValue"/></s:text></td>
+										<!--  We need these hidden fields for totals and variable names, so input values are retained for rendering the page in the case of a validation error 
+											By convention the total inputs id must finish in 'Input'. They are updated by the js that calculates and updates the row-->
+										<s:hidden id="totalMainValueInput" name="totalMainValue"/>
+										<td class="editorTableEvenRowTotal" id="totalMainValue">0</td>
 									</tr>
                     			<!-- End Actual Main Value -->
 								</table>                    			
@@ -149,35 +153,5 @@
 	function updateAllPageTotalsReset(){
 	    document.daily_form.reset();
 		updateTotalRow('dailyMainValue', 'totalMainValue');	
-	}
-
-	function updateProjectionRowValue(objectId, variableName, totalId){
-		truncateDailyProjectionValue(objectId);
-		updateTotalRow(variableName, totalId);
-	}
-
-	function getNumberFromObject(objectId){		
-		var number = getObjectByIDValue(objectId,0).replace(/\,/, "");
-		var truncatedValue = toInt(number);
-
-		if(isNaN(truncatedValue)) {
-			truncatedValue = 0;
-		}
-
-		return truncatedValue;
-	}
-	
-	function truncateDailyProjectionValue(objectId){
-		var truncatedValue = getNumberFromObject(objectId);
-		setObjectByIDValue(objectId, truncatedValue);				
-	}
-		
-	function updateTotalRow(variableName, totalId){
-		var totalValue = 0;
-		for (projectionIndexRow=0; projectionIndexRow < 7; projectionIndexRow++){
-			var dailyValue = getNumberFromObject(variableName+'['+projectionIndexRow+']');
-			totalValue += dailyValue;		
-		}
-		setObjectByIDValueAndClass(totalId, totalValue, 'editorTableEvenRowTotal');
 	}
 </script>

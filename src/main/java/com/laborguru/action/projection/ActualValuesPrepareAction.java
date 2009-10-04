@@ -4,17 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-
-import com.laborguru.action.SpmActionResult;
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.ErrorMessage;
 import com.laborguru.frontend.model.ActualValueElement;
 import com.laborguru.model.DailyHistoricSales;
 import com.laborguru.model.DistributionType;
-import com.laborguru.model.OperationTime;
 import com.laborguru.model.Store;
-import com.laborguru.model.StoreVariableDefinition;
 import com.laborguru.service.historicsales.HistoricSalesService;
 import com.laborguru.util.SpmConstants;
 import com.opensymphony.xwork2.Preparable;
@@ -28,71 +23,18 @@ import com.opensymphony.xwork2.Preparable;
  * 
  */
 @SuppressWarnings("serial")
-public class ActualValuesPrepareAction extends ProjectionCalendarBaseAction implements Preparable {
+public class ActualValuesPrepareAction extends DailyProjectionBaseAction implements Preparable {
 
 	private List<ActualValueElement> dailyActuals = new ArrayList<ActualValueElement>(SpmConstants.DAILY_PROJECTION_PERIOD_DAYS);
 		
 	private Integer totalMainValue = 0;
 	
-	private List<String> variableNames = new ArrayList<String>(StoreVariableDefinition.MAX_VARIABLE_DEFINITIONS_QUANTITY);
-
 	//Flag that indicates wheter the projections view allows to save a new projection to the user.
 	//By default is true, the value is set in setupDailyProjectionData()
 	private Boolean allowToSaveWeek = true;
 
 	HistoricSalesService historicSalesService;
-	
-	/**
-	 * Prepare the data to be used on the edit page
-	 * 
-	 * @throws Exception
-	 */
-	public void prepareEdit() {
-		pageSetup();
-		setProjectionVariablesNames();
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean isSecondaryVariablesConfigured() {
-		return getEmployeeStore().isVariableDefinitionConfigured();
-	}
-	
-	/**
-	 * 
-	 * @param index
-	 * @return
-	 */
-	public boolean isSecondaryVariablesConfigured(int index) {
-		return getEmployeeStore().isVariableDefinitionConfigured(index);
-	}
-	
-	/**
-	 * Sets the variable noames to display at projections page 
-	 */
-	private void setProjectionVariablesNames() {
-		List<StoreVariableDefinition> variableDefinitions = getEmployeeStore().getVariableDefinitions();
 		
-		for (StoreVariableDefinition variableDef: variableDefinitions){
-			getVariableNames().add(variableDef.getVariableIndex(), !StringUtils.isEmpty(variableDef.getName()) ? variableDef.getName() : getText("store.secondary.variable" + variableDef.getVariableIndex() + ".label"));
-		}
-		
-		if (getVariableNames().size() < StoreVariableDefinition.MAX_VARIABLE_DEFINITIONS_QUANTITY){
-			for(int i= getVariableNames().size(); i < StoreVariableDefinition.MAX_VARIABLE_DEFINITIONS_QUANTITY; i++){
-				getVariableNames().add(i, null);
-			}
-		}
-	}
-
-	/**
-	 * @return the projectionVariableNames
-	 */
-	public List<String> getVariableNames() {
-		return variableNames;
-	}
-
 	/**
 	 * 
 	 * 
@@ -127,7 +69,7 @@ public class ActualValuesPrepareAction extends ProjectionCalendarBaseAction impl
 	/**
 	 * 
 	 */
-	protected void setupDailyProjectionData() {	
+	protected void setupDailyProjectionData() {
 		// Force object initialization
 		initializeDayWeekSelector(getSelectedDate(), getSelectedDate());		
 
@@ -184,51 +126,11 @@ public class ActualValuesPrepareAction extends ProjectionCalendarBaseAction impl
 	}	
 	
 	/**
-	 * Prepares the edit page
 	 * 
-	 * @return
-	 * @throws Exception
+	 * @see com.laborguru.action.projection.DailyProjectionBaseAction#customSave()
 	 */
-	public String edit() throws Exception {
-		
-		if(!DistributionType.STATIC.equals(getEmployeeStore().getDistributionType())){
-			addActionError(new ErrorMessage(ErrorEnum.STORE_NOT_STATIC.name()));
-			//TODO: CN - This flag should be removed when we found the way to ask from the front if actionErrors is empty.
-			setProjectionError(true);			
-		}
-
-		
-		setupDailyProjectionData();
-
-		return SpmActionResult.EDIT.getResult();
-	}
-
-
-	/**
-	 * Saves an employee on the DB
-	 * 
-	 * @return
-	 * @throws Exception
-	 */
-	public String save() throws Exception {
-		//Initialize Calendar
-		initializeDayWeekSelector(getSelectedDate(), getSelectedDate());
-
-		
-		//TODO:CN - This should be validated in a different place/way.I'm putting it here just for now.
-		//Now it's ugly, very ugly....
-		Store storeAux = this.getEmployeeStore();		
-		for (int j=0; j < 7; j++){
-			OperationTime operationTime = storeAux.getStoreOperationTimeByDate(getWeekDaySelector().getWeekDays().get(j));
-			if (operationTime == null || operationTime.getOpenHour() == null || operationTime.getCloseHour() == null){
-				addActionError(new ErrorMessage(ErrorEnum.OPERATION_TIME_IS_NOT_SET_FOR_STORE.name()));
-				prepareEdit();
-				setupDailyProjectionData();				
-				return SpmActionResult.INPUT.getResult();
-			}
-
-		}
-
+	@Override
+	protected void customSave(){
 		//Saving each projection
 		int i=0;
 		List<Date> weekDates = getWeekDaySelector().getWeekDays();
@@ -243,14 +145,22 @@ public class ActualValuesPrepareAction extends ProjectionCalendarBaseAction impl
 				getHistoricSalesService().saveDailyHistoricSales(dailyHistoricSales);
 			}
 			i++;
-		}
-		
-		//Setting screen for edition
-		prepareEdit();
-		edit();
-
-		return SpmActionResult.SUCCESS.getResult();
-	}	
+		}		
+	}
+	
+	
+	/**
+	 * 
+	 * @see com.laborguru.action.projection.DailyProjectionBaseAction#customEdit()
+	 */
+	@Override
+	protected void customEdit() {
+		if(!DistributionType.STATIC.equals(getEmployeeStore().getDistributionType())){
+			addActionError(new ErrorMessage(ErrorEnum.STORE_NOT_STATIC.name()));
+			//TODO: CN - This flag should be removed when we found the way to ask from the front if actionErrors is empty.
+			setProjectionError(true);			
+		}		
+	}
 	
 	/**
 	 * Clear the totals for the page
@@ -317,5 +227,4 @@ public class ActualValuesPrepareAction extends ProjectionCalendarBaseAction impl
 	public void setHistoricSalesService(HistoricSalesService historicSalesService) {
 		this.historicSalesService = historicSalesService;
 	}
-	
 }

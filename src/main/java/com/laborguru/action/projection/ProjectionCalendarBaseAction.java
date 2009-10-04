@@ -236,5 +236,4 @@ public abstract class ProjectionCalendarBaseAction extends SpmAction {
 	public Boolean getProjectionError() {
 		return projectionError;
 	}
-	
 }

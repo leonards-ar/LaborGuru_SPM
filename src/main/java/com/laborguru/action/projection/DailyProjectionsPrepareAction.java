@@ -6,14 +6,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.DailyProjectionElement;
 import com.laborguru.model.DailyProjection;
 import com.laborguru.model.DistributionType;
 import com.laborguru.model.Store;
-import com.laborguru.model.StoreVariableDefinition;
 import com.laborguru.util.CalendarUtils;
 import com.laborguru.util.SpmConstants;
 import com.opensymphony.xwork2.Preparable;
@@ -27,7 +24,7 @@ import com.opensymphony.xwork2.Preparable;
  * 
  */
 @SuppressWarnings("serial")
-public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction implements Preparable {
+public class DailyProjectionsPrepareAction extends DailyProjectionBaseAction implements Preparable {
 
 	private List<DailyProjectionElement> dailyProjections = new ArrayList<DailyProjectionElement>(SpmConstants.DAILY_PROJECTION_PERIOD_DAYS);
 	
@@ -39,64 +36,10 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	private Integer totalVariable3 = 0;
 	private Integer totalVariable4= 0;
 
-	
-	private List<String> variableNames = new ArrayList<String>(StoreVariableDefinition.MAX_VARIABLE_DEFINITIONS_QUANTITY);
-
 	//Flag that indicates wheter the projections view allows to save a new projection to the user.
 	//By default is true, the value is set in setupDailyProjectionData()
 	private Boolean allowToSaveWeek = true;
 	
-	/**
-	 * Prepare the data to be used on the edit page
-	 * 
-	 * @throws Exception
-	 */
-	public void prepareEdit() {
-		pageSetup();
-		setProjectionVariablesNames();
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean isSecondaryVariablesConfigured() {
-		return getEmployeeStore().isVariableDefinitionConfigured();
-	}
-	
-	/**
-	 * 
-	 * @param index
-	 * @return
-	 */
-	public boolean isSecondaryVariablesConfigured(int index) {
-		return getEmployeeStore().isVariableDefinitionConfigured(index);
-	}
-	
-	/**
-	 * Sets the variable noames to display at projections page 
-	 */
-	private void setProjectionVariablesNames() {
-		List<StoreVariableDefinition> variableDefinitions = getEmployeeStore().getVariableDefinitions();
-		
-		for (StoreVariableDefinition variableDef: variableDefinitions){
-			getVariableNames().add(variableDef.getVariableIndex(), !StringUtils.isEmpty(variableDef.getName()) ? variableDef.getName() : getText("store.secondary.variable" + variableDef.getVariableIndex() + ".label"));
-		}
-		
-		if (getVariableNames().size() < StoreVariableDefinition.MAX_VARIABLE_DEFINITIONS_QUANTITY){
-			for(int i= getVariableNames().size(); i < StoreVariableDefinition.MAX_VARIABLE_DEFINITIONS_QUANTITY; i++){
-				getVariableNames().add(i, null);
-			}
-		}
-	}
-
-	/**
-	 * @return the projectionVariableNames
-	 */
-	public List<String> getVariableNames() {
-		return variableNames;
-	}
-
 	/**
 	 * 
 	 * 
@@ -131,8 +74,13 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	 * Clear the totals for the page
 	 */
 	private void clearPageValues() {
+		
 		setTotalAdjusted(0);
 		setTotalProjected(0);
+		
+		setTotalVariable2(0);
+		setTotalVariable3(0);
+		setTotalVariable4(0);
 		
 		getDailyProjections().clear();
 		setAllowToSaveWeek(true);
@@ -161,11 +109,7 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 				calculatedDate = firstDayThisWeek;			
 			}
 		}
-		
-		//TODO: confirm that there is no need of substracting the week
-		//calculatedDate = CalendarUtils.addOrSubstractDays(calculatedDate, -7);			
-		
-		
+				
 		// Get calculated projections		
 		List<BigDecimal> calculatedProjections = getProjectionService().calculateWeeklyProjectionValues(getUsedWeeks(), employeeStore, calculatedDate);
 		
@@ -213,6 +157,40 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 		setAllowToSaveWeek(shouldAllowSave);
 	}
 
+	
+	/**
+	 * 
+	 * @see com.laborguru.action.projection.DailyProjectionBaseAction#customSave()
+	 */
+	@Override
+	protected void customSave() {
+		//Saving each projection
+		int i=0;
+		List<Date> weekDates = getWeekDaySelector().getWeekDays();
+		Date currentStartWeekDate = CalendarUtils.getDayOfThisWeek(weekDates.get(0)).getTime();
+		for (DailyProjectionElement dailyProjection: getDailyProjections()){
+			if (dailyProjection.getEditable()){			
+				Date calculatedDate = CalendarUtils.addOrSubstractDays(currentStartWeekDate, i);
+				
+				DailyProjection dailyProjectionToUpdate = dailyProjection.createDailyProjection();
+				dailyProjectionToUpdate.setStore(this.getEmployeeStore());
+				dailyProjectionToUpdate.setProjectionDate(weekDates.get(i));
+				
+				getProjectionService().calculateAndSaveDailyProjection(dailyProjectionToUpdate, dailyProjection.getAdjustedProjection(),calculatedDate);
+			}
+			i++;
+		}		
+	}
+
+	/**
+	 * 
+	 * @see com.laborguru.action.projection.DailyProjectionBaseAction#customEdit()
+	 */
+	@Override
+	protected void customEdit() {
+		//Nothing todo
+	}
+	
 	/**
 	 * 
 	 * 
@@ -313,6 +291,13 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	}
 
 	/**
+	 * Set the totalVariable2
+	 */
+	public void setTotalVariable2(Integer total) {
+		this.totalVariable2 = total;
+	}
+	
+	/**
 	 * @return the totalVariable3
 	 */
 	public Integer getTotalVariable3() {
@@ -324,5 +309,19 @@ public class DailyProjectionsPrepareAction extends ProjectionCalendarBaseAction 
 	 */
 	public Integer getTotalVariable4() {
 		return totalVariable4;
+	}
+
+	/**
+	 * @param totalVariable3 the totalVariable3 to set
+	 */
+	public void setTotalVariable3(Integer totalVariable3) {
+		this.totalVariable3 = totalVariable3;
+	}
+
+	/**
+	 * @param totalVariable4 the totalVariable4 to set
+	 */
+	public void setTotalVariable4(Integer totalVariable4) {
+		this.totalVariable4 = totalVariable4;
 	}	
 }
