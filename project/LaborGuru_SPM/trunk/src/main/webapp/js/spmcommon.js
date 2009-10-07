@@ -94,6 +94,14 @@ function toInt(n) {
 	}
 }
 
+function toDouble(n){
+	if(isNaN(n)){
+		return 0
+	}
+	
+	return Number(n)
+}
+
 function formatTimeNumber(n) {
 	n = '' + n;
 	

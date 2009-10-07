@@ -3,7 +3,9 @@ package com.laborguru.service.historicsales.dao;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.joda.time.DateMidnight;
@@ -187,5 +189,38 @@ public class HistoricSalesDaoHibernate extends SpmHibernateDao implements Histor
 		}		
 	}
 
+
+	/**
+	 * @param store
+	 * @param date
+	 * @return
+	 * @see com.laborguru.service.historicsales.dao.HistoricSalesDao#getHistoricSalesByStoreAndDate(com.laborguru.model.Store, java.util.Date)
+	 */
+	public Map<Date, HistoricSales> getHistoricSalesByStoreAndDate(Store store, Date date) {
+		if (store == null){
+			throw new IllegalArgumentException(STORE_NULL);
+		}
+		
+		if (date == null){
+			throw new IllegalArgumentException(DATE_NULL);
+		}
+
+		DateTime selectedDate = new DateTime(date);
+			
+		if(log.isDebugEnabled()) {
+			log.debug("Before getting historic sales - Parameters: Store Id:"+ store.getId()+" selectedDate:"+selectedDate.toString("yyyy-MM-dd"));
+		}
+		
+		List<HistoricSales> hsList = getHibernateTemplate().findByNamedParam("from HistoricSales hs where hs.store.id =:storeId and DATE(hs.dateTime) = STR_TO_DATE(:selectedDate,'%Y-%m-%d')",
+			new String[]{"storeId","selectedDate"}, new Object[]{store.getId(),selectedDate.toString("yyyy-MM-dd")});
+
+		Map<Date,HistoricSales> retMap = new HashMap<Date,HistoricSales>(SpmConstants.HALF_HOURS_IN_A_DAY);
+		
+		for(HistoricSales hs: hsList){
+			retMap.put(hs.getDateTime(), hs);
+		}
+		
+		return retMap;
+	}
 
 }

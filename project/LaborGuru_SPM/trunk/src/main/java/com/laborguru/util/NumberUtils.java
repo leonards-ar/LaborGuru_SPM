@@ -18,7 +18,10 @@ public class NumberUtils {
 	private final static Logger log = Logger.getLogger(NumberUtils.class);
 
 	public static final String DECIMAL_FORMAT = "#,##0.###";
-
+	
+	//Used in projections
+	public static final String CURRENCY_FORMAT = "#,##0";
+	
 	/**
 	 *
 	 */
@@ -94,4 +97,18 @@ public class NumberUtils {
 		return i != null;
 	}
 	
+	/**
+	 * Used at projection pages (front end)
+	 * @param bd
+	 * @return
+	 */
+	public static int bigDecimalToInt(BigDecimal bd){
+		if (bd != null)
+		{
+			float floatResult = bd.floatValue();
+			return Math.round(floatResult);
+		}
+		
+		return 0;
+	}
 }

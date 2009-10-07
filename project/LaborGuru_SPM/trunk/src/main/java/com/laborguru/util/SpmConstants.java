@@ -1,7 +1,6 @@
 package com.laborguru.util;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -38,5 +37,4 @@ public class SpmConstants {
 	public static final int HALF_HOURS_IN_A_DAY=48;
 	
 	public static final BigDecimal BD_ZERO_VALUE = new BigDecimal(INIT_VALUE_ZERO);
-	public static final MathContext ROUND_TO_INT = new MathContext(0,ROUNDING_MODE);
 }

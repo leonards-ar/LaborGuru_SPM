@@ -19,6 +19,8 @@ public class UploadFileDaoHibernate extends SpmHibernateDao implements UploadFil
 	private static final Logger log = Logger.getLogger(UploadFileDaoHibernate.class);
 	private static final String UPLOAD_FILE_NULL = "The upload file object passed in as parameter is null";
 	private static final String UPLOAD_FILE_ID_NULL = "The upload file object passed in as parameter has ID null";
+	private static final String UPLOAD_FILE_DATE_NULL = "The upload file object passed in as parameter has date null";
+	private static final String UPLOAD_FILE_NAME_NULL = "The upload file object passed in as parameter has name null";
 	
 	/**
 	 * Retrieves an upload file instance by id. Takes the id of the instance passed as parameter.
@@ -83,11 +85,10 @@ public class UploadFileDaoHibernate extends SpmHibernateDao implements UploadFil
 		}
 		
 		if (uploadFile.getId() == null){
-			log.error(UPLOAD_FILE_ID_NULL);
+			log.error(UPLOAD_FILE_ID_NULL + "Upload File:"+uploadFile);
 			throw new IllegalArgumentException(UPLOAD_FILE_ID_NULL);
 		}
 		
 		getHibernateTemplate().delete(uploadFile);		
-	}	
-
+	}
 }

@@ -263,15 +263,15 @@
 
 	function updateAllPageTotalsReset(){
         document.daily_form.reset();
-		updateTotalRow('adjustedProjection', 'totalAdjusted');	
+		updateTotalRow('adjustedProjection', 'totalAdjusted','i');	
 		<s:if test="%{isSecondaryVariablesConfigured(1)}">		
-			updateTotalRow('projectionVariable2', 'totalVariable2');
+			updateTotalRow('projectionVariable2', 'totalVariable2','i');
 		</s:if>
 		<s:if test="%{isSecondaryVariablesConfigured(2)}">					
-			updateTotalRow('projectionVariable3', 'totalVariable3');
+			updateTotalRow('projectionVariable3', 'totalVariable3','i');
 		</s:if>
 		<s:if test="%{isSecondaryVariablesConfigured(3)}">					
-			updateTotalRow('projectionVariable4', 'totalVariable4');	
+			updateTotalRow('projectionVariable4', 'totalVariable4','i');	
 		</s:if>
 	}
 </script>
