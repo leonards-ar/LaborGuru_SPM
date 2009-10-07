@@ -2,6 +2,7 @@ package com.laborguru.service.historicsales.dao;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Map;
 
 import com.laborguru.model.DailyHistoricSales;
 import com.laborguru.model.HistoricSales;
@@ -30,7 +31,7 @@ public interface HistoricSalesDao extends SpmDaoUtils {
 	 * @return
 	 */
 	DailyHistoricSales getDailyHistoricSales(Store store, Date date);
-	
+		
 	/**
 	 * 
 	 * @param store
@@ -46,4 +47,15 @@ public interface HistoricSalesDao extends SpmDaoUtils {
 	 * @return
 	 */
 	HistoricSales getHistoricSales(Store store, Date datime);
+	
+	/**
+	 * Retrieves historic sales by date and store.
+	 * This should always return a list of the availabel Historic Sales records for a day.
+	 * The maximum list size is 48 as the records enters by halfhour. A day has 48 half hours. 
+	 * @param The store, cannot be null
+	 * @param Historic sale Date, cannot be null
+	 * @return The list of historic sales
+	 */
+	Map<Date,HistoricSales> getHistoricSalesByStoreAndDate(Store store, Date date);	
+	
 }

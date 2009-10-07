@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.joda.time.DateTime;
 
@@ -117,6 +118,12 @@ public class HistoricSalesServiceBean implements HistoricSalesService {
 	}
 
 	
+	/**
+	 * @param dailyHistoricSales
+	 * @param projectionAmount
+	 * @return
+	 * @see com.laborguru.service.historicsales.HistoricSalesService#calculateHistoricSalesStaticProjection(com.laborguru.model.DailyHistoricSales, java.math.BigDecimal)
+	 */
 	public DailyHistoricSales calculateHistoricSalesStaticProjection(DailyHistoricSales dailyHistoricSales, BigDecimal projectionAmount) {
 		
 		List<HalfHourProjection> calculatedHalfHourList = getProjectionService().calculateStaticHalfHourProjections(dailyHistoricSales.getStore(), projectionAmount, dailyHistoricSales.getSalesDate());		
@@ -142,34 +149,72 @@ public class HistoricSalesServiceBean implements HistoricSalesService {
 		Date selectedDate = dailyHistoricSales.getSalesDate();
 		Calendar calendarDate = CalendarUtils.getCalendar(selectedDate);
 		int dayOfWeek = calendarDate.get(Calendar.DAY_OF_WEEK);
-						
+		
+
+		//New upload file for store and date
+		//Althoug the name is misleading, "Upload file", this entity represents an import of historic sales to system. Every time we upload values, 
+		//we create a new upload file.
 		UploadFile uploadFile = getUploadFile(dailyHistoricSales);
-		
 		getUploadFileDao().saveOrUpdate(uploadFile);
+
+		Map<Date,HistoricSales> historicSalesMap = historicSalesDao.getHistoricSalesByStoreAndDate(store, selectedDate);
 		
-		for (HalfHourHistoricSales aHalfHourHistoricSales: halfHourSalesList){			
-			HistoricSales aHistoricSales = new HistoricSales();
-			aHistoricSales.setStore(store);
-			aHistoricSales.setMainValue(aHalfHourHistoricSales.getValue());
-			
-			Date time = aHalfHourHistoricSales.getTime();
-			aHistoricSales.setDateTime(CalendarUtils.setTimeToDate(selectedDate, time));
-			aHistoricSales.setDayOfWeek(dayOfWeek);	
-			aHistoricSales.setUploadFile(uploadFile);
-			
-			getHistoricSalesDao().saveOrUpdate(aHistoricSales);
+		if (historicSalesMap.isEmpty()){
+		
+			for (HalfHourHistoricSales aHalfHourHistoricSales: halfHourSalesList){	
+				Date salesDateTime = CalendarUtils.setTimeToDate(selectedDate, aHalfHourHistoricSales.getTime());		
+				HistoricSales aHistoricSales = createHistoricSales(aHalfHourHistoricSales, store, salesDateTime,dayOfWeek);				
+				aHistoricSales.setUploadFile(uploadFile);
+				getHistoricSalesDao().saveOrUpdate(aHistoricSales);
+			}
+		}else{
+			//There is already data for that store and date, we need to update the existing records
+			for (HalfHourHistoricSales aHalfHourHistoricSales: halfHourSalesList){
+				Date salesDateTime = CalendarUtils.setTimeToDate(selectedDate, aHalfHourHistoricSales.getTime());
+				
+				HistoricSales aHistoricSales = null;
+				
+				if(historicSalesMap.containsKey(salesDateTime)){
+					//If there is a historic sale for that half hour then update the value
+					aHistoricSales = historicSalesMap.get(salesDateTime);
+					aHistoricSales.setMainValue(aHalfHourHistoricSales.getValue());
+				}else{
+					//If there is no historic value, we create one.
+					aHistoricSales = createHistoricSales(aHalfHourHistoricSales, store, salesDateTime,dayOfWeek);				
+				}
+				//Another way to do these would be to add the historic sales record to the upload file and later save the upload file, 
+				//I tried and there are problems (randomly) with the colecction of hs in the upload file. In this way works fine.
+				//TODO: Find out why in the other wat does not work. 
+				aHistoricSales.setUploadFile(uploadFile);
+				getHistoricSalesDao().saveOrUpdate(aHistoricSales);
+			}
 		}
+		
+		//Explicitily flushing and clearing the session
+		historicSalesDao.flushSession();
+		historicSalesDao.clearSession();		
 	}
 	
+	private HistoricSales createHistoricSales(HalfHourHistoricSales hhs, Store store, Date dateTime, int dayOfWeek){
+		
+		HistoricSales aHistoricSales = new HistoricSales();
+		aHistoricSales.setStore(store);
+		aHistoricSales.setMainValue(hhs.getValue());
+		aHistoricSales.setDateTime(dateTime);
+		aHistoricSales.setDayOfWeek(dayOfWeek);	
+		
+		return aHistoricSales;
+	}
 	
 	private UploadFile getUploadFile(DailyHistoricSales dailyHistoricSales) {
 		UploadFile uploadFile = new UploadFile();
-		DateTime dateTime = new DateTime();
-		String fileName = "WEB_UI_" + dailyHistoricSales.getStore().getCode()+ "_"+
-			dateTime.getHourOfDay() + dateTime.getMinuteOfDay() + dateTime.getSecondOfDay();
+		
+		DateTime dateTime = new DateTime(dailyHistoricSales.getSalesDate());
+		Date uploadDate = new Date();
+		String fileName = UploadEnumType.WEB_UI.name()+"_" + dailyHistoricSales.getStore().getCode()+ "_"+dateTime.toString("yyyyMMdd");
 		uploadFile.setUploadType(UploadEnumType.WEB_UI);
 		uploadFile.setFilename(fileName);
-		uploadFile.setUploadDate(dateTime.toDate());
+		uploadFile.setUploadDate(uploadDate);
 		return uploadFile;
 	}
 	

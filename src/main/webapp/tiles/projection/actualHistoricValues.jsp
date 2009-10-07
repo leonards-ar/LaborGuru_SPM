@@ -98,10 +98,12 @@
 									</tr>
 									<tr>
 										<td class="editorTableFirstColumn" style="font-weight: bold;"><s:text name="projection.actual.label"/></td>
-										<s:iterator id="dailyActual" value="dailyActuals" status="itProjection">
-											<td class="editorTableOddRow"><s:text name="currency"><s:param value="mainValue"/></s:text></td>
+										<s:iterator id="displayMain" value="mainValueBeforeUpdate" status="itProjection">
+											<s:hidden name="mainValueBeforeUpdate[%{#itProjection.index}]" value="%{displayMain}" />
+											<td class="editorTableOddRow"><s:text name="currency"><s:param value="displayMain"/></s:text></td>
 										</s:iterator>
-										<td class="editorTableOddRow"><b><s:text name="currency"><s:param value="totalMainValue"/></s:text></b></td>
+										<s:hidden name="totalMainBeforeUpdate"/>
+										<td class="editorTableOddRow"><b><s:text name="currency"><s:param value="totalMainBeforeUpdate"/></s:text></b></td>
 									</tr>
 									<tr>
 										<td class="editorTableFirstColumn"><s:text name="projection.actual.modify.label"/></td>
@@ -111,7 +113,7 @@
 												<s:if test="%{#dailyActual.editable}">
 													<s:textfield id="dailyMainValue[%{#itProjection.index}]" name="dailyActuals[%{#itProjection.index}].mainValue" size="7" maxlength="15" theme="simple" 
 													cssStyle="text-align: center;" onchange="updateProjectionRowValue(this.id, 'dailyMainValue','totalMainValue')">
-														<s:param name="value"><s:if test="mainValue != null">0</s:if></s:param>
+														<s:param name="value"><s:if test="mainValue != null"><s:text name="currency"><s:param value="mainValue"/></s:text></s:if></s:param>
 													</s:textfield>
 												</s:if>
 												<s:else>
@@ -123,9 +125,44 @@
 										<!--  We need these hidden fields for totals and variable names, so input values are retained for rendering the page in the case of a validation error 
 											By convention the total inputs id must finish in 'Input'. They are updated by the js that calculates and updates the row-->
 										<s:hidden id="totalMainValueInput" name="totalMainValue"/>
-										<td class="editorTableEvenRowTotal" id="totalMainValue">0</td>
+										<td class="editorTableEvenRowTotal" id="totalMainValue"><s:text name="currency"><s:param value="totalMainValue"/></s:text></td>
 									</tr>
                     			<!-- End Actual Main Value -->
+									<tr>
+										<td colspan="9" class="editorTableOddRow" style="font-weight: bold;"><br/></td>
+									</tr>
+                    			<!-- Actual Hours -->
+									<tr>
+										<td class="editorTableFirstColumn"><s:text name="projection.actual.hours.label" /></td>
+										<s:iterator id="originalHours" value="actualHoursBeforeUpdate" status="itProjection">
+											<s:hidden name="actualHoursBeforeUpdate[%{#itProjection.index}]" value="%{originalHours}" />
+											<td class="editorTableOddRow"><s:text name="hours"><s:param value="originalHours"/></s:text></td>
+										</s:iterator>
+										<s:hidden name="totalHoursBeforeUpdate"/>
+										<td class="editorTableOddRow"><b><s:text name="hours"><s:param value="totalHoursBeforeUpdate"/></s:text></b></td>
+									</tr>
+									<tr>
+										<td class="editorTableFirstColumn"><s:text name="projection.actual.modify.label"/></td>
+										<s:iterator id="dailyActual" value="dailyActuals" status="itProjection">
+											<td class="editorTableEvenRow">
+												<s:if test="%{#dailyActual.editable}">
+													<s:textfield id="dailyHours[%{#itProjection.index}]" name="dailyActuals[%{#itProjection.index}].hours" size="7" maxlength="15" theme="simple" 
+													cssStyle="text-align: center;" onchange="updateDoubleRowValue(this.id, 'dailyHours','totalDailyHours')">
+														<s:param name="value"><s:text name="hours"><s:param value="hours"/></s:text></s:param>
+													</s:textfield>
+												</s:if>
+												<s:else>
+													<s:text name="hours"><s:param value="hours"/></s:text>
+													<s:hidden id="dailyHours[%{#itProjection.index}]" name="dailyActuals[%{#itProjection.index}].hours" value="%{hours}" theme="simple"/>
+												</s:else>
+											</td>										
+										</s:iterator>
+										<!--  We need these hidden fields for totals and variable names, so input values are retained for rendering the page in the case of a validation error 
+											By convention the total inputs id must finish in 'Input'. They are updated by the js that calculates and updates the row-->
+										<s:hidden id="totalDailyHoursInput" name="totalActualHours"/>
+										<td class="editorTableEvenRowTotal" id="totalDailyHours"><s:text name="hours"><s:param value="totalActualHours"/></s:text></td>
+									</tr>
+                    			<!-- End actual Hours -->
 								</table>                    			
                     		</td>
 		                </tr>
@@ -152,6 +189,7 @@
 
 	function updateAllPageTotalsReset(){
 	    document.daily_form.reset();
-		updateTotalRow('dailyMainValue', 'totalMainValue');	
+		updateTotalRow('dailyMainValue', 'totalMainValue','i');
+		updateTotalRow('dailyHours', 'totalDailyHours','d');
 	}
 </script>

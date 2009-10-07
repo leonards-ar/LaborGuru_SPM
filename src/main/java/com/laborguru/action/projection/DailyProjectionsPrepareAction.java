@@ -12,6 +12,7 @@ import com.laborguru.model.DailyProjection;
 import com.laborguru.model.DistributionType;
 import com.laborguru.model.Store;
 import com.laborguru.util.CalendarUtils;
+import com.laborguru.util.NumberUtils;
 import com.laborguru.util.SpmConstants;
 import com.opensymphony.xwork2.Preparable;
 
@@ -142,11 +143,11 @@ public class DailyProjectionsPrepareAction extends DailyProjectionBaseAction imp
 		// calculate and set the total
 		boolean shouldAllowSave = false;
 		for (DailyProjectionElement projection : getDailyProjections()) {
-			this.totalProjected += projection.getCalculatedProjection().intValue();
-			this.totalAdjusted += projection.getAdjustedProjection().intValue();
-			this.totalVariable2 += projection.getProjectionVariable2().intValue();
-			this.totalVariable3 += projection.getProjectionVariable3().intValue();
-			this.totalVariable4 += projection.getProjectionVariable4().intValue();
+			this.totalProjected += NumberUtils.bigDecimalToInt(projection.getCalculatedProjection());
+			this.totalAdjusted += NumberUtils.bigDecimalToInt(projection.getAdjustedProjection());
+			this.totalVariable2 += NumberUtils.bigDecimalToInt(projection.getProjectionVariable2());
+			this.totalVariable3 += NumberUtils.bigDecimalToInt(projection.getProjectionVariable3());
+			this.totalVariable4 += NumberUtils.bigDecimalToInt(projection.getProjectionVariable4());
 			
 			//If any of the projections for the weeks is editable 
 			//so the page should render the save/calculate bottom

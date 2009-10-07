@@ -11,10 +11,5 @@ public enum UploadEnumType {
 
 	FILE,
 	WEBSERVICE,
-	WEB_UI;
-	
-	public String getName() {
-		return this.getName();
-	}
-	
+	WEB_UI;	
 }

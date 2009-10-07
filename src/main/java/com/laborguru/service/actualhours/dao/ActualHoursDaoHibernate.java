@@ -57,12 +57,15 @@ public class ActualHoursDaoHibernate extends SpmHibernateDao implements ActualHo
 			throw new IllegalArgumentException(ACTUAL_HOURS_SEARCH_PARAMETERS_NULL);
 		}
 		
-		List<ActualHours> actualHours = (List<ActualHours>)getHibernateTemplate().findByNamedParam(
-				"from ActualHours actualHours where actualHours.store.id = :storeId and actualHours.date = :date", new String []{"storeId", "date"}, 
-				new Object[]{storeId, date});
+		DateTime dateTime = new DateTime(date);
 		
-		if (actualHours.isEmpty())
+		List<ActualHours> actualHours = (List<ActualHours>)getHibernateTemplate().findByNamedParam(
+				"from ActualHours actualHours where actualHours.store.id = :storeId and DATE(actualHours.date) = STR_TO_DATE(:date,'%Y-%m-%d')", 
+				new String []{"storeId", "date"}, new Object[]{storeId, dateTime.toString("yyyy-MM-dd")});
+		
+		if (actualHours.isEmpty()){
 			return null;
+		}
 		
 		return actualHours.get(0);
 	}
