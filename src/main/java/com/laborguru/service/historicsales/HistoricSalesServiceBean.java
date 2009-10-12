@@ -151,9 +151,8 @@ public class HistoricSalesServiceBean implements HistoricSalesService {
 		int dayOfWeek = calendarDate.get(Calendar.DAY_OF_WEEK);
 		
 
-		//New upload file for store and date
-		//Althoug the name is misleading, "Upload file", this entity represents an import of historic sales to system. Every time we upload values, 
-		//we create a new upload file.
+		//Upload file for store and date
+		//Althoug the name is misleading, "Upload file", this entity represents an import of historic sales to system. 
 		UploadFile uploadFile = getUploadFile(dailyHistoricSales);
 		getUploadFileDao().saveOrUpdate(uploadFile);
 
@@ -182,8 +181,9 @@ public class HistoricSalesServiceBean implements HistoricSalesService {
 					//If there is no historic value, we create one.
 					aHistoricSales = createHistoricSales(aHalfHourHistoricSales, store, salesDateTime,dayOfWeek);				
 				}
-				//Another way to do these would be to add the historic sales record to the upload file and later save the upload file, 
-				//I tried and there are problems (randomly) with the colecction of hs in the upload file. In this way works fine.
+				//We override the upload file for the existing historic sales.				
+				//CN: Adding the historic sales record to the upload file and saving it, DOES NOT WORK. 
+				//I tried and there are problems with the colecction of hs in the upload file. In this way works fine.
 				//TODO: Find out why in the other wat does not work. 
 				aHistoricSales.setUploadFile(uploadFile);
 				getHistoricSalesDao().saveOrUpdate(aHistoricSales);
@@ -206,14 +206,24 @@ public class HistoricSalesServiceBean implements HistoricSalesService {
 		return aHistoricSales;
 	}
 	
+	//Check wheter we need a new upload file.
 	private UploadFile getUploadFile(DailyHistoricSales dailyHistoricSales) {
-		UploadFile uploadFile = new UploadFile();
 		
-		DateTime dateTime = new DateTime(dailyHistoricSales.getSalesDate());
+		Date salesDate = dailyHistoricSales.getSalesDate();
+		Integer storeId = dailyHistoricSales.getStore().getId();
+		
+		UploadFile uploadFile = uploadFileDao.getUploadsByStoreAndHSDateAndType(storeId, salesDate, UploadEnumType.WEB_UI);
+		
+		if (uploadFile == null)
+		{
+			uploadFile = new UploadFile();			
+			DateTime dateTime = new DateTime(salesDate);
+			String fileName = UploadEnumType.WEB_UI.name()+"_" + dailyHistoricSales.getStore().getCode()+ "_"+dateTime.toString("yyyyMMdd");
+			uploadFile.setUploadType(UploadEnumType.WEB_UI);
+			uploadFile.setFilename(fileName);
+		}
+		
 		Date uploadDate = new Date();
-		String fileName = UploadEnumType.WEB_UI.name()+"_" + dailyHistoricSales.getStore().getCode()+ "_"+dateTime.toString("yyyyMMdd");
-		uploadFile.setUploadType(UploadEnumType.WEB_UI);
-		uploadFile.setFilename(fileName);
 		uploadFile.setUploadDate(uploadDate);
 		return uploadFile;
 	}

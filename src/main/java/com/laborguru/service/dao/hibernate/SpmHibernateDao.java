@@ -1,5 +1,6 @@
 package com.laborguru.service.dao.hibernate;
 
+import org.apache.log4j.Logger;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.laborguru.service.dao.SpmDaoUtils;
@@ -62,4 +63,20 @@ public class SpmHibernateDao extends HibernateDaoSupport implements SpmDaoUtils 
 	public void flushSession(){
 		getHibernateTemplate().flush();
 	}
+	
+	/**
+	 * Validate wheter ther argument passed as parameter is null and throws an IllegalArgumentException exception
+	 * 
+	 * @param the argument
+	 * @param The name of the argumente
+	 * @param The logger
+	 */
+	protected void checkNullArgumentAndThrowException(Object arg, String nameArg, Logger log){
+		if (arg == null){
+			String msg = "The"+ nameArg + " passed in as parameter is null";
+			log.error(msg);
+			throw new IllegalArgumentException(msg);			
+		}
+	}
+	
 }
