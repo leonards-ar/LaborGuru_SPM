@@ -1,8 +1,10 @@
 package com.laborguru.service.uploadfile.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.laborguru.model.UploadFile;
+import com.laborguru.service.uploadfile.UploadEnumType;
 
 /**
  * Defines the business interface for the data access operations for Upload File
@@ -38,4 +40,15 @@ public interface UploadFileDao {
 	 * @param uploadFile an attached instance of uploadFile.
 	 */
 	void delete(UploadFile uploadFile);	
+	
+	/**
+	 * Returns an upload file by storeId, Historic Sales date and UploadType
+	 * It used to retrieve the upload file in the actual load through web.
+	 * @param storeId
+	 * @param hsDate
+	 * @param uploadType
+	 * @return
+	 */
+	UploadFile getUploadsByStoreAndHSDateAndType(Integer storeId, Date hsDate, UploadEnumType uploadType);
+	
 }
