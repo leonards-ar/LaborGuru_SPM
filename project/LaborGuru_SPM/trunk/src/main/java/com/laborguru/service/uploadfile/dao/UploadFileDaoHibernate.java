@@ -55,6 +55,7 @@ public class UploadFileDaoHibernate extends SpmHibernateDao implements UploadFil
 			log.error(UPLOAD_FILE_NULL);
 			throw new IllegalArgumentException(UPLOAD_FILE_NULL);
 		}
+		log.debug("saveOrUpdate - Going to save file upload with id ["+uploadFile.getId()+"]"+" and name ["+uploadFile.getFilename()+"]");
 		
 		getHibernateTemplate().saveOrUpdate(uploadFile);
 	}
@@ -89,6 +90,7 @@ public class UploadFileDaoHibernate extends SpmHibernateDao implements UploadFil
 			log.error(UPLOAD_FILE_ID_NULL + "Upload File:"+uploadFile);
 			throw new IllegalArgumentException(UPLOAD_FILE_ID_NULL);
 		}
+		log.debug("delete - Going to delete file upload with id ["+uploadFile.getId()+"]"+" and name ["+uploadFile.getFilename()+"]");
 		
 		getHibernateTemplate().delete(uploadFile);		
 	}
@@ -119,5 +121,35 @@ public class UploadFileDaoHibernate extends SpmHibernateDao implements UploadFil
 		}
 		
 		return uploadFileList.get(0);
+	}
+
+
+	/**
+	 * @param uploadType
+	 * @return
+	 * @see com.laborguru.service.uploadfile.dao.UploadFileDao#findByType(com.laborguru.service.uploadfile.UploadEnumType)
+	 */
+	public List<UploadFile> findByType(UploadEnumType uploadType) {
+
+		checkNullArgumentAndThrowException(uploadType, "upload type", log);		
+
+		List<UploadFile> uploadFileList = (List<UploadFile>)getHibernateTemplate().findByNamedParam("from UploadFile where uploadType =:uploadType", 
+				"uploadType", uploadType);
+		
+		log.debug("find findByType - Found ["+uploadFileList.size()+"] UploadFiles of type ["+uploadType.name()+"]");
+		return uploadFileList;
+	}
+	
+
+	/**
+	 * @param uploadFile
+	 * @return
+	 * @see com.laborguru.service.uploadfile.dao.UploadFileDao#getHistoricSalesSize(com.laborguru.model.UploadFile)
+	 */
+	public Integer getHistoricSalesSize(UploadFile uploadFile){		
+		checkNullArgumentAndThrowException(uploadFile, "upload file", log);		
+		Integer hsSize =  ((Long)getHibernateTemplate().getSessionFactory().getCurrentSession().createFilter(uploadFile.getSalesRecords(),"select count(*)").list().get(0)).intValue();
+		log.debug("getHistoricSalesSize - Found ["+hsSize+"] historic sales record for the file upload with id ["+uploadFile.getId()+"]");
+		return hsSize;		
 	}	
 }

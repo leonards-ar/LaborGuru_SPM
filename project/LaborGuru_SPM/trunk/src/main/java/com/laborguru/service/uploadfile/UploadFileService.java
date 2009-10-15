@@ -22,10 +22,11 @@ public interface UploadFileService {
 	UploadFile getUploadFileById(UploadFile uploadFile);
 
 	/**
-	 * Retrieves a list with all upload files in the system
+	 * Retrieves a list with all upload files of a given type
+	 * @param The upload type
 	 * @return
 	 */
-	List<UploadFile> findAllUploadFiles();
+	List<UploadFile> findUploadFilesByType(UploadEnumType uploadType);
 	
 	/**
 	 * Deletes an upload file from the spm
@@ -33,4 +34,14 @@ public interface UploadFileService {
 	 * @return the UploadFile removed
 	 */
 	UploadFile delete(UploadFile uploadFile);
+		
+	/**
+	 * Retrieves the number of the Historic Sales associated to the uploadFile passed as parameter.
+	 * This method is an alternative to uploadFile.getHistoricSales.size(). 
+	 * We used it when we only need the number of the HistoricSales but we don't want to iniatilize the historicSales collection. A call to size() 
+	 * will initialize the entire list of historic sales of an upload file. In medium size files >10.000 records the call to size() can be very expensive.
+ 	 * 
+	 * @return The number of historic sales associated to the upload file.
+	 */	
+	Integer getHistoricSalesSize(UploadFile uploadFile);	
 }

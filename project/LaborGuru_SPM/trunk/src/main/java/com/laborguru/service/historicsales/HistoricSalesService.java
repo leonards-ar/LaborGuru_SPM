@@ -50,8 +50,21 @@ public interface HistoricSalesService {
 	 */
 	int saveAll(List<HistoricSales> historicSales, UploadFile uploadFile);
 
+	/**
+	 * @param dailyHistoricSales
+	 * @param projectionAmount
+	 * @return
+	 */
 	DailyHistoricSales calculateHistoricSalesStaticProjection(DailyHistoricSales dailyHistoricSales, BigDecimal projectionAmount);
 
+	/**
+	 * @param dailyHistoricSales
+	 */
 	void saveDailyHistoricSales(DailyHistoricSales dailyHistoricSales);
+
+	/**
+	 * @param historicSales
+	 */
+	HistoricSales createOrReplace(HistoricSales historicSales);
 	
 }

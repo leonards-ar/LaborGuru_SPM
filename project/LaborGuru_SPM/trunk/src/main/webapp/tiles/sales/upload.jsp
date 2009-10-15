@@ -66,7 +66,7 @@
                     <td width="100%" align="right" colspan="2">
 	                    <table border="0" cellpadding="1" cellspacing="5">
 		                    <tr>
-		                		<td><s:submit id="uploadButton" key="upload.button" theme="simple" cssClass="button"/></td>
+		                		<td><s:submit id="uploadButton" key="upload.button" action="sales_upload" theme="simple" cssClass="button"/></td>
 		                    	<td><s:submit id="cancelButton" key="cancel.button" action="sales_cancel" theme="simple" cssClass="button"/></td>		                    
 		                    </tr>
 	                    </table>                    
@@ -107,7 +107,7 @@
 		<display:table name="uploadFileListDisplayTagsAux" class="results" pagesize="20" requestURI="sales_edit.action" sort="list" defaultsort="1" defaultorder="descending">		    
 		    <display:column property="uploadDate" titleKey="uploadFile.uploadDate.label" sortable="true" format="{0,date,MM/dd/yyyy h:mm:ss a}"/>
 		    <display:column property="filename" titleKey="uploadFile.filename.label"/>
-			<display:column property="salesRecordsSize" titleKey="uploadFile.salesRecordsSize.label" class="resultsColumnCentered"/>
+			<display:column property="historicSalesSize" titleKey="uploadFile.salesRecordsSize.label" class="resultsColumnCentered"/>
 		    <display:column href="sales_remove.action" paramId="uploadFileId" paramProperty="id" class="resultsColumnCentered"> 
 		    	<img src="<s:url value="/images/delete.png" includeParams="none"/>"/>
 		    </display:column>

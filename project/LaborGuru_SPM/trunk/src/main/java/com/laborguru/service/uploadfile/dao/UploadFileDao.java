@@ -30,6 +30,13 @@ public interface UploadFileDao {
 	UploadFile getUploadFileById(UploadFile uploadFile);
 
 	/**
+	 * Returns all the upload instances of a given type
+	 * @param The upload Type
+	 * @return a list of UploadFiles
+	 */
+	List<UploadFile> findByType(UploadEnumType uploadType);	
+	
+	/**
 	 * Returns all the upload instances stored in the DB
 	 * @return a list of UploadFiles
 	 */
@@ -51,4 +58,13 @@ public interface UploadFileDao {
 	 */
 	UploadFile getUploadsByStoreAndHSDateAndType(Integer storeId, Date hsDate, UploadEnumType uploadType);
 	
+	/**
+	 * Retrieves the number of the Historic Sales associated to the uploadFile passed as parameter.
+	 * This method is an alternative to uploadFile.getHistoricSales.size(). 
+	 * We used it when we only need the number of the HistoricSales but we don't want to iniatilize the historicSales collection. A call to size() 
+	 * will initialize the entire list of historic sales of an upload file.
+	 * 
+	 * @return The number of historic sales associated to the upload file.
+	 */	
+	Integer getHistoricSalesSize(UploadFile uploadFile);
 }

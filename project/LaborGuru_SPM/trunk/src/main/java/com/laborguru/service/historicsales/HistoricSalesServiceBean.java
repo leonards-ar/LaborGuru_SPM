@@ -206,7 +206,11 @@ public class HistoricSalesServiceBean implements HistoricSalesService {
 		return aHistoricSales;
 	}
 	
-	//Check wheter we need a new upload file.
+	/**
+	 * Check wheter we need a new upload file.
+	 * @param dailyHistoricSales
+	 * @return
+	 */
 	private UploadFile getUploadFile(DailyHistoricSales dailyHistoricSales) {
 		
 		Date salesDate = dailyHistoricSales.getSalesDate();
@@ -226,6 +230,30 @@ public class HistoricSalesServiceBean implements HistoricSalesService {
 		Date uploadDate = new Date();
 		uploadFile.setUploadDate(uploadDate);
 		return uploadFile;
+	}
+	
+	/**
+	 * @param historicSales
+	 * @return
+	 * @see com.laborguru.service.historicsales.HistoricSalesService#createOrReplace(com.laborguru.model.HistoricSales)
+	 */
+	public HistoricSales createOrReplace(HistoricSales historicSales){
+		Store store = historicSales.getStore();
+		Date dateTime = historicSales.getDateTime();
+		
+		HistoricSales auxHs = historicSalesDao.getHistoricSales(store, dateTime);
+		HistoricSales retValue = null;
+		
+		if (auxHs != null){
+			auxHs.setFieldForUpdate(historicSales);
+			historicSalesDao.saveOrUpdate(auxHs);
+			retValue = auxHs;
+		}else{
+			historicSalesDao.saveOrUpdate(historicSales);
+			retValue = historicSales;
+		}
+		
+		return retValue;
 	}
 	
 	

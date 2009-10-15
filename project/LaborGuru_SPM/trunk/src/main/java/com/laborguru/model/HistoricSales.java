@@ -209,4 +209,11 @@ public class HistoricSales extends SpmObject {
 		this.fourthValue = fourthValue;
 	}
 
+	public void setFieldForUpdate(HistoricSales hs){
+		setFourthValue(hs.getFourthValue());
+		setMainValue(hs.getMainValue());
+		setSecondValue(hs.getSecondValue());
+		setThirdValue(hs.getThirdValue());
+		setUploadFile(hs.getUploadFile());
+	}
 }

@@ -10,9 +10,11 @@ import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.exception.ErrorMessage;
 import com.laborguru.exception.SpmUncheckedException;
+import com.laborguru.frontend.model.UploadFileElement;
 import com.laborguru.model.UploadFile;
 import com.laborguru.model.service.UploadFileProcessed;
 import com.laborguru.service.dataimport.csv.SalesFileProcessorService;
+import com.laborguru.service.uploadfile.UploadEnumType;
 import com.laborguru.service.uploadfile.UploadFileService;
 
 public class UploadPrepareAction extends SpmAction {
@@ -33,17 +35,30 @@ public class UploadPrepareAction extends SpmAction {
 	private Long uploadFileId;
 	private boolean uploadFileRemoved;
 	private String salesFileRemovedName;
-	private UploadFile uploadFileSelected;
 	
-	private List<UploadFile> uploadFileList;
+	//The class UploadFileElement holds an UploadFile and the number of historic sales record for the upload file.
+	//We use this wrapper to avoid calling size() on the collection, since that call will initilize the intire collection of historic sales
+	//for the file. The only info what we need is the number of historic sales, so there is no point to initialize the collection (imagine a file
+	//with more than 100000 records). 
+	private UploadFileElement uploadFileSelected;	
+	private List<UploadFileElement> uploadFileList;
 	
 	private SalesFileProcessorService salesFileProcessorService;
 	private UploadFileService uploadFileService;
 	
 	
 	public String edit(){
-		List<UploadFile> auxSet = uploadFileService.findAllUploadFiles();
-		setUploadFileList(auxSet);
+		getUploadFileList().clear();
+		
+		List<UploadFile> auxList = uploadFileService.findUploadFilesByType(UploadEnumType.FILE);
+		
+		for (UploadFile uploadFile : auxList){
+			//Gets the size for the collection without initialize the collection
+			Integer hsSize = getUploadFileService().getHistoricSalesSize(uploadFile);
+			UploadFileElement aFrontEndUpload = new UploadFileElement(uploadFile, hsSize);
+			getUploadFileList().add(aFrontEndUpload);
+		}
+		
 		return SpmActionResult.EDIT.getResult();
 	}
 	
@@ -77,11 +92,16 @@ public class UploadPrepareAction extends SpmAction {
 	}
 
 	public String remove(){
-		
 		UploadFile auxUpload = new UploadFile();
 		auxUpload.setId(getUploadFileId());
+		
 		UploadFile uploadFileToRemove =  uploadFileService.getUploadFileById(auxUpload);
-		setUploadFileSelected(uploadFileToRemove);
+		
+		//Gets the size for the collection without initialize the collection
+		Integer hsSize = uploadFileService.getHistoricSalesSize(uploadFileToRemove);
+		
+		UploadFileElement anElement = new UploadFileElement(uploadFileToRemove, hsSize);
+		setUploadFileSelected(anElement);
 		
 		return SpmActionResult.REMOVE.getResult();
 	}	
@@ -191,9 +211,9 @@ public class UploadPrepareAction extends SpmAction {
 	/**
 	 * @return the uploadFileList
 	 */
-	public List<UploadFile> getUploadFileList() {
+	public List<UploadFileElement> getUploadFileList() {
 		if (uploadFileList == null){
-			uploadFileList = new ArrayList<UploadFile>();
+			uploadFileList = new ArrayList<UploadFileElement>();
 		}
 		return uploadFileList;
 	}
@@ -201,7 +221,7 @@ public class UploadPrepareAction extends SpmAction {
 	/**
 	 * @param uploadFileList the uploadFileList to set
 	 */
-	public void setUploadFileList(List<UploadFile> uploadFileList) {
+	public void setUploadFileList(List<UploadFileElement> uploadFileList) {
 		this.uploadFileList = uploadFileList;
 	}
 
@@ -250,14 +270,14 @@ public class UploadPrepareAction extends SpmAction {
 	/**
 	 * @return the uploadFileSelected
 	 */
-	public UploadFile getUploadFileSelected() {
+	public UploadFileElement getUploadFileSelected() {
 		return uploadFileSelected;
 	}
 
 	/**
 	 * @param uploadFileSelected the uploadFileSelected to set
 	 */
-	public void setUploadFileSelected(UploadFile uploadFileSelected) {
+	public void setUploadFileSelected(UploadFileElement uploadFileSelected) {
 		this.uploadFileSelected = uploadFileSelected;
 	}
 

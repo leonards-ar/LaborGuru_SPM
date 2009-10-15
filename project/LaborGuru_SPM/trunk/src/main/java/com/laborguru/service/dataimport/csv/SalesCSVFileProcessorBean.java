@@ -10,7 +10,7 @@ import com.laborguru.model.HistoricSales;
 import com.laborguru.model.UploadFile;
 import com.laborguru.model.service.UploadFileProcessed;
 import com.laborguru.service.dao.SpmDaoUtils;
-import com.laborguru.service.historicsales.dao.HistoricSalesDao;
+import com.laborguru.service.historicsales.HistoricSalesService;
 import com.laborguru.service.uploadfile.UploadEnumType;
 import com.laborguru.service.uploadfile.dao.UploadFileDao;
 
@@ -28,7 +28,7 @@ public class SalesCSVFileProcessorBean implements SalesFileProcessorService {
 	private static final Logger log = Logger.getLogger(SalesCSVFileProcessorBean.class);
 
 	private SalesFileParser fileParser;
-	private HistoricSalesDao historicSalesDao;
+	private HistoricSalesService historicSalesService;
 	private UploadFileDao uploadFileDao;
 	private SpmDaoUtils spmDaoUtils;
 	
@@ -91,7 +91,7 @@ public class SalesCSVFileProcessorBean implements SalesFileProcessorService {
 			
 			while(historicSales != null){						
 				historicSales.setUploadFile(uploadToSave);			
-				historicSalesDao.saveOrUpdate(historicSales);	
+				getHistoricSalesService().createOrReplace(historicSales);	
 
 				//We persist the historic sales. To keep a light session and to improve the performace of the operation
 				//every 20 records we flush the session.
@@ -172,17 +172,17 @@ public class SalesCSVFileProcessorBean implements SalesFileProcessorService {
 	}
 
 	/**
-	 * @return the historicSalesDao
+	 * @return the historicSalesSevice
 	 */
-	public HistoricSalesDao getHistoricSalesDao() {
-		return historicSalesDao;
+	public HistoricSalesService getHistoricSalesService() {
+		return historicSalesService;
 	}
 
 	/**
-	 * @param historicSalesDao the historicSalesDao to set
+	 * @param historicSalesSevice the historicSalesSevice to set
 	 */
-	public void setHistoricSalesDao(HistoricSalesDao historicSalesDao) {
-		this.historicSalesDao = historicSalesDao;
+	public void setHistoricSalesService(HistoricSalesService historicSalesService) {
+		this.historicSalesService = historicSalesService;
 	}
 
 }
