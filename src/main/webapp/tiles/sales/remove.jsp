@@ -42,7 +42,7 @@
 			    </tr>
 			  	<tr class="editFormEvenRow">
 			        <td class="form_label" nowrap><s:text name="uploadFile.salesRecordsSize.label" /></td>
-			        <td class="value"><s:property value="uploadFileSelected.salesRecordsSize"/></td>
+			        <td class="value"><s:property value="uploadFileSelected.historicSalesSize"/></td>
 			    </tr>			    
 			</table>
 		</td>
@@ -59,7 +59,7 @@
                     <td width="100%" align="right" colspan="2">
 	                    <table border="0" cellpadding="1" cellspacing="5">
 		                    <tr>
-		                		<td><s:submit id="removeButton" key="remove.button" theme="simple" cssClass="button"/></td>
+		                		<td><s:submit id="removeButton" key="remove.button" action="sales_delete" theme="simple" cssClass="button"/></td>
 		                    	<td><s:submit id="cancelButton" key="cancel.button" action="sales_edit" theme="simple" cssClass="button"/></td>		                    
 		                    </tr>
 	                    </table>                    

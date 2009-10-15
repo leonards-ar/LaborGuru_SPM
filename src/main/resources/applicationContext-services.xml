@@ -65,7 +65,7 @@
 	
 	<bean id="salesFileProcessorServiceTarget" class="com.laborguru.service.dataimport.csv.SalesCSVFileProcessorBean">
 	  <property name="fileParser" ref="salesFileParser"/>
-  	  <property name="historicSalesDao" ref="historicSalesDao"/>
+  	  <property name="historicSalesService" ref="historicSalesService"/>
 	  <property name="uploadFileDao" ref="uploadFileDao"/>
   	  <property name="spmDaoUtils" ref="spmDaoUtils"/>  	  	  
 	</bean>

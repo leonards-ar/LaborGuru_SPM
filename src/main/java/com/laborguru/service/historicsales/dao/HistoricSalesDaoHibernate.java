@@ -49,6 +49,12 @@ public class HistoricSalesDaoHibernate extends SpmHibernateDao implements Histor
 	}
 
 	
+	/**
+	 * @param store
+	 * @param datime
+	 * @return
+	 * @see com.laborguru.service.historicsales.dao.HistoricSalesDao#getHistoricSales(com.laborguru.model.Store, java.util.Date)
+	 */
 	public HistoricSales getHistoricSales(Store store, Date datime){
 
 		List<HistoricSales> hsResult = (List<HistoricSales>) getHibernateTemplate().findByNamedParam("from HistoricSales hs " +

@@ -2,8 +2,6 @@ package com.laborguru.service.uploadfile;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import com.laborguru.model.UploadFile;
 import com.laborguru.service.uploadfile.dao.UploadFileDao;
 
@@ -18,9 +16,7 @@ import com.laborguru.service.uploadfile.dao.UploadFileDao;
 public class UploadFileServiceBean implements UploadFileService {
 
 	private UploadFileDao uploadFileDao;
-	
-	private static final Logger log = Logger.getLogger(UploadFileServiceBean.class);
-	
+		
 	/**
 	 * @param uploadFile
 	 * @return
@@ -45,10 +41,10 @@ public class UploadFileServiceBean implements UploadFileService {
 	/**
 	 * Retrieves all the upload files instances that exist in the system 
 	 * @return
-	 * @see com.laborguru.service.uploadfile.UploadFileService#findAllUploadFiles()
+	 * @see com.laborguru.service.uploadfile.UploadFileService#findAllUploadFilesByType()
 	 */
-	public List<UploadFile> findAllUploadFiles() {
-		return uploadFileDao.findAll();
+	public List<UploadFile> findUploadFilesByType(UploadEnumType uploadType) {
+		return uploadFileDao.findByType(uploadType);
 	}
 
 	/**
@@ -65,4 +61,13 @@ public class UploadFileServiceBean implements UploadFileService {
 		this.uploadFileDao = uploadFileDao;
 	}
 
+	
+	/**
+	 * @param uploadFiles
+	 * @return
+	 * @see com.laborguru.service.uploadfile.UploadFileService#getHistoricSalesSize(com.laborguru.model.UploadFile)
+	 */
+	public Integer getHistoricSalesSize(UploadFile uploadFiles) {
+		return getUploadFileDao().getHistoricSalesSize(uploadFiles);
+	}	
 }
