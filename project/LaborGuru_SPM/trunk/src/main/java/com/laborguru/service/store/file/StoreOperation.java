@@ -17,6 +17,7 @@ import com.laborguru.model.DayOfWeek;
 import com.laborguru.model.DayOfWeekData;
 import com.laborguru.model.DayPart;
 import com.laborguru.model.DayPartData;
+import com.laborguru.model.DistributionType;
 import com.laborguru.model.OperationTime;
 import com.laborguru.model.Position;
 import com.laborguru.model.PositionGroup;
@@ -56,6 +57,7 @@ public class StoreOperation extends BaseStoreSection {
 		GROUP_NAMES("Group names"),		
 		VARIABLE_DEFINITION("Variable definition"),
 		GUEST_SERVICE("Guest Service"),
+		DISTRIBUTION_TYPE("Distribution Type"),
 		MANAGER("Manager");
 		
 		private String fieldName;
@@ -94,6 +96,7 @@ public class StoreOperation extends BaseStoreSection {
 	private Set<String> guestServiceSet = new HashSet<String>();
 	private DayOfWeek firstDayOfWeek;	
 	private Integer hoursBeforeAndAfter;
+	private DistributionType distributionType;
 	
 	/**
 	 * Default Constructor
@@ -135,6 +138,9 @@ public class StoreOperation extends BaseStoreSection {
 				break;
 			case GUEST_SERVICE:
 				addGuestService(row);
+				break;
+			case DISTRIBUTION_TYPE:
+				addDitributionType(row);
 				break;
 			default: throw new IllegalArgumentException("The type passed as parameter is wrong");			
 		}
@@ -290,6 +296,18 @@ public class StoreOperation extends BaseStoreSection {
 		return getHoursOfOperation()[dayOfWeek.ordinal()];
 	}
 
+	/**
+	 * @param row
+	 */
+	private void addDitributionType(HSSFRow row) {
+		String fieldValue = PoiUtils.getStringValue(row.getCell((short)4));
+		
+		if(DistributionType.STATIC.name().equalsIgnoreCase(fieldValue)){
+			setDistributionType(DistributionType.STATIC);
+		}else{
+			setDistributionType(DistributionType.HISTORIC_AVG);			
+		}		
+	}
 	
 	/**
 	 * @param store
@@ -372,6 +390,11 @@ public class StoreOperation extends BaseStoreSection {
 			variableDefinition.setVariableIndex(k);
 			store.addVariableDefinition(variableDefinition);
 			k++;
+		}
+		
+		//Setting distribution type
+		if (getDistributionType() != null){
+			store.setDistributionType(getDistributionType());
 		}
 	}
 
@@ -486,5 +509,19 @@ public class StoreOperation extends BaseStoreSection {
 	 */
 	public Set<String> getGuestServiceSet() {
 		return guestServiceSet;
+	}
+
+	/**
+	 * @return the distributionType
+	 */
+	private DistributionType getDistributionType() {
+		return distributionType;
+	}
+
+	/**
+	 * @param distributionType the distributionType to set
+	 */
+	private void setDistributionType(DistributionType distributionType) {
+		this.distributionType = distributionType;
 	}
 }
