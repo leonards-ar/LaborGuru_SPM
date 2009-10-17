@@ -21,6 +21,7 @@ import com.laborguru.model.OperationTime;
 import com.laborguru.model.Position;
 import com.laborguru.model.PositionGroup;
 import com.laborguru.model.Store;
+import com.laborguru.model.StoreVariableDefinition;
 import com.laborguru.util.PoiUtils;
 
 
@@ -361,7 +362,17 @@ public class StoreOperation extends BaseStoreSection {
 		
 		//Setting default projection values
 		store.setDailyProjectionsWeeksDefault(DAILY_PROJECTION_WEEK_DEFAULT);
-		store.setHalfHourProjectionsWeeksDefault(HALF_HOUR_PROJECTION_WEEK_DEFAULT);		
+		store.setHalfHourProjectionsWeeksDefault(HALF_HOUR_PROJECTION_WEEK_DEFAULT);
+		
+		//Setting variable definition
+		int k=0;
+		for(String variable: getVariableDefinitions()){
+			StoreVariableDefinition variableDefinition = new StoreVariableDefinition();
+			variableDefinition.setName(variable);
+			variableDefinition.setVariableIndex(k);
+			store.addVariableDefinition(variableDefinition);
+			k++;
+		}
 	}
 
 	

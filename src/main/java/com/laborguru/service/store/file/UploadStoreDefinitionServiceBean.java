@@ -72,17 +72,57 @@ public class UploadStoreDefinitionServiceBean implements UploadStoreDefinitionSe
 		updateLaborAssumptions(source, destination);
 				
 		//Updating Store Allowances
-		for(Position position :source.getPositions()){
+		for(Position sourcePosition :source.getPositions()){
 			
 			//DayParts data
-			for(DayPartData data: position.getDayPartData()){
+			for(DayPartData data: sourcePosition.getDayPartData()){
 				updateDayPartData(data, destination);
 			}
 			
-			for(DayOfWeekData dayData: position.getDayOfWeekData()){
+			for(DayOfWeekData dayData: sourcePosition.getDayOfWeekData()){
 				updateDayOfWeekData(dayData, destination);
 			}
+			
+			updateOpenFlexSecondVariables(sourcePosition, destination);
 		}
+	}
+
+	/**
+	 * @param position
+	 * @param destination
+	 */
+	private void updateOpenFlexSecondVariables(Position position, Store destination) {
+		Position destPosition = destination.getPositionByName(position.getName());
+		
+		Double auxVal = position.getVariable2Flexible();
+		if (auxVal != null){
+			destPosition.setVariable2Flexible(auxVal);
+		}
+		
+		auxVal = position.getVariable2Opening();
+		if (auxVal != null){
+			destPosition.setVariable2Opening(auxVal);
+		}
+
+		auxVal = position.getVariable3Flexible();
+		if (auxVal != null){
+			destPosition.setVariable3Flexible(auxVal);
+		}
+
+		auxVal = position.getVariable3Opening();
+		if (auxVal != null){
+			destPosition.setVariable3Opening(auxVal);
+		}
+
+		auxVal = position.getVariable4Flexible();
+		if (auxVal != null){
+			destPosition.setVariable4Flexible(auxVal);
+		}
+
+		auxVal = position.getVariable4Opening();
+		if (auxVal != null){
+			destPosition.setVariable4Opening(auxVal);
+		}		
 	}
 
 	/**
