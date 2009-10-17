@@ -43,7 +43,9 @@ public class StoreAllowance extends BaseStoreSection{
 		VARIABLE_2_OPENING("Variable 2 Opening"),
 		VARIABLE_2_FLEXIBLE("Variable 2 Flexible"),
 		VARIABLE_3_OPENING("Variable 3 Opening"),
-		VARIABLE_3_FLEXIBLE("Variable 3 Flexible");
+		VARIABLE_3_FLEXIBLE("Variable 3 Flexible"),
+		VARIABLE_4_OPENING("Variable 4 Opening"),
+		VARIABLE_4_FLEXIBLE("Variable 4 Flexible");
 		
 		private String fieldName;
 				
@@ -80,7 +82,8 @@ public class StoreAllowance extends BaseStoreSection{
 	private PositionValueMap fixedOpening = new PositionValueMap();
 	private PositionValueMap fixedPostRush = new PositionValueMap();
 	private PositionValueMap fixedClosing = new PositionValueMap();
-	
+
+	private PositionValueMap secondVarsOpenFlex = new PositionValueMap();
 	
 	/**
 	 * Default Constructor
@@ -130,13 +133,13 @@ public class StoreAllowance extends BaseStoreSection{
 				addPositionValueRow(row, this.fixedClosing, fieldType);
 				break;
 			case VARIABLE_2_FLEXIBLE:
-				break;
 			case VARIABLE_2_OPENING:
-				break;
 			case VARIABLE_3_FLEXIBLE:
-				break;
 			case VARIABLE_3_OPENING:
-				break;				
+			case VARIABLE_4_FLEXIBLE:
+			case VARIABLE_4_OPENING:	
+				addSecondVarOpenFlexRow(row, this.secondVarsOpenFlex, fieldType);
+				break;
 			default: 
 				throw new IllegalArgumentException("The type passed as parameter is wrong");			
 		}
@@ -165,7 +168,25 @@ public class StoreAllowance extends BaseStoreSection{
 	}
 
 	
+	/**
+	 * @param row
+	 * @param positionValueMap
+	 * @param category
+	 */
+	private void addSecondVarOpenFlexRow(HSSFRow row, PositionValueMap positionValueMap, StoreAllowanceField category) {
+		String position = PoiUtils.getStringValue(row.getCell((short)2));
+		Double value = PoiUtils.getDoubleValue(row.getCell((short)4));
 	
+		if ((position == null) || (value == null)){
+			String message = getSection().getStoreSection()+" row is invalid - category: "+category.getFieldName()
+			+" - position:"+position +"- value:"+value;
+			log.error(message);
+			throw new InvalidFieldUploadFileException(message, new String[] {getSection().getStoreSection(), 
+					category.getFieldName()});
+		}
+		
+		positionValueMap.put(position, category.getFieldName(), value);		
+	}	
 	/**
 	 * @param store
 	 */
@@ -190,9 +211,15 @@ public class StoreAllowance extends BaseStoreSection{
 				assembleDayOfWeekData(dayOfWeekData, positionName, this.fixedPostRush, StoreAllowanceField.FIXED_POST_RUSH);
 				assembleDayOfWeekData(dayOfWeekData, positionName, this.fixedClosing, StoreAllowanceField.FIXED_CLOSING);
 			}
+			
+			assembleSecondVarOpenFlex(position);
 		}		
 	}
 
+
+	/**
+	 * @param store
+	 */
 	private void validatePositions(Store store) {
 		Set<String> storePositions = new HashSet<String>(store.getPositions().size());
 		
@@ -279,5 +306,29 @@ public class StoreAllowance extends BaseStoreSection{
 			default: 
 				throw new IllegalArgumentException("The fieldType passed in as parameter is not valid - FieldType:"+fieldType);
 		}
+	}
+	
+	/**
+	 * @param position
+	 */
+	private void assembleSecondVarOpenFlex(Position position) {		
+		String positionName = position.getName();
+
+		position.setVariable2Flexible(getOpenFlexSecondVarValue(positionName, StoreAllowanceField.VARIABLE_2_FLEXIBLE));
+		position.setVariable2Opening(getOpenFlexSecondVarValue(positionName, StoreAllowanceField.VARIABLE_2_OPENING));
+		position.setVariable3Flexible(getOpenFlexSecondVarValue(positionName, StoreAllowanceField.VARIABLE_3_FLEXIBLE));
+		position.setVariable3Opening(getOpenFlexSecondVarValue(positionName, StoreAllowanceField.VARIABLE_3_OPENING));
+		position.setVariable4Flexible(getOpenFlexSecondVarValue(positionName, StoreAllowanceField.VARIABLE_4_FLEXIBLE));
+		position.setVariable4Opening(getOpenFlexSecondVarValue(positionName, StoreAllowanceField.VARIABLE_4_OPENING));		
+	}
+	
+	/**
+	 * @param positionName
+	 * @param fieldType
+	 * @return
+	 */
+	private Double getOpenFlexSecondVarValue(String positionName, StoreAllowanceField fieldType){
+		Double value = (Double) this.secondVarsOpenFlex.get(positionName, fieldType.getFieldName());
+		return value;
 	}
 }
