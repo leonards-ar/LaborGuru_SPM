@@ -11,6 +11,11 @@
 		<property name="name" column="name" type="string" length="100" />
 		
 		<many-to-one name="region" class="Region" column="region_id" not-null="true" foreign-key="fk_areas_region" />
+		
+    <set name="stores" table="tbl_stores" lazy="true" cascade="all-delete-orphan" inverse="true">
+          <key column="area_id" foreign-key="fk_areas_stores"/>
+          <one-to-many class="Store"/>
+    </set>		
 	</class>
 	<database-object>
 		<create>ALTER TABLE tbl_areas AUTO_INCREMENT=1000</create>
