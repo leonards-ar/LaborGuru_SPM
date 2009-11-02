@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.SpmUncheckedException;
 import com.laborguru.model.Customer;
+import com.laborguru.model.Location;
 import com.laborguru.model.Region;
 import com.laborguru.model.Store;
 import com.laborguru.model.StoreDailyHistoricSalesStaffing;
@@ -41,13 +42,13 @@ public class ReportCustomerServiceBean implements ReportCustomerService {
 			List<TotalManagerHour> actualHours = reportDao.getActualHoursByCustomer(customer, start, end);			
 			List<TotalManagerHour> minimumStaffing = getActualMinimumStaffing(customer, start, end);
 		
-			return actualHours;
+			return merge(actualSales, actualHours, minimumStaffing);
 		
 		} catch(SQLException e) {
 			log.error("An SQLError has occurred", e);
 			throw new SpmUncheckedException(e.getCause(), e.getMessage(),
 					ErrorEnum.GENERIC_DATABASE_ERROR);
-		}			
+		}
 		
 	}
 	
@@ -81,6 +82,30 @@ public class ReportCustomerServiceBean implements ReportCustomerService {
 		return totalHours;
 	}
 
+	private List<TotalManagerHour> merge(List<TotalManagerHour> actualSales, List<TotalManagerHour> scheduleHours, List<TotalManagerHour> targetHours) {
+		
+		List<TotalManagerHour> totalHours = new ArrayList<TotalManagerHour>();
+		for(TotalManagerHour total: actualSales) {
+			TotalManagerHour scheduleHour = getTotalHour(total.getLocation(), scheduleHours); 
+			total.setSchedule((scheduleHour.getSchedule() != null)? scheduleHour.getSchedule(): SpmConstants.BD_ZERO_VALUE);
+			TotalManagerHour targetHour = getTotalHour(total.getLocation(), targetHours);
+			total.setTarget(((targetHour.getTarget() != null)? targetHour.getTarget(): SpmConstants.BD_ZERO_VALUE));
+			totalHours.add(total);
+		}
+		
+		return totalHours;
+	}
+	
+	private TotalManagerHour getTotalHour(Location location, List<TotalManagerHour> totalManagerHours) {
+		
+		for(TotalManagerHour totalManagerHour: totalManagerHours) {
+			if(location.getId().equals(totalManagerHour.getLocation().getId())) {
+				return totalManagerHour;
+			}
+		}
+		
+		return null;
+	}
 	/**
 	 * @return the reportDao
 	 */
