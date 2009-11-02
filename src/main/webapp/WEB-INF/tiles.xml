@@ -435,6 +435,11 @@
 		<put-attribute name="body" value="/tiles/report/historical_comparison_report.jsp"/>
 	</definition>
 	
+  <definition name="showCustomerReport" extends="baseLayoutWithMenu">
+    <put-attribute name="htmlExtHeader" value="/tiles/reportHtmlExtHeader.jsp" />
+    <put-attribute name="body" value="/tiles/report/customer_report.jsp"/>
+  </definition>
+  	
 	<!-- Upload Store Page -->
 	<definition name="storeDefinitionUploadPage" extends="baseLayoutWithMenu">
 		<put-attribute name="body" value="/tiles/store/uploaddefinition_edit.jsp" />
