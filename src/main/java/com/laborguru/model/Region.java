@@ -14,7 +14,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @since SPM 1.0
  *
  */
-public class Region extends SpmObject {
+public class Region extends SpmObject implements Location{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -22,6 +22,7 @@ public class Region extends SpmObject {
 	private String name;
 	private Customer customer;
 	private Set<Area> areas;
+	
 	
 	/**
 	 * Retrieves an Area that belongs to the region by area name
@@ -173,5 +174,20 @@ public class Region extends SpmObject {
 		getAreas().remove(area);
 		
 		area.setRegion(null);
+	}
+	
+	
+	/**
+	 * Retrieves all the stores associated to the region.
+	 * @return
+	 */
+	public Set<Store> getStores() {
+		Set<Store> stores = new HashSet<Store>();
+		
+		for(Area area: getAreas()) {
+			stores.addAll(area.getStores());
+		}
+		
+		return stores;
 	}
 }

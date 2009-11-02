@@ -14,7 +14,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @since SPM 1.0
  *
  */
-public class Customer extends SpmObject{
+public class Customer extends SpmObject implements Location{
 
 	private static final long serialVersionUID = 1L;
 

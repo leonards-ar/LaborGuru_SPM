@@ -1,5 +1,7 @@
 package com.laborguru.model;
 
+import java.util.Set;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -11,13 +13,15 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @since SPM 1.0
  *
  */
-public class Area extends SpmObject {
+public class Area extends SpmObject implements Location {
 
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
 	private String name;
 	private Region region;
+	
+	private Set<Store> stores;
 
 	/**
 	 * Area toString
@@ -105,4 +109,19 @@ public class Area extends SpmObject {
 	public void setRegion(Region region) {
 		this.region = region;
 	}
+
+	/**
+	 * @return the stores
+	 */
+	public Set<Store> getStores() {
+		return stores;
+	}
+
+	/**
+	 * @param stores the stores to set
+	 */
+	public void setStores(Set<Store> stores) {
+		this.stores = stores;
+	}
+	
 }
