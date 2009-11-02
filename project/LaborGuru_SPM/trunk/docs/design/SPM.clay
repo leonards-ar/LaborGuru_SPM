@@ -497,7 +497,7 @@
 </table>
 <table alias="" name="tbl_customers" remarks="" uid="1c5cdac:11a1b05b15e:-7e49">
 <table-description></table-description>
-<table-figure-bounds height="57" width="178" x="279" y="394"/>
+<table-figure-bounds height="72" width="178" x="280" y="383"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="customer_id" remarks="" uid="1c5cdac:11a1b05b15e:-7e40">
 <column-description></column-description>
@@ -617,7 +617,7 @@
 </table>
 <table alias="" name="tbl_positions" remarks="" uid="120bd5b:11a46b11a63:-7fc6">
 <table-description></table-description>
-<table-figure-bounds height="141" width="246" x="911" y="320"/>
+<table-figure-bounds height="151" width="246" x="911" y="320"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="position_id" remarks="" uid="120bd5b:11a46b11a63:-7fc2">
 <column-description></column-description>
@@ -723,7 +723,7 @@
 </table>
 <table alias="" name="tbl_employees" remarks="" uid="107610f:11a88a6d470:-7fe6">
 <table-description></table-description>
-<table-figure-bounds height="251" width="194" x="927" y="7"/>
+<table-figure-bounds height="263" width="194" x="927" y="7"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="user_id" remarks="" uid="107610f:11a88a6d470:-7f59">
 <column-description></column-description>
@@ -847,7 +847,7 @@
 </table>
 <table alias="" name="tbl_operation_times" remarks="" uid="16d864e:11abbfde91b:-7ff2">
 <table-description></table-description>
-<table-figure-bounds height="95" width="179" x="761" y="764"/>
+<table-figure-bounds height="101" width="179" x="761" y="764"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="operation_time_id" remarks="" uid="16d864e:11abbfde91b:-7fe7">
 <column-description></column-description>
@@ -904,7 +904,7 @@
 </table>
 <table alias="" name="tbl_day_parts" remarks="" uid="16d864e:11abbfde91b:-7f78">
 <table-description></table-description>
-<table-figure-bounds height="92" width="172" x="1002" y="744"/>
+<table-figure-bounds height="105" width="172" x="1002" y="744"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="day_part_id" remarks="" uid="c5acfe:11b18d1c771:-7f25">
 <column-description></column-description>
@@ -1384,7 +1384,7 @@
 </table>
 <table alias="" name="tbl_position_groups" remarks="" uid="b16656:11b6af0c8fd:-7fe9">
 <table-description></table-description>
-<table-figure-bounds height="63" width="176" x="937" y="533"/>
+<table-figure-bounds height="78" width="176" x="937" y="533"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="position_group_id" remarks="" uid="b16656:11b6af0c8fd:-7fe5">
 <column-description></column-description>
@@ -1627,7 +1627,7 @@
 </table>
 <table alias="" name="tbl_halfhour_projections" remarks="" uid="cb5cd6:11b99e89965:-7f59">
 <table-description></table-description>
-<table-figure-bounds height="87" width="203" x="546" y="914"/>
+<table-figure-bounds height="101" width="213" x="536" y="914"/>
 <column-list>
 <column alias="" auto-increment="false" column-size="0" decimal-digits="0" default-value="" mandatory="true" name="half_hour_projections_id" remarks="" uid="cb5cd6:11b99e89965:-7f3e">
 <column-description></column-description>
