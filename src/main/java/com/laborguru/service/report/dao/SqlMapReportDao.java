@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
+import com.laborguru.model.Customer;
 import com.laborguru.model.HistoricSales;
 import com.laborguru.model.Position;
 import com.laborguru.model.PositionGroup;
@@ -14,6 +15,7 @@ import com.laborguru.model.Store;
 import com.laborguru.model.report.FixedLaborHours;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.model.report.TotalHourByPosition;
+import com.laborguru.model.report.TotalManagerHour;
 import com.laborguru.util.CalendarUtils;
 
 public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao {
@@ -261,11 +263,28 @@ public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao
 		}
 		
 		return (FixedLaborHours)getSqlMapClient().queryForObject("getTargetFixedLaborHoursByService", ReportDaoHelper.mapTargetFixedLaborHoursByService(store, date, positionGroup));
+	}
+	
+	public List<TotalManagerHour> getActualSalesByCustomer(Customer customer, Date startDate, Date endDate) throws SQLException {
+		if(log.isDebugEnabled()) {
+			log.debug("getActualSalesByCustomer: before select params: customer_id: " + customer.getId() + " startDate: " + startDate + " endDate: " + endDate);
+		}
+		
+		return getSqlMapClient().queryForList("getActualSalesByCustomer", ReportDaoHelper.mapActualSalesReport(customer, startDate, endDate));
+	} 
+	
+	public List<TotalManagerHour> getActualHoursByCustomer(Customer customer, Date startDate, Date endDate) throws SQLException{
+		if(log.isDebugEnabled()) {
+			log.debug("getActualHours: before select params: customer_id: " + customer.getId() + " startDate: " + startDate + " endDate: " + endDate);
+		}
+		
+		return getSqlMapClient().queryForList("getActualHoursByCustomer", ReportDaoHelper.mapActualHoursReport(customer, startDate, endDate));
 	}	
 	
 	private boolean isNextDay(Date startHour, Date endHour){
 		return CalendarUtils.equalsOrSmallerTime(endHour, startHour);
 	}
+	
 	
 	
 

@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+import com.laborguru.model.Customer;
 import com.laborguru.model.HistoricSales;
 import com.laborguru.model.Position;
 import com.laborguru.model.PositionGroup;
@@ -11,18 +12,12 @@ import com.laborguru.model.Store;
 import com.laborguru.model.report.FixedLaborHours;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.model.report.TotalHourByPosition;
+import com.laborguru.model.report.TotalManagerHour;
 
 /**
  *
  * @author <a href="fbarreraoro@gmail.com">Federico Barrera Oro</a>
- * @version 1.0
- * @since SPM 1.0
- *
- */
-/**
- *
- * @author <a href="fbarreraoro@gmail.com">Federico Barrera Oro</a>
- * @version 1.0
+ * @version 1.1
  * @since SPM 1.0
  *
  */
@@ -247,5 +242,25 @@ public interface ReportDao {
 	 * @return
 	 * @throws SQLException
 	 */
-	FixedLaborHours getTargetFixedLaborHoursByService(Store store, Date date, PositionGroup positionGroup) throws SQLException;	
+	FixedLaborHours getTargetFixedLaborHoursByService(Store store, Date date, PositionGroup positionGroup) throws SQLException;
+	
+	/**
+	 * Retrieves the sales for all the Stores associated to a customer
+	 * @param customer
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @throws SQLException
+	 */
+	List<TotalManagerHour> getActualSalesByCustomer(Customer customer, Date startDate, Date endDate) throws SQLException;
+	
+	/**
+	 * Retrieves the actual hours of all the stores associated to a customer
+	 * @param customer
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @throws SQLException
+	 */
+	List<TotalManagerHour> getActualHoursByCustomer(Customer customer, Date startDate, Date endDate) throws SQLException;
 }
