@@ -5,7 +5,7 @@
 <table border="0" cellspacing="0" align="center">
   <tr>
     <td id="titleBar"><s:text
-      name="report.historicalComparison.title" /></td>
+      name="report.customer.title" /></td>
   </tr>
   <tr>
     <td class="errorMessage" align="center">
@@ -21,47 +21,51 @@
   <tr>
     <td align="center">
     <table border="0" cellspacing="0" align="center">
+    <s:form id="customerReport_form" name="customerReport_form" action="customerReport_showReport" theme="simple" method="post">
       <tr>
-        <td><s:form id="historicalComparison_form"
-          name="historicalComparison_form" theme="simple" method="post"
-          action="historicalComparisonReport_showReport">
-          <table border="0" cellspacing="0" align="center">
-            <tr>
-              <td align="right" class="form_label"><s:text
-                name="report.reportType.label" /></td>
-              <td align="left"><s:select name="index" list="reportTypes"
-                listKey="index" listValue="%{getText(name)}" theme="simple" /></td>
-              <td align="right" class="form_label"><s:text
-                name="report.historicalComparison.startDate.label" /></td>
-              <td><s:datetimepicker id="startDate" name="startDate"
-                adjustWeeks="true" theme="simple" /></td>
-              <td align="right" class="form_label"><s:text
-                name="report.historicalComparison.endDate.label" /></td>
-              <td><s:datetimepicker id="endDate" name="endDate"
-                adjustWeeks="true" theme="simple" /></td>
-            </tr>
-          </table></td>
-      </tr>
-      <tr>
-        <td align="right"><s:submit id="submit"
+        <td>
+	          <table border="0" cellspacing="0" align="center">
+	            <tr>
+	              <td align="right" class="form_label">
+	                <s:text name="report.reportType.label" /></td>
+	              <td align="left">
+	                <s:select name="selectView" list="reportTypes" listValue="%{getText(value)}" theme="simple"/>
+	              </td>
+	              <td align="right" class="form_label">
+	                <s:text name="report.historicalComparison.startDate.label" />
+	              </td>
+	              <td>
+	                <s:datetimepicker id="startDate" name="startDate" adjustWeeks="true" theme="simple" />
+	              </td>
+	              <td align="right" class="form_label">
+	                <s:text name="report.historicalComparison.endDate.label" />
+	              </td>
+	              <td>
+	                <s:datetimepicker id="endDate" name="endDate" adjustWeeks="true" theme="simple" />
+	              </td>
+	            </tr>
+	          </table>
+          </td>
+        </tr>
+        <tr>
+          <td align="right"><s:submit id="submit"
           key="report.historicalComparison.submit.label"
           cssClass="button" loadingText='%{getText("wait.message")}'
           title="wait.message" type="button" theme="ajax"
           targets="tableFrame" indicator="historicalComparisonIndicator"
-          formId="historicalComparison_form" /></td>
-      </tr>
+          formId="customerReport_form" /></td>
+        </tr>
       </s:form>
-      </td>
-      </tr>
+
     </table>
     </td>
-  </tr>
-  <tr>
-    <td align="center"><s:div id="tableFrame" theme="ajax"
-      indicator="historicalComparisonIndicator" /></td>
-  </tr>
-
-</table>
+	  </tr>
+	  <tr>
+	    <td align="center">
+	     <s:div id="tableFrame" theme="ajax" indicator="historicalComparisonIndicator" />
+      </td>
+    </tr>
+  </table>
 
 <center><img id="historicalComparisonIndicator"
   style="display: none;"
@@ -74,5 +78,5 @@
   djConfig.searchIds.push("endDate");
   djConfig.searchIds.push("tableFrame");
   djConfig.searchIds.push("submit");
-  //djConfig.searchIds.push("historicalComparison_form");
+  //djConfig.searchIds.push("customerReport_form");
 </script>

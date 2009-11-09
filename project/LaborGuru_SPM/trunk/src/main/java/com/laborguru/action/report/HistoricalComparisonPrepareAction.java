@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
+import com.laborguru.frontend.model.ReportTypes;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.service.report.ReportService;
 import com.laborguru.util.CalendarUtils;
@@ -25,43 +26,6 @@ public class HistoricalComparisonPrepareAction extends SpmAction implements Prep
 	 */
 	private static final long serialVersionUID = 5732711967413965288L;
 
-	private enum ReportTypes {
-		performanceEfficiency ("report.historicalComparison.performanceEfficiency.title", 0),
-		schedulingEfficiency("report.historicalComparison.scheduleEfficiency.title", 1),
-		scheduleExecutionEfficiency("report.historicalComparison.scheduleExecutionEfficiency.title", 2),
-		forecastEfficiency("report.historicalComparison.forecastEfficiency.title", 3);
-		
-		private String name;
-		private Integer index;
-		
-		private ReportTypes(String name, Integer index) {
-			this.name = name;
-			this.index = index;
-		}
-		
-		public String getName(){
-			return this.name;
-		}
-		
-		public Integer getIndex(){
-			return this.index;
-		}
-		
-		public static ReportTypes getReportTypeByIndex(int index) {
-			for(ReportTypes reportType: values()){
-				if(reportType.getIndex().intValue() == index ) {
-					return reportType;
-				}
-			}
-			return null;
-		}
-		
-		public String toString() {
-			return this.getName();
-		}
-		
-	};
-	
 	Integer index;
 	Date startDate;
 	Date endDate;

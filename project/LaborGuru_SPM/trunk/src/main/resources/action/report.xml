@@ -41,7 +41,7 @@
 			<result name="show">/tiles/report/historical_comparison_table.jsp</result>
 		</action>
 		
-    <action name="CustomerReport_*" method="{1}" class="com.laborguru.action.report.HistoricalComparisonPrepareAction">
+    <action name="customerReport_*" method="{1}" class="com.laborguru.action.report.ReportCustomerPrepareAction">
       <result name="input" type="tiles">showCustomerReport</result>
       <result name="show">/tiles/report/customer_report_table.jsp</result>
     </action>
