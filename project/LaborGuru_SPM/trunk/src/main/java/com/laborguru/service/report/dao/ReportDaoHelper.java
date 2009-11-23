@@ -130,7 +130,7 @@ public class ReportDaoHelper {
 
 	public static Map<String, Object> mapActualHoursReport(Customer customer, Date startDate, Date endDate){
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("store_id", customer.getId());
+		map.put("customer_id", customer.getId());
 		map.put("start_date", startDate);
 		map.put("end_date", endDate);
 		

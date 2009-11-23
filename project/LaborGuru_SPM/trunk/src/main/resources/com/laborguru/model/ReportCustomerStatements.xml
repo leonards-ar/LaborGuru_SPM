@@ -3,25 +3,25 @@
 <sqlMap namespace="ReportCustomerStatements">
 
 
-  <resultMap id="get-actualSalesByCustomer-result" class="com.laborguru.model.report.TotalManagerHour">
-    <result property="location.id" column="region_id"/>
-    <result property="location.name" column="region_name"/>
+  <resultMap id="get-actualSalesByCustomer-result" class="com.laborguru.model.report.TotalCustomerManagerHour">
+    <result property="region.id" column="region_id"/>
+    <result property="region.name" column="region_name"/>
     <result property="sales" column="main_value"/>
   </resultMap>
   
 	<select id="getActualSalesByCustomer" parameterClass="java.util.Map" resultMap="get-actualSalesByCustomer-result"> 
 	  SELECT r.region_id as region_id, 
     r.name as region_name, 
-    SUM(hs.main_value) as main_value, 
-    FROM tbl_regions r LEFT JOIN tbl_areas a ON r.region_id = a.area_id LEFT JOIN tbl_stores s ON a.area_id = s.area_id LEFT JOIN tbl_historic_sales hs ON s.store_id = hs.store_id AND DATE(hs.date_time) BETWEEN STR_TO_DATE(#start_date#, '%Y-%m-%d') AND STR_TO_DATE(#end_date#, '%Y-%m-%d') 
+    SUM(hs.main_value) as main_value 
+    FROM tbl_regions r LEFT JOIN tbl_areas a ON r.region_id = a.region_id LEFT JOIN tbl_stores s ON a.area_id = s.area_id LEFT JOIN tbl_historic_sales hs ON s.store_id = hs.store_id AND DATE(hs.date_time) BETWEEN STR_TO_DATE(#start_date#, '%Y-%m-%d') AND STR_TO_DATE(#end_date#, '%Y-%m-%d') 
     WHERE r.customer_id=#customer_id# 
     GROUP BY r.region_id 
     ORDER BY r.region_id;
   </select>
   
-  <resultMap id="get-scheduleHoursByCustomer-result" class="com.laborguru.model.report.TotalManagerHour">
-    <result property="location.id" column="region_id"/>
-    <result property="location.name" column="region_name"/>
+  <resultMap id="get-scheduleHoursByCustomer-result" class="com.laborguru.model.report.TotalCustomerManagerHour">
+    <result property="region.id" column="region_id"/>
+    <result property="region.name" column="region_name"/>
     <result property="schedule" column="schedule"/>
   </resultMap>
     

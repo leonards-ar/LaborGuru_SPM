@@ -27,9 +27,10 @@
 	          <table border="0" cellspacing="0" align="center">
 	            <tr>
 	              <td align="right" class="form_label">
-	                <s:text name="report.reportType.label" /></td>
+	                <s:text name="report.reportType.label"/>
+                </td>
 	              <td align="left">
-	                <s:select name="selectView" list="reportTypes" listValue="%{getText(value)}" theme="simple"/>
+	                <s:select name="selectView" list="reportTypes" listKey="name" listValue="%{getText(title)}" theme="simple" />
 	              </td>
 	              <td align="right" class="form_label">
 	                <s:text name="report.historicalComparison.startDate.label" />
@@ -48,12 +49,9 @@
           </td>
         </tr>
         <tr>
-          <td align="right"><s:submit id="submit"
-          key="report.historicalComparison.submit.label"
-          cssClass="button" loadingText='%{getText("wait.message")}'
-          title="wait.message" type="button" theme="ajax"
-          targets="tableFrame" indicator="historicalComparisonIndicator"
-          formId="customerReport_form" /></td>
+          <td align="right">
+            <s:submit id="submit" key="report.historicalComparison.submit.label" cssClass="button" loadingText='%{getText("wait.message")}' title="wait.message" type="button" theme="ajax" targets="tableFrame" indicator="customerReportIndicator"
+                formId="customerReport_form" /></td>
         </tr>
       </s:form>
 
@@ -62,12 +60,12 @@
 	  </tr>
 	  <tr>
 	    <td align="center">
-	     <s:div id="tableFrame" theme="ajax" indicator="historicalComparisonIndicator" />
+	     <s:div id="tableFrame" theme="ajax" indicator="customerReportIndicator" />
       </td>
     </tr>
   </table>
 
-<center><img id="historicalComparisonIndicator"
+<center><img id="customerReportIndicator"
   style="display: none;"
   src="<s:url value="/images/wait.gif" includeParams="none"/>"
   alt="<s:text name="wait.message"/>"

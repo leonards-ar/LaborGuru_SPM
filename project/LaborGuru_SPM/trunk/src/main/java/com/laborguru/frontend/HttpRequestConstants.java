@@ -51,4 +51,8 @@ public interface HttpRequestConstants {
 	 */
 	String SUB_MENU_ITEM_INDEX = "subMenuItemIndex";
 	
+	/**
+	 * The customer of the logged user when he/she is an employee.
+	 */	
+	String CUSTOMER = "spmCustomer";
 }

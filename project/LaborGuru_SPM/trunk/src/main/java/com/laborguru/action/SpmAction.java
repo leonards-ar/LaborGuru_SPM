@@ -10,6 +10,8 @@ import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.ErrorMessage;
 import com.laborguru.exception.SpmUncheckedException;
 import com.laborguru.frontend.HttpRequestConstants;
+import com.laborguru.model.Customer;
+import com.laborguru.model.CustomerUser;
 import com.laborguru.model.Employee;
 import com.laborguru.model.Store;
 import com.laborguru.model.User;
@@ -99,6 +101,21 @@ public class SpmAction extends ActionSupport implements SessionAware,RequestAwar
 			}
 		}
 		return store;
+	}
+	
+	protected Customer getCustomer() {
+		Customer customer = (Customer) getSession().get(HttpRequestConstants.CUSTOMER);
+		if(customer == null) {
+			CustomerUser customerUser = (CustomerUser)getLoggedUser();
+			customer = customerUser.getCustomer();
+			if(customer != null) {
+				getSession().put(HttpRequestConstants.CUSTOMER, customer);
+			} else {
+				throw new SpmUncheckedException("There is no customer present in session. Called from a user that is not a Customer Manager interface or session timed out?", ErrorEnum.NO_STORE_IN_SESSION);
+			}
+		}
+		return customer;
+
 	}
 
 	/**

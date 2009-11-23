@@ -15,16 +15,16 @@ public enum ReportTypes {
 	scheduleExecutionEfficiency("report.historicalComparison.scheduleExecutionEfficiency.title", 2),
 	forecastEfficiency("report.historicalComparison.forecastEfficiency.title", 3);
 	
-	private String name;
+	private String title;
 	private Integer index;
 	
 	private ReportTypes(String name, Integer index) {
-		this.name = name;
+		this.title = name;
 		this.index = index;
 	}
 	
-	public String getName(){
-		return this.name;
+	public String getTitle(){
+		return this.title;
 	}
 	
 	public Integer getIndex(){
@@ -40,8 +40,12 @@ public enum ReportTypes {
 		return null;
 	}
 	
+	public String getName() {
+		return this.name();
+	}
+	
 	public String toString() {
-		return this.getName();
+		return this.name();
 	}
 	
 

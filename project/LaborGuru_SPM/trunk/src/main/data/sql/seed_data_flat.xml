@@ -65,6 +65,11 @@
   <tbl_permissions permission_id="40" name="REMOVE_EMPLOYEE" description="Remove an Employee"/>
   <tbl_permissions permission_id="41" name="PRINT_SHIFT" description="Print Schedule Shifts"/>
   <tbl_permissions permission_id="42" name="SHOW_SHIFT_SUBMENU" description="Show main Schedule menu item"/>
+  <tbl_permissions permission_id="43" name="SHOW_CUSTOMER_REPORT" description="Show Report for Customer Manager"/>
+  <tbl_permissions permission_id="44" name="SHOW_REGIONAL_REPORT" description="Show Report for Regional Manager"/>
+  <tbl_permissions permission_id="45" name="SHOW_AREA_REPORT" description="Show Report for Area Manager"/>
+  <!--  tbl_permissions permission_id="46" name="SHOW_STORE_SUBMENU" description="Show Report for Stores"/-->
+  <tbl_permissions permission_id="47" name="SHOW_REPORT_SUBMENU" description="Show Report Menu"/>
 
   <tbl_menu_items menu_item_id="1" label_key="home.menu.label" help_key="HOME_MENU_HELP" target="/home/home.action" position="0" permission_id="1"/>
   <tbl_menu_items menu_item_id="2" label_key="employee.menu.label" help_key="EMPLOYEE_MENU_HELP" target="/employee/employee_list.action" position="1" permission_id="2"/>
@@ -86,7 +91,7 @@
   <tbl_menu_items menu_item_id="18" label_key="user.submenu.list" help_key="USER_LIST_HELP" target="/user/user_list.action" position="1" parent_id="17" permission_id="17"/>
   <tbl_menu_items menu_item_id="19" label_key="user.submenu.create" help_key="USER_ADD_HELP" target="/user/user_add.action" position="0" parent_id="17" permission_id="18"/>
   <tbl_menu_items menu_item_id="20" label_key="store.submenu.uploadsales" help_key="STORE_UPLOAD_SALES_HELP" target="/sales/sales_edit.action" position="3" parent_id="5" permission_id="6"/>
-  <tbl_menu_items menu_item_id="21" label_key="report.menu.label" help_key="REPORT_MENU_HELP" position="7" permission_id="19"/>
+  <tbl_menu_items menu_item_id="21" label_key="report.menu.label" help_key="REPORT_MENU_HELP" position="7" permission_id="47"/>
   <tbl_menu_items menu_item_id="22" label_key="store.submenu.uploadstoredefinition" help_key="STORE_UPLOAD_DEFINITION_HELP" target="/store/uploadDefinition_edit.action" position="2" parent_id="5" permission_id="6"/>
   <tbl_menu_items menu_item_id="23" label_key="report.weekByDay.title" help_key="WEEK_BY_DAY_REPORT_HELP" target="/report/totalHoursReport_showFirstReport.action?selectedDate=${selectedDate}&amp;selectedWeekDay=${selectedWeekDay}" position="1" parent_id="21" permission_id="19"/>
   <tbl_menu_items menu_item_id="24" label_key="report.dailyHours.title" help_key="DAY_BY_HALFHOUR_REPORT_HELP" target="/report/halfHourReport_showFirstReport.action?selectedDate=${selectedDate}&amp;selectedWeekDay=${selectedWeekDay}" position="2" parent_id="21" permission_id="19"/>
@@ -96,8 +101,9 @@
   <tbl_menu_items menu_item_id="28" label_key="store.submenu.uploadactualhours" help_key="UPLOAD_ACTUAL_HOURS" target="/actualhours/actual_hours_edit.action" position="4" parent_id="5" permission_id="6"/>
   <tbl_menu_items menu_item_id="29" label_key="report.historicalComparison.title" help_key="HISTORICAL_COMPARISON_REPORT_HELP" target="/report/historicalComparisonReport_showFirstReport.action" position="3" parent_id="21" permission_id="19"/>
   <tbl_menu_items menu_item_id="30" label_key="projection.submenu.actualvalues" help_key="PROJECTION_ACTUAL_VALUES_HELP" target="/projection/actualValues_edit.action" position="3" parent_id="11" permission_id="11"/>
- 
-  
+  <tbl_menu_items menu_item_id="31" label_key="report.CustomerManager.title" help_key="CUSTOMER_MANAGER_REPORT" target="/report/customerReport_showFirstReport.action" position="1" parent_id="21" permission_id="43"/> 
+  <!--  tbl_menu_items menu_item_id="32" label_key="report.CustomerManager.title" help_key="CUSTOMER_MANAGER_REPORT" target="/report/customerReport_showFirstReport.action" position="2" parent_id="21" permission_id="44"-->
+  <!--  tbl_menu_items menu_item_id="33" label_key="report.CustomerManager.title" help_key="CUSTOMER_MANAGER_REPORT" target="/report/customerReport_showFirstReport.action" position="3" parent_id="21" permission_id="45"/-->
   
   <tbl_stores store_id="1" name="microcentro" area_id="1" half_hour_projections_weeks_default="4" daily_projections_weeks_default="4" code="MD0001"/>
   <tbl_positions position_id="1" name="chef" manager="0" position_index="0" store_id="1" guest_service="true"/>
@@ -163,13 +169,17 @@
   <tbl_profiles_permissions profile_id="2" permission_id="15"/><!-- Add shift (TODO only see shifts) -->
   <tbl_profiles_permissions profile_id="2" permission_id="41"/><!-- Print shift -->
   <tbl_profiles_permissions profile_id="2" permission_id="19"/><!-- Reports -->
+  <tbl_profiles_permissions profile_id="2" permission_id="47"/><!-- Reports Menu-->
+  
+  
   
 <!-- Employee Permissions -->
   <tbl_profiles_permissions profile_id="3" permission_id="42"/><!-- Add shift (TODO only see projections) -->
   <tbl_profiles_permissions profile_id="3" permission_id="41"/><!-- Print shift -->
 <!-- Customer Manager Permissions -->  
   <tbl_profiles_permissions profile_id="4" permission_id="1"/><!-- Home -->
-  <tbl_profiles_permissions profile_id="4" permission_id="19"/><!-- Reports -->
+  <tbl_profiles_permissions profile_id="4" permission_id="47"/><!-- Show Report Menu -->
+  <tbl_profiles_permissions profile_id="4" permission_id="43"/><!-- Customer Reports -->
 <!-- Region Manager Permissions -->  
   <tbl_profiles_permissions profile_id="5" permission_id="1"/><!-- Home -->
   <tbl_profiles_permissions profile_id="5" permission_id="15"/><!-- Add shift (TODO only see projections) -->

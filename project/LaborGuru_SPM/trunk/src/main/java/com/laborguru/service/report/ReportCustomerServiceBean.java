@@ -11,11 +11,11 @@ import org.apache.log4j.Logger;
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.SpmUncheckedException;
 import com.laborguru.model.Customer;
-import com.laborguru.model.Location;
 import com.laborguru.model.Region;
 import com.laborguru.model.Store;
 import com.laborguru.model.StoreDailyHistoricSalesStaffing;
-import com.laborguru.model.report.TotalManagerHour;
+import com.laborguru.model.report.TotalCustomerManagerHour;
+import com.laborguru.service.customer.CustomerService;
 import com.laborguru.service.report.dao.ReportDao;
 import com.laborguru.service.staffing.StaffingService;
 import com.laborguru.util.CalendarUtils;
@@ -33,14 +33,15 @@ public class ReportCustomerServiceBean implements ReportCustomerService {
 	
 	private ReportDao reportDao;
 	private StaffingService staffingService;
+	private CustomerService customerService;
 
-	public List<TotalManagerHour> getPerformanceEfficiencyReport(Customer customer, Date start, Date end) {
+	public List<TotalCustomerManagerHour> getPerformanceEfficiencyReport(Customer customer, Date start, Date end) {
 
 		try{
 			
-			List<TotalManagerHour> actualSales = reportDao.getActualSalesByCustomer(customer, start, end);
-			List<TotalManagerHour> actualHours = reportDao.getActualHoursByCustomer(customer, start, end);			
-			List<TotalManagerHour> minimumStaffing = getActualMinimumStaffing(customer, start, end);
+			List<TotalCustomerManagerHour> actualSales = reportDao.getActualSalesByCustomer(customer, start, end);
+			List<TotalCustomerManagerHour> actualHours = reportDao.getActualHoursByCustomer(customer, start, end);			
+			List<TotalCustomerManagerHour> minimumStaffing = getActualMinimumStaffing(customer, start, end);
 		
 			return merge(actualSales, actualHours, minimumStaffing);
 		
@@ -60,12 +61,13 @@ public class ReportCustomerServiceBean implements ReportCustomerService {
 	 * @param endDate
 	 * @return
 	 */
-	private List<TotalManagerHour> getActualMinimumStaffing(Customer customer, Date startDate, Date endDate){
-		List<TotalManagerHour> totalHours = new ArrayList<TotalManagerHour>();
+	private List<TotalCustomerManagerHour> getActualMinimumStaffing(Customer customer, Date startDate, Date endDate){
+		List<TotalCustomerManagerHour> totalHours = new ArrayList<TotalCustomerManagerHour>();
 		
-		for(Region region: customer.getRegions()) {
-			TotalManagerHour totalManagerHour = new TotalManagerHour();
-			totalManagerHour.setLocation(region);
+		Customer tmpCustomer = customerService.getCustomerById(customer);
+		for(Region region: tmpCustomer.getRegions()) {
+			TotalCustomerManagerHour totalManagerHour = new TotalCustomerManagerHour();
+			totalManagerHour.setRegion(region);
 			totalHours.add(totalManagerHour);
 			BigDecimal targetRegion = SpmConstants.BD_ZERO_VALUE;
 			for(Store store: region.getStores()) {
@@ -82,13 +84,14 @@ public class ReportCustomerServiceBean implements ReportCustomerService {
 		return totalHours;
 	}
 
-	private List<TotalManagerHour> merge(List<TotalManagerHour> actualSales, List<TotalManagerHour> scheduleHours, List<TotalManagerHour> targetHours) {
+	private List<TotalCustomerManagerHour> merge(List<TotalCustomerManagerHour> actualSales, List<TotalCustomerManagerHour> scheduleHours, List<TotalCustomerManagerHour> targetHours) {
 		
-		List<TotalManagerHour> totalHours = new ArrayList<TotalManagerHour>();
-		for(TotalManagerHour total: actualSales) {
-			TotalManagerHour scheduleHour = getTotalHour(total.getLocation(), scheduleHours); 
+		List<TotalCustomerManagerHour> totalHours = new ArrayList<TotalCustomerManagerHour>();
+		for(TotalCustomerManagerHour total: actualSales) {
+			if(total.getSales() == null) total.setSales(SpmConstants.BD_ZERO_VALUE);
+			TotalCustomerManagerHour scheduleHour = getTotalHour(total.getRegion(), scheduleHours); 
 			total.setSchedule((scheduleHour.getSchedule() != null)? scheduleHour.getSchedule(): SpmConstants.BD_ZERO_VALUE);
-			TotalManagerHour targetHour = getTotalHour(total.getLocation(), targetHours);
+			TotalCustomerManagerHour targetHour = getTotalHour(total.getRegion(), targetHours);
 			total.setTarget(((targetHour.getTarget() != null)? targetHour.getTarget(): SpmConstants.BD_ZERO_VALUE));
 			totalHours.add(total);
 		}
@@ -96,10 +99,10 @@ public class ReportCustomerServiceBean implements ReportCustomerService {
 		return totalHours;
 	}
 	
-	private TotalManagerHour getTotalHour(Location location, List<TotalManagerHour> totalManagerHours) {
+	private TotalCustomerManagerHour getTotalHour(Region region, List<TotalCustomerManagerHour> totalManagerHours) {
 		
-		for(TotalManagerHour totalManagerHour: totalManagerHours) {
-			if(location.getId().equals(totalManagerHour.getLocation().getId())) {
+		for(TotalCustomerManagerHour totalManagerHour: totalManagerHours) {
+			if(region.getId().equals(totalManagerHour.getRegion().getId())) {
 				return totalManagerHour;
 			}
 		}
@@ -133,6 +136,24 @@ public class ReportCustomerServiceBean implements ReportCustomerService {
 	public void setStaffingService(StaffingService staffingService) {
 		this.staffingService = staffingService;
 	}
+
+
+	/**
+	 * @return the customerService
+	 */
+	public CustomerService getCustomerService() {
+		return customerService;
+	}
+
+
+	/**
+	 * @param customerService the customerService to set
+	 */
+	public void setCustomerService(CustomerService customerService) {
+		this.customerService = customerService;
+	}
+	
+	
 	
 
 }

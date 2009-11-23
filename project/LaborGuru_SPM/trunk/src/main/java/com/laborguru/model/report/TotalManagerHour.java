@@ -2,33 +2,25 @@ package com.laborguru.model.report;
 
 import java.math.BigDecimal;
 
-import com.laborguru.model.Location;
-import com.laborguru.model.Region;
 import com.laborguru.model.SpmObject;
+import com.laborguru.util.SpmConstants;
 
-public class TotalManagerHour extends SpmObject {
-
-	private static final long serialVersionUID = -4263736677595272709L;
+/**
+ *
+ * @author <a href="fbarreraoro@gmail.com">Federico Barrera Oro</a>
+ * @version 1.1
+ * @since SPM 1.1
+ *
+ */
+public abstract class TotalManagerHour extends SpmObject{
 	
-	Location location;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 723035706927140054L;
 	BigDecimal sales;
 	BigDecimal schedule;
 	BigDecimal target;
-	
-	
-	/**
-	 * @return the location
-	 */
-	public Location getLocation() {
-		return location;
-	}
-
-	/**
-	 * @param location the location to set
-	 */
-	public void setLocation(Location location) {
-		this.location = location;
-	}
 
 	/**
 	 * @return the sales
@@ -72,6 +64,34 @@ public class TotalManagerHour extends SpmObject {
 		this.target = target;
 	}
 
+	public BigDecimal getDifference() {
+		return schedule.subtract(target);
+	}
+	
+	/**
+	 * @return the percentage
+	 */
+	public BigDecimal getPercentage() {
+		if(target.compareTo(SpmConstants.BD_ZERO_VALUE) == 0) {
+			return SpmConstants.BD_ZERO_VALUE;
+		}
+		return getDifference().divide(target, 2, SpmConstants.ROUNDING_MODE).multiply(new BigDecimal(100));
+	}
+
+	public BigDecimal getScheduleMPH(){
+		 if(schedule.compareTo(SpmConstants.BD_ZERO_VALUE) == 0) {
+			 return SpmConstants.BD_ZERO_VALUE;
+		 }
+		 return sales.divide(schedule, 2, SpmConstants.ROUNDING_MODE);
+	}
+	
+	public BigDecimal getTargerMPH(){
+		 if(target.compareTo(SpmConstants.BD_ZERO_VALUE) == 0) {
+			 return SpmConstants.BD_ZERO_VALUE;
+		 }
+		 return sales.divide(target, 2, SpmConstants.ROUNDING_MODE);
+	}	
+	
 	@Override
 	public boolean equals(Object other) {
 		return false;
@@ -86,9 +106,6 @@ public class TotalManagerHour extends SpmObject {
 	public String toString() {
 		return null;
 	}
-	
-	
-	
 	
 
 }

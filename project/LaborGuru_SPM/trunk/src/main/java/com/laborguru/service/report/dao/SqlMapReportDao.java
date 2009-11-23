@@ -15,7 +15,7 @@ import com.laborguru.model.Store;
 import com.laborguru.model.report.FixedLaborHours;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.model.report.TotalHourByPosition;
-import com.laborguru.model.report.TotalManagerHour;
+import com.laborguru.model.report.TotalCustomerManagerHour;
 import com.laborguru.util.CalendarUtils;
 
 public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao {
@@ -265,7 +265,7 @@ public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao
 		return (FixedLaborHours)getSqlMapClient().queryForObject("getTargetFixedLaborHoursByService", ReportDaoHelper.mapTargetFixedLaborHoursByService(store, date, positionGroup));
 	}
 	
-	public List<TotalManagerHour> getActualSalesByCustomer(Customer customer, Date startDate, Date endDate) throws SQLException {
+	public List<TotalCustomerManagerHour> getActualSalesByCustomer(Customer customer, Date startDate, Date endDate) throws SQLException {
 		if(log.isDebugEnabled()) {
 			log.debug("getActualSalesByCustomer: before select params: customer_id: " + customer.getId() + " startDate: " + startDate + " endDate: " + endDate);
 		}
@@ -273,7 +273,7 @@ public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao
 		return getSqlMapClient().queryForList("getActualSalesByCustomer", ReportDaoHelper.mapActualSalesReport(customer, startDate, endDate));
 	} 
 	
-	public List<TotalManagerHour> getActualHoursByCustomer(Customer customer, Date startDate, Date endDate) throws SQLException{
+	public List<TotalCustomerManagerHour> getActualHoursByCustomer(Customer customer, Date startDate, Date endDate) throws SQLException{
 		if(log.isDebugEnabled()) {
 			log.debug("getActualHours: before select params: customer_id: " + customer.getId() + " startDate: " + startDate + " endDate: " + endDate);
 		}

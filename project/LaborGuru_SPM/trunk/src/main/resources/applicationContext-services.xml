@@ -139,7 +139,18 @@
 	    <property name="staffingService" ref="staffingService" />
 	    <property name="projectionService" ref="projectionService" />
 	</bean>
-	    
+
+  <bean id="reportCustomerServiceTarget" class="com.laborguru.service.report.ReportCustomerServiceBean">
+      <property name="reportDao" ref="reportDao"/>
+      <property name="staffingService" ref="staffingService" />
+      <property name="customerService" ref="customerService"/>
+  </bean>
+	
+	<bean id="reportCustomerService" parent="baseTransactionProxy">
+    <property name="proxyInterfaces" value="com.laborguru.service.report.ReportCustomerService"/>
+    <property name="target" ref="reportCustomerServiceTarget"/>	 
+	</bean>
+	 
 	<bean id="userService" parent="baseTransactionProxy">
 		<property name="proxyInterfaces" value="com.laborguru.service.user.UserService"/>
 		<property name="target" ref="userServiceTarget"/>
