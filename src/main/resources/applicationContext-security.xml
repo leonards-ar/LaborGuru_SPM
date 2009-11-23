@@ -115,7 +115,7 @@
 				
 				/projection/*.action=MANAGER_PROJECTIONS
 				
-				/report/*.action=REPORTS
+				/report/*.action=REPORTS,SHOW_CUSTOMER_REPORT
 				
 				/sales/sales_edit.action=EDIT_STORE
 				

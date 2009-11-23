@@ -1,12 +1,13 @@
 package com.laborguru.action.report;
 
 import java.util.Date;
+import java.util.List;
 
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.ReportTypes;
-import com.laborguru.model.report.TotalManagerHour;
-import com.laborguru.service.report.ReportService;
+import com.laborguru.model.report.TotalCustomerManagerHour;
+import com.laborguru.service.report.ReportCustomerService;
 import com.laborguru.util.CalendarUtils;
 import com.opensymphony.xwork2.Preparable;
 
@@ -24,15 +25,14 @@ public class ReportCustomerPrepareAction extends SpmAction implements Preparable
 	 */
 	private static final long serialVersionUID = 2748619782373332120L;
 	
-	private ReportService reportService;
+	private ReportCustomerService reportCustomerService;
 	
-	private TotalManagerHour totalManagerHours;
+	private List<TotalCustomerManagerHour> totalManagerHours;
 	private Date startDate;
 	private Date endDate;
 	private String selectView;
 	
-	
-	private ReportTypes reportType;
+	private String scheduleHeader, targetHeader, reportTitle;
 	
 	public void prepareShowFirstReport(){
 		//starts 7 days ago and ends today
@@ -47,9 +47,13 @@ public class ReportCustomerPrepareAction extends SpmAction implements Preparable
 	}
 
 	public String showReport() {
-
+		ReportTypes reportType = ReportTypes.performanceEfficiency;//ReportTypes.valueOf(getSelectView());
+		
 		switch(reportType) {
-		case performanceEfficiency: //Performance Efficiency Report
+		case performanceEfficiency: setTotalManagerHours(reportCustomerService.getPerformanceEfficiencyReport(getCustomer(), getStartDate(), getEndDate()));
+									setReportTitle("report.historicalcomparison.performanceEfficiency.title.label");
+									setScheduleHeader("report.historicalComparison.performanceEfficiency.schedule.label");
+									setTargetHeader("report.historicalComparison.performanceEfficiency.target.label");									
 									break;
 		case schedulingEfficiency: //Scheduling Efficiency Report
 									break;
@@ -61,33 +65,30 @@ public class ReportCustomerPrepareAction extends SpmAction implements Preparable
 				 break;
 		}
 		
-		return SpmActionResult.SHOW.getResult();
+		return "show";
 		
 	}
-	public String schedulingEfficiency() {
-		System.out.println("I'm here");
-		return SpmActionResult.INPUT.getResult();
-	}
-	
+
 	/**
 	 * @return the reportService
 	 */
-	public ReportService getReportService() {
-		return reportService;
+	public ReportCustomerService getReportCustomerService() {
+		return reportCustomerService;
 	}
 
 	/**
 	 * @param reportService the reportService to set
 	 */
-	public void setReportService(ReportService reportService) {
-		this.reportService = reportService;
+	public void setReportCustomerService(ReportCustomerService reportCustomerService) {
+		this.reportCustomerService = reportCustomerService;
 	}
 
 	/**
 	 * @return the startDate
 	 */
 	public Date getStartDate() {
-		return startDate;
+		//return startDate;
+		return CalendarUtils.addOrSubstractDays(new Date(), -7);
 	}
 
 	/**
@@ -101,7 +102,8 @@ public class ReportCustomerPrepareAction extends SpmAction implements Preparable
 	 * @return the endDate
 	 */
 	public Date getEndDate() {
-		return endDate;
+		//return endDate;
+		return new Date();
 	}
 
 	/**
@@ -109,20 +111,6 @@ public class ReportCustomerPrepareAction extends SpmAction implements Preparable
 	 */
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
-	}
-
-	/**
-	 * @return the reportType
-	 */
-	public ReportTypes getReportType() {
-		return reportType;
-	}
-
-	/**
-	 * @param reportType the reportType to set
-	 */
-	public void setReportType(ReportTypes reportType) {
-		this.reportType = reportType;
 	}
 
 	/**
@@ -142,15 +130,61 @@ public class ReportCustomerPrepareAction extends SpmAction implements Preparable
 	/**
 	 * @return the totalManagerHours
 	 */
-	public TotalManagerHour getTotalManagerHours() {
+	public List<TotalCustomerManagerHour> getTotalManagerHours() {
 		return totalManagerHours;
 	}
 
 	/**
 	 * @param totalManagerHours the totalManagerHours to set
 	 */
-	public void setTotalManagerHours(TotalManagerHour totalManagerHours) {
+	public void setTotalManagerHours(List<TotalCustomerManagerHour> totalManagerHours) {
 		this.totalManagerHours = totalManagerHours;
+	}
+
+	public ReportTypes[] getReportTypes() {
+		return ReportTypes.values();
+	}
+		
+	/**
+	 * @return the scheduleHeader
+	 */
+	public String getScheduleHeader() {
+		return scheduleHeader;
+	}
+
+	/**
+	 * @param scheduleHeader the scheduleHeader to set
+	 */
+	public void setScheduleHeader(String scheduleHeader) {
+		this.scheduleHeader = scheduleHeader;
+	}
+
+	/**
+	 * @return the targetHeader
+	 */
+	public String getTargetHeader() {
+		return targetHeader;
+	}
+
+	/**
+	 * @param targetHeader the targetHeader to set
+	 */
+	public void setTargetHeader(String targetHeader) {
+		this.targetHeader = targetHeader;
+	}
+
+	/**
+	 * @return the reportTitle
+	 */
+	public String getReportTitle() {
+		return reportTitle;
+	}
+
+	/**
+	 * @param reportTitle the reportTitle to set
+	 */
+	public void setReportTitle(String reportTitle) {
+		this.reportTitle = reportTitle;
 	}
 
 	public void prepare() throws Exception {

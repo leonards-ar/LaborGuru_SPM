@@ -13,7 +13,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @since SPM 1.0
  *
  */
-public class Area extends SpmObject implements Location {
+public class Area extends SpmObject {
 
 	private static final long serialVersionUID = 1L;
 	

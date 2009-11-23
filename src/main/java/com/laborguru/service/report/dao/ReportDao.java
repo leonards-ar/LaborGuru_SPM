@@ -12,7 +12,7 @@ import com.laborguru.model.Store;
 import com.laborguru.model.report.FixedLaborHours;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.model.report.TotalHourByPosition;
-import com.laborguru.model.report.TotalManagerHour;
+import com.laborguru.model.report.TotalCustomerManagerHour;
 
 /**
  *
@@ -252,7 +252,7 @@ public interface ReportDao {
 	 * @return
 	 * @throws SQLException
 	 */
-	List<TotalManagerHour> getActualSalesByCustomer(Customer customer, Date startDate, Date endDate) throws SQLException;
+	List<TotalCustomerManagerHour> getActualSalesByCustomer(Customer customer, Date startDate, Date endDate) throws SQLException;
 	
 	/**
 	 * Retrieves the actual hours of all the stores associated to a customer
@@ -262,5 +262,5 @@ public interface ReportDao {
 	 * @return
 	 * @throws SQLException
 	 */
-	List<TotalManagerHour> getActualHoursByCustomer(Customer customer, Date startDate, Date endDate) throws SQLException;
+	List<TotalCustomerManagerHour> getActualHoursByCustomer(Customer customer, Date startDate, Date endDate) throws SQLException;
 }

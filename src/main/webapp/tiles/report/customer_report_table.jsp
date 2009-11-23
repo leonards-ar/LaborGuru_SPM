@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
-<s:if test="totalHours != null">
+<s:if test="totalManagerHours != null">
   <table border="0" width="100%" cellspacing="0" align="center">
     <tr>
       <td>
@@ -14,24 +14,50 @@
           <td>
           <table  border="0" width="100%" cellspacing="0" align="center">
             <tr>
-              <td class="greyCellLabel">&nbsp;</td>
+              <td class="cellLabel" colspan=2>&nbsp;</td>
+              <td class="greyCellLabel" colspan="4"><s:text name="report.manager.laborHours"/></td>
+              <td class=cellLabel colspan="2"><s:text name="report.manager.variable1PMH"/></td>
+              <td class="greyCellLabel" colspan="2"><s:text name="report.manager.laborPercentage"/></td>
+            </tr>
+            <tr>
+              <td class="cellLabel"><s:text name="report.manager.region"/></td>
+              <td class="greyCellLabel">
+               <s:property value="%{getText(report.manager.sales)}" />
+              </td>
               <td class="cellLabel">
                <s:property value="%{getText(scheduleHeader)}" />
               </td>
               <td class="cellLabel">
                <s:property value="%{getText(targetHeader)}" />
               </td>
-              <td class="greyCellLabel">
-               <s:text name="report.historicalComparison.difference.label" />
+              <td class="cellLabel">
+               <s:text name="report.manager.difference.label" />
               </td>
               <td class="cellLabel">
-                <s:text name="report.historicalComparison.difference.percentage" />
+                <s:text name="report.manager.difference.percentage" />
+              </td>
+              <td class="greCellLabel">
+               <s:property value="%{getText(scheduleHeader)}" />
+              </td>
+              <td class="greyCellLabel">
+               <s:property value="%{getText(targetHeader)}" />
+              </td>
+              <td class="cellLabel">
+               <s:property value="%{getText(scheduleHeader)}" />
+              </td>
+              <td class="cellLabel">
+               <s:property value="%{getText(targetHeader)}" />
               </td>
             </tr>
             <s:iterator id="totalManagerHour" value="totalManagerHours" status="itTotalManagerHour">
               <tr>
+                <td class="cellValue">
+                  <s:property value="region.name"/>
+                </td>
                 <td class="greyCellValue">
-                  <s:property value="location.name"/>
+                  <s:text name="currency">
+                    <s:param value="sales" />
+                 </s:text>
                 </td>
                 <td class="cellValue">
                   <s:text name="currency">
@@ -52,6 +78,26 @@
                   <s:text name="report.percentage">
                    <s:param value="percentage" />
                   </s:text>
+                </td>
+                <td class="greyCellValue">
+                  <s:text name="currency">
+                    <s:param value="scheduleMPH" />
+                 </s:text>
+                </td>                
+                <td class="greyCellValue">
+                  <s:text name="currency">
+                    <s:param value="targetMPH" />
+                 </s:text>
+                </td>
+                <td class="cellValue">0
+                  <!--  s:text name="currency">
+                    <s:param value="scheduleMPH" />
+                 </s:text-->
+                </td>
+                <td class="cellValue">0
+                  <!--  s:text name="currency">
+                    <s:param value="scheduleMPH" />
+                 </s:text-->
                 </td>
               </tr>
             </s:iterator>
