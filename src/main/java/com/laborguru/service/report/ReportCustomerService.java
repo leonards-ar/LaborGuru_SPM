@@ -9,7 +9,23 @@ import com.laborguru.service.Service;
 
 public interface ReportCustomerService extends Service {
 
-	public List<TotalCustomerManagerHour> getPerformanceEfficiencyReport(Customer customer, Date start, Date end);
+	/**
+	 * Retrieves a Performance Efficiency Report for Customers
+	 * @param customer
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	List<TotalCustomerManagerHour> getPerformanceEfficiencyReport(Customer customer, Date start, Date end);
+	
+	/**
+	 * Retrieves a Schedule Efficiency Report for Customers
+	 * @param customer
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	List<TotalCustomerManagerHour> getWeeklyTotalHours(Customer customer, Date start, Date end);
 	
 	
 }

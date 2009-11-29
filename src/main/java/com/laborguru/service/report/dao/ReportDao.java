@@ -263,4 +263,24 @@ public interface ReportDao {
 	 * @throws SQLException
 	 */
 	List<TotalCustomerManagerHour> getActualHoursByCustomer(Customer customer, Date startDate, Date endDate) throws SQLException;
+	
+	/**
+	 * Retrieves the total hours of all the stores associated to a customer 
+	 * @param customer
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @throws SQLException
+	 */
+	List<TotalCustomerManagerHour> getScheduleTotalHourByCustomer(Customer customer, Date startDate, Date endDate) throws SQLException;
+	
+	/**
+	 * Retrieves the total target hours of all the stores associated to a customer
+	 * @param customer
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @throws SQLException
+	 */
+	List<TotalCustomerManagerHour>getTargetTotalHourByCustomer(Customer customer, Date startDate, Date endDate) throws SQLException;
 }

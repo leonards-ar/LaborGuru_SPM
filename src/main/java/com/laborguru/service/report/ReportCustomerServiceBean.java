@@ -15,6 +15,7 @@ import com.laborguru.model.Region;
 import com.laborguru.model.Store;
 import com.laborguru.model.StoreDailyHistoricSalesStaffing;
 import com.laborguru.model.report.TotalCustomerManagerHour;
+import com.laborguru.model.report.TotalHour;
 import com.laborguru.service.customer.CustomerService;
 import com.laborguru.service.report.dao.ReportDao;
 import com.laborguru.service.staffing.StaffingService;
@@ -35,6 +36,8 @@ public class ReportCustomerServiceBean implements ReportCustomerService {
 	private StaffingService staffingService;
 	private CustomerService customerService;
 
+	
+
 	public List<TotalCustomerManagerHour> getPerformanceEfficiencyReport(Customer customer, Date start, Date end) {
 
 		try{
@@ -52,6 +55,22 @@ public class ReportCustomerServiceBean implements ReportCustomerService {
 		}
 		
 	}
+	
+	public List<TotalCustomerManagerHour> getWeeklyTotalHours(Customer customer, Date start, Date end) {
+
+		try {
+			List<TotalCustomerManagerHour> actualSales = reportDao.getActualSalesByCustomer(customer, start, end);
+			List<TotalCustomerManagerHour> scheduleTotalHours = reportDao.getScheduleTotalHourByCustomer(customer, start, end);
+			List<TotalCustomerManagerHour> targetTotalHours = reportDao.getTargetTotalHourByCustomer(customer, start, end);
+			
+			return merge(actualSales, scheduleTotalHours, targetTotalHours); 
+		} catch (SQLException e) {
+			log.error("An SQLError has occurred", e);
+			throw new SpmUncheckedException(e.getCause(), e.getMessage(),
+					ErrorEnum.GENERIC_DATABASE_ERROR);
+		}
+	}
+
 	
 	
 	/**
@@ -152,8 +171,7 @@ public class ReportCustomerServiceBean implements ReportCustomerService {
 	public void setCustomerService(CustomerService customerService) {
 		this.customerService = customerService;
 	}
-	
-	
-	
 
+	
 }
+

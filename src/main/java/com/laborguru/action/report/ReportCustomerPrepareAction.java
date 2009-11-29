@@ -47,16 +47,19 @@ public class ReportCustomerPrepareAction extends SpmAction implements Preparable
 	}
 
 	public String showReport() {
-		ReportTypes reportType = ReportTypes.performanceEfficiency;//ReportTypes.valueOf(getSelectView());
+		ReportTypes reportType = ReportTypes.valueOf(getSelectView());
 		
 		switch(reportType) {
-		case performanceEfficiency: setTotalManagerHours(reportCustomerService.getPerformanceEfficiencyReport(getCustomer(), getStartDate(), getEndDate()));
-									setReportTitle("report.historicalcomparison.performanceEfficiency.title.label");
+		case performanceEfficiency: setTotalManagerHours(getReportCustomerService().getPerformanceEfficiencyReport(getCustomer(), getStartDate(), getEndDate()));
+									setReportTitle("report.manager.performanceEfficiency.title.label");
 									setScheduleHeader("report.historicalComparison.performanceEfficiency.schedule.label");
 									setTargetHeader("report.historicalComparison.performanceEfficiency.target.label");									
 									break;
-		case schedulingEfficiency: //Scheduling Efficiency Report
-									break;
+		case schedulingEfficiency: setTotalManagerHours(getReportCustomerService().getWeeklyTotalHours(getCustomer(), getStartDate(), getEndDate()));
+								   setReportTitle("report.historicalcomparison.scheduleEfficiency.title.label");
+								   setScheduleHeader("report.historicalComparison.scheduleEfficiency.schedule.label");
+								   setTargetHeader("report.historicalComparison.scheduleEfficiency.target.label");
+								   break;
 		case scheduleExecutionEfficiency: //Schedule Execution Efficiency
 									break;
 		case forecastEfficiency: //forecast efficiency report
@@ -65,7 +68,7 @@ public class ReportCustomerPrepareAction extends SpmAction implements Preparable
 				 break;
 		}
 		
-		return "show";
+		return SpmActionResult.INPUT.getResult();
 		
 	}
 
