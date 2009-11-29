@@ -275,11 +275,27 @@ public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao
 	
 	public List<TotalCustomerManagerHour> getActualHoursByCustomer(Customer customer, Date startDate, Date endDate) throws SQLException{
 		if(log.isDebugEnabled()) {
-			log.debug("getActualHours: before select params: customer_id: " + customer.getId() + " startDate: " + startDate + " endDate: " + endDate);
+			log.debug("getActualHoursByCustomer: before select params: customer_id: " + customer.getId() + " startDate: " + startDate + " endDate: " + endDate);
 		}
 		
 		return getSqlMapClient().queryForList("getActualHoursByCustomer", ReportDaoHelper.mapActualHoursReport(customer, startDate, endDate));
-	}	
+	}
+	
+	public List<TotalCustomerManagerHour> getScheduleTotalHourByCustomer(Customer customer, Date startDate, Date endDate) throws SQLException {
+		if(log.isDebugEnabled()) {
+			log.debug("getScheduleTotalHourByCustomer: before select params: customer_id: " + customer.getId() + " startDate: " + startDate + " endDate: " + endDate);
+		}
+		
+		return getSqlMapClient().queryForList("getScheduleTotalHoursByCustomer", ReportDaoHelper.mapTotalHoursReport(customer, startDate, endDate));
+	}
+	
+	public List<TotalCustomerManagerHour>getTargetTotalHourByCustomer (Customer customer, Date startDate, Date endDate) throws SQLException {
+		if(log.isDebugEnabled()) {
+			log.debug("getTargetTotalHourByCustomer: before select params: customer_id: " + customer.getId() + " startDate: " + startDate + " endDate: " + endDate);
+		}
+		
+		return getSqlMapClient().queryForList("getTargetTotalHoursByCustomer", ReportDaoHelper.mapTotalHoursReport(customer, startDate, endDate));
+	}
 	
 	private boolean isNextDay(Date startHour, Date endHour){
 		return CalendarUtils.equalsOrSmallerTime(endHour, startHour);

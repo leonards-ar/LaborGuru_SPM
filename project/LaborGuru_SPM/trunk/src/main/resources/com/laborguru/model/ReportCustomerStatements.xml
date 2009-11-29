@@ -24,6 +24,12 @@
     <result property="region.name" column="region_name"/>
     <result property="schedule" column="schedule"/>
   </resultMap>
+  
+ <resultMap id="get-targetHoursByCustomer-result" class="com.laborguru.model.report.TotalCustomerManagerHour">
+    <result property="region.id" column="region_id"/>
+    <result property="region.name" column="region_name"/>
+    <result property="target" column="target"/>
+  </resultMap>  
     
   <select id="getActualHoursByCustomer" parameterClass="java.util.Map" resultMap="get-scheduleHoursByCustomer-result">
     SELECT
@@ -35,5 +41,36 @@
     GROUP BY r.region_id
     ORDER BY r.region_id
   </select>
-    
+
+  <select id="getScheduleTotalHoursByCustomer" parameterClass="java.util.Map" resultMap="get-scheduleHoursByCustomer-result">
+    SELECT
+    r.region_id as region_id,
+    r.name as region_name,
+    SUM(TIME_TO_SEC(TIMEDIFF(sh.to_hour, sh.from_hour)))/3600 as schedule
+    FROM tbl_regions r 
+    LEFT JOIN tbl_areas a ON r.region_id = a.region_id 
+    LEFT JOIN tbl_stores s ON a.area_id = s.area_id 
+    LEFT JOIN tbl_store_schedules as ss ON s.store_id = ss.store_id AND ss.day BETWEEN STR_TO_DATE(#start_date#,'%Y-%m-%d') AND STR_TO_DATE(#end_date#,'%Y-%m-%d')
+    LEFT JOIN tbl_employee_schedules as es ON ss.store_schedule_id = es.store_schedule_id
+    LEFT JOIN tbl_shifts as sh ON es.employee_schedule_id = sh.employee_schedule_id AND sh.position_id IS NOT NULL
+    WHERE r.customer_id = #customer_id#
+    GROUP BY r.region_id
+    ORDER BY r.region_id
+  </select>
+
+  <select id="getTargetTotalHoursByCustomer" parameterClass="java.util.Map" resultMap="get-targetHoursByCustomer-result">
+    SELECT
+    r.region_id as region_id,
+    r.name as region_name,
+    SUM(total_daily_target) as target
+    FROM tbl_regions r 
+    LEFT JOIN tbl_areas a ON r.region_id = a.region_id 
+    LEFT JOIN tbl_stores s ON a.area_id = s.area_id 
+    LEFT JOIN tbl_positions p ON s.store_id = p.store_id
+    LEFT JOIN tbl_staffing st ON p.position_id = st.position_id AND st.staffing_date BETWEEN STR_TO_DATE(#start_date#,'%Y-%m-%d') AND STR_TO_DATE(#end_date#,'%Y-%m-%d')
+    WHERE r.customer_id = #customer_id#
+    GROUP BY r.region_id
+    ORDER BY r.region_id
+  </select>
+      
 </sqlMap>

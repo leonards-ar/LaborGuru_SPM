@@ -85,7 +85,7 @@ public abstract class TotalManagerHour extends SpmObject{
 		 return sales.divide(schedule, 2, SpmConstants.ROUNDING_MODE);
 	}
 	
-	public BigDecimal getTargerMPH(){
+	public BigDecimal getTargetMPH(){
 		 if(target.compareTo(SpmConstants.BD_ZERO_VALUE) == 0) {
 			 return SpmConstants.BD_ZERO_VALUE;
 		 }

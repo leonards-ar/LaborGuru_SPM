@@ -12,8 +12,10 @@
     <table border="0" align="center" cellpadding="0" cellspacing="0"
       colspan="0" cellspan="0">
       <tr>
-        <td><s:fielderror theme="simple" /> <s:actionerror
-          theme="simple" /></td>
+        <td>
+          <s:fielderror theme="simple" /> 
+          <s:actionerror theme="simple" />
+        </td>
       </tr>
     </table>
     </td>
@@ -50,31 +52,123 @@
         </tr>
         <tr>
           <td align="right">
-            <s:submit id="submit" key="report.historicalComparison.submit.label" cssClass="button" loadingText='%{getText("wait.message")}' title="wait.message" type="button" theme="ajax" targets="tableFrame" indicator="customerReportIndicator"
-                formId="customerReport_form" /></td>
+            <s:submit id="submit" key="report.historicalComparison.submit.label" cssClass="button" loadingText='%{getText("wait.message")}' title="wait.message" type="button" onclick="return showWaitSplash();" theme="ajax"/>
+          </td>
         </tr>
-      </s:form>
-
-    </table>
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>
+					<s:if test="totalManagerHours != null">
+					  <table border="0" width="100%" cellspacing="0" align="center">
+					    <tr>
+					      <td>
+					      <table id="windowReportTable" cellspacing="0">
+					        <tr>
+					          <td id="titleBar"><s:property value="%{getText(reportTitle)}" />
+					          </td>
+					        </tr>
+					        <tr>
+					          <td>
+					          <table  border="0" width="100%" cellspacing="0" align="center">
+					            <tr>
+					              <td class="cellLabel" colspan=2>&nbsp;</td>
+					              <td class="greyCellLabel" colspan="4"><s:text name="report.manager.laborHours"/></td>
+					              <td class=cellLabel colspan="2"><s:text name="report.manager.variable1PMH"/></td>
+					              <td class="greyCellLabel" colspan="2"><s:text name="report.manager.laborPercentage"/></td>
+					            </tr>
+					            <tr>
+					              <td class="cellLabel"><s:text name="report.manager.region"/></td>
+					              <td class="greyCellLabel">
+					               <s:text name="report.manager.sales" />
+					              </td>
+					              <td class="cellLabel">
+					               <s:property value="%{getText(scheduleHeader)}" />
+					              </td>
+					              <td class="cellLabel">
+					               <s:property value="%{getText(targetHeader)}" />
+					              </td>
+					              <td class="cellLabel">
+					               <s:text name="report.manager.difference.label" />
+					              </td>
+					              <td class="cellLabel">
+					                <s:text name="report.manager.difference.percentage" />
+					              </td>
+					              <td class="greyCellLabel">
+					               <s:property value="%{getText(scheduleHeader)}" />
+					              </td>
+					              <td class="greyCellLabel">
+					               <s:property value="%{getText(targetHeader)}" />
+					              </td>
+					              <td class="cellLabel">
+					               <s:property value="%{getText(scheduleHeader)}" />
+					              </td>
+					              <td class="cellLabel">
+					               <s:property value="%{getText(targetHeader)}" />
+					              </td>
+					            </tr>
+					            <s:iterator id="totalManagerHour" value="totalManagerHours" status="itTotalManagerHour">
+					              <tr>
+					                <td class="cellValue">
+					                  <s:property value="region.name"/>
+					                </td>
+					                <td class="greyCellValue">
+					                  <s:text name="currency">
+					                    <s:param value="sales" />
+					                 </s:text>
+					                </td>
+					                <td class="cellValue">
+					                  <s:text name="currency">
+					                    <s:param value="schedule" />
+					                 </s:text>
+					                </td>
+					                <td class="cellValue">
+					                  <s:text name="currency">
+					                   <s:param value="target" />
+					                  </s:text>
+					                </td>
+					                <td class="greyCellValue">
+					                  <s:text name="currency">
+					                   <s:param value="difference" />
+					                  </s:text>
+					                </td>
+					                <td class="cellValue">
+					                  <s:text name="report.percentage">
+					                   <s:param value="percentage" />
+					                  </s:text>
+					                </td>
+					                <td class="greyCellValue">
+					                  <s:text name="currency">
+					                    <s:param value="scheduleMPH" />
+					                 </s:text>
+					                </td>                
+					                <td class="greyCellValue">
+					                  <s:text name="currency">
+					                    <s:param value="targetMPH" />
+					                 </s:text>
+					                </td>
+					                <td class="cellValue">0
+					                </td>
+					                <td class="cellValue">0
+					                </td>
+					              </tr>
+					            </s:iterator>
+					          </table>
+					          </td>
+					        </tr>
+					      </table>
+					      </td>
+					    </tr>
+					  </table>
+					</s:if>
+         </td>
+        </tr>
+      </s:form>        
+     </table>
     </td>
 	  </tr>
-	  <tr>
-	    <td align="center">
-	     <s:div id="tableFrame" theme="ajax" indicator="customerReportIndicator" />
-      </td>
-    </tr>
   </table>
-
-<center><img id="customerReportIndicator"
-  style="display: none;"
-  src="<s:url value="/images/wait.gif" includeParams="none"/>"
-  alt="<s:text name="wait.message"/>"
-  title="<s:text name="wait.message"/>" border="0" /></center>
-
-<script language="javascript" type="text/javascript">
-  djConfig.searchIds.push("startDate");
-  djConfig.searchIds.push("endDate");
-  djConfig.searchIds.push("tableFrame");
-  djConfig.searchIds.push("submit");
-  //djConfig.searchIds.push("customerReport_form");
-</script>

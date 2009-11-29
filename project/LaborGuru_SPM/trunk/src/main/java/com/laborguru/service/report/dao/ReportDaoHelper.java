@@ -37,6 +37,22 @@ public class ReportDaoHelper {
 	}
 	
 	/**
+	 * Retrieves a Map with the parameters needed to execute the report.
+	 * @param customer
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	public static Map<String, Object> mapTotalHoursReport(Customer customer, Date startDate, Date endDate){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("customer_id", customer.getId());
+		map.put("start_date", startDate);
+		map.put("end_date", endDate);
+		
+		return map;
+	}	
+	
+	/**
 	 * Retrieves a Map with the parameters needed to execute the report 
 	 * @param store
 	 * @param date
