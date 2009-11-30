@@ -23,7 +23,7 @@
   <tr>
     <td align="center">
     <table border="0" cellspacing="0" align="center">
-    <s:form id="customerReport_form" name="customerReport_form" action="customerReport_showReport" theme="simple" method="post">
+    <s:form id="customerReport_form" name="customerReport_form" theme="simple" method="post">
       <tr>
         <td>
 	          <table border="0" cellspacing="0" align="center">
@@ -52,7 +52,7 @@
         </tr>
         <tr>
           <td align="right">
-            <s:submit id="submit" key="report.historicalComparison.submit.label" cssClass="button" loadingText='%{getText("wait.message")}' title="wait.message" type="button" onclick="return showWaitSplash();" theme="ajax"/>
+            <s:submit id="submit" onclick="return showWaitSplash();" key="report.historicalComparison.submit.label" action="customerReport_showReport" theme="simple" cssClass="button"/>
           </td>
         </tr>
         <tr>
@@ -76,16 +76,27 @@
 					          <td>
 					          <table  border="0" width="100%" cellspacing="0" align="center">
 					            <tr>
-					              <td class="cellLabel" colspan=2>&nbsp;</td>
-					              <td class="greyCellLabel" colspan="4"><s:text name="report.manager.laborHours"/></td>
-					              <td class=cellLabel colspan="2"><s:text name="report.manager.variable1PMH"/></td>
+					              <td class="cellLabel" <s:if test='selectView != "forecastEfficiency"'>colspan="2"</s:if>>&nbsp;</td>
+					              <td class="greyCellLabel" colspan="4">
+                          <s:if test='selectView != "forecastEfficiency"'>
+					                 <s:text name="report.manager.laborHours"/>
+                          </s:if>
+                          <s:else>
+                           <s:text name="report.manager.sales"/>
+                          </s:else>
+                        </td>
+                       <s:if test='selectView != "forecastEfficiency"'>
+					              <td class="cellLabel" colspan="2"><s:text name="report.manager.variable1PMH"/></td>
 					              <td class="greyCellLabel" colspan="2"><s:text name="report.manager.laborPercentage"/></td>
+                       </s:if>
 					            </tr>
 					            <tr>
 					              <td class="cellLabel"><s:text name="report.manager.region"/></td>
-					              <td class="greyCellLabel">
-					               <s:text name="report.manager.sales" />
-					              </td>
+                        <s:if test='selectView != "forecastEfficiency"'>
+						              <td class="greyCellLabel">
+						               <s:text name="report.manager.sales" />
+						              </td>
+                        </s:if>
 					              <td class="cellLabel">
 					               <s:property value="%{getText(scheduleHeader)}" />
 					              </td>
@@ -98,29 +109,33 @@
 					              <td class="cellLabel">
 					                <s:text name="report.manager.difference.percentage" />
 					              </td>
-					              <td class="greyCellLabel">
-					               <s:property value="%{getText(scheduleHeader)}" />
-					              </td>
-					              <td class="greyCellLabel">
-					               <s:property value="%{getText(targetHeader)}" />
-					              </td>
-					              <td class="cellLabel">
-					               <s:property value="%{getText(scheduleHeader)}" />
-					              </td>
-					              <td class="cellLabel">
-					               <s:property value="%{getText(targetHeader)}" />
-					              </td>
+                        <s:if test='selectView != "forecastEfficiency"'>
+						              <td class="greyCellLabel">
+						               <s:property value="%{getText(scheduleHeader)}" />
+						              </td>
+						              <td class="greyCellLabel">
+						               <s:property value="%{getText(targetHeader)}" />
+						              </td>
+						              <td class="cellLabel">
+						               <s:property value="%{getText(scheduleHeader)}" />
+						              </td>
+						              <td class="cellLabel">
+						               <s:property value="%{getText(targetHeader)}" />
+						              </td>
+                        </s:if>
 					            </tr>
 					            <s:iterator id="totalManagerHour" value="totalManagerHours" status="itTotalManagerHour">
 					              <tr>
 					                <td class="cellValue">
 					                  <s:property value="region.name"/>
 					                </td>
+                        <s:if test='selectView != "forecastEfficiency"'>
 					                <td class="greyCellValue">
 					                  <s:text name="currency">
 					                    <s:param value="sales" />
 					                 </s:text>
 					                </td>
+                        </s:if>
 					                <td class="cellValue">
 					                  <s:text name="currency">
 					                    <s:param value="schedule" />
@@ -141,6 +156,7 @@
 					                   <s:param value="percentage" />
 					                  </s:text>
 					                </td>
+                          <s:if test='selectView != "forecastEfficiency"'>
 					                <td class="greyCellValue">
 					                  <s:text name="currency">
 					                    <s:param value="scheduleMPH" />
@@ -155,6 +171,7 @@
 					                </td>
 					                <td class="cellValue">0
 					                </td>
+                          </s:if>
 					              </tr>
 					            </s:iterator>
 					          </table>
