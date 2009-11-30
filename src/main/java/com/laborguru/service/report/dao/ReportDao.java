@@ -283,4 +283,5 @@ public interface ReportDao {
 	 * @throws SQLException
 	 */
 	List<TotalCustomerManagerHour>getTargetTotalHourByCustomer(Customer customer, Date startDate, Date endDate) throws SQLException;
+		
 }

@@ -25,12 +25,6 @@
     <result property="schedule" column="schedule"/>
   </resultMap>
   
- <resultMap id="get-targetHoursByCustomer-result" class="com.laborguru.model.report.TotalCustomerManagerHour">
-    <result property="region.id" column="region_id"/>
-    <result property="region.name" column="region_name"/>
-    <result property="target" column="target"/>
-  </resultMap>  
-    
   <select id="getActualHoursByCustomer" parameterClass="java.util.Map" resultMap="get-scheduleHoursByCustomer-result">
     SELECT
     r.region_id as region_id, 
@@ -58,11 +52,11 @@
     ORDER BY r.region_id
   </select>
 
-  <select id="getTargetTotalHoursByCustomer" parameterClass="java.util.Map" resultMap="get-targetHoursByCustomer-result">
+  <select id="getTargetTotalHoursByCustomer" parameterClass="java.util.Map" resultMap="get-scheduleHoursByCustomer-result">
     SELECT
     r.region_id as region_id,
     r.name as region_name,
-    SUM(total_daily_target) as target
+    SUM(total_daily_target) as schedule
     FROM tbl_regions r 
     LEFT JOIN tbl_areas a ON r.region_id = a.region_id 
     LEFT JOIN tbl_stores s ON a.area_id = s.area_id 
@@ -71,6 +65,6 @@
     WHERE r.customer_id = #customer_id#
     GROUP BY r.region_id
     ORDER BY r.region_id
-  </select>
+  </select> 
       
 </sqlMap>

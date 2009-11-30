@@ -144,6 +144,7 @@
       <property name="reportDao" ref="reportDao"/>
       <property name="staffingService" ref="staffingService" />
       <property name="customerService" ref="customerService"/>
+      <property name="projectionService" ref="projectionService"/>
   </bean>
 	
 	<bean id="reportCustomerService" parent="baseTransactionProxy">

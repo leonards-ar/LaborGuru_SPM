@@ -296,7 +296,7 @@ public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao
 		
 		return getSqlMapClient().queryForList("getTargetTotalHoursByCustomer", ReportDaoHelper.mapTotalHoursReport(customer, startDate, endDate));
 	}
-	
+
 	private boolean isNextDay(Date startHour, Date endHour){
 		return CalendarUtils.equalsOrSmallerTime(endHour, startHour);
 	}

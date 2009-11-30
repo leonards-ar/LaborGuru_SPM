@@ -56,14 +56,20 @@ public class ReportCustomerPrepareAction extends SpmAction implements Preparable
 									setTargetHeader("report.historicalComparison.performanceEfficiency.target.label");									
 									break;
 		case schedulingEfficiency: setTotalManagerHours(getReportCustomerService().getWeeklyTotalHours(getCustomer(), getStartDate(), getEndDate()));
-								   setReportTitle("report.historicalcomparison.scheduleEfficiency.title.label");
+								   setReportTitle("report.manager.scheduleEfficiency.title.label");
 								   setScheduleHeader("report.historicalComparison.scheduleEfficiency.schedule.label");
 								   setTargetHeader("report.historicalComparison.scheduleEfficiency.target.label");
 								   break;
-		case scheduleExecutionEfficiency: //Schedule Execution Efficiency
-									break;
-		case forecastEfficiency: //forecast efficiency report
-								break;
+		case scheduleExecutionEfficiency: setTotalManagerHours(getReportCustomerService().getScheduleExecutionEfficiencyReport(getCustomer(), getStartDate(), getEndDate()));
+										  setReportTitle("report.manager.scheduleExecutionEfficiency.title.label");
+										  setScheduleHeader("report.historicalComparison.scheduleExecutionEfficiency.schedule.label");
+										  setTargetHeader("report.historicalComparison.scheduleExecutionEfficiency.target.label");
+										  break;
+		case forecastEfficiency: setTotalManagerHours(getReportCustomerService().getForecastEfficiencyReport(getCustomer(), getStartDate(), getEndDate()));
+								 setReportTitle("report.manager.forecastEfficiency.title.label");
+								 setScheduleHeader("report.historicalComparison.forecastEfficiency.schedule.label");
+								 setTargetHeader("report.historicalComparison.forecastEfficiency.target.label");
+								 break;
 		default: setTotalManagerHours(null);
 				 break;
 		}
