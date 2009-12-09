@@ -11,11 +11,13 @@ import com.laborguru.model.Customer;
 import com.laborguru.model.HistoricSales;
 import com.laborguru.model.Position;
 import com.laborguru.model.PositionGroup;
+import com.laborguru.model.Region;
 import com.laborguru.model.Store;
 import com.laborguru.model.report.FixedLaborHours;
+import com.laborguru.model.report.TotalCustomerManagerHour;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.model.report.TotalHourByPosition;
-import com.laborguru.model.report.TotalCustomerManagerHour;
+import com.laborguru.model.report.TotalRegionManagerHour;
 import com.laborguru.util.CalendarUtils;
 
 public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao {
@@ -301,7 +303,35 @@ public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao
 		return CalendarUtils.equalsOrSmallerTime(endHour, startHour);
 	}
 	
+	public List<TotalRegionManagerHour> getActualSalesByRegion(Region region, Date startDate, Date endDate) throws SQLException {
+		if(log.isDebugEnabled()) {
+			log.debug("getActualSalesByRegion: before select params: region_id: " + region.getId() + " startDate: " + startDate + " endDate: " + endDate);
+		}
+		
+		return getSqlMapClient().queryForList("getActualSalesByRegion", ReportDaoHelper.mapActualSalesReport(region, startDate, endDate));
+	} 
 	
+	public List<TotalRegionManagerHour> getActualHoursByRegion (Region region, Date startDate, Date endDate) throws SQLException{
+		if(log.isDebugEnabled()) {
+			log.debug("getActualHoursByRegion: before select params: region_id: " + region.getId() + " startDate: " + startDate + " endDate: " + endDate);
+		}
+		
+		return getSqlMapClient().queryForList("getActualHoursByRegion", ReportDaoHelper.mapActualHoursReport(region, startDate, endDate));
+	}
 	
-
+	public List<TotalRegionManagerHour> getScheduleTotalHourByRegion(Region region, Date startDate, Date endDate) throws SQLException {
+		if(log.isDebugEnabled()) {
+			log.debug("getScheduleTotalHourByRegion: before select params: region_id: " + region.getId() + " startDate: " + startDate + " endDate: " + endDate);
+		}
+		
+		return getSqlMapClient().queryForList("getScheduleTotalHoursByRegion", ReportDaoHelper.mapTotalHoursReport(region, startDate, endDate));
+	}
+	
+	public List<TotalRegionManagerHour>getTargetTotalHourByRegion(Region region, Date startDate, Date endDate) throws SQLException {
+		if(log.isDebugEnabled()) {
+			log.debug("getTargetTotalHourByRegion: before select params: region_id: " + region.getId() + " startDate: " + startDate + " endDate: " + endDate);
+		}
+		
+		return getSqlMapClient().queryForList("getTargetTotalHoursByRegion", ReportDaoHelper.mapTotalHoursReport(region, startDate, endDate));
+	}
 }

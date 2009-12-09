@@ -3,4 +3,5 @@
 <sqlMapConfig>
 	<sqlMap resource="com/laborguru/model/ReportStatements.xml"/>
 	<sqlMap resource="com/laborguru/model/ReportCustomerStatements.xml"/>
+	<sqlMap resource="com/laborguru/model/ReportRegionStatements.xml"/>
 </sqlMapConfig>

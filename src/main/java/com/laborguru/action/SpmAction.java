@@ -13,6 +13,8 @@ import com.laborguru.frontend.HttpRequestConstants;
 import com.laborguru.model.Customer;
 import com.laborguru.model.CustomerUser;
 import com.laborguru.model.Employee;
+import com.laborguru.model.Region;
+import com.laborguru.model.RegionalUser;
 import com.laborguru.model.Store;
 import com.laborguru.model.User;
 import com.opensymphony.xwork2.ActionSupport;
@@ -116,6 +118,20 @@ public class SpmAction extends ActionSupport implements SessionAware,RequestAwar
 		}
 		return customer;
 
+	}
+	
+	protected Region getRegion() {
+		Region region = (Region) getSession().get(HttpRequestConstants.REGION);
+		if(region == null) {
+			RegionalUser regionalUser = (RegionalUser)getLoggedUser();
+			region = regionalUser.getRegion();
+			if(region != null) {
+				getSession().put(HttpRequestConstants.REGION, region);
+			} else {
+				throw new SpmUncheckedException("There is no regin present in session. Called from a user that is not a Regional Manager interface or session timed out?", ErrorEnum.NO_STORE_IN_SESSION);
+			}
+		}
+		return region;
 	}
 
 	/**
