@@ -18,7 +18,7 @@ import com.opensymphony.xwork2.Preparable;
  * @since SPM 1.1
  *
  */
-public class ReportCustomerPrepareAction extends SpmAction implements Preparable {
+public class ReportCustomerPrepareAction extends ReportManagerBaseAction {
 
 	/**
 	 * 
@@ -28,114 +28,29 @@ public class ReportCustomerPrepareAction extends SpmAction implements Preparable
 	private ReportCustomerService reportCustomerService;
 	
 	private List<TotalCustomerManagerHour> totalManagerHours;
-	private Date startDate;
-	private Date endDate;
-	private String selectView;
 	
-	private String scheduleHeader, targetHeader, reportTitle;
-	
-	public void prepareShowFirstReport(){
-		//starts 7 days ago and ends today
-		setEndDate(CalendarUtils.todayWithoutTime());
-		
-		setStartDate(CalendarUtils.addOrSubstractDays(getEndDate(), -7));
-		
-	}
-	
-	public String showFirstReport() {
-		return SpmActionResult.INPUT.getResult();
-	}
-
-	public String showReport() {
-		ReportTypes reportType = ReportTypes.valueOf(getSelectView());
-		
-		switch(reportType) {
-		case performanceEfficiency: setTotalManagerHours(getReportCustomerService().getPerformanceEfficiencyReport(getCustomer(), getStartDate(), getEndDate()));
-									setReportTitle("report.manager.performanceEfficiency.title.label");
-									setScheduleHeader("report.historicalComparison.performanceEfficiency.schedule.label");
-									setTargetHeader("report.historicalComparison.performanceEfficiency.target.label");									
-									break;
-		case schedulingEfficiency: setTotalManagerHours(getReportCustomerService().getWeeklyTotalHours(getCustomer(), getStartDate(), getEndDate()));
-								   setReportTitle("report.manager.scheduleEfficiency.title.label");
-								   setScheduleHeader("report.historicalComparison.scheduleEfficiency.schedule.label");
-								   setTargetHeader("report.historicalComparison.scheduleEfficiency.target.label");
-								   break;
-		case scheduleExecutionEfficiency: setTotalManagerHours(getReportCustomerService().getScheduleExecutionEfficiencyReport(getCustomer(), getStartDate(), getEndDate()));
-										  setReportTitle("report.manager.scheduleExecutionEfficiency.title.label");
-										  setScheduleHeader("report.historicalComparison.scheduleExecutionEfficiency.schedule.label");
-										  setTargetHeader("report.historicalComparison.scheduleExecutionEfficiency.target.label");
-										  break;
-		case forecastEfficiency: setTotalManagerHours(getReportCustomerService().getForecastEfficiencyReport(getCustomer(), getStartDate(), getEndDate()));
-								 setReportTitle("report.manager.forecastEfficiency.title.label");
-								 setScheduleHeader("report.historicalComparison.forecastEfficiency.schedule.label");
-								 setTargetHeader("report.historicalComparison.forecastEfficiency.target.label");
-								 break;
-		default: setTotalManagerHours(null);
-				 break;
-		}
-		
-		return SpmActionResult.INPUT.getResult();
+	@Override
+	protected void forecastEfficiency() {
+		setTotalManagerHours(getReportCustomerService().getForecastEfficiencyReport(getCustomer(), getStartDate(), getEndDate()));
 		
 	}
 
-	/**
-	 * @return the reportService
-	 */
-	public ReportCustomerService getReportCustomerService() {
-		return reportCustomerService;
+	@Override
+	protected void performanceEfficiency() {
+		setTotalManagerHours(getReportCustomerService().getPerformanceEfficiencyReport(getCustomer(), getStartDate(), getEndDate()));
 	}
 
-	/**
-	 * @param reportService the reportService to set
-	 */
-	public void setReportCustomerService(ReportCustomerService reportCustomerService) {
-		this.reportCustomerService = reportCustomerService;
+	@Override
+	protected void scheduleExecutionEfficiency() {
+		setTotalManagerHours(getReportCustomerService().getScheduleExecutionEfficiencyReport(getCustomer(), getStartDate(), getEndDate()));
+		
 	}
 
-	/**
-	 * @return the startDate
-	 */
-	public Date getStartDate() {
-		//return startDate;
-		return CalendarUtils.addOrSubstractDays(new Date(), -7);
-	}
-
-	/**
-	 * @param startDate the startDate to set
-	 */
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
-
-	/**
-	 * @return the endDate
-	 */
-	public Date getEndDate() {
-		//return endDate;
-		return new Date();
-	}
-
-	/**
-	 * @param endDate the endDate to set
-	 */
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
-
-	/**
-	 * @return the selectView
-	 */
-	public String getSelectView() {
-		return selectView;
-	}
-
-	/**
-	 * @param selectView the selectView to set
-	 */
-	public void setSelectView(String selectView) {
-		this.selectView = selectView;
-	}
-	
+	@Override
+	protected void schedulingEfficiency() {
+		setTotalManagerHours(getReportCustomerService().getWeeklyTotalHours(getCustomer(), getStartDate(), getEndDate()));
+		
+	}	
 	/**
 	 * @return the totalManagerHours
 	 */
@@ -150,52 +65,20 @@ public class ReportCustomerPrepareAction extends SpmAction implements Preparable
 		this.totalManagerHours = totalManagerHours;
 	}
 
-	public ReportTypes[] getReportTypes() {
-		return ReportTypes.values();
-	}
-		
+
 	/**
-	 * @return the scheduleHeader
+	 * @return the reportCustomerService
 	 */
-	public String getScheduleHeader() {
-		return scheduleHeader;
+	public ReportCustomerService getReportCustomerService() {
+		return reportCustomerService;
 	}
 
 	/**
-	 * @param scheduleHeader the scheduleHeader to set
+	 * @param reportCustomerService the reportCustomerService to set
 	 */
-	public void setScheduleHeader(String scheduleHeader) {
-		this.scheduleHeader = scheduleHeader;
+	public void setReportCustomerService(ReportCustomerService reportCustomerService) {
+		this.reportCustomerService = reportCustomerService;
 	}
 
-	/**
-	 * @return the targetHeader
-	 */
-	public String getTargetHeader() {
-		return targetHeader;
-	}
-
-	/**
-	 * @param targetHeader the targetHeader to set
-	 */
-	public void setTargetHeader(String targetHeader) {
-		this.targetHeader = targetHeader;
-	}
-
-	/**
-	 * @return the reportTitle
-	 */
-	public String getReportTitle() {
-		return reportTitle;
-	}
-
-	/**
-	 * @param reportTitle the reportTitle to set
-	 */
-	public void setReportTitle(String reportTitle) {
-		this.reportTitle = reportTitle;
-	}
-
-	public void prepare() throws Exception {
-	}	
+	
 }

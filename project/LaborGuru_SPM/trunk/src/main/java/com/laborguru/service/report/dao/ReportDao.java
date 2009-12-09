@@ -8,11 +8,13 @@ import com.laborguru.model.Customer;
 import com.laborguru.model.HistoricSales;
 import com.laborguru.model.Position;
 import com.laborguru.model.PositionGroup;
+import com.laborguru.model.Region;
 import com.laborguru.model.Store;
 import com.laborguru.model.report.FixedLaborHours;
+import com.laborguru.model.report.TotalCustomerManagerHour;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.model.report.TotalHourByPosition;
-import com.laborguru.model.report.TotalCustomerManagerHour;
+import com.laborguru.model.report.TotalRegionManagerHour;
 
 /**
  *
@@ -284,4 +286,44 @@ public interface ReportDao {
 	 */
 	List<TotalCustomerManagerHour>getTargetTotalHourByCustomer(Customer customer, Date startDate, Date endDate) throws SQLException;
 		
+	/**
+	 * Retrieves the sales for all the Stores associated to a customer
+	 * @param customer
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @throws SQLException
+	 */
+	List<TotalRegionManagerHour> getActualSalesByRegion(Region region, Date startDate, Date endDate) throws SQLException;
+	
+	/**
+	 * Retrieves the actual hours of all the stores associated to a customer
+	 * @param customer
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @throws SQLException
+	 */
+	List<TotalRegionManagerHour> getActualHoursByRegion(Region region, Date startDate, Date endDate) throws SQLException;
+	
+	/**
+	 * Retrieves the total hours of all the stores associated to a customer 
+	 * @param customer
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @throws SQLException
+	 */
+	List<TotalRegionManagerHour> getScheduleTotalHourByRegion(Region region, Date startDate, Date endDate) throws SQLException;
+	
+	/**
+	 * Retrieves the total target hours of all the stores associated to a customer
+	 * @param customer
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @throws SQLException
+	 */
+	List<TotalRegionManagerHour>getTargetTotalHourByRegion(Region region, Date startDate, Date endDate) throws SQLException;
+	
 }

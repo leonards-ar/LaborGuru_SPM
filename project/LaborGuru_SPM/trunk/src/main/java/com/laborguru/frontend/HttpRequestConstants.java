@@ -55,4 +55,9 @@ public interface HttpRequestConstants {
 	 * The customer of the logged user when he/she is an employee.
 	 */	
 	String CUSTOMER = "spmCustomer";
+	
+	/**
+	 * The region of the logged user when he/she is an employee.
+	 */
+	String REGION = "spmRegion";
 }
