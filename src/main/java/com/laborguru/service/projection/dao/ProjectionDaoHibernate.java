@@ -111,7 +111,7 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 		
 		DateTime startDate = new DateTime(startWeekDate);
 		
-		DateTime startTime = new DateMidnight(startDate).toDateTime();
+		DateTime startTime = new DateMidnight(startDate.minusWeeks(numberOfWeeks)).toDateTime();
 		DateTime endTime = startDate.minusDays(1).withTime(23, 59, 59, 999);
 		
 		if(log.isDebugEnabled()){
