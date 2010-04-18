@@ -129,7 +129,7 @@ public class DailyProjectionsPrepareAction extends DailyProjectionBaseAction imp
 			dailyProjection.setProjectionDate(getWeekDaySelector().getWeekDays().get(i));
 			
 			auxCalendar.setTime(dailyProjection.getProjectionDate());
-			BigDecimal auxValue = calculatedProjections.get(auxCalendar.get(Calendar.DAY_OF_WEEK)-1);
+			BigDecimal auxValue = calculatedProjections.get(i);
 			
 			dailyProjection.setCalculatedProjection(auxValue);
 			
