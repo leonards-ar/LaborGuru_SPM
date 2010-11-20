@@ -624,4 +624,13 @@ public class CalendarUtils {
 	public static Date getEndOfWeekDay(Date startingDayOfWeek) {
 		return addOrSubstractDays(startingDayOfWeek, DayOfWeek.values().length - 1);
 	}	
+	
+	/**
+	 * 
+	 * @param d
+	 * @return
+	 */
+	public static boolean isMidnightTime(Date d) {
+		return equalsTime(d, getMidnightTime());
+	}	
 }
