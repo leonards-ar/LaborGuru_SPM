@@ -640,4 +640,13 @@ public class CalendarUtils {
 		
 		return calendarDate.getTime();
 	}
+	
+	/**
+	 * 
+	 * @param d
+	 * @return
+	 */
+	public static boolean isMidnightTime(Date d) {
+		return equalsTime(d, getMidnightTime());
+	}		
 }
