@@ -3,11 +3,11 @@ package com.laborguru.service.report;
 import java.util.Date;
 import java.util.List;
 
-import com.laborguru.model.Region;
-import com.laborguru.model.report.TotalRegionManagerHour;
+import com.laborguru.model.Area;
+import com.laborguru.model.report.TotalAreaManagerHour;
 import com.laborguru.service.Service;
 
-public interface ReportRegionService extends Service{
+public interface ReportAreaService extends Service {
 
 	/**
 	 * Retrieves a Performance Efficiency Report for Regions
@@ -16,7 +16,7 @@ public interface ReportRegionService extends Service{
 	 * @param end
 	 * @return
 	 */
-	List<TotalRegionManagerHour> getPerformanceEfficiencyReport(Region region, Date start, Date end);
+	List<TotalAreaManagerHour> getPerformanceEfficiencyReport(Area area, Date start, Date end);
 	
 	/**
 	 * Retrieves a Schedule Efficiency Report for Regions
@@ -25,7 +25,7 @@ public interface ReportRegionService extends Service{
 	 * @param end
 	 * @return
 	 */
-	List<TotalRegionManagerHour> getWeeklyTotalHours(Region region, Date start, Date end);
+	List<TotalAreaManagerHour> getWeeklyTotalHours(Area area, Date start, Date end);
 	
 	/**
 	 * Retrieve a Schedule Execution Efficiency Report for Regions
@@ -34,7 +34,7 @@ public interface ReportRegionService extends Service{
 	 * @param end
 	 * @return
 	 */
-	List<TotalRegionManagerHour> getScheduleExecutionEfficiencyReport(Region region, Date start, Date end);
+	List<TotalAreaManagerHour> getScheduleExecutionEfficiencyReport(Area area, Date start, Date end);
 	
 	/**
 	 * Retrieves ForecasEfficiencyReport for Regions
@@ -43,6 +43,6 @@ public interface ReportRegionService extends Service{
 	 * @param end
 	 * @return
 	 */
-	List<TotalRegionManagerHour> getForecastEfficiencyReport(Region region, Date start, Date end);
+	List<TotalAreaManagerHour> getForecastEfficiencyReport(Area area, Date start, Date end);
 	
 }
