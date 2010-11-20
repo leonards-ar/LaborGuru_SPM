@@ -1060,12 +1060,24 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	 */
 	private int getLastIndexOfBucket(Date hour, List<Date> scheduleBuckets) {
 		Date anHour;
-		for(int i = scheduleBuckets.size() - 1; i >= 0; i--) {
-			anHour = scheduleBuckets.get(i);
-			if(CalendarUtils.greaterTime(hour, anHour)) {
-				return i;
+
+		// Added for special midnight value of 00:00hs
+		if(CalendarUtils.isMidnightTime(hour)) {
+			for(int i = scheduleBuckets.size() - 1; i >= 0; i--) {
+				anHour = scheduleBuckets.get(i);
+				if(CalendarUtils.isMidnightTime(anHour)) {
+					return i - 1;
+				}
+			}
+		} else {
+			for(int i = scheduleBuckets.size() - 1; i >= 0; i--) {
+				anHour = scheduleBuckets.get(i);
+				if(CalendarUtils.greaterTime(hour, anHour)) {
+					return i;
+				}
 			}
 		}
+		
 		return scheduleBuckets.size();
 	}
 	
