@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.laborguru.model.Area;
 import com.laborguru.model.Customer;
 import com.laborguru.model.Position;
 import com.laborguru.model.PositionGroup;
@@ -61,6 +62,15 @@ public class ReportDaoHelper {
 		
 		return map;
 	}
+	
+	public static Map<String, Object> mapTotalHoursReport(Area area, Date startDate, Date endDate){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("area_id", area.getId());
+		map.put("start_date", startDate);
+		map.put("end_date", endDate);
+		
+		return map;
+	}	
 	
 	/**
 	 * Retrieves a Map with the parameters needed to execute the report 
@@ -153,6 +163,15 @@ public class ReportDaoHelper {
 		
 		return map;
 	}	
+
+	public static Map<String, Object> mapActualSalesReport(Area area, Date startDate, Date endDate){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("area_id", area.getId());
+		map.put("start_date", startDate);
+		map.put("end_date", endDate);
+		
+		return map;
+	}	
 	
 	public static Map<String, Object> mapActualHoursReport(Store store, Date startDate, Date endDate){
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -181,6 +200,14 @@ public class ReportDaoHelper {
 		return map;
 	}
 	
+	public static Map<String, Object> mapActualHoursReport(Area area, Date startDate, Date endDate){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("area_id", area.getId());
+		map.put("start_date", startDate);
+		map.put("end_date", endDate);
+		
+		return map;
+	}	
 	public static Map<String, Object> mapMinimumStaffingReport(Store store, Date startDate, Date endDate){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("store_id", store.getId());

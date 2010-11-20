@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
-<sqlMap namespace="ReportcustomerReportStatements">
+<sqlMap namespace="ReportRegionStatements">
 
 
   <resultMap id="get-actualSalesByRegion-result" class="com.laborguru.model.report.TotalRegionManagerHour">
-    <result property="region.id" column="region_id"/>
-    <result property="region.name" column="region_name"/>
+    <result property="area.id" column="area_id"/>
+    <result property="area.name" column="area_name"/>
     <result property="sales" column="main_value"/>
   </resultMap>
   
@@ -16,19 +16,19 @@
     FROM tbl_areas a LEFT JOIN tbl_stores s ON a.area_id = s.area_id LEFT JOIN tbl_historic_sales hs ON s.store_id = hs.store_id AND DATE(hs.date_time) BETWEEN STR_TO_DATE(#start_date#, '%Y-%m-%d') AND STR_TO_DATE(#end_date#, '%Y-%m-%d') 
     WHERE a.region = #region_id# 
     GROUP BY a.area_id 
-    ORDER BY a.area_id;
+    ORDER BY a.name;
   </select>
   
   <resultMap id="get-scheduleHoursByRegion-result" class="com.laborguru.model.report.TotalRegionManagerHour">
-    <result property="region.id" column="region_id"/>
-    <result property="region.name" column="region_name"/>
+    <result property="area.id" column="area_id"/>
+    <result property="area.name" column="area_name"/>
     <result property="schedule" column="schedule"/>
   </resultMap>
   
   <select id="getActualHoursByRegion" parameterClass="java.util.Map" resultMap="get-scheduleHoursByRegion-result">
     SELECT
-    r.region_id as region_id, 
-    r.name as region_name,
+    a.area_id as area_id, 
+    a.name as area_name,
     sum(ah.hours) as schedule
     FROM tbl_areas a LEFT JOIN tbl_stores s ON a.area_id = s.area_id LEFT JOIN tbl_actual_hours ah ON s.store_id = ah.store_id AND ah.date BETWEEN STR_TO_DATE(#start_date#, '%Y-%m-%d') AND STR_TO_DATE(#end_date#, '%Y-%m-%d') 
     WHERE a.region = #region_id#
@@ -38,8 +38,8 @@
 
   <select id="getScheduleTotalHoursByRegion" parameterClass="java.util.Map" resultMap="get-scheduleHoursByRegion-result">
     SELECT
-    r.region_id as region_id,
-    r.name as region_name,
+    a.area_id as area_id, 
+    a.name as area_name,
     SUM(TIME_TO_SEC(TIMEDIFF(sh.to_hour, sh.from_hour)))/3600 as schedule
     FROM tbl_areas a 
     LEFT JOIN tbl_stores s ON a.area_id = s.area_id 
@@ -53,8 +53,8 @@
 
   <select id="getTargetTotalHoursByRegion" parameterClass="java.util.Map" resultMap="get-scheduleHoursByRegion-result">
     SELECT
-    r.region_id as region_id,
-    r.name as region_name,
+    a.area_id as area_id, 
+    a.name as area_name,
     SUM(total_daily_target) as schedule
     FROM tbl_areas 
     LEFT JOIN tbl_stores s ON a.area_id = s.area_id 

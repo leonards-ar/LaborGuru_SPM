@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+import com.laborguru.model.Area;
 import com.laborguru.model.Customer;
 import com.laborguru.model.HistoricSales;
 import com.laborguru.model.Position;
@@ -11,6 +12,7 @@ import com.laborguru.model.PositionGroup;
 import com.laborguru.model.Region;
 import com.laborguru.model.Store;
 import com.laborguru.model.report.FixedLaborHours;
+import com.laborguru.model.report.TotalAreaManagerHour;
 import com.laborguru.model.report.TotalCustomerManagerHour;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.model.report.TotalHourByPosition;
@@ -325,5 +327,46 @@ public interface ReportDao {
 	 * @throws SQLException
 	 */
 	List<TotalRegionManagerHour>getTargetTotalHourByRegion(Region region, Date startDate, Date endDate) throws SQLException;
+	
+	/**
+	 * Retrieves the sales for all the Stores associated to a customer
+	 * @param customer
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @throws SQLException
+	 */
+	List<TotalAreaManagerHour> getActualSalesByArea(Area area, Date startDate, Date endDate) throws SQLException;
+	
+	/**
+	 * Retrieves the actual hours of all the stores associated to a customer
+	 * @param customer
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @throws SQLException
+	 */
+	List<TotalAreaManagerHour> getActualHoursByArea(Area area, Date startDate, Date endDate) throws SQLException;
+	
+	/**
+	 * Retrieves the total hours of all the stores associated to a customer 
+	 * @param customer
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @throws SQLException
+	 */
+	List<TotalAreaManagerHour> getScheduleTotalHourByArea(Area area, Date startDate, Date endDate) throws SQLException;
+	
+	/**
+	 * Retrieves the total target hours of all the stores associated to a customer
+	 * @param customer
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @throws SQLException
+	 */
+	List<TotalAreaManagerHour>getTargetTotalHourByArea(Area area, Date startDate, Date endDate) throws SQLException;
+	
 	
 }

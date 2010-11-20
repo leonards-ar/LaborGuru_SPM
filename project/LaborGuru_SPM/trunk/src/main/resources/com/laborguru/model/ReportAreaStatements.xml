@@ -1,134 +1,66 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
-<sqlMap namespace="ReportStatements">
+<sqlMap namespace="ReportAreaStatements">
 
-  <select id="getScheduleWeeklyTotalHoursByArea" parameterClass='java.util.Map' resultClass="com.laborguru.model.report.TotalHour">
-    SELECT
-    ss.day as day,
-    SUM(TIME_TO_SEC(TIMEDIFF(s.to_hour, s.from_hour)))/3600 as schedule
-    FROM tbl_store_schedules as ss, tbl_employee_schedules as es, tbl_shifts as s, tbl_stores as st
-    WHERE ss.store_schedule_id = es.store_schedule_id
-    AND es.employee_schedule_id = s.employee_schedule_id
-    AND s.position_id IS NOT NULL
-    AND ss.day BETWEEN STR_TO_DATE(#start_date#,'%Y-%m-%d') AND STR_TO_DATE(#end_date#,'%Y-%m-%d')
-    AND ss.store_id = st.store_id
-    AND st.area_id = #area_id#
-    GROUP BY ss.day
-    ORDER BY ss.day
-  </select>
 
-  <select id="getTargetWeeklyTotalHoursByArea" parameterClass='java.util.Map' resultClass="com.laborguru.model.report.TotalHour">
-    SELECT
-    s.staffing_date as day,
-    SUM(total_daily_target) as target
-    FROM tbl_staffing as s, tbl_positions as p, tbl_stores as st
-    WHERE s.position_id = p.position_id
-    AND s.staffing_date BETWEEN STR_TO_DATE(#start_date#,'%Y-%m-%d') AND STR_TO_DATE(#end_date#,'%Y-%m-%d')
-    AND p.store_id = st.store_id
-    AND st.area_id = #area_id#
-    GROUP BY s.staffing_date
-    ORDER BY s.staffing_date
+  <resultMap id="get-actualSalesByArea-result" class="com.laborguru.model.report.TotalAreaManagerHour">
+    <result property="store.store_id" column="store_id"/>
+    <result property="store.name" column="store_name"/>
+    <result property="sales" column="main_value"/>
+  </resultMap>
+  
+  <select id="getActualSalesByArea" parameterClass="java.util.Map" resultMap="get-actualSalesByArea-result"> 
+    SELECT s.store_id as store_id, 
+    s.name as store_name, 
+    SUM(hs.main_value) as main_value 
+    FROM tbl_stores s LEFT JOIN tbl_historic_sales hs ON s.store_id = hs.store_id AND DATE(hs.date_time) BETWEEN STR_TO_DATE(#start_date#, '%Y-%m-%d') AND STR_TO_DATE(#end_date#, '%Y-%m-%d') 
+    WHERE s.area = #area_id# 
+    GROUP BY s.store_id 
+    ORDER BY s.name;
   </select>
   
-  <select id="getScheduleHalfHourlyTotalHoursByArea" parameterClass='java.util.Map' resultClass="com.laborguru.model.report.TotalHour">
-    SELECT h.time as day,
-    COUNT(s.position_id) as schedule
-    FROM tbl_store_schedules as ss, tbl_employee_schedules as es, tbl_shifts as s, tbl_halfhour_staffing h, tbl_staffing as st, tbl_stores as a
-    WHERE ss.store_schedule_id = es.store_schedule_id
-    AND es.employee_schedule_id = s.employee_schedule_id
-    AND s.position_id = st.position_id
-    AND s.position_id IS NOT NULL
-    AND st.staffing_id = h.staffing_id 
-    AND st.staffing_date = ss.day
-    AND TIME(h.time) <![CDATA[ >= ]]> TIME(#open_hour#) 
-    AND TIME(h.time) <![CDATA[ < ]]>  TIME(#close_hour#)
-    AND TIME(h.time) <![CDATA[ >= ]]>TIME(s.from_hour) 
-    AND TIME(h.time) <![CDATA[ < ]]> TIME(s.to_hour)
-    AND ss.store_id = a.store_id
-    AND a.area_id = #area_id#
-    AND ss.day = STR_TO_DATE(#date#,'%Y-%m-%d')
-    GROUP BY h.time
-    ORDER BY TIME(h.time);
-  </select>
-
-  <select id="getTargetHalfHourlyTotalHoursByArea" parameterClass='java.util.Map' resultClass="com.laborguru.model.report.TotalHour">
-    SELECT 
-    h.time as day, 
-    sum(h.calculated_staff) as target
-    FROM tbl_staffing as s, tbl_halfhour_staffing as h, tbl_positions as p, tbl_stores st 
-    WHERE p.position_id = s.position_id 
-    AND s.staffing_id = h.staffing_id 
-    AND s.staffing_date = STR_TO_DATE(#date#,'%Y-%m-%d')
-    AND TIME(h.time) <![CDATA[ >= ]]> TIME(#open_hour#) 
-    AND TIME(h.time) <![CDATA[ < ]]>  TIME(#close_hour#)
-    AND p.store_id=st.store_id
-    AND st.area_id = #area_id# 
-    GROUP BY h.time 
-    ORDER BY TIME(h.time)
-  </select>
-
-  <select id="getScheduleHalfHourlyTotalHoursSplitInTwoDaysByArea" parameterClass='java.util.Map' resultClass="com.laborguru.model.report.TotalHour">
-    SELECT h.time as day, COUNT(s.position_id) as schedule
-    FROM tbl_employee_schedules as es, tbl_shifts as s,tbl_store_schedules as ss, tbl_stores st, 
-    (
-      SELECT distinct(h.time) as time
-      FROM tbl_halfhour_staffing h, tbl_staffing as st
-      WHERE st.staffing_id = h.staffing_id
-        AND st.staffing_date = STR_TO_DATE(#date#,'%Y-%m-%d')
-      ORDER BY h.time
-        ) as h
-    WHERE ss.store_schedule_id = es.store_schedule_id
-    AND es.employee_schedule_id = s.employee_schedule_id
-    AND s.position_id IS NOT NULL
-    AND(  
-          TIME(s.to_hour) = TIME(s.from_hour)
-            OR
-      (
-        TIME(s.to_hour) <![CDATA[ > ]]> TIME(s.from_hour)
-        AND TIME(h.time) <![CDATA[ >= ]]> TIME(s.from_hour)
-        AND TIME(h.time) <![CDATA[ < ]]> TIME(s.to_hour)
-      )
-      OR
-      (
-        TIME(s.to_hour) <![CDATA[ < ]]> TIME(s.from_hour)
-        AND NOT
-        (
-          TIME(h.time) <![CDATA[ >= ]]> TIME(s.to_hour)
-          AND TIME(h.time) <![CDATA[ < ]]> TIME(s.from_hour)
-        )
-      )
-    )
-    AND ss.day = STR_TO_DATE(#date#,'%Y-%m-%d')   
-    AND ss.store_id = st.store_id
-    AND st.area_id = #area_id#  
-    GROUP BY TIME(h.time)
-    ORDER BY TIME(h.time)
-  </select>
-
-  <select id="getTargetHalfHourlyTotalHoursSplitInTwoDaysByArea" parameterClass='java.util.Map' resultClass="com.laborguru.model.report.TotalHour">
-    SELECT 
-    h.time as day, 
-    sum(h.calculated_staff) as target
-    FROM tbl_staffing as s, tbl_halfhour_staffing as h, tbl_positions as p, tbl_stores st 
-    WHERE p.position_id = s.position_id 
-    AND s.staffing_id = h.staffing_id
-    AND(
-      ( 
-        TIME(h.time) <![CDATA[ >= ]]> TIME(#open_hour#) 
-        AND TIME(h.time) <![CDATA[ <= ]]>  TIME('1970-01-01 23:59:59')
-      )
-      OR
-      (
-        TIME(h.time) <![CDATA[ >= ]]> TIME('1970-01-01 00:00:00') 
-        AND TIME(h.time) <![CDATA[ < ]]>  TIME(#close_hour#)
-      )
-    )
-    AND s.staffing_date = STR_TO_DATE(#date#,'%Y-%m-%d')    
-    AND p.store_id=st.store_id
-    AND st.area_id = #area_id# 
-    GROUP BY s.staffing_date, h.time 
-    ORDER BY s.staffing_date, TIME(h.time)
-  </select>
-
+  <resultMap id="get-scheduleHoursByArea-result" class="com.laborguru.model.report.TotalAreaManagerHour">
+    <result property="store.store_id" column="store_id"/>
+    <result property="store.name" column="store_name"/>
+    <result property="schedule" column="schedule"/>
+  </resultMap>
   
+  <select id="getActualHoursByArea" parameterClass="java.util.Map" resultMap="get-scheduleHoursByArea-result">
+    SELECT
+    s.store_id as store_id, 
+    s.name as store_name,
+    sum(ah.hours) as schedule
+    FROM tbl_stores s LEFT JOIN tbl_actual_hours ah ON s.store_id = ah.store_id AND ah.date BETWEEN STR_TO_DATE(#start_date#, '%Y-%m-%d') AND STR_TO_DATE(#end_date#, '%Y-%m-%d') 
+    WHERE s.area = #area_id#
+    GROUP BY s.store_id 
+    ORDER BY s.name;
+  </select>
+
+  <select id="getScheduleTotalHoursByArea" parameterClass="java.util.Map" resultMap="get-scheduleHoursByArea-result">
+    SELECT
+    s.store_id as store_id,
+    s.name as store_name,
+    SUM(TIME_TO_SEC(TIMEDIFF(sh.to_hour, sh.from_hour)))/3600 as schedule
+    FROM tbl_stores s 
+    LEFT JOIN tbl_store_schedules as ss ON s.store_id = ss.store_id AND ss.day BETWEEN STR_TO_DATE(#start_date#,'%Y-%m-%d') AND STR_TO_DATE(#end_date#,'%Y-%m-%d')
+    LEFT JOIN tbl_employee_schedules as es ON ss.store_schedule_id = es.store_schedule_id
+    LEFT JOIN tbl_shifts as sh ON es.employee_schedule_id = sh.employee_schedule_id AND sh.position_id IS NOT NULL
+    WHERE s.area = #area_id#
+    GROUP BY s.store_id 
+    ORDER BY s.name;
+  </select>
+
+  <select id="getTargetTotalHoursByArea" parameterClass="java.util.Map" resultMap="get-scheduleHoursByArea-result">
+    SELECT
+    s.store_id as store_id,
+    s.name as store_name,
+    SUM(total_daily_target) as schedule
+    FROM tbl_stores s 
+    LEFT JOIN tbl_positions p ON s.store_id = p.store_id
+    LEFT JOIN tbl_staffing st ON p.position_id = st.position_id AND st.staffing_date BETWEEN STR_TO_DATE(#start_date#,'%Y-%m-%d') AND STR_TO_DATE(#end_date#,'%Y-%m-%d')
+    WHERE s.area = #area_id#
+    GROUP BY s.store_id 
+    ORDER BY s.name;
+  </select> 
+      
 </sqlMap>
