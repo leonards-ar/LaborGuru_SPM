@@ -6,7 +6,7 @@
 	<select id="getScheduleWeeklyTotalHours" parameterClass='java.util.Map' resultClass="com.laborguru.model.report.TotalHour">
 		SELECT
 		ss.day as day,
-		SUM(TIME_TO_SEC(TIMEDIFF(s.to_hour, s.from_hour)))/3600 as schedule
+		SUM(s.service_hours + s.opening_hours + s.closing_hours) as schedule
 		FROM tbl_store_schedules as ss, tbl_employee_schedules as es, tbl_shifts as s
 		WHERE ss.store_schedule_id = es.store_schedule_id
 		AND es.employee_schedule_id = s.employee_schedule_id
@@ -32,7 +32,7 @@
 	<select id="getScheduleWeeklyTotalHoursByPosition" parameterClass='java.util.Map' resultClass="com.laborguru.model.report.TotalHour">
 		SELECT
 		ss.day as day,
-		SUM(TIME_TO_SEC(TIMEDIFF(s.to_hour, s.from_hour)))/3600 as schedule
+		SUM(s.service_hours + s.opening_hours + s.closing_hours) as schedule
 		FROM tbl_store_schedules as ss, tbl_employee_schedules as es, tbl_shifts as s
 		WHERE ss.store_schedule_id = es.store_schedule_id
 		AND es.employee_schedule_id = s.employee_schedule_id
@@ -57,7 +57,7 @@
 	<select id="getScheduleWeeklyTotalHoursByService" parameterClass='java.util.Map' resultClass="com.laborguru.model.report.TotalHour">
 		SELECT
 		ss.day as day,
-		SUM(TIME_TO_SEC(TIMEDIFF(s.to_hour, s.from_hour)))/3600 as schedule
+		SUM(s.service_hours + s.opening_hours + s.closing_hours) as schedule
 		FROM tbl_store_schedules as ss, tbl_employee_schedules as es, tbl_shifts as s, tbl_positions as p
 		WHERE ss.store_schedule_id = es.store_schedule_id
 		AND es.employee_schedule_id = s.employee_schedule_id
@@ -391,7 +391,7 @@
 	<select id="getScheduleForecastByPosition" parameterClass='java.util.Map' resultMap="get-schedule-forecast-result">
 		SELECT
 		s.position_id as id, 
-		SUM(TIME_TO_SEC(TIMEDIFF(s.to_hour, s.from_hour)))/3600 as schedule
+		SUM(s.service_hours + s.opening_hours + s.closing_hours) as schedule
 		FROM tbl_store_schedules as ss, tbl_employee_schedules as es, tbl_shifts as s
 		WHERE ss.store_schedule_id = es.store_schedule_id
 		AND es.employee_schedule_id = s.employee_schedule_id

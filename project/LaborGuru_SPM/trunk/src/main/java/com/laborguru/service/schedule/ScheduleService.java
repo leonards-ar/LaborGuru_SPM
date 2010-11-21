@@ -69,6 +69,11 @@ public interface ScheduleService extends Service {
 	 * @param endDate
 	 * @return
 	 */
-	Map<Integer, BigDecimal> getTotalScheduledHoursByPositionForTimePeriod(Store store, Date startDate, Date endDate);	
+	Map<Integer, BigDecimal> getTotalScheduledHoursByPositionForTimePeriod(Store store, Date startDate, Date endDate);
+	
+	/**
+	 * 
+	 */
+	void updateAllStoreSchedules();
 }
  
