@@ -1,7 +1,5 @@
 package com.laborguru.action.report;
 
-import java.util.Date;
-
 import com.laborguru.model.Position;
 import com.laborguru.model.PositionGroup;
 import com.laborguru.util.CalendarUtils;

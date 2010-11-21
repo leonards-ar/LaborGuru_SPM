@@ -7,6 +7,7 @@ package com.laborguru.service.schedule.dao;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import com.laborguru.model.Store;
@@ -69,4 +70,10 @@ public interface ScheduleDao {
 	 * @return
 	 */
 	Map<Integer, BigDecimal> getTotalScheduledHoursByPositionForTimePeriod(Store store, Date startDate, Date endDate);
+	
+	/**
+	 * 
+	 * @return
+	 */
+	List<StoreSchedule> getAllStoreSchedules();
 }

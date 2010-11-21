@@ -25,7 +25,7 @@
 	
 		<return-scalar column="totalHours" type="big_decimal"/>
 		
-		<![CDATA[SELECT SUM(TIME_TO_SEC(TIMEDIFF(s.to_hour, s.from_hour)))/3600 as totalHours
+		<![CDATA[SELECT SUM(s.service_hours + s.opening_hours + s.closing_hours) as totalHours
 		FROM tbl_store_schedules as ss, tbl_employee_schedules as es, tbl_shifts as s
 		WHERE ss.store_schedule_id = es.store_schedule_id
 		AND es.employee_schedule_id = s.employee_schedule_id
@@ -38,7 +38,7 @@
 	
 		<return-scalar column="totalLaborCost" type="big_decimal"/>
 		
-		<![CDATA[SELECT SUM(TIME_TO_SEC(TIMEDIFF(s.to_hour, s.from_hour)) / 3600 * e.wage) as totalLaborCost
+		<![CDATA[SELECT SUM((s.service_hours + s.opening_hours + s.closing_hours) * e.wage) as totalLaborCost
 		FROM tbl_store_schedules as ss, tbl_employee_schedules as es, tbl_shifts as s, tbl_employees as e
 		WHERE ss.store_schedule_id = es.store_schedule_id
 		AND es.employee_schedule_id = s.employee_schedule_id
@@ -53,7 +53,7 @@
 		<return-scalar column="positionId" type="integer"/>
 		<return-scalar column="totalHours" type="big_decimal"/>
 		
-		<![CDATA[SELECT s.position_id as positionId, SUM(TIME_TO_SEC(TIMEDIFF(s.to_hour, s.from_hour)))/3600 as totalHours
+		<![CDATA[SELECT s.position_id as positionId, SUM(s.service_hours + s.opening_hours + s.closing_hours) as totalHours
 		FROM tbl_store_schedules as ss, tbl_employee_schedules as es, tbl_shifts as s
 		WHERE ss.store_schedule_id = es.store_schedule_id
 		AND es.employee_schedule_id = s.employee_schedule_id

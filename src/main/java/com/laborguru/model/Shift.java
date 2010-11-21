@@ -391,10 +391,10 @@ public class Shift extends SpmObject {
 			if(CalendarUtils.inRangeIncludingEndTime(getFromHour(), opTime.getOpenHour(), opTime.getCloseHour()) && CalendarUtils.inRangeIncludingEndTime(getToHour(), opTime.getOpenHour(), opTime.getCloseHour())) {
 				// The whole shift is inside service period
 				return CalendarUtils.differenceInHours(getToHour(), getFromHour());
-			} else if(CalendarUtils.inRangeIncludingEndTime(getFromHour(), opTime.getOpenHour(), opTime.getCloseHour())) {
+			} else if(CalendarUtils.inRangeNotIncludingEndTime(getFromHour(), opTime.getOpenHour(), opTime.getCloseHour())) {
 				// The shift starts on service period
 				return CalendarUtils.differenceInHours(opTime.getCloseHour(), getFromHour());
-			} else if(CalendarUtils.inRangeIncludingEndTime(getToHour(), opTime.getOpenHour(), opTime.getCloseHour())) {
+			} else if(CalendarUtils.inRangeNotIncludingStartTime(getToHour(), opTime.getOpenHour(), opTime.getCloseHour())) {
 				// The shift ends on service period
 				return CalendarUtils.differenceInHours(getToHour(), opTime.getOpenHour());
 			} else if(CalendarUtils.inRangeIncludingEndTime(opTime.getOpenHour(), getFromHour(), getToHour()) && CalendarUtils.inRangeIncludingEndTime(opTime.getCloseHour(), getFromHour(), getToHour())) {

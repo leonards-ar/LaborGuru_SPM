@@ -61,6 +61,7 @@ public class ScheduleDaoHibernate extends HibernateDaoSupport implements Schedul
 	/**
 	 * 
 	 * @return
+	 * @see com.laborguru.service.schedule.dao.ScheduleDao#getAllStoreSchedules()
 	 */
 	public List<StoreSchedule> getAllStoreSchedules() {
 		if(log.isDebugEnabled()) {

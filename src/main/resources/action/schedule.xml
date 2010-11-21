@@ -52,7 +52,12 @@
 		
 		<action name="showscheduledetails" class="com.laborguru.action.schedule.ScheduleDetailsAction">
 			<result name="success" type="tiles">showScheduleDetailsPage</result>
-		</action>		
+		</action>
+		
+		<action name="batchupdateschedule" class="com.laborguru.action.schedule.BatchUpdateScheduleAction">
+			<result name="success" type="redirectAction"><param name="actionName">addshiftbyemployee_edit</param></result>
+		</action>
+		
 	</package>
 
 	<package name="schedule_ajax" namespace="/schedule" extends="json-default">
