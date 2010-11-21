@@ -131,7 +131,7 @@
 										<!--  We need these hidden fields for totals and variable names, so input values are retained for rendering the page in the case of a validation error 
 											By convention the total inputs id must finish in 'Input'. They are updated by the js that calculates and updates the row-->
 										<s:hidden id="totalAdjustedInput" name="totalAdjusted"/>
-										<td class="editorTableEvenRowTotal" id="totalAdjusted"><s:text name="currency"><s:param value="totalAdjusted"/></s:text></td>
+										<td class="editorTableEvenRow" id="totalAdjusted"><b><s:text name="currency"><s:param value="totalAdjusted"/></s:text></b></td>
 									</tr>
                     			<!-- End Daily Projection -->
                     			
@@ -161,7 +161,7 @@
 											</td>										
 										</s:iterator>
 										<s:hidden id="totalVariable2Input" name="totalVariable2"/>
-										<td class="editorTableEvenRowTotal" id="totalVariable2"><s:text name="currency"><s:param value="totalVariable2"/></s:text></td>
+										<td class="editorTableEvenRow" id="totalVariable2"><b><s:text name="currency"><s:param value="totalVariable2"/></s:text></b></td>
 									</tr>
 									</s:if>
 									<s:else>
@@ -189,7 +189,7 @@
 											</td>										
 										</s:iterator>
 										<s:hidden id="totalVariable3Input" name="totalVariable3"/>
-										<td class="editorTableEvenRowTotal" id="totalVariable3"><s:text name="currency"><s:param value="totalVariable3"/></s:text></td>
+										<td class="editorTableEvenRow" id="totalVariable3"><b><s:text name="currency"><s:param value="totalVariable3"/></s:text></b></td>
 									</tr>
 									</s:if>
 									<s:else>
@@ -217,7 +217,7 @@
 											</td>										
 										</s:iterator>
 										<s:hidden id="totalVariable4Input" name="totalVariable4"/>
-										<td class="editorTableEvenRowTotal" id="totalVariable4"><s:text name="currency"><s:param value="totalVariable4"/></s:text></td>
+										<td class="editorTableEvenRow" id="totalVariable4"><b><s:text name="currency"><s:param value="totalVariable4"/></s:text></b></td>
 									</tr>
 									</s:if>
 									<s:else>
