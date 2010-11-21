@@ -1045,7 +1045,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 		Date anHour;
 		for(int i = 0; i < scheduleBuckets.size(); i++) {
 			anHour = scheduleBuckets.get(i);
-			if(hour.getTime() <= anHour.getTime()) {
+			if(CalendarUtils.equalsOrSmallerTime(hour, anHour)) {
 				return i;
 			}
 		}
