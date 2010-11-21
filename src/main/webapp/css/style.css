@@ -579,14 +579,6 @@ input.text, input.password, textarea {
 	color: #333333;
 	text-align: center;
 }
-.editorTableEvenRowTotal{
-	background-color: #E6E6E6;
-	font-size: 12px;
-	font-family: trebuchet ms, arial, sans-serif;
-	color: #333333;
-	text-align: center;	
-	font-weight: bold;
-}
 
 #titleBar2 {
 	height: 22px;

@@ -125,7 +125,7 @@
 										<!--  We need these hidden fields for totals and variable names, so input values are retained for rendering the page in the case of a validation error 
 											By convention the total inputs id must finish in 'Input'. They are updated by the js that calculates and updates the row-->
 										<s:hidden id="totalMainValueInput" name="totalMainValue"/>
-										<td class="editorTableEvenRowTotal" id="totalMainValue"><s:text name="currency"><s:param value="totalMainValue"/></s:text></td>
+										<td class="editorTableEvenRow" id="totalMainValue"><b><s:text name="currency"><s:param value="totalMainValue"/></s:text></b></td>
 									</tr>
                     			<!-- End Actual Main Value -->
 									<tr>
@@ -160,7 +160,7 @@
 										<!--  We need these hidden fields for totals and variable names, so input values are retained for rendering the page in the case of a validation error 
 											By convention the total inputs id must finish in 'Input'. They are updated by the js that calculates and updates the row-->
 										<s:hidden id="totalDailyHoursInput" name="totalActualHours"/>
-										<td class="editorTableEvenRowTotal" id="totalDailyHours"><s:text name="hours"><s:param value="totalActualHours"/></s:text></td>
+										<td class="editorTableEvenRow" id="totalDailyHours"><b><s:text name="hours"><s:param value="totalActualHours"/></s:text></b></td>
 									</tr>
                     			<!-- End actual Hours -->
 								</table>                    			
