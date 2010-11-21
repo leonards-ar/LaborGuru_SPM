@@ -107,7 +107,7 @@ public class UserDaoHibernate extends SpmHibernateDao implements UserDao {
 		
 		if(includeInFilter(searchUserFilter.getProfile())) {
 			sb.append(" join user.profiles as profile where ");
-			sb.append(" user.profile.id=" + searchUserFilter.getProfile());
+			sb.append(" profile.id=" + searchUserFilter.getProfile().getId());
 		}
 		
 		if(includeInFilter(searchUserFilter.getFullName())) {
