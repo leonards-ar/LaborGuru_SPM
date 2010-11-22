@@ -15,6 +15,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.laborguru.util.CalendarUtils;
+import com.laborguru.util.NumberUtils;
 
 /**
  *
@@ -211,7 +212,7 @@ public class StoreSchedule extends SpmObject {
 		double total = 0.0;
 		
 		for(EmployeeSchedule employeeSchedule : getEmployeeSchedules()) {
-			total += employeeSchedule.getTotalShiftHours().doubleValue();
+			total += NumberUtils.getDoubleValue(employeeSchedule.getTotalShiftHours());
 		}
 		
 		return new Double(total);

@@ -294,11 +294,20 @@ function updatePositionTotals() {
 	}	
 }
 
+function getHiddenScheduledTotal() {
+	var hiddenTotalMins = 0;
+	var hiddenTotalObj = getObjectByID('hiddenTotalScheduledInMinutes');
+	if(hiddenTotalObj) {
+		hiddenTotalMins = toInt(hiddenTotalObj.value);
+	}
+	return hiddenTotalMins;
+}
+
 function updateProjectionTotals() {
 	var totalHours = 0;
 	var target = 0;
 	var diff = 0;
-
+	
 	for(var i = 0; i < SCHEDULE_IDS.length; i++) {
 		var totalHoursObj = getObjectByID(SCHEDULE_IDS[i] + 'total_cell');
 		if(totalHoursObj) {
@@ -307,7 +316,7 @@ function updateProjectionTotals() {
 	}
 	var totalObj = getObjectByID('projection_schedule_total');
 	if(totalObj) {
-		totalObj.innerHTML = minutesToTime(totalHours);
+		totalObj.innerHTML = minutesToTime(totalHours + getHiddenScheduledTotal());
 	}
 	
 	var targetObj = getObjectByID('projection_target_total');
@@ -693,7 +702,7 @@ function wsUpdateProjectionTotals() {
 		totalHours += getObjectValueAsTimeInMinutes('scheduleWeeklyTotal_' + i, '00:00');
 	}
 	
-	setObjectByIDValue('projection_schedule_total', minutesToTime(totalHours));
+	setObjectByIDValue('projection_schedule_total', minutesToTime(totalHours + getHiddenScheduledTotal()));
 
 	target = getObjectValueAsTimeInMinutes('projection_target_total', '00:00');
 

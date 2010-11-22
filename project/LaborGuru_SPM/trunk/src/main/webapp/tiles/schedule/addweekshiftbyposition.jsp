@@ -12,6 +12,7 @@
 	<s:hidden id="selectedDate" name="selectedDate"/>
 	<s:hidden id="selectedWeekDay" name="selectedWeekDay"/>
 	<s:hidden id="weeklyVolume" name="weeklyVolume"/>
+	<s:hidden id="hiddenTotalScheduledInMinutes" name="hiddenTotalScheduledInMinutes"/>
 	
 	<table border="0" cellspacing="0" align="center">
 		<tr>
@@ -99,7 +100,7 @@
 								</tr>
 								
 								<!--  For each position -->
-								<s:iterator value="positions" id="pos">
+								<s:iterator value="selectedPositions" id="pos">
 								<tr>
 									<td class="windowTableValue"><s:property value="name"/></td>
 									<td class="windowTableValue" id="<s:property value="id"/>_position_schedule_total">&nbsp;</td>
