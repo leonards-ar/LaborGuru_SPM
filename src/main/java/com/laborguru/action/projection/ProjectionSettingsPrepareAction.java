@@ -2,6 +2,7 @@ package com.laborguru.action.projection;
 
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
+import com.laborguru.model.StoreVariableDefinition;
 import com.laborguru.service.store.StoreService;
 import com.opensymphony.xwork2.Preparable;
 
@@ -18,6 +19,7 @@ public class ProjectionSettingsPrepareAction extends SpmAction implements Prepar
 	
 	private Integer dailyWeeksUsedDefault;
 	private Integer halfHourWeeksUsedDefault;
+	private Double averageVariable;
 	
 	private StoreService storeService;
 
@@ -28,9 +30,19 @@ public class ProjectionSettingsPrepareAction extends SpmAction implements Prepar
 	 */
 	public void prepareEdit() {
 		setDailyWeeksUsedDefault(this.getEmployeeStore().getDailyProjectionsWeeksDefault());
-		setHalfHourWeeksUsedDefault(this.getEmployeeStore().getHalfHourProjectionsWeeksDefault());		
+		setHalfHourWeeksUsedDefault(this.getEmployeeStore().getHalfHourProjectionsWeeksDefault());
+		setAverageVariable(this.getEmployeeStore().getAverageVariable());
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public String getMainVariableName() {
+		StoreVariableDefinition varDef = this.getEmployeeStore().getMainVariableDefinition();
+		return varDef != null ? varDef.getName() : "";
+	}
+	
 	/**
 	 * Prepare data to be used in the actions methods defined for this action
 	 * 
@@ -62,6 +74,7 @@ public class ProjectionSettingsPrepareAction extends SpmAction implements Prepar
 		
 		getEmployeeStore().setDailyProjectionsWeeksDefault(getDailyWeeksUsedDefault());
 		getEmployeeStore().setHalfHourProjectionsWeeksDefault(getHalfHourWeeksUsedDefault());
+		getEmployeeStore().setAverageVariable(getAverageVariable());
 		
 		storeService.save(getEmployeeStore());
 		
@@ -108,5 +121,19 @@ public class ProjectionSettingsPrepareAction extends SpmAction implements Prepar
 	 */
 	public void setStoreService(StoreService storeService) {
 		this.storeService = storeService;
+	}
+
+	/**
+	 * @return the averageVariable
+	 */
+	public Double getAverageVariable() {
+		return averageVariable;
+	}
+
+	/**
+	 * @param averageVariable the averageVariable to set
+	 */
+	public void setAverageVariable(Double averageVariable) {
+		this.averageVariable = averageVariable;
 	}
 }
