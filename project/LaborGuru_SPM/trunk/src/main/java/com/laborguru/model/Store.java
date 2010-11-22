@@ -29,7 +29,8 @@ public class Store extends SpmObject {
 	private Area area;
 	private Integer dailyProjectionsWeeksDefault;
 	private Integer halfHourProjectionsWeeksDefault;
-
+	private Double averageVariable;
+	
 	private Date creationDate;
 	private Date lastUpdateDate;
 	
@@ -863,5 +864,21 @@ public class Store extends SpmObject {
 	 */
 	public void setDistributionType(String projectionType) {
 		this.distributionType = Enum.valueOf(DistributionType.class, projectionType);
+	}
+
+
+	/**
+	 * @return the averageVariable
+	 */
+	public Double getAverageVariable() {
+		return averageVariable;
+	}
+
+
+	/**
+	 * @param averageVariable the averageVariable to set
+	 */
+	public void setAverageVariable(Double averageVariable) {
+		this.averageVariable = averageVariable;
 	}	
 }

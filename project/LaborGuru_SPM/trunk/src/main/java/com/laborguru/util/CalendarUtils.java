@@ -72,9 +72,13 @@ public class CalendarUtils {
 	 * @return
 	 */
 	public static Date addOrSubstractHours(Date d, int hoursToAddOrSubstract) {
-		Calendar cal = CalendarUtils.getCalendar(d);
-		cal.add(Calendar.HOUR_OF_DAY, hoursToAddOrSubstract);
-		return cal.getTime();		
+		if(d != null) {
+			Calendar cal = CalendarUtils.getCalendar(d);
+			cal.add(Calendar.HOUR_OF_DAY, hoursToAddOrSubstract);
+			return cal.getTime();		
+		} else {
+			return null;
+		}
 	}
 
 	/**

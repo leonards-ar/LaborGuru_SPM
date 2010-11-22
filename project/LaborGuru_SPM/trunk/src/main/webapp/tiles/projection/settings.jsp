@@ -35,8 +35,13 @@
 		                    <td align="right" class="form_label" nowrap><s:text name="projections.settings.halfHourWeeksUsedDefault.label" /></td>
 		                    <td  align="left" class="value"><s:textfield name="halfHourWeeksUsedDefault" size="10" theme="simple"/></td>
 		                </tr>
+
+			            <tr class="editFormEvenRow">
+		                    <td align="right" class="form_label" nowrap><s:text name="projections.settings.averageVariable.label"><s:param value="mainVariableName"/></s:text></td>
+		                    <td align="left" class="value"><s:textfield name="averageVariable" size="10" theme="simple"/></td>
+		                </tr>
  
-		 		       	<tr class="editFormEvenRow">
+		 		       	<tr class="editFormOddRow">
 		                    <td width="100%" align="right" colspan="2">
 			                    <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
 				                    <tr>

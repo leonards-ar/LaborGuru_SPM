@@ -1,0 +1,1 @@
+alter table tbl_stores add average_variable double DEFAULT 0.0;

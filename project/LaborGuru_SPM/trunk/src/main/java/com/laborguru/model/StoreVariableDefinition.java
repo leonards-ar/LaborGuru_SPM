@@ -5,6 +5,8 @@
  */
 package com.laborguru.model;
 
+import java.util.StringTokenizer;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -145,5 +147,26 @@ public class StoreVariableDefinition extends SpmObject {
 	 */
 	public Integer getVariablePosition() {
 		return getVariableIndex() != null ? new Integer(getVariableIndex().intValue() + 1) : null;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getVariableInitials() {
+		if(getName() != null) {
+			StringTokenizer st = new StringTokenizer(getName());
+			StringBuffer initials = new StringBuffer();
+			String token;
+			while(st.hasMoreTokens()) {
+				token = st.nextToken();
+				if(token != null && token.trim().length() > 0) {
+					initials.append(token.trim().charAt(0));
+				}
+			}
+			return initials.toString().toUpperCase();
+		} else {
+			return null;
+		}
 	}
 }

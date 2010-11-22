@@ -21,7 +21,8 @@
 		
 		<property name="dailyProjectionsWeeksDefault" column="daily_projections_weeks_default" type="int"/>
 		<property name="halfHourProjectionsWeeksDefault" column="half_hour_projections_weeks_default" type="int"/>
-
+		<property name="averageVariable" column="average_variable" type="double"/>
+		
 	    <property name="allPositionsUtilization" type="double">
 			<column name="all_pos_utilization" not-null="false" default="90.00" />
 		</property>
