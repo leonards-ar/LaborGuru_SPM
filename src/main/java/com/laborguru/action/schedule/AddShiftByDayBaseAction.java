@@ -32,6 +32,7 @@ import com.laborguru.model.StoreDailyStaffing;
 import com.laborguru.model.StoreSchedule;
 import com.laborguru.service.schedule.ShiftService;
 import com.laborguru.util.CalendarUtils;
+import com.laborguru.util.NumberUtils;
 import com.laborguru.util.SpmConstants;
 
 /**
@@ -49,6 +50,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	private StoreSchedule storeSchedule;
 	private List<StoreDailyStaffing> dailyStaffings = null;
 	private BigDecimal dailyVolume;
+	
 	
 	private ShiftService shiftService;
 	
@@ -365,6 +367,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 		if(getStoreSchedule() != null) {
 			List<ScheduleRow> schedule = new ArrayList<ScheduleRow>();
 			ScheduleRow aRow = null;
+			double hiddenTotalScheduled = 0.0D;
 			
 			for(EmployeeSchedule employeeSchedule : getStoreSchedule().getEmployeeSchedules()) {
 				boolean isFirst = true;
@@ -376,10 +379,16 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 							if(aRow != null) {
 								schedule.add(aRow);
 							}
+						} else if(!shift.isBreak() && position != null) {
+							// Total shift hours that are not shown, but should be taken into account
+							// for totals
+							hiddenTotalScheduled += NumberUtils.getDoubleValue(shift.getTotalShiftHours());
 						}
 					}
 				}
 			}
+			setHiddenTotalScheduled(hiddenTotalScheduled);
+			
 			// Sort schedule
 			sortScheduleRows(schedule);
 			return schedule;

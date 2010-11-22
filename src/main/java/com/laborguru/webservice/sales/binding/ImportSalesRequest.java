@@ -14,7 +14,6 @@ import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.HistoricSales;
 import com.laborguru.model.Store;
-import com.laborguru.model.UploadFile;
 import com.laborguru.model.filter.SearchStoreFilter;
 import com.laborguru.service.store.StoreService;
 import com.laborguru.util.CalendarUtils;

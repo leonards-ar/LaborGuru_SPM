@@ -57,6 +57,9 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 	private List<Employee> employees;
 	
 	private Position position;
+	private List<Position> selectedPositions = new ArrayList<Position>();
+	
+	private Double hiddenTotalScheduled;
 	
 	/**
 	 * 
@@ -376,4 +379,54 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 		this.employees = employees;
 	}
 
+	/**
+	 * @return the hiddenTotalScheduled
+	 */
+	protected Double getHiddenTotalScheduled() {
+		return hiddenTotalScheduled;
+	}
+
+	/**
+	 * @param hiddenTotalScheduled the hiddenTotalScheduled to set
+	 */
+	protected void setHiddenTotalScheduled(Double hiddenTotalScheduled) {
+		this.hiddenTotalScheduled = hiddenTotalScheduled;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Integer getHiddenTotalScheduledInMinutes() {
+		return CalendarUtils.hoursToMinutes(getHiddenTotalScheduled());
+	}
+	
+	/**
+	 * 
+	 * @param hiddenTotalScheduledInMinutes
+	 */
+	public void setHiddenTotalScheduledInMinutes(Integer hiddenTotalScheduledInMinutes) {
+		
+	}
+
+	/**
+	 * @return the selectedPositions
+	 */
+	public List<Position> getSelectedPositions() {
+		selectedPositions.clear();
+		Position pos = getPosition();
+		if(pos != null) {
+			selectedPositions.add(pos);
+		} else {
+			selectedPositions.addAll(getPositions());
+		}
+		return selectedPositions;
+	}
+
+	/**
+	 * @param selectedPositions the selectedPositions to set
+	 */
+	public void setSelectedPositions(List<Position> selectedPositions) {
+		this.selectedPositions = selectedPositions;
+	}
 }

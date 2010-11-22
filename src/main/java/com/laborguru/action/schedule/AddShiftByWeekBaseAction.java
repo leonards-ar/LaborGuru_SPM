@@ -106,6 +106,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		int size = getStoreSchedules().size();
 		StoreSchedule aSchedule;
 		WeeklyScheduleRow aRow;
+		double hiddenTotalScheduled = 0.0D;
 		
 		for(int i = 0; i < size; i++) {
 			aSchedule = getStoreSchedules().get(i);
@@ -119,11 +120,16 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 								getWeeklyScheduleData().addScheduleRow(getGroupById(employeeSchedule.getEmployee(), shift), aRow);
 							}
 							buildScheduleDataFor(aRow, employeeSchedule, shift, i);
+						} else if(!shift.isBreak() && position != null) {
+							// Total shift hours that are not shown, but should be taken into account
+							// for totals
+							hiddenTotalScheduled += NumberUtils.getDoubleValue(shift.getTotalShiftHours());
 						}
 					}
 				}
 			}			
 		}
+		setHiddenTotalScheduled(hiddenTotalScheduled);
 	}
 	
 	/**
