@@ -310,6 +310,7 @@ public class StorePrepareAction extends SpmAction implements Preparable {
 		getStoreToSave().setName(getStore().getName());
 		getStoreToSave().setCode(getStore().getCode());
 		getStoreToSave().setArea(getStoreArea());
+		getStoreToSave().setDemo(getStore().isDemo());
 		
 		storeService.save(getStoreToSave());
 

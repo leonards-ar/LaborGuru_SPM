@@ -14,14 +14,16 @@ import com.laborguru.model.User;
 import com.laborguru.model.UserStatus;
 import com.laborguru.model.filter.SearchEmployeeFilter;
 import com.laborguru.service.employee.dao.EmployeeDao;
+import com.laborguru.service.store.dao.StoreDao;
 import com.laborguru.service.user.dao.UserDao;
 
 public class EmployeeServiceBean implements EmployeeService {
 
 	private static final Logger log = Logger.getLogger(EmployeeServiceBean.class);
 	
-	EmployeeDao employeeDao;
-	UserDao userDao;
+	private EmployeeDao employeeDao;
+	private StoreDao storeDao;
+	private UserDao userDao;
 	
 	/* (non-Javadoc)
 	 * @see com.laborguru.service.employee.EmployeeService#delete(com.laborguru.model.Employee)
@@ -94,7 +96,12 @@ public class EmployeeServiceBean implements EmployeeService {
 			log.error(exMgs);
 			throw new SpmCheckedException(exMgs, ErrorEnum.USERNAME_ALREADY_EXIST_ERROR, new String[]{employee.getUserName()});
 		}
+		
+		createIfTransientStore(employee);
+
 		employee.setCreationDate(new Date());
+		employee.setLastUpdateDate(new Date());
+
 		return  employeeDao.save(employee);
 	}
 
@@ -116,11 +123,27 @@ public class EmployeeServiceBean implements EmployeeService {
 		
 		//Evicting the user
 		userDao.evict(auxUser);
-		
+
+		createIfTransientStore(employee);
+
 		employee.setLastUpdateDate(new Date());
+
 		return employeeDao.save(employee);
 	}
 
+	/**
+	 * 
+	 * @param employee
+	 * @return
+	 */
+	private void createIfTransientStore(Employee employee) throws SpmCheckedException {
+		Store store = employee.getStore();
+		if(store != null && (store.getId() == null || store.getId().intValue() <= 0)) {
+			log.info("Employee [" + employee + "] has transient store. Store will be created");
+			employee.setStore(getStoreDao().save(store));
+		}
+	}
+	
 	/**
 	 * @return the employeeDao
 	 */
@@ -189,5 +212,21 @@ public class EmployeeServiceBean implements EmployeeService {
 		employee.setUserStatus(UserStatus.DELETED);
 		employee.setUserName(employee.getUserName() + "_" + employee.getId());
 		save(employee);
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public StoreDao getStoreDao() {
+		return storeDao;
+	}
+
+	/**
+	 * 
+	 * @param storeDao
+	 */
+	public void setStoreDao(StoreDao storeDao) {
+		this.storeDao = storeDao;
 	}
 }

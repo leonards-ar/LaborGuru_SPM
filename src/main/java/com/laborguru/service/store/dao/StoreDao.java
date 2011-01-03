@@ -67,4 +67,9 @@ public interface StoreDao {
 	 */
 	List<Store> findNStores(Integer n, OrderFindN order);
 
+	/**
+	 * Retrieves all Demo Stores
+	 * @return
+	 */
+	List<Store> findAllDemo();	
 }

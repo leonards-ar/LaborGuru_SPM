@@ -40,8 +40,18 @@
                     <td align="right" class="form_label" nowrap><s:text name="store.area.label" /></td>
                     <td align="left" class="value"><s:property value="store.area.name"/></td>
 				</tr>				
-
               	<tr class="editFormOddRow">
+                    <td align="right" class="form_label" nowrap><s:text name="store.isdemo.label" /></td>
+                    <td align="left" class="value">
+						<s:if test="%{store.demo}">
+							<img src="<s:url value="/images/check.png" includeParams="none"/>"/>
+						</s:if>
+						<s:else>
+							<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>
+						</s:else>                    
+                    </td>
+				</tr>
+              	<tr class="editFormEvenRow">
                     <td width="100%" align="right" colspan="2">
 	                    <s:form theme="simple"> 
 	                    <s:hidden name="store.id"/>

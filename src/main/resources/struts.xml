@@ -81,4 +81,5 @@
 	<include file="action/report.xml"/>	
 	<include file="action/actualhours.xml"/>
 	<include file="action/util.xml"/>
+	<include file="action/demo.xml"/>
 </struts>

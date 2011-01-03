@@ -77,15 +77,17 @@ public class OperationTimePrepareAction extends StoreAdministrationBaseAction {
 				if(getStore().getOperationTimes().size() > i && getStore().getOperationTimes().get(i) != null) {
 					// Already exists
 					anOperationTime = getStore().getOperationTimes().get(i);
+					anOperationTime.setOpenHour(displayTimeToDate(weekOperationTimeOpen[i]));
+					anOperationTime.setCloseHour(displayTimeToDate(weekOperationTimeClose[i]));
 				} else {
 					// New Operation time for the current day of week
 					anOperationTime = new OperationTime();
 					anOperationTime.setStore(getStore());
 					anOperationTime.setDayOfWeek(DayOfWeek.values()[i]);
+					anOperationTime.setOpenHour(displayTimeToDate(weekOperationTimeOpen[i]));
+					anOperationTime.setCloseHour(displayTimeToDate(weekOperationTimeClose[i]));
+					getStore().getOperationTimes().add(anOperationTime);
 				}
-				anOperationTime.setOpenHour(displayTimeToDate(weekOperationTimeOpen[i]));
-				anOperationTime.setCloseHour(displayTimeToDate(weekOperationTimeClose[i]));
-				getStore().getOperationTimes().add(anOperationTime);
 			}
 		}
 	}

@@ -448,5 +448,31 @@
 	<!-- Actual hours upload pages -->
 	<definition name="actualHoursUploadPage" extends="baseLayoutWithMenu">
 		<put-attribute name="body" value="/tiles/actualhours/actualHoursUpload.jsp" />
-	</definition>		
+	</definition>	
+	
+	<!-- Demo Wizard pages -->
+	<definition name="demoWizardStep1Page" extends="baseLayout">
+		<put-attribute name="body" value="/tiles/demo/step1.jsp" />
+	</definition>	
+	<definition name="demoWizardStep2Page" extends="baseLayout">
+		<put-attribute name="body" value="/tiles/demo/step2.jsp" />
+	</definition>	
+	<definition name="demoWizardStep3Page" extends="baseLayout">
+		<put-attribute name="body" value="/tiles/demo/step3.jsp" />
+	</definition>	
+	<definition name="demoWizardStep4Page" extends="baseLayout">
+		<put-attribute name="body" value="/tiles/demo/step4.jsp" />
+	</definition>	
+	<definition name="demoWizardStep5Page" extends="baseLayout">
+		<put-attribute name="body" value="/tiles/demo/step5.jsp" />
+	</definition>	
+	<definition name="demoWizardStep6Page" extends="baseLayout">
+		<put-attribute name="body" value="/tiles/demo/step6.jsp" />
+	</definition>	
+	<definition name="demoWizardStep7Page" extends="baseLayout">
+		<put-attribute name="body" value="/tiles/demo/step7.jsp" />
+	</definition>	
+	<definition name="demoWizardStep8Page" extends="baseLayout">
+		<put-attribute name="body" value="/tiles/demo/step8.jsp" />
+	</definition>	
 </tiles-definitions>

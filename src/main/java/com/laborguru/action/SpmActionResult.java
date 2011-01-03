@@ -22,8 +22,17 @@ public enum SpmActionResult {
 	SUCCESS("success"),
 	CANCEL_EDIT("cancelEdit"),
 	CANCEL_SHOW("cancelShow"),
-	CANCEL("cancel");
-	
+	CANCEL("cancel"),
+	RESTART("restart"),
+	STEP_1("step1"),
+	STEP_2("step2"),
+	STEP_3("step3"),
+	STEP_4("step4"),
+	STEP_5("step5"),
+	STEP_6("step6"),
+	STEP_7("step7"),
+	STEP_8("step8");
+
 	private String result;
 	
 	private SpmActionResult(String result){

@@ -18,6 +18,7 @@
 		<property name="firstDayOfWeekAsInteger" column="first_day_of_week" type="int"/>
 		<property name="creationDate" column="creation_date" type="timestamp"/>
 		<property name="lastUpdateDate" column="last_update_date" type="timestamp"/>
+		<property name="demo" column="demo" type="boolean"/>
 		
 		<property name="dailyProjectionsWeeksDefault" column="daily_projections_weeks_default" type="int"/>
 		<property name="halfHourProjectionsWeeksDefault" column="half_hour_projections_weeks_default" type="int"/>

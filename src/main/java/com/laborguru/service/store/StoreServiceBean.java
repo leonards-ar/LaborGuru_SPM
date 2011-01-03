@@ -158,4 +158,12 @@ public class StoreServiceBean implements StoreService {
 		return storeDao.getNumberOfStores();
 	}
 
+	/**
+	 * Retrieves all demo stores
+	 * @return demo stores
+	 * @see com.laborguru.service.store.StoreService#findAllDemo()
+	 */
+	public List<Store> findAllDemo() {
+		return storeDao.findAllDemo();
+	}
 }
