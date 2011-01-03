@@ -141,6 +141,15 @@ public class StoreDaoHibernate extends SpmHibernateDao implements StoreDao {
 	}
 
 	/**
+	 * @return
+	 * @see com.laborguru.service.store.dao.StoreDao#findAllDemo()
+	 */
+	public List<Store> findAllDemo() {
+		// Check Hibernate property hibernate.query.substitutions for "TRUE" sustitution
+		return (List<Store>) getHibernateTemplate().find("from Store where demo = true");
+	}
+	
+	/**
 	 * Retrieves the number of stores
 	 * @return the number of stores in the system.
 	 * @see com.laborguru.service.store.dao.StoreDao#getNumberOfStores()

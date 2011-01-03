@@ -14,6 +14,11 @@
 			document.login.submit();
 		}
 	}
+	
+	function createDemoAccount() {
+		document.login.action = '<s:url namespace="/demo" action="demowizard_step1" includeParams="none"/>';
+		document.login.submit();
+	}
 </script>
 
 <br/>
@@ -70,6 +75,9 @@
 			</tr>
 			<tr>
 				<td align="left" colspan="2"><a href="#" onClick="forgotPassword();" class="link"><s:text name="login.forgot_password.label"/></a></td>
+			</tr>
+			<tr>
+				<td align="left" colspan="2"><a href="#" onClick="createDemoAccount();" class="link"><s:text name="login.create_demo_account.label"/></a></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center">

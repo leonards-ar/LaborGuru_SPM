@@ -302,7 +302,7 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 	public void setPosition(Position position) {
 		this.position = position;
 	}
-	
+
 	/**
 	 * Compares two positions by their ID
 	 * @param pos1

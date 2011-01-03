@@ -105,7 +105,6 @@
 				/customer/regionaluser_show.action=VIEW_REGIONAL_CUSTOMER
 				/customer/regionaluser_edit.action=EDIT_REGIONAL_CUSTOMER
 				/customer/regionaluser_remove.action=REMOVE_REGIONAL_CUSTOMER
-
 				
 				/employee/employee_list.action=VIEW_EMPLOYEE,EDIT_EMPLOYEE,REMOVE_EMPLOYEE
 				/employee/employee_add.action=CREATE_EMPLOYEE
@@ -145,8 +144,11 @@
 				/user/user_edit.action=CREATE_USER
 				/user/user_remove.action=REMOVE_USER
 				
+				/demo/*=ROLE_ANONYMOUS,ROLE_USER
 				
 				/**=IS_AUTHENTICATED_ANONYMOUSLY
+				
+				
 			]]></value>
 		</property>
 	</bean>

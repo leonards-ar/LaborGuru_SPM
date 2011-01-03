@@ -1,7 +1,9 @@
 package com.laborguru.action;
 
+import java.util.Date;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
@@ -17,6 +19,8 @@ import com.laborguru.model.Region;
 import com.laborguru.model.RegionalUser;
 import com.laborguru.model.Store;
 import com.laborguru.model.User;
+import com.laborguru.util.CalendarUtils;
+import com.laborguru.util.SpmConstants;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
@@ -29,6 +33,8 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 @SuppressWarnings("serial")
 public class SpmAction extends ActionSupport implements SessionAware,RequestAware{
+	private static Logger log = Logger.getLogger(SpmAction.class);
+	
 	private Map session;
 	private Map request;
 
@@ -148,4 +154,34 @@ public class SpmAction extends ActionSupport implements SessionAware,RequestAwar
 		this.request = request;
 	}   
 	
+	/**
+	 * 
+	 * @param d
+	 * @return
+	 */
+	protected String dateToDisplayTime(Date d) {
+		if(d != null) {
+			return SpmConstants.TIME_FORMAT.format(d);
+		} else {
+			return null;
+		}
+	}	
+	
+	/**
+	 * 
+	 * @param time
+	 * @return
+	 */
+	protected Date displayTimeToDate(String time) {
+		try {
+			if(time != null) {
+				return CalendarUtils.inputTimeToDate(time);
+			} else {
+				return null;
+			}
+		} catch (Exception ex) {
+			log.error("Cannot parse time [" + time + "]", ex);
+			return null;
+		}
+	}	
 }

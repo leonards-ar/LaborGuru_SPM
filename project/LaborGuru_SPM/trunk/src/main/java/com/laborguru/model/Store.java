@@ -51,6 +51,8 @@ public class Store extends SpmObject {
 	private List<StoreVariableDefinition> variableDefinitions;
 	private DistributionType distributionType;
 	
+	private boolean demo;
+	
 	/**
 	 * Store toString
 	 * @return string version of the object 
@@ -117,6 +119,14 @@ public class Store extends SpmObject {
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public PositionGroup getFirstPositionGroup() {
+		return getPositionGroups().size() > 0 ? getPositionGroups().iterator().next() : null;
 	}
 	
 	/**
@@ -212,7 +222,7 @@ public class Store extends SpmObject {
 	 * DO NOT MAKE IT PUBLIC
 	 * @param childMenuItems
 	 */
-	private void setPositions(List<Position> positions) {
+	public void setPositions(List<Position> positions) {
 		this.positions = positions;
 	}
 	
@@ -880,5 +890,15 @@ public class Store extends SpmObject {
 	 */
 	public void setAverageVariable(Double averageVariable) {
 		this.averageVariable = averageVariable;
+	}
+
+
+	public boolean isDemo() {
+		return demo;
+	}
+
+
+	public void setDemo(boolean demo) {
+		this.demo = demo;
 	}	
 }

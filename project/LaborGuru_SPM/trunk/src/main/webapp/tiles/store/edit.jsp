@@ -53,8 +53,12 @@
               	<tr class="editFormEvenRow">
                     <td align="right" class="form_label" nowrap>* <s:text name="store.area.label" /></td>
                     <td align="left" class="value"><s:select name="storeArea.id" list="areas" listKey="id" listValue="name" headerKey="" headerValue="%{getText('store.area.header.label')}" theme="simple"/></td>
-				</tr>		                       
+				</tr>
               	<tr class="editFormOddRow">
+                    <td align="right" class="form_label" nowrap><s:text name="store.isdemo.label" /></td>
+                    <td align="left" class="value"><s:checkbox name="store.demo" theme="simple"/></td>
+				</tr>					
+              	<tr class="editFormEvenRow">
                     <td width="100%" align="right" colspan="2">
 	                    <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
 		                    <tr>

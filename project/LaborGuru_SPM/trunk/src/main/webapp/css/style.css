@@ -355,6 +355,13 @@ table.results th a {
 	font-family: trebuchet ms, arial, sans-serif;
 }
 
+.wizardMessage {
+	color: #236A0D;
+	font-size: 11px;
+	font-weight: bold;
+	font-family: arial, trebuchet ms, sans-serif;	
+}
+
 .waitMessage {
 	font-style: normal;
 	font-weight: bold;

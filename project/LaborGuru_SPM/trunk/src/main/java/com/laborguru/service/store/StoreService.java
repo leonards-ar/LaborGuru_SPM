@@ -71,4 +71,11 @@ public interface StoreService extends Service {
 	 * @return the number of stores in the system.
 	 */
 	Integer getNumberOfStores();
+	
+	/**
+	 * Retrieves all Demo Stores
+	 * @return
+	 */
+	List<Store> findAllDemo();
+	
 }
