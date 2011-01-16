@@ -77,9 +77,6 @@
 				<td align="left" colspan="2"><a href="#" onClick="forgotPassword();" class="link"><s:text name="login.forgot_password.label"/></a></td>
 			</tr>
 			<tr>
-				<td align="left" colspan="2"><a href="#" onClick="createDemoAccount();" class="link"><s:text name="login.create_demo_account.label"/></a></td>
-			</tr>
-			<tr>
 				<td colspan="2" align="center">
 					<table border="0" align="center" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 						<tr>
