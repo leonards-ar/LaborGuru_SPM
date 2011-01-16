@@ -41,6 +41,17 @@
 							<tr>
 								<td align="right" class="headerTopMessage"><a class="logoutLink" href="<s:url namespace="/login" action="logout"  includeParams="none"/>"><s:text name="logout.label"/></a></td>
 							</tr>
+							<tr>
+								<td align="right" class="headerTopMessage">
+									<table border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td><a href="<s:url><s:param name="request_locale" value="%{'en'}" /></s:url>"><img height="18px" src="<s:url value="/images/english.gif" includeParams="none"/>"/></a></td>
+										<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+										<td><a href="<s:url><s:param name="request_locale" value="%{'es'}" /></s:url>"><img height="18px" src="<s:url value="/images/spanish.gif" includeParams="none"/>"/></a></td>
+									</tr>
+									</table>
+								</td>
+							</tr>
 						</table>
 					</td>
 				</tr>

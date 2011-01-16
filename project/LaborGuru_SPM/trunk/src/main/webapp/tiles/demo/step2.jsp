@@ -36,7 +36,7 @@
               
               <tr>                            
               <td align="center">              
-              <s:form name="demowizard_form" id="demowizard_form" action="demowizard_step3" theme="simple">
+              <s:form name="demowizard_form" id="demowizard_form" action="stepThree_execute" theme="simple">
               <s:hidden name="sourceDemoStoreId" theme="simple"/>
               <s:hidden name="actionButton" theme="simple"/>
               <table id="editFormTable" border="0" cellpadding="6" cellspacing="0" colspan="0" cellspan="0" align="center">
@@ -68,9 +68,9 @@
                     <td width="100%" align="right" colspan="2">
 	                    <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
 		                    <tr>
-		                    	<td><s:submit name="backButton" id="backButton" key="back.button" action="demowizard_step1" theme="simple" cssClass="button" onclick="demowizard_form.actionButton.value='back'; return displayMessage();"/></td>
+		                    	<td><s:submit name="backButton" id="backButton" key="back.button" action="stepOne_execute" theme="simple" cssClass="button" onclick="demowizard_form.actionButton.value='back'; return displayMessage();"/></td>
 		                		<td><s:submit name="nextButton" id="nextButton" key="next.button" theme="simple" cssClass="button" onclick="demowizard_form.actionButton.value='next';"/></td>
-		                    	<td><s:submit name="cancelButton" id="cancelButton" key="cancel.button" action="demowizard_cancel" theme="simple" cssClass="button" onclick="demowizard_form.actionButton.value='cancel';"/></td>		                    
+		                    	<td><s:submit name="cancelButton" id="cancelButton" key="cancel.button" action="stepTwo_cancel" theme="simple" cssClass="button" onclick="demowizard_form.actionButton.value='cancel';"/></td>		                    
 		                    </tr>
 	                    </table>                    
                     </td>

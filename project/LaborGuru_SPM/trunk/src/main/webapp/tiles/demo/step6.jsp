@@ -28,7 +28,7 @@
               
               <tr>                            
               <td align="center">              
-              <s:form name="demowizard_form" id="demowizard_form" action="demowizard_step7" theme="simple">
+              <s:form name="demowizard_form" id="demowizard_form" action="stepSeven_execute" theme="simple">
               <s:hidden name="sourceDemoStoreId" theme="simple"/>
               <s:hidden name="index" theme="simple"/>
               <s:hidden name="actionButton" theme="simple"/>
@@ -49,10 +49,10 @@
 						<s:if test="#itPosition.index != 0">
 							<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 								<tr>
-									<td width="16px"><a href="#" onclick="demowizard_form.action='demowizard_positionOneUp.action'; demowizard_form.index.value='<s:property value='#itPosition.index'/>'; demowizard_form.submit();"><img src="<s:url value="/images/up.png" includeParams="none"/>"/></a></td>
+									<td width="16px"><a href="#" onclick="demowizard_form.action='stepSix_positionOneUp.action'; demowizard_form.index.value='<s:property value='#itPosition.index'/>'; demowizard_form.submit();"><img src="<s:url value="/images/up.png" includeParams="none"/>"/></a></td>
 									<td width="16px">
 									<s:if test="#itPosition.last == false">
-									<a href="#" onclick="demowizard_form.action='demowizard_positionOneDown.action'; demowizard_form.index.value='<s:property value='#itPosition.index'/>'; demowizard_form.submit();"><img src="<s:url value="/images/down.png" includeParams="none"/>"/></a>
+									<a href="#" onclick="demowizard_form.action='stepSix_positionOneDown.action'; demowizard_form.index.value='<s:property value='#itPosition.index'/>'; demowizard_form.submit();"><img src="<s:url value="/images/down.png" includeParams="none"/>"/></a>
 									</s:if>
 									<s:else>
 									&nbsp;
@@ -76,7 +76,7 @@
 							<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 								<tr>
 									<td>
-										<a href="<s:url value="#" includeParams="none"/>" onclick="demowizard_form.action='demowizard_removePosition.action', demowizard_form.index.value='<s:property value='#itPosition.index'/>'; demowizard_form.submit();"><img
+										<a href="<s:url value="#" includeParams="none"/>" onclick="demowizard_form.action='stepSix_removePosition.action', demowizard_form.index.value='<s:property value='#itPosition.index'/>'; demowizard_form.submit();"><img
 										src="<s:url value="/images/delete.png" includeParams="none"/>" /></a>
 									</td>
 								</tr>
@@ -95,7 +95,7 @@
 							<table border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 								<tr>
 									<td>
-										<a href="<s:url value="#" includeParams="none"/>" onclick="demowizard_form.action='demowizard_addPosition.action'; demowizard_form.submit();"><img
+										<a href="<s:url value="#" includeParams="none"/>" onclick="demowizard_form.action='stepSix_addPosition.action'; demowizard_form.submit();"><img
 										src="<s:url value="/images/add.png" includeParams="none"/>" /></a>
 									</td>
 								</tr>
@@ -107,9 +107,9 @@
                     <td width="100%" align="right" colspan="5">
 	                    <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
 		                    <tr>
-		                    	<td><s:submit name="backButton" id="backButton" key="back.button" action="demowizard_step5" theme="simple" cssClass="button" onclick="demowizard_form.actionButton.value='back';"/></td>
+		                    	<td><s:submit name="backButton" id="backButton" key="back.button" action="stepFive_execute" theme="simple" cssClass="button" onclick="demowizard_form.actionButton.value='back';"/></td>
 		                		<td><s:submit name="nextButton" id="nextButton" key="next.button" theme="simple" cssClass="button" onclick="demowizard_form.actionButton.value='next';"/></td>
-		                    	<td><s:submit name="cancelButton" id="cancelButton" key="cancel.button" action="demowizard_cancel" theme="simple" cssClass="button" onclick="demowizard_form.actionButton.value='cancel';"/></td>		                    
+		                    	<td><s:submit name="cancelButton" id="cancelButton" key="cancel.button" action="stepSix_cancel" theme="simple" cssClass="button" onclick="demowizard_form.actionButton.value='cancel';"/></td>		                    
 		                    </tr>
 	                    </table>                    
                     </td>

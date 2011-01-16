@@ -16,7 +16,7 @@
 	}
 	
 	function createDemoAccount() {
-		document.login.action = '<s:url namespace="/demo" action="demowizard_step1" includeParams="none"/>';
+		document.login.action = '<s:url namespace="/demo" action="stepOne_execute" includeParams="none"/>';
 		document.login.submit();
 	}
 </script>

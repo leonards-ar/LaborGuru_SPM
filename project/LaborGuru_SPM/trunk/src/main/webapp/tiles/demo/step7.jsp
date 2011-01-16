@@ -28,7 +28,7 @@
               
               <tr>                            
               <td align="center">              
-              <s:form name="demowizard_form" id="demowizard_form" action="demowizard_step8" theme="simple">
+              <s:form name="demowizard_form" id="demowizard_form" action="stepEight_execute" theme="simple">
               <s:hidden name="sourceDemoStoreId" theme="simple"/>
               <s:hidden name="actionButton" theme="simple"/>
 
@@ -88,9 +88,9 @@
                     <td width="100%" align="right" colspan="4">
 	                    <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
 		                    <tr>
-		                    	<td><s:submit name="backButton" id="backButton" key="back.button" action="demowizard_step6" theme="simple" cssClass="button" onclick="demowizard_form.actionButton.value='back';"/></td>
+		                    	<td><s:submit name="backButton" id="backButton" key="back.button" action="stepSix_execute" theme="simple" cssClass="button" onclick="demowizard_form.actionButton.value='back';"/></td>
 		                		<td><s:submit name="saveButton" id="saveButton" key="save.button" theme="simple" cssClass="button" onclick="demowizard_form.actionButton.value='save';"/></td>
-		                    	<td><s:submit name="cancelButton" id="cancelButton" key="cancel.button" action="demowizard_cancel" theme="simple" cssClass="button" onclick="demowizard_form.actionButton.value='cancel';"/></td>		                    
+		                    	<td><s:submit name="cancelButton" id="cancelButton" key="cancel.button" action="stepSeven_cancel" theme="simple" cssClass="button" onclick="demowizard_form.actionButton.value='cancel';"/></td>		                    
 		                    </tr>
 	                    </table>                    
                     </td>

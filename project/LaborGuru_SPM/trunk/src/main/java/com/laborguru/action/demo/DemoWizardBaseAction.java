@@ -7,6 +7,7 @@ import org.apache.commons.lang.StringUtils;
 
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
+import com.laborguru.action.utils.CustomValidators;
 import com.laborguru.exception.ErrorMessage;
 import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.DayOfWeek;
@@ -22,6 +23,7 @@ import com.laborguru.model.StoreVariableDefinition;
 import com.laborguru.service.data.ReferenceDataService;
 import com.laborguru.service.employee.EmployeeService;
 import com.laborguru.service.store.StoreService;
+import com.opensymphony.xwork2.Preparable;
 
 /**
  * This class deals with the Demo Store & User Creation Wizard
@@ -30,11 +32,11 @@ import com.laborguru.service.store.StoreService;
  * @since SPM 1.0
  *
  */
-public class DemoWizardPrepareAction extends SpmAction {
+public abstract class DemoWizardBaseAction extends SpmAction implements Preparable {
 	private static final long serialVersionUID = 1L;
 
-	private static final String STORE_SESSION_KEY = "_storeKey_";
-	private static final String EMPLOYEE_SESSION_KEY = "_employeeKey_";
+	protected static final String STORE_SESSION_KEY = "_storeKey_";
+	protected static final String EMPLOYEE_SESSION_KEY = "_employeeKey_";
 
 	private StoreService storeService;
 	private EmployeeService employeeService;
@@ -62,7 +64,8 @@ public class DemoWizardPrepareAction extends SpmAction {
 
 	private String storeName;
 	private String employeeUserName;
-	
+	private String passwordConfirmation;
+
 	/**
 	 * This property holds an empty position set by Spring containing
 	 * default values
@@ -119,151 +122,23 @@ public class DemoWizardPrepareAction extends SpmAction {
 	 * 
 	 * @return
 	 */
-	public String step1() {
-		getSession().remove(STORE_SESSION_KEY);
-		getSession().remove(EMPLOYEE_SESSION_KEY);
-		
-		if(getDemoStores() == null || getDemoStores().size() <= 0) {
-			addActionError(new ErrorMessage("error.demo.wizard.noDemoStore"));
-			return SpmActionResult.CANCEL.getResult();
-		} else if(getDemoStores().size() == 1) {
-			setSourceDemoStoreId(getDemoStores().get(0).getId());
-			// Start with new store
-			getSession().remove(STORE_SESSION_KEY);
-			getSession().remove(EMPLOYEE_SESSION_KEY);
-			copyStore();
-			
-			return SpmActionResult.STEP_2.getResult();
-		} else {
-			
-			return SpmActionResult.STEP_1.getResult();
-		}
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public String step2() {
-		if(getSourceDemoStore() == null) {
-			addActionError(new ErrorMessage("error.demo.wizard.noDemoStore"));
-			return SpmActionResult.CANCEL.getResult();
-		}
-		if(!isBackButton()) {
-			// Start with new store
-			getSession().remove(STORE_SESSION_KEY);
-			getSession().remove(EMPLOYEE_SESSION_KEY);
-			copyStore();
-		}
-		return SpmActionResult.STEP_2.getResult();
-	}
+	public abstract boolean validateSession();
 	
 	/**
 	 * 
-	 * @return
 	 */
-	public String step3() {
-		if(!isSessionValid()) {
-			copyStore();
-			return SpmActionResult.RESTART.getResult();
-		}
-		// If BACK from step 4
-		setOperationTimes();
-		return SpmActionResult.STEP_3.getResult();
-	}	
+	public abstract String executeStep() throws Exception;
 	
 	/**
 	 * 
-	 * @return
 	 */
-	public String step4() {
-		if(!isSessionValid()) {
-			copyStore();
-			return SpmActionResult.RESTART.getResult();
-		}
-		// If BACK from step 5
-		setVariableDefinitionNames();
-
-		loadOperationTimes();
-		return SpmActionResult.STEP_4.getResult();
-	}	
-
-	/**
-	 * 
-	 * @return
-	 */
-	public String step5() {
-		if(!isSessionValid()) {
-			copyStore();
-			return SpmActionResult.RESTART.getResult();
-		}
-		// If BACK from step 6
-		setPositions();
-		
-		loadVariableDefinitionNames();
-		return SpmActionResult.STEP_5.getResult();
-	}	
-
-	/**
-	 * 
-	 * @return
-	 */
-	public String step6() {
-		if(!isSessionValid()) {
+	public String execute() throws Exception {
+		if(validateSession() && !isSessionValid()) {
 			copyStore();
 			return SpmActionResult.RESTART.getResult();
 		}
 		
-		loadPositions();
-		
-		return SpmActionResult.STEP_6.getResult();
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public String step7() {
-		if(!isSessionValid()) {
-			copyStore();
-			return SpmActionResult.RESTART.getResult();
-		}
-		
-		setPositions();
-		setStatesList(getReferenceDataService().getStates("us"));
-		
-		return SpmActionResult.STEP_7.getResult();
-	}
-	
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public String step8() {
-		if(!isSessionValid()) {
-			copyStore();
-			return SpmActionResult.RESTART.getResult();
-		}
-		
-		try {
-			//:TODO: Save store & save employee should be a transaction!
-			Store store = getDemoStore(); //getStoreService().save(getDemoStore()); 
-			getEmployee().setStore(store);
-			getEmployeeService().save(getEmployee());
-			
-			setStoreName(store.getName());
-			setEmployeeUserName(getEmployee().getUserName());
-
-			getSession().remove(STORE_SESSION_KEY);
-			getSession().remove(EMPLOYEE_SESSION_KEY);
-			
-			return SpmActionResult.STEP_8.getResult();
-		} catch(SpmCheckedException ex) {
-			addActionError(ex.getErrorMessage());
-			setStatesList(getReferenceDataService().getStates("us"));
-			return SpmActionResult.STEP_7.getResult();
-		}
+		return executeStep();
 	}
 	
 	/**
@@ -283,62 +158,6 @@ public class DemoWizardPrepareAction extends SpmAction {
 		getSession().remove(EMPLOYEE_SESSION_KEY);
 		setSourceDemoStoreId(null);
 		return SpmActionResult.CANCEL.getResult();
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public String variableDefinitionOneUp() {
-		if(getVariableDefinitionNames() != null) {
-			int idx = getIndex() != null ? getIndex().intValue() : -1;
-			if(idx > 0 && idx < getVariableDefinitionNames().size()) {
-				String aux = getVariableDefinitionNames().get(idx-1);
-				getVariableDefinitionNames().set(idx-1, getVariableDefinitionNames().get(idx));
-				getVariableDefinitionNames().set(idx, aux);
-			}
-		}
-		return SpmActionResult.STEP_5.getResult();
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public String variableDefinitionOneDown() {
-		if(getVariableDefinitionNames() != null) {
-			int idx = getIndex() != null ? getIndex().intValue() : -1;
-			if(idx >= 0 && idx < getVariableDefinitionNames().size() - 1) {
-				String aux = getVariableDefinitionNames().get(idx+1);
-				getVariableDefinitionNames().set(idx+1, getVariableDefinitionNames().get(idx));
-				getVariableDefinitionNames().set(idx, aux);
-			}
-		}
-		return SpmActionResult.STEP_5.getResult();
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public String addVariableDefinition() {
-		if(!isMaximumVariableDefinitionsReached() && !StringUtils.isBlank(getNewVariableDefinitionName())) {
-			getVariableDefinitionNames().add(getNewVariableDefinitionName());
-		}
-		setNewVariableDefinitionName(null);
-		return SpmActionResult.STEP_5.getResult();
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public String removeVariableDefinition() {
-		int idx = getIndex() != null ? getIndex().intValue() : -1;
-		if(idx >= 0 && idx < getVariableDefinitionNames().size()) {
-			getVariableDefinitionNames().remove(idx);
-		}
-		return SpmActionResult.STEP_5.getResult();
 	}
 	
 	/**
@@ -422,7 +241,7 @@ public class DemoWizardPrepareAction extends SpmAction {
 	/**
 	 * Copies default values for source store to the new demo store
 	 */
-	private void copyStore() {
+	protected void copyStore() {
 		Store demoStore = getDemoStore();
 		Store sourceStore = getSourceDemoStore();
 		
@@ -539,7 +358,7 @@ public class DemoWizardPrepareAction extends SpmAction {
 	 * 
 	 * @param position
 	 */
-	private void buildDefaultPosition(Position position) {
+	protected void buildDefaultPosition(Position position) {
 		PositionGroup demoPosGrp = getDemoStore().getFirstPositionGroup();
 		
 		position.setGuestService(false);
@@ -587,7 +406,7 @@ public class DemoWizardPrepareAction extends SpmAction {
 	/**
 	 * 
 	 */
-	private void loadVariableDefinitionNames() {
+	protected void loadVariableDefinitionNames() {
 		setVariableDefinitionNames(null);
 		for(StoreVariableDefinition varDef : getDemoStore().getVariableDefinitions()) {
 			getVariableDefinitionNames().add(varDef.getName());
@@ -597,7 +416,7 @@ public class DemoWizardPrepareAction extends SpmAction {
 	/**
 	 * 
 	 */
-	private void setVariableDefinitionNames() {
+	protected void setVariableDefinitionNames() {
 		if(getVariableDefinitionNames() != null && getVariableDefinitionNames().size() > 0) {
 			getDemoStore().getVariableDefinitions().clear();
 			// Main Variable
@@ -624,8 +443,108 @@ public class DemoWizardPrepareAction extends SpmAction {
 	
 	/**
 	 * 
+	 * @return
 	 */
-	private void loadPositions() {
+	protected boolean validateVariableDefinitionNames() {
+		if(getVariableDefinitionNames() == null || getVariableDefinitionNames().size() < 1) {
+			addActionError("error.storevariabledefinitions.minimum.invalid");
+			return false;
+		}
+		
+		for(String name : getVariableDefinitionNames()) {
+			if(StringUtils.isEmpty(name)) {
+				addActionError("error.storevariabledefinitions.name.required");
+			}
+			if(isDuplicateVariableDefinitionName(name)) {
+				addActionError(new ErrorMessage("error.storevariabledefinitions.duplicated.name", new String[] {name}));
+			}
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 */
+	private boolean isDuplicateVariableDefinitionName(String name) {
+		int count = 0;
+		for(String n : getVariableDefinitionNames()) {
+			if(name.equalsIgnoreCase(n)) {
+				count++;
+			}
+		}
+		return count > 1;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	protected boolean validatePositionNames() {
+		if(getPositions() == null || getPositions().size() < 1) {
+			addActionError("error.storeoperations.positionnames.minimum.invalid");
+			return false;
+		}
+		
+		for(Position pos : getPositions()) {
+			if(pos == null || StringUtils.isEmpty(pos.getName())) {
+				addActionError("error.storeoperations.positionnames.name.required");
+			}
+			if(isDuplicatePosition(pos)) {
+				addActionError(new ErrorMessage("error.storevariabledefinitions.duplicated.name", new String[] {pos.getName()}));
+			}
+		}
+		
+		return true;		
+	}
+	
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 */
+	private boolean isDuplicatePosition(Position position) {
+		int count = 0;
+		for(Position pos : getPositions()) {
+			if(pos != null && position.getName().equalsIgnoreCase(pos.getName())) {
+				count++;
+			}
+		}
+		return count > 1;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	protected boolean validateOperationTimes() {
+		boolean valid = true;
+		if(getWeekOperationTimeOpen() != null) {
+			for(int i=0; i < getWeekOperationTimeOpen().length; i++) {
+				if(!CustomValidators.isValidMilitaryTime(getWeekOperationTimeOpen()[i], true)) {
+					addFieldError( "weekOperationTimeOpen", getText("error.storeoperations.hoursofoperation.opentime.invalid", new String[] {getWeekOperationTimeOpen()[i], getText("dayofweek." + i)}) );
+					valid = false;
+				}
+			}
+		}
+
+		if(getWeekOperationTimeClose() != null) {
+			for(int i=0; i < getWeekOperationTimeClose().length; i++) {
+				if(!CustomValidators.isValidMilitaryTime(getWeekOperationTimeClose()[i], true)) {
+					addFieldError( "weekOperationTimeClose", getText("error.storeoperations.hoursofoperation.closetime.invalid", new String[] {getWeekOperationTimeClose()[i], getText("dayofweek." + i)}) );
+					valid = false;
+				}
+			}
+		}
+		return valid;
+	}
+	
+	/**
+	 * 
+	 */
+	protected void loadPositions() {
 		setPositions(null);
 		for(Position pos : getDemoStore().getPositions()) {
 			Position editPos = new Position();
@@ -655,73 +574,12 @@ public class DemoWizardPrepareAction extends SpmAction {
 		}
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
-	public String addPosition() {
-		if(getNewPosition() != null && !StringUtils.isBlank(getNewPosition().getName())) {
-			Position newPos = new Position();
-			buildDefaultPosition(newPos);
-			newPos.setName(getNewPosition().getName());
-			newPos.setPositionIndex(new Integer(getPositions().size()));
-			newPos.setGuestService(getNewPosition().isGuestService());
-			newPos.setManager(getNewPosition().isManager());
-			getPositions().add(newPos);
-			newPos = null;				
-		}
-		setNewPosition(null);
-		return SpmActionResult.STEP_6.getResult();
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public String removePosition() {
-		int idx = getIndex() != null ? getIndex().intValue() : -1;
-		if(idx >= 0 && idx < getPositions().size()) {
-			getPositions().remove(idx);
-		}
-		return SpmActionResult.STEP_6.getResult();
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public String positionOneUp() {
-		if(getPositions() != null) {
-			int idx = getIndex() != null ? getIndex().intValue() : -1;
-			if(idx > 0 && idx < getPositions().size()) {
-				Position aux = getPositions().get(idx-1);
-				getPositions().set(idx-1, getPositions().get(idx));
-				getPositions().set(idx, aux);
-			}
-		}
-		return SpmActionResult.STEP_6.getResult();
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public String positionOneDown() {
-		if(getPositions() != null) {
-			int idx = getIndex() != null ? getIndex().intValue() : -1;
-			if(idx >= 0 && idx < getPositions().size() - 1) {
-				Position aux = getPositions().get(idx+1);
-				getPositions().set(idx+1, getPositions().get(idx));
-				getPositions().set(idx, aux);
-			}
-		}
-		return SpmActionResult.STEP_6.getResult();
-	}
+
 	
 	/**
 	 * 
 	 */
-	private void setPositions() {
+	protected void setPositions() {
 		if(getPositions() != null && getPositions().size() > 0) {
 			List<Position> current = getDemoStore().getPositions();
 			getDemoStore().setPositions(null);
@@ -757,7 +615,7 @@ public class DemoWizardPrepareAction extends SpmAction {
 	 * Initializes the container object that will handle input of
 	 * open and close operation times.
 	 */
-	private void loadOperationTimes() {
+	protected void loadOperationTimes() {
 		if(getDemoStore() != null) {
 			for(OperationTime time : getDemoStore().getOperationTimes()) {
 				if(time != null && time.getDayOfWeekIndex() != null) {
@@ -796,7 +654,7 @@ public class DemoWizardPrepareAction extends SpmAction {
 	 * Puts all the corresponding values in the Store object
 	 * so it can be updated.
 	 */
-	private void setOperationTimes() {
+	protected void setOperationTimes() {
 		if(getDemoStore().getOperationTimes() != null && updateOperationTimes()) {
 			OperationTime anOperationTime;
 
@@ -1070,6 +928,9 @@ public class DemoWizardPrepareAction extends SpmAction {
 	 * @return
 	 */
 	public List<String> getStatesList() {
+		if(statesList == null || statesList.size() <= 0) {
+			setStatesList(getReferenceDataService().getStates("us"));
+		}
 		return statesList;
 	}
 
@@ -1079,5 +940,27 @@ public class DemoWizardPrepareAction extends SpmAction {
 	 */
 	public void setStatesList(List<String> statesList) {
 		this.statesList = statesList;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String getPasswordConfirmation() {
+		return passwordConfirmation;
+	}
+
+	/**
+	 * 
+	 * @param passwordConfirmation
+	 */
+	public void setPasswordConfirmation(String passwordConfirmation) {
+		this.passwordConfirmation = passwordConfirmation;
+	}
+
+	/**
+	 * 
+	 */
+	public void prepare() throws Exception {
 	}
 }
