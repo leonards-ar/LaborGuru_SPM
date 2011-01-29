@@ -166,4 +166,14 @@ public class StoreServiceBean implements StoreService {
 	public List<Store> findAllDemo() {
 		return storeDao.findAllDemo();
 	}
+
+	/**
+	 * @param store
+	 * @return the average wage of all the store employees
+	 * @see com.laborguru.service.store.StoreService#getAverageWage(Store)
+	 */
+	public Double getAverageWage(Store store) {
+		Double avg = storeDao.getAverageWage(store);
+		return avg != null ? avg : new Double(0.0);
+	}
 }

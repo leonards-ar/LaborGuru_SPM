@@ -177,8 +177,22 @@ public class StoreDaoHibernate extends SpmHibernateDao implements StoreDao {
 			orderFlag = "asc";
 		}
 		
-		List<Store> results = (List<Store>)getSession().createQuery("from Store order by creationDate "+orderFlag).setFirstResult(0).setMaxResults(n).list();
+		List<Store> results = (List<Store>) getSession().createQuery("from Store order by creationDate "+orderFlag).setFirstResult(0).setMaxResults(n).list();
 		
 		return results;
+	}
+
+	/**
+	 * @param store
+	 * @return the average wage of all the store employees
+	 */
+	public Double getAverageWage(Store store) {
+		if (store == null){
+			throw new IllegalArgumentException(STORE_NULL);
+		}
+		
+		List<Double> results = (List<Double>) getSession().createQuery("select avg(wage) from Employee employee where employee.store.id = " + store.getId());
+		
+		return results.size() > 0 ? results.get(0) : null;
 	}
 }

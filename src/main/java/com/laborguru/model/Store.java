@@ -892,12 +892,18 @@ public class Store extends SpmObject {
 		this.averageVariable = averageVariable;
 	}
 
-
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isDemo() {
 		return demo;
 	}
 
-
+	/**
+	 * 
+	 * @param demo
+	 */
 	public void setDemo(boolean demo) {
 		this.demo = demo;
 	}	

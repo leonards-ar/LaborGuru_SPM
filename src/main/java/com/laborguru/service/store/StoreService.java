@@ -78,4 +78,10 @@ public interface StoreService extends Service {
 	 */
 	List<Store> findAllDemo();
 	
+	/**
+	 * 
+	 * @param store
+	 * @return
+	 */
+	Double getAverageWage(Store store);
 }
