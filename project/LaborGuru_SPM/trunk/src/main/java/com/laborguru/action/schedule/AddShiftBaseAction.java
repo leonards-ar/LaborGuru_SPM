@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import com.laborguru.model.DailyProjectedStaffing;
 import com.laborguru.model.Employee;
 import com.laborguru.model.Position;
+import com.laborguru.model.PositionGroup;
 import com.laborguru.model.Shift;
 import com.laborguru.model.comparator.UserFullNameComparator;
 import com.laborguru.service.data.ReferenceDataService;
@@ -54,9 +55,12 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 	private Date copyTargetDay;
 	
 	private List<Position> positions;
+	private List<PositionGroup> positionGroups;
 	private List<Employee> employees;
 	
 	private Position position;
+	private PositionGroup positionGroup;
+	
 	private List<Position> selectedPositions = new ArrayList<Position>();
 	
 	private Double hiddenTotalScheduled;
@@ -417,6 +421,8 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 		Position pos = getPosition();
 		if(pos != null) {
 			selectedPositions.add(pos);
+		} else if(getPositionGroup() != null) {
+			selectedPositions.addAll(getPositionGroup().getPositions());
 		} else {
 			selectedPositions.addAll(getPositions());
 		}
@@ -429,4 +435,81 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 	public void setSelectedPositions(List<Position> selectedPositions) {
 		this.selectedPositions = selectedPositions;
 	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public List<PositionGroup> getPositionGroups() {
+		return positionGroups;
+	}
+
+	/**
+	 * 
+	 * @param positionGroups
+	 */
+	public void setPositionGroups(List<PositionGroup> positionGroups) {
+		this.positionGroups = positionGroups;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public PositionGroup getPositionGroup() {
+		return positionGroup;
+	}
+
+	/**
+	 * 
+	 * @param positionGroup
+	 */
+	public void setPositionGroup(PositionGroup positionGroup) {
+		this.positionGroup = positionGroup;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getMainVariableInitials() {
+		if(getEmployeeStore() != null && getEmployeeStore().getMainVariableDefinition() != null) {
+			return getEmployeeStore().getMainVariableDefinition().getVariableInitials();
+		} else {
+			return "";
+		}
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getVplhSchedule() {
+		return new Double(5.1);
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getVplhTarget() {
+		return new Double(7.2);
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getLaborPercentageSchedule() {
+		return new Double(15);
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getLaborPercentageTarget() {
+		return new Double(15);
+	}
+
 }

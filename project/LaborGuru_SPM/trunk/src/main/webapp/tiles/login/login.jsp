@@ -98,3 +98,8 @@
 		</td>
 	</tr>
 </table>
+<script language="javascript" type="text/javascript">
+<!--
+document.login.j_username.focus();
+// -->
+</script>

@@ -19,7 +19,7 @@
 				<!-- Header tables -->
 				<table border="0" cellpadding="2" cellspacing="2" width="100%">
 					<tr>
-						<td valign="top" align="right" width="45%">
+						<td valign="top" align="right" width="30%">
 							<!-- Left column -->
 							<table id="fullHeightTable" border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
 								<tr valign="top">
@@ -83,8 +83,8 @@
 						
 						<td width="10%">&nbsp;</td>
 						
-						<td valign="top" width="45%" align="left">
-							<!-- Right column -->
+						<td valign="top" width="30%" align="center">
+							<!-- Center column -->
 							<table id="windowTable">
 								<tr>
 									<td class="windowTableHeader"><s:text name='schedule.addshift.weekday.dateformat'><s:param value='weekDaySelector.selectedDay'/></s:text></td>
@@ -113,8 +113,32 @@
 								</tr>
 								
 							</table>
-							<!-- Right column -->
+							<!-- Center column -->
 						</td>
+						
+						<td width="10%">&nbsp;</td>
+						
+						<td valign="top" width="20%" align="left">
+							<!-- Right column -->
+							<table id="windowTable">	
+								<tr>
+									<td></td>
+									<td class="windowTableHeader"><s:text name="schedule.addshift.schedule"/></td>
+									<td class="windowTableHeader"><s:text name="schedule.addshift.target"/></td>
+								</tr>							
+								<tr>
+									<td class="windowTableLabel" nowrap="nowrap"><s:text name="schedule.addshift.vplh"><s:param value='mainVariableInitials'/></s:text></td>
+									<td class="windowTableValue" id="vplh_schedule"><s:text name="decimal"><s:param value="vplhSchedule"/></s:text></td>
+									<td class="windowTableValue" id="vplh_target"><s:text name="decimal"><s:param value="vplhTarget"/></s:text></td>
+								</tr>							
+								<tr>
+									<td class="windowTableLabel" nowrap="nowrap"><s:text name="schedule.addshift.labor_percent"/></td>
+									<td class="windowTableValue" id="labor_schedule"><s:text name="percentage"><s:param value="laborPercentageSchedule"/></s:text>%</td>
+									<td class="windowTableValue" id="labor_target"><s:text name="percentage"><s:param value="laborPercentageTarget"/></s:text>%</td>
+								</tr>							
+							</table>
+							<!-- Right column -->
+						</td>						
 					</tr>
 				</table>
 				<!-- Header tables -->
