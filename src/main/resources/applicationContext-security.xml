@@ -80,7 +80,8 @@
 				/home/home.action=Administrator,Store_Manager,Employee,Customer_Manager,Regional_Manager,Area_Manager
 				**/logout.action=ROLE_ANONYMOUS,ROLE_USER
 				**/login.action=ROLE_ANONYMOUS,ROLE_USER
-
+				/demo/**=ROLE_ANONYMOUS,HOME_ACCESS
+				
 				/customer/areauser_list.action=ADD_AREA_CUSTOMER,VIEW_AREA_CUSTOMER,EDIT_AREA_CUSTOMER,REMOVE_AREA_CUSTOMER
 				/customer/areauser_add.action=ADD_AREA_CUSTOMER
 				/customer/areauser_show.action=VIEW_AREA_CUSTOMER
@@ -143,8 +144,6 @@
 				/user/user_add.action=EDIT_USER
 				/user/user_edit.action=CREATE_USER
 				/user/user_remove.action=REMOVE_USER
-				
-				/demo/*=ROLE_ANONYMOUS,ROLE_USER
 				
 				/**=IS_AUTHENTICATED_ANONYMOUSLY
 				
