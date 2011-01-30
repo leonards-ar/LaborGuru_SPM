@@ -41,6 +41,8 @@ import com.opensymphony.xwork2.Preparable;
  *
  */
 public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implements Preparable {
+	private static final long serialVersionUID = 1L;
+
 	private static final Logger log = Logger.getLogger(AddShiftByWeekBaseAction.class);
 	
 	private WeeklyScheduleData weeklyScheduleData = null;
@@ -195,6 +197,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 			row.setEmployeeMaxDaysWeek(employee.getMaxDaysWeek());
 			row.setEmployeeMaxHoursDay(employee.getMaxHoursDay());
 			row.setEmployeeMaxHoursWeek(employee.getMaxHoursWeek());
+			row.setEmployeeWage(employee.getWage());
 			row.setEmployeeName(employee.getFullName());
 			row.setPositionId(position.getId());
 			row.setPositionName(position.getName());
@@ -823,6 +826,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		setStoreSchedules(null);
 		setFirstDayNextWeekStoreSchedule(null);
 		resetScheduleData();
+		resetWeekData();
 		//resetStaffingData();
 		setScheduleData();
 		loadCopyTargetDay();		
@@ -834,8 +838,8 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 */
 	public String edit() {
 		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
-		
 		initializeSelectView();
+		initializeCopyTargetDay();
 		
 		setScheduleData();
 		
@@ -894,6 +898,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 			newRow.setEmployeeMaxDaysWeek(newEmployee.getMaxDaysWeek());
 			newRow.setEmployeeMaxHoursDay(newEmployee.getMaxHoursDay());
 			newRow.setEmployeeMaxHoursWeek(newEmployee.getMaxHoursWeek());		
+			newRow.setEmployeeWage(newEmployee.getWage());
 		}
 		
 		getWeeklyScheduleData().addScheduleRow(getAddEmployeeGroupById(), newRow);
@@ -960,6 +965,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		
 		resetScheduleData();
 		setScheduleData();
+		resetWeekData();
 		
 		addActionMessage(getText("schedule.addshift.save_success"));
 		
@@ -1035,6 +1041,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
 		resetScheduleData();
 		setScheduleData();
+		resetWeekData();
 		
 		return SpmActionResult.EDIT.getResult();
 	}	
@@ -1062,7 +1069,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	
 		resetScheduleData();
 		//resetStaffingData();
-
+		resetWeekData();
 		setScheduleData();
 		
 		return SpmActionResult.EDIT.getResult();
@@ -1174,7 +1181,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		
 		resetScheduleData();
 		//resetStaffingData();
-		
+		resetWeekData();
 		setScheduleData();
 		
 		return SpmActionResult.EDIT.getResult();
@@ -1507,4 +1514,99 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	public void setPositionWeeklyTarget(Map<Integer, Double> positionWeeklyTarget) {
 		this.positionWeeklyTarget = positionWeeklyTarget;
 	}	
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getVplhSchedule() {
+		if(getTotalHoursSchedule() > 0.0) {
+			return new Double(NumberUtils.getDoubleValue(getWeeklyVolume()) / getTotalHoursSchedule());
+		} else {
+			return NumberUtils.EMPTY_DOUBLE;
+		}
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getVplhTarget() {
+		if(getTotalHoursTarget() > 0) {
+			return new Double(NumberUtils.getDoubleValue(getWeeklyVolume()) / getTotalHoursTarget());
+		} else {
+			return NumberUtils.EMPTY_DOUBLE;
+		}
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	private double getTotalHoursSchedule() {
+		double total = 0.0;
+		for(StoreSchedule aStoreSchedule : getStoreSchedules()) {
+			total += aStoreSchedule.getTotalShiftHours();
+		}
+		return new Double(total);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	private double getTotalHoursTarget() {
+		double total = 0.0;
+		for(Double d : getPositionWeeklyTarget().values()) {
+			total += NumberUtils.getDoubleValue(d);
+		}
+		return new Double(total);		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getLaborPercentageSchedule() {
+		double d = NumberUtils.getDoubleValue(getWeeklyVolume()) * getStoreAverageVariable();
+		if(d != 0.0) {
+			return (NumberUtils.getDoubleValue(getAverageWage()) * getTotalHoursSchedule() / d) * 100;
+		} else {
+			return NumberUtils.EMPTY_DOUBLE;
+		}
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getLaborPercentageTarget() {
+		double d = NumberUtils.getDoubleValue(getWeeklyVolume()) * getStoreAverageVariable();
+		if(d != 0.0) {
+			return (NumberUtils.getDoubleValue(getAverageWage()) * getTotalHoursTarget() / d) * 100;
+		} else {
+			return NumberUtils.EMPTY_DOUBLE;
+		}
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getAverageWage() {
+		double totalWage = 0.0;
+		double totalHours = 0.0;
+		for(StoreSchedule aStoreSchedule : getStoreSchedules()) {
+			totalWage += aStoreSchedule.getTotalWage();
+			totalHours += aStoreSchedule.getTotalShiftHours();
+		}
+		return new Double(totalWage / totalHours);
+	}	
+	
+	/**
+	 * 
+	 */
+	protected void resetWeekData() {
+		setWeeklyVolume(null);
+	}
 }

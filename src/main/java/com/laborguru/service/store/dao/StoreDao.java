@@ -72,11 +72,4 @@ public interface StoreDao {
 	 * @return
 	 */
 	List<Store> findAllDemo();
-	
-	/**
-	 * 
-	 * @param store
-	 * @return
-	 */
-	Double getAverageWage(Store store);
 }

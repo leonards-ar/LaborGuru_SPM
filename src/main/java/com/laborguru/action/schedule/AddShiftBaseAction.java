@@ -27,6 +27,7 @@ import com.laborguru.service.projection.ProjectionService;
 import com.laborguru.service.schedule.ScheduleService;
 import com.laborguru.service.staffing.StaffingService;
 import com.laborguru.util.CalendarUtils;
+import com.laborguru.util.NumberUtils;
 import com.laborguru.util.SpmConstants;
 
 /**
@@ -484,32 +485,46 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 	 * 
 	 * @return
 	 */
-	public Double getVplhSchedule() {
-		return new Double(5.1);
-	}
+	public abstract Double getVplhSchedule();
 
 	/**
 	 * 
 	 * @return
 	 */
-	public Double getVplhTarget() {
-		return new Double(7.2);
-	}
+	public abstract Double getVplhTarget();
 
 	/**
 	 * 
 	 * @return
 	 */
-	public Double getLaborPercentageSchedule() {
-		return new Double(15);
-	}
+	public abstract Double getLaborPercentageSchedule();
 
 	/**
 	 * 
 	 * @return
 	 */
-	public Double getLaborPercentageTarget() {
-		return new Double(15);
-	}
+	public abstract Double getLaborPercentageTarget();
 
+	/**
+	 * 
+	 * @return
+	 */
+	public abstract Double getAverageWage();
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public double getStoreAverageVariable() {
+		return NumberUtils.getDoubleValue(getEmployeeStore().getAverageVariable());
+	}
+	
+	/**
+	 * 
+	 */
+	protected void initializeCopyTargetDay() {
+		if(getCopyTargetDay() == null || !CalendarUtils.isAfterToday(getCopyTargetDay())) {
+			loadCopyTargetDay();
+		}
+	}
 }

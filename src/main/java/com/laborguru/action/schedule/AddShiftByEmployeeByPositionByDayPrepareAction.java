@@ -92,6 +92,8 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftByDa
 	protected void processChangeDay() {
 		setStoreSchedule(null);
 		resetScheduleData();
+		resetDayData();
+
 		setScheduleData();
 		loadCopyTargetDay();
 	}
@@ -104,6 +106,8 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftByDa
 	protected void processChangeWeek() {
 		setStoreSchedule(null);
 		resetScheduleData();
+		resetDayData();
+		
 		setScheduleData();
 		loadCopyTargetDay();
 	}
@@ -165,6 +169,8 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftByDa
 		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
 		
 		resetScheduleData();
+		resetDayData();
+		
 		setScheduleData();
 		
 		return SpmActionResult.EDIT.getResult();
@@ -176,8 +182,8 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftByDa
 	 */
 	public String edit() {
 		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
-
 		initializeSelectView();
+		initializeCopyTargetDay();
 		
 		setScheduleData();
 		
@@ -192,6 +198,7 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftByDa
 		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
 	
 		resetScheduleData();
+		resetDayData();
 
 		setScheduleData();
 		
@@ -236,6 +243,7 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftByDa
 				newRow.setEmployeeMaxDaysWeek(newEmployee.getMaxDaysWeek());
 				newRow.setEmployeeMaxHoursDay(newEmployee.getMaxHoursDay());
 				newRow.setEmployeeMaxHoursWeek(newEmployee.getMaxHoursWeek());		
+				newRow.setEmployeeWage(newEmployee.getWage());
 			}
 			
 			entry.getScheduleData().add(newRow);
@@ -325,6 +333,8 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftByDa
 		updateShifts(outOfScheduleShiftsToUpdate);
 		
 		resetScheduleData();
+		resetDayData();
+
 		setScheduleData();
 		
 		addActionMessage(getText("schedule.addshift.save_success"));
@@ -339,6 +349,8 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftByDa
 	public String cancel() {
 		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
 		resetScheduleData();
+		resetDayData();
+		
 		setScheduleData();
 		
 		return SpmActionResult.EDIT.getResult();

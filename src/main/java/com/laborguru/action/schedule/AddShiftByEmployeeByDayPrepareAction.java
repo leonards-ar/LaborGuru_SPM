@@ -132,6 +132,8 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 		setStoreSchedule(null);
 		resetScheduleData();
 		resetStaffingData();
+		resetDayData();
+		
 		setScheduleData();
 		loadCopyTargetDay();
 	}
@@ -145,6 +147,8 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 		setStoreSchedule(null);
 		resetScheduleData();
 		resetStaffingData();
+		resetDayData();
+		
 		setScheduleData();
 		loadCopyTargetDay();
 	}
@@ -207,6 +211,8 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 		resetScheduleData();
 		resetStaffingData();
 		
+		resetDayData();
+		
 		setScheduleData();
 		
 		return SpmActionResult.EDIT.getResult();
@@ -218,8 +224,8 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 	 */
 	public String edit() {
 		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
-
 		initializeSelectView();
+		initializeCopyTargetDay();
 		
 		setScheduleData();
 		
@@ -235,7 +241,8 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 	
 		resetScheduleData();
 		resetStaffingData();
-
+		resetDayData();
+		
 		setScheduleData();
 		
 		return SpmActionResult.EDIT.getResult();
@@ -274,7 +281,8 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 		if(newEmployee != null) {
 			newRow.setEmployeeMaxDaysWeek(newEmployee.getMaxDaysWeek());
 			newRow.setEmployeeMaxHoursDay(newEmployee.getMaxHoursDay());
-			newRow.setEmployeeMaxHoursWeek(newEmployee.getMaxHoursWeek());		
+			newRow.setEmployeeMaxHoursWeek(newEmployee.getMaxHoursWeek());	
+			newRow.setEmployeeWage(newEmployee.getWage());
 		}
 		
 		getScheduleData().add(newRow);

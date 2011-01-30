@@ -33,6 +33,7 @@ public class WeeklyScheduleRow implements Serializable, Comparable<WeeklySchedul
 	private Integer employeeMaxHoursWeek;
 	private Integer employeeMaxDaysWeek;
 	private Integer employeeMaxHoursDay;
+	private Double employeeWage;
 	
 	private Integer groupById;
 	
@@ -289,4 +290,22 @@ public class WeeklyScheduleRow implements Serializable, Comparable<WeeklySchedul
 	public void setPositionIndex(Integer positionIndex) {
 		this.positionIndex = positionIndex;
 	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getEmployeeWage() {
+		return employeeWage;
+	}
+
+	/**
+	 * 
+	 * @param employeeWage
+	 */
+	public void setEmployeeWage(Double employeeWage) {
+		this.employeeWage = employeeWage;
+	}
+	
+	
 }

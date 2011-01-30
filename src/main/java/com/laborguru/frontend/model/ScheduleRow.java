@@ -37,6 +37,7 @@ public class ScheduleRow implements Serializable, Comparable<ScheduleRow> {
 	private Integer employeeMaxHoursWeek;
 	private Integer employeeMaxDaysWeek;
 	private Integer employeeMaxHoursDay;
+	private Double employeeWage;
 	
 	/**
 	 * 
@@ -284,6 +285,22 @@ public class ScheduleRow implements Serializable, Comparable<ScheduleRow> {
 		} else {
 			return object.getEmployeeName() != null ? -1 : 0;
 		}
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getEmployeeWage() {
+		return employeeWage;
+	}
+
+	/**
+	 * 
+	 * @param employeeWage
+	 */
+	public void setEmployeeWage(Double employeeWage) {
+		this.employeeWage = employeeWage;
 	}
 	
 }
