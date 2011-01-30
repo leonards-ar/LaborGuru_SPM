@@ -69,7 +69,7 @@
 											<tr>
 												<td align="right" class="form_label"><s:text name="schedule.addshift.copy.label"/></td>
 												<td align="left">
-												<s:datetimepicker id="copy_target_day" displayFormat="MM/dd/yyyy" disabled="true" name="copyTargetDay" theme="simple"/>
+												<s:datetimepicker id="copy_target_day" type="date" formatLength="short" displayFormat="%{getText('datepicker.format.date')}" disabled="true" name="copyTargetDay" theme="simple"/>
 												<script>djConfig.searchIds.push("copy_target_day");</script>
 												</td>
 												<td align="right"><s:submit onclick="return confirmAndWaitSpash('confirm', this, '%{getText('schedule.addshift.copy.schedule.confirm.msg')}');" id="copyButton" key="schedule.addshift.copy.button" action="addshiftbyemployee_copySchedule" theme="simple" cssClass="button"/></td>
@@ -128,15 +128,26 @@
 								</tr>							
 								<tr>
 									<td class="windowTableLabel" nowrap="nowrap"><s:text name="schedule.addshift.vplh"><s:param value='mainVariableInitials'/></s:text></td>
-									<td class="windowTableValue" id="vplh_schedule"><s:text name="decimal"><s:param value="vplhSchedule"/></s:text></td>
-									<td class="windowTableValue" id="vplh_target"><s:text name="decimal"><s:param value="vplhTarget"/></s:text></td>
+									<td class="windowTableValue" id="vplh_schedule">
+										<s:if test="vplhSchedule != null"><s:text name="decimal"><s:param value="vplhSchedule"/></s:text></s:if>
+										<s:else><s:text name="schedule.addshift.emptyvalue"/></s:else>
+									</td>
+									<td class="windowTableValue" id="vplh_target">
+										<s:if test="vplhTarget != null"><s:text name="decimal"><s:param value="vplhTarget"/></s:text></s:if>
+										<s:else><s:text name="schedule.addshift.emptyvalue"/></s:else>									
+									</td>
 								</tr>							
 								<tr>
 									<td class="windowTableLabel" nowrap="nowrap"><s:text name="schedule.addshift.labor_percent"/></td>
-									<td class="windowTableValue" id="labor_schedule"><s:text name="percentage"><s:param value="laborPercentageSchedule"/></s:text>%</td>
-									<td class="windowTableValue" id="labor_target"><s:text name="percentage"><s:param value="laborPercentageTarget"/></s:text>%</td>
-								</tr>							
-
+									<td class="windowTableValue" id="labor_schedule">
+										<s:if test="laborPercentageSchedule != null"><s:text name="percentage"><s:param value="laborPercentageSchedule"/></s:text>%</s:if>
+										<s:else><s:text name="schedule.addshift.emptyvalue"/></s:else>									
+									</td>
+									<td class="windowTableValue" id="labor_target">
+										<s:if test="laborPercentageTarget != null"><s:text name="percentage"><s:param value="laborPercentageTarget"/></s:text>%</s:if>
+										<s:else><s:text name="schedule.addshift.emptyvalue"/></s:else>									
+									</td>
+								</tr>
 							</table>
 							<!-- Right column -->
 						</td>											
@@ -317,6 +328,7 @@
 							<s:else>
 								<s:hidden id="scheduleOriginalEmployeeId_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].originalEmployeeId"/>
 								<s:hidden id="scheduleEmployeeMaxWeekHours_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].employeeMaxHoursDay"/>
+								<s:hidden id="scheduleEmployeeWage_%{#itScheduleData.index}" name="scheduleData[%{#itScheduleData.index}].employeeWage"/>
 								<!--s:url id="employeeList" action="scheduleemployeeautocomplete" includeParams="none"/-->
 								<!--s:autocompleter id="scheduleEmployee_%{#itScheduleData.index}" onchange="reloadEmployeeMaxHoursDay('', %{#itScheduleData.index}); return true;" name="scheduleData[%{#itScheduleData.index}].employeeName" keyName="scheduleData[%{#itScheduleData.index}].employeeId" loadMinimumCount="3" forceValidOption="true" theme="ajax" href="%{employeeList}" dataFieldName="storeEmployees" autoComplete="true" searchType="substring"/-->
 								<!--script>djConfig.searchIds.push("scheduleEmployee_<s:property value="#itScheduleData.index"/>");</script-->

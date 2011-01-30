@@ -22,6 +22,8 @@ public class NumberUtils {
 	//Used in projections
 	public static final String CURRENCY_FORMAT = "#,##0";
 	
+	public static final Double EMPTY_DOUBLE = null;
+	
 	/**
 	 *
 	 */

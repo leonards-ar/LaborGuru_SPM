@@ -75,7 +75,7 @@
 											<tr>
 												<td align="right" class="form_label"><s:text name="schedule.addshift.copy.label"/></td>
 												<td align="left">
-													<s:datetimepicker id="copy_target_day" displayFormat="MM/dd/yyyy" disabled="true" name="copyTargetDay" theme="simple"/>
+													<s:datetimepicker id="copy_target_day" type="date" formatLength="short" displayFormat="%{getText('datepicker.format.date')}" disabled="true" name="copyTargetDay" theme="simple" />
 													<script>djConfig.searchIds.push("copy_target_day");</script>
 												</td>
 												<td align="right"><s:submit onclick="return confirmAndWaitSpash('confirm', this, '%{getText('schedule.addshift.copy.schedule.confirm.msg')}');" id="copyButton" key="schedule.addshift.copy.button" action="addweeklyshiftbyemployee_copySchedule" theme="simple" cssClass="button"/></td>
@@ -134,13 +134,25 @@
 								</tr>							
 								<tr>
 									<td class="windowTableLabel" nowrap="nowrap"><s:text name="schedule.addshift.vplh"><s:param value='mainVariableInitials'/></s:text></td>
-									<td class="windowTableValue" id="vplh_schedule"><s:text name="decimal"><s:param value="vplhSchedule"/></s:text></td>
-									<td class="windowTableValue" id="vplh_target"><s:text name="decimal"><s:param value="vplhTarget"/></s:text></td>
+									<td class="windowTableValue" id="vplh_schedule">
+										<s:if test="vplhSchedule != null"><s:text name="decimal"><s:param value="vplhSchedule"/></s:text></s:if>
+										<s:else><s:text name="schedule.addshift.emptyvalue"/></s:else>
+									</td>
+									<td class="windowTableValue" id="vplh_target">
+										<s:if test="vplhTarget != null"><s:text name="decimal"><s:param value="vplhTarget"/></s:text></s:if>
+										<s:else><s:text name="schedule.addshift.emptyvalue"/></s:else>									
+									</td>
 								</tr>							
 								<tr>
 									<td class="windowTableLabel" nowrap="nowrap"><s:text name="schedule.addshift.labor_percent"/></td>
-									<td class="windowTableValue" id="labor_schedule"><s:text name="percentage"><s:param value="laborPercentageSchedule"/></s:text>%</td>
-									<td class="windowTableValue" id="labor_target"><s:text name="percentage"><s:param value="laborPercentageTarget"/></s:text>%</td>
+									<td class="windowTableValue" id="labor_schedule">
+										<s:if test="laborPercentageSchedule != null"><s:text name="percentage"><s:param value="laborPercentageSchedule"/></s:text>%</s:if>
+										<s:else><s:text name="schedule.addshift.emptyvalue"/></s:else>									
+									</td>
+									<td class="windowTableValue" id="labor_target">
+										<s:if test="laborPercentageTarget != null"><s:text name="percentage"><s:param value="laborPercentageTarget"/></s:text>%</s:if>
+										<s:else><s:text name="schedule.addshift.emptyvalue"/></s:else>									
+									</td>
 								</tr>							
 							</table>
 							<!-- Right column -->
@@ -267,6 +279,7 @@
 						<s:hidden id="scheduleEmployeeMaxHoursDay_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].employeeMaxHoursDay"/>
 						<s:hidden id="scheduleEmployeeMaxHoursWeek_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].employeeMaxHoursWeek"/>
 						<s:hidden id="scheduleEmployeeMaxDaysWeek_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].employeeMaxDaysWeek"/>
+						<s:hidden id="scheduleEmployeeWage_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].employeeWage"/>
 						<s:hidden id="scheduleGroupById_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].groupById"/>
 						<s:hidden id="scheduleOrderByEmployee_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].orderByEmployee"/>
 						<s:hidden id="schedulePositionIndex_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].positionIndex"/>

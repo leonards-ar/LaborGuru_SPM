@@ -97,7 +97,7 @@
                     <td width="35%" align="left" class="value"><s:checkbox name="employee.manager" fieldValue="true" theme="simple"/></td>
                     <td width="15%" align="right" class="form_label" nowrap><s:text name="employee.hiredate.label" /></td>
                     <td width="35%" align="left" class="value">
-                    	<s:datetimepicker id="hireDate" displayFormat="MM/dd/yyyy" disabled="true" name="employee.hireDate" theme="simple"/>
+                    	<s:datetimepicker id="hireDate" type="date" formatLength="short" displayFormat="%{getText('datepicker.format.date')}" disabled="true" name="employee.hireDate" theme="simple"/>
                     	<script>djConfig.searchIds.push("hireDate");</script>
                     </td>
                 </tr>

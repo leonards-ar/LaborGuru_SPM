@@ -271,4 +271,25 @@ public class StoreSchedule extends SpmObject {
 		
 		return employees;		
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getAverageWage() {
+		return new Double(NumberUtils.getDoubleValue(getTotalWage()) / NumberUtils.getDoubleValue(getTotalShiftHours()));
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getTotalWage() {
+		double total = 0.0;
+		for(EmployeeSchedule anEmployeeSchedule : getEmployeeSchedules()) {
+			total += NumberUtils.getDoubleValue(anEmployeeSchedule.getTotalShiftHours()) * NumberUtils.getDoubleValue(anEmployeeSchedule.getEmployee().getWage());
+		}
+		
+		return new Double(total);		
+	}
 }

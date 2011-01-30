@@ -43,6 +43,11 @@ import com.laborguru.util.SpmConstants;
  *
  */
 public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private static final Logger log = Logger.getLogger(AddShiftByDayBaseAction.class);
 	
 	private List<ScheduleHourLabelElement> scheduleLabelHours;
@@ -990,7 +995,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 			aRow.setEmployeeMaxDaysWeek(employeeSchedule.getEmployee().getMaxDaysWeek());
 			aRow.setEmployeeMaxHoursDay(employeeSchedule.getEmployee().getMaxHoursDay());
 			aRow.setEmployeeMaxHoursWeek(employeeSchedule.getEmployee().getMaxHoursWeek());
-			
+			aRow.setEmployeeWage(employeeSchedule.getEmployee().getWage());
 			
 			List<Date> scheduleBuckets = getScheduleIndividualHours();
 			List<String> occupation = initializeScheduleRow();
@@ -1288,5 +1293,80 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	 */
 	public void setShiftService(ShiftService shiftService) {
 		this.shiftService = shiftService;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getVplhSchedule() {
+		if(getTotalHoursSchedule() > 0.0) {
+			return new Double(NumberUtils.getDoubleValue(getDailyVolume()) / getTotalHoursSchedule());
+		} else {
+			return NumberUtils.EMPTY_DOUBLE;
+		}
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getVplhTarget() {
+		StoreDailyStaffing storeDailyStaffing = getSelectedDayDailyStaffing();
+		if(storeDailyStaffing != null) {
+			return new Double(NumberUtils.getDoubleValue(getDailyVolume()) / NumberUtils.getDoubleValue(storeDailyStaffing.getTotalDailyTarget()));
+		} else {
+			return NumberUtils.EMPTY_DOUBLE;
+		}
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	private double getTotalHoursSchedule() {
+		return NumberUtils.getDoubleValue(getStoreSchedule().getTotalShiftHours());
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getLaborPercentageSchedule() {
+		double d = NumberUtils.getDoubleValue(getDailyVolume()) * getStoreAverageVariable();
+		if(d != 0.0) {
+			return (NumberUtils.getDoubleValue(getAverageWage()) * getTotalHoursSchedule() / d) * 100;
+		} else {
+			return NumberUtils.EMPTY_DOUBLE;
+		}
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getLaborPercentageTarget() {
+		StoreDailyStaffing storeDailyStaffing = getSelectedDayDailyStaffing();
+		double d = NumberUtils.getDoubleValue(getDailyVolume()) * getStoreAverageVariable();
+		if(storeDailyStaffing != null && d != 0.0) {
+			return (NumberUtils.getDoubleValue(getAverageWage()) * NumberUtils.getDoubleValue(storeDailyStaffing.getTotalDailyTarget()) / d) * 100;
+		} else {
+			return NumberUtils.EMPTY_DOUBLE;
+		}
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getAverageWage() {
+		return getStoreSchedule().getAverageWage();
+	}
+	
+	/**
+	 * 
+	 */
+	protected void resetDayData() {
+		setDailyVolume(null);
 	}
 }
