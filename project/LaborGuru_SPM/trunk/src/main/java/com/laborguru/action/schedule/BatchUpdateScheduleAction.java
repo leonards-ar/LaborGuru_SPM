@@ -6,6 +6,7 @@
 package com.laborguru.action.schedule;
 
 import com.laborguru.action.SpmActionResult;
+import com.laborguru.service.projection.ProjectionService;
 import com.laborguru.service.schedule.ScheduleService;
 
 /**
@@ -23,7 +24,22 @@ public class BatchUpdateScheduleAction extends ScheduleBaseAction {
 	private static final long serialVersionUID = 7865174211531869913L;
 	
 	private ScheduleService scheduleService;
+	private ProjectionService projectionService;
 	
+	/**
+	 * @return the projectionService
+	 */
+	public ProjectionService getProjectionService() {
+		return projectionService;
+	}
+
+	/**
+	 * @param projectionService the projectionService to set
+	 */
+	public void setProjectionService(ProjectionService projectionService) {
+		this.projectionService = projectionService;
+	}
+
 	/**
 	 * 
 	 */
@@ -37,6 +53,8 @@ public class BatchUpdateScheduleAction extends ScheduleBaseAction {
 	 */
 	public String execute() {
 		getScheduleService().updateAllStoreSchedules();
+		getProjectionService().updateAll();
+		
 		return SpmActionResult.SUCCESS.getResult();
 	}
 

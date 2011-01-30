@@ -213,8 +213,32 @@ function parseTime(timeTxt) {
 	}
 }
 
+function timeToDisplay(parsedTime) {
+	// Time to display will be 5p, 4:30a, etc.
+	var hours = toInt(getHours(parsedTime));
+	var minutes = getMinutes(parsedTime);
+	var am_pm;
+	
+	if(hours > 12) {
+		hours = toInt(hours) - 12;
+		am_pm = 'p';	
+	} else if(hours == 12) {
+		am_pm = 'p';
+	} else {
+		am_pm = 'a';
+	}
+	
+	if(toInt(minutes) > 0) {
+		minutes = ':' + minutes;
+	} else {
+		minutes = '';
+	}
+	
+	return hours + minutes + am_pm;
+}
+
 function updateTime(formElement) {
-	formElement.value = parseTime(formElement.value);
+	formElement.value = timeToDisplay(parseTime(formElement.value));
 }
 
 function getHours(time) {

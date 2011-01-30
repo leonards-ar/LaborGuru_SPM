@@ -435,8 +435,12 @@ public class Shift extends SpmObject {
 			// The shifts ends in opening period
 			return CalendarUtils.differenceInHours(getToHour(), start);
 		} else if(CalendarUtils.inRangeNotIncludingEndTime(getFromHour(), start, opTime.getOpenHour())) {
-			// The shifts starts in openind period
+			// The shifts starts in opening period
 			return CalendarUtils.differenceInHours(opTime.getOpenHour(), getFromHour());
+		} else if(CalendarUtils.smallerTime(getFromHour(), start)) {
+			// This should never happen if validation is done while saving schedule
+			// There are two options: the whole shift is before open hour or not
+			return CalendarUtils.differenceInHours(CalendarUtils.smallerTime(getToHour(), opTime.getOpenHour()) ? getToHour() : opTime.getOpenHour(), getFromHour());
 		} else {
 			return new Double(0.0);
 		}
@@ -464,10 +468,10 @@ public class Shift extends SpmObject {
 		} else if(CalendarUtils.equalsTime(opTime.getCloseHour(), end)) {
 			// There is no closing time configured
 			return new Double(0.0);
-		} else if(CalendarUtils.inRangeNotIncludingStartTime(getFromHour(), opTime.getCloseHour(), end) && CalendarUtils.inRangeNotIncludingStartTime(getToHour(), opTime.getCloseHour(), end)) {
+		} else if(CalendarUtils.inRangeNotIncludingEndTime(getFromHour(), opTime.getCloseHour(), end) && CalendarUtils.inRangeNotIncludingStartTime(getToHour(), opTime.getCloseHour(), end)) {
 			// The whole shift is inside the closing period
 			return CalendarUtils.differenceInHours(getToHour(), getFromHour());
-		} else if(CalendarUtils.inRangeNotIncludingStartTime(getFromHour(), opTime.getCloseHour(), end)) {
+		} else if(CalendarUtils.inRangeNotIncludingEndTime(getFromHour(), opTime.getCloseHour(), end)) {
 			// The shifts starts in closing period
 			return CalendarUtils.differenceInHours(end, getFromHour());
 		} else if(CalendarUtils.inRangeNotIncludingStartTime(getToHour(), opTime.getCloseHour(), end)) {
