@@ -149,6 +149,33 @@ public abstract class StoreAdministrationBaseAction extends SpmAction implements
 	
 	/**
 	 * 
+	 * @param d
+	 * @return
+	 */
+	protected String dateToDisplayTime(Date d) {
+		return CalendarUtils.dateToDisplayTime(d);
+	}
+	
+	/**
+	 * 
+	 * @param time
+	 * @return
+	 */
+	protected Date displayTimeToDate(String time) {
+		try {
+			if(time != null) {
+				return CalendarUtils.inputTimeToDate(time);
+			} else {
+				return null;
+			}
+		} catch (Exception ex) {
+			log.error("Cannot parse time [" + time + "]", ex);
+			return null;
+		}
+	}
+
+	/**
+	 * 
 	 * @param decimals
 	 * @return
 	 */

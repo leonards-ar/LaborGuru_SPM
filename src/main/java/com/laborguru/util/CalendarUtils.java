@@ -180,12 +180,8 @@ public class CalendarUtils {
 	 * @return
 	 */
 	public static Date displayTimeToDate(String time) {
-		try {
-			return SpmConstants.TIME_FORMAT.parse(time);
-		} catch (ParseException ex) {
-			log.error("Cannot parse date/time [" + time + "]", ex);
-			return null;
-		}
+		// Display time can now be different to HH:mm
+		return inputTimeToDate(time);
 	}
 
 	/**
@@ -278,12 +274,14 @@ public class CalendarUtils {
 	 */
 	public static String dateToDisplayTime(Date time) {
 		if(time != null) {
-			return SpmConstants.TIME_FORMAT.format(time);
+			String displayTime = SpmConstants.DISPLAY_TIME_FORMAT.format(time);
+			return displayTime.replaceAll(":00", "").toLowerCase().replaceAll("m", "");
+			//return SpmConstants.TIME_FORMAT.format(time);
 		} else {
 			return "";
 		}
 	}
-
+	
 	/**
 	 * 
 	 * @param time
