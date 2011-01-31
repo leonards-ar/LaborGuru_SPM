@@ -11,7 +11,7 @@ public class SpmConstants {
 	public static final int MINUTES_INTERVAL = 15;
 	
 	public static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
-	public static final SimpleDateFormat DISPLAY_TIME_FORMAT = new SimpleDateFormat("K:mma");
+	public static final SimpleDateFormat DISPLAY_TIME_FORMAT = new SimpleDateFormat("h:mma");
 	public static final SimpleDateFormat TIME_NUMBER_FORMAT = new SimpleDateFormat("HHmm");
 	public static final SimpleDateFormat TIME_HOUR_FORMAT = new SimpleDateFormat("HH");
 	public static final SimpleDateFormat TIME_MINUTE_FORMAT = new SimpleDateFormat("mm");

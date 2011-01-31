@@ -187,7 +187,7 @@ function parseTime(timeTxt) {
 		return '';
 	} else {
 		var m = getRegExpMatch(timeTxt);
-		if(m == null || trim(m) == '') {
+		if(!m || m == null || trim(m) == '' || m.length <= 0) {
 			return '';
 		} else {
 			var hs = 0;
@@ -206,6 +206,8 @@ function parseTime(timeTxt) {
 				d = m[3];
 				if(d && (d.toLowerCase() == 'p' || d.toLowerCase() == 'pm') && hs >= 0 && hs < 12) {
 					hs = hs + 12;
+				} else if(d && (d.toLowerCase() == 'a' || d.toLowerCase() == 'am') && hs == 12) {
+					hs = 0;
 				}
 			}
 			return formatTimeNumber(hs) + ':' + formatTimeNumber(mins);
@@ -214,27 +216,31 @@ function parseTime(timeTxt) {
 }
 
 function timeToDisplay(parsedTime) {
-	// Time to display will be 5p, 4:30a, etc.
-	var hours = toInt(getHours(parsedTime));
-	var minutes = getMinutes(parsedTime);
-	var am_pm;
-	
-	if(hours > 12) {
-		hours = toInt(hours) - 12;
-		am_pm = 'p';	
-	} else if(hours == 12) {
-		am_pm = 'p';
+	if(parsedTime == null || trim(parsedTime) == '') {
+		return '';
 	} else {
-		am_pm = 'a';
+		// Time to display will be 5p, 4:30a, etc.
+		var hours = toInt(getHours(parsedTime));
+		var minutes = getMinutes(parsedTime);
+		var am_pm;
+		
+		if(hours > 12) {
+			hours = toInt(hours) - 12;
+			am_pm = 'p';	
+		} else if(hours == 12) {
+			am_pm = 'p';
+		} else {
+			am_pm = 'a';
+		}
+		
+		if(toInt(minutes) > 0) {
+			minutes = ':' + minutes;
+		} else {
+			minutes = '';
+		}
+		
+		return hours + minutes + am_pm;
 	}
-	
-	if(toInt(minutes) > 0) {
-		minutes = ':' + minutes;
-	} else {
-		minutes = '';
-	}
-	
-	return hours + minutes + am_pm;
 }
 
 function updateTime(formElement) {
