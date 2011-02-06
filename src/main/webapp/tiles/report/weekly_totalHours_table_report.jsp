@@ -178,10 +178,10 @@
 			</td>
 			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
 			  <td class="tableValueWithLeftBorder">
-			   <s:text name="decimal"><s:param value="scheduleLaborPercentage"/>%</s:text></td>
+			   <s:text name="decimal"><s:param value="scheduleLaborPercentage"/></s:text>%</td>
 			</s:iterator>
 			<td class="greyTableValueWithLeftBorder">
-			   <s:text name="decimal"><s:param value="totalScheduleLaborPercentage"/>%</s:text></td>
+			   <s:text name="decimal"><s:param value="totalScheduleLaborPercentage"/></s:text>%</td>
 		  </tr>
 		  <tr>
 			<td class="greyTableLabel">
@@ -189,11 +189,11 @@
 			</td>
 			<s:iterator id="txPerLaborHour" value="totalHours" status="itTotalHours">
 			  <td class="greyTableValueWithLeftBorder">
-			  	<s:text name="decimal"><s:param value="targetLaborPercentage"/>%</s:text>
+			  	<s:text name="decimal"><s:param value="targetLaborPercentage"/></s:text>%
 			  </td>
 			</s:iterator>
 			<td class="tableValueWithLeftBorder">
-				<s:text name="decimal"><s:param value="totalTargetLaborPercentage"/>%</s:text>
+				<s:text name="decimal"><s:param value="totalTargetLaborPercentage"/></s:text>%
 			</td>
 		  </tr>
 		</table>
