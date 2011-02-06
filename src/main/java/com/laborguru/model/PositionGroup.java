@@ -21,6 +21,8 @@ public class PositionGroup extends SpmObject implements ComparableObject {
 
 	private static final long serialVersionUID = 1L;
 	
+	private static final String UID_PREFIX = "pg_";
+	
 	private Integer id;
 	private String name;
 	private Store store;
@@ -181,4 +183,32 @@ public class PositionGroup extends SpmObject implements ComparableObject {
 		setName(name);
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public String getUniqueId() {
+		return new StringBuilder().append(UID_PREFIX).append(getId()).toString();
+	}
+	
+	/**
+	 * 
+	 * @param uniqueId
+	 */
+	public static Integer getId(String uniqueId) {
+		if(isValidUniqueId(uniqueId)) {
+			return new Integer(uniqueId.substring(UID_PREFIX.length()));
+		} else {
+			throw new IllegalArgumentException("Invalid position unique id [" + uniqueId + "]");
+		}
+	}
+	
+	/**
+	 * 
+	 * @param uniqueId
+	 * @return
+	 */
+	public static boolean isValidUniqueId(String uniqueId) {
+		return uniqueId != null && uniqueId.startsWith(UID_PREFIX);
+	}	
 }

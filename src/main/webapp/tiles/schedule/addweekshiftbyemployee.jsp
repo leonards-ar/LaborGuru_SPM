@@ -62,7 +62,9 @@
 												</td>
 												<td align="right" class="form_label"><s:text name="schedule.addshift.positions"/></td>
 												<td align="left">
-													<s:select onchange="showWaitSplash(); addweeklyshiftbyemployee_form.action='addweeklyshiftbyemployee_selectPosition.action'; addweeklyshiftbyemployee_form.submit();" name="position.id" list="positions" listKey="id" listValue="name" theme="simple" headerKey="" headerValue="%{getText('schedule.addshift.positions.header.label')}"/>					
+													<s:select onchange="showWaitSplash(); addweeklyshiftbyemployee_form.action='addweeklyshiftbyemployee_selectPosition.action'; addweeklyshiftbyemployee_form.submit();" name="positionSelectId" list="positions" listKey="uniqueId" listValue="name" theme="simple" headerKey="" headerValue="%{getText('schedule.addshift.positions.header.label')}">
+														<s:optgroup label="%{getText('schedule.addshift.position_groups.header.label')}" list="positionGroups" listKey="uniqueId" listValue="name"/>
+													</s:select>					
 												</td>
 											</tr>
 										</table>
@@ -302,12 +304,12 @@
 				    	</s:else>
 						<td class="weekScheduleNameCell" id="schedulePositionTD_<s:property value="#itScheduleData.index"/>">
 							<s:if test="%{editable}">
-					    		<s:if test="%{position == null}">
-					    			<s:select id="scheduleposition_%{#itScheduleData.index}" onchange="wsUpdatePositionTotals();" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].positionId" list="positions" listKey="id" listValue="name" theme="simple"/>
+					    		<s:if test="%{selectedPositions.size() != 1}">
+					    			<s:select id="scheduleposition_%{#itScheduleData.index}" onchange="wsUpdatePositionTotals();" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].positionId" list="selectedPositions" listKey="id" listValue="name" theme="simple"/>
 					    		</s:if>
 					    		<s:else>
-					    			<s:property value="position.name"/>
-					    			<s:hidden id="scheduleposition_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].positionId" value="%{position.id}"/>
+					    			<s:property value="selectedPositions[0].name"/>
+					    			<s:hidden id="scheduleposition_%{#itScheduleData.index}" name="weeklyScheduleData.scheduleData[%{#itScheduleData.index}].positionId" value="%{selectedPositions[0].id}"/>
 					    		</s:else>
 				    		</s:if>
 				    		<s:else>
@@ -362,12 +364,12 @@
 							<s:select id="newEmployeeId" name="newEmployeeId" onchange="setValueWithSelectedText('newEmployeeId', 'newEmployeeName'); return true;" list="employees" listKey="id" listValue="fullName" theme="simple"/>
 				    	</td>
 				    	<td class="weekScheduleNameCell">
-				    		<s:if test="%{position == null}">
-								<s:select name="newEmployeePositionId" list="positions" listKey="id" listValue="name" theme="simple"/>
+				    		<s:if test="%{selectedPositions.size() != 1}">
+								<s:select name="newEmployeePositionId" list="selectedPositions" listKey="id" listValue="name" theme="simple"/>
 				    		</s:if>
 				    		<s:else>
-				    			<s:property value="position.name"/>
-				    			<s:hidden name="newEmployeePositionId" value="%{position.id}"/>
+				    			<s:property value="selectedPositions[0].name"/>
+				    			<s:hidden name="newEmployeePositionId" value="%{selectedPositions[0].id}"/>
 				    		</s:else>				    	
 				    	</td>
 						<td class="weekScheduleNameCell" align="center"><a href="<s:url value="#" includeParams="none"/>" onclick="showWaitSplash(); setValueWithSelectedText('newEmployeeId', 'newEmployeeName'); addweeklyshiftbyemployee_form.action='addweeklyshiftbyemployee_addEmployee.action'; addweeklyshiftbyemployee_form.submit();"><img src="<s:url value="/images/add.png" includeParams="none"/>" /></a></td>

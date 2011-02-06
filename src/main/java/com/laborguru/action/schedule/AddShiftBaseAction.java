@@ -23,6 +23,7 @@ import com.laborguru.model.comparator.UserFullNameComparator;
 import com.laborguru.service.data.ReferenceDataService;
 import com.laborguru.service.employee.EmployeeService;
 import com.laborguru.service.position.PositionService;
+import com.laborguru.service.positionGroup.PositionGroupService;
 import com.laborguru.service.projection.ProjectionService;
 import com.laborguru.service.schedule.ScheduleService;
 import com.laborguru.service.staffing.StaffingService;
@@ -38,6 +39,11 @@ import com.laborguru.util.SpmConstants;
  *
  */
 public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private static final Logger log = Logger.getLogger(AddShiftBaseAction.class);
 	
 	private Map<String, String> scheduleViewsMap = null;
@@ -50,6 +56,7 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 	private ProjectionService projectionService;
 	private ReferenceDataService referenceDataService;
 	private PositionService positionService;
+	private PositionGroupService positionGroupService;
 	
 	private String saveSchedule;
 
@@ -59,10 +66,12 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 	private List<PositionGroup> positionGroups;
 	private List<Employee> employees;
 	
+	private String positionSelectId;
+	
 	private Position position;
 	private PositionGroup positionGroup;
 	
-	private List<Position> selectedPositions = new ArrayList<Position>();
+	private List<Position> selectedPositions;
 	
 	private Double hiddenTotalScheduled;
 	
@@ -97,6 +106,23 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 			position.setId(positionId);
 			position = getPositionService().getPositionById(position);
 			return position;
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 * 
+	 * @param positionGroupId
+	 * @return
+	 */
+	protected PositionGroup getPositionGroup(Integer positionGroupId) {
+		if(positionGroupId != null) {
+			PositionGroup positionGroup = new PositionGroup();
+			positionGroup.setId(positionGroupId);
+			positionGroup = getPositionGroupService().getPositionGroupById(positionGroup);
+			positionGroup.getPositions();
+			return positionGroup;
 		} else {
 			return null;
 		}
@@ -278,6 +304,7 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 	 */
 	protected void loadPositions() {
 		this.setPositions(getPositionService().getPositionsByStore(getEmployeeStore()));
+		this.setPositionGroups(getPositionGroupService().getPositionGroupsByStore(getEmployeeStore()));
 	}
 	
 	/**
@@ -292,11 +319,12 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 	 * @return the position
 	 */
 	public Position getPosition() {
-		if(position != null && position.getId() == null) {
-			return null;
-		} else if(position != null && position.getId() != null && position.getName() == null) {
-			Position auxPosition = getPosition(position.getId());
-			position.setName(auxPosition != null ? auxPosition.getName() : null);
+		if(Position.isValidUniqueId(getPositionSelectId())) {
+			if(position == null || position.getId() == null || position.getName() == null) {
+				setPosition(getPosition(Position.getId(getPositionSelectId())));
+			}
+		} else {
+			setPosition(null);
 		}
 		return position;
 	}
@@ -418,18 +446,59 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 	 * @return the selectedPositions
 	 */
 	public List<Position> getSelectedPositions() {
-		selectedPositions.clear();
-		Position pos = getPosition();
-		if(pos != null) {
-			selectedPositions.add(pos);
-		} else if(getPositionGroup() != null) {
-			selectedPositions.addAll(getPositionGroup().getPositions());
-		} else {
-			selectedPositions.addAll(getPositions());
+		if(selectedPositions == null || selectedPositions.size() <= 0) {
+			selectedPositions = new ArrayList<Position>();
+			if(getPosition() != null) {
+				selectedPositions.add(getPosition());
+			} else if(getPositionGroup() != null) {
+				selectedPositions.addAll(getPositionGroup().getPositions());
+			} else {
+				selectedPositions.addAll(getPositions());
+			}
 		}
 		return selectedPositions;
 	}
 
+	/**
+	 * Returns true if all positions are selected
+	 * @return
+	 */
+	protected boolean isAllPositions() {
+		return getPosition() == null && getPositionGroup() == null;
+	}
+	
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 */
+	protected List<Position> getPositionInList(Position position) {
+		List<Position> positions = new ArrayList<Position>();
+		positions.add(position);
+		return positions;
+	}
+	
+	/**
+	 * 
+	 * @param position
+	 */
+	protected boolean isPositionInList(List<Position> positions, Position position) {
+		if(position != null && positions != null) {
+			if(!isAllPositions()) {
+				for(Position pos : positions) {
+					if(isEqualPosition(pos, position)) {
+						return true;
+					}
+				}
+				return false;
+			} else {
+				return true;
+			}
+		} else {
+			return false;
+		}
+	}
+	
 	/**
 	 * @param selectedPositions the selectedPositions to set
 	 */
@@ -442,6 +511,9 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 	 * @return
 	 */
 	public List<PositionGroup> getPositionGroups() {
+		if(positionGroups == null) {
+			setPositionGroups(new ArrayList<PositionGroup>());
+		}
 		return positionGroups;
 	}
 
@@ -458,6 +530,13 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 	 * @return
 	 */
 	public PositionGroup getPositionGroup() {
+		if(PositionGroup.isValidUniqueId(getPositionSelectId())) {
+			if(positionGroup == null) {
+				setPositionGroup(getPositionGroup(PositionGroup.getId(getPositionSelectId())));
+			}
+		} else {
+			setPosition(null);
+		}
 		return positionGroup;
 	}
 
@@ -526,5 +605,37 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 		if(getCopyTargetDay() == null || !CalendarUtils.isAfterToday(getCopyTargetDay())) {
 			loadCopyTargetDay();
 		}
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String getPositionSelectId() {
+		return positionSelectId;
+	}
+
+	/**
+	 * 
+	 * @param positionSelectId
+	 */
+	public void setPositionSelectId(String positionSelectId) {
+		this.positionSelectId = positionSelectId;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public PositionGroupService getPositionGroupService() {
+		return positionGroupService;
+	}
+
+	/**
+	 * 
+	 * @param positionGroupService
+	 */
+	public void setPositionGroupService(PositionGroupService positionGroupService) {
+		this.positionGroupService = positionGroupService;
 	}
 }

@@ -561,6 +561,21 @@ public class EmployeeSchedule extends SpmObject {
 	
 	/**
 	 * 
+	 * @param positions
+	 * @return
+	 */
+	public List<Shift> getReferencedShifts(List<Position> positions) {
+		List<Shift> shifts = new ArrayList<Shift>();
+		if(positions != null) {
+			for(Position aPosition : positions) {
+				shifts.addAll(getReferencedShifts(aPosition));
+			}
+		}
+		return shifts;
+	}
+	
+	/**
+	 * 
 	 * @return
 	 */
 	public List<Shift> getShiftsWithContiguous() {
@@ -588,5 +603,20 @@ public class EmployeeSchedule extends SpmObject {
 			}
 		}
 		return shifts;		
+	}
+	
+	/**
+	 * 
+	 * @param positions
+	 * @return
+	 */
+	public List<Shift> getShiftsWithContiguous(List<Position> positions) {
+		List<Shift> shifts = new ArrayList<Shift>();
+		if(positions != null) {
+			for(Position aPosition : positions) {
+				shifts.addAll(getShiftsWithContiguous(aPosition));
+			}
+		}
+		return shifts;
 	}
 }

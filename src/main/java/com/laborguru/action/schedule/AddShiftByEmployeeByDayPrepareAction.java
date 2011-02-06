@@ -186,11 +186,11 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 	 */
 	private void setScheduleData() {
 		if(scheduleData == null || scheduleData.isEmpty()) {
-			setScheduleData(buildScheduleFor(getPosition()));
+			setScheduleData(buildScheduleFor(getSelectedPositions()));
 		}
 		
 		if(minimumStaffing == null || minimumStaffing.isEmpty()) {
-			setMinimumStaffing(buildMinimumStaffingFor(getPosition()));
+			setMinimumStaffing(buildMinimumStaffingFor(getSelectedPositions()));
 		}
 	}
 	
@@ -320,7 +320,7 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 			setStoreSchedule(null);
 			getWeekDaySelector().setSelectedDay(getCopyTargetDay());
 			
-			setSchedule(getScheduleData(), getPosition());
+			setSchedule(getScheduleData(), getSelectedPositions());
 
 			if(log.isDebugEnabled()) {
 				log.debug("About to copy schedule " + getStoreSchedule());
@@ -353,10 +353,10 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 			log.debug("About to save schedule data " + getScheduleData());
 		}
 		
-		Map<Integer, List<Shift>> shiftsWithContiguous = retrieveCurrentShiftsWithContiguous(getPosition());
-		Map<Integer, List<Shift>> referencedShifts = retrieveCurrentReferencedShifts(getPosition());
+		Map<Integer, List<Shift>> shiftsWithContiguous = retrieveCurrentShiftsWithContiguous(getSelectedPositions());
+		Map<Integer, List<Shift>> referencedShifts = retrieveCurrentReferencedShifts(getSelectedPositions());
 		
-		setSchedule(getScheduleData(), getPosition());
+		setSchedule(getScheduleData(), getSelectedPositions());
 		
 		List<Shift> outOfScheduleShiftsToUpdate = new ArrayList<Shift>(shiftsWithContiguous.size() + referencedShifts.size());
 		outOfScheduleShiftsToUpdate.addAll(updateShiftsWithContiguous(shiftsWithContiguous));

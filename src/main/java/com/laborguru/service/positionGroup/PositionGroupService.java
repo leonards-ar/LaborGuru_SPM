@@ -37,9 +37,9 @@ public interface PositionGroupService extends Service{
 	void delete(PositionGroup positionGroup);
 	
 	/**
-	 * Retrieves a position by position group id
-	 * @param position Position with id populated
-	 * @return the Position
+	 * Retrieves a position group by position group id
+	 * @param positionGroup Position group with id populated
+	 * @return the position group
 	 */
-	PositionGroup getPositionById(PositionGroup positionGroup);
+	PositionGroup getPositionGroupById(PositionGroup positionGroup);
 }

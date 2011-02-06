@@ -14,7 +14,7 @@ public class PositionGroupServiceBean implements PositionGroupService {
 		//not implemented.
 	}
 
-	public PositionGroup getPositionById(PositionGroup positionGroup) {
+	public PositionGroup getPositionGroupById(PositionGroup positionGroup) {
 		return positionGroupDao.getPositionGroupById(positionGroup);
 	}
 
