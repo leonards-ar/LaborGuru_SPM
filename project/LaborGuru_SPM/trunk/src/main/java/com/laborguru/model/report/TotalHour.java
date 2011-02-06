@@ -142,7 +142,7 @@ public class TotalHour extends SpmObject {
 	public BigDecimal getScheduleLaborPercentage() {
 		BigDecimal ps = getProjectedSales();
 		if(ps != null && ps.compareTo(SpmConstants.BD_ZERO_VALUE) != 0) {
-			return getSchedule().multiply(getStoreAverageWageAsBigDecimal()).divide(ps, 2, SpmConstants.ROUNDING_MODE);
+			return getSchedule().multiply(getStoreAverageWageAsBigDecimal()).divide(ps, 2, SpmConstants.ROUNDING_MODE).multiply(new BigDecimal(100));
 		} else {
 			return SpmConstants.BD_ZERO_VALUE;
 		}
@@ -155,7 +155,7 @@ public class TotalHour extends SpmObject {
 	public BigDecimal getTargetLaborPercentage() {
 		BigDecimal ps = getProjectedSales();
 		if(ps != null && ps.compareTo(SpmConstants.BD_ZERO_VALUE) != 0) {
-			return getTarget().multiply(getStoreAverageWageAsBigDecimal()).divide(ps, 2, SpmConstants.ROUNDING_MODE);
+			return getTarget().multiply(getStoreAverageWageAsBigDecimal()).divide(ps, 2, SpmConstants.ROUNDING_MODE).multiply(new BigDecimal(100));
 		} else {
 			return SpmConstants.BD_ZERO_VALUE;
 		}

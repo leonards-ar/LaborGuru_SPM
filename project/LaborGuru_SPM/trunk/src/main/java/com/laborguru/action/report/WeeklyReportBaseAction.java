@@ -109,8 +109,8 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 			if(getTotalSchedule().compareTo(SpmConstants.BD_ZERO_VALUE) != 0 && getTotalProjectedSales().compareTo(SpmConstants.BD_ZERO_VALUE) != 0) {
 				averageWage = totalWage / NumberUtils.getDoubleValue(getTotalSchedule());
 				
-				setTotalScheduleLaborPercentage(getTotalSchedule().multiply(new BigDecimal(averageWage)).divide(getTotalProjectedSales(), 2, SpmConstants.ROUNDING_MODE));
-				setTotalTargetLaborPercentage(getTotalTarget().multiply(new BigDecimal(averageWage)).divide(getTotalProjectedSales(), 2, SpmConstants.ROUNDING_MODE));
+				setTotalScheduleLaborPercentage(getTotalSchedule().multiply(new BigDecimal(averageWage)).divide(getTotalProjectedSales(), 2, SpmConstants.ROUNDING_MODE).multiply(new BigDecimal(100)));
+				setTotalTargetLaborPercentage(getTotalTarget().multiply(new BigDecimal(averageWage)).divide(getTotalProjectedSales(), 2, SpmConstants.ROUNDING_MODE).multiply(new BigDecimal(100)));
 			}
 			
 		}
