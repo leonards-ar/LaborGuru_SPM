@@ -129,13 +129,14 @@
 							<td>&nbsp;</td>
 							<td align="left"><s:div id="selectItemDiv"
 								formId="report_form" href="%{positionAutoCompleter}"
-								theme="ajax" listenTopics="/Changed" /></td>
+								theme="ajax" listenTopics="/Changed" cssClass="waitMessage" loadingText='%{getText("wait.message")}'/>
+							</td>
 
 						</tr>
 					</table>
 					</td>
 				</tr>
-			</s:form>
+			
 		</table>
 		</td>
 	</tr>
@@ -152,7 +153,7 @@
 					theme="ajax" formId="report_form" listenTopics="/refresh,/Changed" 
 					indicator="indicator" href="%{forecastReport}" cssClass="waitMessage" 
 					loadingText='%{getText("wait.message")}'/>
-			</td>
+				</td>
 			</tr>
 			
 			<tr>
@@ -168,6 +169,7 @@
 		</td>
 	</tr>
 </table>
+</s:form>
 
 <center><img id="indicator"
 	style="display: none;"

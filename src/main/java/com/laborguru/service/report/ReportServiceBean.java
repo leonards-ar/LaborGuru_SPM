@@ -17,11 +17,13 @@ import com.laborguru.model.Position;
 import com.laborguru.model.PositionGroup;
 import com.laborguru.model.Store;
 import com.laborguru.model.StoreDailyHistoricSalesStaffing;
+import com.laborguru.model.StoreSchedule;
 import com.laborguru.model.report.FixedLaborHoursReport;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.model.report.TotalHourByPosition;
 import com.laborguru.service.projection.ProjectionService;
 import com.laborguru.service.report.dao.ReportDao;
+import com.laborguru.service.schedule.ScheduleService;
 import com.laborguru.service.staffing.StaffingService;
 import com.laborguru.util.CalendarUtils;
 import com.laborguru.util.SpmConstants;
@@ -38,6 +40,7 @@ public class ReportServiceBean implements ReportService {
 
 	private StaffingService staffingService;
 	private ProjectionService projectionService;
+	private ScheduleService scheduleService;
 	private ReportDao reportDao;
 
 	/**
@@ -59,7 +62,7 @@ public class ReportServiceBean implements ReportService {
 				List<TotalHour> scheduleTotalHours = reportDao.getScheduleWeeklyTotalHour(store, start, end);
 				List<TotalHour> targetTotalHours = reportDao.getTargetWeeklyTotalHour(store, start, end);
 				
-				return getMergedTotalHours(scheduleTotalHours, targetTotalHours, projections, start, end); 
+				return getMergedTotalHours(store, scheduleTotalHours, targetTotalHours, projections, start, end); 
 			} catch (SQLException e) {
 				log.error("An SQLError has occurred", e);
 				throw new SpmUncheckedException(e.getCause(), e.getMessage(),
@@ -81,7 +84,7 @@ public class ReportServiceBean implements ReportService {
 			List<TotalHour> scheduleTotalHours = reportDao.getScheduleWeeklyTotalHourByPosition(store, position, start, end);
 			List<TotalHour> targetTotalHours = reportDao.getTargetWeeklyTotalHourByPosition(store, position, start, end);
 			
-			return getMergedTotalHours(scheduleTotalHours, targetTotalHours, projections, start, end);
+			return getMergedTotalHours(store, scheduleTotalHours, targetTotalHours, projections, start, end);
 			
 		} catch (SQLException e) {
 			log.error("An SQLError has occurred", e);
@@ -96,7 +99,7 @@ public class ReportServiceBean implements ReportService {
 			List<DailyProjection> projections = projectionService.getAdjustedDailyProjectionForAWeek(store, start);
 			List<TotalHour> scheduleTotalHours = reportDao.getScheduleWeeklyTotalHourByService(store, positiongroup, start, end);
 			List<TotalHour> targetTotalHours = reportDao.getTargetWeeklyTotalHourByService(store, positiongroup, start, end);
-			return getMergedTotalHours(scheduleTotalHours, targetTotalHours, projections, start, end);
+			return getMergedTotalHours(store, scheduleTotalHours, targetTotalHours, projections, start, end);
 			
 		} catch (SQLException e) {
 			log.error("An SQLError has occurred", e);
@@ -162,7 +165,7 @@ public class ReportServiceBean implements ReportService {
 				halfHourProjections = projections.getHalfHourProjections();
 			}
 			
-			return getMergedHalfHours(startHour, endHour, halfHourProjections, schedule, target);
+			return getMergedHalfHours(store, startHour, endHour, halfHourProjections, schedule, target);
 			
 		}catch(SQLException e){
 			log.error("An SQLError has occurred", e);
@@ -189,7 +192,7 @@ public class ReportServiceBean implements ReportService {
 				halfHourProjections = projections.getHalfHourProjections();
 			}
 
-			return getMergedHalfHours(startHour, endHour, halfHourProjections, schedule, target);
+			return getMergedHalfHours(store, startHour, endHour, halfHourProjections, schedule, target);
 		} catch(SQLException e){
 			log.error("An SQLError has occurred", e);
 			throw new SpmUncheckedException(e.getCause(), e.getMessage(),
@@ -215,7 +218,7 @@ public class ReportServiceBean implements ReportService {
 				halfHourProjections = projections.getHalfHourProjections();
 			}
 	
-			return getMergedHalfHours(startHour, endHour, halfHourProjections, schedule, target);
+			return getMergedHalfHours(store, startHour, endHour, halfHourProjections, schedule, target);
 			
 		} catch(SQLException e){
 			log.error("An SQLError has occurred", e);
@@ -236,7 +239,7 @@ public class ReportServiceBean implements ReportService {
 			List<TotalHour> actualHours = reportDao.getActualHours(store, start, end);			
 			List<TotalHour> minimumStaffing = getActualMinimumStaffing(store, start, end);
 			 
-			return getMergedTotalEfficiencyHours(actualSales, actualHours, minimumStaffing, start, end);
+			return getMergedTotalEfficiencyHours(store, actualSales, actualHours, minimumStaffing, start, end);
 			
 		} catch(SQLException e) {
 			log.error("An SQLError has occurred", e);
@@ -258,7 +261,7 @@ public class ReportServiceBean implements ReportService {
 			List<TotalHour> scheduleTotalHours = reportDao.getScheduleWeeklyTotalHour(store, start, end);
 			List<TotalHour> actualHours = reportDao.getActualHours(store, start, end);
 		
-			return getMergedTotalEfficiencyHours(actualSales, scheduleTotalHours, actualHours, start, end);
+			return getMergedTotalEfficiencyHours(store, actualSales, scheduleTotalHours, actualHours, start, end);
 		} catch (SQLException e) {
 			log.error("An SQLError has occurred", e);
 			throw new SpmUncheckedException(e.getCause(), e.getMessage(),
@@ -318,7 +321,7 @@ public class ReportServiceBean implements ReportService {
 		try{
 			List<HistoricSales> actualSales = reportDao.getActualSales(store, start, end);
 			List<DailyProjection> projections = getProjectionService().getDailyProjections(store, start, end);
-			return getMergedForecastHours(start, end, actualSales, projections);
+			return getMergedForecastHours(store, start, end, actualSales, projections);
 			
 		}catch (SQLException e) {
 			log.error("An SQLError has occurred", e);
@@ -370,13 +373,13 @@ public class ReportServiceBean implements ReportService {
 		return null;
 	}
 	
-	private List<TotalHour> getMergedTotalHours(List<TotalHour> scheduleTotalHours, List<TotalHour> targetTotalHours, List<DailyProjection>projections, Date startDate, Date endDate) {
+	private List<TotalHour> getMergedTotalHours(Store store, List<TotalHour> scheduleTotalHours, List<TotalHour> targetTotalHours, List<DailyProjection>projections, Date startDate, Date endDate) {
 		
 		List<TotalHour> totalHours = new ArrayList<TotalHour>();
 		
 		for (Date date=startDate; date.compareTo(endDate) <= 0; date=CalendarUtils.addOrSubstractDays(date, 1)) {
-			
-			TotalHour totalhour = new TotalHour();
+			Double storeWages[] = getStoreWages(store, date);
+			TotalHour totalhour = new TotalHour(store.getAverageVariable(), storeWages[0], storeWages[1]);
 			totalhour.setDay(date);
 			DailyProjection dp = getDailyProjectionByDate(date, projections);
 			if(dp != null){
@@ -395,7 +398,7 @@ public class ReportServiceBean implements ReportService {
 
 	}
 	
-	private List<TotalHour> getMergedForecastHours(Date startDate, Date endDate, List<HistoricSales> actualSales, List<DailyProjection> projections){
+	private List<TotalHour> getMergedForecastHours(Store store, Date startDate, Date endDate, List<HistoricSales> actualSales, List<DailyProjection> projections){
 		List<TotalHour> totalHours = new ArrayList<TotalHour>();
 		
 		for (Date date=startDate; date.compareTo(endDate) <= 0; date=CalendarUtils.addOrSubstractDays(date, 1)) {
@@ -422,7 +425,7 @@ public class ReportServiceBean implements ReportService {
 		return totalHours;
 		
 	}
-	private List<TotalHour> getMergedHalfHours(Date startHour, Date endHour, List<HalfHourProjection> halfHourProjections, List<TotalHour> schedule, List<TotalHour> target){
+	private List<TotalHour> getMergedHalfHours(Store store, Date startHour, Date endHour, List<HalfHourProjection> halfHourProjections, List<TotalHour> schedule, List<TotalHour> target){
 		List <TotalHour> totalHours = new ArrayList<TotalHour>();
 		
 		//if start hour is greater or equals than end hour, it means that 
@@ -454,7 +457,7 @@ public class ReportServiceBean implements ReportService {
 		return totalHours;
 	}
 	
-	private List<TotalHour> getMergedTotalEfficiencyHours(List<HistoricSales> actualSales, List<TotalHour>scheduleTotalHours, List<TotalHour> targetTotalHours, Date startDate, Date endDate) {
+	private List<TotalHour> getMergedTotalEfficiencyHours(Store store, List<HistoricSales> actualSales, List<TotalHour>scheduleTotalHours, List<TotalHour> targetTotalHours, Date startDate, Date endDate) {
 		List<TotalHour> totalHours = new ArrayList<TotalHour>();
 		
 		for (Date date=startDate; date.compareTo(endDate) <= 0; date=CalendarUtils.addOrSubstractDays(date, 1)) {
@@ -556,6 +559,41 @@ public class ReportServiceBean implements ReportService {
 	 */
 	public void setProjectionService(ProjectionService projectionService) {
 		this.projectionService = projectionService;
+	}
+	
+	/**
+	 * 
+	 * @param store
+	 * @param day
+	 * @return
+	 */
+	private Double[] getStoreWages(Store store, Date day) {
+		Double storeWages[] = new Double[2];
+		StoreSchedule schedule = getScheduleService().getStoreScheduleByDate(store, day);
+		if(schedule != null) {
+			storeWages[0] = schedule.getAverageWage();
+			storeWages[1] = schedule.getTotalWage();
+		} else {
+			storeWages[0] = new Double(0.0);
+			storeWages[1] = new Double(0.0);
+		}
+		return storeWages;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public ScheduleService getScheduleService() {
+		return scheduleService;
+	}
+
+	/**
+	 * 
+	 * @param scheduleService
+	 */
+	public void setScheduleService(ScheduleService scheduleService) {
+		this.scheduleService = scheduleService;
 	}
 
 }

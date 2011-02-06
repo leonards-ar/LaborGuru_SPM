@@ -138,6 +138,7 @@
 	    <property name="reportDao" ref="reportDao"/>
 	    <property name="staffingService" ref="staffingService" />
 	    <property name="projectionService" ref="projectionService" />
+	    <property name="scheduleService" ref="scheduleService" />
 	</bean>
 
   <bean id="reportCustomerServiceTarget" class="com.laborguru.service.report.ReportCustomerServiceBean">

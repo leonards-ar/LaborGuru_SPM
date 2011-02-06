@@ -1546,7 +1546,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	private double getTotalHoursSchedule() {
 		double total = 0.0;
 		for(StoreSchedule aStoreSchedule : getStoreSchedules()) {
-			total += aStoreSchedule.getTotalShiftHours();
+			total += NumberUtils.getDoubleValue(aStoreSchedule.getTotalShiftHours());
 		}
 		return new Double(total);
 	}

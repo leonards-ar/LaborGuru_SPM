@@ -38,4 +38,5 @@ public class SpmConstants {
 	public static final int HALF_HOURS_IN_A_DAY=48;
 	
 	public static final BigDecimal BD_ZERO_VALUE = new BigDecimal(INIT_VALUE_ZERO);
+	public static final Double DOUBLE_ZERO_VALUE = new Double(INIT_VALUE_ZERO);
 }

@@ -1,7 +1,6 @@
 package com.laborguru.model.report;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -10,6 +9,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.laborguru.model.SpmObject;
+import com.laborguru.util.NumberUtils;
 import com.laborguru.util.SpmConstants;
 
 /**
@@ -19,15 +19,36 @@ import com.laborguru.util.SpmConstants;
  * @since SPM 1.0
  *
  */
-public class TotalHour extends SpmObject{
+public class TotalHour extends SpmObject {
 	
 	private static final long serialVersionUID = -7940750254658565313L;
 	
 	private Date day;
-	private BigDecimal sales;
-	private BigDecimal schedule;
-	private BigDecimal target;
+	private BigDecimal sales = SpmConstants.BD_ZERO_VALUE;
+	private BigDecimal schedule = SpmConstants.BD_ZERO_VALUE;
+	private BigDecimal target = SpmConstants.BD_ZERO_VALUE;
+	private Double storeAverageVariable = SpmConstants.DOUBLE_ZERO_VALUE;
+	private Double storeAverageWage = SpmConstants.DOUBLE_ZERO_VALUE;
+	private Double storeTotalWage = SpmConstants.DOUBLE_ZERO_VALUE;
 	
+	/**
+	 * 
+	 */
+	public TotalHour() {
+		super();
+	}
+	
+	/**
+	 * 
+	 * @param storeAverageVariable
+	 * @param storeAverageWage
+	 */
+	public TotalHour(Double storeAverageVariable, Double storeAverageWage, Double storeTotalWage) {
+		super();
+		setStoreAverageVariable(storeAverageVariable);
+		setStoreAverageWage(storeAverageWage);
+		setStoreTotalWage(storeTotalWage);
+	}
 	
 	/**
 	 * @return the day
@@ -95,6 +116,61 @@ public class TotalHour extends SpmObject{
 		return getDifference().divide(target, 2, SpmConstants.ROUNDING_MODE).multiply(new BigDecimal(100));
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public BigDecimal getVplhSchedule() {
+		if(schedule == null || schedule.compareTo(SpmConstants.BD_ZERO_VALUE) == 0) {
+			return SpmConstants.BD_ZERO_VALUE;
+		}
+		return getSales().divide(schedule, 2, SpmConstants.ROUNDING_MODE);		
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public BigDecimal getProjectedSales() {
+		return new BigDecimal(NumberUtils.getDoubleValue(getStoreAverageVariable())).multiply(getSales());
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public BigDecimal getScheduleLaborPercentage() {
+		BigDecimal ps = getProjectedSales();
+		if(ps != null && ps.compareTo(SpmConstants.BD_ZERO_VALUE) != 0) {
+			return getSchedule().multiply(getStoreAverageWageAsBigDecimal()).divide(ps, 2, SpmConstants.ROUNDING_MODE);
+		} else {
+			return SpmConstants.BD_ZERO_VALUE;
+		}
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public BigDecimal getTargetLaborPercentage() {
+		BigDecimal ps = getProjectedSales();
+		if(ps != null && ps.compareTo(SpmConstants.BD_ZERO_VALUE) != 0) {
+			return getTarget().multiply(getStoreAverageWageAsBigDecimal()).divide(ps, 2, SpmConstants.ROUNDING_MODE);
+		} else {
+			return SpmConstants.BD_ZERO_VALUE;
+		}
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public BigDecimal getVplhTarget() {
+		if(target == null || target.compareTo(SpmConstants.BD_ZERO_VALUE) == 0) {
+			return SpmConstants.BD_ZERO_VALUE;
+		}
+		return getSales().divide(target, 2, SpmConstants.ROUNDING_MODE);		
+	}
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -138,5 +214,59 @@ public class TotalHour extends SpmObject{
 		.toString();
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getStoreAverageVariable() {
+		return storeAverageVariable;
+	}
 	
+	/**
+	 * 
+	 * @param storeAverageVariable
+	 */
+	public void setStoreAverageVariable(Double storeAverageVariable) {
+		this.storeAverageVariable = storeAverageVariable;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getStoreAverageWage() {
+		return storeAverageWage;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	private BigDecimal getStoreAverageWageAsBigDecimal() {
+		return new BigDecimal(NumberUtils.getDoubleValue(getStoreAverageWage()));
+	}
+	
+	/**
+	 * 
+	 * @param storeAverageWage
+	 */
+	public void setStoreAverageWage(Double storeAverageWage) {
+		this.storeAverageWage = storeAverageWage;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getStoreTotalWage() {
+		return storeTotalWage;
+	}
+
+	/**
+	 * 
+	 * @param storeTotalWage
+	 */
+	public void setStoreTotalWage(Double storeTotalWage) {
+		this.storeTotalWage = storeTotalWage;
+	}
 }
