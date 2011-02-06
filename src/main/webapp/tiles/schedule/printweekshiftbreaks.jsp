@@ -138,9 +138,9 @@
 									<table border="0" cellpadding="1" cellspacing="0" align="center">
 									<s:iterator id="shift" value="shifts" status="itShiftStatus">
 										<tr>
-											<td class="printScheduleValueTextCell"><s:text name='schedule.printshift.weekly.hour.dateformat'><s:param value='fromHour'/></s:text></td>
+											<td class="printScheduleValueTextCell"><s:property value="fromHourAsString"/></td>
 											<td class="printScheduleValueTextCell">-</td>
-											<td class="printScheduleValueTextCell"><s:text name='schedule.printshift.weekly.hour.dateformat'><s:param value='toHour'/></s:text></td>
+											<td class="printScheduleValueTextCell"><s:property value="toHourAsString"/></td>
 										</tr>
 									</s:iterator>
 									</table>
