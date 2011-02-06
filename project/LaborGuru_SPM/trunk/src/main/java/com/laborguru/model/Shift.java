@@ -490,4 +490,19 @@ public class Shift extends SpmObject {
 		
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getFromHourAsString() {
+		return CalendarUtils.dateToDisplayTime(getFromHour());
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getToHourAsString() {
+		return CalendarUtils.dateToDisplayTime(getToHour());
+	}	
 }
