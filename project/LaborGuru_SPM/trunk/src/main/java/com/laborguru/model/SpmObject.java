@@ -39,4 +39,5 @@ public abstract class SpmObject implements Serializable {
 	 * @see java.lang.Object#hashCode()
 	 */
 	public abstract int hashCode();
+
 }

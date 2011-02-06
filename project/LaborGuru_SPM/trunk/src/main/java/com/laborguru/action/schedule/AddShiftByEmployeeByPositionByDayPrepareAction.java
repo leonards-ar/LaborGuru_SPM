@@ -315,8 +315,8 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftByDa
 			log.debug("About to save schedule data" + getPositionScheduleData());
 		}
 		
-		Map<Integer, List<Shift>> shiftsWithContiguous = retrieveCurrentShiftsWithContiguous(getPosition());
-		Map<Integer, List<Shift>> referencedShifts = retrieveCurrentReferencedShifts(getPosition());
+		Map<Integer, List<Shift>> shiftsWithContiguous = retrieveCurrentShiftsWithContiguous(getSelectedPositions());
+		Map<Integer, List<Shift>> referencedShifts = retrieveCurrentReferencedShifts(getSelectedPositions());
 		
 		setSchedule();
 		
@@ -380,10 +380,11 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftByDa
 		if(positionScheduleData == null || positionScheduleData.isEmpty()) {
 			ScheduleByPositionEntry scheduleEntry;
 			for(Position aPosition : getPositions()) {
-				Position selectedPosition = getPosition();
+				List<Position> selectedPositions = getSelectedPositions();
 				// If it is filtered by position only include that position
-				if(selectedPosition == null || isEqualPosition(selectedPosition, aPosition)) {
+				if(isAllPositions() || isPositionInList(selectedPositions, aPosition)) {
 					scheduleEntry = new ScheduleByPositionEntry();
+
 					scheduleEntry.setScheduleData(buildScheduleFor(aPosition));
 					scheduleEntry.setMinimumStaffing(buildMinimumStaffingFor(aPosition));
 					scheduleEntry.setPosition(aPosition);

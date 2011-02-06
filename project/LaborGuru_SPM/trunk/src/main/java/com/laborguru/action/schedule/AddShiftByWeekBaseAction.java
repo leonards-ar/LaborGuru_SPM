@@ -102,9 +102,9 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	
 	/**
 	 * 
-	 * @param position
+	 * @param positions
 	 */
-	protected void buildScheduleDataFor(Position position) {
+	protected void buildScheduleDataFor(List<Position> positions) {
 		int size = getStoreSchedules().size();
 		StoreSchedule aSchedule;
 		WeeklyScheduleRow aRow;
@@ -115,14 +115,14 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 			for(EmployeeSchedule employeeSchedule : aSchedule.getEmployeeSchedules()) {
 				if(employeeSchedule != null) {
 					for(Shift shift : employeeSchedule.getShifts()) {
-						if(shift != null && !shift.isBreak() && (position == null || (position != null && isEqualPosition(position, shift.getPosition()))) && !shift.isReferencedShift()) {
+						if(shift != null && !shift.isBreak() && (isAllPositions() || isPositionInList(positions, shift.getPosition())) && !shift.isReferencedShift()) {
 							aRow = getRowFor(employeeSchedule, shift);
 							if(aRow == null) {
 								aRow = buildRowFor(employeeSchedule, shift);
 								getWeeklyScheduleData().addScheduleRow(getGroupById(employeeSchedule.getEmployee(), shift), aRow);
 							}
 							buildScheduleDataFor(aRow, employeeSchedule, shift, i);
-						} else if(!shift.isBreak() && position != null) {
+						} else if(!shift.isBreak() && !isAllPositions()) {
 							// Total shift hours that are not shown, but should be taken into account
 							// for totals
 							hiddenTotalScheduled += NumberUtils.getDoubleValue(shift.getTotalShiftHours());
@@ -284,7 +284,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 */
 	protected void setScheduleData() {
 		if(getWeeklyScheduleData().isEmpty()) {
-			buildScheduleDataFor(getPosition());
+			buildScheduleDataFor(getSelectedPositions());
 		}
 	}
 
@@ -434,12 +434,12 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 			
 			for(EmployeeSchedule employeeSchedule : storeSchedule.getEmployeeSchedules()) {
 				if(employeeSchedule.getEmployee() != null && !employeeIds.contains(employeeSchedule.getEmployee().getId())) {
-					if(getPosition() == null) {
+					if(isAllPositions()) {
 						// Applies for all positions
 						employeeSchedulesToRemove.add(employeeSchedule);
 					} else {
 						for(Shift shift : employeeSchedule.getShifts()) {
-							if(isEqualPosition(shift.getPosition(), getPosition())) {
+							if(isPositionInList(getSelectedPositions(), shift.getPosition())) {
 								shiftsToRemove.add(shift);
 							}
 						}
@@ -466,10 +466,10 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 * @param shiftsFromPreviousDay
 	 */
 	private void setShifts(List<WeeklyScheduleRow> source, EmployeeSchedule employeeSchedule, int dayIndex, List<Shift> shiftsFromPreviousDay) {
-		if(getPosition() == null) {
+		if(isAllPositions()) {
 			setShiftsAllPositions(source, employeeSchedule, dayIndex, shiftsFromPreviousDay);
 		} else {
-			setShiftsForPosition(source, employeeSchedule, getPosition(), dayIndex, shiftsFromPreviousDay);
+			setShiftsForPositions(source, employeeSchedule, getSelectedPositions(), dayIndex, shiftsFromPreviousDay);
 		}
 	}
 	
@@ -731,11 +731,11 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 * 
 	 * @param source
 	 * @param employeeSchedule
-	 * @param position
+	 * @param positions
 	 * @param dayIndex
 	 * @param shiftsForNextDay
 	 */
-	private void setShiftsForPosition(List<WeeklyScheduleRow> source, EmployeeSchedule employeeSchedule, Position position, int dayIndex, List<Shift> shiftsForNextDay) {
+	private void setShiftsForPositions(List<WeeklyScheduleRow> source, EmployeeSchedule employeeSchedule, List<Position> positions, int dayIndex, List<Shift> shiftsForNextDay) {
 		int shiftPosition = 0;
 		Shift rowShift;
 		List<Shift> currentShifts = employeeSchedule.getShifts();
@@ -745,8 +745,8 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	
 		for(WeeklyScheduleRow row : source) {
 			rowShift = retrieveShift(row, dayIndex);
-			if(rowShift != null && isEqualPosition(position, rowShift.getPosition()) && changeShiftForPosition(rowShift, employeeSchedule)) {
-				while(shiftPosition < currentShifts.size() && (isShiftToKeep(shiftsToKeep, currentShifts.get(shiftPosition)) || !isEqualPosition(position, currentShifts.get(shiftPosition).getPosition()))) {
+			if(rowShift != null && isPositionInList(positions, rowShift.getPosition()) && changeShiftForPosition(rowShift, employeeSchedule)) {
+				while(shiftPosition < currentShifts.size() && (isShiftToKeep(shiftsToKeep, currentShifts.get(shiftPosition)) || !isPositionInList(positions, currentShifts.get(shiftPosition).getPosition()))) {
 					shiftPosition++;
 				}
 				
@@ -768,7 +768,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		// Remove non-existing shifts
 		if(shiftPosition < currentShiftsSize) {
 			for(int i = currentShiftsSize - 1; i >= shiftPosition; i--) {
-				if(isEqualPosition(position, currentShifts.get(i).getPosition()) && !isShiftToKeep(shiftsToKeep, currentShifts.get(i))) {
+				if(isPositionInList(positions, currentShifts.get(i).getPosition()) && !isShiftToKeep(shiftsToKeep, currentShifts.get(i))) {
 					currentShifts.remove(i);
 				}
 			}

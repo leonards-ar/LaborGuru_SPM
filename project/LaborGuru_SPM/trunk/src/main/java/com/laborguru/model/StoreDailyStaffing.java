@@ -8,6 +8,7 @@ package com.laborguru.model;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -66,6 +67,22 @@ public class StoreDailyStaffing extends SpmObject {
 				halfHourIndex = dailyStaffing.getHalfHourIndex(time);
 			}
 			total += dailyStaffing.getHalfHourStaffing().get(halfHourIndex).getCalculatedStaff().intValue();
+		}
+		return total;
+	}
+	
+	/**
+	 * 
+	 * @param positions
+	 * @param time
+	 * @return
+	 */
+	public int getHalfHourStaffing(List<Position> positions, Date time) {
+		int total = 0;
+		if(positions != null) {
+			for(Position pos : positions) {
+				total += getHalfHourStaffing(pos, time);
+			}
 		}
 		return total;
 	}

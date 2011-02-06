@@ -56,7 +56,9 @@
 													<s:select id="selectView" name="selectView" onchange="showWaitSplash(); addshiftbyemployeebyposition_form.action=addshiftbyemployeebyposition_form.selectView.value; addshiftbyemployeebyposition_form.submit();" theme="simple" list="scheduleViewsMap" listKey="key" listValue="%{getText(value)}"/></td>
 												<td align="right" class="form_label"><s:text name="schedule.addshift.positions"/></td>
 												<td align="left">
-													<s:select onchange="showWaitSplash(); addshiftbyemployeebyposition_form.action='addshiftbyemployeebyposition_selectPosition.action'; addshiftbyemployeebyposition_form.submit();" name="position.id" list="positions" listKey="id" listValue="name" theme="simple" headerKey="" headerValue="%{getText('schedule.addshift.positions.header.label')}"/>					
+													<s:select onchange="showWaitSplash(); addshiftbyemployeebyposition_form.action='addshiftbyemployeebyposition_selectPosition.action'; addshiftbyemployeebyposition_form.submit();" name="positionSelectId" list="positions" listKey="uniqueId" listValue="name" theme="simple" headerKey="" headerValue="%{getText('schedule.addshift.positions.header.label')}">
+														<s:optgroup label="%{getText('schedule.addshift.position_groups.header.label')}" list="positionGroups" listKey="uniqueId" listValue="name"/>
+													</s:select>					
 												</td>
 											</tr>
 										</table>

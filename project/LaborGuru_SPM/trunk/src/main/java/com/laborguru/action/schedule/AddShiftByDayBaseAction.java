@@ -365,10 +365,10 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	 * in the GUI. If position is null, then all positions will be taken
 	 * into account, if not the schedule will be filtered by position.
 	 * The StoreSchedule object is used as the source of data.
-	 * @param position
+	 * @param positions
 	 * @return
 	 */
-	protected List<ScheduleRow> buildScheduleFor(Position position) {
+	protected List<ScheduleRow> buildScheduleFor(List<Position> positions) {
 		if(getStoreSchedule() != null) {
 			List<ScheduleRow> schedule = new ArrayList<ScheduleRow>();
 			ScheduleRow aRow = null;
@@ -378,13 +378,13 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 				boolean isFirst = true;
 				for(Shift shift : employeeSchedule.getShifts()) {
 					if(shift != null) {
-						if(!shift.isBreak() && (position == null || (position != null && isEqualPosition(position, shift.getPosition())))) {
+						if(!shift.isBreak() && (isAllPositions() || isPositionInList(positions, shift.getPosition()))) {
 							aRow = buildScheduleRow(employeeSchedule, shift, schedule, isFirst);
 							isFirst = false;
 							if(aRow != null) {
 								schedule.add(aRow);
 							}
-						} else if(!shift.isBreak() && position != null) {
+						} else if(!shift.isBreak() && !isAllPositions()) {
 							// Total shift hours that are not shown, but should be taken into account
 							// for totals
 							hiddenTotalScheduled += NumberUtils.getDoubleValue(shift.getTotalShiftHours());
@@ -404,6 +404,16 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 
 	/**
 	 * 
+	 * @param position
+	 * @return
+	 */
+	protected List<ScheduleRow> buildScheduleFor(Position position) {
+		return buildScheduleFor(getPositionInList(position));
+	}
+	
+	
+	/**
+	 * 
 	 * @param time
 	 * @return
 	 */
@@ -419,10 +429,10 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	
 	/**
 	 * 
-	 * @param position
+	 * @param positions
 	 * @return
 	 */
-	protected List<Integer> buildMinimumStaffingFor(Position position) {
+	protected List<Integer> buildMinimumStaffingFor(List<Position> positions) {
 		int size = getScheduleIndividualHours().size();
 		List<Integer> minimumStaffing = new ArrayList<Integer>(size);
 
@@ -430,7 +440,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 		// This should be calculated only once
 		StoreDailyStaffing dailyStaffing = getSelectedDayDailyStaffing();
 		Date lastProcessedTime = null;
-		if(position == null) {
+		if(isAllPositions()) {
 			for(Date time : getScheduleIndividualHours()) {
 				if(lastProcessedTime != null && CalendarUtils.smallerTime(time, lastProcessedTime)) {
 					dailyStaffing = getNextDayDailyStaffing();
@@ -450,7 +460,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 				if(isExtraHourTime(time)) {
 					minimumStaffing.add(new Integer(0));
 				} else {
-					minimumStaffing.add(new Integer(dailyStaffing.getHalfHourStaffing(position, time)));
+					minimumStaffing.add(new Integer(dailyStaffing.getHalfHourStaffing(positions, time)));
 				}				
 				lastProcessedTime = time;
 			}			
@@ -461,14 +471,24 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 
 	/**
 	 * 
+	 * @param position
 	 * @return
 	 */
-	protected Map<Integer, List<Shift>> retrieveCurrentShiftsWithContiguous(Position position) {
+	protected List<Integer> buildMinimumStaffingFor(Position position) {
+		return buildMinimumStaffingFor(	getPositionInList(position));
+	}
+	
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 */
+	protected Map<Integer, List<Shift>> retrieveCurrentShiftsWithContiguous(List<Position> positions) {
 		Map<Integer, List<Shift>> shiftsWithContiguous = new HashMap<Integer, List<Shift>>();
 		
 		List<Shift> shifts;
 		for(EmployeeSchedule schedule : getStoreSchedule().getEmployeeSchedules()) {
-			shifts = position == null ? schedule.getShiftsWithContiguous() : schedule.getShiftsWithContiguous(position);
+			shifts = isAllPositions() ? schedule.getShiftsWithContiguous() : schedule.getShiftsWithContiguous(positions);
 			if(shifts != null && shifts.size() > 0) {
 				shiftsWithContiguous.put(schedule.getEmployee().getId(), cloneShifts(shifts));
 			}
@@ -570,14 +590,15 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 
 	/**
 	 * 
+	 * @param positions
 	 * @return
 	 */
-	protected Map<Integer, List<Shift>> retrieveCurrentReferencedShifts(Position position) {
+	protected Map<Integer, List<Shift>> retrieveCurrentReferencedShifts(List<Position> positions) {
 		Map<Integer, List<Shift>> referencedShifts = new HashMap<Integer, List<Shift>>();
 		
 		List<Shift> shifts;
 		for(EmployeeSchedule schedule : getStoreSchedule().getEmployeeSchedules()) {
-			shifts = position == null ? schedule.getReferencedShifts() : schedule.getReferencedShifts(position);
+			shifts = isAllPositions() ? schedule.getReferencedShifts() : schedule.getReferencedShifts(positions);
 			if(shifts != null && shifts.size() > 0) {
 				referencedShifts.put(schedule.getEmployee().getId(), cloneShifts(shifts));
 			}
@@ -651,10 +672,10 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	/**
 	 * 
 	 * @param schedule
-	 * @param position
+	 * @param positions
 	 * @param day
 	 */
-	protected void setSchedule(List<ScheduleRow> schedule, Position position) {
+	protected void setSchedule(List<ScheduleRow> schedule, List<Position> positions) {
 		getStoreSchedule().setDay(getWeekDaySelector().getSelectedDay());
 		getStoreSchedule().setStore(getEmployeeStore());
 		
@@ -670,32 +691,41 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 					employeeSchedule.setStoreSchedule(getStoreSchedule());
 					getStoreSchedule().getEmployeeSchedules().add(employeeSchedule);
 				}
-				setShifts(getEmployeeSchedule(employeeId, schedule), employeeSchedule, position);				
+				setShifts(getEmployeeSchedule(employeeId, schedule), employeeSchedule, positions);				
 			}
 		}
 		
 		// Remove non existing shifts for the employee and for a position
-		cleanStoreSchedule(employeeIds, position);
+		cleanStoreSchedule(employeeIds, positions);
 	}
 
 	/**
 	 * 
-	 * @param employeeIds
+	 * @param schedule
 	 * @param position
 	 */
-	private void cleanStoreSchedule(Set<Integer> employeeIds, Position position) {
+	protected void setSchedule(List<ScheduleRow> schedule, Position position) {
+		setSchedule(schedule, getPositionInList(position));
+	}
+	
+	/**
+	 * 
+	 * @param employeeIds
+	 * @param positions
+	 */
+	private void cleanStoreSchedule(Set<Integer> employeeIds, List<Position> positions) {
 		if(getStoreSchedule() != null && employeeIds != null) {
 			Set<EmployeeSchedule> employeeSchedulesToRemove = new HashSet<EmployeeSchedule>();
 			Set<Shift> shiftsToRemove = new HashSet<Shift>();
 			
 			for(EmployeeSchedule employeeSchedule : getStoreSchedule().getEmployeeSchedules()) {
 				if(employeeSchedule.getEmployee() != null && !employeeIds.contains(employeeSchedule.getEmployee().getId())) {
-					if(position == null) {
+					if(isAllPositions()) {
 						// Applies for all positions
 						employeeSchedulesToRemove.add(employeeSchedule);
 					} else {
 						for(Shift shift : employeeSchedule.getShifts()) {
-							if(isEqualPosition(shift.getPosition(), position)) {
+							if(isPositionInList(positions, shift.getPosition())) {
 								shiftsToRemove.add(shift);
 							}
 						}
@@ -718,11 +748,11 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	 * @param employeeSchedule
 	 * @param position
 	 */
-	private void setShifts(List<ScheduleRow> source, EmployeeSchedule employeeSchedule, Position position) {
-		if(position == null) {
+	private void setShifts(List<ScheduleRow> source, EmployeeSchedule employeeSchedule, List<Position> positions) {
+		if(isAllPositions()) {
 			setShiftsAllPositions(source, employeeSchedule);
 		} else {
-			setShiftsForPosition(source, employeeSchedule, position);
+			setShiftsForPosition(source, employeeSchedule, positions);
 		}
 	}
 	
@@ -730,9 +760,9 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	 * 
 	 * @param source
 	 * @param employeeSchedule
-	 * @param position
+	 * @param positions
 	 */
-	private void setShiftsForPosition(List<ScheduleRow> source, EmployeeSchedule employeeSchedule, Position position) {
+	private void setShiftsForPosition(List<ScheduleRow> source, EmployeeSchedule employeeSchedule, List<Position> positions) {
 		int shiftPosition = 0;
 		List<Shift> rowShifts;
 		List<Shift> currentShifts = employeeSchedule.getShifts();
@@ -742,8 +772,8 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 			rowShifts = retrieveShifts(row);
 			
 			for(Shift aShift : rowShifts) {
-				if(isEqualPosition(position, aShift.getPosition())) {
-					while(shiftPosition < currentShifts.size() && !isEqualPosition(position, currentShifts.get(shiftPosition).getPosition())) {
+				if(isPositionInList(positions, aShift.getPosition())) {
+					while(shiftPosition < currentShifts.size() && !isPositionInList(positions, currentShifts.get(shiftPosition).getPosition())) {
 						shiftPosition++;
 					}
 					
@@ -761,7 +791,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 		// Remove non-existing shifts
 		if(shiftPosition < currentShiftsSize) {
 			for(int i = currentShiftsSize - 1; i >= shiftPosition; i--) {
-				if(isEqualPosition(position, currentShifts.get(i).getPosition())) {
+				if(isPositionInList(positions, currentShifts.get(i).getPosition())) {
 					currentShifts.remove(i);
 				}
 			}
