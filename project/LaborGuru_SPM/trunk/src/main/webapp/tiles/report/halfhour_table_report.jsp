@@ -83,6 +83,17 @@
 			<tr>
 				<td>
 					<table border="0" width="100%" cellspacing="0" align="center">
+					<!-- New Labor % table -->
+					<tr><td>
+						<s:url id="percentLaborUrl" action="percentLaborReport_showReport" namespace="/report" includeParams="none"/>
+						<s:div id="tableFrame" theme="ajax" 
+								href="%{percentLaborUrl}" 
+								formId="dailyReport_form"
+								listenTopics="/refresh"
+								indicator="indicator" cssClass="waitMessage" loadingText='%{getText("wait.message")}'/>
+					</td></tr>
+					<tr><td>&nbsp;</td></tr>					
+					<!-- End New Labor % table -->
 					<tr><td>
 						<s:url id="fixedLaborUrl" action="fixedLaborReport_showReport" namespace="/report" includeParams="none"/>
 			

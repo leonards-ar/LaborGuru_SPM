@@ -6,6 +6,7 @@ import java.util.List;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.service.position.PositionService;
+import com.laborguru.util.NumberUtils;
 import com.laborguru.util.SpmConstants;
 import com.opensymphony.xwork2.Preparable;
 
@@ -22,6 +23,13 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 	private BigDecimal totalDifference = SpmConstants.BD_ZERO_VALUE;
 	private BigDecimal totalPercentage = SpmConstants.BD_ZERO_VALUE;
 	private BigDecimal totalSales = SpmConstants.BD_ZERO_VALUE;
+	// Extended totals
+	private BigDecimal totalVplhSchedule = SpmConstants.BD_ZERO_VALUE;
+	private BigDecimal totalVplhTarget = SpmConstants.BD_ZERO_VALUE;
+	private BigDecimal totalProjectedSales = SpmConstants.BD_ZERO_VALUE;
+	private BigDecimal totalScheduleLaborPercentage = SpmConstants.BD_ZERO_VALUE;
+	private BigDecimal totalTargetLaborPercentage = SpmConstants.BD_ZERO_VALUE;
+	// End of extended totals
 	
 	private String scheduleAxisName;
 	private String targetAxisName;
@@ -69,11 +77,13 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 	}
 
 	private void calculateTotals() {
+		double totalWage = 0.0;
 		for (TotalHour th : getTotalHours()) {
 			setTotalSales(getTotalSales().add(th.getSales()));
 			setTotalSchedule(getTotalSchedule().add(th.getSchedule()));
 			setTotalTarget(getTotalTarget().add(th.getTarget()));
 			setTotalDifference(getTotalDifference().add(th.getDifference()));
+			totalWage += NumberUtils.getDoubleValue(th.getStoreTotalWage());
 		}
 		// totalDifference/totalTarget
 		if (getTotalTarget().compareTo(SpmConstants.BD_ZERO_VALUE) == 0) {
@@ -81,6 +91,28 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 		} else {
 			setTotalPercentage(getTotalDifference().divide(getTotalTarget(), 2,
 					SpmConstants.ROUNDING_MODE).multiply(new BigDecimal(100)));
+		}
+		
+		if(calculateExtendedTotals()) {
+			if(getTotalSchedule().compareTo(SpmConstants.BD_ZERO_VALUE) != 0) {
+				setTotalVplhSchedule(getTotalSales().divide(getTotalSchedule(), 2, SpmConstants.ROUNDING_MODE));
+			}
+
+			if(getTotalTarget().compareTo(SpmConstants.BD_ZERO_VALUE) != 0) {
+				setTotalVplhTarget(getTotalSales().divide(getTotalTarget(), 2, SpmConstants.ROUNDING_MODE));
+			}
+			
+			if(getTotalSales() != null && getEmployeeStore() != null) {
+				setTotalProjectedSales(getTotalSales().multiply(new BigDecimal(NumberUtils.getDoubleValue(getEmployeeStore().getAverageVariable()))));
+			}
+			double averageWage = 0.0;
+			if(getTotalSchedule().compareTo(SpmConstants.BD_ZERO_VALUE) != 0 && getTotalProjectedSales().compareTo(SpmConstants.BD_ZERO_VALUE) != 0) {
+				averageWage = totalWage / NumberUtils.getDoubleValue(getTotalSchedule());
+				
+				setTotalScheduleLaborPercentage(getTotalSchedule().multiply(new BigDecimal(averageWage)).divide(getTotalProjectedSales(), 2, SpmConstants.ROUNDING_MODE));
+				setTotalTargetLaborPercentage(getTotalTarget().multiply(new BigDecimal(averageWage)).divide(getTotalProjectedSales(), 2, SpmConstants.ROUNDING_MODE));
+			}
+			
 		}
 	}
 	
@@ -94,6 +126,15 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 	protected abstract void getReportByService();
 	protected abstract void setAxisLabels();
 
+	/**
+	 * Weather the following totals should be calculated:
+	 * totalVplhSchedule, totalVplhTarget, totalProjectedSales, totalScheduleLaborPercentage, totalTargetLaborPercentage
+	 * @return
+	 */
+	protected boolean calculateExtendedTotals() {
+		return false;
+	}
+	
 	/**
 	 * @return the totalHours
 	 */
@@ -246,6 +287,47 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 	 */
 	public void setTargetAxisName(String targetAxisName) {
 		this.targetAxisName = targetAxisName;
+	}
+
+	public BigDecimal getTotalVplhSchedule() {
+		return totalVplhSchedule;
+	}
+
+	public void setTotalVplhSchedule(BigDecimal totalVplhSchedule) {
+		this.totalVplhSchedule = totalVplhSchedule;
+	}
+
+	public BigDecimal getTotalVplhTarget() {
+		return totalVplhTarget;
+	}
+
+	public void setTotalVplhTarget(BigDecimal totalVplhTarget) {
+		this.totalVplhTarget = totalVplhTarget;
+	}
+
+	public BigDecimal getTotalProjectedSales() {
+		return totalProjectedSales;
+	}
+
+	public void setTotalProjectedSales(BigDecimal totalProjectedSales) {
+		this.totalProjectedSales = totalProjectedSales;
+	}
+
+	public BigDecimal getTotalScheduleLaborPercentage() {
+		return totalScheduleLaborPercentage;
+	}
+
+	public void setTotalScheduleLaborPercentage(
+			BigDecimal totalScheduleLaborPercentage) {
+		this.totalScheduleLaborPercentage = totalScheduleLaborPercentage;
+	}
+
+	public BigDecimal getTotalTargetLaborPercentage() {
+		return totalTargetLaborPercentage;
+	}
+
+	public void setTotalTargetLaborPercentage(BigDecimal totalTargetLaborPercentage) {
+		this.totalTargetLaborPercentage = totalTargetLaborPercentage;
 	}
 
 }

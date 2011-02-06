@@ -277,7 +277,11 @@ public class StoreSchedule extends SpmObject {
 	 * @return
 	 */
 	public Double getAverageWage() {
-		return new Double(NumberUtils.getDoubleValue(getTotalWage()) / NumberUtils.getDoubleValue(getTotalShiftHours()));
+		if(NumberUtils.getDoubleValue(getTotalShiftHours()) > 0) {
+			return new Double(NumberUtils.getDoubleValue(getTotalWage()) / NumberUtils.getDoubleValue(getTotalShiftHours()));
+		} else {
+			return new Double(0.0);
+		}
 	}
 	
 	/**

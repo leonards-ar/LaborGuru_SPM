@@ -60,7 +60,7 @@ public class NumberUtils {
 	 * @return
 	 */
 	public static double getDoubleValue(Double d) {
-		return d != null ? d.doubleValue() : 0.0;
+		return d != null && !d.isNaN() && !d.isInfinite() ? d.doubleValue() : 0.0;
 	}
 	
 	/**

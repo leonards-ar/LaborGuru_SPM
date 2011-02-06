@@ -36,4 +36,12 @@ public class SchedulingEfficiencyReportPrepareAction extends WeeklyReportBaseAct
 		setTargetAxisName("report.weeklytotalhours.target.label");
 	}
 	
+	/**
+	 * Weather the following totals should be calculated:
+	 * totalVplhSchedule, totalVplhTarget, totalProjectedSales, totalScheduleLaborPercentage, totalTargetLaborPercentage
+	 * @return
+	 */
+	protected boolean calculateExtendedTotals() {
+		return true;
+	}
 }

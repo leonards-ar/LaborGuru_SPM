@@ -552,18 +552,6 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 	 * 
 	 * @return
 	 */
-	public String getMainVariableInitials() {
-		if(getEmployeeStore() != null && getEmployeeStore().getMainVariableDefinition() != null) {
-			return getEmployeeStore().getMainVariableDefinition().getVariableInitials();
-		} else {
-			return "";
-		}
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
 	public abstract Double getVplhSchedule();
 
 	/**

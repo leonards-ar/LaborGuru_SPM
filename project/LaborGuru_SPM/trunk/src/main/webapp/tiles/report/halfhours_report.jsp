@@ -95,12 +95,12 @@
 				    <td align="left"><s:select id="selectGrouping" name="selectedGrouping" list="groupingMap" listKey="key" listValue="%{getText(value)}" onchange="controller.changed()" theme="simple" /></td>
 	 				<td>&nbsp;</td>
 					<s:url id="positionAutoCompleter" action="positionAutocompleter" namespace="/report" includeParams="none"/>
-	 				<td align="left"><s:div  id="selectItemDaily" formId="dailyReport_form" href="%{positionAutoCompleter}" theme="ajax" listenTopics="/Changed"/></td>						
+	 				<td align="left"><s:div  id="selectItemDaily" formId="dailyReport_form" href="%{positionAutoCompleter}" theme="ajax" listenTopics="/Changed" cssClass="waitMessage" loadingText='%{getText("wait.message")}'/></td>						
 				</tr>
 				</table>
 			</td>
 		</tr>
-</s:form>
+
 		<tr>
 			<td align="center">
 				<s:url id="halfHourReportUrl" action="halfHourReport_showReport" namespace="/report" includeParams="none"/>
@@ -114,7 +114,7 @@
 			</td>
 		</tr>
 	</table>
-
+</s:form>
 <center><img id="indicator"
 	style="display: none;"
 	src="<s:url value="/images/wait.gif" includeParams="none"/>"

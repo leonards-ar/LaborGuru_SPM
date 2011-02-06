@@ -87,9 +87,125 @@
 		</table>
       </td>
     </tr>
+    
 	<tr>
 		<td>&nbsp;</td>
 	</tr>
+
+	<!-- TPLH Report -->
+  <tr>
+    <td class="windowTableHeader">
+      <s:text name="report.txperlabourhr.title"><s:param value='mainVariableInitials'/></s:text>
+    </td>
+   </tr>
+    <tr>
+      <td>
+		<table id="windowReportTable" cellspacing="0">
+		  <tr>
+			<td class="tableLabel">&nbsp;</td>
+			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
+			  <td class="tableValueWithLeftBorder"><s:text name="report.weeklytotalhours.dateformat"><s:param value="day"/></s:text></td>
+			</s:iterator>
+			<td class="greyTableLabelWithLeftBorder"><s:text name="report.weeklytotalhours.totalweek.label" /></td>
+		  </tr>
+		  <tr>
+			<td class="greyTableLabel">
+			  <s:text name="report.txperlabourhr.scheduled.label"><s:param value='mainVariableInitials'/></s:text>
+			</td>
+			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
+			  <td class="greyTableValueWithLeftBorder">
+			  	<s:text name="decimal"><s:param value="vplhSchedule"/></s:text>
+			  </td>
+			</s:iterator>
+			<td class="tableValueWithLeftBorder">
+				<s:text name="decimal"><s:param value="totalVplhSchedule"/></s:text>
+			</td>
+		  </tr>
+		  
+		  <tr>
+			<td class="tableLabel">
+				<s:text name="report.txperlabourhr.target.label"><s:param value='mainVariableInitials'/></s:text>
+			</td>
+			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
+			  <td class="tableValueWithLeftBorder">
+			   <s:text name="decimal"><s:param value="vplhTarget"/></s:text></td>
+			</s:iterator>
+			<td class="greyTableValueWithLeftBorder">
+			   <s:text name="decimal"><s:param value="totalVplhTarget"/></s:text></td>
+		  </tr>
+
+		</table>
+      </td>
+    </tr>
+	<!--  End new report table -->
+	
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+
+	<!-- New report table -->
+  <tr>
+    <td class="windowTableHeader">
+      <s:text name="report.laborpercentsales.title" />
+    </td>
+   </tr>
+    <tr>
+      <td>
+		<table id="windowReportTable" cellspacing="0">
+		  <tr>
+			<td class="tableLabel">&nbsp;</td>
+			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
+			  <td class="tableValueWithLeftBorder"><s:text name="report.weeklytotalhours.dateformat"><s:param value="day"/></s:text></td>
+			</s:iterator>
+			<td class="greyTableLabelWithLeftBorder"><s:text name="report.weeklytotalhours.totalweek.label" /></td>
+		  </tr>
+		  <tr>
+			<td class="greyTableLabel">
+			  <s:text name="report.laborpercentsales.projected.label" />
+			</td>
+			<s:iterator id="txPerLaborHour" value="totalHours" status="itTotalHours">
+			  <td class="greyTableValueWithLeftBorder">
+			  	<s:text name="currency"><s:param value="ProjectedSales"/></s:text>
+			  </td>
+			</s:iterator>
+			<td class="tableValueWithLeftBorder">
+				<s:text name="currency"><s:param value="totalProjectedSales"/></s:text>
+			</td>
+		  </tr>
+		  <tr>
+			<td class="tableLabel">
+			  <s:text name="report.laborpercentsales.scheduled.label" />
+			</td>
+			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
+			  <td class="tableValueWithLeftBorder">
+			   <s:text name="decimal"><s:param value="scheduleLaborPercentage"/>%</s:text></td>
+			</s:iterator>
+			<td class="greyTableValueWithLeftBorder">
+			   <s:text name="decimal"><s:param value="totalScheduleLaborPercentage"/>%</s:text></td>
+		  </tr>
+		  <tr>
+			<td class="greyTableLabel">
+			  <s:text name="report.laborpercentsales.target.label" />
+			</td>
+			<s:iterator id="txPerLaborHour" value="totalHours" status="itTotalHours">
+			  <td class="greyTableValueWithLeftBorder">
+			  	<s:text name="decimal"><s:param value="targetLaborPercentage"/>%</s:text>
+			  </td>
+			</s:iterator>
+			<td class="tableValueWithLeftBorder">
+				<s:text name="decimal"><s:param value="totalTargetLaborPercentage"/>%</s:text>
+			</td>
+		  </tr>
+		</table>
+      </td>
+    </tr>
+    
+    <!-- End of Report -->
+
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	
 	<tr>
 		<td>
 			<OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase=http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" width="600" height="350" id="Column3D" >
