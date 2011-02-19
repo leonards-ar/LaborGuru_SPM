@@ -1,11 +1,14 @@
 package com.laborguru.action.store;
 
 import org.apache.log4j.Logger;
+import org.apache.struts2.interceptor.validation.SkipValidation;
 
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.action.utils.CustomValidators;
 import com.laborguru.model.DayOfWeek;
 import com.laborguru.model.OperationTime;
+import com.laborguru.util.CalendarUtils;
+import com.laborguru.util.NumberUtils;
 
 /**
  * This action deals with Store CRUD.
@@ -21,10 +24,12 @@ public class OperationTimePrepareAction extends StoreAdministrationBaseAction {
 	private static Logger log = Logger.getLogger(OperationTimePrepareAction.class);
 
 	private Integer firstDayOfWeek;
-	private Integer extraScheduleHours;
 	
 	private String weekOperationTimeOpen[] = new String[DayOfWeek.values().length];
 	private String weekOperationTimeClose[] = new String[DayOfWeek.values().length];
+	private String closingExtraHours[] = new String[DayOfWeek.values().length];
+	private String openingExtraHours[] = new String[DayOfWeek.values().length];
+	
 	
 	/**
 	 * Prepare the data to be used on the edit page
@@ -60,6 +65,8 @@ public class OperationTimePrepareAction extends StoreAdministrationBaseAction {
 				if(time != null && time.getDayOfWeekIndex() != null) {
 					weekOperationTimeOpen[time.getDayOfWeekIndex().intValue()] = dateToDisplayTime(time.getOpenHour());
 					weekOperationTimeClose[time.getDayOfWeekIndex().intValue()] = dateToDisplayTime(time.getCloseHour());
+					openingExtraHours[time.getDayOfWeekIndex().intValue()] = time.getOpeningExtraHours() != null ? String.valueOf(time.getOpeningExtraHours()) : null;
+					closingExtraHours[time.getDayOfWeekIndex().intValue()] = time.getClosingExtraHours() != null ? String.valueOf(time.getClosingExtraHours()) : null;
 				}
 			}
 		}
@@ -79,6 +86,8 @@ public class OperationTimePrepareAction extends StoreAdministrationBaseAction {
 					anOperationTime = getStore().getOperationTimes().get(i);
 					anOperationTime.setOpenHour(displayTimeToDate(weekOperationTimeOpen[i]));
 					anOperationTime.setCloseHour(displayTimeToDate(weekOperationTimeClose[i]));
+					anOperationTime.setOpeningExtraHours(NumberUtils.stringToInteger(openingExtraHours[i]));
+					anOperationTime.setClosingExtraHours(NumberUtils.stringToInteger(closingExtraHours[i]));
 				} else {
 					// New Operation time for the current day of week
 					anOperationTime = new OperationTime();
@@ -86,6 +95,8 @@ public class OperationTimePrepareAction extends StoreAdministrationBaseAction {
 					anOperationTime.setDayOfWeek(DayOfWeek.values()[i]);
 					anOperationTime.setOpenHour(displayTimeToDate(weekOperationTimeOpen[i]));
 					anOperationTime.setCloseHour(displayTimeToDate(weekOperationTimeClose[i]));
+					anOperationTime.setOpeningExtraHours(NumberUtils.stringToInteger(openingExtraHours[i]));
+					anOperationTime.setClosingExtraHours(NumberUtils.stringToInteger(closingExtraHours[i]));
 					getStore().getOperationTimes().add(anOperationTime);
 				}
 			}
@@ -98,10 +109,10 @@ public class OperationTimePrepareAction extends StoreAdministrationBaseAction {
 	 * @return
 	 * @throws Exception
 	 */
+	@SkipValidation
 	public String edit() throws Exception {
 		loadOperationTimes();
 		setFirstDayOfWeek(getStore().getFirstDayOfWeekAsInteger());
-		setExtraScheduleHours(getStore().getExtraScheduleHours());
 		return SpmActionResult.EDIT.getResult();
 	}
 
@@ -111,6 +122,7 @@ public class OperationTimePrepareAction extends StoreAdministrationBaseAction {
 	 * @return
 	 * @throws Exception
 	 */
+	@SkipValidation
 	public String show() throws Exception {
 	
 		loadOperationTimes();
@@ -127,7 +139,6 @@ public class OperationTimePrepareAction extends StoreAdministrationBaseAction {
 	public String save() throws Exception {
 			setOperationTimes();
 			getStore().setFirstDayOfWeekAsInteger(getFirstDayOfWeek());
-			getStore().setExtraScheduleHours(getExtraScheduleHours());
 			if(log.isDebugEnabled()) {
 				log.debug("About to save store: " + getStore());
 			}
@@ -189,35 +200,134 @@ public class OperationTimePrepareAction extends StoreAdministrationBaseAction {
 	 */
 	@Override
 	public void validate() {
+		// Validate values
+		for(int i=0; i < DayOfWeek.values().length; i++) {
+			if(getWeekOperationTimeOpen() != null && getWeekOperationTimeOpen().length > i && !CustomValidators.isValidMilitaryTime(getWeekOperationTimeOpen()[i])) {
+				addFieldError( "weekOperationTimeOpen", getText("error.storeoperations.hoursofoperation.opentime.invalid", new String[] {getWeekOperationTimeOpen()[i], getText("dayofweek." + i)}) );
+			}
+			if(getWeekOperationTimeClose() != null && getWeekOperationTimeClose().length > i && !CustomValidators.isValidMilitaryTime(getWeekOperationTimeClose()[i])) {
+				addFieldError( "weekOperationTimeClose", getText("error.storeoperations.hoursofoperation.closetime.invalid", new String[] {getWeekOperationTimeClose()[i], getText("dayofweek." + i)}) );
+			}
+			if(getOpeningExtraHours() != null && getOpeningExtraHours().length > i) {
+				String v = getOpeningExtraHours()[i];
+				if(v != null) {
+					int hours = NumberUtils.isValidInteger(v) ? NumberUtils.getIntegerValue(NumberUtils.stringToInteger(v)) : -1;
+					if(hours < 0 || hours >= 24) {
+						addFieldError( "openingExtraHours", getText("error.storeoperations.hoursofoperation.opening_extra_hours.invalid", new String[] {getOpeningExtraHours()[i], getText("dayofweek." + i)}) );
+					}
+				}
+			}
+			if(getClosingExtraHours() != null && getClosingExtraHours().length > i) {
+				String v = getClosingExtraHours()[i];
+				if(v != null) {
+					int hours = NumberUtils.isValidInteger(v) ? NumberUtils.getIntegerValue(NumberUtils.stringToInteger(v)) : -1;
+					if(hours < 0 || hours >= 24) {
+						addFieldError( "closingExtraHours", getText("error.storeoperations.hoursofoperation.closing_extra_hours.invalid", new String[] {getClosingExtraHours()[i], getText("dayofweek." + i)}) );
+					}
+				}
+			}
+		}
+
+		// Validate overlapping operation times only when all data is valid
+		if(getFieldErrors().size() <= 0) {
+			for(int i=0; i < DayOfWeek.values().length; i++) {
+				if(!validDayStartEnd(DayOfWeek.values()[i])) {
+					addFieldError( "weekOperationTimeOpen", getText("error.storeoperations.hoursofoperation.operation_time_collision.invalid", new String[] {getText("dayofweek." + i), getText("dayofweek." + (DayOfWeek.values()[i].getPreviousDayOfWeek().ordinal()))}) );
+				}
+				if(!validDayDuration(DayOfWeek.values()[i])) {
+					addFieldError( "weekOperationTimeOpen", getText("error.storeoperations.hoursofoperation.operation_time_limit.invalid", new String[] {getText("dayofweek." + i)}));
+				}
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 * @param day
+	 * @return
+	 */
+	private boolean validDayDuration(DayOfWeek day) {
+		try {
+			OperationTime today = buildOperationTime(day.ordinal());
+			
+			return !(today.getTotalOperationHours() > 24);
+		} catch(Throwable t) {
+			// If a value is null, validation is not required
+			return true;
+		}
+	}
+	
+	/**
+	 * 
+	 * @param dayIndex
+	 * @return
+	 */
+	private boolean validDayStartEnd(DayOfWeek day) {
+		try {
+			OperationTime today = buildOperationTime(day.ordinal());
+			OperationTime yesterday = buildOperationTime(day.getPreviousDayOfWeek().ordinal());
+			
+			if(CalendarUtils.equalsTime(today.getStartHour(), yesterday.getEndHour())) {
+				return true;
+			} else if((!today.startsYesterday() && yesterday.endsTomorrow()) || (today.startsYesterday() && !yesterday.endsTomorrow())) {
+				return CalendarUtils.equalsOrGreaterTime(today.getStartHour(), yesterday.getEndHour());
+			} else {
+				return CalendarUtils.equalsOrGreaterTime(yesterday.getEndHour(), today.getStartHour());
+			}
+		} catch(Throwable t) {
+			// If a value is null, validation is not required
+			return true;
+		}
+	}
+
+	/**
+	 * 
+	 * @param dayIndex
+	 * @return
+	 */
+	private OperationTime buildOperationTime(int dayIndex) {
+		OperationTime opTime = new OperationTime();
+		opTime.setDayOfWeekIndex(new Integer(dayIndex));
+		opTime.setOpenHour(displayTimeToDate(weekOperationTimeOpen[dayIndex]));
+		opTime.setCloseHour(displayTimeToDate(weekOperationTimeClose[dayIndex]));
+		opTime.setOpeningExtraHours(NumberUtils.stringToInteger(openingExtraHours[dayIndex]));
+		opTime.setClosingExtraHours(NumberUtils.stringToInteger(closingExtraHours[dayIndex]));
 		
-		if(getWeekOperationTimeOpen() != null) {
-			for(int i=0; i < getWeekOperationTimeOpen().length; i++) {
-				if(!CustomValidators.isValidMilitaryTime(getWeekOperationTimeOpen()[i])) {
-					addFieldError( "weekOperationTimeOpen", getText("error.storeoperations.hoursofoperation.opentime.invalid", new String[] {getWeekOperationTimeOpen()[i], getText("dayofweek." + i)}) );
-				}
-			}
-		}
+		return opTime;
+	}
+	
 
-		if(getWeekOperationTimeClose() != null) {
-			for(int i=0; i < getWeekOperationTimeClose().length; i++) {
-				if(!CustomValidators.isValidMilitaryTime(getWeekOperationTimeClose()[i])) {
-					addFieldError( "weekOperationTimeClose", getText("error.storeoperations.hoursofoperation.closetime.invalid", new String[] {getWeekOperationTimeClose()[i], getText("dayofweek." + i)}) );
-				}
-			}
-		}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String[] getClosingExtraHours() {
+		return closingExtraHours;
 	}
 
 	/**
-	 * @return the extraScheduleHours
+	 * 
+	 * @param closingExtraHours
 	 */
-	public Integer getExtraScheduleHours() {
-		return extraScheduleHours;
+	public void setClosingExtraHours(String[] closingExtraHours) {
+		this.closingExtraHours = closingExtraHours;
 	}
 
 	/**
-	 * @param extraScheduleHours the extraScheduleHours to set
+	 * 
+	 * @return
 	 */
-	public void setExtraScheduleHours(Integer extraScheduleHours) {
-		this.extraScheduleHours = extraScheduleHours;
+	public String[] getOpeningExtraHours() {
+		return openingExtraHours;
 	}
+
+	/**
+	 * 
+	 * @param openingExtraHours
+	 */
+	public void setOpeningExtraHours(String[] openingExtraHours) {
+		this.openingExtraHours = openingExtraHours;
+	}
+
 }

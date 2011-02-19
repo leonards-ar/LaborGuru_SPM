@@ -196,4 +196,16 @@ public class SpmAction extends ActionSupport implements SessionAware,RequestAwar
 			return "";
 		}
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getMainVariableName() {
+		if(getEmployeeStore() != null && getEmployeeStore().getMainVariableDefinition() != null) {
+			return getEmployeeStore().getMainVariableDefinition().getName();
+		} else {
+			return "";
+		}
+	}
 }

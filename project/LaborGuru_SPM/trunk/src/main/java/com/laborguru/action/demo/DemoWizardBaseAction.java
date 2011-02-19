@@ -9,7 +9,6 @@ import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.action.utils.CustomValidators;
 import com.laborguru.exception.ErrorMessage;
-import com.laborguru.exception.SpmCheckedException;
 import com.laborguru.model.DayOfWeek;
 import com.laborguru.model.DayOfWeekData;
 import com.laborguru.model.DayPart;
@@ -251,7 +250,6 @@ public abstract class DemoWizardBaseAction extends SpmAction implements Preparab
 		demoStore.setDailyProjectionsWeeksDefault(sourceStore.getDailyProjectionsWeeksDefault());
 		demoStore.setDistributionType(sourceStore.getDistributionType());
 		demoStore.setEarnedBreakFactor(sourceStore.getEarnedBreakFactor());
-		demoStore.setExtraScheduleHours(sourceStore.getExtraScheduleHours());
 		demoStore.setFillInefficiency(sourceStore.getFillInefficiency());
 		demoStore.setFirstDayOfWeek(sourceStore.getFirstDayOfWeek());
 		demoStore.setFloorManagementFactor(sourceStore.getFloorManagementFactor());
@@ -284,6 +282,8 @@ public abstract class DemoWizardBaseAction extends SpmAction implements Preparab
 			newOpTime.setCloseHour(opTime.getCloseHour());
 			newOpTime.setDayOfWeek(opTime.getDayOfWeek());
 			newOpTime.setOpenHour(opTime.getOpenHour());
+			newOpTime.setOpeningExtraHours(opTime.getOpeningExtraHours());
+			newOpTime.setClosingExtraHours(opTime.getClosingExtraHours());
 			demoStore.addOperationTime(newOpTime);
 			newOpTime = null;
 		}

@@ -95,7 +95,7 @@
 	<!-- TPLH Report -->
   <tr>
     <td class="windowTableHeader">
-      <s:text name="report.txperlabourhr.title"><s:param value='mainVariableInitials'/></s:text>
+      <s:text name="report.txperlabourhr.title"><s:param value='mainVariableName'/><s:param value='mainVariableInitials'/></s:text>
     </td>
    </tr>
     <tr>

@@ -13,6 +13,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.laborguru.util.CalendarUtils;
+import com.laborguru.util.NumberUtils;
 
 /**
  * This class holds the start and close hours on a daily basis for Stores.
@@ -30,6 +31,8 @@ public class OperationTime extends SpmObject {
 	private Date openHour;
 	private Date closeHour;
 	private Store store;
+	private Integer openingExtraHours;
+	private Integer closingExtraHours;
 	
 	/**
 	 * Integer holding the same value for
@@ -203,14 +206,96 @@ public class OperationTime extends SpmObject {
 	}
 
 	/**
-	 * Returns whether this instance of operation time is spanned over 2 calendar days. 
+	 * Returns whether this instance of operation time is spanned over 2 calendar days, taking
+	 * into account just operation hours (Open & Close) without taking into account opening and
+	 * closing extra hours. 
 	 * @return
 	 */
-	public boolean endsTomorrow(){
+	public boolean operationTimeEndsTomorrow() {
 		if ((getOpenHour() == null) || (getCloseHour() == null)){
 			throw new IllegalArgumentException("openHour or closeHour is null");
 		}
 		
 		return CalendarUtils.equalsOrGreaterTime(getOpenHour(), getCloseHour());
+	}
+
+	/**
+	 * Returns whether this instance of operation time is spanned over 2 calendar days, taking
+	 * into account opening and closing extra hours.
+	 * @return
+	 */
+	public boolean endsTomorrow() {
+		if(operationTimeEndsTomorrow()) {
+			// No matter if extra hours are 0 or more, it ends tomorrow!
+			return true;
+		} else {
+			return CalendarUtils.equalsOrGreaterTime(getCloseHour(), getEndHour());		
+		}
+	}
+	
+	/**
+	 * Returns whether this instance of operation time starts yesterday, taking into
+	 * account the opening extra hours.
+	 * @return
+	 */
+	public boolean startsYesterday() {
+		return CalendarUtils.equalsOrGreaterTime(getStartHour(), getOpenHour());	
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Integer getOpeningExtraHours() {
+		return openingExtraHours;
+	}
+
+	/**
+	 * 
+	 * @param openingExtraHours
+	 */
+	public void setOpeningExtraHours(Integer openingExtraHours) {
+		this.openingExtraHours = openingExtraHours;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Integer getClosingExtraHours() {
+		return closingExtraHours;
+	}
+
+	/**
+	 * 
+	 * @param closingExtraHours
+	 */
+	public void setClosingExtraHours(Integer closingExtraHours) {
+		this.closingExtraHours = closingExtraHours;
+	}
+	
+	/**
+	 * Time the store will stop working. This is is the closing hour plus the extra closing hours
+	 * @return
+	 */
+	public Date getEndHour() {
+		return CalendarUtils.addOrSubstractHours(getCloseHour(), NumberUtils.getIntegerValue(getClosingExtraHours()));
+	}
+	
+	/**
+	 * Time the store will start working. This is the opening hour less the extra opening hours.
+	 * @return
+	 */
+	public Date getStartHour() {
+		return CalendarUtils.addOrSubstractHours(getOpenHour(), (-1) * NumberUtils.getIntegerValue(getOpeningExtraHours()));
+	}
+	
+	/**
+	 * Total amount of hours the store operates (Opening + Operation + Closing)
+	 * @return
+	 */
+	public Double getTotalOperationHours() {
+		double operationHours = CalendarUtils.differenceInHours(getCloseHour(), getOpenHour()).doubleValue();
+		return new Double(NumberUtils.getIntegerValue(getOpeningExtraHours()) + operationHours + NumberUtils.getIntegerValue(getClosingExtraHours()));
 	}
 }

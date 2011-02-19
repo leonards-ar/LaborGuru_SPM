@@ -46,6 +46,25 @@ public class NumberUtils {
 	}
 
 	/**
+	 * Parse an integer with a specific format passed as parameter.
+	 * 
+	 * @param the number to parser
+	 * @return
+	 */
+	public static Integer stringToInteger(String number) {
+		if(number == null) {
+			return null;
+		} else {
+			try {
+				return new Integer(number);
+			} catch (Throwable ex) {
+				log.error("Cannot parse number:" + number, ex);
+				return null;
+			}
+		}
+	}
+	
+	/**
 	 * Returns the string representation for a given number and format
 	 * @param time
 	 * @return
@@ -97,6 +116,20 @@ public class NumberUtils {
 	 */
 	public static boolean isValid(Integer i) {
 		return i != null;
+	}
+
+	/**
+	 * 
+	 * @param i
+	 * @return
+	 */
+	public static boolean isValidInteger(String number) {
+		try {
+			new Integer(number);
+			return true;
+		} catch (Throwable ex) {
+			return false;
+		}
 	}
 	
 	/**

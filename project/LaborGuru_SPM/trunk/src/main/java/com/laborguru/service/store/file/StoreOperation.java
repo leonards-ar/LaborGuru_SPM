@@ -41,8 +41,8 @@ public class StoreOperation extends BaseStoreSection {
 	private static final String FIRST_DAY_OF_WEEK = "First day of week";
 	private static final String OPEN = "Open";
 	private static final String CLOSE = "Close";
-	private static final String HOURS_BEFORE_AND_AFTER = "Hours before and after";
-
+	private static final String OPENING_EXTRA_HOURS = "Opening extra hours";
+	private static final String CLOSING_EXTRA_HOURS = "Closing extra hours";
 	
 	//Projections Defaults
 	//TODO:Include this on the upload file
@@ -95,7 +95,6 @@ public class StoreOperation extends BaseStoreSection {
 	private Set<String> managerSet = new HashSet<String>();
 	private Set<String> guestServiceSet = new HashSet<String>();
 	private DayOfWeek firstDayOfWeek;	
-	private Integer hoursBeforeAndAfter;
 	private DistributionType distributionType;
 	
 	/**
@@ -244,17 +243,19 @@ public class StoreOperation extends BaseStoreSection {
 			
 			return;
 		}
-				
-		if (HOURS_BEFORE_AND_AFTER.equalsIgnoreCase(fieldName)){
-			Integer fieldValue = PoiUtils.getIntegerValue(row.getCell((short)4));
-			setHoursBeforeAndAfter(fieldValue);
+		
+		String fieldAux = PoiUtils.getStringValue(row.getCell((short)3));		
+		OperationTime operationTime = getHourOfOperation(fieldName);
+		
+		if(OPENING_EXTRA_HOURS.equalsIgnoreCase(fieldAux)) {
+			operationTime.setOpeningExtraHours(PoiUtils.getIntegerValue(row.getCell((short)4)));
 			return;
+		} else if(CLOSING_EXTRA_HOURS.equalsIgnoreCase(fieldAux)) {
+			operationTime.setClosingExtraHours(PoiUtils.getIntegerValue(row.getCell((short)4)));
 		}
 		
+		// This means that just operation time is left as possibility
 		Date hour = PoiUtils.getDateValue(row.getCell((short)4));
-		String fieldAux = PoiUtils.getStringValue(row.getCell((short)3));		
-
-		OperationTime operationTime = getHourOfOperation(fieldName);
 		
 		if ((hour == null) || (operationTime == null) ){
 			String message = getSection().getStoreSection()+" row is invalid - category: Hour of operation - fieldName:"+fieldName + " - fieldAux:"+fieldAux+ " - hour: "+ hour;
@@ -373,11 +374,6 @@ public class StoreOperation extends BaseStoreSection {
 			store.setFirstDayOfWeek(getFirstDayOfWeek());
 		}
 
-		//Setting extra scheduler hours
-		if (getHoursBeforeAndAfter() != null){
-			store.setExtraScheduleHours(getHoursBeforeAndAfter());
-		}
-		
 		//Setting default projection values
 		store.setDailyProjectionsWeeksDefault(DAILY_PROJECTION_WEEK_DEFAULT);
 		store.setHalfHourProjectionsWeeksDefault(HALF_HOUR_PROJECTION_WEEK_DEFAULT);
@@ -481,20 +477,6 @@ public class StoreOperation extends BaseStoreSection {
 	 */
 	public void setFirstDayOfWeek(DayOfWeek firstDayOfWeek) {
 		this.firstDayOfWeek = firstDayOfWeek;
-	}
-
-	/**
-	 * @return the hoursBeforeAndAfter
-	 */
-	public Integer getHoursBeforeAndAfter() {
-		return hoursBeforeAndAfter;
-	}
-
-	/**
-	 * @param hoursBeforeAndAfter the hoursBeforeAndAfter to set
-	 */
-	public void setHoursBeforeAndAfter(Integer hoursBeforeAndAfter) {
-		this.hoursBeforeAndAfter = hoursBeforeAndAfter;
 	}
 
 	/**
