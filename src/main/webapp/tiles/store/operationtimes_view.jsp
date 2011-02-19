@@ -18,12 +18,6 @@
                     	</s:if>
                     </td>
 				</tr>
-				<tr class="editFormEvenRow">
-                    <td align="right" class="form_label" nowrap><s:text name="store.storeoperations.hours_before_after.label" /></td>
-                    <td align="left" class="value">
-                    	<s:property value="store.extraScheduleHours"/>
-                    </td>
-				</tr>				
 			</table>
 		</td>
 	</tr>
@@ -71,7 +65,27 @@
 								<td class="editorTableEvenRow"><s:property value="weekOperationTimeClose[4]"/></td>
 								<td class="editorTableEvenRow"><s:property value="weekOperationTimeClose[5]"/></td>
 								<td class="editorTableEvenRow"><s:property value="weekOperationTimeClose[6]"/></td>
-							</tr>						
+							</tr>	
+							<tr>
+								<td class="editorTableFirstColumn"><s:text name="store.storeoperations.opening_extra_hours.label" /></td>
+								<td class="editorTableOddRow"><s:property value="openingExtraHours[0]"/></td>
+								<td class="editorTableOddRow"><s:property value="openingExtraHours[1]"/></td>
+								<td class="editorTableOddRow"><s:property value="openingExtraHours[2]"/></td>
+								<td class="editorTableOddRow"><s:property value="openingExtraHours[3]"/></td>
+								<td class="editorTableOddRow"><s:property value="openingExtraHours[4]"/></td>
+								<td class="editorTableOddRow"><s:property value="openingExtraHours[5]"/></td>
+								<td class="editorTableOddRow"><s:property value="openingExtraHours[6]"/></td>
+							</tr>
+							<tr>
+								<td class="editorTableFirstColumn"><s:text name="store.storeoperations.closing_extra_hours.label" /></td>
+								<td class="editorTableEvenRow"><s:property value="closingExtraHours[0]"/></td>
+								<td class="editorTableEvenRow"><s:property value="closingExtraHours[1]"/></td>
+								<td class="editorTableEvenRow"><s:property value="closingExtraHours[2]"/></td>
+								<td class="editorTableEvenRow"><s:property value="closingExtraHours[3]"/></td>
+								<td class="editorTableEvenRow"><s:property value="closingExtraHours[4]"/></td>
+								<td class="editorTableEvenRow"><s:property value="closingExtraHours[5]"/></td>
+								<td class="editorTableEvenRow"><s:property value="closingExtraHours[6]"/></td>
+							</tr>													
 						</table>
 					</td>
 				</tr>

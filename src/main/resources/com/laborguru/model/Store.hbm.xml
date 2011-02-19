@@ -29,9 +29,6 @@
 		</property>
 
 		<property name="minimumFloorManagementHours" column="minimum_floor_Management_hours" type="int"/>
-		<property name="extraScheduleHours" type="int">
-			<column name="extra_schedule_hours" not-null="false" default="2" />
-		</property>
 		
 		<property name="scheduleInefficiency" column="schedule_inefficiency" type="double"/>
 		<property name="fillInefficiency" column="fill_inefficiency" type="double"/>

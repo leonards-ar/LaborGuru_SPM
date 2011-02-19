@@ -18,13 +18,6 @@
                     	<s:select name="firstDayOfWeek" list="{'0','1','2','3','4','5','6'}" listValue="%{getText('dayofweek.'+toString())}"/>
                     </td>
 				</tr>
-				<tr class="editFormEvenRow">
-                    <td align="right" class="form_label" nowrap><s:text name="store.storeoperations.hours_before_after.label" /></td>
-                    <td align="left" class="value">
-                    	<s:textfield name="extraScheduleHours" size="2" maxlength="2"/>
-                    </td>
-				</tr>
-				
 			</table>
 		</td>
 	</tr>
@@ -63,7 +56,7 @@
 							</tr>
 							<tr>
 								<td class="editorTableFirstColumn"><s:text name="store.storeoperations.hoursofoperation.open" /></td>
-								<td class="editorTableOddRow"><s:textfield name='weekOperationTimeOpen[0]' onchange="updateTime(this);" onchange="updateTime(this);" size="4" maxlength="8"/></td>
+								<td class="editorTableOddRow"><s:textfield name='weekOperationTimeOpen[0]' onchange="updateTime(this);" size="4" maxlength="8"/></td>
 								<td class="editorTableOddRow"><s:textfield name='weekOperationTimeOpen[1]' onchange="updateTime(this);" size="4" maxlength="8"/></td>
 								<td class="editorTableOddRow"><s:textfield name='weekOperationTimeOpen[2]' onchange="updateTime(this);" size="4" maxlength="8"/></td>
 								<td class="editorTableOddRow"><s:textfield name='weekOperationTimeOpen[3]' onchange="updateTime(this);" size="4" maxlength="8"/></td>
@@ -80,6 +73,26 @@
 								<td class="editorTableEvenRow"><s:textfield name='weekOperationTimeClose[4]' onchange="updateTime(this);" size="4" maxlength="8"/></td>
 								<td class="editorTableEvenRow"><s:textfield name='weekOperationTimeClose[5]' onchange="updateTime(this);" size="4" maxlength="8"/></td>
 								<td class="editorTableEvenRow"><s:textfield name='weekOperationTimeClose[6]' onchange="updateTime(this);" size="4" maxlength="8"/></td>
+							</tr>						
+							<tr>
+								<td class="editorTableFirstColumn"><s:text name="store.storeoperations.opening_extra_hours.label" /></td>
+								<td class="editorTableOddRow"><s:textfield name='openingExtraHours[0]' size="2" maxlength="2"/></td>
+								<td class="editorTableOddRow"><s:textfield name='openingExtraHours[1]' size="2" maxlength="2"/></td>
+								<td class="editorTableOddRow"><s:textfield name='openingExtraHours[2]' size="2" maxlength="2"/></td>
+								<td class="editorTableOddRow"><s:textfield name='openingExtraHours[3]' size="2" maxlength="2"/></td>
+								<td class="editorTableOddRow"><s:textfield name='openingExtraHours[4]' size="2" maxlength="2"/></td>
+								<td class="editorTableOddRow"><s:textfield name='openingExtraHours[5]' size="2" maxlength="2"/></td>
+								<td class="editorTableOddRow"><s:textfield name='openingExtraHours[6]' size="2" maxlength="2"/></td>
+							</tr>
+							<tr>
+								<td class="editorTableFirstColumn"><s:text name="store.storeoperations.closing_extra_hours.label" /></td>
+								<td class="editorTableEvenRow"><s:textfield name='closingExtraHours[0]' size="2" maxlength="2"/></td>
+								<td class="editorTableEvenRow"><s:textfield name='closingExtraHours[1]' size="2" maxlength="2"/></td>
+								<td class="editorTableEvenRow"><s:textfield name='closingExtraHours[2]' size="2" maxlength="2"/></td>
+								<td class="editorTableEvenRow"><s:textfield name='closingExtraHours[3]' size="2" maxlength="2"/></td>
+								<td class="editorTableEvenRow"><s:textfield name='closingExtraHours[4]' size="2" maxlength="2"/></td>
+								<td class="editorTableEvenRow"><s:textfield name='closingExtraHours[5]' size="2" maxlength="2"/></td>
+								<td class="editorTableEvenRow"><s:textfield name='closingExtraHours[6]' size="2" maxlength="2"/></td>
 							</tr>						
 
 							<tr>

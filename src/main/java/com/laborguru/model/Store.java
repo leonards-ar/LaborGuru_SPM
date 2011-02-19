@@ -12,6 +12,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import com.laborguru.exception.ErrorEnum;
+import com.laborguru.exception.SpmUncheckedException;
 import com.laborguru.model.comparator.SpmComparator;
 import com.laborguru.util.CalendarUtils;
 
@@ -46,7 +48,6 @@ public class Store extends SpmObject {
 	private Double earnedBreakFactor = null;
 	private Double floorManagementFactor = null;
 	private Integer minimumFloorManagementHours = null;
-	private Integer extraScheduleHours = null;
 	
 	private List<StoreVariableDefinition> variableDefinitions;
 	private DistributionType distributionType;
@@ -642,22 +643,6 @@ public class Store extends SpmObject {
 		return null;
 	}
 
-
-	/**
-	 * @return the extraScheduleHours
-	 */
-	public Integer getExtraScheduleHours() {
-		return extraScheduleHours;
-	}
-
-
-	/**
-	 * @param extraScheduleHours the extraScheduleHours to set
-	 */
-	public void setExtraScheduleHours(Integer extraScheduleHours) {
-		this.extraScheduleHours = extraScheduleHours;
-	}
-	
 	/**
 	 * 
 	 * @param dayOfWeek
@@ -665,60 +650,29 @@ public class Store extends SpmObject {
 	 */
 	public Date getStoreScheduleStartHour(DayOfWeek dayOfWeek) {
 		OperationTime operationTime = getOperationTime(dayOfWeek);
-		Date startTime = CalendarUtils.addOrSubstractHours(operationTime.getOpenHour(), (-1) * getCalculatedExtraHours(operationTime.getOpenHour(), operationTime.getCloseHour(), false));
-		Date previuosCloseTime = getStoreScheduleEndHour(dayOfWeek.getPreviousDayOfWeek());
-		OperationTime previousOperationTime = getOperationTime(dayOfWeek.getPreviousDayOfWeek());
-		
-		if(CalendarUtils.greaterTime(startTime, operationTime.getOpenHour())) {
-			// Case 1: Real start time is yesterday.
-			if(CalendarUtils.smallerTime(previuosCloseTime, previousOperationTime.getCloseHour())) {
-				// Case 1.1: Yesterday's real close hour is today
-				return CalendarUtils.greaterTime(startTime, previuosCloseTime) ? previuosCloseTime : startTime;
-			} else {
-				// Case 1.2: Real previous close hour and today's open hour are yesterday
-				return CalendarUtils.smallerTime(startTime, previuosCloseTime) ? previuosCloseTime : startTime;
-			}
-		} else {
-			// Case 2: Real start time is still today. 
-			if(CalendarUtils.equalsOrGreaterTime(previuosCloseTime, previousOperationTime.getCloseHour())) {
-				// Case 2.1: Real previous close hour is yerterday but today's open hour is today
-				return startTime;
-			} else {
-				// Case 2.2: Yesterday's real close hour is today and real open hour is today
-				return CalendarUtils.smallerTime(startTime, previuosCloseTime) ? previuosCloseTime : startTime;
-			}
-		}
-	}
+		Date startHour  = operationTime != null ? operationTime.getStartHour() : null;
 
-	/**
-	 * 
-	 * @param open
-	 * @param close
-	 * @return
-	 */
-	private int getCalculatedExtraHours(Date open, Date close, boolean isCeil) {
-		if(CalendarUtils.equalsTime(open, close)) {
-			// 24hs store
-			return 0;
-		} else {
-			double diff = CalendarUtils.differenceInHours(close, open).doubleValue();
-			int extraHours = getExtraHoursAsInt();
-			if(diff + extraHours >= 24) {
-				double hs = (diff + extraHours - 24) / 2;
-				return (int) (isCeil ? Math.ceil(hs) : Math.floor(hs));
+		if(operationTime != null && startHour != null) {		
+			OperationTime previousOperationTime = getOperationTime(dayOfWeek.getPreviousDayOfWeek());
+			
+			if(!CalendarUtils.greaterTime(previousOperationTime.getEndHour(), operationTime.getOpenHour())) {
+				if(operationTime.startsYesterday() && !previousOperationTime.endsTomorrow() && CalendarUtils.greaterTime(previousOperationTime.getEndHour(), startHour)) {
+					startHour = previousOperationTime.getEndHour();
+				} else if(!operationTime.startsYesterday() && previousOperationTime.endsTomorrow() && CalendarUtils.greaterTime(previousOperationTime.getEndHour(), startHour)) {
+					startHour = previousOperationTime.getEndHour();
+				} else if(operationTime.startsYesterday() && previousOperationTime.endsTomorrow() && CalendarUtils.smallerTime(previousOperationTime.getEndHour(), startHour)) {
+					startHour = previousOperationTime.getEndHour();
+				}				
 			} else {
-				// Normal case
-				return extraHours;
+				if(!operationTime.startsYesterday() && previousOperationTime.endsTomorrow() && CalendarUtils.greaterTime(previousOperationTime.getEndHour(), startHour)) {
+					startHour = operationTime.getOpenHour();
+				} else if(operationTime.startsYesterday() && previousOperationTime.endsTomorrow() && CalendarUtils.smallerTime(previousOperationTime.getEndHour(), startHour)) {
+					startHour = operationTime.getOpenHour();
+				}
 			}
 		}
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	private int getExtraHoursAsInt() {
-		return getExtraScheduleHours() != null ? getExtraScheduleHours().intValue() : 0;
+		
+		return startHour;
 	}
 	
 	/**
@@ -728,7 +682,22 @@ public class Store extends SpmObject {
 	 */
 	public Date getStoreScheduleEndHour(DayOfWeek dayOfWeek) {
 		OperationTime operationTime = getOperationTime(dayOfWeek);
-		return CalendarUtils.addOrSubstractHours(operationTime.getCloseHour(), getCalculatedExtraHours(operationTime.getOpenHour(), operationTime.getCloseHour(), false));
+		Date endHour  = operationTime != null ? operationTime.getEndHour() : null;
+
+		if(operationTime != null && endHour != null) {
+			OperationTime nextOperationTime = getOperationTime(dayOfWeek.getNextDayOfWeek());
+
+			if(operationTime.operationTimeEndsTomorrow() && CalendarUtils.greaterTime(operationTime.getCloseHour(), nextOperationTime.getOpenHour())) {
+				throw new SpmUncheckedException("Close hour for [" + dayOfWeek + "] is after open hour for [" + dayOfWeek.getNextDayOfWeek() + "]", ErrorEnum.INVALID_OPERATION_TIME_FOR_STORE);
+			}
+			
+			// The only way we modify end hour is if closing hours overlap with open time
+			if(operationTime.endsTomorrow() && CalendarUtils.greaterTime(endHour, nextOperationTime.getOpenHour())) {
+				endHour = nextOperationTime.getOpenHour();
+			}
+		}
+		
+		return endHour;
 	}
 	
 	/**

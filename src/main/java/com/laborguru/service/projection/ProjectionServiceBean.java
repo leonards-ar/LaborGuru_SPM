@@ -356,7 +356,7 @@ public class ProjectionServiceBean implements ProjectionService {
 			Date openHour = operationTime.getOpenHour();
 			
 			//Setting the values when open and close time are in the same day
-			if (!operationTime.endsTomorrow()){
+			if (!operationTime.operationTimeEndsTomorrow()){
 				for(HalfHourProjection halfHour: avgCalculatedHalfHourList){
 					if ((halfHour.getTime().compareTo(openHour) >=0) && halfHour.getTime().before(closeHour)){
 						halfHour.setAdjustedValue(new BigDecimal(avgProjectionValue.toString()));	
@@ -392,7 +392,7 @@ public class ProjectionServiceBean implements ProjectionService {
 		int minutesCloseTime = closeTime.getMinuteOfDay();
 		
 		//If the close time falls in the following day we have to add a day
-		if (operationTime.endsTomorrow()){
+		if (operationTime.operationTimeEndsTomorrow()){
 			minutesCloseTime += SpmConstants.HALF_HOUR * SpmConstants.HALF_HOURS_IN_A_DAY;
 		}
 		
