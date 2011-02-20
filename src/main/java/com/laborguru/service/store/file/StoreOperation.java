@@ -252,6 +252,7 @@ public class StoreOperation extends BaseStoreSection {
 			return;
 		} else if(CLOSING_EXTRA_HOURS.equalsIgnoreCase(fieldAux)) {
 			operationTime.setClosingExtraHours(PoiUtils.getIntegerValue(row.getCell((short)4)));
+			return;
 		}
 		
 		// This means that just operation time is left as possibility

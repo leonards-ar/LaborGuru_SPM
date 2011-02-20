@@ -33,7 +33,15 @@ public interface UploadStoreDefinitionService {
 	 */
 	void setStoreDefinitionFileParser(StoreDefinitionFileParser storeDefinitionFileParser);
 	
+	/**
+	 * 
+	 * @param storeService
+	 */
 	void setStoreService(StoreService storeService);
 	
+	/**
+	 * 
+	 * @param customerService
+	 */
 	void setCustomerService(CustomerService customerService);
 }
