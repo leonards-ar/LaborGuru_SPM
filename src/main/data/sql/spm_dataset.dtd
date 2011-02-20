@@ -92,6 +92,8 @@
     close_hour CDATA #REQUIRED
     day_of_week CDATA #REQUIRED
     store_id CDATA #IMPLIED
+    opening_extra_hours CDATA #IMPLIED
+    closing_extra_hours CDATA #IMPLIED
 >
 
 <!ELEMENT tbl_permissions EMPTY>
@@ -141,7 +143,6 @@
     area_id CDATA #IMPLIED
     daily_projections_weeks_default CDATA #IMPLIED
     half_hour_projections_weeks_default CDATA #IMPLIED
-    extra_schedule_hours CDATA #IMPLIED
 >
 
 <!ELEMENT tbl_users EMPTY>
