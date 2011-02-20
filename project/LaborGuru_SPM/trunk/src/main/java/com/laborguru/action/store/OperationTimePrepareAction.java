@@ -1,7 +1,6 @@
 package com.laborguru.action.store;
 
 import org.apache.log4j.Logger;
-import org.apache.struts2.interceptor.validation.SkipValidation;
 
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.action.utils.CustomValidators;
@@ -109,7 +108,6 @@ public class OperationTimePrepareAction extends StoreAdministrationBaseAction {
 	 * @return
 	 * @throws Exception
 	 */
-	@SkipValidation
 	public String edit() throws Exception {
 		loadOperationTimes();
 		setFirstDayOfWeek(getStore().getFirstDayOfWeekAsInteger());
@@ -122,7 +120,6 @@ public class OperationTimePrepareAction extends StoreAdministrationBaseAction {
 	 * @return
 	 * @throws Exception
 	 */
-	@SkipValidation
 	public String show() throws Exception {
 	
 		loadOperationTimes();
