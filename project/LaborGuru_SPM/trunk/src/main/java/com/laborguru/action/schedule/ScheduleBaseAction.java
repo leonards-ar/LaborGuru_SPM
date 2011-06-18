@@ -29,6 +29,11 @@ public abstract class ScheduleBaseAction extends SpmAction {
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * 
+	 */
 	public ScheduleBaseAction() {
 	}
 

@@ -17,6 +17,11 @@ import com.laborguru.service.schedule.ScheduleService;
  *
  */
 public abstract class PrintShiftBaseAction extends ScheduleShiftBaseAction {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private static final Logger log = Logger.getLogger(AddShiftBaseAction.class);
 	
 	private ScheduleService scheduleService;

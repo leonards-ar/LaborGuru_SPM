@@ -5,7 +5,6 @@ import java.util.List;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.model.report.TotalHourByPosition;
 import com.laborguru.service.position.PositionService;
-import com.laborguru.service.report.ReportService;
 import com.opensymphony.xwork2.Preparable;
 
 /**

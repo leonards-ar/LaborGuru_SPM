@@ -19,6 +19,11 @@ import com.opensymphony.xwork2.Preparable;
  *
  */
 public abstract class ScheduleShiftBaseAction extends ScheduleBaseAction implements Preparable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private static final Logger log = Logger.getLogger(ScheduleShiftBaseAction.class);
 	
 	private WeekDaySelector weekDaySelector;
