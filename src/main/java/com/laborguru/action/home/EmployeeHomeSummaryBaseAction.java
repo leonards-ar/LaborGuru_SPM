@@ -34,6 +34,11 @@ import com.laborguru.util.SpmConstants;
  *
  */
 public abstract class EmployeeHomeSummaryBaseAction extends SpmAction {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private WeekDaySelector weekDaySelector;
 
 	private ScheduleService scheduleService;

@@ -1,12 +1,10 @@
 package com.laborguru.action.report;
 
 import java.util.Date;
-import java.util.List;
 
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.ReportTypes;
-import com.laborguru.model.report.TotalManagerHour;
 import com.laborguru.util.CalendarUtils;
 import com.opensymphony.xwork2.Preparable;
 

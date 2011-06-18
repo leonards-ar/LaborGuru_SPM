@@ -28,6 +28,11 @@ import com.opensymphony.xwork2.Preparable;
  *
  */
 public abstract class StoreAdministrationBaseAction extends SpmAction implements Preparable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private static Logger log = Logger.getLogger(StoreAdministrationBaseAction.class);
 
 	private Store store;
