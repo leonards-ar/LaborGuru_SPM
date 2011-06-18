@@ -1,7 +1,5 @@
 package com.laborguru.action.report;
 
-import java.util.Date;
-
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.SpmUncheckedException;
 import com.laborguru.util.CalendarUtils;

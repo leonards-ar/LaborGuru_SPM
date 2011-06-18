@@ -388,8 +388,8 @@ public class ReportServiceBean implements ReportService {
 				totalhour.setSales(SpmConstants.BD_ZERO_VALUE);
 			}
 
-			totalhour.setSchedule(getValue(getTotalHourByDay(date, scheduleTotalHours)));
-			totalhour.setTarget(getValue(getTotalHourByDay(date, targetTotalHours)));
+			totalhour.setSchedule(getScheduleValue(getTotalHourByDay(date, scheduleTotalHours)));
+			totalhour.setTarget(getTargetValue(getTotalHourByDay(date, targetTotalHours)));
 			
 			totalHours.add(totalhour);
 		}
@@ -448,8 +448,8 @@ public class ReportServiceBean implements ReportService {
 				totalhour.setSales(SpmConstants.BD_ZERO_VALUE);
 			}
 			
-			totalhour.setSchedule(getValue(getTotalHourByTime(hour, schedule)));
-			totalhour.setTarget(getValue(getTotalHourByTime(hour, target)));
+			totalhour.setSchedule(getScheduleValue(getTotalHourByTime(hour, schedule)));
+			totalhour.setTarget(getTargetValue(getTotalHourByTime(hour, target)));
 			
 			totalHours.add(totalhour);
 		}
@@ -471,8 +471,8 @@ public class ReportServiceBean implements ReportService {
 				totalhour.setSales(SpmConstants.BD_ZERO_VALUE);
 			}
 
-			totalhour.setSchedule(getValue(getTotalHourByDay(date, scheduleTotalHours)));
-			totalhour.setTarget(getValue(getTotalHourByDay(date, targetTotalHours)));
+			totalhour.setSchedule(getScheduleValue(getTotalHourByDay(date, scheduleTotalHours)));
+			totalhour.setTarget(getTargetValue(getTotalHourByDay(date, targetTotalHours)));
 			
 			totalHours.add(totalhour);
 		}
@@ -508,13 +508,21 @@ public class ReportServiceBean implements ReportService {
 		}
 		return null;
 	}
-	private BigDecimal getValue(TotalHour th) {
+	private BigDecimal getScheduleValue(TotalHour th) {
 		if(th != null){
-			if(th.getSchedule() != null)
+			if(th.getSchedule() != null) {
 				return th.getSchedule();
-			else return th.getTarget();
+			}
 		}
-		
+		return SpmConstants.BD_ZERO_VALUE;
+	}
+
+	private BigDecimal getTargetValue(TotalHour th) {
+		if(th != null){
+			if(th.getTarget() != null) {
+				return th.getTarget();
+			}
+		}
 		return SpmConstants.BD_ZERO_VALUE;
 	}
 	
