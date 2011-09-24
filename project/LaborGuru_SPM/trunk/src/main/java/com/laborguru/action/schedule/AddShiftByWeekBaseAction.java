@@ -122,7 +122,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 								getWeeklyScheduleData().addScheduleRow(getGroupById(employeeSchedule.getEmployee(), shift), aRow);
 							}
 							buildScheduleDataFor(aRow, employeeSchedule, shift, i);
-						} else if(!shift.isBreak() && !isAllPositions()) {
+						} else if(shift != null && !shift.isBreak() && !isAllPositions()) {
 							// Total shift hours that are not shown, but should be taken into account
 							// for totals
 							hiddenTotalScheduled += NumberUtils.getDoubleValue(shift.getTotalShiftHours());

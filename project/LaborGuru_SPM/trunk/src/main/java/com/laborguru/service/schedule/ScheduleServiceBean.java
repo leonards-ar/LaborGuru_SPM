@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.laborguru.model.EmployeeSchedule;
 import com.laborguru.model.Store;
 import com.laborguru.model.StoreSchedule;
 import com.laborguru.service.schedule.dao.ScheduleDao;
@@ -121,6 +122,9 @@ public class ScheduleServiceBean implements ScheduleService {
 		List<StoreSchedule> schedules = getScheduleDao().getAllStoreSchedules();
 		
 		for(StoreSchedule aSchedule : schedules) {
+			for(EmployeeSchedule employeeSchedule : aSchedule.getEmployeeSchedules()) {
+				employeeSchedule.reindexShifts();
+			}			
 			getScheduleDao().save(aSchedule);
 		}
 	}

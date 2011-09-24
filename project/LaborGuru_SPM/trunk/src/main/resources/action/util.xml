@@ -10,5 +10,8 @@
 		<action name="updateStaffing" class="com.laborguru.action.util.UpdateStaffingAction">
 			<result name="success">/tiles/util/updateSchedules.jsp</result>
 		</action>
+		<action name="batchupdateschedule" class="com.laborguru.action.util.BatchUpdateScheduleAction">
+			<result name="success">/tiles/util/updateSchedules.jsp</result>
+		</action>		
 	</package>
 </struts>
