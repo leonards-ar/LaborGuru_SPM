@@ -3,9 +3,10 @@
  * Creation date: Nov 27, 2008 11:06:46 AM
  * Copyright Mindpool
  */
-package com.laborguru.action.schedule;
+package com.laborguru.action.util;
 
 import com.laborguru.action.SpmActionResult;
+import com.laborguru.action.schedule.ScheduleBaseAction;
 import com.laborguru.service.projection.ProjectionService;
 import com.laborguru.service.schedule.ScheduleService;
 
