@@ -205,6 +205,16 @@ public class ScheduleDaoHibernate extends HibernateDaoSupport implements Schedul
 		}
 		
 		return totalHoursByPosition;
+	}
+
+	public StoreSchedule delete(StoreSchedule schedule) {
+		if (schedule == null){
+			throw new IllegalArgumentException("The schedule passed as parameter is null");
+		}
+		
+		getHibernateTemplate().delete(schedule);
+		
+		return schedule;		
 	}	
 	
 }
