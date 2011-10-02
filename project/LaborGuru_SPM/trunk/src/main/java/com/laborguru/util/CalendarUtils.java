@@ -250,6 +250,15 @@ public class CalendarUtils {
 	private static boolean isPM(String dayPart) {
 		return dayPart != null && (dayPart.equalsIgnoreCase("pm") || dayPart.equalsIgnoreCase("p"));
 	}
+
+	/**
+	 * 
+	 * @param dayPart
+	 * @return
+	 */
+	private static boolean isAM(String dayPart) {
+		return dayPart != null && (dayPart.equalsIgnoreCase("am") || dayPart.equalsIgnoreCase("a"));
+	}
 	
 	/**
 	 * 
@@ -261,7 +270,9 @@ public class CalendarUtils {
 	private static String getTime(String hours, String minutes, String dayPart) {
 		int hs = Integer.parseInt(hours != null ? hours : "0");
 		int mins = Integer.parseInt(minutes != null ? minutes : "0");
-		if(dayPart != null && isPM(dayPart) && hs < 12) {
+		if(dayPart != null && isAM(dayPart) && hs == 12) {
+			hs = 0;
+		} else if (dayPart != null && isPM(dayPart) && hs < 12) {
 			hs += 12;
 		}
 		return formatTimeComponent(hs) + ":" + formatTimeComponent(mins);

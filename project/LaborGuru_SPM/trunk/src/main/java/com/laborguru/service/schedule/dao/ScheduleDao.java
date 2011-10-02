@@ -46,6 +46,13 @@ public interface ScheduleDao {
 	
 	/**
 	 * 
+	 * @param schedule
+	 * @return
+	 */
+	StoreSchedule delete(StoreSchedule schedule);
+	
+	/**
+	 * 
 	 * @param store
 	 * @param startDate
 	 * @param endDate

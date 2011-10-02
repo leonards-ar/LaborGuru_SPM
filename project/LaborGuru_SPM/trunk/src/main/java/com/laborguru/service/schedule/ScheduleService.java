@@ -75,5 +75,6 @@ public interface ScheduleService extends Service {
 	 * 
 	 */
 	void updateAllStoreSchedules();
+	
 }
  
