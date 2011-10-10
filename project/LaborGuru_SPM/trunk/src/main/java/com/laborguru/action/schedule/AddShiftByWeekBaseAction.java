@@ -157,14 +157,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		if(entry.getOutHour() == null) {
 			entry.setOutHour(employeeSchedule.getToHourWithContiguous(shift.getPosition()));
 		}
-		/*
-		if(entry.getInHour() == null || CalendarUtils.greaterTime(entry.getInHour(), shift.getFromHour())) {
-			entry.setInHour(shift.getFromHour());
-		}
-		if(entry.getOutHour() == null || CalendarUtils.smallerTime(entry.getOutHour(), shift.getToHour())) {
-			entry.setOutHour(shift.getToHour());
-		}
-		*/
+
 		entry.addShiftHours(shift.getFromHour(), shift.getToHourWithContiguousShift());
 	}
 	
@@ -1205,37 +1198,29 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 			log.debug("About to copy schedule data " + getWeeklyScheduleData() + " to week starting " + getCopyTargetDay());
 		}
 
-		Date currentDay = getWeekDaySelector().getSelectedDay();
-		Date currentWeekDay = getWeekDaySelector().getStartingWeekDay();
-		
 		List<Object> params = new ArrayList<Object>();
 		params.add(getCopyTargetDay());
-		params.add(currentWeekDay);
+		params.add(getWeekDaySelector().getStartingWeekDay());
 		params.add(new Date());
 
+		// Memorize current schedule
+		setSchedule();
+
 		if(getCopyTargetDay() != null && getCopyTargetDay().after(new Date())) {
-			/*
-			 * Force selected date to the target date.
-			 */
-			setStoreSchedules(null);
-			setFirstDayNextWeekStoreSchedule(null);
-			setWeekDays(null);
-			getWeekDaySelector().setSelectedDay(getCopyTargetDay());
-			getWeekDaySelector().setStartingWeekDay(getCopyTargetDay());
-			
-			setSchedule();
 
 			if(log.isDebugEnabled()) {
-				log.debug("About to copy schedules " + getStoreSchedules());
+				log.debug("About to copy schedules starting in day [" + getCopyTargetDay() + "] -> " + getStoreSchedules());
 			}
-		
-			//:TODO: Should also copy contiguous shifts for next day!
 			
 			int size = getStoreSchedules().size();
 			StoreSchedule storeSchedule;
-			for(int dayIndex = size - 1; dayIndex >= 0; dayIndex--) {
-				storeSchedule = getStoreSchedules().get(dayIndex);
 
+			StoreSchedule previousDaySchedule = getScheduleService().getStoreScheduleByDate(getEmployeeStore(), CalendarUtils.addOrSubstractDays(getCopyTargetDay(), -1));
+			StoreSchedule nextDaySchedule = getScheduleService().getStoreScheduleByDate(getEmployeeStore(), CalendarUtils.addOrSubstractDays(getCopyTargetDay(), size));
+
+			for(int dayIndex = size - 1; dayIndex >= 0; dayIndex--) {
+				storeSchedule = getScheduleService().copyScheduleTo(getStoreSchedules().get(dayIndex), CalendarUtils.addOrSubstractDays(getCopyTargetDay(), dayIndex), nextDaySchedule);
+				
 				if(log.isDebugEnabled()) {
 					log.debug("About to save schedule " + storeSchedule);
 				}
@@ -1245,18 +1230,9 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 				if(log.isDebugEnabled()) {
 					log.debug("Saved schedule for date " + storeSchedule.getDay());
 				}
+				nextDaySchedule = storeSchedule;
 			}
 
-			/*
-			 * Set selected day back again
-			 */
-			setFirstDayNextWeekStoreSchedule(null);
-			setWeekDays(null);
-			getWeekDaySelector().setSelectedDay(currentDay);
-			getWeekDaySelector().setStartingWeekDay(currentWeekDay);
-			setStoreSchedules(null);
-			setFirstDayNextWeekStoreSchedule(null);
-			
 			addActionMessage(getText("schedule.addshift.weekly.copy_success", params));
 		} else {
 			addActionError(getText("error.schedule.addshift.invalid_target_day", params));

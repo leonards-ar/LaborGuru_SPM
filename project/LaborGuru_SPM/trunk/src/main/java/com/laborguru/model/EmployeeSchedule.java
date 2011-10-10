@@ -527,7 +527,6 @@ public class EmployeeSchedule extends SpmObject {
 		return shifts != null && shifts.size() > 0 ? shifts.get(0) : null;
 	}
 	
-	
 	/**
 	 * 
 	 * @return
@@ -618,5 +617,12 @@ public class EmployeeSchedule extends SpmObject {
 			}
 		}
 		return shifts;
+	}
+	
+	public void removeLastShift() {
+		int size = getShifts().size();
+		if(size > 0) {
+			getShifts().remove(size - 1);
+		}
 	}
 }

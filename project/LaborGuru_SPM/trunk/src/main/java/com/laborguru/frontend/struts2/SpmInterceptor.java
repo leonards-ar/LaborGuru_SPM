@@ -109,6 +109,10 @@ public class SpmInterceptor implements Interceptor {
 		if(menu == null && user != null) {
 			menu = new SessionMenuWrapper(getMenuService().getMenuFor(user));
 			session.put(HttpRequestConstants.MENU, menu);
+			// Goto to first Menu item and Submenu (FS#297)
+			// TODO Set these values based on profile
+			menu.setSelectedItemIndex(0);
+			menu.setSelectedSubItemIndex(0);
 		}
 
 		Object idxObj = params.get(HttpRequestConstants.MENU_ITEM_INDEX);

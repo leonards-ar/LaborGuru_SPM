@@ -574,7 +574,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 					if(originalShift != null) {
 						Shift scheduleShift = schedule.getLastShiftFor(position);
 						
-						// Re-establish the contiguous relation when ther is no change in the shift end time
+						// Re-establish the contiguous relation when there is no change in the shift end time
 						if(scheduleShift != null && CalendarUtils.equalsTime(selectedDayEndHour, scheduleShift.getToHour()) && CalendarUtils.equalsTime(scheduleShift.getToHour(), originalShift.getToHour())) {
 							scheduleShift.setContiguousShift(originalShift.getContiguousShift());
 						} else {

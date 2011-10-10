@@ -5,6 +5,10 @@
 <struts>
 	<package name="home" namespace="/home" extends="spm-default">
 		<action name="home" class="com.laborguru.action.home.HomeAction">
+			<result name="nonadmin_employee" type="redirectAction">
+				<param name="actionName">printweeklyshiftbyposition_view</param>
+				<param name="namespace">/schedule</param>
+			</result>		
 			<result name="employee" type="redirectAction">employee_home</result>
 			<result name="administrator" type="redirectAction">admin_home</result>
 			<result name="success" type="tiles">homePage</result>			

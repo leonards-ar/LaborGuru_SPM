@@ -76,5 +76,11 @@ public interface ScheduleService extends Service {
 	 */
 	void updateAllStoreSchedules();
 	
+	/**
+	 * 
+	 * @param sourceSchedule
+	 * @param date
+	 */
+	StoreSchedule copyScheduleTo(StoreSchedule sourceSchedule, Date date, StoreSchedule destinationNextDaySchedule);
 }
  
