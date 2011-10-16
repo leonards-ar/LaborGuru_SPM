@@ -341,10 +341,12 @@
 									</s:else>
 									<td class="weekScheduleTimeInputCellText" id="weeklyScheduleTotalHours_<s:property value="#itScheduleData.index"/>_<s:property value="#itDataEntry.index"/>">
 									<s:property value="totalHoursAsString"/>
-									<s:if test="%{multipleShifts}">
-									<span title="| <s:iterator id="h" value="shiftHours"><s:property/> | </s:iterator>"><s:text name="schedule.addshift.weekly.has_multiple_shifts" /></span>
-									</s:if>
 									</td>
+									<s:if test="%{multipleShifts}">
+									<td class="weekScheduleTimeInputCellText">
+									<span title="| <s:iterator id="h" value="shiftHours"><s:property/> | </s:iterator>"><s:text name="schedule.addshift.weekly.has_multiple_shifts" /></span>
+									</td>
+									</s:if>
 								</tr>
 							</table>
 						</td>
