@@ -22,6 +22,7 @@ import com.laborguru.frontend.model.WeeklyScheduleDailyEntry;
 import com.laborguru.frontend.model.WeeklyScheduleData;
 import com.laborguru.frontend.model.WeeklyScheduleRow;
 import com.laborguru.model.DailyProjection;
+import com.laborguru.model.DayOfWeek;
 import com.laborguru.model.Employee;
 import com.laborguru.model.EmployeeSchedule;
 import com.laborguru.model.Position;
@@ -81,6 +82,8 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 						aSchedule = new StoreSchedule();
 						aSchedule.setStore(getEmployeeStore());
 						aSchedule.setDay(aDate);
+					} else {
+						getScheduleService().evict(aSchedule);
 					}
 					storeSchedules.add(aSchedule);
 				}
@@ -839,6 +842,16 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		return SpmActionResult.EDIT.getResult();
 	}
 	
+	protected void loadCopyTargetDay() {
+		setCopyTargetDay(CalendarUtils.addOrSubstractDays(getWeekDaySelector().getStartingWeekDay(), DayOfWeek.values().length));
+	}
+	
+	protected void initializeCopyTargetDay() {
+		if(getCopyTargetDay() == null || !CalendarUtils.isAfterToday(getCopyTargetDay())) {
+			loadCopyTargetDay();
+		}
+	}
+	
 	/**
 	 * 
 	 */
@@ -1206,7 +1219,8 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		// Memorize current schedule
 		setSchedule();
 
-		if(getCopyTargetDay() != null && getCopyTargetDay().after(new Date())) {
+		// Only able to copy after today and after the last day of the current week
+		if(getCopyTargetDay() != null && getCopyTargetDay().after(new Date()) && getCopyTargetDay().after(getWeekDays().get(getWeekDays().size() - 1))) {
 
 			if(log.isDebugEnabled()) {
 				log.debug("About to copy schedules starting in day [" + getCopyTargetDay() + "] -> " + getStoreSchedules());
@@ -1215,7 +1229,6 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 			int size = getStoreSchedules().size();
 			StoreSchedule storeSchedule;
 
-			StoreSchedule previousDaySchedule = getScheduleService().getStoreScheduleByDate(getEmployeeStore(), CalendarUtils.addOrSubstractDays(getCopyTargetDay(), -1));
 			StoreSchedule nextDaySchedule = getScheduleService().getStoreScheduleByDate(getEmployeeStore(), CalendarUtils.addOrSubstractDays(getCopyTargetDay(), size));
 
 			for(int dayIndex = size - 1; dayIndex >= 0; dayIndex--) {
@@ -1280,7 +1293,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 */
 	@Override
 	public void validate() {
-		if(getSaveSchedule() != null) {
+		if(getSaveSchedule() != null || getCopySchedule() != null) {
 			initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
 
 			Map<String, Integer> employeesPositions = new HashMap<String, Integer>();

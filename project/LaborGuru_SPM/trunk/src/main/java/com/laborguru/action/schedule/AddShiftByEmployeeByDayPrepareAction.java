@@ -469,7 +469,7 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 	 */
 	@Override
 	public void validate() {
-		if(getSaveSchedule() != null) {
+		if(getSaveSchedule() != null || getCopySchedule() != null) {
 			initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
 			
 			validateSchedule(getScheduleData());

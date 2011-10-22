@@ -78,6 +78,12 @@ public interface ScheduleService extends Service {
 	
 	/**
 	 * 
+	 * @param schedule
+	 */
+	void evict(StoreSchedule schedule);
+	
+	/**
+	 * 
 	 * @param sourceSchedule
 	 * @param date
 	 */

@@ -6,11 +6,11 @@
 package com.laborguru.service.schedule;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.laborguru.model.EmployeeSchedule;
 import com.laborguru.model.Shift;
@@ -147,18 +147,21 @@ public class ScheduleServiceBean implements ScheduleService {
 	}
 	
 	private void copyEmployeeSchedule(StoreSchedule sourceSchedule, StoreSchedule destinationSchedule, StoreSchedule destinationNextDaySchedule) {
-		prepareEmployeeSchedule(destinationSchedule, sourceSchedule.getEmployeeSchedules().size());
-		
 		Iterator<EmployeeSchedule> srcIt = sourceSchedule.getEmployeeSchedules().iterator();
-		Iterator<EmployeeSchedule> destIt = destinationSchedule.getEmployeeSchedules().iterator();
-		while(srcIt.hasNext() && destIt.hasNext()) {
+		Iterator<EmployeeSchedule> destIt = prepareEmployeeSchedule(destinationSchedule, sourceSchedule.getEmployeeSchedules().size()).iterator();
+		
+		destinationSchedule.getEmployeeSchedules().clear();
+		
+		while(srcIt.hasNext()) {
 			EmployeeSchedule src = srcIt.next();
 			EmployeeSchedule dest = destIt.next();
 			
 			dest.setEmployee(src.getEmployee());
 			dest.setStoreSchedule(destinationSchedule);
 			
-			copyShifts(src, dest, destinationNextDaySchedule.getEmployeeSchedule(src.getEmployee()));
+			destinationSchedule.getEmployeeSchedules().add(dest);
+			
+			copyShifts(src, dest, destinationNextDaySchedule != null ? destinationNextDaySchedule.getEmployeeSchedule(src.getEmployee()) : null);
 		}
 	}
 
@@ -176,7 +179,7 @@ public class ScheduleServiceBean implements ScheduleService {
 			dest.setServiceHours(src.getServiceHours());
 			dest.setToHour(src.getToHour());
 			
-			if(src.hasContiguousShift()) {
+			if(src.hasContiguousShift() && destinationNextDayEmployeeSchedule != null) {
 				Shift candidateShif = destinationNextDayEmployeeSchedule.getFirstShiftFor(src.getPosition());
 				if(CalendarUtils.equalsTime(candidateShif.getFromHour(), dest.getToHour())) {
 					dest.setContiguousShift(candidateShif);
@@ -186,28 +189,36 @@ public class ScheduleServiceBean implements ScheduleService {
 	}
 	
 	private void prepareShifts(EmployeeSchedule destinationEmployeeSchedule, int size) {
-		if(size > destinationEmployeeSchedule.getShifts().size()) {
-			for(int i = 0; i < size - destinationEmployeeSchedule.getShifts().size(); i++) {
+		int originalSize = destinationEmployeeSchedule.getShifts().size();
+		if(size > originalSize) {
+			for(int i = 0; i < size - originalSize; i++) {
 				destinationEmployeeSchedule.addShift(new Shift());
 			}			
-		} else if(size < destinationEmployeeSchedule.getShifts().size()) {
-			for(int i = 0; i < destinationEmployeeSchedule.getShifts().size() - size; i++) {
+		} else if(size < originalSize) {
+			for(int i = 0; i < originalSize - size; i++) {
 				destinationEmployeeSchedule.removeLastShift();
 			}				
 		}
 	}
 	
-	private void prepareEmployeeSchedule(StoreSchedule destinationSchedule, int size) {
-		if(size > destinationSchedule.getEmployeeSchedules().size()) {
-			for(int i = 0; i < size - destinationSchedule.getEmployeeSchedules().size(); i++) {
-				destinationSchedule.getEmployeeSchedules().add(new EmployeeSchedule());
-			}
-		} else if(size < destinationSchedule.getEmployeeSchedules().size()) {
-			Iterator<EmployeeSchedule> it = destinationSchedule.getEmployeeSchedules().iterator();
-			for(int i = 0; i < destinationSchedule.getEmployeeSchedules().size() - size; i++) {
-				it.next();
-				it.remove();
+	private List<EmployeeSchedule> prepareEmployeeSchedule(StoreSchedule destinationSchedule, int size) {
+		List<EmployeeSchedule> schedules = new ArrayList<EmployeeSchedule>(size);
+		
+		int originalSize = destinationSchedule.getEmployeeSchedules().size();
+		Iterator<EmployeeSchedule> destIt = destinationSchedule.getEmployeeSchedules().iterator();
+
+		for(int i=0; i < size; i++) {
+			if(i < originalSize && destIt.hasNext()) {
+				schedules.add(destIt.next());
+			} else {
+				schedules.add(new EmployeeSchedule());
 			}
 		}
+		
+		return schedules;
+	}
+
+	public void evict(StoreSchedule schedule) {
+		getScheduleDao().evict(schedule);
 	}
 }

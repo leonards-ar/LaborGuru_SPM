@@ -83,4 +83,10 @@ public interface ScheduleDao {
 	 * @return
 	 */
 	List<StoreSchedule> getAllStoreSchedules();
+	
+	/**
+	 * 
+	 * @param schedule
+	 */
+	void evict(StoreSchedule schedule);
 }
