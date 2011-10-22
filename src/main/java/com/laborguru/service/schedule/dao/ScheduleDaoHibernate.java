@@ -215,6 +215,10 @@ public class ScheduleDaoHibernate extends HibernateDaoSupport implements Schedul
 		getHibernateTemplate().delete(schedule);
 		
 		return schedule;		
+	}
+
+	public void evict(StoreSchedule schedule) {
+		getHibernateTemplate().evict(schedule);
 	}	
 	
 }

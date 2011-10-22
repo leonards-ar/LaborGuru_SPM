@@ -23,6 +23,7 @@ import com.laborguru.frontend.model.ScheduleHourLabelElement;
 import com.laborguru.frontend.model.ScheduleRow;
 import com.laborguru.model.DailyProjectedStaffing;
 import com.laborguru.model.DailyProjection;
+import com.laborguru.model.DayOfWeek;
 import com.laborguru.model.Employee;
 import com.laborguru.model.EmployeeSchedule;
 import com.laborguru.model.OperationTime;
@@ -1399,4 +1400,20 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	protected void resetDayData() {
 		setDailyVolume(null);
 	}
+	
+	/**
+	 * 
+	 */
+	protected void loadCopyTargetDay() {
+		setCopyTargetDay(CalendarUtils.addOrSubstractDays(getWeekDaySelector().getSelectedDay(), 1));
+	}
+	
+	/**
+	 * 
+	 */
+	protected void initializeCopyTargetDay() {
+		if(getCopyTargetDay() == null || !CalendarUtils.isAfterToday(getCopyTargetDay())) {
+			loadCopyTargetDay();
+		}
+	}	
 }

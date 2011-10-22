@@ -59,6 +59,7 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 	private PositionGroupService positionGroupService;
 	
 	private String saveSchedule;
+	private String copySchedule;
 
 	private Date copyTargetDay;
 	
@@ -92,9 +93,7 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 	/**
 	 * 
 	 */
-	protected void loadCopyTargetDay() {
-		setCopyTargetDay(CalendarUtils.addOrSubstractDays(getWeekDaySelector().getSelectedDay(), 1));
-	}
+	protected abstract void loadCopyTargetDay();
 	
 	/**
 	 * 
@@ -589,11 +588,7 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 	/**
 	 * 
 	 */
-	protected void initializeCopyTargetDay() {
-		if(getCopyTargetDay() == null || !CalendarUtils.isAfterToday(getCopyTargetDay())) {
-			loadCopyTargetDay();
-		}
-	}
+	protected abstract void initializeCopyTargetDay();
 
 	/**
 	 * 
@@ -625,5 +620,13 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 	 */
 	public void setPositionGroupService(PositionGroupService positionGroupService) {
 		this.positionGroupService = positionGroupService;
+	}
+
+	public String getCopySchedule() {
+		return copySchedule;
+	}
+
+	public void setCopySchedule(String copySchedule) {
+		this.copySchedule = copySchedule;
 	}
 }
