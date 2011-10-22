@@ -13,6 +13,7 @@
 	<s:hidden id="selectedWeekDay" name="selectedWeekDay"/>
 	<s:hidden id="weeklyVolume" name="weeklyVolume"/>
 	<s:hidden id="hiddenTotalScheduledInMinutes" name="hiddenTotalScheduledInMinutes"/>
+	<s:hidden id="copySchedule" name="copySchedule"/>
 	
 	<table border="0" cellspacing="0" align="center">
 		<tr>
@@ -80,7 +81,7 @@
 													<s:datetimepicker id="copy_target_day" type="date" formatLength="short" displayFormat="%{getText('datepicker.format.date')}" disabled="true" name="copyTargetDay" theme="simple" />
 													<script>djConfig.searchIds.push("copy_target_day");</script>
 												</td>
-												<td align="right"><s:submit name="copySchedule" onclick="return confirmAndWaitSpash('confirm', this, '%{getText('schedule.addshift.copy.schedule.confirm.msg')}');" id="copyButton" key="schedule.addshift.copy.button" action="addweeklyshiftbyemployee_copySchedule" theme="simple" cssClass="button"/></td>
+												<td align="right"><s:submit onclick="return confirmCopySchedule(this, '%{getText('schedule.addshift.copy.schedule.confirm.msg')}');" id="copyButton" key="schedule.addshift.copy.button" action="addweeklyshiftbyemployee_copySchedule" theme="simple" cssClass="button"/></td>
 											</tr>
 										</table>
 									</td>

@@ -769,3 +769,12 @@ function wsUpdateSummaryTotals() {
 	wsUpdateProjectionTotals();
 	wsUpdatePositionTotals();
 }
+
+function confirmCopySchedule(obj, message) {
+	var c = confirmAndWaitSpash('confirm', obj, message);
+	
+	if(c) {
+		setObjectByIDValue('copySchedule', 'true');
+	}
+	return c;
+}
