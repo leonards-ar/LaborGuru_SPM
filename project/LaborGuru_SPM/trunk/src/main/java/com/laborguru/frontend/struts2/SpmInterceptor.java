@@ -111,8 +111,7 @@ public class SpmInterceptor implements Interceptor {
 			session.put(HttpRequestConstants.MENU, menu);
 			// Goto to first Menu item and Submenu (FS#297)
 			// TODO Set these values based on profile
-			menu.setSelectedItemIndex(0);
-			menu.setSelectedSubItemIndex(0);
+			menu.reset();
 		}
 
 		Object idxObj = params.get(HttpRequestConstants.MENU_ITEM_INDEX);
@@ -146,7 +145,8 @@ public class SpmInterceptor implements Interceptor {
 		
 		params.remove(HttpRequestConstants.SUB_MENU_ITEM_INDEX);
 		
-		return invocation.invoke();
+		String invocationResult = invocation.invoke();
+		return invocationResult;
 	}
 
 	/**
