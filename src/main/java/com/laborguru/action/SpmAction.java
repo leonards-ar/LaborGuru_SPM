@@ -12,6 +12,7 @@ import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.ErrorMessage;
 import com.laborguru.exception.SpmUncheckedException;
 import com.laborguru.frontend.HttpRequestConstants;
+import com.laborguru.frontend.model.SessionMenuWrapper;
 import com.laborguru.model.Customer;
 import com.laborguru.model.CustomerUser;
 import com.laborguru.model.Employee;
@@ -206,6 +207,25 @@ public class SpmAction extends ActionSupport implements SessionAware,RequestAwar
 			return getEmployeeStore().getMainVariableDefinition().getName();
 		} else {
 			return "";
+		}
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	protected SessionMenuWrapper getMenu() {
+		SessionMenuWrapper menu = (SessionMenuWrapper) session.get(HttpRequestConstants.MENU);
+		return menu;
+	}
+	
+	/**
+	 * 
+	 */
+	protected void resetMenu() {
+		SessionMenuWrapper menu = getMenu();
+		if(menu != null) {
+			menu.reset();
 		}
 	}
 }

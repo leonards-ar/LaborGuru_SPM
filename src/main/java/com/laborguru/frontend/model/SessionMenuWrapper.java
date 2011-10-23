@@ -164,4 +164,10 @@ public class SessionMenuWrapper implements Serializable {
 	public boolean isSubMenuItemSelected() {
 		return getSelectedSubItemIndex() >= 0;
 	}	
+	
+	
+	public void reset() {
+		setSelectedItemIndex(0);
+		setSelectedSubItemIndex(0);
+	}
 }

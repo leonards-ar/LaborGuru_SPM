@@ -41,6 +41,9 @@ public class HomeAction extends SpmAction implements Preparable {
 	public String execute() throws Exception {
 		Profile loggedUserProfile = getLoggedUser().getProfile();
 		String result = loggedUserProfile != null ? loggedUserProfile.getHomeResult() : null;
+		
+		resetMenu();
+
 		if(result != null) {
 			return result;
 		} else {
