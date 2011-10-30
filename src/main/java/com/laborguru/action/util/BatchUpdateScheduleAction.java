@@ -54,7 +54,7 @@ public class BatchUpdateScheduleAction extends ScheduleBaseAction {
 	 */
 	public String execute() {
 		getScheduleService().updateAllStoreSchedules();
-		getProjectionService().updateAll();
+		getProjectionService().updateAll(true);
 		
 		return SpmActionResult.SUCCESS.getResult();
 	}

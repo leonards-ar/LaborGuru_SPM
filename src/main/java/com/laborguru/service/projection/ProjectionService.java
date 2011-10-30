@@ -146,11 +146,20 @@ public interface ProjectionService extends Service {
 	 * @param staffingService
 	 */
 	void setStaffingService(StaffingService staffingService);
-	
+
 	/**
 	 * 
+	 * @param continueOnError
 	 * @return
 	 */
-	List<DailyProjection> updateAll();
+	List<DailyProjection> updateAll(boolean continueOnError);
+
+	/**
+	 * 
+	 * @param date
+	 * @param continueOnError
+	 * @return
+	 */
+	List<DailyProjection> updateAll(Date date, boolean continueOnError);
 
 }

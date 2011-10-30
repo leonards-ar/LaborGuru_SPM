@@ -3,9 +3,11 @@ package com.laborguru.action.util;
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.service.projection.ProjectionService;
+import com.laborguru.util.CalendarUtils;
 
 public class UpdateStaffingAction extends SpmAction {
 
+	private String date;
 	
 	/**
 	 * 
@@ -20,7 +22,12 @@ public class UpdateStaffingAction extends SpmAction {
 	 * @see com.opensymphony.xwork2.ActionSupport#execute()
 	 */
 	public String execute() {
-		getProjectionService().updateAll();
+		
+		if(getDate() != null && getDate().trim().length() > 0) {
+			getProjectionService().updateAll(CalendarUtils.stringToDate(getDate(), "yyyyMMdd"), true);
+		} else {
+			getProjectionService().updateAll(true);
+		}
 		
 		return SpmActionResult.SUCCESS.getResult();
 	}
@@ -37,6 +44,14 @@ public class UpdateStaffingAction extends SpmAction {
 	 */
 	public void setProjectionService(ProjectionService projectionService) {
 		this.projectionService = projectionService;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 }

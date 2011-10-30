@@ -239,7 +239,7 @@ public class ReportServiceBean implements ReportService {
 			List<TotalHour> actualHours = reportDao.getActualHours(store, start, end);			
 			List<TotalHour> minimumStaffing = getActualMinimumStaffing(store, start, end);
 			 
-			return getMergedTotalEfficiencyHours(store, actualSales, actualHours, minimumStaffing, start, end);
+			return getMergedTotalEfficiencyHours(store, actualSales, actualHours, minimumStaffing, start, end, false);
 			
 		} catch(SQLException e) {
 			log.error("An SQLError has occurred", e);
@@ -261,7 +261,8 @@ public class ReportServiceBean implements ReportService {
 			List<TotalHour> scheduleTotalHours = reportDao.getScheduleWeeklyTotalHour(store, start, end);
 			List<TotalHour> actualHours = reportDao.getActualHours(store, start, end);
 		
-			return getMergedTotalEfficiencyHours(store, actualSales, scheduleTotalHours, actualHours, start, end);
+			// Bug 299 - actualHours are stored in schedule, but should be moved to target
+			return getMergedTotalEfficiencyHours(store, actualSales, scheduleTotalHours, actualHours, start, end, true);
 		} catch (SQLException e) {
 			log.error("An SQLError has occurred", e);
 			throw new SpmUncheckedException(e.getCause(), e.getMessage(),
@@ -332,7 +333,7 @@ public class ReportServiceBean implements ReportService {
 	
 	private List<TotalHour> getActualMinimumStaffing(Store store, Date startDate, Date endDate){
 		List<TotalHour> totalHours = new ArrayList<TotalHour>();
-		for(Date date = startDate; endDate.after(date); date = CalendarUtils.addOrSubstractDays(date,1)){
+		for(Date date = startDate; CalendarUtils.equalsOrGreaterDate(endDate, date); date = CalendarUtils.addOrSubstractDays(date,1)){
 			TotalHour totalhour = new TotalHour();
 			
 			StoreDailyHistoricSalesStaffing saleStaffing = getStaffingService().getDailyHistoricSalesStaffingByDate(store, date);
@@ -457,7 +458,7 @@ public class ReportServiceBean implements ReportService {
 		return totalHours;
 	}
 	
-	private List<TotalHour> getMergedTotalEfficiencyHours(Store store, List<HistoricSales> actualSales, List<TotalHour>scheduleTotalHours, List<TotalHour> targetTotalHours, Date startDate, Date endDate) {
+	private List<TotalHour> getMergedTotalEfficiencyHours(Store store, List<HistoricSales> actualSales, List<TotalHour>scheduleTotalHours, List<TotalHour> targetTotalHours, Date startDate, Date endDate, boolean targetInScheduled) {
 		List<TotalHour> totalHours = new ArrayList<TotalHour>();
 		
 		for (Date date=startDate; date.compareTo(endDate) <= 0; date=CalendarUtils.addOrSubstractDays(date, 1)) {
@@ -472,7 +473,13 @@ public class ReportServiceBean implements ReportService {
 			}
 
 			totalhour.setSchedule(getScheduleValue(getTotalHourByDay(date, scheduleTotalHours)));
-			totalhour.setTarget(getTargetValue(getTotalHourByDay(date, targetTotalHours)));
+			
+			// Bug 299 - Target can be in schedule for some reports
+			if(targetInScheduled) {
+				totalhour.setTarget(getScheduleValue(getTotalHourByDay(date, targetTotalHours)));
+			} else {
+				totalhour.setTarget(getTargetValue(getTotalHourByDay(date, targetTotalHours)));
+			}
 			
 			totalHours.add(totalhour);
 		}

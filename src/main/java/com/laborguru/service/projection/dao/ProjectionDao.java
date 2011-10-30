@@ -64,4 +64,12 @@ public interface ProjectionDao {
 	 * @return
 	 */
 	List<DailyProjection> loadAll();
+	
+	/**
+	 * 
+	 * @param date
+	 * @return
+	 */
+	List<DailyProjection> loadAll(Date date);
+	
 }

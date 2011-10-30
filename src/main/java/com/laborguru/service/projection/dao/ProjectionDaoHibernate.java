@@ -1,4 +1,4 @@
-package com.laborguru.service.projection.dao;
+ package com.laborguru.service.projection.dao;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -315,5 +315,16 @@ public class ProjectionDaoHibernate extends HibernateDaoSupport implements Proje
 	 */
 	public List<DailyProjection> loadAll() {
 		return (List<DailyProjection>)getHibernateTemplate().loadAll(DailyProjection.class);
+	}
+
+	/**
+	 * 
+	 */
+	public List<DailyProjection> loadAll(Date date) {
+		List<DailyProjection> projections  = (List<DailyProjection>)  getHibernateTemplate().findByNamedParam("from DailyProjection dp " +
+				"where dp.projectionDate = :date order by dp.projectionDate",
+				new String[]{"date"}, new Object[] {date} );		
+		
+		return projections;
 	}
 }

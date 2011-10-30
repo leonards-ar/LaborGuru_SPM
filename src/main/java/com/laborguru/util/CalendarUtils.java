@@ -140,6 +140,23 @@ public class CalendarUtils {
 	}
 	
 	/**
+	 * Returns if date1 is greater or equal than date2
+	 * @param date1
+	 * @param date2
+	 * @return
+	 */
+	public static boolean equalsOrGreaterDate(Date date1, Date date2) {
+		try {
+			long d1 = removeTimeFromDate(date1).getTime();
+			long d2 = removeTimeFromDate(date2).getTime();
+			
+			return d1 >= d2;
+		} catch(Throwable ex) {
+			return false;
+		}
+	}
+	
+	/**
 	 * 
 	 * @param d
 	 * @return

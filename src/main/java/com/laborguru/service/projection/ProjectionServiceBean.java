@@ -225,21 +225,50 @@ public class ProjectionServiceBean implements ProjectionService {
 	
 	/**
 	 * 
+	 * @param continueOnError
 	 * @return
 	 * @see com.laborguru.service.projection.ProjectionService#updateAll()
 	 */
-	public List<DailyProjection> updateAll() {
+	public List<DailyProjection> updateAll(boolean continueOnError) {
 		List<DailyProjection> projections = getProjectionDao().loadAll();
 		
 		for(DailyProjection projection: projections) {
-			getStaffingService().deleteDailyStaffingForDate(projection.getStore(), projection.getProjectionDate());
-			getStaffingService().getDailyStaffingByDate(projection.getStore(), projection.getProjectionDate());
-			getProjectionDao().save(projection);
+			try {
+				getStaffingService().deleteDailyStaffingForDate(projection.getStore(), projection.getProjectionDate());
+				getStaffingService().getDailyStaffingByDate(projection.getStore(), projection.getProjectionDate());
+				getProjectionDao().save(projection);
+			} catch(RuntimeException ex) {
+				log.error("Error updating projection and daily staffing " + projection, ex);
+				if(!continueOnError) {
+					throw ex;
+				}
+			}
 		}
 		
 		return projections;
 	}
 	
+	/**
+	 * 
+	 */
+	public List<DailyProjection> updateAll(Date date, boolean continueOnError) {
+		List<DailyProjection> projections = getProjectionDao().loadAll(date);
+		
+		for(DailyProjection projection: projections) {
+			try {
+				getStaffingService().deleteDailyStaffingForDate(projection.getStore(), projection.getProjectionDate());
+				getStaffingService().getDailyStaffingByDate(projection.getStore(), projection.getProjectionDate());
+				getProjectionDao().save(projection);
+			} catch(RuntimeException ex) {
+				log.error("Error updating projection and daily staffing " + projection, ex);
+				if(!continueOnError) {
+					throw ex;
+				}
+			}
+		}
+		
+		return projections;
+	}	
 	
 	/**
 	 * This method calculate and saves the set of half hour projections for a day.
@@ -545,5 +574,4 @@ public class ProjectionServiceBean implements ProjectionService {
 	public void setStaffingService(StaffingService staffingService) {
 		this.staffingService = staffingService;
 	}
-
 }

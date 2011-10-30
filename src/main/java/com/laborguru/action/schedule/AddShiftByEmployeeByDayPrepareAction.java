@@ -10,8 +10,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import com.ctc.wstx.util.StringUtil;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.ScheduleRow;
 import com.laborguru.model.Employee;
@@ -469,7 +471,7 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 	 */
 	@Override
 	public void validate() {
-		if(getSaveSchedule() != null || getCopySchedule() != null) {
+		if(StringUtils.isNotBlank(getSaveSchedule()) || StringUtils.isNotBlank(getCopySchedule())) {
 			initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
 			
 			validateSchedule(getScheduleData());
