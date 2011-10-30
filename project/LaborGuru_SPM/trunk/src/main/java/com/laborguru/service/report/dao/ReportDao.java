@@ -193,7 +193,7 @@ public interface ReportDao {
 	 * @throws SQLException
 	 */
 	List<TotalHour> getActualHours(Store store, Date startDate, Date endDate) throws SQLException;
-
+	
 	/**
 	 * Retrieves the Scheduled FixedLaborHours
 	 * @param store

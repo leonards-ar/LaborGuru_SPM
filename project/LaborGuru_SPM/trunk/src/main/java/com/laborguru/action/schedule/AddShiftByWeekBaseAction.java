@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.laborguru.action.SpmActionResult;
@@ -1293,7 +1294,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 */
 	@Override
 	public void validate() {
-		if(getSaveSchedule() != null || getCopySchedule() != null) {
+		if(StringUtils.isNotBlank(getSaveSchedule()) || StringUtils.isNotBlank(getCopySchedule())) {
 			initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
 
 			Map<String, Integer> employeesPositions = new HashMap<String, Integer>();

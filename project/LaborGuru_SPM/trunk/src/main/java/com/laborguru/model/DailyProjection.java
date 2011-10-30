@@ -83,6 +83,7 @@ public class DailyProjection extends DailySalesValue {
 	public String toString() {
 		return new ToStringBuilder(this, DEFAULT_TO_STRING_STYLE)
 	   	.append("id" , getId())
+	   	.append("store", getStore())
 	   	.append("date",getSalesDate())
 	   	.append("startingTime",getStartingTime())
 	   	.toString();		
