@@ -44,6 +44,14 @@
 	    <action name="customerReport_*" method="{1}" class="com.laborguru.action.report.ReportCustomerPrepareAction">
 	      <result name="input" type="tiles">showCustomerReport</result>
 	    </action>
+
+      <action name="regionalReport_*" method="{1}" class="com.laborguru.action.report.ReportRegionPrepareAction">
+        <result name="input" type="tiles">showRegionalReport</result>
+      </action>
+
+      <action name="areaReport_*" method="{1}" class="com.laborguru.action.report.ReportAreaPrepareAction">
+        <result name="input" type="tiles">showAreaReport</result>
+      </action>
 	    
 		<action name="percentLaborReport_*" method="{1}" class="com.laborguru.action.report.PercentageLaborHoursReportPrepareAction">
 			<result name="show">/tiles/report/percent_labor_hours_report.jsp</result>
