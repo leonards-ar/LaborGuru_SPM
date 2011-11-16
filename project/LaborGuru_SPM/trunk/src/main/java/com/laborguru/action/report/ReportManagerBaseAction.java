@@ -42,6 +42,8 @@ public abstract class ReportManagerBaseAction extends SpmAction implements Prepa
 
 	public String showReport() {
 		ReportTypes reportType = ReportTypes.valueOf(getSelectView());
+	      setEndDate(CalendarUtils.todayWithoutTime());
+	      setStartDate(CalendarUtils.addOrSubstractDays(getEndDate(), -7));
 		
 		switch(reportType) {
 		case performanceEfficiency: performanceEfficiency();
