@@ -165,12 +165,32 @@ public class ScheduleServiceBean implements ScheduleService {
 		}
 	}
 
+	private List<Shift> removeNullElements(List<Shift> list) {
+		List<Shift> cleanList = new ArrayList<Shift>(list.size());
+		for(int i = 0; i < list.size(); i++) {
+			if(list.get(i) != null) {
+				cleanList.add(list.get(i));
+			}
+		}
+		return cleanList;
+	}
+	
 	private void copyShifts(EmployeeSchedule sourceEmployeeSchedule, EmployeeSchedule destinationEmployeeSchedule, EmployeeSchedule destinationNextDayEmployeeSchedule) {
-		prepareShifts(destinationEmployeeSchedule, sourceEmployeeSchedule.getShifts().size());
+		// Bug SPM#218
+		List<Shift> srcShifts = removeNullElements(sourceEmployeeSchedule.getShifts());
 		
-		for(int i = 0; i < sourceEmployeeSchedule.getShifts().size(); i++) {
-			Shift src = sourceEmployeeSchedule.getShifts().get(i);
+		prepareShifts(destinationEmployeeSchedule, srcShifts.size());
+		
+		for(int i = 0; i < srcShifts.size(); i++) {
+			Shift src = srcShifts.get(i);
 			Shift dest = destinationEmployeeSchedule.getShifts().get(i);
+			
+			
+			// Bug SPM#218
+			if(dest == null) {
+				dest = new Shift();
+				destinationEmployeeSchedule.getShifts().set(i, dest);
+			}
 			
 			dest.setClosingHours(src.getClosingHours());
 			dest.setFromHour(src.getFromHour());
