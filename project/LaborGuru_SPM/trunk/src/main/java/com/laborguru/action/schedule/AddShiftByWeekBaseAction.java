@@ -585,9 +585,11 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 * @return
 	 */
 	private boolean isShiftToKeep(List<Shift> shiftsToKeep, Shift shift) {
-		for(Shift aShift : shiftsToKeep) {
-			if(isEqualId(shift.getId(), aShift.getId())) {
-				return true;
+		if(shift != null && shiftsToKeep != null && shiftsToKeep.size() > 0) {
+			for(Shift aShift : shiftsToKeep) {
+				if(aShift != null && isEqualId(shift.getId(), aShift.getId())) {
+					return true;
+				}
 			}
 		}
 		return false;
