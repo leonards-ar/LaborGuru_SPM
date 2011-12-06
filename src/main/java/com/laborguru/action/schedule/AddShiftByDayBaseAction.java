@@ -23,7 +23,6 @@ import com.laborguru.frontend.model.ScheduleHourLabelElement;
 import com.laborguru.frontend.model.ScheduleRow;
 import com.laborguru.model.DailyProjectedStaffing;
 import com.laborguru.model.DailyProjection;
-import com.laborguru.model.DayOfWeek;
 import com.laborguru.model.Employee;
 import com.laborguru.model.EmployeeSchedule;
 import com.laborguru.model.OperationTime;
@@ -726,7 +725,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 						employeeSchedulesToRemove.add(employeeSchedule);
 					} else {
 						for(Shift shift : employeeSchedule.getShifts()) {
-							if(isPositionInList(positions, shift.getPosition())) {
+							if(shift != null && isPositionInList(positions, shift.getPosition())) {
 								shiftsToRemove.add(shift);
 							}
 						}
@@ -1034,16 +1033,19 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 			boolean foundFirst = false;
 			
 			for(Shift aShift : employeeSchedule.getShifts()) {
-				if((aShift.isBreak() && isFirst) || (aShift.isBreak() && foundFirst) || isEqualPosition(shift.getPosition(), aShift.getPosition())) {
-					setScheduleOccupation(occupation, scheduleBuckets, aShift);
-					if(!aShift.isBreak()) {
-						foundFirst = true;
-					}
-				} else {
-					// Skip until first
-					if(foundFirst && !aShift.isBreak()) {
-						// Position changed!
-						break;
+				// Added because of Bug#220 (getShifts has null references)
+				if(aShift != null) {
+					if((aShift.isBreak() && isFirst) || (aShift.isBreak() && foundFirst) || isEqualPosition(shift.getPosition(), aShift.getPosition())) {
+						setScheduleOccupation(occupation, scheduleBuckets, aShift);
+						if(!aShift.isBreak()) {
+							foundFirst = true;
+						}
+					} else {
+						// Skip until first
+						if(foundFirst && !aShift.isBreak()) {
+							// Position changed!
+							break;
+						}
 					}
 				}
 			}
