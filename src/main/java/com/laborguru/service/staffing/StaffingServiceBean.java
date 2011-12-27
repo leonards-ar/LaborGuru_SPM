@@ -5,6 +5,7 @@
  */
 package com.laborguru.service.staffing;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -224,12 +225,16 @@ public class StaffingServiceBean implements StaffingService {
 			dailyStaffing.setStartingTime(open);
 			
 			int size = dailySalesValue.getHalfHourSalesValues().size();
+			
+			// SPM#221: If sales is zero, then staffing is zero
+			boolean calculateStaffing = dailySalesValue.getDailySalesValue() != null ? dailySalesValue.getDailySalesValue().compareTo(BigDecimal.ZERO) > 0 : false;
 			double totalWorkContent = 0.0;
 			int totalMinimumStaffing = 0;
 			
 			HalfHourStaffing aHalfHourStaffing;
 			for(int i = 0; i < size; i++) {
-				aHalfHourStaffing = calculateHalfHourStaffing(position, date, dailySalesValue.getHalfHourSalesValues().get(i), staffingData.get(i));
+				// SPM#221: If sales is zero, then staffing is zero
+				aHalfHourStaffing = calculateStaffing ? calculateHalfHourStaffing(position, date, dailySalesValue.getHalfHourSalesValues().get(i), staffingData.get(i)) : zeroHalfHourStaffing(position, date, dailySalesValue.getHalfHourSalesValues().get(i), staffingData.get(i));
 
 				// Only take into account store opperation hours
 				if(CalendarUtils.inRangeNotIncludingEndTime(aHalfHourStaffing.getTime(), open, close) || CalendarUtils.equalsTime(open, close)) {
@@ -245,7 +250,12 @@ public class StaffingServiceBean implements StaffingService {
 			dailyStaffing.setTotalMinimumStaffing(totalMinimumStaffing);
 			dailyStaffing.setTotalWorkContent(totalWorkContent);
 			
-			calculateDailyTarget(dailyStaffing, position, date, dailySalesValue, initializeDailyStaffingData(position, date, dailySalesValue));
+			// SPM#221: If sales is zero, then staffing is zero
+			if(calculateStaffing) {
+				calculateDailyTarget(dailyStaffing, position, date, dailySalesValue, initializeDailyStaffingData(position, date, dailySalesValue));
+			} else {
+				zeroDailyTarget(dailyStaffing, position, date, dailySalesValue, initializeDailyStaffingData(position, date, dailySalesValue));
+			}
 			
 			return dailyStaffing;
 		} else {
@@ -261,7 +271,18 @@ public class StaffingServiceBean implements StaffingService {
 	private void setTotalServiceHours(DailyStaffing dailyStaffing, Position position) {
 		dailyStaffing.setTotalServiceHours((double) NumberUtils.getIntegerValue(dailyStaffing.getTotalHourStaffing()));
 	}
-	
+
+	/**
+	 * 
+	 * @param dailyStaffing
+	 * @param position
+	 * @param date
+	 * @param dailySalesValue
+	 * @param dailyStaffingData
+	 */
+	private void zeroDailyTarget(DailyStaffing dailyStaffing, Position position, Date date, DailySalesValue dailySalesValue, Map<DayPart, DailyStaffingPositionData> dailyStaffingData) {
+		// DailyStaffing should default all values to zero!
+	}	
 	/**
 	 * 
 	 * @param dailyStaffing
@@ -572,6 +593,16 @@ public class StaffingServiceBean implements StaffingService {
 			halfHourStaffing.setWorkContent(new Double(staffingData.getWorkContent()));
 		}
 		
+		return halfHourStaffing;
+	}
+	
+	private HalfHourStaffing zeroHalfHourStaffing(Position position, Date date, HalfHourSalesValue halfHourSalesValue, Map<String, List<HalfHourStaffingPositionData>> data) {
+		HalfHourStaffing halfHourStaffing = getHalfHourStaffingInstance(halfHourSalesValue);
+		halfHourStaffing.setTime(halfHourSalesValue.getTime());
+		halfHourStaffing.setIndex(halfHourSalesValue.getIndex());
+		halfHourStaffing.setCalculatedStaff(new Integer(0));
+		halfHourStaffing.setWorkContent(new Double(0.0));
+
 		return halfHourStaffing;
 	}
 	

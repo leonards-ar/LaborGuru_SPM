@@ -425,12 +425,16 @@ public class ProjectionServiceBean implements ProjectionService {
 			minutesCloseTime += SpmConstants.HALF_HOUR * SpmConstants.HALF_HOURS_IN_A_DAY;
 		}
 		
-		int sizeListOfHalfHours = ((minutesCloseTime - minutesOpenTime)/SpmConstants.HALF_HOUR);			
-		
-		BigDecimal numberOfHalfHours = new BigDecimal(sizeListOfHalfHours);
-		BigDecimal valueToSet = projectionAmount.divide(numberOfHalfHours, SpmConstants.DECIMAL_SCALE, SpmConstants.ROUNDING_MODE);
-		
-		return valueToSet;
+		int sizeListOfHalfHours = ((minutesCloseTime - minutesOpenTime) / SpmConstants.HALF_HOUR);	
+		// SPM#222 avoid divide by zero
+		if(sizeListOfHalfHours > 0) {
+			BigDecimal numberOfHalfHours = new BigDecimal(sizeListOfHalfHours);
+			BigDecimal valueToSet = projectionAmount.divide(numberOfHalfHours, SpmConstants.DECIMAL_SCALE, SpmConstants.ROUNDING_MODE);
+			
+			return valueToSet;
+		} else {
+			return SpmConstants.BD_ZERO_VALUE;
+		}
 	}
 
 	/**
