@@ -5,6 +5,9 @@
  */
 package com.laborguru.service.email;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  *
  * @author <a href="mcapurro@gmail.com">Mariano Capurro</a>
@@ -22,4 +25,15 @@ public interface EmailService {
 	 * @param body
 	 */
 	void sendEmail(String[] to, String[] cc, String subject, String body);
+	
+	/**
+	 * 
+	 * @param to
+	 * @param cc
+	 * @param subject
+	 * @param bodyTemplate
+	 * @param model
+	 * @param attachments
+	 */
+	void sendHtmlEmail(String[] to, String[] cc, String subject, String bodyTemplate, Map<String, Object> model, List<String> attachments);
 }

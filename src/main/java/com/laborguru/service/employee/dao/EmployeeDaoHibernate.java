@@ -80,8 +80,64 @@ public class EmployeeDaoHibernate extends SpmHibernateDao implements EmployeeDao
 		
 		log.debug("Calling hibernate with query:"+ sb.toString());
 
-		
 		return (List<Employee>)getHibernateTemplate().find(sb.toString());
 	}
 
+	/**
+	 * 
+	 * @param employee
+	 * @return
+	 * @see com.laborguru.service.employee.dao.EmployeeDao#getEmployeeByUsername(com.laborguru.model.Employee)
+	 */
+	public Employee getEmployeeByUsername(Employee employee) {
+
+		List<Employee> result = (List<Employee>)getHibernateTemplate().findByNamedParam(
+				"from Employee employee where employee.userName = :searchString and employee.status != 2", "searchString", employee.getUserName());
+
+		Employee retEmployee = null;
+		
+		if(log.isDebugEnabled()) {
+			log.debug("Found " + result.size() + " results matching the query for username: [" + employee.getUserName() + "]");
+		}
+		
+		if(result.size() > 0) {
+			retEmployee = result.get(0);
+			if(result.size() > 1) {
+				log.warn("More than one employee matches the query for username: [" + employee.getUserName() + "]. Returning the first one with id: [" + retEmployee.getId() + "]");
+			}
+		}
+		
+		return retEmployee;
+	}
+
+	/**
+	 * 
+	 * @param employee
+	 * @return
+	 * @see com.laborguru.service.employee.dao.EmployeeDao#getStoreEmployeeByCompleteName(com.laborguru.model.Employee)
+	 */
+	public Employee getStoreEmployeeByCompleteName(Employee employee) {
+		if (employee.getStore() == null){
+			throw new IllegalArgumentException("The store in the employee is empty.");
+		}
+		
+		List<Employee> result = (List<Employee>)getHibernateTemplate().findByNamedParam(
+				"from Employee employee where employee.store.id = :storeId and employee.name = :name and employee.surname = :surname and employee.status != 2", new String[] {"storeId", "name", "surname"}, new Object[] {employee.getStore().getId(), employee.getName(), employee.getSurname()});
+
+		if(log.isDebugEnabled()) {
+			log.debug("Found " + result.size() + " results matching the query for store id: [" + employee.getStore().getId() + "], name: [" + employee.getName() + "] and surname: [" + employee.getSurname() + "]");
+		}
+
+		Employee retEmployee = null;
+		
+		if(result.size() > 0) {
+			retEmployee = result.get(0);
+			if(result.size() > 1) {
+				log.warn("More than one employee matches the query for store id: [" + employee.getStore().getId() + "], name: [" + employee.getName() + "] and surname: [" + employee.getSurname() + "]. Returning the first one with id: [" + retEmployee.getId() + "]");
+			}
+			
+		}
+		
+		return retEmployee;
+	}	
 }

@@ -13,8 +13,20 @@ package com.laborguru.exception;
  */
 public class ErrorMessage {
 	
-	String messageKey;
-	String[] parameters;
+	private String messageKey;
+	private String[] parameters;
+	private int row;
+	
+	/**
+	 * Constructor
+	 * 
+	 * @param message The message key
+	 * @param arrayObject The parameters to pass.
+	 */
+	public ErrorMessage(ErrorEnum error, String[] arrayParameters, int row) {
+		this(error.name(), arrayParameters);
+		setRow(row);
+	}
 	
 	/**
 	 * Constructor
@@ -48,5 +60,19 @@ public class ErrorMessage {
 	}
 	public void setParameters(String[] arrayParameters) {
 		this.parameters = arrayParameters;
+	}
+
+	/**
+	 * @return the row
+	 */
+	public int getRow() {
+		return row;
+	}
+
+	/**
+	 * @param row the row to set
+	 */
+	public void setRow(int row) {
+		this.row = row;
 	}	
 }

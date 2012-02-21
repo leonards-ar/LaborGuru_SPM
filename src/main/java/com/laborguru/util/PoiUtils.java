@@ -69,4 +69,21 @@ public class PoiUtils {
 		
 		return null;
 	}
+	
+	/**
+	 * 
+	 * @param cell
+	 * @return
+	 */
+	public static boolean getBooleanValue(HSSFCell cell) {
+		Object o;
+		if(cell != null && cell.getCellType() == HSSFCell.CELL_TYPE_BOOLEAN) {
+			return cell.getBooleanCellValue();
+		} else if((o = getIntegerValue(cell)) !=  null) {
+			return ((Integer ) o).intValue() == 1;
+		} else if((o = getStringValue(cell)) !=  null) {
+			return o.toString().equalsIgnoreCase("y") || o.toString().equalsIgnoreCase("yes") || o.toString().equalsIgnoreCase("t") || o.toString().equalsIgnoreCase("true") || o.toString().equalsIgnoreCase("1");
+		}
+		return false;
+	}
 }

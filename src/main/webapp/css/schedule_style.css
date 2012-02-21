@@ -356,6 +356,16 @@ a.scheduleActionLink:hover {
 	font-family: trebuchet ms, arial, sans-serif;
 }
 
+.printSchedulePositionTotalHours {
+	border: 1px solid #969696;
+	background-color: #C0C0C0;
+	color: #333333;
+	font-size: 11px;
+	font-weight: bold;
+	text-align: center;
+	font-family: trebuchet ms, arial, sans-serif;
+}
+
 .printScheduleValueTextCell {
 	background-color: #E6E6E6;
 	color: #333333;

@@ -29,6 +29,8 @@
 
 	<bean id="storeDefinitionFileParser" class="com.laborguru.service.store.file.StoreDefinitionFileParserBean" autowire="byType"/>
 
+	<bean id="employeeDefinitionFileParser" class="com.laborguru.service.employee.file.EmployeeDefinitionFileParserBean" autowire="byType"/>
+
 	<bean id="actualHoursFileParser" class="com.laborguru.service.dataimport.actualhours.csv.ActualHoursSimpleCSVParserBean" autowire="no">
 		<property name="storeService" ref="storeService"/>
 		<property name="assembler" ref="actualHoursAssembler"/>
@@ -207,6 +209,19 @@
  	 	<property name="storeDefinitionFileParser" ref="storeDefinitionFileParser"/>
  	 	<property name="storeService" ref="storeService"/>
  	</bean>	
+
+	<bean id="uploadEmployeeDefinitionService" parent="baseTransactionProxy">
+		<property name="proxyInterfaces" value="com.laborguru.service.employee.file.UploadEmployeeDefinitionService"/>
+		<property name="target" ref="uploadEmployeeDefinitionServiceTarget"/>
+ 	</bean>
+
+ 	<bean id="uploadEmployeeDefinitionServiceTarget" class="com.laborguru.service.employee.file.UploadEmployeeDefinitionServiceBean">
+ 	 	<property name="employeeDefinitionFileParser" ref="employeeDefinitionFileParser"/>
+ 	 	<property name="storeService" ref="storeService"/>
+ 	 	<property name="employeeService" ref="employeeService"/>
+ 	 	<property name="positionService" ref="positionService"/>
+ 		<property name="customerService" ref="customerService"/>
+ 	</bean>	
 				
 	<bean id="scheduleService" parent="baseTransactionProxy">
 		<property name="proxyInterfaces" value="com.laborguru.service.schedule.ScheduleService"/>
@@ -269,7 +284,19 @@
  		<property name="mailSender" ref="mailSender"/>
  		<property name="mailMessage" ref="mailMessage"/>
  		<property name="enabled" value="true"/>
+ 		<property name="velocityEngine" ref="velocityEngine"/>
  	</bean>
 	
+	<!-- Velocity Template -->
+	<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+    <property name="velocityProperties">
+        <props>
+            <prop key="resource.loader">class</prop>
+            <prop key="class.resource.loader.class">
+                org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+            </prop>
+        </props>
+    </property>
+</bean>	
 </beans>
 

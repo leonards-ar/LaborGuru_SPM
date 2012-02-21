@@ -13,7 +13,9 @@ import com.laborguru.action.SpmAction;
 import com.laborguru.frontend.model.ScheduleRow;
 import com.laborguru.model.Employee;
 import com.laborguru.model.OperationTime;
+import com.laborguru.model.Position;
 import com.laborguru.model.Store;
+import com.laborguru.model.comparator.PositionNameComparator;
 import com.laborguru.model.comparator.UserFullNameComparator;
 import com.laborguru.util.CalendarUtils;
 
@@ -91,6 +93,16 @@ public abstract class ScheduleBaseAction extends SpmAction {
 	 */
 	protected List<Employee> sortEmployees(List<Employee> data) {
 		Collections.sort(data, new UserFullNameComparator());
+		return data;
+	}
+	
+	/**
+	 * 
+	 * @param data
+	 * @return
+	 */
+	protected List<Position> sortPositions(List<Position> data) {
+		Collections.sort(data, new PositionNameComparator());
 		return data;
 	}
 	

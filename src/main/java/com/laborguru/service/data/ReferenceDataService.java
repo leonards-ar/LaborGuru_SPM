@@ -105,6 +105,12 @@ public interface ReferenceDataService extends Service {
 	Map<String, String> getReportTypes();
 	
 	/**
+	 * 
+	 * @return
+	 */
+	Map<String, String> getPrintScheduleViews();
+	
+	/**
 	 * Retrieves different options for period
 	 * @return
 	 */

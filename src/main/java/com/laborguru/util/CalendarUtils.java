@@ -32,6 +32,8 @@ public class CalendarUtils {
 
 	private final static Date MIDNIGHT_TIME = todayWithoutTime();
 	
+	private final static String DEFAULT_ZERO_TIME = "00:00";
+	
 	/**
 	 * 
 	 */
@@ -569,7 +571,7 @@ public class CalendarUtils {
 			int mins = minutes.intValue() % 60;
 			return formatTimeComponent(hs) + ":" + formatTimeComponent(mins);
 		} else {
-			return "00:00";
+			return DEFAULT_ZERO_TIME;
 		}
 	}
 	
@@ -623,6 +625,17 @@ public class CalendarUtils {
 	 */
 	public static String hoursToTime(Double hours) {
 		return minutesToTime(hoursToMinutes(hours));
+	}
+	
+	/**
+	 * 
+	 * @param hours
+	 * @param zeroText
+	 * @return
+	 */
+	public static String hoursToTime(Double hours, String zeroText) {
+		String time = hoursToTime(hours);
+		return DEFAULT_ZERO_TIME.equals(time) ? zeroText : time;
 	}
 	
 	/**

@@ -45,6 +45,20 @@ public interface EmployeeService extends Service {
 	 * @return Employee the employee
 	 */
 	Employee getEmployeeById(Employee employee);
+
+	/**
+	 * Retrieves an employee by username
+	 * @param employee with the username populated
+	 * @return
+	 */
+	Employee getEmployeeByUsername(Employee employee);
+
+	/**
+	 * Retrieves an employee by name, surname and store
+	 * @param employee with store, name and surname fields populated
+	 * @return
+	 */
+	Employee getStoreEmployeeByCompleteName(Employee employee);
 	
 	/**
 	 * Retrieves an employee by Store

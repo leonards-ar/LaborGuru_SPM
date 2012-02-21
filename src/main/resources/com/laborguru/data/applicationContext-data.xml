@@ -19,6 +19,9 @@
 				<entry key="weeklyScheduleViews">
 					<ref bean="weeklyScheduleViews"/>
 				</entry>
+				<entry key="printScheduleViews">
+					<ref bean="printScheduleViews"/>
+				</entry>
 				<entry key="usedWeeks">
 					<ref bean="usedWeeks"/>
 				</entry>
@@ -197,6 +200,20 @@
 				</entry>
 				<entry key="addweeklyshiftbyposition_selectView.action">
 					<value>schedule.addshift.view.position</value>
+				</entry>
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<bean id="printScheduleViews" class="java.util.LinkedHashMap" singleton="true">
+		<description>Different Print Schedule Views</description>
+		<constructor-arg>
+			<map>
+				<entry key="printweeklyshiftbyposition_view.action">
+					<value>schedule.printshift.position.view.label</value>
+				</entry>
+				<entry key="printweeklyshiftbyemployee_view.action">
+					<value>schedule.printshift.employee.view.label</value>
 				</entry>
 			</map>
 		</constructor-arg>

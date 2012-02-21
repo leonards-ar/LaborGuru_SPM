@@ -125,8 +125,11 @@
 				/schedule/addshiftbyemployeebyposition_*.action=ADD_SHIFT
 				/schedule/addweeklyshiftbyemployee_*.action=ADD_SHIFT
 				/schedule/addweeklyshiftbyposition_*.action=ADD_SHIFT
+				/schedule/printweeklyshiftbyposition_post.action=POST_SHIFT
 				/schedule/printweeklyshiftbyposition_*.action=PRINT_SHIFT
-				/schedule/printweeklytotalhoursbyposition_*.action=PRINT_SHIFT
+				/schedule/printweeklyshiftbyemployee_post.action=POST_SHIFT
+				/schedule/printweeklyshiftbyemployee_*.action=PRINT_SHIFT
+				/schedule/printweeklytotalhoursbyposition_view.action=PRINT_SHIFT
 				/schedule/printweeklyshiftbreaks_*.action=PRINT_SHIFT
 				
 				/store/store_list.action=VIEW_STORE,EDIT_STORE,CREATE_STORE,REMOVE_STORE,ADD_EMPLOYEE_STORE,LIST_EMPLOYEE_STORE

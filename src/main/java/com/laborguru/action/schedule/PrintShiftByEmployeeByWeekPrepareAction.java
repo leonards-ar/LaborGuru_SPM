@@ -16,21 +16,24 @@ import com.laborguru.action.SpmActionResult;
  * @since SPM 1.0
  *
  */
-public class PrintShiftByPositionByWeekPrepareAction extends PrintScheduleBaseAction {
+public class PrintShiftByEmployeeByWeekPrepareAction extends PrintScheduleBaseAction {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger log = Logger.getLogger(PrintShiftByPositionByWeekPrepareAction.class);
+	private static final Logger log = Logger.getLogger(PrintShiftByEmployeeByWeekPrepareAction.class);
+	
+
 	
 	/**
 	 * 
 	 */
-	public PrintShiftByPositionByWeekPrepareAction() {
+	public PrintShiftByEmployeeByWeekPrepareAction() {
 	}
 
 
+	
 	/**
 	 * 
 	 * @return
@@ -47,6 +50,6 @@ public class PrintShiftByPositionByWeekPrepareAction extends PrintScheduleBaseAc
 	 */
 	public void prepare() throws Exception {
 		setViewMap(getReferenceDataService().getPrintScheduleViews());
-		setSelectedView("printweeklyshiftbyposition_view.action");
+		setSelectedView("printweeklyshiftbyemployee_view.action");
 	}	
 }

@@ -85,4 +85,24 @@ public class PositionServiceBean implements PositionService {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 * @see com.laborguru.service.position.PositionService#getStorePositionByName(com.laborguru.model.Position)
+	 */
+	public Position getStorePositionByName(Position position) {
+		if (position == null)
+			throw new IllegalArgumentException("Position passed in as parameter is null");
+
+		if (position.getStore() == null)
+			throw new IllegalArgumentException("Position store passed in as parameter is null");
+
+		if (position.getStore() == null)
+			throw new IllegalArgumentException("Position name passed in as parameter is null");
+		
+		return getPositionDao().getStorePositionByName(position);
+		
+	}
+
 }
