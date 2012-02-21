@@ -179,6 +179,20 @@ public class StoreSchedule extends SpmObject {
 	 * 
 	 * @return
 	 */
+	public Set<Employee> getScheduleEmployees() {
+		Set<Employee> employees = new HashSet<Employee>();
+		
+		for(EmployeeSchedule employeeSchedule : getEmployeeSchedules()) {
+			employees.add(employeeSchedule.getEmployee());
+		}
+		
+		return employees;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public Double getTotalShiftHoursWithContiguous() {
 		double total = 0.0;
 		
@@ -251,6 +265,17 @@ public class StoreSchedule extends SpmObject {
 		}		
 		
 		return employees;
+	}
+	
+	/**
+	 * 
+	 * @param employee
+	 * @return
+	 */
+	public Set<Position> getSchedulePositionsFor(Employee employee) {
+		EmployeeSchedule employeeSchedule = getEmployeeSchedule(employee);
+		
+		return employeeSchedule != null ? employeeSchedule.getSchedulePositions() : new HashSet<Position>();
 	}
 	
 	/**

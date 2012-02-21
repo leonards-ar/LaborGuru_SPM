@@ -11,5 +11,11 @@
 			<result name="listAction" type="redirectAction">employee_list</result>
 			<result name="input" type="tiles">editEmployeePage</result>			
 		</action>
+		
+		<action name="uploadDefinition_*" method="{1}" class="com.laborguru.action.employee.UploadDefinitionPrepareAction">
+			<result name="edit" type="tiles">employeesDefinitionUploadPage</result>
+			<result name="input" type="tiles">employeesDefinitionUploadPage</result>
+			<result name="cancel" type="redirectAction">store_list</result>						
+		</action>		
 	</package>
 </struts>

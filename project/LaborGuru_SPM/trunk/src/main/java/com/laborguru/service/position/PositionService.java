@@ -42,4 +42,12 @@ public interface PositionService extends Service {
 	 * @return the Position
 	 */
 	Position getPositionById(Position position);
+	
+	/**
+	 * Retrieves a position by position store and name
+	 * @param position Position with store and name populated
+	 * @return the Position
+	 */
+	Position getStorePositionByName(Position position);
+	
 }

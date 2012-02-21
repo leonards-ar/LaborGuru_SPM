@@ -90,5 +90,5 @@ public abstract class PrintShiftBaseAction extends ScheduleShiftBaseAction {
 	 */
 	@Override
 	protected void processChangeWeek() {
-	}	
+	}
 }

@@ -490,6 +490,44 @@ public class EmployeeSchedule extends SpmObject {
 	}
 	
 	/**
+	 * Complete shifts are shifts for the same position that only have breaks inside. So for example:
+	 * If shifts are:
+	 * shifts[0] => 08am to 10am -> Position 1
+	 * shifts[1] => 10am to 11am -> Break
+	 * shifts[2] => 11am to 01pm -> Position 1
+	 * 
+	 * Then this method will return just one Shift:
+	 * unreferencedCompleteShifts[0] => 08am to 01pm -> Position 1
+	 * @param position
+	 * @return
+	 */
+	public List<CompleteShift> getUnreferencedCompleteShiftsFor(Position position) {
+		List<CompleteShift> shifts = new ArrayList<CompleteShift>();
+		if(position != null && position.getId() != null) {
+			CompleteShift completeShift = new CompleteShift();
+			completeShift.setPosition(position);
+			completeShift.setEmployee(getEmployee());
+			
+			for(Shift shift : getShifts()) {
+				if(shift != null && !shift.isReferencedShift() && (shift.isBreak() || (shift.getPosition() != null && position.getId().equals(shift.getPosition().getId())))) {
+					if(!completeShift.addShift(shift)) {
+						shifts.add(completeShift);
+
+						completeShift = new CompleteShift();
+						completeShift.setPosition(position);
+						completeShift.setEmployee(getEmployee());
+						completeShift.addShift(shift);
+					}
+				}
+			}
+			if(completeShift.getShifts().size() > 0) {
+				shifts.add(completeShift);
+			}
+		}
+		return shifts;
+	}
+	
+	/**
 	 * 
 	 * @param shift
 	 * @return

@@ -24,8 +24,10 @@ public class EmployeeServiceBean implements EmployeeService {
 	private EmployeeDao employeeDao;
 	private StoreDao storeDao;
 	private UserDao userDao;
-	
-	/* (non-Javadoc)
+
+	/**
+	 * 
+	 * @param employee
 	 * @see com.laborguru.service.employee.EmployeeService#delete(com.laborguru.model.Employee)
 	 */
 	public void delete(Employee employee) {
@@ -37,7 +39,10 @@ public class EmployeeServiceBean implements EmployeeService {
 		
 	}
 
-	/* (non-Javadoc)
+	/**
+	 * 
+	 * @param employee
+	 * @return
 	 * @see com.laborguru.service.employee.EmployeeService#getEmployeeById(com.laborguru.model.Employee)
 	 */
 	public Employee getEmployeeById(Employee employee) {
@@ -48,7 +53,10 @@ public class EmployeeServiceBean implements EmployeeService {
 		return employeeDao.getEmployeeById(employee);
 	}
 
-	/* (non-Javadoc)
+	/**
+	 * 
+	 * @param store
+	 * @return
 	 * @see com.laborguru.service.employee.EmployeeService#getEmployeesByStore(com.laborguru.model.Store)
 	 */
 	public List<Employee> getEmployeesByStore(Store store) {
@@ -62,7 +70,11 @@ public class EmployeeServiceBean implements EmployeeService {
 		return employees;
 	}
 
-	/* (non-Javadoc)
+	/**
+	 * 
+	 * @param employee
+	 * @return
+	 * @throws SpmCheckedException
 	 * @see com.laborguru.service.employee.EmployeeService#save(com.laborguru.model.Employee)
 	 */
 	public Employee save(Employee employee) throws SpmCheckedException {
@@ -228,5 +240,33 @@ public class EmployeeServiceBean implements EmployeeService {
 	 */
 	public void setStoreDao(StoreDao storeDao) {
 		this.storeDao = storeDao;
+	}
+
+	/**
+	 * 
+	 * @param employee
+	 * @return
+	 * @see com.laborguru.service.employee.EmployeeService#getEmployeeByUsername(com.laborguru.model.Employee)
+	 */
+	public Employee getEmployeeByUsername(Employee employee) {
+		if(employee == null) {
+			log.error("Employee passed as parameter is null");
+			throw new IllegalArgumentException("param is null");
+		}
+		return employeeDao.getEmployeeByUsername(employee);
+	}
+
+	/**
+	 * 
+	 * @param employee
+	 * @return
+	 * @see com.laborguru.service.employee.EmployeeService#getStoreEmployeeByCompleteName(com.laborguru.model.Employee)
+	 */
+	public Employee getStoreEmployeeByCompleteName(Employee employee) {
+		if(employee == null) {
+			log.error("Employee passed as parameter is null");
+			throw new IllegalArgumentException("param is null");
+		}
+		return employeeDao.getStoreEmployeeByCompleteName(employee);
 	}
 }

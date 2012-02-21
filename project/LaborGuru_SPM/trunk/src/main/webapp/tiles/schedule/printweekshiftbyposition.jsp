@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib uri="http://acegisecurity.org/authz" prefix="authz" %>
 
 <script language="JavaScript">
 <!--
@@ -11,10 +12,32 @@
 <s:form id="printweeklyshiftbyposition_form" name="printweeklyshiftbyposition_form" action="printweeklyshiftbyposition_view" theme="simple">
 	<s:hidden id="selectedDate" name="selectedDate"/>
 	<s:hidden id="selectedWeekDay" name="selectedWeekDay"/>
+	<s:hidden id="postSchedule" name="postSchedule"/>
 	
 	<table border="0" cellspacing="0" align="center">
 		<tr>
-			<td id="titleBar"><s:text name="schedule.printshift.weekly.byposition.title" /></td>
+			<td>
+				<table border="0" cellspacing="0" align="center">
+					<tr>
+						<td align="right" class="form_label"><s:text name="schedule.printshift.view_selector.label"/></td>	
+						<td align="left"><s:select name="selectedView" list="viewMap" listKey="key" listValue="%{getText(value)}" onchange="printweeklyshiftbyposition_form.action=printweeklyshiftbyposition_form.selectedView.value; printweeklyshiftbyposition_form.submit()" theme="simple" /></td>				
+						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>	
+						<td align="right"><s:checkbox name="inTimeOnly" onchange="printweeklyshiftbyposition_form.submit()" theme="simple" /></td>	
+						<td align="left" class="form_label"><s:text name="schedule.printshift.in_time_only.label"/></td>
+						<authz:authorize ifAllGranted="POST_SHIFT">	
+						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+						<td align="center"><s:submit onclick="return confirmPostSchedule(this, '%{getText('schedule.post.schedule.confirm.msg')}');" id="postButton" key="schedule.printshift.weekly.post.button" action="printweeklyshiftbyposition_post" theme="simple" cssClass="button"/></td>
+						</authz:authorize>
+						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+						<td align="center"><s:submit onclick="" id="printButton" key="schedule.printshift.weekly.print.button" theme="simple" cssClass="button"/></td>
+									
+					</tr>				
+				</table>
+			</td>
+		</tr>
+
+		<tr>
+			<td id="titleBar"><s:if test="!inTimeOnly"><s:text name="schedule.printshift.weekly.byposition.title" /></s:if><s:else><s:text name="schedule.printshift.weekly.byposition_in_time.title" /></s:else></td>
 		</tr>
 
 		<tr>
@@ -66,27 +89,6 @@
 			                  	</table>
 			                 </td>
 			              </tr>
-			              <!-- 
-			              <tr class="calendarWeekDayTableRowSeparator">
-			              	<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-			              </tr>
-			              <tr>
-			              	<td align="center" class="calendarWeekDayTableColumn">
-								<table align="center" border="0" cellpadding="0" cellspacing="0" colspan="0" cellspan="0">
-                  					<tr>
-                  						<s:iterator id="weekDay" value="weekDaySelector.weekDays" status="itWeekDay">
-	                  						<td width="12%" class="availableWeekDay"><a title="<s:text name='schedule.printshift.weekdayselector.daytooltip.dateformat'><s:param value='weekDay'/></s:text>" href="<s:url value="#" includeParams="none"/>" onclick="showWaitSplash(); printweeklyshiftbyposition_form.action='printweeklyshiftbyposition_changeDay.action'; printweeklyshiftbyposition_form.selectedWeekDay.value='<s:text name='schedule.printshift.weekdayselector.input.dateformat'><s:param value='weekDay'/></s:text>'; printweeklyshiftbyposition_form.submit();" class="availableWeekDayLink">
-	                  						<s:text name='schedule.printshift.weekday.dateformat'><s:param value='weekDay'/></s:text>
-	                  						</a>
-	                  						</td>                  						
-	                  						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-                  						</s:iterator>
-                  						<td width="12%" class="selectedWeekDay"><s:text name="schedule.printshift.weekselector.week"/></td>
-                  					</tr>
-                  				</table>			              		
-			              	</td>
-			              </tr>
-			               -->
                   	</table>
                   	<!-- End week table -->  			
 			</td>
@@ -127,21 +129,29 @@
 					<!-- Header -->
 					
 					<s:iterator id="pos" value="weeklySchedulePositions" status="itPosStatus">
-						<tr><td  class="printSchedulePositionTitle" colspan="9"><s:property value="name"/></td></tr>
+						<tr>
+							<td class="printSchedulePositionTitle"><s:property value="name"/></td>
+							<s:iterator id="weekDay" value="weekDaySelector.weekDays" status="itDayStatus">
+							<td class="printSchedulePositionTotalHours"><s:property value="%{getDayTotalHoursFor(#pos, #itDayStatus.index)}"/></td>			
+							</s:iterator>							
+							<td class="printSchedulePositionTotalHours"><s:property value="%{getWeekTotalHoursFor(#pos)}"/></td>
+						</tr>
 						
 						<s:iterator id="employee" value="getWeeklyScheduleEmployeesFor(#pos)" status="itEmployeeStatus">
 						<tr>
 							<td class="printScheduleValueCell"><s:property value="fullName"/></td>
 							<s:iterator id="weekDay" value="weekDaySelector.weekDays" status="itDayStatus">
 							<td class="printScheduleValueCell" align="center">
-							<s:set id="shifts" name="shifts" value="%{getShiftsFor(#pos, #employee, #itDayStatus.index)}"/>
+							<s:set id="shifts" name="shifts" value="%{getCompleteShiftsFor(#pos, #employee, #itDayStatus.index)}"/>
 							<s:if test="#shifts.size() > 0">
 									<table border="0" cellpadding="1" cellspacing="0" align="center">
 									<s:iterator id="shift" value="shifts" status="itShiftStatus">
 										<tr>
 											<td class="printScheduleValueTextCell"><s:property value="fromHourAsString"/></td>
+											<s:if test="!inTimeOnly">
 											<td class="printScheduleValueTextCell">-</td>
 											<td class="printScheduleValueTextCell"><s:property value="toHourAsString"/></td>
+											</s:if>
 										</tr>
 									</s:iterator>
 									</table>
@@ -155,6 +165,13 @@
 						</tr>
 						</s:iterator>
 					</s:iterator>
+					<tr>
+						<td class="printSchedulePositionTitle"><s:text name="schedule.printshift.total_hours"/></td>
+						<s:iterator id="weekDay" value="weekDaySelector.weekDays" status="itDayStatus">
+						<td class="printSchedulePositionTotalHours"><s:property value="%{getDayTotalHours(#itDayStatus.index)}"/></td>			
+						</s:iterator>
+						<td class="printSchedulePositionTotalHours"><s:property value="%{getWeekTotalHours()}"/></td>
+					</tr>
 				</table>			
 			<!-- Schedule selection table -->
 			</td>

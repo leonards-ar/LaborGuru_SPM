@@ -70,6 +70,7 @@
   <tbl_permissions permission_id="45" name="SHOW_AREA_REPORT" description="Show Report for Area Manager"/>
   <!--  tbl_permissions permission_id="46" name="SHOW_STORE_SUBMENU" description="Show Report for Stores"/-->
   <tbl_permissions permission_id="47" name="SHOW_REPORT_SUBMENU" description="Show Report Menu"/>
+  <tbl_permissions permission_id="48" name="POST_SHIFT" description="Post Schedule Shifts"/>
 
   <tbl_menu_items menu_item_id="1" label_key="home.menu.label" help_key="HOME_MENU_HELP" target="/home/home.action" position="0" permission_id="1"/>
   <tbl_menu_items menu_item_id="2" label_key="employee.menu.label" help_key="EMPLOYEE_MENU_HELP" target="/employee/employee_list.action" position="1" permission_id="2"/>
@@ -104,6 +105,7 @@
   <tbl_menu_items menu_item_id="31" label_key="report.CustomerManager.title" help_key="CUSTOMER_MANAGER_REPORT" target="/report/customerReport_showFirstReport.action" position="1" parent_id="21" permission_id="43"/> 
   <!--  tbl_menu_items menu_item_id="32" label_key="report.CustomerManager.title" help_key="CUSTOMER_MANAGER_REPORT" target="/report/customerReport_showFirstReport.action" position="2" parent_id="21" permission_id="44"-->
   <!--  tbl_menu_items menu_item_id="33" label_key="report.CustomerManager.title" help_key="CUSTOMER_MANAGER_REPORT" target="/report/customerReport_showFirstReport.action" position="3" parent_id="21" permission_id="45"/-->
+  <tbl_menu_items menu_item_id="34" label_key="employee.submenu.uploademployeesdefinition" help_key="EMPLOYEES_UPLOAD_DEFINITION_HELP" target="/employee/uploadDefinition_edit.action" position="5" parent_id="5" permission_id="6"/>
   
   <tbl_stores store_id="1" name="microcentro" area_id="1" half_hour_projections_weeks_default="4" daily_projections_weeks_default="4" code="MD0001"/>
   <tbl_positions position_id="1" name="chef" manager="0" position_index="0" store_id="1" guest_service="true"/>
@@ -170,7 +172,7 @@
   <tbl_profiles_permissions profile_id="2" permission_id="41"/><!-- Print shift -->
   <tbl_profiles_permissions profile_id="2" permission_id="19"/><!-- Reports -->
   <tbl_profiles_permissions profile_id="2" permission_id="47"/><!-- Reports Menu-->
-  
+  <tbl_profiles_permissions profile_id="2" permission_id="48"/><!-- Post shift -->
   
   
 <!-- Employee Permissions -->

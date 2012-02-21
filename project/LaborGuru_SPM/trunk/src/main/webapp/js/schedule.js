@@ -778,3 +778,12 @@ function confirmCopySchedule(obj, message) {
 	}
 	return c;
 }
+
+function confirmPostSchedule(obj, message) {
+	var c = confirmAndWaitSpash('confirm', obj, message);
+	
+	if(c) {
+		setObjectByIDValue('postSchedule', 'true');
+	}
+	return c;
+}

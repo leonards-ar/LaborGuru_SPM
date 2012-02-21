@@ -12,8 +12,6 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-import com.laborguru.exception.ErrorEnum;
-import com.laborguru.exception.SpmUncheckedException;
 import com.laborguru.model.comparator.SpmComparator;
 import com.laborguru.util.CalendarUtils;
 
@@ -687,10 +685,13 @@ public class Store extends SpmObject {
 		if(operationTime != null && endHour != null) {
 			OperationTime nextOperationTime = getOperationTime(dayOfWeek.getNextDayOfWeek());
 
+			// SPM#223: Should we be validating in this method? It should be enough to validate when saving the Operation Hours!
+			// This lines make no sense based on the clases that use this method!
+			/*
 			if(operationTime.operationTimeEndsTomorrow() && CalendarUtils.greaterTime(operationTime.getCloseHour(), nextOperationTime.getOpenHour())) {
 				throw new SpmUncheckedException("Close hour for [" + dayOfWeek + "] is after open hour for [" + dayOfWeek.getNextDayOfWeek() + "]", ErrorEnum.INVALID_OPERATION_TIME_FOR_STORE);
 			}
-			
+			*/
 			// The only way we modify end hour is if closing hours overlap with open time
 			if(operationTime.endsTomorrow() && CalendarUtils.greaterTime(endHour, nextOperationTime.getOpenHour())) {
 				endHour = nextOperationTime.getOpenHour();

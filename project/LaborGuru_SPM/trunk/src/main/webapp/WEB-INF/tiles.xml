@@ -313,6 +313,11 @@
 		<put-attribute name="body" value="/tiles/schedule/printweekshiftbyposition.jsp"/>
 	</definition>
 
+	<definition name="viewPrintShiftByEmployeeByWeekPage" extends="baseLayoutWithMenu">
+		<put-attribute name="htmlExtHeader" value="/tiles/printscheduleHtmlExtHeader.jsp" />
+		<put-attribute name="body" value="/tiles/schedule/printweekshiftbyemployee.jsp"/>
+	</definition>
+
 	<definition name="viewPrintTotalHoursByPositionByWeekPage" extends="baseLayoutWithMenu">
 		<put-attribute name="htmlExtHeader" value="/tiles/printscheduleHtmlExtHeader.jsp" />
 		<put-attribute name="body" value="/tiles/schedule/printweektotalhoursbyposition.jsp"/>
@@ -444,7 +449,12 @@
 	<definition name="storeDefinitionUploadPage" extends="baseLayoutWithMenu">
 		<put-attribute name="body" value="/tiles/store/uploaddefinition_edit.jsp" />
 	</definition>
-	
+
+	<!-- Upload Store Page -->
+	<definition name="employeesDefinitionUploadPage" extends="baseLayoutWithMenu">
+		<put-attribute name="body" value="/tiles/employee/uploaddefinition_edit.jsp" />
+	</definition>
+		
 	<!-- Actual hours upload pages -->
 	<definition name="actualHoursUploadPage" extends="baseLayoutWithMenu">
 		<put-attribute name="body" value="/tiles/actualhours/actualHoursUpload.jsp" />

@@ -18,7 +18,7 @@ import com.laborguru.model.comparator.ComparableObject;
  * @since SPM 1.0
  *
  */
-public class Position extends SpmObject implements ComparableObject{
+public class Position extends SpmObject implements ComparableObject {
 
 	/**
 	 * Default serial version ID

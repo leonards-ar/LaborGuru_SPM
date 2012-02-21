@@ -6,11 +6,19 @@
 package com.laborguru.service.email;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.log4j.Logger;
+import org.apache.velocity.app.VelocityEngine;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
+import org.springframework.ui.velocity.VelocityEngineUtils;
 
 /**
  *
@@ -25,6 +33,7 @@ public class EmailServiceBean implements EmailService {
 	private JavaMailSender mailSender;
 	private SimpleMailMessage mailMessage;
 	private boolean enabled;
+	private VelocityEngine velocityEngine;
 	
 	/**
 	 * 
@@ -63,6 +72,42 @@ public class EmailServiceBean implements EmailService {
 			log.warn("Email Service is disabled. Check configuration.");
 		}
 	}
+	
+	/**
+	 * 
+	 * @param to
+	 * @param cc
+	 * @param subject
+	 * @param bodyTemplate
+	 * @param model
+	 * @param attachments
+	 * @see com.laborguru.service.email.EmailService#sendHtmlEmail(java.lang.String[], java.lang.String[], java.lang.String, java.util.Map, java.util.List)
+	 */
+	public void sendHtmlEmail(final String[] to, final String[] cc, final String subject, final String bodyTemplate, final Map<String, Object> model, final List<String> attachments) {
+		if (isEnabled()) {
+			getMailSender().send(new MimeMessagePreparator() {
+
+				public void prepare(MimeMessage mimeMessage) throws Exception {
+					MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+					message.setTo(to);
+					if (cc != null) {
+						message.setCc(cc);
+					}
+					message.setFrom(getMailMessage().getFrom());
+					message.setSubject(subject);
+					message.setSentDate(new Date());
+					String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, bodyTemplate, model);
+					if(log.isDebugEnabled())
+					{
+						log.debug("Email to send: [" + text + "]");
+					}
+					message.setText(text, true);
+				}
+			});
+		} else {
+			log.warn("Email Service is disabled. Check configuration.");
+		}
+	}	
 
 	/**
 	 * 
@@ -122,6 +167,14 @@ public class EmailServiceBean implements EmailService {
 	 */
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public VelocityEngine getVelocityEngine() {
+		return velocityEngine;
+	}
+
+	public void setVelocityEngine(VelocityEngine velocityEngine) {
+		this.velocityEngine = velocityEngine;
 	}
 
 }
