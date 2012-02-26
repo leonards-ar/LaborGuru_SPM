@@ -16,6 +16,7 @@ public enum SpmActionResult {
 	SHOW("show"),
 	DELETE("delte"),
 	SAVE("save"), 
+	PRINT("print"), 
 	INPUT("input"),
 	LOGOUT("logout"),
 	LOGIN("login"),

@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
 
 import com.laborguru.exception.InvalidUploadFileException;
 import com.laborguru.model.Area;
@@ -56,13 +57,13 @@ public class EmployeeDefinitionFileParserBean implements EmployeeDefinitionFileP
 			 HSSFWorkbook wb = new HSSFWorkbook(inp);
 			 
 			 HSSFSheet sheet = wb.getSheetAt(0);	
-			 Iterator<HSSFRow> rit = (Iterator<HSSFRow>) sheet.rowIterator();
+			 Iterator<Row> rit = sheet.rowIterator();
 			 			 
 			 //Ignoring the header
 			 rit.next();
 			 
 			 while(rit.hasNext()) {
-				HSSFRow row = rit.next();
+				Row row = rit.next();
 				employees.add(buildEmployee(row));
 			}
 			 
@@ -92,7 +93,7 @@ public class EmployeeDefinitionFileParserBean implements EmployeeDefinitionFileP
 		}
 	}
 
-	private Employee buildEmployee(HSSFRow row) {
+	private Employee buildEmployee(Row row) {
 		Employee employee = new Employee();
 		Store store = new Store();
 		Customer customer = new Customer();

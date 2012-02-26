@@ -2,8 +2,8 @@ package com.laborguru.util;
 
 import java.util.Date;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
+import org.apache.poi.ss.usermodel.Cell;
 
 /**
  *
@@ -25,8 +25,8 @@ public class PoiUtils {
 	 * @param cell
 	 * @return
 	 */
-	public static String getStringValue(HSSFCell cell){
-		if ( (cell!= null) && (cell.getCellType() == HSSFCell.CELL_TYPE_STRING)){
+	public static String getStringValue(Cell cell){
+		if ( (cell!= null) && (cell.getCellType() == Cell.CELL_TYPE_STRING)){
 			return cell.getStringCellValue().trim();
 		}
 		
@@ -37,8 +37,8 @@ public class PoiUtils {
 	 * @param cell
 	 * @return
 	 */
-	public static Date getDateValue(HSSFCell cell){
-		if ( (cell != null) && (cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC) && (HSSFDateUtil.isCellDateFormatted(cell))){
+	public static Date getDateValue(Cell cell){
+		if ( (cell != null) && (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) && (HSSFDateUtil.isCellDateFormatted(cell))){
 			return cell.getDateCellValue();
 		}
 		
@@ -50,8 +50,8 @@ public class PoiUtils {
 	 * @param cell
 	 * @return
 	 */
-	public static Double getDoubleValue(HSSFCell cell){
-		if ((cell != null) && (cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC) && !(HSSFDateUtil.isCellDateFormatted(cell))){
+	public static Double getDoubleValue(Cell cell){
+		if ((cell != null) && (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) && !(HSSFDateUtil.isCellDateFormatted(cell))){
 			return cell.getNumericCellValue();
 		}
 		
@@ -62,8 +62,8 @@ public class PoiUtils {
 	 * @param cell
 	 * @return
 	 */
-	public static Integer getIntegerValue(HSSFCell cell){
-		if ((cell != null) && (cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC) && !(HSSFDateUtil.isCellDateFormatted(cell))){
+	public static Integer getIntegerValue(Cell cell){
+		if ((cell != null) && (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) && !(HSSFDateUtil.isCellDateFormatted(cell))){
 			return new Integer(((int)cell.getNumericCellValue()));
 		}
 		
@@ -75,9 +75,9 @@ public class PoiUtils {
 	 * @param cell
 	 * @return
 	 */
-	public static boolean getBooleanValue(HSSFCell cell) {
+	public static boolean getBooleanValue(Cell cell) {
 		Object o;
-		if(cell != null && cell.getCellType() == HSSFCell.CELL_TYPE_BOOLEAN) {
+		if(cell != null && cell.getCellType() == Cell.CELL_TYPE_BOOLEAN) {
 			return cell.getBooleanCellValue();
 		} else if((o = getIntegerValue(cell)) !=  null) {
 			return ((Integer ) o).intValue() == 1;

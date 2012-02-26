@@ -29,7 +29,16 @@
 						<td align="center"><s:submit onclick="return confirmPostSchedule(this, '%{getText('schedule.post.schedule.confirm.msg')}');" id="postButton" key="schedule.printshift.weekly.post.button" action="printweeklyshiftbyemployee_post" theme="simple" cssClass="button"/></td>
 						</authz:authorize>
 						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
-						<td align="center"><s:submit onclick="" id="printButton" key="schedule.printshift.weekly.print.button" theme="simple" cssClass="button"/></td>
+						<td align="center">
+							<s:url id="printUrl" action="printweeklyshiftbyemployee_print" escapeAmp="false" includeParams="none">
+								<s:param name="selectedDate"><s:property value="selectedDate"/></s:param>
+								<s:param name="selectedWeekDay"><s:property value="selectedWeekDay"/></s:param>
+								<s:param name="selectedView"><s:property value="selectedView"/></s:param>
+								<s:param name="selectedWeekDay"><s:property value="selectedWeekDay"/></s:param>
+								<s:param name="inTimeOnly"><s:property value="inTimeOnly"/></s:param>
+							</s:url>						
+							<s:submit onclick="return openPopup('%{printUrl}', 'print_window');" id="printButton" key="schedule.printshift.weekly.print.button" theme="simple" cssClass="button"/>
+						</td>
 					</tr>				
 				</table>
 			</td>

@@ -35,12 +35,14 @@
 		<action name="printweeklyshiftbyposition_*" method="{1}"
 			class="com.laborguru.action.schedule.PrintShiftByPositionByWeekPrepareAction">
 			<result name="input" type="tiles">viewPrintShiftByPositionByWeekPage</result>
+			<result name="print" type="tiles">printShiftByPositionByWeekPage</result>
 			<result name="success" type="tiles">viewPrintShiftByPositionByWeekPage</result>
 		</action>		
 
 		<action name="printweeklyshiftbyemployee_*" method="{1}"
 			class="com.laborguru.action.schedule.PrintShiftByEmployeeByWeekPrepareAction">
 			<result name="input" type="tiles">viewPrintShiftByEmployeeByWeekPage</result>
+			<result name="print" type="tiles">printShiftByEmployeeByWeekPage</result>
 			<result name="success" type="tiles">viewPrintShiftByEmployeeByWeekPage</result>
 		</action>
 
