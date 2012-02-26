@@ -4,6 +4,27 @@ function breakout_of_frame() {
   }
 }
 
+function openPopup(url, name) {
+	 var params = 'directories=no';
+	 //params += 'width='+width+', height='+height;
+	 //params += ', top='+top+', left='+left;
+	 params += ', location=no';
+	 params += ', menubar=no';
+	 params += ', resizable=yes';
+	 params += ', scrollbars=yes';
+	 params += ', status=no';
+	 params += ', toolbar=no';
+	 newwin=window.open(url, name, params);
+	 var left   = (screen.width  - newwin.width) / 2;
+	 var top    = (screen.height - newwin.height) /2;
+
+	 if (window.focus) {
+		 newwin.focus();
+	 }
+	 return false;	
+
+}
+
 function trim(s) {
 	if(s && s.replace) {
 		var t = s.replace(/^\s+/, '');

@@ -3,7 +3,7 @@ package com.laborguru.service.store.file;
 import java.util.EnumSet;
 
 import org.apache.log4j.Logger;
-import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.ss.usermodel.Row;
 
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.InvalidFieldUploadFileException;
@@ -82,10 +82,10 @@ public class StoreInformation extends BaseStoreSection{
 	/**
 	 * Add row to section
 	 * @param row
-	 * @see com.laborguru.service.store.file.BaseStoreSection#addRowToSection(org.apache.poi.hssf.usermodel.HSSFRow)
+	 * @see com.laborguru.service.store.file.BaseStoreSection#addRowToSection(org.apache.poi.hssf.usermodel.Row)
 	 */
 	@Override
-	protected void addRowToSection(HSSFRow row) {
+	protected void addRowToSection(Row row) {
 
 		String fieldName = PoiUtils.getStringValue(row.getCell((short)2));
 		String fieldValue = PoiUtils.getStringValue(row.getCell((short)4));

@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.InvalidFieldUploadFileException;
@@ -107,10 +107,10 @@ public class StoreOperation extends BaseStoreSection {
 	
 	/**
 	 * @param row
-	 * @see com.laborguru.service.store.file.BaseStoreSection#addRowToSection(org.apache.poi.hssf.usermodel.HSSFRow)
+	 * @see com.laborguru.service.store.file.BaseStoreSection#addRowToSection(org.apache.poi.hssf.usermodel.Row)
 	 */
 	@Override
-	protected void addRowToSection(HSSFRow row) {	
+	protected void addRowToSection(Row row) {	
 				
 		String category = PoiUtils.getStringValue(row.getCell((short)1));
 		
@@ -147,12 +147,12 @@ public class StoreOperation extends BaseStoreSection {
 	
 	/**
 	 * @param row
-	 * @see com.laborguru.service.store.file.BaseStoreSection#validateRow(org.apache.poi.hssf.usermodel.HSSFRow)
+	 * @see com.laborguru.service.store.file.BaseStoreSection#validateRow(org.apache.poi.hssf.usermodel.Row)
 	 */
 	@Override
-	protected void validateRow(HSSFRow row){
-		HSSFCell category = row.getCell((short)1);
-		HSSFCell fieldValue = row.getCell((short)4);
+	protected void validateRow(Row row){
+		Cell category = row.getCell((short)1);
+		Cell fieldValue = row.getCell((short)4);
 		
 		if ((category == null) || (fieldValue == null)){
 			String message = getSection().getStoreSection()+" row is invalid - category:"+category+" - fieldValue:"+fieldValue;
@@ -164,7 +164,7 @@ public class StoreOperation extends BaseStoreSection {
 	/**
 	 * @param row
 	 */
-	private void addVariableDefinitions(HSSFRow row){
+	private void addVariableDefinitions(Row row){
 		String fieldValue = PoiUtils.getStringValue(row.getCell((short)4));
 		getVariableDefinitions().add(fieldValue.trim());
 	}
@@ -172,7 +172,7 @@ public class StoreOperation extends BaseStoreSection {
 	/**
 	 * @param row
 	 */
-	private void addGroupNames(HSSFRow row) {
+	private void addGroupNames(Row row) {
 		String fieldValue = PoiUtils.getStringValue(row.getCell((short)4));		
 		getGroupNames().add(fieldValue.trim());
 	}
@@ -180,7 +180,7 @@ public class StoreOperation extends BaseStoreSection {
 	/**
 	 * @param row
 	 */
-	private void addPositionNames(HSSFRow row) {
+	private void addPositionNames(Row row) {
 		String fieldValue = PoiUtils.getStringValue(row.getCell((short)4));
 		getPositionNames().add(fieldValue.trim());
 		
@@ -189,7 +189,7 @@ public class StoreOperation extends BaseStoreSection {
 	/**
 	 * @param row
 	 */
-	private void addGuestService(HSSFRow row) {
+	private void addGuestService(Row row) {
 		String fieldValue = PoiUtils.getStringValue(row.getCell((short)4));
 		getGuestServiceSet().add(fieldValue.trim());
 
@@ -198,7 +198,7 @@ public class StoreOperation extends BaseStoreSection {
 	/**
 	 * @param row
 	 */
-	private void addManager(HSSFRow row) {
+	private void addManager(Row row) {
 		String fieldValue = PoiUtils.getStringValue(row.getCell((short)4));
 		getManagerSet().add(fieldValue.trim());
 	}	
@@ -206,7 +206,7 @@ public class StoreOperation extends BaseStoreSection {
 	/**
 	 * @param row
 	 */
-	private void addDaypartDefinition(HSSFRow row) {		
+	private void addDaypartDefinition(Row row) {		
 		String fieldName = PoiUtils.getStringValue(row.getCell((short)2));
 		Date startTime = PoiUtils.getDateValue(row.getCell((short)4));
 
@@ -229,7 +229,7 @@ public class StoreOperation extends BaseStoreSection {
 	 * @param fieldAux
 	 * @param fieldValue
 	 */
-	private void addHoursOfOperation(HSSFRow row) {
+	private void addHoursOfOperation(Row row) {
 		
 		String fieldName = PoiUtils.getStringValue(row.getCell((short)2));
 				
@@ -301,7 +301,7 @@ public class StoreOperation extends BaseStoreSection {
 	/**
 	 * @param row
 	 */
-	private void addDitributionType(HSSFRow row) {
+	private void addDitributionType(Row row) {
 		String fieldValue = PoiUtils.getStringValue(row.getCell((short)4));
 		
 		if(DistributionType.STATIC.name().equalsIgnoreCase(fieldValue)){

@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.ss.usermodel.Row;
 
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.InvalidFieldUploadFileException;
@@ -98,7 +98,7 @@ public class StoreAllowance extends BaseStoreSection{
 	 * @param fieldValue
 	 */
 	@Override
-	public void addRowToSection(HSSFRow row) {	
+	public void addRowToSection(Row row) {	
 				
 		String category = PoiUtils.getStringValue(row.getCell((short)1));
 		
@@ -151,7 +151,7 @@ public class StoreAllowance extends BaseStoreSection{
 	 * @param positionValueMap
 	 * @param category
 	 */
-	private void addPositionValueRow(HSSFRow row, PositionValueMap positionValueMap, StoreAllowanceField category) {
+	private void addPositionValueRow(Row row, PositionValueMap positionValueMap, StoreAllowanceField category) {
 		String position = PoiUtils.getStringValue(row.getCell((short)2));
 		String field = PoiUtils.getStringValue(row.getCell((short)3));
 		Double value = PoiUtils.getDoubleValue(row.getCell((short)4));
@@ -173,7 +173,7 @@ public class StoreAllowance extends BaseStoreSection{
 	 * @param positionValueMap
 	 * @param category
 	 */
-	private void addSecondVarOpenFlexRow(HSSFRow row, PositionValueMap positionValueMap, StoreAllowanceField category) {
+	private void addSecondVarOpenFlexRow(Row row, PositionValueMap positionValueMap, StoreAllowanceField category) {
 		String position = PoiUtils.getStringValue(row.getCell((short)2));
 		Double value = PoiUtils.getDoubleValue(row.getCell((short)4));
 	

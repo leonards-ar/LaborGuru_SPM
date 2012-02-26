@@ -319,6 +319,11 @@ public abstract class PrintScheduleBaseAction extends PrintShiftBaseAction {
 		this.selectedView = selectedView;
 	}
 	
+	public String print() {
+		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
+		return SpmActionResult.PRINT.getResult();
+	}
+	
 	public String post() {
 		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
 		List<Object> args =  new ArrayList<Object>();

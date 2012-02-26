@@ -1,7 +1,7 @@
 package com.laborguru.service.store.file;
 
 import org.apache.log4j.Logger;
-import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.ss.usermodel.Row;
 
 import com.laborguru.model.Store;
 import com.laborguru.service.store.file.BaseStoreSection.StoreSection;
@@ -42,7 +42,7 @@ public class StoreAssembler {
 	/**
 	 * @param row
 	 */
-	public void addToStore(HSSFRow row){
+	public void addToStore(Row row){
 				
 		StoreSection section = BaseStoreSection.getRowSection(row);
 		switch(section){

@@ -5,8 +5,8 @@ import java.util.EnumSet;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.InvalidFieldUploadFileException;
@@ -129,8 +129,8 @@ public abstract class BaseStoreSection {
 	 * @param row
 	 * @return
 	 */
-	public static StoreSection getRowSection(HSSFRow row){		
-		HSSFCell cell = row.getCell((short) 0);
+	public static StoreSection getRowSection(Row row){		
+		Cell cell = row.getCell((short) 0);
 		
 		String section = PoiUtils.getStringValue(cell);
 		
@@ -149,7 +149,7 @@ public abstract class BaseStoreSection {
 	 * @param fieldName
 	 * @param fieldValue
 	 */
-	public void addField(HSSFRow row) {		
+	public void addField(Row row) {		
 		validateRow(row);
 		addRowToSection(row);
 	}
@@ -157,16 +157,16 @@ public abstract class BaseStoreSection {
 	/**
 	 * @param row
 	 */
-	protected abstract void addRowToSection(HSSFRow row);
+	protected abstract void addRowToSection(Row row);
 
 	/**
 	 * @param row
 	 * @return
 	 */
-	protected void validateRow(HSSFRow row){
-		HSSFCell category = row.getCell((short)1);
-		HSSFCell fieldName = row.getCell((short)2);
-		HSSFCell fieldValue = row.getCell((short)4);
+	protected void validateRow(Row row){
+		Cell category = row.getCell((short)1);
+		Cell fieldName = row.getCell((short)2);
+		Cell fieldValue = row.getCell((short)4);
 		
 		if ((category == null) || (fieldName == null) || (fieldValue == null)){
 			String message = getSection().getStoreSection()+" row is invalid - category:"+category+" fieldName:"+fieldName+" - fieldValue:"+fieldValue;

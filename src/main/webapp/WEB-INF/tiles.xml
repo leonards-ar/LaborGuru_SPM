@@ -21,10 +21,17 @@
 		<put-attribute name="popUpFooter" value="/tiles/popup_footer.jsp" />
 	</definition>
 
+	<definition name="printLayout" template="/layouts/print.jsp">
+		<put-attribute name="htmlExtHeader" value="/tiles/defaultHtmlExtHeader.jsp" />
+		<put-attribute name="header" value="/tiles/print_header.jsp" />
+		<put-attribute name="footer" value="/tiles/print_footer.jsp" />
+	</definition>
+	
 	<!--  Error -->
 	<definition name="errorPage" extends="baseLayout">
 		<put-attribute name="body" value="/tiles/error.jsp" />
 	</definition>
+
 
 	<!--  Login and Security -->
 	<definition name="loginPage" extends="baseLayout">
@@ -322,6 +329,16 @@
 		<put-attribute name="htmlExtHeader" value="/tiles/printscheduleHtmlExtHeader.jsp" />
 		<put-attribute name="body" value="/tiles/schedule/printweektotalhoursbyposition.jsp"/>
 	</definition>	
+	<!--  Print -->
+	<definition name="printShiftByPositionByWeekPage" extends="printLayout">
+		<put-attribute name="htmlExtHeader" value="/tiles/printscheduleHtmlExtHeader.jsp" />
+		<put-attribute name="body" value="/tiles/schedule/print_printweekshiftbyposition.jsp"/>
+	</definition>
+		
+	<definition name="printShiftByEmployeeByWeekPage" extends="printLayout">
+		<put-attribute name="htmlExtHeader" value="/tiles/printscheduleHtmlExtHeader.jsp" />
+		<put-attribute name="body" value="/tiles/schedule/print_printweekshiftbyemployee.jsp"/>
+	</definition>
 	
 	<definition name="viewPrintShiftBreaksByWeekPage" extends="baseLayoutWithMenu">
 		<put-attribute name="htmlExtHeader" value="/tiles/printscheduleHtmlExtHeader.jsp" />

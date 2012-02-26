@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
 
 import com.laborguru.exception.InvalidUploadFileException;
 import com.laborguru.model.Store;
@@ -44,13 +45,13 @@ public class StoreDefinitionFileParserBean implements StoreDefinitionFileParser 
 			 
 			 StoreAssembler storeAssembler = StoreAssembler.getStoreAssembler();
 
-			 Iterator<HSSFRow> rit = (Iterator<HSSFRow>)sheet.rowIterator();
+			 Iterator<Row> rit = sheet.rowIterator();
 			 			 
 			 //Ignoring the header
 			 rit.next();
 			 
 			 while(rit.hasNext()) {
-				HSSFRow row = rit.next();
+				Row row = rit.next();
 				storeAssembler.addToStore(row);
 			}
 			 
