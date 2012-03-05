@@ -1,9 +1,18 @@
 package com.laborguru.util;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
+import java.util.Iterator;
 
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.poifs.filesystem.OfficeXmlFileException;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -85,5 +94,20 @@ public class PoiUtils {
 			return o.toString().equalsIgnoreCase("y") || o.toString().equalsIgnoreCase("yes") || o.toString().equalsIgnoreCase("t") || o.toString().equalsIgnoreCase("true") || o.toString().equalsIgnoreCase("1");
 		}
 		return false;
+	}
+	
+	public static Iterator<Row> getFirstSheetRows(InputStream stream) throws IOException {
+		try {
+			 HSSFWorkbook wb = new HSSFWorkbook(stream);
+			 
+			 HSSFSheet sheet = wb.getSheetAt(0);	
+			 
+			 return sheet.rowIterator();
+		} catch(OfficeXmlFileException ex) {
+			XSSFWorkbook wb = new XSSFWorkbook(stream);
+			XSSFSheet sheet = wb.getSheetAt(0);
+			
+			return sheet.rowIterator();
+		}
 	}
 }

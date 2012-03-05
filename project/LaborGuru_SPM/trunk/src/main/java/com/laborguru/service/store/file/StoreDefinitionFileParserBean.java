@@ -8,13 +8,11 @@ import java.io.InputStream;
 import java.util.Iterator;
 
 import org.apache.log4j.Logger;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 
 import com.laborguru.exception.InvalidUploadFileException;
 import com.laborguru.model.Store;
+import com.laborguru.util.PoiUtils;
 
 /**
  * Parses a store definition file
@@ -40,12 +38,9 @@ public class StoreDefinitionFileParserBean implements StoreDefinitionFileParser 
 		try {
 			 inp = new FileInputStream(storeToUpload);
 			 
-			 HSSFWorkbook wb = new HSSFWorkbook(inp);
-			 HSSFSheet sheet = wb.getSheetAt(0);	
-			 
 			 StoreAssembler storeAssembler = StoreAssembler.getStoreAssembler();
 
-			 Iterator<Row> rit = sheet.rowIterator();
+			 Iterator<Row> rit = PoiUtils.getFirstSheetRows(inp);
 			 			 
 			 //Ignoring the header
 			 rit.next();
