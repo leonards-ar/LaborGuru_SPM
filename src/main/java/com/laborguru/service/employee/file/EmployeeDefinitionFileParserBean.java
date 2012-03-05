@@ -14,9 +14,6 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 
 import com.laborguru.exception.InvalidUploadFileException;
@@ -54,10 +51,8 @@ public class EmployeeDefinitionFileParserBean implements EmployeeDefinitionFileP
 		try {
 			 inp = new FileInputStream(employeesToUpload);
 			 
-			 HSSFWorkbook wb = new HSSFWorkbook(inp);
-			 
-			 HSSFSheet sheet = wb.getSheetAt(0);	
-			 Iterator<Row> rit = sheet.rowIterator();
+
+			 Iterator<Row> rit = PoiUtils.getFirstSheetRows(inp);
 			 			 
 			 //Ignoring the header
 			 rit.next();
