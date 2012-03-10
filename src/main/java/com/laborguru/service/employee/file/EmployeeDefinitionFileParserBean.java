@@ -4,10 +4,8 @@
 package com.laborguru.service.employee.file;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -45,14 +43,11 @@ public class EmployeeDefinitionFileParserBean implements EmployeeDefinitionFileP
 	 * @see com.laborguru.service.employee.file.EmployeeDefinitionFileParser#parseEmployees(java.io.File)
 	 */
 	public List<Employee> parseEmployees(File employeesToUpload) {
-		InputStream inp = null;
 		List<Employee> employees = new ArrayList<Employee>();
 		
 		try {
-			 inp = new FileInputStream(employeesToUpload);
-			 
 
-			 Iterator<Row> rit = PoiUtils.getFirstSheetRows(inp);
+			 Iterator<Row> rit = PoiUtils.getFirstSheetRows(employeesToUpload);
 			 			 
 			 //Ignoring the header
 			 rit.next();
@@ -76,15 +71,6 @@ public class EmployeeDefinitionFileParserBean implements EmployeeDefinitionFileP
 			String msg = "The file " + employeesToUpload.getName() + " passed in as parameter cannot be processed: " + ex.getMessage();
 			log.error(msg);
 			throw new InvalidUploadFileException(msg);		
-		} finally{
-			if (inp != null){
-				try {
-					inp.close();
-				} catch (IOException e) {
-					String msg = "The file " + employeesToUpload.getName() + " passed in as parameter could not be closed.";
-					log.error(msg);
-				}
-			}
 		}
 	}
 

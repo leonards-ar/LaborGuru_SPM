@@ -1,10 +1,8 @@
 package com.laborguru.service.store.file;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Iterator;
 
 import org.apache.log4j.Logger;
@@ -33,14 +31,11 @@ public class StoreDefinitionFileParserBean implements StoreDefinitionFileParser 
 	 */
 	public Store parseStore(File storeToUpload) {
 		
-		InputStream inp = null;
-		
 		try {
-			 inp = new FileInputStream(storeToUpload);
 			 
 			 StoreAssembler storeAssembler = StoreAssembler.getStoreAssembler();
 
-			 Iterator<Row> rit = PoiUtils.getFirstSheetRows(inp);
+			 Iterator<Row> rit = PoiUtils.getFirstSheetRows(storeToUpload);
 			 			 
 			 //Ignoring the header
 			 rit.next();
@@ -60,15 +55,6 @@ public class StoreDefinitionFileParserBean implements StoreDefinitionFileParser 
 			String msg = "The file " + storeToUpload.getName() +" passed in as parameter cannot be read.";
 			log.error(msg);
 			throw new InvalidUploadFileException(msg);			
-		} finally{
-			if (inp != null){
-				try {
-					inp.close();
-				} catch (IOException e) {
-					String msg = "The file " + storeToUpload.getName() +" passed in as parameter could not be closed.";
-					log.error(msg);
-				}
-			}
 		}
 	}
 }

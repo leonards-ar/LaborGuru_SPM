@@ -98,7 +98,7 @@ public class SpmAction extends ActionSupport implements SessionAware,RequestAwar
 	 * @return The store the employee belongs to
 	 */
 	protected Store getEmployeeStore() {
-		Store store = (Store) getSession().get(HttpRequestConstants.STORE);
+		Store store = getEmployeeStoreOrNull();
 		if(store == null) {
 			Employee employee = getLoggedEmployeeOrNull();
 			if(employee != null) {
@@ -110,6 +110,14 @@ public class SpmAction extends ActionSupport implements SessionAware,RequestAwar
 			}
 		}
 		return store;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	protected Store getEmployeeStoreOrNull() {
+		return (Store) getSession().get(HttpRequestConstants.STORE);
 	}
 	
 	protected Customer getCustomer() {
