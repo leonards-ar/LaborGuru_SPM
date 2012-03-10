@@ -1,5 +1,7 @@
 package com.laborguru.util;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
@@ -96,18 +98,34 @@ public class PoiUtils {
 		return false;
 	}
 	
-	public static Iterator<Row> getFirstSheetRows(InputStream stream) throws IOException {
+	public static Iterator<Row> getFirstSheetRows(File file) throws IOException {
+		InputStream in = null;
 		try {
-			 HSSFWorkbook wb = new HSSFWorkbook(stream);
-			 
-			 HSSFSheet sheet = wb.getSheetAt(0);	
-			 
-			 return sheet.rowIterator();
-		} catch(OfficeXmlFileException ex) {
-			XSSFWorkbook wb = new XSSFWorkbook(stream);
-			XSSFSheet sheet = wb.getSheetAt(0);
-			
+			in = new FileInputStream(file);
+			HSSFWorkbook wb = new HSSFWorkbook(in);
+
+			HSSFSheet sheet = wb.getSheetAt(0);
+
 			return sheet.rowIterator();
+		} catch (OfficeXmlFileException ex) {
+			close(in);
+			in = new FileInputStream(file);
+			XSSFWorkbook wb = new XSSFWorkbook(in);
+			XSSFSheet sheet = wb.getSheetAt(0);
+
+			return sheet.rowIterator();
+		} finally {
+			close(in);
+		}
+	}
+	
+	private static void close(InputStream is) {
+		if(is != null) {
+			try {
+				is.close();
+			} catch(Throwable ex) {
+				
+			}
 		}
 	}
 }

@@ -5,6 +5,9 @@ import java.util.Map;
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.WeekDaySelector;
+import com.laborguru.model.DayOfWeek;
+import com.laborguru.model.Employee;
+import com.laborguru.model.Store;
 import com.laborguru.service.data.ReferenceDataService;
 import com.laborguru.service.report.ReportService;
 import com.laborguru.util.FusionXmlDataConverter;
@@ -37,12 +40,29 @@ public abstract class ScheduleReportPrepareAction extends SpmAction  {
 	private ReportService reportService;
 	private FusionXmlDataConverter fusionXmlDataConverter;
 	
+	private DayOfWeek getFirstDayOfWeek() {
+		Store store = getEmployeeStoreOrNull();
+
+		// Case 1: An employee is logged: The first day is the Store one
+		if(store != null) {
+			return store.getFirstDayOfWeek();
+		}
+		
+		// Case 2: AreaUser, RegionUser, CustomerUser
+		if(getLoggedUser() != null) {
+			return DayOfWeek.MONDAY;
+		}
+		
+		// Case 3: No logged user??? Impossible
+		return null;
+	}
+	
 	/**
 	 * @return the weekDaySelector
 	 */
 	public WeekDaySelector getWeekDaySelector() {
 		if(weekDaySelector == null) {
-			weekDaySelector = new WeekDaySelector(getEmployeeStore().getFirstDayOfWeek());
+			weekDaySelector = new WeekDaySelector(getFirstDayOfWeek());
 		}
 		return weekDaySelector;
 	}
