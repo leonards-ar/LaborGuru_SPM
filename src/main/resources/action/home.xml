@@ -11,6 +11,24 @@
 			</result>		
 			<result name="employee" type="redirectAction">employee_home</result>
 			<result name="administrator" type="redirectAction">admin_home</result>
+			<result name="customerReport" type="redirectAction">
+				<param name="actionName">customerReport_showFirstReport</param>
+				<param name="namespace">/report</param>
+				<param name="selectedDate">${selectedDate}</param>
+				<param name="selectedWeekDay">${selectedWeekDay}</param>
+			</result>		
+			<result name="regionReport" type="redirectAction">
+				<param name="actionName">regionalReport_showFirstReport</param>
+				<param name="namespace">/report</param>
+				<param name="selectedDate">${selectedDate}</param>
+				<param name="selectedWeekDay">${selectedWeekDay}</param>
+			</result>	
+			<result name="areaReport" type="redirectAction">
+				<param name="actionName">areaReport_showFirstReport</param>
+				<param name="namespace">/report</param>
+				<param name="selectedDate">${selectedDate}</param>
+				<param name="selectedWeekDay">${selectedWeekDay}</param>
+			</result>			
 			<result name="success" type="tiles">homePage</result>			
 		</action>	
 

@@ -461,7 +461,17 @@
     <put-attribute name="htmlExtHeader" value="/tiles/reportHtmlExtHeader.jsp" />
     <put-attribute name="body" value="/tiles/report/customer_report.jsp"/>
   </definition>
-  	
+
+  <definition name="showRegionReport" extends="baseLayoutWithMenu">
+    <put-attribute name="htmlExtHeader" value="/tiles/reportHtmlExtHeader.jsp" />
+    <put-attribute name="body" value="/tiles/report/region_report.jsp"/>
+  </definition>
+  
+    <definition name="showAreaReport" extends="baseLayoutWithMenu">
+    <put-attribute name="htmlExtHeader" value="/tiles/reportHtmlExtHeader.jsp" />
+    <put-attribute name="body" value="/tiles/report/area_report.jsp"/>
+  </definition>
+    	
 	<!-- Upload Store Page -->
 	<definition name="storeDefinitionUploadPage" extends="baseLayoutWithMenu">
 		<put-attribute name="body" value="/tiles/store/uploaddefinition_edit.jsp" />

@@ -201,7 +201,6 @@ public class MenuItem extends SpmObject {
 	}
 	
 	public String getMenuTarget() {
-		
 		if(target == null) {
 			return getOrderedChildMenuItems().get(0).target;
 		}
