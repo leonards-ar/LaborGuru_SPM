@@ -6,7 +6,7 @@ insert into tbl_profiles_permissions (profile_id, permission_id) values (2, 48);
 insert into tbl_menu_items (menu_item_id, label_key, help_key, target, position, parent_id, permission_id) values (34, 'employee.submenu.uploademployeesdefinition', 'EMPLOYEES_UPLOAD_DEFINITION_HELP', '/employee/uploadDefinition_edit.action', 5, 5, 6);
 
 
--- SPM#
+-- SPM#198
 update tbl_profiles set home_result="customerReport" where profile_id="4";
 update tbl_profiles set home_result="regionReport" where profile_id="5";
 update tbl_profiles set home_result="areaReport" where profile_id="6";
