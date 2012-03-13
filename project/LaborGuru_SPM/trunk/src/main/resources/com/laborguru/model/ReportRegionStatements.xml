@@ -14,7 +14,7 @@
     a.name as area_name, 
     SUM(hs.main_value) as main_value 
     FROM tbl_areas a LEFT JOIN tbl_stores s ON a.area_id = s.area_id LEFT JOIN tbl_historic_sales hs ON s.store_id = hs.store_id AND DATE(hs.date_time) BETWEEN STR_TO_DATE(#start_date#, '%Y-%m-%d') AND STR_TO_DATE(#end_date#, '%Y-%m-%d') 
-    WHERE a.region = #region_id# 
+    WHERE a.region_id = #region_id# 
     GROUP BY a.area_id 
     ORDER BY a.name;
   </select>
@@ -31,7 +31,7 @@
     a.name as area_name,
     sum(ah.hours) as schedule
     FROM tbl_areas a LEFT JOIN tbl_stores s ON a.area_id = s.area_id LEFT JOIN tbl_actual_hours ah ON s.store_id = ah.store_id AND ah.date BETWEEN STR_TO_DATE(#start_date#, '%Y-%m-%d') AND STR_TO_DATE(#end_date#, '%Y-%m-%d') 
-    WHERE a.region = #region_id#
+    WHERE a.region_id = #region_id#
     GROUP BY a.area_id 
     ORDER BY a.area_id;
   </select>
@@ -46,7 +46,7 @@
     LEFT JOIN tbl_store_schedules as ss ON s.store_id = ss.store_id AND ss.day BETWEEN STR_TO_DATE(#start_date#,'%Y-%m-%d') AND STR_TO_DATE(#end_date#,'%Y-%m-%d')
     LEFT JOIN tbl_employee_schedules as es ON ss.store_schedule_id = es.store_schedule_id
     LEFT JOIN tbl_shifts as sh ON es.employee_schedule_id = sh.employee_schedule_id AND sh.position_id IS NOT NULL
-    WHERE a.region = #region_id#
+    WHERE a.region_id = #region_id#
     GROUP BY a.area_id 
     ORDER BY a.area_id;
   </select>
@@ -60,7 +60,7 @@
     LEFT JOIN tbl_stores s ON a.area_id = s.area_id 
     LEFT JOIN tbl_positions p ON s.store_id = p.store_id
     LEFT JOIN tbl_staffing st ON p.position_id = st.position_id AND st.staffing_date BETWEEN STR_TO_DATE(#start_date#,'%Y-%m-%d') AND STR_TO_DATE(#end_date#,'%Y-%m-%d')
-    WHERE a.region = #region_id#
+    WHERE a.region_id = #region_id#
     GROUP BY a.area_id 
     ORDER BY a.area_id;
   </select> 

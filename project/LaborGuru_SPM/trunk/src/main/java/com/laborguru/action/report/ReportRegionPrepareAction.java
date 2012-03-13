@@ -72,7 +72,7 @@ public class ReportRegionPrepareAction extends ReportManagerBaseAction {
 	 */
 	public Region getRegion() {
 		if(region == null) {
-			return getRegion();
+			return super.getRegion();
 		}
 		return region;
 	}

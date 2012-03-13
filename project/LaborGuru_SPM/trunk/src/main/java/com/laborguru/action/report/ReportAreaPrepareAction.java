@@ -61,7 +61,7 @@ public class ReportAreaPrepareAction extends ReportManagerBaseAction {
      */
     public Area getArea() {
         if(area == null) {
-            return getArea();
+            return super.getArea();
         }
         return area;
     }

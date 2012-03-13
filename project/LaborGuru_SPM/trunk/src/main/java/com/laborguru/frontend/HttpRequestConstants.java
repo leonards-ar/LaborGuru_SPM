@@ -60,4 +60,9 @@ public interface HttpRequestConstants {
 	 * The region of the logged user when he/she is an employee.
 	 */
 	String REGION = "spmRegion";
+	
+	/**
+	 * The area of the logged user when he/she is an employee.
+	 */
+	String AREA = "spmArea";	
 }
