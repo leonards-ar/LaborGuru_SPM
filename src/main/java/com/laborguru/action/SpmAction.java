@@ -13,6 +13,8 @@ import com.laborguru.exception.ErrorMessage;
 import com.laborguru.exception.SpmUncheckedException;
 import com.laborguru.frontend.HttpRequestConstants;
 import com.laborguru.frontend.model.SessionMenuWrapper;
+import com.laborguru.model.Area;
+import com.laborguru.model.AreaUser;
 import com.laborguru.model.Customer;
 import com.laborguru.model.CustomerUser;
 import com.laborguru.model.Employee;
@@ -143,11 +145,26 @@ public class SpmAction extends ActionSupport implements SessionAware,RequestAwar
 			if(region != null) {
 				getSession().put(HttpRequestConstants.REGION, region);
 			} else {
-				throw new SpmUncheckedException("There is no regin present in session. Called from a user that is not a Regional Manager interface or session timed out?", ErrorEnum.NO_STORE_IN_SESSION);
+				throw new SpmUncheckedException("There is no region present in session. Called from a user that is not a Regional Manager interface or session timed out?", ErrorEnum.NO_STORE_IN_SESSION);
 			}
 		}
 		return region;
 	}
+	
+	protected Area getArea() {
+		Area area = (Area) getSession().get(HttpRequestConstants.AREA);
+		if(area == null) {
+			AreaUser areaUser = (AreaUser)getLoggedUser();
+			area = areaUser.getArea();
+			if(area != null) {
+				getSession().put(HttpRequestConstants.AREA, area);
+			} else {
+				throw new SpmUncheckedException("There is no area present in session. Called from a user that is not an Area Manager interface or session timed out?", ErrorEnum.NO_STORE_IN_SESSION);
+			}
+		}
+		return area;
+	}
+	
 
 	/**
 	 * @return the request
