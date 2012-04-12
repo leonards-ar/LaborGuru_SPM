@@ -2,6 +2,8 @@ package com.laborguru.model.report;
 
 import java.math.BigDecimal;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 import com.laborguru.model.SpmObject;
 import com.laborguru.util.SpmConstants;
 
@@ -90,22 +92,55 @@ public abstract class TotalManagerHour extends SpmObject{
 			 return SpmConstants.BD_ZERO_VALUE;
 		 }
 		 return sales.divide(target, 2, SpmConstants.ROUNDING_MODE);
-	}	
+	}
 	
-	@Override
-	public boolean equals(Object other) {
-		return false;
-	}
-
-	@Override
-	public int hashCode() {
-		return 0;
-	}
-
-	@Override
 	public String toString() {
-		return null;
+        return new ToStringBuilder(this, DEFAULT_TO_STRING_STYLE)
+        .append("sales" , sales)
+        .append("schedule", schedule)
+        .append("target", target)
+        .toString();
+	    
 	}
-	
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((sales == null) ? 0 : sales.hashCode());
+        result = prime * result
+                + ((schedule == null) ? 0 : schedule.hashCode());
+        result = prime * result + ((target == null) ? 0 : target.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        TotalManagerHour other = (TotalManagerHour) obj;
+        if (sales == null) {
+            if (other.sales != null)
+                return false;
+        } else if (!sales.equals(other.sales))
+            return false;
+        if (schedule == null) {
+            if (other.schedule != null)
+                return false;
+        } else if (!schedule.equals(other.schedule))
+            return false;
+        if (target == null) {
+            if (other.target != null)
+                return false;
+        } else if (!target.equals(other.target))
+            return false;
+        return true;
+    }
+	
+	
+	
 }

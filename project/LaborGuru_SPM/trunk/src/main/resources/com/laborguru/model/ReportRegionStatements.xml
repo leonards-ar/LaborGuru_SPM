@@ -56,7 +56,7 @@
     a.area_id as area_id, 
     a.name as area_name,
     SUM(total_daily_target) as schedule
-    FROM tbl_areas 
+    FROM tbl_areas a
     LEFT JOIN tbl_stores s ON a.area_id = s.area_id 
     LEFT JOIN tbl_positions p ON s.store_id = p.store_id
     LEFT JOIN tbl_staffing st ON p.position_id = st.position_id AND st.staffing_date BETWEEN STR_TO_DATE(#start_date#,'%Y-%m-%d') AND STR_TO_DATE(#end_date#,'%Y-%m-%d')
