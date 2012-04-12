@@ -12,27 +12,27 @@ public class ReportAreaPrepareAction extends ReportManagerBaseAction {
 
     private ReportAreaService reportAreaService;
     
-    private List<TotalAreaManagerHour> totalAreaHours;
+    private List<TotalAreaManagerHour> totalManagerHours;
     
     private Area area;    
     @Override
     protected void performanceEfficiency() {
-        setTotalAreaHours(reportAreaService.getPerformanceEfficiencyReport(getArea(), getStartDate(), getEndDate()));
+        setTotalManagerHours(reportAreaService.getPerformanceEfficiencyReport(getArea(), getStartDate(), getEndDate()));
     }
 
     @Override
     protected void schedulingEfficiency() {
-        setTotalAreaHours(reportAreaService.getWeeklyTotalHours(getArea(), getStartDate(), getEndDate()));
+        setTotalManagerHours(reportAreaService.getWeeklyTotalHours(getArea(), getStartDate(), getEndDate()));
     }
 
     @Override
     protected void scheduleExecutionEfficiency() {
-        setTotalAreaHours(reportAreaService.getScheduleExecutionEfficiencyReport(getArea(), getStartDate(), getEndDate()));
+        setTotalManagerHours(reportAreaService.getScheduleExecutionEfficiencyReport(getArea(), getStartDate(), getEndDate()));
     }
 
     @Override
     protected void forecastEfficiency() {
-        setTotalAreaHours(reportAreaService.getForecastEfficiencyReport(getArea(), getStartDate(), getEndDate()));
+        setTotalManagerHours(reportAreaService.getForecastEfficiencyReport(getArea(), getStartDate(), getEndDate()));
     }
 
     /**
@@ -42,20 +42,21 @@ public class ReportAreaPrepareAction extends ReportManagerBaseAction {
         this.reportAreaService = reportAreaService;
     }
 
+    
     /**
-     * @return the totalAreaHours
+     * @return the totalManagerHours
      */
-    public List<TotalAreaManagerHour> getTotalAreaHours() {
-        return totalAreaHours;
+    public List<TotalAreaManagerHour> getTotalManagerHours() {
+        return totalManagerHours;
     }
 
     /**
-     * @param totalAreaHours the totalAreaHours to set
+     * @param totalManagerHours the totalManagerHours to set
      */
-    public void setTotalAreaHours(List<TotalAreaManagerHour> totalAreaHours) {
-        this.totalAreaHours = totalAreaHours;
+    public void setTotalManagerHours(List<TotalAreaManagerHour> totalManagerHours) {
+        this.totalManagerHours = totalManagerHours;
     }
-    
+
     /**
      * @return the region
      */

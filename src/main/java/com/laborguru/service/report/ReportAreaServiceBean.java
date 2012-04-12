@@ -119,7 +119,7 @@ public class ReportAreaServiceBean implements ReportAreaService {
 		
 		Area tmpArea= getAreaService().getAreaById(area);
 
-			for(Store store: area.getStores()) {
+			for(Store store: tmpArea.getStores()) {
 				TotalAreaManagerHour totalManagerHour = new TotalAreaManagerHour();
 				totalManagerHour.setStore(store);
 				totalHours.add(totalManagerHour);

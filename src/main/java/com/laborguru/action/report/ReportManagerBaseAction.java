@@ -25,6 +25,8 @@ public abstract class ReportManagerBaseAction extends SpmAction implements Prepa
 	private Date startDate;
 	private Date endDate;
 	private String selectView;
+	private String selectedDate;
+	private String selectedWeekDay;
 	
 	private String scheduleHeader, targetHeader, reportTitle;
 	
@@ -150,7 +152,36 @@ public abstract class ReportManagerBaseAction extends SpmAction implements Prepa
 	public void setReportTitle(String reportTitle) {
 		this.reportTitle = reportTitle;
 	}
-	public void prepare() throws Exception {
+	
+	/**
+     * @return the selectedDate
+     */
+    public String getSelectedDate() {
+        return selectedDate;
+    }
+
+    /**
+     * @param selectedDate the selectedDate to set
+     */
+    public void setSelectedDate(String selectedDate) {
+        this.selectedDate = selectedDate;
+    }
+
+    /**
+     * @return the selectedWeekDay
+     */
+    public String getSelectedWeekDay() {
+        return selectedWeekDay;
+    }
+
+    /**
+     * @param selectedWeekDay the selectedWeekDay to set
+     */
+    public void setSelectedWeekDay(String selectedWeekDay) {
+        this.selectedWeekDay = selectedWeekDay;
+    }
+
+    public void prepare() throws Exception {
 	}		
 	
 	protected abstract void performanceEfficiency();

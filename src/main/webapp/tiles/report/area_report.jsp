@@ -127,7 +127,7 @@
                       <s:iterator id="totalManagerHour" value="totalManagerHours" status="itTotalManagerHour">
                         <tr>
                           <td class="cellValue">
-                            <s:property value="region.name"/>
+                            <s:property value="store.name"/>
                           </td>
                         <s:if test='selectView != "forecastEfficiency"'>
                           <td class="greyCellValue">

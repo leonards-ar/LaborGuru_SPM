@@ -14,7 +14,7 @@
     s.name as store_name, 
     SUM(hs.main_value) as main_value 
     FROM tbl_stores s LEFT JOIN tbl_historic_sales hs ON s.store_id = hs.store_id AND DATE(hs.date_time) BETWEEN STR_TO_DATE(#start_date#, '%Y-%m-%d') AND STR_TO_DATE(#end_date#, '%Y-%m-%d') 
-    WHERE s.area = #area_id# 
+    WHERE s.area_id = #area_id# 
     GROUP BY s.store_id 
     ORDER BY s.name;
   </select>

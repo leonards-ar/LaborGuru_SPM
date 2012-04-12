@@ -38,13 +38,13 @@
 	                <s:text name="report.historicalComparison.startDate.label" />
 	              </td>
 	              <td>
-	                <s:datetimepicker id="startDate" name="startDate" adjustWeeks="true" theme="simple" />
+	                <s:datetimepicker id="startDate" name="startDate" type="date" adjustWeeks="true" theme="simple" />
 	              </td>
 	              <td align="right" class="form_label">
 	                <s:text name="report.historicalComparison.endDate.label" />
 	              </td>
 	              <td>
-	                <s:datetimepicker id="endDate" name="endDate" adjustWeeks="true" theme="simple" />
+	                <s:datetimepicker id="endDate" name="endDate" type="date" adjustWeeks="true" theme="simple" />
 	              </td>
 	            </tr>
 	          </table>
@@ -189,3 +189,11 @@
     </td>
 	  </tr>
   </table>
+<!--  
+<script language="javascript" type="text/javascript">
+  djConfig.searchIds.push("startDate");
+  djConfig.searchIds.push("endDate");
+  djConfig.searchIds.push("submit");
+  djConfig.searchIds.push("customerReport_form");
+</script>
+-->

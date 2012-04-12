@@ -334,20 +334,20 @@ public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao
 			log.debug("getTargetTotalHourByRegion: before select params: region_id: " + region.getId() + " startDate: " + startDate + " endDate: " + endDate);
 		}
 		
-		return getSqlMapClient().queryForList("getTargetTotalHoursByArea", ReportDaoHelper.mapTotalHoursReport(region, startDate, endDate));
+		return getSqlMapClient().queryForList("getTargetTotalHoursByRegion", ReportDaoHelper.mapTotalHoursReport(region, startDate, endDate));
 	}
 
 	public List<TotalAreaManagerHour> getActualSalesByArea(Area area, Date startDate, Date endDate) throws SQLException {
 		if(log.isDebugEnabled()) {
-			log.debug("getActualSalesByRegion: before select params: area_id: " + area.getId() + " startDate: " + startDate + " endDate: " + endDate);
+			log.debug("getActualSalesByArea: before select params: area_id: " + area.getId() + " startDate: " + startDate + " endDate: " + endDate);
 		}
 		
-		return getSqlMapClient().queryForList("getActualSalesByRegion", ReportDaoHelper.mapActualSalesReport(area, startDate, endDate));
+		return getSqlMapClient().queryForList("getActualSalesByArea", ReportDaoHelper.mapActualSalesReport(area, startDate, endDate));
 	} 
 	
 	public List<TotalAreaManagerHour> getActualHoursByArea (Area area, Date startDate, Date endDate) throws SQLException{
 		if(log.isDebugEnabled()) {
-			log.debug("getActualHoursByRegion: before select params: area_id: " + area.getId() + " startDate: " + startDate + " endDate: " + endDate);
+			log.debug("getActualHoursByArea: before select params: area_id: " + area.getId() + " startDate: " + startDate + " endDate: " + endDate);
 		}
 		
 		return getSqlMapClient().queryForList("getActualHoursByArea", ReportDaoHelper.mapActualHoursReport(area, startDate, endDate));
@@ -355,7 +355,7 @@ public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao
 	
 	public List<TotalAreaManagerHour> getScheduleTotalHourByArea(Area area, Date startDate, Date endDate) throws SQLException {
 		if(log.isDebugEnabled()) {
-			log.debug("getScheduleTotalHourByRegion: before select params: area_id: " + area.getId() + " startDate: " + startDate + " endDate: " + endDate);
+			log.debug("getScheduleTotalHourByArea: before select params: area_id: " + area.getId() + " startDate: " + startDate + " endDate: " + endDate);
 		}
 		
 		return getSqlMapClient().queryForList("getScheduleTotalHoursByArea", ReportDaoHelper.mapTotalHoursReport(area, startDate, endDate));
@@ -363,7 +363,7 @@ public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao
 	
 	public List<TotalAreaManagerHour>getTargetTotalHourByArea(Area area, Date startDate, Date endDate) throws SQLException {
 		if(log.isDebugEnabled()) {
-			log.debug("getTargetTotalHourByRegion: before select params: area_id: " + area.getId() + " startDate: " + startDate + " endDate: " + endDate);
+			log.debug("getTargetTotalHourByArea: before select params: area_id: " + area.getId() + " startDate: " + startDate + " endDate: " + endDate);
 		}
 		
 		return getSqlMapClient().queryForList("getTargetTotalHoursByArea", ReportDaoHelper.mapTotalHoursReport(area, startDate, endDate));
