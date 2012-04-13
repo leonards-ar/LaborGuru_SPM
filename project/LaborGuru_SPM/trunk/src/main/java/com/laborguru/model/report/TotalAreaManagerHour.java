@@ -5,8 +5,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import com.laborguru.model.Store;
 
 public class TotalAreaManagerHour extends TotalManagerHour {
-	
-	Store store;
+    private static final long serialVersionUID = 3118328144912999607L;
+    Store store;
 
 	/**
 	 * @return the store
@@ -58,6 +58,10 @@ public class TotalAreaManagerHour extends TotalManagerHour {
         result = prime * result + ((store == null) ? 0 : store.hashCode());
         result += super.hashCode();
         return result;
-    }   	
+    }
+    
+    public String getName() {
+        return store != null?store.getName():null;
+    }
 
 }

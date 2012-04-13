@@ -23,6 +23,8 @@ public class ReportCustomerPrepareAction extends ReportManagerBaseAction {
 	
 	private List<TotalCustomerManagerHour> totalManagerHours;
 	
+	private static String reportObject = "report.manager.region";
+	
 	@Override
 	protected void forecastEfficiency() {
 		setTotalManagerHours(getReportCustomerService().getForecastEfficiencyReport(getCustomer(), getStartDate(), getEndDate()));
@@ -73,6 +75,11 @@ public class ReportCustomerPrepareAction extends ReportManagerBaseAction {
 	public void setReportCustomerService(ReportCustomerService reportCustomerService) {
 		this.reportCustomerService = reportCustomerService;
 	}
-
 	
+    /**
+     * @return the reportObject
+     */
+    public String getReportObject() {
+        return reportObject;
+    }
 }

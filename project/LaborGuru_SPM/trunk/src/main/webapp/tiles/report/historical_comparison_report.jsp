@@ -30,7 +30,7 @@
 							<td align="right" class="form_label"><s:text
 								name="report.reportType.label" /></td>
 							<td align="left"><s:select name="index" list="reportTypes"
-								listKey="index" listValue="%{getText(name)}" theme="simple" /></td>
+								listKey="index" listValue="%{getText(title)}" theme="simple" /></td>
 							<td align="right" class="form_label"><s:text
 								name="report.historicalComparison.startDate.label" /></td>
 							<td><s:datetimepicker id="startDate" name="startDate"

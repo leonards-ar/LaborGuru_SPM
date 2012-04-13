@@ -14,6 +14,8 @@ public class ReportAreaPrepareAction extends ReportManagerBaseAction {
     
     private List<TotalAreaManagerHour> totalManagerHours;
     
+    private static String reportObject = "report.manager.store"; 
+    
     private Area area;    
     @Override
     protected void performanceEfficiency() {
@@ -74,4 +76,11 @@ public class ReportAreaPrepareAction extends ReportManagerBaseAction {
         this.area= area;
     }
     
+    /**
+     * @return the reportObject
+     */
+    public String getReportObject() {
+        return reportObject;
+    }
+
 }

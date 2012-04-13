@@ -140,6 +140,8 @@ public abstract class TotalManagerHour extends SpmObject{
             return false;
         return true;
     }
+    
+    public abstract String getName(); 
 	
 	
 	

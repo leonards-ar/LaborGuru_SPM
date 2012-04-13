@@ -19,6 +19,8 @@ public class ReportRegionPrepareAction extends ReportManagerBaseAction {
 	
 	private Region region;
 	
+	private static String reportObject = "report.manager.area";
+	
 	@Override
 	protected void forecastEfficiency() {
 		setTotalManagerHours(getReportRegionService().getForecastEfficiencyReport(getRegion(), getStartDate(), getEndDate()));
@@ -84,7 +86,11 @@ public class ReportRegionPrepareAction extends ReportManagerBaseAction {
 		this.region = region;
 	}
 
+    /**
+     * @return the reportObject
+     */
+    public String getReportObject() {
+        return reportObject;
+    }
 	
-	
-
 }
