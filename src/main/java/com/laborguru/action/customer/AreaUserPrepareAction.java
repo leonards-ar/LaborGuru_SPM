@@ -78,7 +78,7 @@ public class AreaUserPrepareAction extends ManagerBaseAction implements Preparab
 	@Override
 	protected void setSaveObject() {
 		AreaUser areaUser = new AreaUser(getUser());
-		areaUser.addProfile(getReferenceDataService().getCustomerRole());
+		areaUser.addProfile(getReferenceDataService().getAreaRole());
 		Area auxArea = new Area();
 		auxArea.setId(getParamId());
 		areaUser.setArea(auxArea);
