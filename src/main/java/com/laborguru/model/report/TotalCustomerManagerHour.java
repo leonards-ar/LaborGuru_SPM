@@ -1,11 +1,8 @@
 package com.laborguru.model.report;
 
-import java.math.BigDecimal;
-
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.laborguru.model.Region;
-import com.laborguru.model.SpmObject;
 
 /**
  *
@@ -71,5 +68,9 @@ public class TotalCustomerManagerHour extends TotalManagerHour {
         result = prime * result + ((region == null) ? 0 : region.hashCode());
         result += super.hashCode();
         return result;
-    }	
+    }
+    
+    public String getName() {
+        return region != null ? region.getName() : null;
+    }
 }

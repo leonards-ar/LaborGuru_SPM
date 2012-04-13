@@ -25,8 +25,6 @@ public abstract class ReportManagerBaseAction extends SpmAction implements Prepa
 	private Date startDate;
 	private Date endDate;
 	private String selectView;
-	private String selectedDate;
-	private String selectedWeekDay;
 	
 	private String scheduleHeader, targetHeader, reportTitle;
 	
@@ -44,8 +42,6 @@ public abstract class ReportManagerBaseAction extends SpmAction implements Prepa
 
 	public String showReport() {
 		ReportTypes reportType = ReportTypes.valueOf(getSelectView());
-	      setEndDate(CalendarUtils.todayWithoutTime());
-	      setStartDate(CalendarUtils.addOrSubstractDays(getEndDate(), -7));
 		
 		switch(reportType) {
 		case performanceEfficiency: performanceEfficiency();
@@ -70,7 +66,7 @@ public abstract class ReportManagerBaseAction extends SpmAction implements Prepa
 			break;
 		}
 		
-		return SpmActionResult.INPUT.getResult();
+		return SpmActionResult.SHOW.getResult();
 		
 	}
 	
@@ -153,38 +149,10 @@ public abstract class ReportManagerBaseAction extends SpmAction implements Prepa
 		this.reportTitle = reportTitle;
 	}
 	
-	/**
-     * @return the selectedDate
-     */
-    public String getSelectedDate() {
-        return selectedDate;
-    }
-
-    /**
-     * @param selectedDate the selectedDate to set
-     */
-    public void setSelectedDate(String selectedDate) {
-        this.selectedDate = selectedDate;
-    }
-
-    /**
-     * @return the selectedWeekDay
-     */
-    public String getSelectedWeekDay() {
-        return selectedWeekDay;
-    }
-
-    /**
-     * @param selectedWeekDay the selectedWeekDay to set
-     */
-    public void setSelectedWeekDay(String selectedWeekDay) {
-        this.selectedWeekDay = selectedWeekDay;
-    }
-
     public void prepare() throws Exception {
 	}		
-	
-	protected abstract void performanceEfficiency();
+    
+    protected abstract void performanceEfficiency();
 	protected abstract void schedulingEfficiency();
 	protected abstract void scheduleExecutionEfficiency();
 	protected abstract void forecastEfficiency();

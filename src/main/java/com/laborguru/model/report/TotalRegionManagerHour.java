@@ -71,6 +71,9 @@ public class TotalRegionManagerHour extends TotalManagerHour {
         result += super.hashCode();
         return result;
     }
-	
+
+    public String getName() {
+        return area != null ? area.getName() : null;
+    }    
 	
 }
