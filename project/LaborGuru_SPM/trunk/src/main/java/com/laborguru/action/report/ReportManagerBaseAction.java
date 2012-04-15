@@ -50,12 +50,12 @@ public abstract class ReportManagerBaseAction extends SpmAction implements Prepa
 			setTargetHeader("report.historicalComparison.performanceEfficiency.target.label");
 			break;
 		case schedulingEfficiency: schedulingEfficiency();
-			setReportTitle("report.manager.scheduleExecutionEfficiency.title.label");
+		    setReportTitle("report.manager.scheduleEfficiency.title.label");
 			setScheduleHeader("report.historicalComparison.scheduleExecutionEfficiency.schedule.label");
 			setTargetHeader("report.historicalComparison.scheduleExecutionEfficiency.target.label");		
 			break;
 		case scheduleExecutionEfficiency: scheduleExecutionEfficiency();
-			setReportTitle("report.manager.scheduleEfficiency.title.label");
+			setReportTitle("report.manager.scheduleExecutionEfficiency.title.label");			
 			setScheduleHeader("report.historicalComparison.scheduleEfficiency.schedule.label");
 			setTargetHeader("report.historicalComparison.scheduleEfficiency.target.label");
 			break;
