@@ -33,7 +33,7 @@ public class ReportRegionPrepareAction extends ReportManagerBaseAction {
 
 	@Override
 	protected void scheduleExecutionEfficiency() {
-		setTotalManagerHours(getReportRegionService().getScheduleExecutionEfficiencyReport(getRegion(), getStartDate(), getStartDate()));
+		setTotalManagerHours(getReportRegionService().getScheduleExecutionEfficiencyReport(getRegion(), getStartDate(), getEndDate()));
 	}
 
 	@Override
