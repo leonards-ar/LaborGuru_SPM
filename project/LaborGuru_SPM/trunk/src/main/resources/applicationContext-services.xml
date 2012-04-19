@@ -172,6 +172,7 @@
       <property name="staffingService" ref="staffingService" />
       <property name="areaService" ref="areaService"/>
       <property name="projectionService" ref="projectionService"/>
+      <property name="scheduleService" ref="scheduleService"/>
   </bean>
   
   <bean id="reportAreaService" parent="baseTransactionProxy">

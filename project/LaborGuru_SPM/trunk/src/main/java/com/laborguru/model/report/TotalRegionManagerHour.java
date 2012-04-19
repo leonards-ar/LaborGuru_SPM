@@ -18,7 +18,7 @@ public class TotalRegionManagerHour extends TotalManagerHour {
 	 */
 	private static final long serialVersionUID = -4859066865015430608L;
 	
-	Area area;
+	private Area area;
 
 	/**
 	 * @return the area

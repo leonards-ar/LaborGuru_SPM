@@ -15,7 +15,7 @@ public class TotalCustomerManagerHour extends TotalManagerHour {
 
 	private static final long serialVersionUID = -4263736677595272709L;
 	
-	Region region;
+	private Region region;
 	
 	
 	/**
