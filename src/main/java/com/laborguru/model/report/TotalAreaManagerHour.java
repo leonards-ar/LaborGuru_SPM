@@ -6,7 +6,7 @@ import com.laborguru.model.Store;
 
 public class TotalAreaManagerHour extends TotalManagerHour {
     private static final long serialVersionUID = 3118328144912999607L;
-    Store store;
+    private Store store;
 
 	/**
 	 * @return the store

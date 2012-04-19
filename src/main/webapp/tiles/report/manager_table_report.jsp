@@ -85,8 +85,12 @@
 											<td class="greyCellValue"><s:text name="currency">
 													<s:param value="targetMPH" />
 												</s:text></td>
-											<td class="cellValue">0</td>
-											<td class="cellValue">0</td>
+											<td class="cellValue">
+											 <s:text name="decimal"><s:param value="scheduleLaborPercentage"/></s:text>%
+											 </td>
+											<td class="cellValue">
+											 <s:text name="decimal"><s:param value="targetLaborPercentage"/></s:text>%
+											</td>
 										</s:if>
 									</tr>
 								</s:iterator>

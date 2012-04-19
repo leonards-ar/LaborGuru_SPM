@@ -33,12 +33,12 @@
                 listKey="name" listValue="%{getText(title)}" theme="simple" /></td>
               <td align="right" class="form_label"><s:text
                 name="report.historicalComparison.startDate.label" /></td>
-              <td><s:datetimepicker id="startDate" name="startDate"
+              <td><s:datetimepicker id="startDate" name="startDate" displayFormat="%{getText('datepicker.format.date')}"
                 adjustWeeks="true" theme="simple" /></td>
               <td align="right" class="form_label"><s:text
                 name="report.historicalComparison.endDate.label" /></td>
               <td><s:datetimepicker id="endDate" name="endDate"
-                adjustWeeks="true" theme="simple" /></td>
+                adjustWeeks="true" displayFormat="%{getText('datepicker.format.date')}" theme="simple" /></td>
             </tr>
           </table></td>
       </tr>

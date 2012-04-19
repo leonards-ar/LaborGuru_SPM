@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.laborguru.model.SpmObject;
+import com.laborguru.util.NumberUtils;
 import com.laborguru.util.SpmConstants;
 
 /**
@@ -20,9 +21,13 @@ public abstract class TotalManagerHour extends SpmObject{
 	 * 
 	 */
 	private static final long serialVersionUID = 723035706927140054L;
-	BigDecimal sales;
-	BigDecimal schedule;
-	BigDecimal target;
+	protected BigDecimal sales;
+	protected BigDecimal schedule;
+	protected BigDecimal target;
+	protected Double averageVariable = SpmConstants.DOUBLE_ZERO_VALUE;
+	protected Double averageWage = SpmConstants.DOUBLE_ZERO_VALUE;
+	protected Double totalWage = SpmConstants.DOUBLE_ZERO_VALUE;
+
 
 	/**
 	 * @return the sales
@@ -94,6 +99,81 @@ public abstract class TotalManagerHour extends SpmObject{
 		 return sales.divide(target, 2, SpmConstants.ROUNDING_MODE);
 	}
 	
+	
+	
+	/**
+	 * @return the averageVariable
+	 */
+	public Double getAverageVariable() {
+		return averageVariable;
+	}
+
+	/**
+	 * @param averageVariable the averageVariable to set
+	 */
+	public void setAverageVariable(Double averageVariable) {
+		this.averageVariable = averageVariable;
+	}
+
+	/**
+	 * @return the averageWage
+	 */
+	public Double getAverageWage() {
+		return averageWage;
+	}
+
+	/**
+	 * @param averageWage the averageWage to set
+	 */
+	public void setAverageWage(Double averageWage) {
+		this.averageWage = averageWage;
+	}
+
+	/**
+	 * @return the totalWage
+	 */
+	public Double getTotalWage() {
+		return totalWage;
+	}
+
+	/**
+	 * @param totalWage the totalWage to set
+	 */
+	public void setTotalWage(Double totalWage) {
+		this.totalWage = totalWage;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	private BigDecimal getAverageWageAsBigDecimal() {
+		return new BigDecimal(NumberUtils.getDoubleValue(getAverageWage()));
+	}
+	
+	
+	public BigDecimal getScheduleLaborPercentage() {
+		BigDecimal ps = getSales();
+		if(ps != null && ps.compareTo(SpmConstants.BD_ZERO_VALUE) != 0) {
+			return getSchedule().multiply(getAverageWageAsBigDecimal()).divide(ps, 2, SpmConstants.ROUNDING_MODE).multiply(new BigDecimal(100));
+		} else {
+			return SpmConstants.BD_ZERO_VALUE;
+		}
+	}
+
+
+	/**
+	 * 
+	 * @return
+	 */
+	public BigDecimal getTargetLaborPercentage() {
+		BigDecimal ps = getSales();
+		if(ps != null && ps.compareTo(SpmConstants.BD_ZERO_VALUE) != 0) {
+			return getTarget().multiply(getAverageWageAsBigDecimal()).divide(ps, 2, SpmConstants.ROUNDING_MODE).multiply(new BigDecimal(100));
+		} else {
+			return SpmConstants.BD_ZERO_VALUE;
+		}
+	}	
 	public String toString() {
         return new ToStringBuilder(this, DEFAULT_TO_STRING_STYLE)
         .append("sales" , sales)
