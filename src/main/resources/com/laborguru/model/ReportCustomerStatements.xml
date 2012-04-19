@@ -16,7 +16,7 @@
     FROM tbl_regions r LEFT JOIN tbl_areas a ON r.region_id = a.region_id LEFT JOIN tbl_stores s ON a.area_id = s.area_id LEFT JOIN tbl_historic_sales hs ON s.store_id = hs.store_id AND DATE(hs.date_time) BETWEEN STR_TO_DATE(#start_date#, '%Y-%m-%d') AND STR_TO_DATE(#end_date#, '%Y-%m-%d') 
     WHERE r.customer_id=#customer_id# 
     GROUP BY r.region_id 
-    ORDER BY r.region_id;
+    ORDER BY r.name;
   </select>
   
   <resultMap id="get-scheduleHoursByCustomer-result" class="com.laborguru.model.report.TotalCustomerManagerHour">
@@ -33,7 +33,7 @@
     FROM tbl_regions r LEFT JOIN tbl_areas a ON r.region_id = a.region_id LEFT JOIN tbl_stores s ON a.area_id = s.area_id LEFT JOIN tbl_actual_hours ah ON s.store_id = ah.store_id AND ah.date BETWEEN STR_TO_DATE(#start_date#, '%Y-%m-%d') AND STR_TO_DATE(#end_date#, '%Y-%m-%d') 
     WHERE r.customer_id = #customer_id#
     GROUP BY r.region_id
-    ORDER BY r.region_id
+    ORDER BY r.name
   </select>
 
   <select id="getScheduleTotalHoursByCustomer" parameterClass="java.util.Map" resultMap="get-scheduleHoursByCustomer-result">
@@ -49,7 +49,7 @@
     LEFT JOIN tbl_shifts as sh ON es.employee_schedule_id = sh.employee_schedule_id AND sh.position_id IS NOT NULL
     WHERE r.customer_id = #customer_id#
     GROUP BY r.region_id
-    ORDER BY r.region_id
+    ORDER BY r.name
   </select>
 
   <select id="getTargetTotalHoursByCustomer" parameterClass="java.util.Map" resultMap="get-scheduleHoursByCustomer-result">
@@ -64,7 +64,7 @@
     LEFT JOIN tbl_staffing st ON p.position_id = st.position_id AND st.staffing_date BETWEEN STR_TO_DATE(#start_date#,'%Y-%m-%d') AND STR_TO_DATE(#end_date#,'%Y-%m-%d')
     WHERE r.customer_id = #customer_id#
     GROUP BY r.region_id
-    ORDER BY r.region_id
+    ORDER BY r.name
   </select> 
       
 </sqlMap>

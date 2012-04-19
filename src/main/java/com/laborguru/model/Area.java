@@ -6,6 +6,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import com.laborguru.util.SpmConstants;
+
 /**
  * Area business object
  * @author <a href="cnunezre@gmail.com">Cristian Nunez Rebolledo</a>
@@ -122,6 +124,17 @@ public class Area extends SpmObject {
 	 */
 	public void setStores(Set<Store> stores) {
 		this.stores = stores;
+	}
+	
+	public Double getAverageVariable() {
+	    
+	    Double averageVariable = SpmConstants.DOUBLE_ZERO_VALUE;
+	    
+	    for(Store store: getStores()) {
+	        averageVariable += store.getAverageVariable() != null ? store.getAverageVariable() : SpmConstants.DOUBLE_ZERO_VALUE;
+	    }
+	    
+	    return averageVariable;
 	}
 	
 }

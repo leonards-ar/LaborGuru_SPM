@@ -147,7 +147,9 @@
       <property name="reportDao" ref="reportDao"/>
       <property name="staffingService" ref="staffingService" />
       <property name="customerService" ref="customerService"/>
+      <property name="regionService" ref="regionService"/>      
       <property name="projectionService" ref="projectionService"/>
+      <property name="scheduleService" ref="scheduleService"/>      
   </bean>
 	
 	<bean id="reportCustomerService" parent="baseTransactionProxy">
@@ -159,7 +161,9 @@
       <property name="reportDao" ref="reportDao"/>
       <property name="staffingService" ref="staffingService" />
       <property name="regionService" ref="regionService"/>
+      <property name="areaService" ref="areaService"/>
       <property name="projectionService" ref="projectionService"/>
+      <property name="scheduleService" ref="scheduleService"/>
   </bean>
   
   <bean id="reportRegionService" parent="baseTransactionProxy">

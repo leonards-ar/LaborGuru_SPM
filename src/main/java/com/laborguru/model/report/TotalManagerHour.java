@@ -24,6 +24,7 @@ public abstract class TotalManagerHour extends SpmObject{
 	protected BigDecimal sales;
 	protected BigDecimal schedule;
 	protected BigDecimal target;
+	protected BigDecimal projections;
 	protected Double averageVariable = SpmConstants.DOUBLE_ZERO_VALUE;
 	protected Double averageWage = SpmConstants.DOUBLE_ZERO_VALUE;
 	protected Double totalWage = SpmConstants.DOUBLE_ZERO_VALUE;
@@ -99,9 +100,21 @@ public abstract class TotalManagerHour extends SpmObject{
 		 return sales.divide(target, 2, SpmConstants.ROUNDING_MODE);
 	}
 	
-	
-	
 	/**
+     * @return the projections
+     */
+    public BigDecimal getProjections() {
+        return projections;
+    }
+
+    /**
+     * @param projections the projections to set
+     */
+    public void setProjections(BigDecimal projections) {
+        this.projections = projections;
+    }
+
+    /**
 	 * @return the averageVariable
 	 */
 	public Double getAverageVariable() {

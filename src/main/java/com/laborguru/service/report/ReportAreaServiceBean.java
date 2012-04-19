@@ -38,7 +38,7 @@ public class ReportAreaServiceBean implements ReportAreaService {
 			List<TotalAreaManagerHour> actualSales = reportDao.getActualSalesByArea(area, start, end);
 			List<TotalAreaManagerHour> projections = getDailyProjections(area, start, end);
 			
-			return merge(actualSales, actualSales, projections, null);
+			return mergeForecast(actualSales, projections);
 		}catch (SQLException e) {
 			log.error("An SQLError has occurred", e);
 			throw new SpmUncheckedException(e.getCause(), e.getMessage(),
@@ -54,7 +54,7 @@ public class ReportAreaServiceBean implements ReportAreaService {
 			List<TotalAreaManagerHour> minimumStaffing = getActualMinimumStaffing(area, start, end);
 			List<TotalAreaManagerHour> wages = getStoreWages(area, start, end);
 			
-			return merge(actualSales, actualHours, minimumStaffing, wages);
+			return merge(actualSales, actualHours, minimumStaffing, wages, null);
 		
 		} catch(SQLException e) {
 			log.error("An SQLError has occurred", e);
@@ -70,8 +70,9 @@ public class ReportAreaServiceBean implements ReportAreaService {
 			List<TotalAreaManagerHour> scheduleTotalHours = getReportDao().getScheduleTotalHourByArea(area, start, end);
 			List<TotalAreaManagerHour> actualHours = getReportDao().getActualHoursByArea(area, start, end);
 			List<TotalAreaManagerHour> wages = getStoreWages(area, start, end);
+			List<TotalAreaManagerHour> projections = getDailyProjections(area, start, end);
 		
-			return merge(actualSales, scheduleTotalHours, actualHours, wages);
+			return merge(actualSales, scheduleTotalHours, actualHours, wages, projections);
 		} catch (SQLException e) {
 			log.error("An SQLError has occurred", e);
 			throw new SpmUncheckedException(e.getCause(), e.getMessage(),
@@ -85,7 +86,7 @@ public class ReportAreaServiceBean implements ReportAreaService {
 			List<TotalAreaManagerHour> scheduleTotalHours = getReportDao().getScheduleTotalHourByArea(area, start, end);
 			List<TotalAreaManagerHour> targetTotalHours = getReportDao().getTargetTotalHourByArea(area, start, end);
 			List<TotalAreaManagerHour> wages = getStoreWages(area, start, end);
-			return merge(actualSales, scheduleTotalHours, targetTotalHours, wages); 
+			return merge(actualSales, scheduleTotalHours, targetTotalHours, wages, null); 
 		} catch (SQLException e) {
 			log.error("An SQLError has occurred", e);
 			throw new SpmUncheckedException(e.getCause(), e.getMessage(),
@@ -174,7 +175,7 @@ public class ReportAreaServiceBean implements ReportAreaService {
 		return totalHours;
 	}
 	
-	private List<TotalAreaManagerHour> merge(List<TotalAreaManagerHour> actualSales, List<TotalAreaManagerHour> scheduleHours, List<TotalAreaManagerHour> targetHours, List<TotalAreaManagerHour> wages) {
+	private List<TotalAreaManagerHour> merge(List<TotalAreaManagerHour> actualSales, List<TotalAreaManagerHour> scheduleHours, List<TotalAreaManagerHour> targetHours, List<TotalAreaManagerHour> wages, List<TotalAreaManagerHour> projections) {
 		
 		List<TotalAreaManagerHour> totalHours = new ArrayList<TotalAreaManagerHour>();
 		for(TotalAreaManagerHour total: actualSales) {
@@ -196,12 +197,31 @@ public class ReportAreaServiceBean implements ReportAreaService {
 				total.setAverageVariable(total.getStore().getAverageVariable());
 			}
 			
+            if(projections != null) {
+                TotalAreaManagerHour projectionHour = getTotalHour(total.getStore(), projections);
+                total.setProjections(((projectionHour.getSales() != null)? projectionHour.getSales() : SpmConstants.BD_ZERO_VALUE));
+            }			
+			
 			totalHours.add(total);
 		}
 		
 		return totalHours;
 	}	
 	
+	private List<TotalAreaManagerHour> mergeForecast(List<TotalAreaManagerHour> actualHours, List<TotalAreaManagerHour> scheduleHours) {
+
+	    List<TotalAreaManagerHour> totalHours = new ArrayList<TotalAreaManagerHour>();
+        for(TotalAreaManagerHour total: actualHours) {
+            TotalAreaManagerHour scheduleHour = getTotalHour(total.getStore(), scheduleHours); 
+            total.setSchedule((scheduleHour.getSchedule() != null)? scheduleHour.getSchedule(): SpmConstants.BD_ZERO_VALUE);
+            total.setTarget(((total.getSales() != null)? total.getSales(): SpmConstants.BD_ZERO_VALUE));
+            
+            totalHours.add(total);
+        }
+        
+        return totalHours;	    
+	    
+	}
 	private TotalAreaManagerHour getTotalHour(Store store, List<TotalAreaManagerHour> totalManagerHours) {
 		
 		for(TotalAreaManagerHour totalManagerHour: totalManagerHours) {
