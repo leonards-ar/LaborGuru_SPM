@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.mindpool.laborguru</groupId>
@@ -80,8 +80,8 @@
 			<id>mochahost</id>
 			<properties>
 				<db.url>jdbc:mysql://localhost:3306/laborgur_spm</db.url>
-				<db.username>laborgur_spm</db.username>
-				<db.password>java1234</db.password>
+				<db.username>laborgur_spm2</db.username>
+				<db.password>IPU_Hm-E3GA@</db.password>
 				<db.schema>laborgur_spm</db.schema>
 				<debug.level>WARN</debug.level>
 				<show_sql>false</show_sql>
