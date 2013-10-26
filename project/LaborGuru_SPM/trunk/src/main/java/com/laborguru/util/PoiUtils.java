@@ -39,6 +39,19 @@ public class PoiUtils {
 	public static String getStringValue(Cell cell){
 		if ( (cell!= null) && (cell.getCellType() == Cell.CELL_TYPE_STRING)){
 			return cell.getStringCellValue().trim();
+		} else {
+			Object val = getIntegerValue(cell);
+			if(val != null) {
+				return val.toString();
+			}
+			val = getDoubleValue(cell);
+			if(val != null) {
+				return val.toString();
+			}
+			val = getDateValue(cell);
+			if(val != null) {
+				return val.toString();
+			}
 		}
 		
 		return null;
