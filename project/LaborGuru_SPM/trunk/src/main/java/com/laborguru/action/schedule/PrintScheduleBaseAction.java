@@ -27,6 +27,7 @@ import com.laborguru.model.StoreSchedule;
 import com.laborguru.service.data.ReferenceDataService;
 import com.laborguru.service.email.EmailService;
 import com.laborguru.service.manager.ManagerService;
+import com.laborguru.service.store.StoreService;
 import com.laborguru.util.CalendarUtils;
 
 /**
@@ -51,6 +52,7 @@ public abstract class PrintScheduleBaseAction extends PrintShiftBaseAction {
 	private ReferenceDataService referenceDataService;
 	private ManagerService managerService;
 	private boolean postSchedule;
+	private StoreService storeService;
 	
 	/**
 	 * 
@@ -323,6 +325,16 @@ public abstract class PrintScheduleBaseAction extends PrintShiftBaseAction {
 		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
 		return SpmActionResult.PRINT.getResult();
 	}
+
+	public String save() {
+		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
+
+		getEmployeeStore().setInTimeOnly(isInTimeOnly());
+		
+		getStoreService().save(getEmployeeStore());		
+		
+		return SpmActionResult.SUCCESS.getResult();
+	}	
 	
 	public String post() {
 		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
@@ -409,4 +421,18 @@ public abstract class PrintScheduleBaseAction extends PrintShiftBaseAction {
 	public void setPostSchedule(boolean postSchedule) {
 		this.postSchedule = postSchedule;
 	}
+	
+	/**
+	 * @return the storeService
+	 */
+	public StoreService getStoreService() {
+		return storeService;
+	}
+
+	/**
+	 * @param storeService the storeService to set
+	 */
+	public void setStoreService(StoreService storeService) {
+		this.storeService = storeService;
+	}	
 }

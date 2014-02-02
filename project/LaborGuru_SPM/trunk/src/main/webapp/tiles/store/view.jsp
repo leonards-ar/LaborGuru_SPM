@@ -52,6 +52,17 @@
                     </td>
 				</tr>
               	<tr class="editFormEvenRow">
+                    <td align="right" class="form_label" nowrap><s:text name="store.intimeonly.label" /></td>
+                    <td align="left" class="value">
+						<s:if test="%{store.inTimeOnly}">
+							<img src="<s:url value="/images/check.png" includeParams="none"/>"/>
+						</s:if>
+						<s:else>
+							<img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/>
+						</s:else>                    
+                    </td>
+				</tr>				
+              	<tr class="editFormOddRow">
                     <td width="100%" align="right" colspan="2">
 	                    <s:form theme="simple"> 
 	                    <s:hidden name="store.id"/>

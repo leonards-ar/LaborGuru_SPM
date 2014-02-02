@@ -51,6 +51,8 @@ public class Store extends SpmObject {
 	private DistributionType distributionType;
 	
 	private boolean demo;
+	// Default value for printing schedule. Managers can override this value before executing the report.
+	private boolean inTimeOnly;
 	
 	/**
 	 * Store toString
@@ -876,5 +878,21 @@ public class Store extends SpmObject {
 	 */
 	public void setDemo(boolean demo) {
 		this.demo = demo;
+	}
+
+
+	/**
+	 * @return the inTimeOnly
+	 */
+	public boolean isInTimeOnly() {
+		return inTimeOnly;
+	}
+
+
+	/**
+	 * @param inTimeOnly the inTimeOnly to set
+	 */
+	public void setInTimeOnly(boolean inTimeOnly) {
+		this.inTimeOnly = inTimeOnly;
 	}	
 }
