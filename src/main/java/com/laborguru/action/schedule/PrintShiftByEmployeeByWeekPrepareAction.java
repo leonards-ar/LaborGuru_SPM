@@ -51,5 +51,6 @@ public class PrintShiftByEmployeeByWeekPrepareAction extends PrintScheduleBaseAc
 	public void prepare() throws Exception {
 		setViewMap(getReferenceDataService().getPrintScheduleViews());
 		setSelectedView("printweeklyshiftbyemployee_view.action");
+		setInTimeOnly(getEmployeeStore().isInTimeOnly());
 	}	
 }

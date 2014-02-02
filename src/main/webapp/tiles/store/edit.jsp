@@ -59,6 +59,10 @@
                     <td align="left" class="value"><s:checkbox name="store.demo" theme="simple"/></td>
 				</tr>					
               	<tr class="editFormEvenRow">
+                    <td align="right" class="form_label" nowrap><s:text name="store.intimeonly.label" /></td>
+                    <td align="left" class="value"><s:checkbox name="store.inTimeOnly" theme="simple"/></td>
+				</tr>
+              	<tr class="editFormOddRow">
                     <td width="100%" align="right" colspan="2">
 	                    <table border="0" cellpadding="1" cellspacing="5" colspan="0" cellspan="0">
 		                    <tr>

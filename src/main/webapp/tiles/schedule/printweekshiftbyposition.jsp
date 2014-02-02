@@ -22,8 +22,17 @@
 						<td align="right" class="form_label"><s:text name="schedule.printshift.view_selector.label"/></td>	
 						<td align="left"><s:select name="selectedView" list="viewMap" listKey="key" listValue="%{getText(value)}" onchange="printweeklyshiftbyposition_form.action=printweeklyshiftbyposition_form.selectedView.value; printweeklyshiftbyposition_form.submit()" theme="simple" /></td>				
 						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>	
-						<td align="right"><s:checkbox name="inTimeOnly" onchange="printweeklyshiftbyposition_form.submit()" theme="simple" /></td>	
-						<td align="left" class="form_label"><s:text name="schedule.printshift.in_time_only.label"/></td>
+						<s:if test="#session.spmUser.manager == true">
+							<td align="right">
+								<s:checkbox name="inTimeOnly" onchange="printweeklyshiftbyposition_form.submit()" theme="simple" />
+							</td>						
+							<td align="left" class="form_label"><s:text name="schedule.printshift.in_time_only.label"/></td>
+							<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
+							<td align="center"><s:submit id="saveButton" key="schedule.printshift.weekly.save.button" action="printweeklyshiftbyposition_save" theme="simple" cssClass="button"/></td>
+						</s:if>
+						<s:else>
+							<s:hidden id="inTimeOnly" name="inTimeOnly"/>
+						</s:else>						
 						<authz:authorize ifAllGranted="POST_SHIFT">	
 						<td><img src="<s:url value="/images/transp2x1.gif" includeParams="none"/>"/></td>
 						<td align="center"><s:submit onclick="return confirmPostSchedule(this, '%{getText('schedule.post.schedule.confirm.msg')}');" id="postButton" key="schedule.printshift.weekly.post.button" action="printweeklyshiftbyposition_post" theme="simple" cssClass="button"/></td>
