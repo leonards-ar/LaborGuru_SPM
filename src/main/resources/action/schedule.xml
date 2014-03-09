@@ -46,6 +46,20 @@
 			<result name="success" type="tiles">viewPrintShiftByEmployeeByWeekPage</result>
 		</action>
 
+		<action name="printdailyshiftbyposition_*" method="{1}"
+			class="com.laborguru.action.schedule.PrintShiftByPositionByDayPrepareAction">
+			<result name="input" type="tiles">viewPrintShiftByPositionByDayPage</result>
+			<result name="print" type="tiles">printShiftByPositionByDayPage</result>
+			<result name="success" type="tiles">viewPrintShiftByPositionByDayPage</result>
+		</action>		
+
+		<action name="printdailyshiftbyemployee_*" method="{1}"
+			class="com.laborguru.action.schedule.PrintShiftByEmployeeByDayPrepareAction">
+			<result name="input" type="tiles">viewPrintShiftByEmployeeByDayPage</result>
+			<result name="print" type="tiles">printShiftByEmployeeByDayPage</result>
+			<result name="success" type="tiles">viewPrintShiftByEmployeeByDayPage</result>
+		</action>
+
 		<action name="printweeklytotalhoursbyposition_*" method="{1}"
 			class="com.laborguru.action.schedule.PrintTotalHoursByPositionByWeekPrepareAction">
 			<result name="input" type="tiles">viewPrintTotalHoursByPositionByWeekPage</result>

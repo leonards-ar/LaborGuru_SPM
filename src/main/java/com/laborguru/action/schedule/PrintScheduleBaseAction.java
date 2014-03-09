@@ -70,12 +70,7 @@ public abstract class PrintScheduleBaseAction extends PrintShiftBaseAction {
 				StoreSchedule aSchedule;
 				//:TODO: Probably should retrieve the whole week from the database
 				for(Date aDate : getWeekDays()) {
-					aSchedule = getScheduleService().getStoreScheduleByDate(getEmployeeStore(), aDate);
-					if(aSchedule == null) {
-						aSchedule = new StoreSchedule();
-						aSchedule.setStore(getEmployeeStore());
-						aSchedule.setDay(aDate);
-					}					
+					aSchedule = getStoreSchedule(aDate);
 					storeSchedules.add(aSchedule);
 				}
 			} catch(RuntimeException ex) {
@@ -84,6 +79,21 @@ public abstract class PrintScheduleBaseAction extends PrintShiftBaseAction {
 
 		}
 		return storeSchedules;
+	}
+	
+	/**
+	 * 
+	 * @param date
+	 * @return
+	 */
+	protected StoreSchedule getStoreSchedule(Date date) {
+		StoreSchedule aSchedule = getScheduleService().getStoreScheduleByDate(getEmployeeStore(), date);
+		if(aSchedule == null) {
+			aSchedule = new StoreSchedule();
+			aSchedule.setStore(getEmployeeStore());
+			aSchedule.setDay(date);
+		}					
+		return aSchedule;
 	}
 	
 	/**
@@ -121,6 +131,14 @@ public abstract class PrintScheduleBaseAction extends PrintShiftBaseAction {
 	 * 
 	 * @return
 	 */
+	public List<Position> getSchedulePositionsForSelectedDate() {
+		return new ArrayList<Position>(getStoreSchedule(getWeekDaySelector().getSelectedDay()).getSchedulePositions());
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public List<Employee> getWeeklyScheduleEmployees() {
 		Set<Employee> employees = new HashSet<Employee>();
 		
@@ -129,6 +147,14 @@ public abstract class PrintScheduleBaseAction extends PrintShiftBaseAction {
 		}
 		
 		return sortEmployees(new ArrayList<Employee>(employees));
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public List<Employee> getScheduleEmployeesForSelectedDate() {
+		return sortEmployees(new ArrayList<Employee>(getStoreSchedule(getWeekDaySelector().getSelectedDay()).getScheduleEmployees()));
 	}
 	
 	/**
@@ -151,6 +177,15 @@ public abstract class PrintScheduleBaseAction extends PrintShiftBaseAction {
 	 * @param position
 	 * @return
 	 */
+	public List<Employee> getScheduleEmployeesForSelectedDate(Position position) {
+		return sortEmployees(new ArrayList<Employee>(getStoreSchedule(getWeekDaySelector().getSelectedDay()).getScheduleEmployeesFor(position)));		
+	}
+	
+	/**
+	 * 
+	 * @param employee
+	 * @return
+	 */
 	public List<Position> getWeeklySchedulePositionsFor(Employee employee) {
 		Set<Position> positions = new HashSet<Position>();
 		
@@ -160,6 +195,15 @@ public abstract class PrintScheduleBaseAction extends PrintShiftBaseAction {
 		
 		return sortPositions(new ArrayList<Position>(positions));		
 	}	
+
+	/**
+	 * 
+	 * @param employee
+	 * @return
+	 */
+	public List<Position> getSchedulePositionsForSelectedDate(Employee employee) {
+		return sortPositions(new ArrayList<Position>(getStoreSchedule(getWeekDaySelector().getSelectedDay()).getSchedulePositionsFor(employee)));		
+	}
 	
 	
 	/**
@@ -176,6 +220,37 @@ public abstract class PrintScheduleBaseAction extends PrintShiftBaseAction {
 			return schedule.getUnreferencedCompleteShiftsFor(position);
 		} else {
 			return new ArrayList<CompleteShift>();
+		}
+	}
+	
+	/**
+	 * 
+	 * @param position
+	 * @param employee
+	 * @return
+	 */
+	public List<CompleteShift> getCompleteShiftsForSelectedDate(Position position, Employee employee) {
+		StoreSchedule storeSchedule = getStoreSchedule(getWeekDaySelector().getSelectedDay());
+		EmployeeSchedule schedule = storeSchedule.getEmployeeSchedule(employee);
+		if(schedule != null) {
+			return schedule.getUnreferencedCompleteShiftsFor(position);
+		} else {
+			return new ArrayList<CompleteShift>();
+		}
+	}
+	
+	/**
+	 * 
+	 * @param employee
+	 * @return
+	 */
+	public List<Shift> getBreaksForSelectedDate(Employee employee) {
+		StoreSchedule storeSchedule = getStoreSchedule(getWeekDaySelector().getSelectedDay());
+		EmployeeSchedule schedule = storeSchedule.getEmployeeSchedule(employee);
+		if(schedule != null) {
+			return schedule.getBreakShifts();
+		} else {
+			return new ArrayList<Shift>();
 		}
 	}
 	
@@ -213,12 +288,30 @@ public abstract class PrintScheduleBaseAction extends PrintShiftBaseAction {
 		}
 		return CalendarUtils.hoursToTime(new Double(total), ZERO_TIME);
 	}
-	
+
+	/**
+	 * 
+	 * @param dayIndex
+	 * @return
+	 */
 	public String getDayTotalHours(int dayIndex) {
 		StoreSchedule storeSchedule = getStoreSchedules().get(dayIndex);
 		return CalendarUtils.hoursToTime(storeSchedule.getTotalShiftHoursWithContiguous(), ZERO_TIME);
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getDayTotalHoursForSelectedDate() {
+		StoreSchedule storeSchedule = getStoreSchedule(getWeekDaySelector().getSelectedDay());
+		return CalendarUtils.hoursToTime(storeSchedule.getTotalShiftHoursWithContiguous(), ZERO_TIME);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getWeekTotalHours() {
 		double total = 0.0;
 		StoreSchedule storeSchedule = null;
@@ -272,6 +365,28 @@ public abstract class PrintScheduleBaseAction extends PrintShiftBaseAction {
 	public String getDayTotalHoursFor(Position position, int dayIndex) {
 		StoreSchedule storeSchedule = getStoreSchedules().get(dayIndex);
 		return CalendarUtils.hoursToTime(storeSchedule.getTotalShiftHoursWithContiguous(position), ZERO_TIME);
+	}
+
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 */
+	public String getDayTotalHoursForSelectedDate(Position position) {
+		StoreSchedule storeSchedule = getStoreSchedule(getWeekDaySelector().getSelectedDay());
+		return CalendarUtils.hoursToTime(storeSchedule.getTotalShiftHoursWithContiguous(position), ZERO_TIME);
+	}
+
+	/**
+	 * 
+	 * @param position
+	 * @param dayIndex
+	 * @return
+	 */
+	public String getDayTotalHoursForSelectedDate(Employee employee) {
+		StoreSchedule storeSchedule = getStoreSchedule(getWeekDaySelector().getSelectedDay());
+		EmployeeSchedule employeeSchedule = storeSchedule.getEmployeeSchedule(employee);
+		return CalendarUtils.hoursToTime(employeeSchedule != null ? employeeSchedule.getTotalShiftHoursWithContiguous() : null, ZERO_TIME);
 	}
 
 	/**

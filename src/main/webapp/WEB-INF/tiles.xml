@@ -320,9 +320,19 @@
 		<put-attribute name="body" value="/tiles/schedule/printweekshiftbyposition.jsp"/>
 	</definition>
 
+	<definition name="viewPrintShiftByPositionByDayPage" extends="baseLayoutWithMenu">
+		<put-attribute name="htmlExtHeader" value="/tiles/printscheduleHtmlExtHeader.jsp" />
+		<put-attribute name="body" value="/tiles/schedule/printdayshiftbyposition.jsp"/>
+	</definition>
+	
 	<definition name="viewPrintShiftByEmployeeByWeekPage" extends="baseLayoutWithMenu">
 		<put-attribute name="htmlExtHeader" value="/tiles/printscheduleHtmlExtHeader.jsp" />
 		<put-attribute name="body" value="/tiles/schedule/printweekshiftbyemployee.jsp"/>
+	</definition>
+
+	<definition name="viewPrintShiftByEmployeeByDayPage" extends="baseLayoutWithMenu">
+		<put-attribute name="htmlExtHeader" value="/tiles/printscheduleHtmlExtHeader.jsp" />
+		<put-attribute name="body" value="/tiles/schedule/printdayshiftbyemployee.jsp"/>
 	</definition>
 
 	<definition name="viewPrintTotalHoursByPositionByWeekPage" extends="baseLayoutWithMenu">
@@ -334,10 +344,20 @@
 		<put-attribute name="htmlExtHeader" value="/tiles/printscheduleHtmlExtHeader.jsp" />
 		<put-attribute name="body" value="/tiles/schedule/print_printweekshiftbyposition.jsp"/>
 	</definition>
-		
+
+	<definition name="printShiftByPositionByDayPage" extends="printLayout">
+		<put-attribute name="htmlExtHeader" value="/tiles/printscheduleHtmlExtHeader.jsp" />
+		<put-attribute name="body" value="/tiles/schedule/print_printdayshiftbyposition.jsp"/>
+	</definition>
+
 	<definition name="printShiftByEmployeeByWeekPage" extends="printLayout">
 		<put-attribute name="htmlExtHeader" value="/tiles/printscheduleHtmlExtHeader.jsp" />
 		<put-attribute name="body" value="/tiles/schedule/print_printweekshiftbyemployee.jsp"/>
+	</definition>
+
+	<definition name="printShiftByEmployeeByDayPage" extends="printLayout">
+		<put-attribute name="htmlExtHeader" value="/tiles/printscheduleHtmlExtHeader.jsp" />
+		<put-attribute name="body" value="/tiles/schedule/print_printdayshiftbyemployee.jsp"/>
 	</definition>
 	
 	<definition name="viewPrintShiftBreaksByWeekPage" extends="baseLayoutWithMenu">
