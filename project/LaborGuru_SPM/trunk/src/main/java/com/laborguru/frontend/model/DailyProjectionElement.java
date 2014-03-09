@@ -5,6 +5,7 @@ import java.util.Date;
 
 import com.laborguru.model.DailyProjection;
 import com.laborguru.util.CalendarUtils;
+import com.laborguru.util.SpmConstants;
 
 public class DailyProjectionElement {
 	
@@ -55,8 +56,12 @@ public class DailyProjectionElement {
 		this.projectionDate = projectionDate;
 	}
 	
-	public Boolean getEditable(){
-		return (CalendarUtils.todayWithoutTime().compareTo(getProjectionDate()) < 0);
+	public Boolean getEditable() {
+		if(System.getProperty(SpmConstants.DEBUG) != null) {
+			return Boolean.TRUE;
+		} else {		
+			return (CalendarUtils.todayWithoutTime().compareTo(getProjectionDate()) < 0);
+		}
 	}
 	/**
 	 * @return the projectionVariable2

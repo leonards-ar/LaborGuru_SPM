@@ -39,8 +39,12 @@ public class HalfHourProjectionsPrepareAction extends ProjectionCalendarBaseActi
 	 * Returns whether the page is editable
 	 * @return
 	 */
-	public boolean isEditable(){
-		return ((!getWeekDaySelector().isSelectedDateBeforeToday()) && (getTotalProjectedValues().doubleValue() > 0.00));
+	public boolean isEditable() {
+		if(System.getProperty(SpmConstants.DEBUG) != null) {
+			return true;
+		} else {
+			return ((!getWeekDaySelector().isSelectedDateBeforeToday()) && (getTotalProjectedValues().doubleValue() > 0.00));
+		}
 	}
 	
 	/**
