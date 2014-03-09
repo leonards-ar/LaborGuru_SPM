@@ -43,7 +43,6 @@
 								<s:param name="selectedDate"><s:property value="selectedDate"/></s:param>
 								<s:param name="selectedWeekDay"><s:property value="selectedWeekDay"/></s:param>
 								<s:param name="selectedView"><s:property value="selectedView"/></s:param>
-								<s:param name="selectedWeekDay"><s:property value="selectedWeekDay"/></s:param>
 								<s:param name="inTimeOnly"><s:property value="inTimeOnly"/></s:param>
 							</s:url>						
 							<s:submit onclick="return openPopup('%{printUrl}', 'print_window');" id="printButton" key="schedule.printshift.weekly.print.button" theme="simple" cssClass="button"/>

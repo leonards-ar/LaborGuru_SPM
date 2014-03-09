@@ -128,6 +128,8 @@
 				/schedule/printweeklyshiftbyposition_post.action=POST_SHIFT
 				/schedule/printweeklyshiftbyposition_save.action=POST_SHIFT
 				/schedule/printweeklyshiftbyposition_*.action=PRINT_SHIFT
+				/schedule/printdailyshiftbyposition_*.action=PRINT_DAILY_SHIFT
+				/schedule/printdailyshiftbyemployee_*.action=PRINT_DAILY_SHIFT
 				/schedule/printweeklyshiftbyemployee_post.action=POST_SHIFT
 				/schedule/printweeklyshiftbyemployee_save.action=POST_SHIFT
 				/schedule/printweeklyshiftbyemployee_*.action=PRINT_SHIFT

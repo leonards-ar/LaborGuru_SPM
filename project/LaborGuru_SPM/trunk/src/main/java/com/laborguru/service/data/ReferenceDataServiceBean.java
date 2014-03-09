@@ -157,4 +157,9 @@ public class ReferenceDataServiceBean implements ReferenceDataService {
 	public Map<String, String> getPrintScheduleViews() {
 		return (Map<String, String>) getReferenceData().get("printScheduleViews");
 	}
+	
+	public Map<String, String> getPrintDailyScheduleViews() {
+		return (Map<String, String>) getReferenceData().get("printDailyScheduleViews");
+	}
+	
 }
