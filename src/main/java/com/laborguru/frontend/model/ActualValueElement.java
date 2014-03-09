@@ -44,8 +44,12 @@ public class ActualValueElement {
 		this.date = date;
 	}
 	
-	public Boolean getEditable(){
-		return (CalendarUtils.todayWithoutTime().compareTo(getDate()) >= 0);
+	public Boolean getEditable() {
+		if(System.getProperty(SpmConstants.DEBUG) != null) {
+			return Boolean.TRUE;
+		} else {			
+			return (CalendarUtils.todayWithoutTime().compareTo(getDate()) >= 0);
+		}
 	}	
 
 	public int getMainValueToDisplay(){

@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.laborguru.util.CalendarUtils;
+import com.laborguru.util.SpmConstants;
 
 /**
  *
@@ -164,7 +165,11 @@ public class WeeklyScheduleDailyEntry implements Serializable {
 	 * @return
 	 */
 	public boolean isEditable() {
-		return CalendarUtils.isAfterToday(getDay());
+		if(System.getProperty(SpmConstants.DEBUG) != null) {
+			return true;
+		} else {
+			return CalendarUtils.isAfterToday(getDay());
+		}
 	}
 
 	/**

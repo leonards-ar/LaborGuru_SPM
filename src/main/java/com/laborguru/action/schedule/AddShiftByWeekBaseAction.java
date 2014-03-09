@@ -436,7 +436,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 						employeeSchedulesToRemove.add(employeeSchedule);
 					} else {
 						for(Shift shift : employeeSchedule.getShifts()) {
-							if(isPositionInList(getSelectedPositions(), shift.getPosition())) {
+							if(shift != null && isPositionInList(getSelectedPositions(), shift.getPosition())) {
 								shiftsToRemove.add(shift);
 							}
 						}
@@ -987,8 +987,12 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 * @return
 	 */
 	public boolean isEditable(int dayIndex) {
-		Date d = getDay(dayIndex);
-		return d != null ? CalendarUtils.isAfterToday(d) : false;
+		if(System.getProperty(SpmConstants.DEBUG) != null) {
+			return true;
+		} else {
+			Date d = getDay(dayIndex);
+			return d != null ? CalendarUtils.isAfterToday(d) : false;
+		}
 	}
 	
 	/**
@@ -1012,12 +1016,16 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 * @return
 	 */
 	public boolean isEditable() {
-		for(int i = 0; i < getWeekDays().size(); i++) {
-			if(isEditable(i)) {
-				return true;
+		if(System.getProperty(SpmConstants.DEBUG) != null) {
+			return true;
+		} else {
+			for(int i = 0; i < getWeekDays().size(); i++) {
+				if(isEditable(i)) {
+					return true;
+				}
 			}
+			return false;
 		}
-		return false;
 	}
 	
 	/**
