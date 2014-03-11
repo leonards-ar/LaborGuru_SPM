@@ -431,7 +431,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 			
 			for(EmployeeSchedule employeeSchedule : storeSchedule.getEmployeeSchedules()) {
 				if(employeeSchedule.getEmployee() != null && !employeeIds.contains(employeeSchedule.getEmployee().getId())) {
-					if(isAllPositions()) {
+					if(isAllPositions() && !isByPositionView()) {
 						// Applies for all positions
 						employeeSchedulesToRemove.add(employeeSchedule);
 					} else {
@@ -463,7 +463,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 * @param shiftsFromPreviousDay
 	 */
 	private void setShifts(List<WeeklyScheduleRow> source, EmployeeSchedule employeeSchedule, int dayIndex, List<Shift> shiftsFromPreviousDay) {
-		if(isAllPositions()) {
+		if(isAllPositions() && !isByPositionView()) {
 			setShiftsAllPositions(source, employeeSchedule, dayIndex, shiftsFromPreviousDay);
 		} else {
 			setShiftsForPositions(source, employeeSchedule, getSelectedPositions(), dayIndex, shiftsFromPreviousDay);
