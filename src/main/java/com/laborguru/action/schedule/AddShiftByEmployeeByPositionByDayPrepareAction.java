@@ -396,6 +396,11 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftByDa
 		}
 	}	
 	
+	@Override
+	protected boolean isByPositionView() {
+		return true;
+	}
+	
 	/**
 	 * 
 	 */

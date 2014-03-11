@@ -477,13 +477,17 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 		return positions;
 	}
 	
+	protected boolean isByPositionView() {
+		return false;
+	}
+	
 	/**
 	 * 
 	 * @param position
 	 */
 	protected boolean isPositionInList(List<Position> positions, Position position) {
 		if(position != null && positions != null) {
-			if(!isAllPositions()) {
+			if(!isAllPositions() || isByPositionView()) {
 				for(Position pos : positions) {
 					if(isEqualPosition(pos, position)) {
 						return true;
