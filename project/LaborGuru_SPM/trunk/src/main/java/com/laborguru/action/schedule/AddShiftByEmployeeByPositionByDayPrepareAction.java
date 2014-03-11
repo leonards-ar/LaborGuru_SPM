@@ -383,7 +383,7 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftByDa
 			for(Position aPosition : getPositions()) {
 				List<Position> selectedPositions = getSelectedPositions();
 				// If it is filtered by position only include that position
-				if(isAllPositions() || isPositionInList(selectedPositions, aPosition)) {
+				if((isAllPositions() && !isByPositionView()) || isPositionInList(selectedPositions, aPosition)) {
 					scheduleEntry = new ScheduleByPositionEntry();
 
 					scheduleEntry.setScheduleData(buildScheduleFor(aPosition));

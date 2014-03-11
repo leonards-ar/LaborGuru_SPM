@@ -440,7 +440,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 		// This should be calculated only once
 		StoreDailyStaffing dailyStaffing = getSelectedDayDailyStaffing();
 		Date lastProcessedTime = null;
-		if(isAllPositions()) {
+		if(isAllPositions() && !isByPositionView()) {
 			for(Date time : getScheduleIndividualHours()) {
 				if(lastProcessedTime != null && CalendarUtils.smallerTime(time, lastProcessedTime)) {
 					dailyStaffing = getNextDayDailyStaffing();
@@ -488,7 +488,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 		
 		List<Shift> shifts;
 		for(EmployeeSchedule schedule : getStoreSchedule().getEmployeeSchedules()) {
-			shifts = isAllPositions() ? schedule.getShiftsWithContiguous() : schedule.getShiftsWithContiguous(positions);
+			shifts = isAllPositions() && !isByPositionView() ? schedule.getShiftsWithContiguous() : schedule.getShiftsWithContiguous(positions);
 			if(shifts != null && shifts.size() > 0) {
 				shiftsWithContiguous.put(schedule.getEmployee().getId(), cloneShifts(shifts));
 			}
@@ -598,7 +598,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 		
 		List<Shift> shifts;
 		for(EmployeeSchedule schedule : getStoreSchedule().getEmployeeSchedules()) {
-			shifts = isAllPositions() ? schedule.getReferencedShifts() : schedule.getReferencedShifts(positions);
+			shifts = isAllPositions() && !isByPositionView() ? schedule.getReferencedShifts() : schedule.getReferencedShifts(positions);
 			if(shifts != null && shifts.size() > 0) {
 				referencedShifts.put(schedule.getEmployee().getId(), cloneShifts(shifts));
 			}
@@ -720,7 +720,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 			
 			for(EmployeeSchedule employeeSchedule : getStoreSchedule().getEmployeeSchedules()) {
 				if(employeeSchedule.getEmployee() != null && !employeeIds.contains(employeeSchedule.getEmployee().getId())) {
-					if(isAllPositions()) {
+					if(isAllPositions() && !isByPositionView()) {
 						// Applies for all positions
 						employeeSchedulesToRemove.add(employeeSchedule);
 					} else {
@@ -749,7 +749,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	 * @param position
 	 */
 	private void setShifts(List<ScheduleRow> source, EmployeeSchedule employeeSchedule, List<Position> positions) {
-		if(isAllPositions()) {
+		if(isAllPositions() && !isByPositionView()) {
 			setShiftsAllPositions(source, employeeSchedule);
 		} else {
 			setShiftsForPosition(source, employeeSchedule, positions);
