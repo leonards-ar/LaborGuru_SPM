@@ -53,8 +53,13 @@ public class ScheduleDaoHibernate extends HibernateDaoSupport implements Schedul
 		List<StoreSchedule> schedules = (List<StoreSchedule>) getHibernateTemplate().findByNamedParam("from StoreSchedule schedule where schedule.store.id = :storeId and schedule.day = :day", new String[]{"storeId", "day"}, new Object[] {store.getId(),date});
 		
 		if(log.isDebugEnabled()) {
-			log.debug("Found [" + (schedules != null ? schedules.size() : "null") + "] schedules for day [" + date + "]");
+			log.debug("Found [" + (schedules != null ? schedules.size() : "null") + "] schedules for day [" + date + "] and store [" + store + "]");
 		}
+		
+		if(schedules.size() > 0) {
+			log.warn("Found [" + (schedules != null ? schedules.size() : "null") + "] schedules for day [" + date + "] and store [" + store + "]");
+		}
+		
 		return schedules != null && schedules.size() > 0 ? schedules.get(0) : null;
 	}
 
