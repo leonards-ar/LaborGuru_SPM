@@ -129,7 +129,7 @@ public class ReportCustomerServiceBean implements ReportCustomerService {
 			BigDecimal targetRegion = SpmConstants.BD_ZERO_VALUE;
 			for(Store store: region.getStores()) {
 				BigDecimal targetStores = SpmConstants.BD_ZERO_VALUE;
-				for(Date date = startDate; endDate.after(date); date = CalendarUtils.addOrSubstractDays(date,1)){
+				for(Date date = startDate; CalendarUtils.equalsOrGreaterDate(endDate, date); date = CalendarUtils.addOrSubstractDays(date,1)){
 					StoreDailyHistoricSalesStaffing saleStaffing = getStaffingService().getDailyHistoricSalesStaffingByDate(store, date);
 					targetStores = targetStores.add(new BigDecimal(saleStaffing.getTotalDailyTarget()));
 				}
@@ -152,7 +152,7 @@ public class ReportCustomerServiceBean implements ReportCustomerService {
 			BigDecimal targetRegion = SpmConstants.BD_ZERO_VALUE;
 			for(Store store: region.getStores()) {
 				BigDecimal targetStores = SpmConstants.BD_ZERO_VALUE;
-				for(Date date = startDate; endDate.after(date); date = CalendarUtils.addOrSubstractDays(date,1)){
+				for(Date date = startDate; CalendarUtils.equalsOrGreaterDate(endDate, date); date = CalendarUtils.addOrSubstractDays(date,1)){
 					DailyProjection dailyProjection = getProjectionService().getDailyProjection(store, date);
 					targetStores = targetStores.add(dailyProjection != null? dailyProjection.getDailyProjectionValue() :  SpmConstants.BD_ZERO_VALUE);
 				}
