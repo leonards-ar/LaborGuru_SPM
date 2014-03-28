@@ -119,7 +119,7 @@ public static Logger log = Logger.getLogger(ReportCustomerServiceBean.class);
 			BigDecimal targetArea = SpmConstants.BD_ZERO_VALUE;
 			for(Store store: area.getStores()) {
 				BigDecimal targetStores = SpmConstants.BD_ZERO_VALUE;
-				for(Date date = startDate; CalendarUtils.equalsOrGreaterDate(endDate, date); date = CalendarUtils.addOrSubstractDays(date,1)){
+				for(Date date = startDate; endDate.after(date); date = CalendarUtils.addOrSubstractDays(date,1)){
 					StoreDailyHistoricSalesStaffing saleStaffing = getStaffingService().getDailyHistoricSalesStaffingByDate(store, date);
 					targetStores = targetStores.add(new BigDecimal(saleStaffing.getTotalDailyTarget()));
 				}
