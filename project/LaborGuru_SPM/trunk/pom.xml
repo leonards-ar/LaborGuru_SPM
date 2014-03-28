@@ -107,6 +107,8 @@
 				<db.schema>laborgur_spm</db.schema>
 				<debug.level>WARN</debug.level>
 				<show_sql>false</show_sql>
+				<db.maxActive>10</db.maxActive>
+				<db.maxIdle>2</db.maxIdle>
 			</properties>
 		</profile>			
 	</profiles>
