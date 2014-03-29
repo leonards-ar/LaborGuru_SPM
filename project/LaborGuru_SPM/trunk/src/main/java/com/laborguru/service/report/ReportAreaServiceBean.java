@@ -22,6 +22,7 @@ import com.laborguru.service.report.dao.ReportDao;
 import com.laborguru.service.schedule.ScheduleService;
 import com.laborguru.service.staffing.StaffingService;
 import com.laborguru.util.CalendarUtils;
+import com.laborguru.util.NumberUtils;
 import com.laborguru.util.SpmConstants;
 
 public class ReportAreaServiceBean implements ReportAreaService {
@@ -131,7 +132,7 @@ public class ReportAreaServiceBean implements ReportAreaService {
 				totalHours.add(totalManagerHour);
 				
 				BigDecimal targetStores = SpmConstants.BD_ZERO_VALUE;
-				for(Date date = startDate; endDate.compareTo(date) >= 0; date = CalendarUtils.addOrSubstractDays(date,1)){
+				for(Date date = startDate; CalendarUtils.equalsOrGreaterDate(endDate, date); date = CalendarUtils.addOrSubstractDays(date,1)){
 					DailyProjection dailyProjection = getProjectionService().getDailyProjection(store, date);
 					targetStores = targetStores.add(dailyProjection != null? dailyProjection.getDailyProjectionValue() :  SpmConstants.BD_ZERO_VALUE);
 				}
@@ -151,23 +152,29 @@ public class ReportAreaServiceBean implements ReportAreaService {
 			totalManagerHour.setStore(store);
 			totalHours.add(totalManagerHour);
 			
-			Double storeWages[] = new Double[2];
-			storeWages[0] = SpmConstants.DOUBLE_ZERO_VALUE;
-			storeWages[1] = SpmConstants.DOUBLE_ZERO_VALUE;
-					
-			for(Date date = startDate; endDate.compareTo(date) >= 0; date = CalendarUtils.addOrSubstractDays(date,1)){
+			Double totalWage = SpmConstants.DOUBLE_ZERO_VALUE;
+			Double totalShiftHours = SpmConstants.DOUBLE_ZERO_VALUE;
+			
+			for(Date date = startDate; CalendarUtils.equalsOrGreaterDate(endDate, date); date = CalendarUtils.addOrSubstractDays(date,1)){
 				StoreSchedule schedule = getScheduleService().getStoreScheduleByDate(store, date);
 				if(schedule != null) {
-					storeWages[0] += schedule.getAverageWage();
-					storeWages[1] += schedule.getTotalWage();
+					totalWage += schedule.getTotalWage();
+					totalShiftHours += schedule.getTotalShiftHours();
 				} else {
-					storeWages[0] += new Double(0.0);
-					storeWages[1] += new Double(0.0);
+					totalWage += new Double(0.0);
+					totalShiftHours += new Double(0.0);
 				}
 			}
 			
-			totalManagerHour.setAverageWage(storeWages[0]);
-			totalManagerHour.setTotalWage(storeWages[1]);
+			if(totalShiftHours > 0) {
+				totalManagerHour.setAverageWage(
+						new Double(NumberUtils.getDoubleValue(totalWage) / NumberUtils.getDoubleValue(totalShiftHours))
+				);			
+			} else {
+				totalManagerHour.setAverageWage(new Double(0.0));
+			}
+			
+			totalManagerHour.setTotalWage(totalWage);
 			
 		}
 		
