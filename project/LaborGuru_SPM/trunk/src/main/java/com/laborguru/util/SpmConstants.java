@@ -41,4 +41,5 @@ public class SpmConstants {
 	
 	public static final BigDecimal BD_ZERO_VALUE = new BigDecimal(INIT_VALUE_ZERO);
 	public static final Double DOUBLE_ZERO_VALUE = new Double(INIT_VALUE_ZERO);
+	public static final Double DOUBLE_ONE_VALUE = new Double(1.0);
 }

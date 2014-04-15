@@ -31,6 +31,7 @@ public class StoreVariableDefinition extends SpmObject {
 	private Store store;
 	private String name;
 	private Integer variableIndex;
+	private Double average;
 	
 	/**
 	 * 
@@ -168,5 +169,19 @@ public class StoreVariableDefinition extends SpmObject {
 		} else {
 			return null;
 		}
+	}
+
+	/**
+	 * @return the average
+	 */
+	public Double getAverage() {
+		return average;
+	}
+
+	/**
+	 * @param average the average to set
+	 */
+	public void setAverage(Double average) {
+		this.average = average;
 	}
 }

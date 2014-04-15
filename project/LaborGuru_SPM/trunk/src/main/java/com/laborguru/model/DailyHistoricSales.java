@@ -27,7 +27,7 @@ public class DailyHistoricSales extends DailySalesValue {
 	private static final int NUMBER_OF_HALF_HOURS = 48;
 
 	private List<HalfHourHistoricSales> halfHourHistoricSales = new ArrayList<HalfHourHistoricSales>(NUMBER_OF_HALF_HOURS);
-		
+	BigDecimal dailyHistoricSalesValue = null;	
 	
 	/**
 	 * Returns the sum of all the halfhours defined for the projection.
@@ -35,13 +35,29 @@ public class DailyHistoricSales extends DailySalesValue {
 	 * @return the projection value or null
 	 */
 	public BigDecimal getDailyHistoricSalesValue(){
-		BigDecimal retValue = new BigDecimal("0.00");
+		if(dailyHistoricSalesValue == null) {
+			loadDailyValues();
+		}
+		return dailyHistoricSalesValue;
+	}
+	
+	public void loadDailyValues() {
+		BigDecimal value1 = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
+		BigDecimal value2 = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
+		BigDecimal value3 = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
+		BigDecimal value4 = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
 		
 		for (HalfHourHistoricSales aHalfHourHistoricSales: getHalfHourHistoricSales()){
-			retValue = retValue.add(aHalfHourHistoricSales.getValue());
+			value1 = value1.add(aHalfHourHistoricSales.getValue());
+			value2 = value2.add(aHalfHourHistoricSales.getSecondValue());
+			value3 = value3.add(aHalfHourHistoricSales.getThirdValue());
+			value4 = value4.add(aHalfHourHistoricSales.getFourthValue());
 		}
-		
-		return getHalfHourHistoricSales().isEmpty()? null : retValue;
+
+		setDailyHistoricSalesValue(value1);
+		setDailyProjectionVariable2(value2);
+		setDailyProjectionVariable3(value3);
+		setDailyProjectionVariable4(value4);
 	}
 	
 	/**
@@ -181,5 +197,12 @@ public class DailyHistoricSales extends DailySalesValue {
 	@Override
 	public List<? extends HalfHourSalesValue> getHalfHourSalesValues() {
 		return getHalfHourHistoricSales();
+	}
+
+	/**
+	 * @param dailyHistoricSalesValue the dailyHistoricSalesValue to set
+	 */
+	protected void setDailyHistoricSalesValue(BigDecimal dailyHistoricSalesValue) {
+		this.dailyHistoricSalesValue = dailyHistoricSalesValue;
 	}	
 }

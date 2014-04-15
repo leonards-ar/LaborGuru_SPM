@@ -17,7 +17,8 @@
 		</many-to-one>
 		
 	    <property name="variableIndex" column="variable_index" type="int" not-null="true"/>
-	    	    
+	    
+	    <property name="average" column="average" type="double"/>	    
 	</class>	
 	<database-object>
 		<create>ALTER TABLE tbl_store_variable_definitions AUTO_INCREMENT=1000</create>

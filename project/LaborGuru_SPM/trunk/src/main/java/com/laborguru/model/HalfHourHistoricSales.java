@@ -8,6 +8,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.laborguru.util.CalendarUtils;
+import com.laborguru.util.SpmConstants;
 
 
 /**
@@ -22,7 +23,11 @@ public class HalfHourHistoricSales extends HalfHourSalesValue implements Compara
 	
 	private static final long serialVersionUID = 1L;
 	
-	private BigDecimal value;
+	private BigDecimal value = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
+	private BigDecimal secondValue = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
+	private BigDecimal thirdValue = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
+	private BigDecimal fourthValue = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
+	
 	private DailyHistoricSales dailyHistoricSales;
 	private Date time;
 	
@@ -163,5 +168,47 @@ public class HalfHourHistoricSales extends HalfHourSalesValue implements Compara
 		}
 		
 		return (anotherDate != null)?-1:0;
+	}
+
+	/**
+	 * @return the secondValue
+	 */
+	public BigDecimal getSecondValue() {
+		return secondValue;
+	}
+
+	/**
+	 * @param secondValue the secondValue to set
+	 */
+	public void setSecondValue(BigDecimal secondValue) {
+		this.secondValue = secondValue;
+	}
+
+	/**
+	 * @return the thirdValue
+	 */
+	public BigDecimal getThirdValue() {
+		return thirdValue;
+	}
+
+	/**
+	 * @param thirdValue the thirdValue to set
+	 */
+	public void setThirdValue(BigDecimal thirdValue) {
+		this.thirdValue = thirdValue;
+	}
+
+	/**
+	 * @return the fourthValue
+	 */
+	public BigDecimal getFourthValue() {
+		return fourthValue;
+	}
+
+	/**
+	 * @param fourthValue the fourthValue to set
+	 */
+	public void setFourthValue(BigDecimal fourthValue) {
+		this.fourthValue = fourthValue;
 	}
 }

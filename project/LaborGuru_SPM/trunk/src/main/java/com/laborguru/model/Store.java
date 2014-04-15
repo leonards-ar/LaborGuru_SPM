@@ -14,6 +14,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.laborguru.model.comparator.SpmComparator;
 import com.laborguru.util.CalendarUtils;
+import com.laborguru.util.SpmConstants;
 
 public class Store extends SpmObject {
 	
@@ -29,6 +30,11 @@ public class Store extends SpmObject {
 	private Area area;
 	private Integer dailyProjectionsWeeksDefault;
 	private Integer halfHourProjectionsWeeksDefault;
+	// We should stop using this attribute. Now this same value is stored
+	// in the average property of the first variableDefinitions => getVariableDefinitions().get(0).getAverage()
+	// At some point this variable will be removed. Right now when possible, every update will
+	// set it to null
+	@Deprecated
 	private Double averageVariable;
 	
 	private Date creationDate;
@@ -767,6 +773,7 @@ public class Store extends SpmObject {
 			StoreVariableDefinition varDef = new StoreVariableDefinition();
 			varDef.setVariableIndex(new Integer(0));
 			varDef.setStore(this);
+			varDef.setAverage(SpmConstants.DOUBLE_ONE_VALUE);
 			variableDefinitions.add(varDef);
 		}
 		return variableDefinitions;		
@@ -851,7 +858,9 @@ public class Store extends SpmObject {
 
 	/**
 	 * @return the averageVariable
+	 * @deprecated Use getMainVariableAverage()
 	 */
+	@Deprecated
 	public Double getAverageVariable() {
 		return averageVariable;
 	}
@@ -859,11 +868,21 @@ public class Store extends SpmObject {
 
 	/**
 	 * @param averageVariable the averageVariable to set
+	 * @deprecated Use setMainVariableAverage()
 	 */
+	@Deprecated
 	public void setAverageVariable(Double averageVariable) {
 		this.averageVariable = averageVariable;
 	}
 
+	public Double getMainVariableAverage() {
+		return getMainVariableDefinition().getAverage();
+	}
+	
+	public void setMainVariableAverage(Double averageVariable) {
+		getMainVariableDefinition().setAverage(averageVariable);
+	}
+	
 	/**
 	 * 
 	 * @return

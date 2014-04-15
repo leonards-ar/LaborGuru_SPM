@@ -246,7 +246,6 @@ public abstract class DemoWizardBaseAction extends SpmAction implements Preparab
 		
 		demoStore.setArea(sourceStore.getArea());
 		demoStore.setAllPositionsUtilization(sourceStore.getAllPositionsUtilization());
-		demoStore.setAverageVariable(sourceStore.getAverageVariable());
 		demoStore.setDailyProjectionsWeeksDefault(sourceStore.getDailyProjectionsWeeksDefault());
 		demoStore.setDistributionType(sourceStore.getDistributionType());
 		demoStore.setEarnedBreakFactor(sourceStore.getEarnedBreakFactor());
@@ -348,6 +347,7 @@ public abstract class DemoWizardBaseAction extends SpmAction implements Preparab
 			StoreVariableDefinition newVarDef = new StoreVariableDefinition();
 			newVarDef.setName(varDef.getName());
 			newVarDef.setVariableIndex(new Integer(i));
+			newVarDef.setAverage(varDef.getAverage());
 			demoStore.addVariableDefinition(newVarDef);
 			newVarDef = null;
 		}

@@ -103,7 +103,7 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 			}
 			
 			if(getTotalSales() != null && getEmployeeStore() != null) {
-				setTotalProjectedSales(getTotalSales().multiply(new BigDecimal(NumberUtils.getDoubleValue(getEmployeeStore().getAverageVariable()))));
+				setTotalProjectedSales(getTotalSales().multiply(new BigDecimal(NumberUtils.getDoubleValue(getEmployeeStore().getMainVariableAverage()))));
 			}
 			double averageWage = 0.0;
 			if(getTotalSchedule().compareTo(SpmConstants.BD_ZERO_VALUE) != 0 && getTotalProjectedSales().compareTo(SpmConstants.BD_ZERO_VALUE) != 0) {
