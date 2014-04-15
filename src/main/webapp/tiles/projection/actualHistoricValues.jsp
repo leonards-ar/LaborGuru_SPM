@@ -88,7 +88,7 @@
 								<table border="0" cellpadding="3" cellspacing="1" align="center">
 									<tr class="editorTableHeader">
 										<s:hidden name="variableNames[0]"/>
-										<td><s:property value="getVariableNames().get(0)"/></td>
+										<td><s:text name="projection.actual.daily.label"><s:param value="%{getVariableNames().get(0)}"/></s:text></td>
 										<!-- Iterate week days -->
 										<s:iterator id="weekDay" value="weekDaySelector.weekDays">
 											<td><s:text name='projection.daily.weekday.dateformat'><s:param value='weekDay'/></s:text></td>
@@ -98,7 +98,7 @@
 									</tr>
 									<!--  Main Variable -->
 									<tr>
-										<td class="editorTableFirstColumn" style="font-weight: bold;"><s:text name="projection.actual.label"/></td>
+										<td class="editorTableFirstColumn" style="font-weight: bold;"><s:text name="projection.actual.main.label"><s:param value="%{getVariableNames().get(0)}"/></s:text></td>
 										<s:iterator id="displayMain" value="mainValueBeforeUpdate" status="itProjection">
 											<s:hidden name="mainValueBeforeUpdate[%{#itProjection.index}]" value="%{displayMain}" />
 											<td class="editorTableOddRow"><s:text name="currency"><s:param value="displayMain"/></s:text></td>
