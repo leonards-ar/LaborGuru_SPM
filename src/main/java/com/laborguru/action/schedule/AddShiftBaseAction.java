@@ -586,7 +586,7 @@ public abstract class AddShiftBaseAction extends ScheduleShiftBaseAction {
 	 * @return
 	 */
 	public double getStoreAverageVariable() {
-		return NumberUtils.getDoubleValue(getEmployeeStore().getAverageVariable());
+		return NumberUtils.getDoubleValue(getEmployeeStore().getMainVariableAverage());
 	}
 	
 	/**

@@ -50,7 +50,7 @@
 			totalValue = totalValue.toFixed(2);
 		}
 		
-		setObjectByIDValueAndClass(totalId, totalValue, 'editorTableEvenRowTotal');
-		setObjectByIDValue(totalId+'Input', totalValue, 'editorTableEvenRowTotal');		
+		setObjectByIDValueAndClass(totalId, totalValue, null);
+		setObjectByIDValue(totalId+'Input', totalValue, null);		
 	}
 		

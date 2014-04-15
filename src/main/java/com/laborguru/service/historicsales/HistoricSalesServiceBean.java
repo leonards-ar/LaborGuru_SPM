@@ -19,6 +19,7 @@ import com.laborguru.service.projection.ProjectionService;
 import com.laborguru.service.uploadfile.UploadEnumType;
 import com.laborguru.service.uploadfile.dao.UploadFileDao;
 import com.laborguru.util.CalendarUtils;
+import com.laborguru.util.SpmConstants;
 
 /**
  * Historic Sales Services Bean
@@ -158,12 +159,28 @@ public class HistoricSalesServiceBean implements HistoricSalesService {
 
 		Map<Date,HistoricSales> historicSalesMap = historicSalesDao.getHistoricSalesByStoreAndDate(store, selectedDate);
 		
+		// We are not interested in distributing secondary variables across half hours groups, so
+		// we just save the daily value for them in the first half hour record we process
+		boolean isFirstRecord = true;
+		
 		if (historicSalesMap.isEmpty()){
 		
 			for (HalfHourHistoricSales aHalfHourHistoricSales: halfHourSalesList){	
 				Date salesDateTime = CalendarUtils.setTimeToDate(selectedDate, aHalfHourHistoricSales.getTime());		
 				HistoricSales aHistoricSales = createHistoricSales(aHalfHourHistoricSales, store, salesDateTime,dayOfWeek);				
 				aHistoricSales.setUploadFile(uploadFile);
+				
+				// Adding the full day value for second variables in the first processed halfhour
+				if(isFirstRecord) {
+					aHistoricSales.setSecondValue(dailyHistoricSales.getDailyProjectionVariable2());
+					aHistoricSales.setThirdValue(dailyHistoricSales.getDailyProjectionVariable3());
+					aHistoricSales.setFourthValue(dailyHistoricSales.getDailyProjectionVariable4());
+					isFirstRecord = false;
+				} else {
+					aHistoricSales.setSecondValue(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
+					aHistoricSales.setThirdValue(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
+					aHistoricSales.setFourthValue(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
+				}
 				getHistoricSalesDao().saveOrUpdate(aHistoricSales);
 			}
 		}else{
@@ -181,6 +198,20 @@ public class HistoricSalesServiceBean implements HistoricSalesService {
 					//If there is no historic value, we create one.
 					aHistoricSales = createHistoricSales(aHalfHourHistoricSales, store, salesDateTime,dayOfWeek);				
 				}
+
+				// Adding the full day value for second variables in the first processed halfhour
+				if(isFirstRecord) {
+					aHistoricSales.setSecondValue(dailyHistoricSales.getDailyProjectionVariable2());
+					aHistoricSales.setThirdValue(dailyHistoricSales.getDailyProjectionVariable3());
+					aHistoricSales.setFourthValue(dailyHistoricSales.getDailyProjectionVariable4());
+					isFirstRecord = false;
+				} else {
+					aHistoricSales.setSecondValue(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
+					aHistoricSales.setThirdValue(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
+					aHistoricSales.setFourthValue(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
+				}
+				
+				
 				//We override the upload file for the existing historic sales.				
 				//CN: Adding the historic sales record to the upload file and saving it, DOES NOT WORK. 
 				//I tried and there are problems with the colecction of hs in the upload file. In this way works fine.

@@ -144,11 +144,17 @@ public class HistoricSalesDaoHibernate extends SpmHibernateDao implements Histor
 		for (int i=0; i < size; i++){
 			Object[] row = (Object[])halfHourSales.get(i);			
 			String time = (String) row[0];
-			BigDecimal value =  (BigDecimal)row[1];
+			BigDecimal value1 =  (BigDecimal)row[1];
+			BigDecimal value2 =  (BigDecimal)row[2];
+			BigDecimal value3 =  (BigDecimal)row[3];
+			BigDecimal value4 =  (BigDecimal)row[4];
 			
 			HalfHourHistoricSales halfHour = new HalfHourHistoricSales();
 			halfHour.setTime(time);
-			halfHour.setValue(value);
+			halfHour.setValue(value1);
+			halfHour.setSecondValue(value2);
+			halfHour.setThirdValue(value3);
+			halfHour.setFourthValue(value4);
 			
 			halfHoursList.add(halfHour);
 		}

@@ -148,7 +148,7 @@ public class PercentageLaborHoursReportPrepareAction extends ScheduleReportPrepa
 	 * @return
 	 */
 	protected double getStoreAverageVariable() {
-		return NumberUtils.getDoubleValue(getEmployeeStore().getAverageVariable());
+		return NumberUtils.getDoubleValue(getEmployeeStore().getMainVariableAverage());
 	}
 	
 	/**

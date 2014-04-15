@@ -131,7 +131,7 @@ public class Area extends SpmObject {
 	    Double averageVariable = SpmConstants.DOUBLE_ZERO_VALUE;
 	    
 	    for(Store store: getStores()) {
-	        averageVariable += store.getAverageVariable() != null ? store.getAverageVariable() : SpmConstants.DOUBLE_ZERO_VALUE;
+	        averageVariable += store.getMainVariableAverage() != null ? store.getMainVariableAverage() : SpmConstants.DOUBLE_ONE_VALUE;
 	    }
 	    
 	    return averageVariable;

@@ -29,14 +29,24 @@ public class ActualValuesPrepareAction extends DailyProjectionBaseAction impleme
 
 	private List<ActualValueElement> dailyActuals = new ArrayList<ActualValueElement>(SpmConstants.DAILY_PROJECTION_PERIOD_DAYS);
 	private List<Integer> mainValueBeforeUpdate = new ArrayList<Integer>(SpmConstants.DAILY_PROJECTION_PERIOD_DAYS);
-
+	private List<Integer> secondValueBeforeUpdate = new ArrayList<Integer>(SpmConstants.DAILY_PROJECTION_PERIOD_DAYS);
+	private List<Integer> thirdValueBeforeUpdate = new ArrayList<Integer>(SpmConstants.DAILY_PROJECTION_PERIOD_DAYS);
+	private List<Integer> fourthValueBeforeUpdate = new ArrayList<Integer>(SpmConstants.DAILY_PROJECTION_PERIOD_DAYS);
+	
+	
 	private List<Double> actualHoursBeforeUpdate = new ArrayList<Double>(SpmConstants.DAILY_PROJECTION_PERIOD_DAYS);
 	
 	
 	private Integer totalMainValue = 0;
+	private Integer totalSecondValue = 0;
+	private Integer totalThirdValue = 0;
+	private Integer totalFourthValue = 0;
 	private double totalActualHours = 0;
 
 	private Integer totalMainBeforeUpdate = 0;
+	private Integer totalSecondBeforeUpdate = 0;
+	private Integer totalThirdBeforeUpdate = 0;
+	private Integer totalFourthBeforeUpdate = 0;
 	private double totalHoursBeforeUpdate= 0;
 	
 	
@@ -96,8 +106,14 @@ public class ActualValuesPrepareAction extends DailyProjectionBaseAction impleme
 			DailyHistoricSales dailyHistoricSales = getHistoricSalesService().getDailyHistoricSales(employeeStore, dateToRetrieve);
 			
 			ActualValueElement actualValue = new ActualValueElement();
+			// This calculates all main and secondary variables
+			dailyHistoricSales.loadDailyValues();
 			
 			actualValue.setMainValue(dailyHistoricSales.getDailyHistoricSalesValue());
+			actualValue.setActualVariable2(dailyHistoricSales.getDailyProjectionVariable2());
+			actualValue.setActualVariable3(dailyHistoricSales.getDailyProjectionVariable3());
+			actualValue.setActualVariable4(dailyHistoricSales.getDailyProjectionVariable4());
+			
 			actualValue.setDate(dateToRetrieve);
 
 			ActualHours ah = getActualHoursService().getActualHoursByDate(employeeStore, dateToRetrieve);			
@@ -113,10 +129,20 @@ public class ActualValuesPrepareAction extends DailyProjectionBaseAction impleme
 		
 		for (ActualValueElement actualValue : getDailyActuals()) {
 			int mainValueDisplay = actualValue.getMainValueToDisplay();
+			int secondaryValueDisplay = actualValue.getActualVariable2ToDisplay();
+			int thirdValueDisplay = actualValue.getActualVariable3ToDisplay();
+			int fourthValueDisplay = actualValue.getActualVariable4ToDisplay();
 			
 			this.totalMainValue += mainValueDisplay;
+			this.totalSecondValue += secondaryValueDisplay;
+			this.totalThirdValue += thirdValueDisplay;
+			this.totalFourthValue += fourthValueDisplay;
+			
 			getMainValueBeforeUpdate().add(mainValueDisplay);
-
+			getSecondValueBeforeUpdate().add(secondaryValueDisplay);
+			getThirdValueBeforeUpdate().add(thirdValueDisplay);
+			getFourthValueBeforeUpdate().add(fourthValueDisplay);
+			
 			this.totalActualHours += actualValue.getHours();
 			getActualHoursBeforeUpdate().add(actualValue.getHours());
 			
@@ -129,7 +155,9 @@ public class ActualValuesPrepareAction extends DailyProjectionBaseAction impleme
 		
 		setTotalHoursBeforeUpdate(getTotalActualHours());
 		setTotalMainBeforeUpdate(getTotalMainValue());
-		
+		setTotalSecondBeforeUpdate(getTotalSecondValue());
+		setTotalThirdBeforeUpdate(getTotalThirdValue());
+		setTotalFourthBeforeUpdate(getTotalFourthValue());
 		setAllowToSaveWeek(shouldAllowSave);		
 	}
 	
@@ -172,13 +200,21 @@ public class ActualValuesPrepareAction extends DailyProjectionBaseAction impleme
 		int i=0;
 		List<Date> weekDates = getWeekDaySelector().getWeekDays();
 		for (ActualValueElement dailyActuals: getDailyActuals()){
-			if (dailyActuals.getEditable() && (dailyActuals.getMainValueToDisplay() != getMainValueBeforeUpdate().get(i))){
+			if (dailyActuals.getEditable() && (dailyActuals.getMainValueToDisplay() != getMainValueBeforeUpdate().get(i) ||
+					                          (isSecondaryVariablesConfigured(1) && dailyActuals.getActualVariable2ToDisplay() != getSecondValueBeforeUpdate().get(i)) || 
+					                          (isSecondaryVariablesConfigured(2) && dailyActuals.getActualVariable3ToDisplay() != getThirdValueBeforeUpdate().get(i)) ||
+					                          (isSecondaryVariablesConfigured(3) && dailyActuals.getActualVariable4ToDisplay() != getFourthValueBeforeUpdate().get(i)))) {
 
 				DailyHistoricSales dailyHistoricSales = new DailyHistoricSales();
 				dailyHistoricSales.setStore(this.getEmployeeStore());
 				dailyHistoricSales.setSalesDate(weekDates.get(i));
 				
 				dailyHistoricSales = getHistoricSalesService().calculateHistoricSalesStaticProjection(dailyHistoricSales, dailyActuals.getMainValue());
+
+				dailyHistoricSales.setDailyProjectionVariable2(dailyActuals.getActualVariable2());
+				dailyHistoricSales.setDailyProjectionVariable3(dailyActuals.getActualVariable3());
+				dailyHistoricSales.setDailyProjectionVariable4(dailyActuals.getActualVariable4());
+				
 				getHistoricSalesService().saveDailyHistoricSales(dailyHistoricSales);
 			}
 			i++;
@@ -225,12 +261,21 @@ public class ActualValuesPrepareAction extends DailyProjectionBaseAction impleme
 	private void clearPageValues() {
 		setTotalMainValue(0);
 		setTotalMainBeforeUpdate(0);
+		setTotalSecondValue(0);
+		setTotalSecondBeforeUpdate(0);
+		setTotalThirdValue(0);
+		setTotalThirdBeforeUpdate(0);
+		setTotalFourthValue(0);
+		setTotalFourthBeforeUpdate(0);
 		
 		setTotalActualHours(0.0);
 		setTotalHoursBeforeUpdate(0.0);
 		
 		getDailyActuals().clear();
 		getMainValueBeforeUpdate().clear();
+		getSecondValueBeforeUpdate().clear();
+		getThirdValueBeforeUpdate().clear();
+		getFourthValueBeforeUpdate().clear();
 		getActualHoursBeforeUpdate().clear();
 		
 		setAllowToSaveWeek(true);
@@ -374,5 +419,131 @@ public class ActualValuesPrepareAction extends DailyProjectionBaseAction impleme
 	 */
 	public void setTotalHoursBeforeUpdate(double totalHoursBeforeUpdate) {
 		this.totalHoursBeforeUpdate = totalHoursBeforeUpdate;
+	}
+
+	/**
+	 * @return the secondValueBeforeUpdate
+	 */
+	public List<Integer> getSecondValueBeforeUpdate() {
+		return secondValueBeforeUpdate;
+	}
+
+	/**
+	 * @param secondValueBeforeUpdate the secondValueBeforeUpdate to set
+	 */
+	public void setSecondValueBeforeUpdate(List<Integer> secondValueBeforeUpdate) {
+		this.secondValueBeforeUpdate = secondValueBeforeUpdate;
+	}
+
+	/**
+	 * @return the thirdValueBeforeUpdate
+	 */
+	public List<Integer> getThirdValueBeforeUpdate() {
+		return thirdValueBeforeUpdate;
+	}
+
+	/**
+	 * @param thirdValueBeforeUpdate the thirdValueBeforeUpdate to set
+	 */
+	public void setThirdValueBeforeUpdate(List<Integer> thirdValueBeforeUpdate) {
+		this.thirdValueBeforeUpdate = thirdValueBeforeUpdate;
+	}
+
+	/**
+	 * @return the fourthValueBeforeUpdate
+	 */
+	public List<Integer> getFourthValueBeforeUpdate() {
+		return fourthValueBeforeUpdate;
+	}
+
+	/**
+	 * @param fourthValueBeforeUpdate the fourthValueBeforeUpdate to set
+	 */
+	public void setFourthValueBeforeUpdate(List<Integer> fourthValueBeforeUpdate) {
+		this.fourthValueBeforeUpdate = fourthValueBeforeUpdate;
+	}
+
+	/**
+	 * @return the totalSecondValue
+	 */
+	public Integer getTotalSecondValue() {
+		return totalSecondValue;
+	}
+
+	/**
+	 * @param totalSecondValue the totalSecondValue to set
+	 */
+	public void setTotalSecondValue(Integer totalSecondValue) {
+		this.totalSecondValue = totalSecondValue;
+	}
+
+	/**
+	 * @return the totalThirdValue
+	 */
+	public Integer getTotalThirdValue() {
+		return totalThirdValue;
+	}
+
+	/**
+	 * @param totalThirdValue the totalThirdValue to set
+	 */
+	public void setTotalThirdValue(Integer totalThirdValue) {
+		this.totalThirdValue = totalThirdValue;
+	}
+
+	/**
+	 * @return the totalFourthValue
+	 */
+	public Integer getTotalFourthValue() {
+		return totalFourthValue;
+	}
+
+	/**
+	 * @param totalFourthValue the totalFourthValue to set
+	 */
+	public void setTotalFourthValue(Integer totalFourthValue) {
+		this.totalFourthValue = totalFourthValue;
+	}
+
+	/**
+	 * @return the totalSecondaryBeforeUpdate
+	 */
+	public Integer getTotalSecondBeforeUpdate() {
+		return totalSecondBeforeUpdate;
+	}
+
+	/**
+	 * @param totalSecondaryBeforeUpdate the totalSecondaryBeforeUpdate to set
+	 */
+	public void setTotalSecondBeforeUpdate(Integer totalSecondBeforeUpdate) {
+		this.totalSecondBeforeUpdate = totalSecondBeforeUpdate;
+	}
+
+	/**
+	 * @return the totalThirdBeforeUpdate
+	 */
+	public Integer getTotalThirdBeforeUpdate() {
+		return totalThirdBeforeUpdate;
+	}
+
+	/**
+	 * @param totalThirdBeforeUpdate the totalThirdBeforeUpdate to set
+	 */
+	public void setTotalThirdBeforeUpdate(Integer totalThirdBeforeUpdate) {
+		this.totalThirdBeforeUpdate = totalThirdBeforeUpdate;
+	}
+
+	/**
+	 * @return the totalFourthBeforeUpdate
+	 */
+	public Integer getTotalFourthBeforeUpdate() {
+		return totalFourthBeforeUpdate;
+	}
+
+	/**
+	 * @param totalFourthBeforeUpdate the totalFourthBeforeUpdate to set
+	 */
+	public void setTotalFourthBeforeUpdate(Integer totalFourthBeforeUpdate) {
+		this.totalFourthBeforeUpdate = totalFourthBeforeUpdate;
 	}
 }

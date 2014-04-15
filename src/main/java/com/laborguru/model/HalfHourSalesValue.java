@@ -18,6 +18,10 @@ import com.laborguru.util.CalendarUtils;
  *
  */
 public abstract class HalfHourSalesValue extends SpmObject {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -696943173636004499L;
 	private Long id;
 	private BigDecimal value;
 	private Integer index;

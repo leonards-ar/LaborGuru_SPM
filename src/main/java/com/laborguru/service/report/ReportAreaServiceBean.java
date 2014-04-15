@@ -201,7 +201,7 @@ public class ReportAreaServiceBean implements ReportAreaService {
 					total.setTotalWage(SpmConstants.DOUBLE_ZERO_VALUE);
 				}
 				
-				total.setAverageVariable(total.getStore().getAverageVariable());
+				total.setAverageVariable(total.getStore().getMainVariableAverage());
 			}
 			
             if(projections != null) {

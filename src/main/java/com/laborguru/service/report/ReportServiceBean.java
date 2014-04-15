@@ -380,7 +380,7 @@ public class ReportServiceBean implements ReportService {
 		
 		for (Date date=startDate; date.compareTo(endDate) <= 0; date=CalendarUtils.addOrSubstractDays(date, 1)) {
 			Double storeWages[] = getStoreWages(store, date);
-			TotalHour totalhour = new TotalHour(store.getAverageVariable(), storeWages[0], storeWages[1]);
+			TotalHour totalhour = new TotalHour(store.getMainVariableAverage(), storeWages[0], storeWages[1]);
 			totalhour.setDay(date);
 			DailyProjection dp = getDailyProjectionByDate(date, projections);
 			if(dp != null){

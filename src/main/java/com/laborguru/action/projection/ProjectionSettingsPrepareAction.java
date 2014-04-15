@@ -1,9 +1,15 @@
 package com.laborguru.action.projection;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.model.StoreVariableDefinition;
 import com.laborguru.service.store.StoreService;
+import com.laborguru.util.SpmConstants;
 import com.opensymphony.xwork2.Preparable;
 
 /**
@@ -16,11 +22,12 @@ import com.opensymphony.xwork2.Preparable;
  */
 @SuppressWarnings("serial")
 public class ProjectionSettingsPrepareAction extends SpmAction implements Preparable {
-	
+	private static Logger log = Logger.getLogger(ProjectionSettingsPrepareAction.class);
+
 	private Integer dailyWeeksUsedDefault;
 	private Integer halfHourWeeksUsedDefault;
-	private Double averageVariable;
-	
+	private List<Double> storeVariablesAverages;
+
 	private StoreService storeService;
 
 	/**
@@ -31,15 +38,33 @@ public class ProjectionSettingsPrepareAction extends SpmAction implements Prepar
 	public void prepareEdit() {
 		setDailyWeeksUsedDefault(this.getEmployeeStore().getDailyProjectionsWeeksDefault());
 		setHalfHourWeeksUsedDefault(this.getEmployeeStore().getHalfHourProjectionsWeeksDefault());
-		setAverageVariable(this.getEmployeeStore().getAverageVariable());
+		loadSecondaryVariablesAverages();
 	}
 
+	private void loadSecondaryVariablesAverages() {
+		List<StoreVariableDefinition> variableDefinitions = getEmployeeStore().getVariableDefinitions();
+		
+		boolean isMainVariable = true;
+		for (StoreVariableDefinition variableDef: variableDefinitions) {
+			// Remove all this code when averageVariable gets finally removed
+			if(isMainVariable) {
+				Double currentValue = getEmployeeStore().getAverageVariable();
+				if(currentValue != null && !currentValue.equals(variableDef.getAverage())) {
+					variableDef.setAverage(currentValue);
+				}
+				isMainVariable = false;
+			}
+			// End of code that should be removed
+			getStoreVariablesAverages().add(variableDef.getVariableIndex(), variableDef.getAverage() != null ? variableDef.getAverage() : SpmConstants.DOUBLE_ONE_VALUE);
+		}
+	}	
+	
 	/**
 	 * 
 	 * @return
 	 */
-	public String getMainVariableName() {
-		StoreVariableDefinition varDef = this.getEmployeeStore().getMainVariableDefinition();
+	public String getMainVariable(int index) {
+		StoreVariableDefinition varDef = this.getEmployeeStore().getVariableDefinitions().get(index);
 		return varDef != null ? varDef.getName() : "";
 	}
 	
@@ -60,7 +85,6 @@ public class ProjectionSettingsPrepareAction extends SpmAction implements Prepar
 	 * @throws Exception
 	 */
 	public String edit() throws Exception {
-
 		return SpmActionResult.EDIT.getResult();
 	}
 
@@ -74,7 +98,15 @@ public class ProjectionSettingsPrepareAction extends SpmAction implements Prepar
 		
 		getEmployeeStore().setDailyProjectionsWeeksDefault(getDailyWeeksUsedDefault());
 		getEmployeeStore().setHalfHourProjectionsWeeksDefault(getHalfHourWeeksUsedDefault());
-		getEmployeeStore().setAverageVariable(getAverageVariable());
+		getEmployeeStore().setAverageVariable(null); // First make sure we null the deprecated variable
+		
+		for(int i=0; i < getStoreVariablesAverages().size(); i++) {
+			if(i < getEmployeeStore().getVariableDefinitions().size()) {
+				getEmployeeStore().getVariableDefinitions().get(i).setAverage(getStoreVariablesAverages().get(i));
+			} else {
+				log.warn("The size of the variable definitions don't match with the whats configured");
+			}
+		}
 		
 		storeService.save(getEmployeeStore());
 		
@@ -124,16 +156,20 @@ public class ProjectionSettingsPrepareAction extends SpmAction implements Prepar
 	}
 
 	/**
-	 * @return the averageVariable
+	 * @return the secondaryVariablesAverages
 	 */
-	public Double getAverageVariable() {
-		return averageVariable;
+	public List<Double> getStoreVariablesAverages() {
+		if(storeVariablesAverages == null) {
+			setStoreVariablesAverages(new ArrayList<Double>(StoreVariableDefinition.MAX_VARIABLE_DEFINITIONS_QUANTITY));
+		}
+		
+		return storeVariablesAverages;
 	}
 
 	/**
-	 * @param averageVariable the averageVariable to set
+	 * @param secondaryVariablesAverages the secondaryVariablesAverages to set
 	 */
-	public void setAverageVariable(Double averageVariable) {
-		this.averageVariable = averageVariable;
+	public void setStoreVariablesAverages(List<Double> secondaryVariablesAverages) {
+		this.storeVariablesAverages = secondaryVariablesAverages;
 	}
 }

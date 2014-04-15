@@ -46,10 +46,16 @@
 	
 		<return-scalar column="hhTime" type="string"/>
 		<return-scalar column="value" type="big_decimal"/>
+		<return-scalar column="value2" type="big_decimal"/>
+		<return-scalar column="value3" type="big_decimal"/>
+		<return-scalar column="value4" type="big_decimal"/>
 		
 		<![CDATA[
 		SELECT if(MINUTE(hs.date_time) >= 30, CONCAT(HOUR(hs.date_time), ':30'), CONCAT(HOUR(hs.date_time),':00')) as hhTime, 
-		SUM(hs.main_value) as value
+		SUM(hs.main_value) as value,
+		SUM(hs.second_value) as value2,
+		SUM(hs.third_value) as value3,
+		SUM(hs.fourth_value) as value4
 		FROM tbl_historic_sales hs 
 		WHERE hs.store_id=:storeId 
 		AND DATE(hs.date_time) = STR_TO_DATE(:selectedDate,'%Y-%m-%d')

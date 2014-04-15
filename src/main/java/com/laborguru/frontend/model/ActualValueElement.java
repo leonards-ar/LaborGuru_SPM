@@ -13,6 +13,10 @@ import com.laborguru.util.SpmConstants;
 public class ActualValueElement {
 
 	private BigDecimal mainValue;
+	private BigDecimal actualVariable2;
+	private BigDecimal actualVariable3;
+	private BigDecimal actualVariable4;
+	
 	private Double hours;
 	private Date date;
 	
@@ -53,7 +57,7 @@ public class ActualValueElement {
 	}	
 
 	public int getMainValueToDisplay(){
-		return NumberUtils.bigDecimalToInt(mainValue);
+		return NumberUtils.bigDecimalToInt(getMainValue());
 	}
 	
 	public String toString(){
@@ -81,4 +85,63 @@ public class ActualValueElement {
 	public void setHours(Double actualHours) {
 		this.hours = actualHours;
 	}
+	/**
+	 * @return the actualVariable2
+	 */
+	public BigDecimal getActualVariable2() {
+		if (this.actualVariable2 == null){
+			setActualVariable2(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
+		}
+		return actualVariable2;
+	}
+	/**
+	 * @param actualVariable2 the actualVariable2 to set
+	 */
+	public void setActualVariable2(BigDecimal actualVariable2) {
+		this.actualVariable2 = actualVariable2;
+	}
+	/**
+	 * @return the actualVariable3
+	 */
+	public BigDecimal getActualVariable3() {
+		if (this.actualVariable3 == null){
+			setActualVariable3(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
+		}
+		
+		return actualVariable3;
+	}
+	/**
+	 * @param actualVariable3 the actualVariable3 to set
+	 */
+	public void setActualVariable3(BigDecimal actualVariable3) {
+		this.actualVariable3 = actualVariable3;
+	}
+	/**
+	 * @return the actualVariable4
+	 */
+	public BigDecimal getActualVariable4() {
+		if (this.actualVariable4 == null){
+			setActualVariable4(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
+		}
+		
+		return actualVariable4;
+	}
+	/**
+	 * @param actualVariable4 the actualVariable4 to set
+	 */
+	public void setActualVariable4(BigDecimal actualVariable4) {
+		this.actualVariable4 = actualVariable4;
+	}
+
+	public int getActualVariable2ToDisplay(){
+		return NumberUtils.bigDecimalToInt(getActualVariable2());
+	}	
+	
+	public int getActualVariable3ToDisplay(){
+		return NumberUtils.bigDecimalToInt(getActualVariable3());
+	}	
+	
+	public int getActualVariable4ToDisplay(){
+		return NumberUtils.bigDecimalToInt(getActualVariable4());
+	}	
 }
