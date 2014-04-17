@@ -18,6 +18,7 @@ import com.laborguru.model.PositionGroup;
 import com.laborguru.model.Store;
 import com.laborguru.model.StoreDailyHistoricSalesStaffing;
 import com.laborguru.model.StoreSchedule;
+import com.laborguru.model.StoreVariableDefinition;
 import com.laborguru.model.report.FixedLaborHoursReport;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.model.report.TotalHourByPosition;
@@ -381,12 +382,25 @@ public class ReportServiceBean implements ReportService {
 		for (Date date=startDate; date.compareTo(endDate) <= 0; date=CalendarUtils.addOrSubstractDays(date, 1)) {
 			Double storeWages[] = getStoreWages(store, date);
 			TotalHour totalhour = new TotalHour(store.getMainVariableAverage(), storeWages[0], storeWages[1]);
+			StoreVariableDefinition varDef = store.getSecondaryVariableDefinition(1);
+			totalhour.setStoreAverageVariable2(varDef != null ? varDef.getAverage() : SpmConstants.DOUBLE_ZERO_VALUE);
+			varDef = store.getSecondaryVariableDefinition(2);
+			totalhour.setStoreAverageVariable3(varDef != null ? varDef.getAverage() : SpmConstants.DOUBLE_ZERO_VALUE);
+			varDef = store.getSecondaryVariableDefinition(3);
+			totalhour.setStoreAverageVariable4(varDef != null ? varDef.getAverage() : SpmConstants.DOUBLE_ZERO_VALUE);
+			
 			totalhour.setDay(date);
 			DailyProjection dp = getDailyProjectionByDate(date, projections);
 			if(dp != null){
 				totalhour.setSales(dp.getDailyProjectionValue());
+				totalhour.setVariable2(dp.getDailyProjectionVariable2());
+				totalhour.setVariable3(dp.getDailyProjectionVariable3());
+				totalhour.setVariable4(dp.getDailyProjectionVariable4());
 			} else {
 				totalhour.setSales(SpmConstants.BD_ZERO_VALUE);
+				totalhour.setVariable2(SpmConstants.BD_ZERO_VALUE);
+				totalhour.setVariable3(SpmConstants.BD_ZERO_VALUE);
+				totalhour.setVariable4(SpmConstants.BD_ZERO_VALUE);
 			}
 
 			totalhour.setSchedule(getScheduleValue(getTotalHourByDay(date, scheduleTotalHours)));
@@ -458,7 +472,7 @@ public class ReportServiceBean implements ReportService {
 		return totalHours;
 	}
 	
-	private List<TotalHour> getMergedTotalEfficiencyHours(Store store, List<HistoricSales> actualSales, List<TotalHour>scheduleTotalHours, List<TotalHour> targetTotalHours, Date startDate, Date endDate, boolean targetInScheduled) {
+	private List<TotalHour> getMergedTotalEfficiencyHours(Store store, List<HistoricSales> actualSales, List<TotalHour> scheduleTotalHours, List<TotalHour> targetTotalHours, Date startDate, Date endDate, boolean targetInScheduled) {
 		List<TotalHour> totalHours = new ArrayList<TotalHour>();
 		
 		for (Date date=startDate; date.compareTo(endDate) <= 0; date=CalendarUtils.addOrSubstractDays(date, 1)) {
@@ -468,8 +482,14 @@ public class ReportServiceBean implements ReportService {
 			HistoricSales hs = getHistoricSalesByDate(date, actualSales);
 			if(hs != null){
 				totalhour.setSales(hs.getMainValue());
+				totalhour.setVariable2(hs.getSecondValue());
+				totalhour.setVariable3(hs.getThirdValue());
+				totalhour.setVariable4(hs.getFourthValue());
 			} else {
 				totalhour.setSales(SpmConstants.BD_ZERO_VALUE);
+				totalhour.setVariable2(SpmConstants.BD_ZERO_VALUE);
+				totalhour.setVariable3(SpmConstants.BD_ZERO_VALUE);
+				totalhour.setVariable4(SpmConstants.BD_ZERO_VALUE);
 			}
 
 			totalhour.setSchedule(getScheduleValue(getTotalHourByDay(date, scheduleTotalHours)));

@@ -23,6 +23,10 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 	private BigDecimal totalDifference = SpmConstants.BD_ZERO_VALUE;
 	private BigDecimal totalPercentage = SpmConstants.BD_ZERO_VALUE;
 	private BigDecimal totalSales = SpmConstants.BD_ZERO_VALUE;
+	private BigDecimal totalVariable2 = SpmConstants.BD_ZERO_VALUE;
+	private BigDecimal totalVariable3 = SpmConstants.BD_ZERO_VALUE;
+	private BigDecimal totalVariable4 = SpmConstants.BD_ZERO_VALUE;
+	private BigDecimal total = SpmConstants.BD_ZERO_VALUE;
 	// Extended totals
 	private BigDecimal totalVplhSchedule = SpmConstants.BD_ZERO_VALUE;
 	private BigDecimal totalVplhTarget = SpmConstants.BD_ZERO_VALUE;
@@ -80,6 +84,10 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 		double totalWage = 0.0;
 		for (TotalHour th : getTotalHours()) {
 			setTotalSales(getTotalSales().add(th.getSales()));
+			setTotalVariable2(getTotalVariable2().add(th.getVariable2()));
+			setTotalVariable3(getTotalVariable3().add(th.getVariable3()));
+			setTotalVariable4(getTotalVariable4().add(th.getVariable4()));
+			setTotal(getTotal().add(th.getTotal()));
 			setTotalSchedule(getTotalSchedule().add(th.getSchedule()));
 			setTotalTarget(getTotalTarget().add(th.getTarget()));
 			setTotalDifference(getTotalDifference().add(th.getDifference()));
@@ -103,7 +111,15 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 			}
 			
 			if(getTotalSales() != null && getEmployeeStore() != null) {
-				setTotalProjectedSales(getTotalSales().multiply(new BigDecimal(NumberUtils.getDoubleValue(getEmployeeStore().getMainVariableAverage()))));
+				BigDecimal var1 = new BigDecimal(NumberUtils.getDoubleValue(getEmployeeStore().getMainVariableAverage())).multiply(getTotalSales());
+				Double avg2 = getEmployeeStore().getSecondaryVariableDefinition(1) != null ? getEmployeeStore().getSecondaryVariableDefinition(1).getAverage() : SpmConstants.DOUBLE_ZERO_VALUE;
+				Double avg3 = getEmployeeStore().getSecondaryVariableDefinition(2) != null ? getEmployeeStore().getSecondaryVariableDefinition(2).getAverage() : SpmConstants.DOUBLE_ZERO_VALUE;
+				Double avg4 = getEmployeeStore().getSecondaryVariableDefinition(3) != null ? getEmployeeStore().getSecondaryVariableDefinition(3).getAverage() : SpmConstants.DOUBLE_ZERO_VALUE;
+				BigDecimal var2 =  new BigDecimal(NumberUtils.getDoubleValue(avg2)).multiply(getTotalVariable2());
+				BigDecimal var3 = new BigDecimal(NumberUtils.getDoubleValue(avg3)).multiply(getTotalVariable3());
+				BigDecimal var4 = new BigDecimal(NumberUtils.getDoubleValue(avg4)).multiply(getTotalVariable4());
+				
+				setTotalProjectedSales(var1.add(var2.add(var3.add(var4))));
 			}
 			double averageWage = 0.0;
 			if(getTotalSchedule().compareTo(SpmConstants.BD_ZERO_VALUE) != 0 && getTotalProjectedSales().compareTo(SpmConstants.BD_ZERO_VALUE) != 0) {
@@ -328,6 +344,62 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 
 	public void setTotalTargetLaborPercentage(BigDecimal totalTargetLaborPercentage) {
 		this.totalTargetLaborPercentage = totalTargetLaborPercentage;
+	}
+
+	/**
+	 * @return the totalVariable2
+	 */
+	public BigDecimal getTotalVariable2() {
+		return totalVariable2;
+	}
+
+	/**
+	 * @param totalVariable2 the totalVariable2 to set
+	 */
+	public void setTotalVariable2(BigDecimal totalVariable2) {
+		this.totalVariable2 = totalVariable2;
+	}
+
+	/**
+	 * @return the totalVariable3
+	 */
+	public BigDecimal getTotalVariable3() {
+		return totalVariable3;
+	}
+
+	/**
+	 * @param totalVariable3 the totalVariable3 to set
+	 */
+	public void setTotalVariable3(BigDecimal totalVariable3) {
+		this.totalVariable3 = totalVariable3;
+	}
+
+	/**
+	 * @return the totalVariable4
+	 */
+	public BigDecimal getTotalVariable4() {
+		return totalVariable4;
+	}
+
+	/**
+	 * @param totalVariable4 the totalVariable4 to set
+	 */
+	public void setTotalVariable4(BigDecimal totalVariable4) {
+		this.totalVariable4 = totalVariable4;
+	}
+
+	/**
+	 * @return the total
+	 */
+	public BigDecimal getTotal() {
+		return total;
+	}
+
+	/**
+	 * @param total the total to set
+	 */
+	public void setTotal(BigDecimal total) {
+		this.total = total;
 	}
 
 }

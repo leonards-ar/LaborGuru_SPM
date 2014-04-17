@@ -25,9 +25,15 @@ public class TotalHour extends SpmObject {
 	
 	private Date day;
 	private BigDecimal sales = SpmConstants.BD_ZERO_VALUE;
+	private BigDecimal variable2 = SpmConstants.BD_ZERO_VALUE;
+	private BigDecimal variable3 = SpmConstants.BD_ZERO_VALUE;
+	private BigDecimal variable4 = SpmConstants.BD_ZERO_VALUE;
 	private BigDecimal schedule = SpmConstants.BD_ZERO_VALUE;
 	private BigDecimal target = SpmConstants.BD_ZERO_VALUE;
 	private Double storeAverageVariable = SpmConstants.DOUBLE_ZERO_VALUE;
+	private Double storeAverageVariable2 = SpmConstants.DOUBLE_ZERO_VALUE;
+	private Double storeAverageVariable3 = SpmConstants.DOUBLE_ZERO_VALUE;
+	private Double storeAverageVariable4 = SpmConstants.DOUBLE_ZERO_VALUE;
 	private Double storeAverageWage = SpmConstants.DOUBLE_ZERO_VALUE;
 	private Double storeTotalWage = SpmConstants.DOUBLE_ZERO_VALUE;
 	
@@ -132,7 +138,12 @@ public class TotalHour extends SpmObject {
 	 * @return
 	 */
 	public BigDecimal getProjectedSales() {
-		return new BigDecimal(NumberUtils.getDoubleValue(getStoreAverageVariable())).multiply(getSales());
+		BigDecimal var1 = new BigDecimal(NumberUtils.getDoubleValue(getStoreAverageVariable())).multiply(getSales());
+		BigDecimal var2 =  new BigDecimal(NumberUtils.getDoubleValue(getStoreAverageVariable2())).multiply(getVariable2());
+		BigDecimal var3 = new BigDecimal(NumberUtils.getDoubleValue(getStoreAverageVariable3())).multiply(getVariable3());
+		BigDecimal var4 = new BigDecimal(NumberUtils.getDoubleValue(getStoreAverageVariable4())).multiply(getVariable4());
+		
+		return var1.add(var2.add(var3.add(var4)));
 	}
 	
 	/**
@@ -268,5 +279,93 @@ public class TotalHour extends SpmObject {
 	 */
 	public void setStoreTotalWage(Double storeTotalWage) {
 		this.storeTotalWage = storeTotalWage;
+	}
+
+	/**
+	 * @return the variable2
+	 */
+	public BigDecimal getVariable2() {
+		return variable2;
+	}
+
+	/**
+	 * @param variable2 the variable2 to set
+	 */
+	public void setVariable2(BigDecimal variable2) {
+		this.variable2 = variable2;
+	}
+
+	/**
+	 * @return the variable3
+	 */
+	public BigDecimal getVariable3() {
+		return variable3;
+	}
+
+	/**
+	 * @param variable3 the variable3 to set
+	 */
+	public void setVariable3(BigDecimal variable3) {
+		this.variable3 = variable3;
+	}
+
+	/**
+	 * @return the variable4
+	 */
+	public BigDecimal getVariable4() {
+		return variable4;
+	}
+
+	/**
+	 * @param variable4 the variable4 to set
+	 */
+	public void setVariable4(BigDecimal variable4) {
+		this.variable4 = variable4;
+	}
+	
+	public BigDecimal getTotal() {
+		return getSales().add(getVariable2()).add(getVariable3()).add(getVariable4());
+	}
+
+	/**
+	 * @return the storeAverageVariable2
+	 */
+	public Double getStoreAverageVariable2() {
+		return storeAverageVariable2;
+	}
+
+	/**
+	 * @param storeAverageVariable2 the storeAverageVariable2 to set
+	 */
+	public void setStoreAverageVariable2(Double storeAverageVariable2) {
+		this.storeAverageVariable2 = storeAverageVariable2;
+	}
+
+	/**
+	 * @return the storeAverageVariable3
+	 */
+	public Double getStoreAverageVariable3() {
+		return storeAverageVariable3;
+	}
+
+	/**
+	 * @param storeAverageVariable3 the storeAverageVariable3 to set
+	 */
+	public void setStoreAverageVariable3(Double storeAverageVariable3) {
+		this.storeAverageVariable3 = storeAverageVariable3;
+	}
+
+	/**
+	 * @return the storeAverageVariable4
+	 */
+	public Double getStoreAverageVariable4() {
+		return storeAverageVariable4;
+	}
+
+	/**
+	 * @param storeAverageVariable4 the storeAverageVariable4 to set
+	 */
+	public void setStoreAverageVariable4(Double storeAverageVariable4) {
+		this.storeAverageVariable4 = storeAverageVariable4;
 	}
 }

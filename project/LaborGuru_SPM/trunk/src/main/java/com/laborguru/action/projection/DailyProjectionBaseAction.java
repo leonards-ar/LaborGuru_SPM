@@ -16,56 +16,6 @@ public abstract class DailyProjectionBaseAction extends ProjectionCalendarBaseAc
 
 	private static final long serialVersionUID = 1L;
 
-	private List<String> variableNames = new ArrayList<String>(StoreVariableDefinition.MAX_VARIABLE_DEFINITIONS_QUANTITY);
-	
-	/**
-	 * @return the projectionVariableNames
-	 */
-	public List<String> getVariableNames() {
-		return variableNames;
-	}
-
-	/**
-	 * @param variableNames the variableNames to set
-	 */
-	public void setVariableNames(List<String> variableNames) {
-		this.variableNames = variableNames;
-	}
-
-	/**
-	 * Sets the variable noames to display at projections page 
-	 */
-	private void setProjectionVariablesNames() {
-		List<StoreVariableDefinition> variableDefinitions = getEmployeeStore().getVariableDefinitions();
-		
-		for (StoreVariableDefinition variableDef: variableDefinitions){
-			getVariableNames().add(variableDef.getVariableIndex(), !StringUtils.isEmpty(variableDef.getName()) ? variableDef.getName() : getText("store.secondary.variable" + variableDef.getVariableIndex() + ".label"));
-		}
-		
-		if (getVariableNames().size() < StoreVariableDefinition.MAX_VARIABLE_DEFINITIONS_QUANTITY){
-			for(int i= getVariableNames().size(); i < StoreVariableDefinition.MAX_VARIABLE_DEFINITIONS_QUANTITY; i++){
-				getVariableNames().add(i, null);
-			}
-		}
-	}
-	
-	/**
-	 * 
-	 * @param index
-	 * @return
-	 */
-	public boolean isSecondaryVariablesConfigured(int index) {
-		return getEmployeeStore().isVariableDefinitionConfigured(index);
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean isSecondaryVariablesConfigured() {
-		return getEmployeeStore().isVariableDefinitionConfigured();
-	}
-
 	/**
 	 *  Checks wheter operation times are defined for an store and adds an error to action error.
 	 *  This validatin is only need it when we are gong to save a projection as the operation times are used
@@ -121,7 +71,7 @@ public abstract class DailyProjectionBaseAction extends ProjectionCalendarBaseAc
 	 */
 	public void prepareEdit() {
 		pageSetup();
-		setProjectionVariablesNames();		
+		loadVariablesNames();		
 	}	
 	
 	/**
