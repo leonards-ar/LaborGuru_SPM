@@ -1,8 +1,11 @@
 package com.laborguru.action;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.RequestAware;
@@ -21,6 +24,7 @@ import com.laborguru.model.Employee;
 import com.laborguru.model.Region;
 import com.laborguru.model.RegionalUser;
 import com.laborguru.model.Store;
+import com.laborguru.model.StoreVariableDefinition;
 import com.laborguru.model.User;
 import com.laborguru.util.CalendarUtils;
 import com.laborguru.util.SpmConstants;
@@ -41,6 +45,42 @@ public class SpmAction extends ActionSupport implements SessionAware,RequestAwar
 	private Map session;
 	private Map request;
 
+	private List<String> variableNames = new ArrayList<String>(StoreVariableDefinition.MAX_VARIABLE_DEFINITIONS_QUANTITY);
+	
+	/**
+	 * @return the projectionVariableNames
+	 */
+	public List<String> getVariableNames() {
+		if (variableNames != null && variableNames.isEmpty()) {
+			loadVariablesNames();
+		}
+		return variableNames;
+	}
+
+	/**
+	 * @param variableNames the variableNames to set
+	 */
+	public void setVariableNames(List<String> variableNames) {
+		this.variableNames = variableNames;
+	}
+
+	/**
+	 * Sets the variable noames to display at projections page 
+	 */
+	protected void loadVariablesNames() {
+		List<StoreVariableDefinition> variableDefinitions = getEmployeeStore().getVariableDefinitions();
+		
+		for (StoreVariableDefinition variableDef: variableDefinitions){
+			variableNames.add(variableDef.getVariableIndex(), !StringUtils.isEmpty(variableDef.getName()) ? variableDef.getName() : getText("store.secondary.variable" + variableDef.getVariableIndex() + ".label"));
+		}
+		
+		if (variableNames.size() < StoreVariableDefinition.MAX_VARIABLE_DEFINITIONS_QUANTITY){
+			for(int i= variableNames.size(); i < StoreVariableDefinition.MAX_VARIABLE_DEFINITIONS_QUANTITY; i++){
+				variableNames.add(i, null);
+			}
+		}
+	}	
+	
 	/**
 	 * Returns the logged user from session scope
 	 * @param session The http request session
@@ -253,4 +293,21 @@ public class SpmAction extends ActionSupport implements SessionAware,RequestAwar
 			menu.reset();
 		}
 	}
+	
+	/**
+	 * 
+	 * @param index
+	 * @return
+	 */
+	public boolean isSecondaryVariablesConfigured(int index) {
+		return getEmployeeStore().isVariableDefinitionConfigured(index);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isSecondaryVariablesConfigured() {
+		return getEmployeeStore().isVariableDefinitionConfigured();
+	}	
 }

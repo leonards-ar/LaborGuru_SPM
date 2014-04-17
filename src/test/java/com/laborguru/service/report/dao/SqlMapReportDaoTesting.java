@@ -1,7 +1,5 @@
 package com.laborguru.service.report.dao;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -25,7 +23,7 @@ import com.laborguru.service.dao.SpmDaoHibernateTest;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-public class SqlMapReportDaoTesting extends SpmDaoHibernateTest{
+public class SqlMapReportDaoTesting extends SpmDaoHibernateTest {
 
 	@Autowired
 	private ReportDao reportDao;
