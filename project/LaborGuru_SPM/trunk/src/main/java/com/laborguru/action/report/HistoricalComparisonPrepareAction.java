@@ -1,15 +1,21 @@
 package com.laborguru.action.report;
 
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import com.laborguru.action.SpmAction;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.ReportTypes;
+import com.laborguru.model.report.TotalHistoricalHour;
 import com.laborguru.model.report.TotalHour;
+import com.laborguru.service.data.ReferenceDataService;
 import com.laborguru.service.report.ReportService;
 import com.laborguru.util.CalendarUtils;
 import com.laborguru.util.FusionXmlDataConverter;
+import com.laborguru.util.SpmConstants;
 import com.opensymphony.xwork2.Preparable;
 
 /**
@@ -25,18 +31,21 @@ public class HistoricalComparisonPrepareAction extends SpmAction implements Prep
 	 * 
 	 */
 	private static final long serialVersionUID = 5732711967413965288L;
+    private static final int LAST_DAYS = 7;
+	private Integer index;
+	private Date startDate;
+	private Date endDate;
+	
+	private List<TotalHistoricalHour> totalHistoricalHours;
 
-	Integer index;
-	Date startDate;
-	Date endDate;
+	private String scheduleHeader, targetHeader, reportTitle; 
 	
-	List<TotalHour> totalHours;
-	String scheduleHeader, targetHeader, reportTitle; 
+	private String xmlValues, xmlPercentValues;
+	private String dataType;
 	
-	String xmlValues;
-	
-	ReportService reportService;
-	FusionXmlDataConverter fusionXmlDataConverter;
+	private ReportService reportService;
+	private ReferenceDataService referenceDataService;
+	private FusionXmlDataConverter fusionXmlDataConverter;
 
 	public void prepareShowFirstReport(){
 		//starts 4 weeks ago and ends today
@@ -80,9 +89,51 @@ public class HistoricalComparisonPrepareAction extends SpmAction implements Prep
 		return SpmActionResult.SHOW.getResult();
 	}
 	
+
+	
+	private void setTotalHours(List<TotalHour> totalHours) {
+		
+		totalHistoricalHours = new LinkedList<TotalHistoricalHour>();
+		
+		BigDecimal scheduleSum = SpmConstants.BD_ZERO_VALUE;
+		BigDecimal targetSum = SpmConstants.BD_ZERO_VALUE;
+		
+		for(int i=0; i < totalHours.size(); i++) {
+			
+			TotalHistoricalHour totalHistoricalHour = new TotalHistoricalHour(totalHours.get(i));
+			
+			scheduleSum = scheduleSum.add(totalHistoricalHour.getTotalHour().getSchedule());
+			targetSum = targetSum.add(totalHistoricalHour.getTotalHour().getTarget());
+			
+			if(i >= LAST_DAYS - 1) {
+				
+				totalHistoricalHour.setActualTrend(scheduleSum.divide(new BigDecimal(LAST_DAYS),SpmConstants.DECIMAL_SCALE, SpmConstants.ROUNDING_MODE));
+				totalHistoricalHour.setIdealTrend(targetSum.divide(new BigDecimal(LAST_DAYS),SpmConstants.DECIMAL_SCALE, SpmConstants.ROUNDING_MODE));
+
+				if((i - LAST_DAYS) >= 0) {
+					
+					scheduleSum = scheduleSum.subtract(totalHours.get(i - LAST_DAYS).getSchedule());
+					targetSum = targetSum.subtract(totalHours.get(i - LAST_DAYS).getTarget());
+					
+				}				
+				
+			} else {
+				
+				totalHistoricalHour.setActualTrend(null);
+				totalHistoricalHour.setIdealTrend(null);
+				
+			}
+			
+			totalHistoricalHours.add(totalHistoricalHour);
+			
+		}
+		
+	}
+	
 	private void generateXmlGraph(){
 		
-		setXmlValues(getFusionXmlDataConverter().historicalComparisonXmlConverter(getTotalHours(), getTexts("defaultmessages"), getScheduleHeader(), getTargetHeader(), getReportTitle()));
+		setXmlValues(getFusionXmlDataConverter().historicalComparisonXmlConverter(getTotalHistoricalHours(), getTexts("defaultmessages"), getScheduleHeader(), getTargetHeader(), getReportTitle()));
+		setXmlPercentValues(getFusionXmlDataConverter().historicalComparisonPercentXmlConverter(getTotalHistoricalHours(), getTexts("defaultmessages"), "report.historicalComparison.difference.percentage.graph", "report.historicalComparison.difference.trendpercentage.graph", "report.historicalComparison.difference.percentageLabel.graph"));
 	}
 	
 	public ReportTypes[] getReportTypes(){
@@ -191,15 +242,15 @@ public class HistoricalComparisonPrepareAction extends SpmAction implements Prep
 	/**
 	 * @return the totalHours
 	 */
-	public List<TotalHour> getTotalHours() {
-		return totalHours;
+	public List<TotalHistoricalHour> getTotalHistoricalHours() {
+		return totalHistoricalHours;
 	}
 	
 	/**
 	 * @param totalHours the totalHours to set
 	 */
-	public void setTotalHours(List<TotalHour> totalHours) {
-		this.totalHours = totalHours;
+	public void setTotalHistoricalHours(List<TotalHistoricalHour> totalHistoricalHours) {
+		this.totalHistoricalHours = totalHistoricalHours;
 	}
 	
 	/**
@@ -207,6 +258,45 @@ public class HistoricalComparisonPrepareAction extends SpmAction implements Prep
 	 */
 	public String getXmlValues() {
 		return xmlValues;
+	}
+	
+	/**
+	 * @param xmlValues the xmlValues to set
+	 */
+	public void setXmlValues(String xmlValues) {
+		this.xmlValues = xmlValues;
+	}
+
+	/**
+	 * @return the xmlValues
+	 */
+	public String getXmlPercentValues() {
+		return xmlPercentValues;
+	}
+	
+	/**
+	 * @param xmlValues the xmlValues to set
+	 */
+	public void setXmlPercentValues(String xmlPercentValues) {
+		this.xmlPercentValues = xmlPercentValues;
+	}
+	
+	/**
+	 * @return the ReferenceService
+	 */
+	public ReferenceDataService getReferenceDataService(){
+		return this.referenceDataService;
+	}
+	
+	/**
+	 * @param referenceDataService the referenceDataService to set
+	 */
+	public void setReferenceDataService(ReferenceDataService referenceDataService) {
+		this.referenceDataService = referenceDataService;
+	}
+	
+	public Map getReportDataTypeMap(){
+		return referenceDataService.getHistoricalReportDataType();
 	}
 
 	/**
@@ -217,18 +307,27 @@ public class HistoricalComparisonPrepareAction extends SpmAction implements Prep
 	}
 
 	/**
+	 * 
+	 * @return dataType
+	 */
+	public String getDataType() {
+		return dataType;
+	}
+
+	/**
+	 * 
+	 * @param dataType
+	 */
+	public void setDataType(String dataType) {
+		this.dataType = dataType;
+	}
+
+	/**
 	 * @param fusionXmlDataConverter the fusionXmlDataConverter to set
 	 */
 	public void setFusionXmlDataConverter(
 			FusionXmlDataConverter fusionXmlDataConverter) {
 		this.fusionXmlDataConverter = fusionXmlDataConverter;
-	}
-
-	/**
-	 * @param xmlValues the xmlValues to set
-	 */
-	public void setXmlValues(String xmlValues) {
-		this.xmlValues = xmlValues;
 	}
 
 	public void prepare() throws Exception {
