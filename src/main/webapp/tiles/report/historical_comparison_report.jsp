@@ -39,6 +39,10 @@
 								name="report.historicalComparison.endDate.label" /></td>
 							<td><s:datetimepicker id="endDate" name="endDate"
 								adjustWeeks="true" displayFormat="%{getText('datepicker.format.date')}" theme="simple" /></td>
+							<td align="right" class="form_label"><s:text
+								name="report.historicalComparison.dataType.label" /></td>
+							<td align="left"><s:select name="dataType" list="reportDataTypeMap"
+								listKey="key" listValue="%{getText(value)}" value="absolute" theme="simple" onchange="toggleDivs(this.value)"/></td>								
 						</tr>
 					</table></td>
 			</tr>
@@ -59,6 +63,7 @@
 	<tr>
 		<td align="center"><s:div id="tableFrame" theme="ajax"
 			indicator="historicalComparisonIndicator" /></td>
+			
 	</tr>
 
 </table>
@@ -75,4 +80,15 @@
 	djConfig.searchIds.push("tableFrame");
 	djConfig.searchIds.push("submit");
 	//djConfig.searchIds.push("historicalComparison_form");
+	
+	function toggleDivs(dataType){
+	    if(dataType=='absolute'){
+	    	document.getElementById('totalHistoricalTable').style.display = 'block';
+	    	document.getElementById('totalHistoricalPercentageTable').style.display = 'none';
+	    } else {
+	    	document.getElementById('totalHistoricalTable').style.display = 'none';
+	    	document.getElementById('totalHistoricalPercentageTable').style.display ='block';
+	    }
+    }
+
 </script>

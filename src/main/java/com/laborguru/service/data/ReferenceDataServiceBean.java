@@ -162,4 +162,8 @@ public class ReferenceDataServiceBean implements ReferenceDataService {
 		return (Map<String, String>) getReferenceData().get("printDailyScheduleViews");
 	}
 	
+	public Map<String,String>getHistoricalReportDataType() {
+		return (Map<String, String>) getReferenceData().get("historicalDataType");
+	}
+	
 }

@@ -121,4 +121,9 @@ public interface ReferenceDataService extends Service {
 	 * @return
 	 */
 	Map<String, String> getReportGrouping();
+	/**
+	 * Retrieves different options for Historical Report Data Type
+	 * @return
+	 */
+	Map<String, String> getHistoricalReportDataType();
 }

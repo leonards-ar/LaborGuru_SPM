@@ -51,8 +51,8 @@
 				</entry>
 				<entry key="reportGrouping">
 					<ref bean="reportGrouping"/>
-				</entry>				
-								
+				</entry>
+				<entry key="historicalDataType" value-ref="historicReportDataType"/>				
 			</map>
 		</constructor-arg>
 	</bean> 
@@ -268,6 +268,16 @@
 				</entry>
 			</map>
 		</constructor-arg>
+	</bean>
+	
+	<bean id="historicReportDataType" class="java.util.HashMap" singleton="true">
+	  <description>Two kind of Data to be shown in the Historical Report</description>
+	  <constructor-arg>
+	  	<map>
+	  		<entry key="absolute" value="report.historicalComparions.dataType.absolute"/>
+	  		<entry key="percentage" value="report.historicalComparions.dataType.percentage"/>
+	  	</map>
+	  </constructor-arg>
 	</bean>	
 	
 </beans>

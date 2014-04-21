@@ -16,6 +16,7 @@ import org.dom4j.Element;
 
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.SpmUncheckedException;
+import com.laborguru.model.report.TotalHistoricalHour;
 import com.laborguru.model.report.TotalHour;
 
 public class FusionXmlDataConverter {
@@ -184,13 +185,15 @@ public class FusionXmlDataConverter {
 		return document.asXML();
 	}
 
-	public String historicalComparisonXmlConverter(List<TotalHour> totalHours, ResourceBundle bundle, String scheduleLegend, String targetLegend, String yAxisName){
+	public String historicalComparisonXmlConverter(List<TotalHistoricalHour> totalHistoricalHours, ResourceBundle bundle, String scheduleLegend, String targetLegend, String yAxisName){
 
 		Document document = DocumentHelper.createDocument();
 		Element graph = document.addElement("graph");
 		Element categories = graph.addElement("categories");
 		Element scheduleDataset = graph.addElement("dataset");
-		Element targetDataset = graph.addElement("dataset");		
+		Element targetDataset = graph.addElement("dataset");	
+		Element actualTrend = graph.addElement("dataset");
+		Element idealTrend = graph.addElement("dataset");
 		Properties props = null;
 
 		try {
@@ -223,9 +226,20 @@ public class FusionXmlDataConverter {
 		targetDataset.addAttribute("seriesName", bundle.getString(targetLegend));
 		targetDataset.addAttribute("color", props.getProperty("targetColor"));
 		targetDataset.addAttribute("showValues", props.getProperty("targetShowValues"));
-
-		for (TotalHour th : totalHours) {
+		
+		actualTrend.addAttribute("seriesName", bundle.getString("report.hisotricalComparison.performanceEfficiency.actualTrend"));
+		actualTrend.addAttribute("color", props.getProperty("actualTrendColor"));
+		actualTrend.addAttribute("showValues", props.getProperty("targetShowValues"));
+		actualTrend.addAttribute("alpha", "30");
+		
+		idealTrend.addAttribute("seriesName", bundle.getString("report.historicalComparison.performanceEfficiency.idealTrend"));
+		idealTrend.addAttribute("color", props.getProperty("idealTrendColor"));
+		idealTrend.addAttribute("showValues", props.getProperty("scheduleShowValues"));
+		idealTrend.addAttribute("alpha", "30");
+		
+		for (TotalHistoricalHour totalHistoricalHour : totalHistoricalHours) {
 			
+			TotalHour th = totalHistoricalHour.getTotalHour();
 			// Add column
 			Element element = categories.addElement("category");
 			element.addAttribute("name", sdf.format(th.getDay()));
@@ -234,11 +248,27 @@ public class FusionXmlDataConverter {
 			element = scheduleDataset.addElement("set");
 			element.addAttribute("value", th.getSchedule().toPlainString());
 			//element.addAttribute("link", "http://www.google.com.ar");
-
+		
 			// Add target value
 			element = targetDataset.addElement("set");
 			element.addAttribute("value", th.getTarget().toPlainString());
 			//element.addAttribute("link", "http://www.google.com.ar");
+			
+			
+			if(totalHistoricalHour.getActualTrend() != null) {
+				
+				element = actualTrend.addElement("set");
+				element.addAttribute("value", totalHistoricalHour.getActualTrend().toPlainString());
+				
+				element = idealTrend.addElement("set");
+				element.addAttribute("value", totalHistoricalHour.getIdealTrend().toPlainString());
+				
+				
+			} else {
+				//when set is empty "<set/>" the line is discontinued.
+				element = actualTrend.addElement("set");
+				element = idealTrend.addElement("set");
+			}
 		}
 
 		if (log.isDebugEnabled()) {
@@ -247,6 +277,82 @@ public class FusionXmlDataConverter {
 		return document.asXML();
 		
 	}	
+	
+	public String historicalComparisonPercentXmlConverter(List<TotalHistoricalHour> totalHistoricalHours, ResourceBundle bundle, String percentLegend, String percentTrendLegend, String yAxisName){
+
+		Document document = DocumentHelper.createDocument();
+		Element graph = document.addElement("graph");
+		Element categories = graph.addElement("categories");
+		Element percentageDataset = graph.addElement("dataset");
+		Element percentageTrendDataset = graph.addElement("dataset");	
+		Properties props = null;
+
+		try {
+			props = getProperties(HISTORICAL_COMPARISON_REPORT);
+		} catch (IOException e) {
+			log.error("No file found", e);
+			throw new SpmUncheckedException(e.getCause(), e.getMessage(), ErrorEnum.GENERIC_ERROR);
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat(props.getProperty("dateFormat"));
+
+		graph.addAttribute("caption", "");
+		graph.addAttribute("yAxisMinValue", props.getProperty("defaultYAxisMinValue"));
+		graph.addAttribute("yAxisMaxValue", props.getProperty("defaultYAxisMaxValue"));
+		graph.addAttribute("yAxisName", bundle.getString(yAxisName));
+		graph.addAttribute("showvalues", props.getProperty("showvalues"));
+		graph.addAttribute("numDivLines", props.getProperty("numDivLines"));
+		graph.addAttribute("formatNumberScale", props.getProperty("formatNumberScale"));
+		graph.addAttribute("decimalPrecision", props.getProperty("decimalPrecision"));
+		graph.addAttribute("forceDecimals", props.getProperty("forceDecimals"));
+		graph.addAttribute("anchorSides", props.getProperty("anchorSides"));
+		graph.addAttribute("anchorRadius", props.getProperty("anchorRadius"));
+		graph.addAttribute("anchorBorderColor", props.getProperty("anchorBorderColor"));
+		graph.addAttribute("rotateNames", "1");
+
+		
+		percentageDataset.addAttribute("seriesName", bundle.getString(percentLegend));
+		percentageDataset.addAttribute("color", props.getProperty("scheduleColor"));
+		percentageDataset.addAttribute("showValues", props.getProperty("scheduleShowValues"));
+
+		percentageTrendDataset.addAttribute("seriesName", bundle.getString(percentTrendLegend));
+		percentageTrendDataset.addAttribute("color", props.getProperty("targetColor"));
+		percentageTrendDataset.addAttribute("showValues", props.getProperty("targetShowValues"));
+		percentageTrendDataset.addAttribute("alpha", "30");
+		
+		
+		for (TotalHistoricalHour totalHistoricalHour : totalHistoricalHours) {
+			
+			TotalHour th = totalHistoricalHour.getTotalHour();
+			// Add column
+			Element element = categories.addElement("category");
+			element.addAttribute("name", sdf.format(th.getDay()));
+
+			// Add schedule value
+			element = percentageDataset.addElement("set");
+			element.addAttribute("value", totalHistoricalHour.getPercentage().toPlainString());
+			//element.addAttribute("link", "http://www.google.com.ar");
+		
+			if(totalHistoricalHour.getActualTrend() != null) {
+				
+				// Add target value
+				element = percentageTrendDataset.addElement("set");
+				element.addAttribute("value", totalHistoricalHour.getTrendPercentage().toPlainString());
+				//element.addAttribute("link", "http://www.google.com.ar");				
+				
+			} else {
+				//when set is empty "<set/>" the line is discontinued.
+				element = percentageTrendDataset.addElement("set");
+				
+			}
+		}
+
+		if (log.isDebugEnabled()) {
+			log.debug(document.asXML());
+		}
+		return document.asXML();
+		
+	}	
+	
 	private Properties getProperties(String reportName) throws IOException {
 
 		Properties props = new Properties();
