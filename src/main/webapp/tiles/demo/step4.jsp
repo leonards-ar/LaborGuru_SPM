@@ -47,7 +47,7 @@
 							</tr>
 							<tr>
 								<td class="editorTableFirstColumn"><s:text name="store.storeoperations.hoursofoperation.open" /></td>
-								<td class="editorTableOddRow"><s:textfield name='weekOperationTimeOpen[0]' onchange="updateTime(this);" onchange="updateTime(this);" size="4" maxlength="8"/></td>
+								<td class="editorTableOddRow"><s:textfield name='weekOperationTimeOpen[0]' onchange="updateTime(this);" size="4" maxlength="8"/></td>
 								<td class="editorTableOddRow"><s:textfield name='weekOperationTimeOpen[1]' onchange="updateTime(this);" size="4" maxlength="8"/></td>
 								<td class="editorTableOddRow"><s:textfield name='weekOperationTimeOpen[2]' onchange="updateTime(this);" size="4" maxlength="8"/></td>
 								<td class="editorTableOddRow"><s:textfield name='weekOperationTimeOpen[3]' onchange="updateTime(this);" size="4" maxlength="8"/></td>
