@@ -72,7 +72,7 @@ public class TotalHour extends SpmObject {
 	 * @return the schedule
 	 */
 	public BigDecimal getSchedule() {
-		return schedule;
+		return schedule != null ? schedule : SpmConstants.BD_ZERO_VALUE;
 	}
 	/**
 	 * @param schedule the schedule to set
@@ -84,7 +84,7 @@ public class TotalHour extends SpmObject {
 	 * @return the target
 	 */
 	public BigDecimal getTarget() {
-		return target;
+		return target != null ? target : SpmConstants.BD_ZERO_VALUE;
 	}
 	/**
 	 * @param target the target to set
@@ -97,8 +97,9 @@ public class TotalHour extends SpmObject {
 	 * @return the sales
 	 */
 	public BigDecimal getSales() {
-		return sales;
+		return sales != null ? sales : SpmConstants.BD_ZERO_VALUE;
 	}
+	
 	/**
 	 * @param sales the sales to set
 	 */
@@ -109,7 +110,7 @@ public class TotalHour extends SpmObject {
 	 * @return the difference
 	 */
 	public BigDecimal getDifference() {
-		return schedule.subtract(target);
+		return getSchedule().subtract(getTarget());
 	}
 	
 	/**
@@ -130,7 +131,7 @@ public class TotalHour extends SpmObject {
 		if(schedule == null || schedule.compareTo(SpmConstants.BD_ZERO_VALUE) == 0) {
 			return SpmConstants.BD_ZERO_VALUE;
 		}
-		return getSales().divide(schedule, 2, SpmConstants.ROUNDING_MODE);		
+		return getTotal().divide(schedule, 2, SpmConstants.ROUNDING_MODE);		
 	}
 
 	/**
@@ -180,7 +181,7 @@ public class TotalHour extends SpmObject {
 		if(target == null || target.compareTo(SpmConstants.BD_ZERO_VALUE) == 0) {
 			return SpmConstants.BD_ZERO_VALUE;
 		}
-		return getSales().divide(target, 2, SpmConstants.ROUNDING_MODE);		
+		return getTotal().divide(target, 2, SpmConstants.ROUNDING_MODE);		
 	}
 	
 	@Override
@@ -230,7 +231,7 @@ public class TotalHour extends SpmObject {
 	 * @return
 	 */
 	public Double getStoreAverageVariable() {
-		return storeAverageVariable;
+		return storeAverageVariable != null ? storeAverageVariable : SpmConstants.DOUBLE_ZERO_VALUE;
 	}
 	
 	/**
@@ -246,7 +247,7 @@ public class TotalHour extends SpmObject {
 	 * @return
 	 */
 	public Double getStoreAverageWage() {
-		return storeAverageWage;
+		return storeAverageWage != null ? storeAverageWage : SpmConstants.DOUBLE_ZERO_VALUE;
 	}
 
 	/**
@@ -270,7 +271,7 @@ public class TotalHour extends SpmObject {
 	 * @return
 	 */
 	public Double getStoreTotalWage() {
-		return storeTotalWage;
+		return storeTotalWage != null ? storeTotalWage : SpmConstants.DOUBLE_ZERO_VALUE;
 	}
 
 	/**
@@ -285,7 +286,7 @@ public class TotalHour extends SpmObject {
 	 * @return the variable2
 	 */
 	public BigDecimal getVariable2() {
-		return variable2;
+		return variable2 != null ? variable2 : SpmConstants.BD_ZERO_VALUE;
 	}
 
 	/**
@@ -299,7 +300,7 @@ public class TotalHour extends SpmObject {
 	 * @return the variable3
 	 */
 	public BigDecimal getVariable3() {
-		return variable3;
+		return variable3 != null ? variable3 : SpmConstants.BD_ZERO_VALUE;
 	}
 
 	/**
@@ -313,7 +314,7 @@ public class TotalHour extends SpmObject {
 	 * @return the variable4
 	 */
 	public BigDecimal getVariable4() {
-		return variable4;
+		return variable4 != null ? variable4 : SpmConstants.BD_ZERO_VALUE;
 	}
 
 	/**
@@ -331,7 +332,7 @@ public class TotalHour extends SpmObject {
 	 * @return the storeAverageVariable2
 	 */
 	public Double getStoreAverageVariable2() {
-		return storeAverageVariable2;
+		return storeAverageVariable2 != null ? storeAverageVariable2 : SpmConstants.DOUBLE_ZERO_VALUE;
 	}
 
 	/**
@@ -345,7 +346,7 @@ public class TotalHour extends SpmObject {
 	 * @return the storeAverageVariable3
 	 */
 	public Double getStoreAverageVariable3() {
-		return storeAverageVariable3;
+		return storeAverageVariable3 != null ? storeAverageVariable3 : SpmConstants.DOUBLE_ZERO_VALUE;
 	}
 
 	/**
@@ -359,7 +360,7 @@ public class TotalHour extends SpmObject {
 	 * @return the storeAverageVariable4
 	 */
 	public Double getStoreAverageVariable4() {
-		return storeAverageVariable4;
+		return storeAverageVariable4 != null ? storeAverageVariable4 : SpmConstants.DOUBLE_ZERO_VALUE;
 	}
 
 	/**

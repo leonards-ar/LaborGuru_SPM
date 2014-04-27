@@ -7,6 +7,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import com.laborguru.util.SpmConstants;
+
 /**
  * Deals with sales data collected from the client.
  * 
@@ -128,7 +130,7 @@ public class HistoricSales extends SpmObject {
 	 * @return the mainValue
 	 */
 	public BigDecimal getMainValue() {
-		return mainValue;
+		return mainValue != null ? mainValue : SpmConstants.BD_ZERO_VALUE;
 	}
 
 	/**
@@ -171,7 +173,7 @@ public class HistoricSales extends SpmObject {
 	 * @return the secondValue
 	 */
 	public BigDecimal getSecondValue() {
-		return secondValue;
+		return secondValue != null ? secondValue : SpmConstants.BD_ZERO_VALUE;
 	}
 
 	/**
@@ -185,7 +187,7 @@ public class HistoricSales extends SpmObject {
 	 * @return the thirdValue
 	 */
 	public BigDecimal getThirdValue() {
-		return thirdValue;
+		return thirdValue != null ? thirdValue : SpmConstants.BD_ZERO_VALUE;
 	}
 
 	/**
@@ -199,7 +201,7 @@ public class HistoricSales extends SpmObject {
 	 * @return the fourthValue
 	 */
 	public BigDecimal getFourthValue() {
-		return fourthValue;
+		return fourthValue != null ? fourthValue : SpmConstants.BD_ZERO_VALUE;
 	}
 
 	/**
@@ -215,5 +217,9 @@ public class HistoricSales extends SpmObject {
 		setSecondValue(hs.getSecondValue());
 		setThirdValue(hs.getThirdValue());
 		setUploadFile(hs.getUploadFile());
+	}
+	
+	public BigDecimal getTotalValue() {
+		return getMainValue().add(getSecondValue().add(getThirdValue().add(getFourthValue())));
 	}
 }

@@ -109,7 +109,7 @@ public class ActualValuesPrepareAction extends DailyProjectionBaseAction impleme
 			// This calculates all main and secondary variables
 			dailyHistoricSales.loadDailyValues();
 			
-			actualValue.setMainValue(dailyHistoricSales.getDailyHistoricSalesValue());
+			actualValue.setMainValue(dailyHistoricSales.getDailySalesValue());
 			actualValue.setActualVariable2(dailyHistoricSales.getDailyProjectionVariable2());
 			actualValue.setActualVariable3(dailyHistoricSales.getDailyProjectionVariable3());
 			actualValue.setActualVariable4(dailyHistoricSales.getDailyProjectionVariable4());

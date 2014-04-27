@@ -19,9 +19,10 @@
 			</s:iterator>
 			<td class="greyTableValueWithLeftBorder"><s:text name="report.performance.totalweek.label" /></td>
 		  </tr>
+
 		  <tr>
 			<td class="greyTableLabel">
-			  <s:text name="report.performance.checks.label" />
+			  <s:text name="report.performance.checks.label"><s:param value="%{getVariableNames().get(0)}"/></s:text>
 			</td>
 			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
 			  <td class="greyTableValueWithLeftBorder">
@@ -32,6 +33,71 @@
 				<s:text name="currency"><s:param value="totalSales"/></s:text>
 			</td>
 		  </tr>
+
+		  <s:if test="%{isSecondaryVariablesConfigured(1)}">
+		  <tr>
+			<td class="tableLabel">
+			  <s:text name="report.performance.checks.label"><s:param value="%{getVariableNames().get(1)}"/></s:text>
+			</td>
+			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
+			  <td class="tableValueWithLeftBorder">
+			  	<s:text name="currency"><s:param value="variable2"/></s:text>
+			  </td>
+			</s:iterator>
+			<td class="greyTableValueWithLeftBorder">
+				<s:text name="currency"><s:param value="totalVariable2"/></s:text>
+			</td>
+		  </tr>
+		  </s:if>
+
+		  <s:if test="%{isSecondaryVariablesConfigured(2)}">
+		  <tr>
+			<td class="tableLabel">
+			  <s:text name="report.performance.checks.label"><s:param value="%{getVariableNames().get(2)}"/></s:text>
+			</td>
+			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
+			  <td class="tableValueWithLeftBorder">
+			  	<s:text name="currency"><s:param value="variable3"/></s:text>
+			  </td>
+			</s:iterator>
+			<td class="greyTableValueWithLeftBorder">
+				<s:text name="currency"><s:param value="totalVariable3"/></s:text>
+			</td>
+		  </tr>
+		  </s:if>
+
+		  <s:if test="%{isSecondaryVariablesConfigured(3)}">
+		  <tr>
+			<td class="tableLabel">
+			  <s:text name="report.performance.checks.label"><s:param value="%{getVariableNames().get(3)}"/></s:text>
+			</td>
+			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
+			  <td class="tableValueWithLeftBorder">
+			  	<s:text name="currency"><s:param value="variable4"/></s:text>
+			  </td>
+			</s:iterator>
+			<td class="greyTableValueWithLeftBorder">
+				<s:text name="currency"><s:param value="totalVariable4"/></s:text>
+			</td>
+		  </tr>		  
+		  </s:if>
+		  
+		  <s:if test="secondaryVariablesConfigured">
+		  <tr>
+			<td class="greyTableLabel">
+			  <s:text name="report.performance.total.label"/>
+			</td>
+			<s:iterator id="totalHour" value="totalHours" status="itTotalHours">
+			  <td class="greyTableValueWithLeftBorder">
+			  	<s:text name="currency"><s:param value="total"/></s:text>
+			  </td>
+			</s:iterator>
+			<td class="tableValueWithLeftBorder">
+				<s:text name="currency"><s:param value="total"/></s:text>
+			</td>
+		  </tr>
+		  </s:if>		  
+
 		  <tr>
 			<td class="tableLabelWithBottomBorder">
 			  <s:text name="report.performance.scheduled.label" />

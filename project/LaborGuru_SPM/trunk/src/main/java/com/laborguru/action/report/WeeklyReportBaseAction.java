@@ -103,11 +103,11 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 		
 		if(calculateExtendedTotals()) {
 			if(getTotalSchedule().compareTo(SpmConstants.BD_ZERO_VALUE) != 0) {
-				setTotalVplhSchedule(getTotalSales().divide(getTotalSchedule(), 2, SpmConstants.ROUNDING_MODE));
+				setTotalVplhSchedule(getTotal().divide(getTotalSchedule(), 2, SpmConstants.ROUNDING_MODE));
 			}
 
 			if(getTotalTarget().compareTo(SpmConstants.BD_ZERO_VALUE) != 0) {
-				setTotalVplhTarget(getTotalSales().divide(getTotalTarget(), 2, SpmConstants.ROUNDING_MODE));
+				setTotalVplhTarget(getTotal().divide(getTotalTarget(), 2, SpmConstants.ROUNDING_MODE));
 			}
 			
 			if(getTotalSales() != null && getEmployeeStore() != null) {
@@ -253,7 +253,7 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 	 * @return the totalSales
 	 */
 	public BigDecimal getTotalSales() {
-		return totalSales;
+		return totalSales != null ? totalSales : SpmConstants.BD_ZERO_VALUE;
 	}
 
 	/**
@@ -306,7 +306,7 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 	}
 
 	public BigDecimal getTotalVplhSchedule() {
-		return totalVplhSchedule;
+		return totalVplhSchedule != null ? totalVplhSchedule : SpmConstants.BD_ZERO_VALUE;
 	}
 
 	public void setTotalVplhSchedule(BigDecimal totalVplhSchedule) {
@@ -314,7 +314,7 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 	}
 
 	public BigDecimal getTotalVplhTarget() {
-		return totalVplhTarget;
+		return totalVplhTarget != null ? totalVplhTarget : SpmConstants.BD_ZERO_VALUE;
 	}
 
 	public void setTotalVplhTarget(BigDecimal totalVplhTarget) {
@@ -322,7 +322,7 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 	}
 
 	public BigDecimal getTotalProjectedSales() {
-		return totalProjectedSales;
+		return totalProjectedSales != null ? totalProjectedSales : SpmConstants.BD_ZERO_VALUE;
 	}
 
 	public void setTotalProjectedSales(BigDecimal totalProjectedSales) {
@@ -330,7 +330,7 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 	}
 
 	public BigDecimal getTotalScheduleLaborPercentage() {
-		return totalScheduleLaborPercentage;
+		return totalScheduleLaborPercentage != null ? totalScheduleLaborPercentage : SpmConstants.BD_ZERO_VALUE;
 	}
 
 	public void setTotalScheduleLaborPercentage(
@@ -339,7 +339,7 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 	}
 
 	public BigDecimal getTotalTargetLaborPercentage() {
-		return totalTargetLaborPercentage;
+		return totalTargetLaborPercentage != null ? totalTargetLaborPercentage : SpmConstants.BD_ZERO_VALUE;
 	}
 
 	public void setTotalTargetLaborPercentage(BigDecimal totalTargetLaborPercentage) {
@@ -350,7 +350,7 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 	 * @return the totalVariable2
 	 */
 	public BigDecimal getTotalVariable2() {
-		return totalVariable2;
+		return totalVariable2 != null ? totalVariable2 : SpmConstants.BD_ZERO_VALUE;
 	}
 
 	/**
@@ -364,7 +364,7 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 	 * @return the totalVariable3
 	 */
 	public BigDecimal getTotalVariable3() {
-		return totalVariable3;
+		return totalVariable3 != null ? totalVariable3 : SpmConstants.BD_ZERO_VALUE;
 	}
 
 	/**
@@ -378,7 +378,7 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 	 * @return the totalVariable4
 	 */
 	public BigDecimal getTotalVariable4() {
-		return totalVariable4;
+		return totalVariable4 != null ? totalVariable4 : SpmConstants.BD_ZERO_VALUE;
 	}
 
 	/**
@@ -392,7 +392,7 @@ public abstract class WeeklyReportBaseAction extends ScheduleReportPrepareAction
 	 * @return the total
 	 */
 	public BigDecimal getTotal() {
-		return total;
+		return total != null ? total : SpmConstants.BD_ZERO_VALUE;
 	}
 
 	/**
