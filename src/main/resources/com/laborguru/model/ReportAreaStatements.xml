@@ -12,7 +12,10 @@
   <select id="getActualSalesByArea" parameterClass="java.util.Map" resultMap="get-actualSalesByArea-result"> 
     SELECT s.store_id as store_id, 
     s.name as store_name, 
-    SUM(hs.main_value) as main_value 
+    SUM(hs.main_value) as main_value,
+	SUM(hs.second_value) as secondValue, 
+	SUM(hs.third_value) as thirdValue, 
+	SUM(hs.fourth_value) as fourthValue
     FROM tbl_stores s LEFT JOIN tbl_historic_sales hs ON s.store_id = hs.store_id AND DATE(hs.date_time) BETWEEN STR_TO_DATE(#start_date#, '%Y-%m-%d') AND STR_TO_DATE(#end_date#, '%Y-%m-%d') 
     WHERE s.area_id = #area_id# 
     GROUP BY s.store_id 

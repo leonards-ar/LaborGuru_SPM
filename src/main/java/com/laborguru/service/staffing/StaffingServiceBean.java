@@ -226,8 +226,8 @@ public class StaffingServiceBean implements StaffingService {
 			
 			int size = dailySalesValue.getHalfHourSalesValues().size();
 			
-			// SPM#221: If sales is zero, then staffing is zero
-			boolean calculateStaffing = dailySalesValue.getDailySalesValue() != null ? dailySalesValue.getDailySalesValue().compareTo(BigDecimal.ZERO) > 0 : false;
+			// SPM#221: If sales (sales + any of secondary variables) is zero, then staffing is zero
+			boolean calculateStaffing = dailySalesValue.getTotalDailyValue() != null ? dailySalesValue.getTotalDailyValue().compareTo(BigDecimal.ZERO) > 0 : false;
 			double totalWorkContent = 0.0;
 			int totalMinimumStaffing = 0;
 			
@@ -236,7 +236,7 @@ public class StaffingServiceBean implements StaffingService {
 				// SPM#221: If sales is zero, then staffing is zero
 				aHalfHourStaffing = calculateStaffing ? calculateHalfHourStaffing(position, date, dailySalesValue.getHalfHourSalesValues().get(i), staffingData.get(i)) : zeroHalfHourStaffing(position, date, dailySalesValue.getHalfHourSalesValues().get(i), staffingData.get(i));
 
-				// Only take into account store opperation hours
+				// Only take into account store operation hours
 				if(CalendarUtils.inRangeNotIncludingEndTime(aHalfHourStaffing.getTime(), open, close) || CalendarUtils.equalsTime(open, close)) {
 					//:TODO: Round up Work Content to 2 decimals????
 					totalWorkContent += NumberUtils.getDoubleValue(aHalfHourStaffing.getWorkContent());

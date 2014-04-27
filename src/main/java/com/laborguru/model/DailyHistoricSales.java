@@ -27,34 +27,22 @@ public class DailyHistoricSales extends DailySalesValue {
 	private static final int NUMBER_OF_HALF_HOURS = 48;
 
 	private List<HalfHourHistoricSales> halfHourHistoricSales = new ArrayList<HalfHourHistoricSales>(NUMBER_OF_HALF_HOURS);
-	BigDecimal dailyHistoricSalesValue = null;	
 	
-	/**
-	 * Returns the sum of all the halfhours defined for the projection.
-	 * If there is no halfhours returns NULL
-	 * @return the projection value or null
-	 */
-	public BigDecimal getDailyHistoricSalesValue(){
-		if(dailyHistoricSalesValue == null) {
-			loadDailyValues();
-		}
-		return dailyHistoricSalesValue;
-	}
-	
+	@Override
 	public void loadDailyValues() {
 		BigDecimal value1 = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
 		BigDecimal value2 = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
 		BigDecimal value3 = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
 		BigDecimal value4 = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
 		
-		for (HalfHourHistoricSales aHalfHourHistoricSales: getHalfHourHistoricSales()){
+		for (HalfHourHistoricSales aHalfHourHistoricSales: getHalfHourHistoricSales()) {
 			value1 = value1.add(aHalfHourHistoricSales.getValue());
 			value2 = value2.add(aHalfHourHistoricSales.getSecondValue());
 			value3 = value3.add(aHalfHourHistoricSales.getThirdValue());
 			value4 = value4.add(aHalfHourHistoricSales.getFourthValue());
 		}
 
-		setDailyHistoricSalesValue(value1);
+		setDailySalesValue(value1);
 		setDailyProjectionVariable2(value2);
 		setDailyProjectionVariable3(value3);
 		setDailyProjectionVariable4(value4);
@@ -198,11 +186,4 @@ public class DailyHistoricSales extends DailySalesValue {
 	public List<? extends HalfHourSalesValue> getHalfHourSalesValues() {
 		return getHalfHourHistoricSales();
 	}
-
-	/**
-	 * @param dailyHistoricSalesValue the dailyHistoricSalesValue to set
-	 */
-	protected void setDailyHistoricSalesValue(BigDecimal dailyHistoricSalesValue) {
-		this.dailyHistoricSalesValue = dailyHistoricSalesValue;
-	}	
 }

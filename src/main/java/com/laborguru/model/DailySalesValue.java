@@ -28,6 +28,7 @@ public abstract class DailySalesValue extends SpmObject {
 	
 	private Store store;
 
+	private BigDecimal dailySalesValue = null;
 	private BigDecimal dailyProjectionVariable2;
 	private BigDecimal dailyProjectionVariable3;
 	private BigDecimal dailyProjectionVariable4;
@@ -105,14 +106,21 @@ public abstract class DailySalesValue extends SpmObject {
 	 * If there is no halfhours returns NULL
 	 * @return the projection value or null
 	 */
-	public BigDecimal getDailySalesValue(){
+	public BigDecimal getDailySalesValue() {
+		if(dailySalesValue == null) {
+			loadDailyValues();
+		}
+		return dailySalesValue;
+	}
+	
+	public void loadDailyValues() {
 		BigDecimal retValue = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
 		
 		for (HalfHourSalesValue aHalfHourSalesValue: getHalfHourSalesValues()){
 			retValue = retValue.add(aHalfHourSalesValue.getValue());
 		}
 		
-		return getHalfHourSalesValues().isEmpty()? null : retValue;
+		setDailySalesValue(retValue);
 	}
 	
 	/**
@@ -166,5 +174,16 @@ public abstract class DailySalesValue extends SpmObject {
 	 */
 	public void setDailyProjectionVariable4(BigDecimal dailyProjectionVariable4) {
 		this.dailyProjectionVariable4 = dailyProjectionVariable4;
+	}
+
+	/**
+	 * @param dailySalesValue the dailySalesValue to set
+	 */
+	public void setDailySalesValue(BigDecimal dailySalesValue) {
+		this.dailySalesValue = dailySalesValue;
 	}	
+	
+	public BigDecimal getTotalDailyValue() {
+		return getDailySalesValue().add(getDailyProjectionVariable2()).add(getDailyProjectionVariable3()).add(getDailyProjectionVariable4());
+	}
 }

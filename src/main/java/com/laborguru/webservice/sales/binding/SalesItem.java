@@ -2,16 +2,11 @@ package com.laborguru.webservice.sales.binding;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-import com.laborguru.exception.FileParserException;
 import com.laborguru.model.HistoricSales;
-import com.laborguru.model.Store;
-import com.laborguru.model.filter.SearchStoreFilter;
-import com.laborguru.service.store.StoreService;
 import com.laborguru.util.CalendarUtils;
 import com.laborguru.util.SpmConstants;
 

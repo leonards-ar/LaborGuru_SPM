@@ -422,14 +422,14 @@ public class ReportServiceBean implements ReportService {
 			
 			DailyProjection dp = getDailyProjectionByDate(date, projections);
 			if(dp != null) {
-				th.setSchedule(dp.getDailyProjectionValue());
+				th.setSchedule(dp.getTotalDailyValue());
 			} else {
 				th.setSchedule(SpmConstants.BD_ZERO_VALUE);
 			}
 			
 			HistoricSales hs = getHistoricSalesByDate(date, actualSales);
 			if(hs != null) {
-				th.setTarget(hs.getMainValue());
+				th.setTarget(hs.getTotalValue());
 			} else {
 				th.setTarget(SpmConstants.BD_ZERO_VALUE);
 			}
