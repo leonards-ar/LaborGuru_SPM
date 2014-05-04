@@ -110,13 +110,9 @@ public class HistoricalComparisonPrepareAction extends SpmAction implements Prep
 				totalHistoricalHour.setActualTrend(scheduleSum.divide(new BigDecimal(LAST_DAYS),SpmConstants.DECIMAL_SCALE, SpmConstants.ROUNDING_MODE));
 				totalHistoricalHour.setIdealTrend(targetSum.divide(new BigDecimal(LAST_DAYS),SpmConstants.DECIMAL_SCALE, SpmConstants.ROUNDING_MODE));
 
-				if((i - LAST_DAYS) >= 0) {
+				scheduleSum = scheduleSum.subtract(totalHours.get(i - (LAST_DAYS - 1)).getSchedule());
+				targetSum = targetSum.subtract(totalHours.get(i - (LAST_DAYS - 1)).getTarget());
 					
-					scheduleSum = scheduleSum.subtract(totalHours.get(i - LAST_DAYS).getSchedule());
-					targetSum = targetSum.subtract(totalHours.get(i - LAST_DAYS).getTarget());
-					
-				}				
-				
 			} else {
 				
 				totalHistoricalHour.setActualTrend(null);
