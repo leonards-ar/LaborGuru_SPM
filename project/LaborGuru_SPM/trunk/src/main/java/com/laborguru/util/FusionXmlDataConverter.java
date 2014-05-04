@@ -28,6 +28,7 @@ public class FusionXmlDataConverter {
 	private static final String WEEKLY_TOTAL_HOURS_REPORT = "weeklyTotalHoursReport";
 	private static final String DAILY_HALFHOUR_REPORT = "dailyHalfhourReport";
 	private static final String HISTORICAL_COMPARISON_REPORT = "historicalComparisonReport";
+	private static final BigDecimal MIN_SCALE_VALUE = new BigDecimal(50); //For Historical Percentage the minimun values is 50%
 	
 	public String weeklyTotalHoursXmlConverter(List<TotalHour> totalHours, String scheduleAxisName, String targetAxisName, ResourceBundle bundle) {
 
@@ -285,6 +286,7 @@ public class FusionXmlDataConverter {
 		Element categories = graph.addElement("categories");
 		Element percentageDataset = graph.addElement("dataset");
 		Element percentageTrendDataset = graph.addElement("dataset");	
+
 		Properties props = null;
 
 		try {
@@ -296,11 +298,11 @@ public class FusionXmlDataConverter {
 		SimpleDateFormat sdf = new SimpleDateFormat(props.getProperty("dateFormat"));
 
 		graph.addAttribute("caption", "");
-		graph.addAttribute("yAxisMinValue", props.getProperty("defaultYAxisMinValue"));
-		graph.addAttribute("yAxisMaxValue", props.getProperty("defaultYAxisMaxValue"));
+		graph.addAttribute("numberSuffix","%25 ");
+		graph.addAttribute("yAxisMinValue", MIN_SCALE_VALUE.toPlainString());
+		//graph.addAttribute("yAxisMaxValue", props.getProperty("defaultYAxisMaxValue"));
 		graph.addAttribute("yAxisName", bundle.getString(yAxisName));
 		graph.addAttribute("showvalues", props.getProperty("showvalues"));
-		graph.addAttribute("numDivLines", props.getProperty("numDivLines"));
 		graph.addAttribute("formatNumberScale", props.getProperty("formatNumberScale"));
 		graph.addAttribute("decimalPrecision", props.getProperty("decimalPrecision"));
 		graph.addAttribute("forceDecimals", props.getProperty("forceDecimals"));
@@ -319,7 +321,8 @@ public class FusionXmlDataConverter {
 		percentageTrendDataset.addAttribute("showValues", props.getProperty("targetShowValues"));
 		percentageTrendDataset.addAttribute("alpha", "30");
 		
-		
+		BigDecimal maxValue = SpmConstants.BD_ZERO_VALUE;
+		BigDecimal minValue = MIN_SCALE_VALUE;
 		for (TotalHistoricalHour totalHistoricalHour : totalHistoricalHours) {
 			
 			TotalHour th = totalHistoricalHour.getTotalHour();
@@ -328,24 +331,45 @@ public class FusionXmlDataConverter {
 			element.addAttribute("name", sdf.format(th.getDay()));
 
 			// Add schedule value
-			element = percentageDataset.addElement("set");
-			element.addAttribute("value", totalHistoricalHour.getPercentage().toPlainString());
+			if(totalHistoricalHour.getPercentage().compareTo(MIN_SCALE_VALUE) >= 0){
+				element = percentageDataset.addElement("set");
+				element.addAttribute("value", totalHistoricalHour.getPercentage().toPlainString());
+				if(maxValue.compareTo(totalHistoricalHour.getPercentage()) < 0) {
+					maxValue = totalHistoricalHour.getPercentage();
+				}
+				
+				if(minValue.compareTo(totalHistoricalHour.getPercentage()) > 0) {
+					minValue = totalHistoricalHour.getPercentage();
+				}
+			} else {
+				element = percentageDataset.addElement("set");
+				
+			}
 			//element.addAttribute("link", "http://www.google.com.ar");
 		
-			if(totalHistoricalHour.getActualTrend() != null) {
+			if(totalHistoricalHour.getActualTrend() != null && totalHistoricalHour.getTrendPercentage().compareTo(MIN_SCALE_VALUE) >= 0) {
 				
 				// Add target value
 				element = percentageTrendDataset.addElement("set");
 				element.addAttribute("value", totalHistoricalHour.getTrendPercentage().toPlainString());
 				//element.addAttribute("link", "http://www.google.com.ar");				
+				if(maxValue.compareTo(totalHistoricalHour.getTrendPercentage()) < 0) {
+					maxValue = totalHistoricalHour.getTrendPercentage();
+				}
+				
+				if(minValue.compareTo(totalHistoricalHour.getTrendPercentage()) > 0) {
+					minValue = totalHistoricalHour.getTrendPercentage();
+				}
 				
 			} else {
 				//when set is empty "<set/>" the line is discontinued.
 				element = percentageTrendDataset.addElement("set");
-				
 			}
 		}
-
+		
+		graph.addAttribute("numdivlines", maxValue.subtract(minValue).divide(new BigDecimal(10),0,BigDecimal.ROUND_UP).toPlainString());
+		//graph.addAttribute("numdivlines", "10");
+		
 		if (log.isDebugEnabled()) {
 			log.debug(document.asXML());
 		}
