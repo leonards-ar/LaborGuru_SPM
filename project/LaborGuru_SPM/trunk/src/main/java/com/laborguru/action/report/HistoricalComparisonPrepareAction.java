@@ -38,7 +38,7 @@ public class HistoricalComparisonPrepareAction extends SpmAction implements Prep
 	
 	private List<TotalHistoricalHour> totalHistoricalHours;
 
-	private String scheduleHeader, targetHeader, reportTitle; 
+	private String scheduleHeader, targetHeader, reportTitle, scheduleTrendHeader, targetTrendHeader; 
 	
 	private String xmlValues, xmlPercentValues;
 	private String dataType;
@@ -65,21 +65,31 @@ public class HistoricalComparisonPrepareAction extends SpmAction implements Prep
 									setReportTitle("report.historicalcomparison.performanceEfficiency.title.label");
 									setScheduleHeader("report.historicalComparison.performanceEfficiency.schedule.label");
 									setTargetHeader("report.historicalComparison.performanceEfficiency.target.label");
+									setScheduleTrendHeader("report.hisotricalComparison.performanceEfficiency.actualTrend.label");
+									setTargetTrendHeader("report.historicalComparison.performanceEfficiency.idealTrend.label");
 									break;
 		case schedulingEfficiency: setTotalHours(getReportService().getWeeklyTotalHours(getEmployeeStore(), getStartDate(), getEndDate(), false));
 									setReportTitle("report.historicalcomparison.scheduleEfficiency.title.label");
 									setScheduleHeader("report.historicalComparison.scheduleEfficiency.schedule.label");
 									setTargetHeader("report.historicalComparison.scheduleEfficiency.target.label");
+									setScheduleTrendHeader("report.historicalComparison.scheduleEfficiency.scheduleTrend.label");
+									setTargetTrendHeader("report.historicalComparison.scheduleEfficiency.targetTrend.label");
+									
 									break;
 		case scheduleExecutionEfficiency: setTotalHours(getReportService().getScheduleExecutionEfficiencyReport(getEmployeeStore(), getStartDate(), getEndDate(), false));
 									setReportTitle("report.historicalcomparison.performanceEfficiency.title.label");
 									setScheduleHeader("report.historicalComparison.scheduleExecutionEfficiency.schedule.label");
 									setTargetHeader("report.historicalComparison.scheduleExecutionEfficiency.target.label");
+									setScheduleTrendHeader("report.historicalComparison.scheduleExecutionEfficiency.scheduleTrend.label");
+									setTargetTrendHeader("report.historicalComparison.scheduleExecutionEfficiency.targetTrend.label");
+									
 									break;
 		case forecastEfficiency: setTotalHours(getReportService().getForecastEfficiencyReport(getEmployeeStore(), getStartDate(), getEndDate()));
 								setReportTitle("report.historicalcomparison.forecastEfficiency.title.label");
 								setScheduleHeader("report.historicalComparison.forecastEfficiency.schedule.label");
 								setTargetHeader("report.historicalComparison.forecastEfficiency.target.label");
+								setScheduleTrendHeader("report.historicalComparison.forecastEfficiency.scheduleTrend.label");
+								setTargetTrendHeader("report.historicalComparison.forecastEfficiency.targetTrend.label");
 								break;
 		default: setTotalHours(null);
 				 break;
@@ -128,7 +138,7 @@ public class HistoricalComparisonPrepareAction extends SpmAction implements Prep
 	
 	private void generateXmlGraph(){
 		
-		setXmlValues(getFusionXmlDataConverter().historicalComparisonXmlConverter(getTotalHistoricalHours(), getTexts("defaultmessages"), getScheduleHeader(), getTargetHeader(), getReportTitle()));
+		setXmlValues(getFusionXmlDataConverter().historicalComparisonXmlConverter(getTotalHistoricalHours(), getTexts("defaultmessages"), getScheduleHeader(), getTargetHeader(), getReportTitle(), getScheduleTrendHeader(), getTargetTrendHeader()));
 		setXmlPercentValues(getFusionXmlDataConverter().historicalComparisonPercentXmlConverter(getTotalHistoricalHours(), getTexts("defaultmessages"), "report.historicalComparison.difference.percentage.graph", "report.historicalComparison.difference.trendpercentage.graph", "report.historicalComparison.difference.percentageLabel.graph"));
 	}
 	
@@ -191,6 +201,38 @@ public class HistoricalComparisonPrepareAction extends SpmAction implements Prep
 	 */
 	public void setReportTitle(String reportTitle) {
 		this.reportTitle = reportTitle;
+	}
+	
+    /**
+     * 
+     * @return the scheduleTrendHeader
+     */
+	public String getScheduleTrendHeader() {
+		return scheduleTrendHeader;
+	}
+
+	/**
+	 * 
+	 * @param scheduleTrendHeader
+	 */
+	public void setScheduleTrendHeader(String scheduleTrendHeader) {
+		this.scheduleTrendHeader = scheduleTrendHeader;
+	}
+
+	/**
+	 * 
+	 * @return the target Trend Header
+	 */
+	public String getTargetTrendHeader() {
+		return targetTrendHeader;
+	}
+
+	/**
+	 * 
+	 * @param targetTrendHeader
+	 */
+	public void setTargetTrendHeader(String targetTrendHeader) {
+		this.targetTrendHeader = targetTrendHeader;
 	}
 
 	/**

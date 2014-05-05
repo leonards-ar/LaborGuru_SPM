@@ -29,10 +29,10 @@
                 <s:text name="report.historicalComparison.difference.percentage" />
               </td>
               <td class="cellLabel">
-                   <s:text name="report.hisotricalComparison.performanceEfficiency.actualTrend"/>
+                   <s:property value="%{getText(scheduleTrendHeader)}"/>
               </td>
               <td class="cellLabel">
-                   <s:text name="report.historicalComparison.performanceEfficiency.idealTrend"/>
+                   <s:property value="%{getText(targetTrendHeader)}"/>
               </td>
 						</tr>
 						<s:iterator id="totalHistoricalHour" value="totalHistoricalHours" status="itTotalHour">
