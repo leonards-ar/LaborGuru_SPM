@@ -36,10 +36,10 @@ public class DailyHistoricSales extends DailySalesValue {
 		BigDecimal value4 = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
 		
 		for (HalfHourHistoricSales aHalfHourHistoricSales: getHalfHourHistoricSales()) {
-			value1 = value1.add(aHalfHourHistoricSales.getValue());
-			value2 = value2.add(aHalfHourHistoricSales.getSecondValue());
-			value3 = value3.add(aHalfHourHistoricSales.getThirdValue());
-			value4 = value4.add(aHalfHourHistoricSales.getFourthValue());
+			value1 = value1.add(aHalfHourHistoricSales.getValue() != null ? aHalfHourHistoricSales.getValue() : SpmConstants.BD_ZERO_VALUE);
+			value2 = value2.add(aHalfHourHistoricSales.getSecondValue() != null ? aHalfHourHistoricSales.getSecondValue() : SpmConstants.BD_ZERO_VALUE);
+			value3 = value3.add(aHalfHourHistoricSales.getThirdValue() != null ? aHalfHourHistoricSales.getThirdValue() : SpmConstants.BD_ZERO_VALUE);
+			value4 = value4.add(aHalfHourHistoricSales.getFourthValue() != null ? aHalfHourHistoricSales.getFourthValue() : SpmConstants.BD_ZERO_VALUE);
 		}
 
 		setDailySalesValue(value1);

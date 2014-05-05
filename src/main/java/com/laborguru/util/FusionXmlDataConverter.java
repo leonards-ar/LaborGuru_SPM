@@ -186,7 +186,7 @@ public class FusionXmlDataConverter {
 		return document.asXML();
 	}
 
-	public String historicalComparisonXmlConverter(List<TotalHistoricalHour> totalHistoricalHours, ResourceBundle bundle, String scheduleLegend, String targetLegend, String yAxisName){
+	public String historicalComparisonXmlConverter(List<TotalHistoricalHour> totalHistoricalHours, ResourceBundle bundle, String scheduleLegend, String targetLegend, String yAxisName, String scheduleTrendLegend, String targetTrendLegend){
 
 		Document document = DocumentHelper.createDocument();
 		Element graph = document.addElement("graph");
@@ -228,12 +228,12 @@ public class FusionXmlDataConverter {
 		targetDataset.addAttribute("color", props.getProperty("targetColor"));
 		targetDataset.addAttribute("showValues", props.getProperty("targetShowValues"));
 		
-		actualTrend.addAttribute("seriesName", bundle.getString("report.hisotricalComparison.performanceEfficiency.actualTrend"));
+		actualTrend.addAttribute("seriesName", bundle.getString(scheduleTrendLegend));
 		actualTrend.addAttribute("color", props.getProperty("actualTrendColor"));
 		actualTrend.addAttribute("showValues", props.getProperty("targetShowValues"));
 		actualTrend.addAttribute("alpha", "30");
 		
-		idealTrend.addAttribute("seriesName", bundle.getString("report.historicalComparison.performanceEfficiency.idealTrend"));
+		idealTrend.addAttribute("seriesName", bundle.getString(targetTrendLegend));
 		idealTrend.addAttribute("color", props.getProperty("idealTrendColor"));
 		idealTrend.addAttribute("showValues", props.getProperty("scheduleShowValues"));
 		idealTrend.addAttribute("alpha", "30");
