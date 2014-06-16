@@ -56,8 +56,14 @@
         <result name="show">/tiles/report/manager_table_report.jsp</result>
       </action>
 	    
-		<action name="percentLaborReport_*" method="{1}" class="com.laborguru.action.report.PercentageLaborHoursReportPrepareAction">
-			<result name="show">/tiles/report/percent_labor_hours_report.jsp</result>
-		</action>	    
+	  <action name="percentLaborReport_*" method="{1}" class="com.laborguru.action.report.PercentageLaborHoursReportPrepareAction">
+	    <result name="show">/tiles/report/percent_labor_hours_report.jsp</result>
+	  </action>
+	  
+	  <action name="dailyFlashReport_*" method="{1}" class="com.laborguru.action.report.DailyFlashReportPrepareAction">
+	    <result name="input" type="tiles">showDailyFlashHours</result>
+		<!-- result name="show">/tiles/report/halfhour_table_report.jsp</result -->
+	  </action>
+	  	    
 	</package>
 </struts>

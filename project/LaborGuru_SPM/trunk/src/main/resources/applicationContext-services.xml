@@ -136,12 +136,19 @@
 		<property name="profileDao" ref="profileDao" />
 	</bean>
 	
-	<bean id="reportService" class="com.laborguru.service.report.ReportServiceBean">
+	<bean id="reportServiceTarget" class="com.laborguru.service.report.ReportServiceBean">
 	    <property name="reportDao" ref="reportDao"/>
 	    <property name="staffingService" ref="staffingService" />
 	    <property name="projectionService" ref="projectionService" />
 	    <property name="scheduleService" ref="scheduleService" />
+	    <property name="storeDao" ref="storeDao"/>
 	</bean>
+	
+  <bean id="reportService" parent="baseTransactionProxy">
+    <property name="proxyInterfaces" value="com.laborguru.service.report.ReportService"/>
+    <property name="target" ref="reportServiceTarget"/>	 
+  </bean>
+	
 
   <bean id="reportCustomerServiceTarget" class="com.laborguru.service.report.ReportCustomerServiceBean">
       <property name="reportDao" ref="reportDao"/>
@@ -152,10 +159,10 @@
       <property name="scheduleService" ref="scheduleService"/>      
   </bean>
 	
-	<bean id="reportCustomerService" parent="baseTransactionProxy">
+  <bean id="reportCustomerService" parent="baseTransactionProxy">
     <property name="proxyInterfaces" value="com.laborguru.service.report.ReportCustomerService"/>
     <property name="target" ref="reportCustomerServiceTarget"/>	 
-	</bean>
+  </bean>
 	
   <bean id="reportRegionServiceTarget" class="com.laborguru.service.report.ReportRegionServiceBean">
       <property name="reportDao" ref="reportDao"/>

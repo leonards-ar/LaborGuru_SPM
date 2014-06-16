@@ -3,6 +3,7 @@ package com.laborguru.service.report;
 import java.util.Date;
 import java.util.List;
 
+import com.laborguru.model.DailyFlashHour;
 import com.laborguru.model.Position;
 import com.laborguru.model.PositionGroup;
 import com.laborguru.model.Store;
@@ -136,5 +137,13 @@ public interface ReportService extends Service {
 	 * @return
 	 */
 	List<TotalHour> getForecastEfficiencyReport(Store store, Date start, Date end);
+	
+	/**
+	 * Retrives the projection information of the day
+	 * @param store
+	 * @param date
+	 * @return
+	 */
+	List<DailyFlashHour> getDailyFlashReport(Store store, Date date);
 		
 }

@@ -10,9 +10,11 @@ import org.apache.log4j.Logger;
 
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.SpmUncheckedException;
+import com.laborguru.model.DailyFlashHour;
 import com.laborguru.model.DailyProjection;
 import com.laborguru.model.HalfHourProjection;
 import com.laborguru.model.HistoricSales;
+import com.laborguru.model.OperationTime;
 import com.laborguru.model.Position;
 import com.laborguru.model.PositionGroup;
 import com.laborguru.model.Store;
@@ -26,6 +28,7 @@ import com.laborguru.service.projection.ProjectionService;
 import com.laborguru.service.report.dao.ReportDao;
 import com.laborguru.service.schedule.ScheduleService;
 import com.laborguru.service.staffing.StaffingService;
+import com.laborguru.service.store.dao.StoreDao;
 import com.laborguru.util.CalendarUtils;
 import com.laborguru.util.SpmConstants;
 
@@ -43,6 +46,7 @@ public class ReportServiceBean implements ReportService {
 	private ProjectionService projectionService;
 	private ScheduleService scheduleService;
 	private ReportDao reportDao;
+	private StoreDao storeDao;
 
 	/**
 	 * @param store
@@ -332,6 +336,36 @@ public class ReportServiceBean implements ReportService {
 		}
 	}
 	
+	public List<DailyFlashHour> getDailyFlashReport(Store store, Date date) {
+		try{
+			//Initialize Minimum staffing in case it doesn't exist.
+			getStaffingService().getDailyStaffingByDate(store, date);
+			store = storeDao.getStoreById(store);
+			DailyProjection projections = projectionService.getDailyProjection(store, date);
+			OperationTime storeOperationTime = store.getOperationTime(CalendarUtils.getDayOfWeek(date));
+			Date startHour = storeOperationTime != null? storeOperationTime.getOpenHour() : null;
+			Date endHour = storeOperationTime != null? storeOperationTime.getCloseHour() : null;
+			Date nowHour = CalendarUtils.removeDateFromTime(date);
+			List<HistoricSales> actualSales = reportDao.getActualSales(store, startHour, nowHour);
+			
+			List<TotalHour> schedule = reportDao.getHalfHourlySchedule(store, date, startHour, endHour);
+			List<TotalHour> actualHours = reportDao.getHalfHourlyMinimumStaffing(store, date);
+			
+			List<HalfHourProjection> halfHourProjections = new ArrayList<HalfHourProjection>();
+			
+			if(projections != null) {
+				halfHourProjections = projections.getHalfHourProjections();
+			}
+			
+			return getMergedDailyFlashHours(store, startHour, endHour, nowHour, halfHourProjections, actualSales, schedule, actualHours);
+			
+		}catch(SQLException e){
+			log.error("An SQLError has occurred", e);
+			throw new SpmUncheckedException(e.getCause(), e.getMessage(),
+					ErrorEnum.GENERIC_DATABASE_ERROR);
+		}
+	}	
+	
 	private List<TotalHour> getActualMinimumStaffing(Store store, Date startDate, Date endDate){
 		List<TotalHour> totalHours = new ArrayList<TotalHour>();
 		for(Date date = startDate; CalendarUtils.equalsOrGreaterDate(endDate, date); date = CalendarUtils.addOrSubstractDays(date,1)){
@@ -507,6 +541,54 @@ public class ReportServiceBean implements ReportService {
 		return totalHours;
 	}
 	
+	private List<DailyFlashHour> getMergedDailyFlashHours(Store store, Date startHour, Date endHour, Date nowHour, List<HalfHourProjection> halfHourProjections, List<HistoricSales> actualSales, List<TotalHour> scheduleHours, List<TotalHour> actualHours){
+		List <DailyFlashHour> totalHours = new ArrayList<DailyFlashHour>();
+		
+		//if start hour is greater or equals than end hour, it means that 
+		//the store opens one day and closes the following date.
+		//So a day should be added to the endHour in order to iterate through
+		//all the hours the store is open.
+		if(startHour.compareTo(endHour) >= 0) {
+			endHour = CalendarUtils.addOrSubstractDays(endHour, 1);
+		}
+		
+		BigDecimal cumulSales = SpmConstants.BD_ZERO_VALUE;
+		BigDecimal cumulActualSales = SpmConstants.BD_ZERO_VALUE;
+		
+		for(Date hour = startHour; hour.compareTo(endHour) <= 0; hour = CalendarUtils.addOrSubstractMinutes(hour, 30)) {
+			
+			DailyFlashHour dailyFlashHour = new DailyFlashHour();
+			
+			dailyFlashHour.setDay(hour);
+			dailyFlashHour.setDayPart(store.getDayPartFor(hour));
+			
+			HalfHourProjection hp = getHalfHourProyectionByHour(hour, halfHourProjections);
+			
+			dailyFlashHour.setSales((hp != null) ? hp.getValue() : SpmConstants.BD_ZERO_VALUE);
+			
+			cumulSales = cumulSales.add(dailyFlashHour.getSales());
+			dailyFlashHour.setCumulSales(cumulSales);
+			
+			HistoricSales hs = getHistoricSalesByHour(hour, actualSales);
+		
+			if(hour.compareTo(nowHour) <=0){
+				dailyFlashHour.setActualSale(hs != null ? hs.getMainValue() : SpmConstants.BD_ZERO_VALUE);
+				cumulActualSales = cumulActualSales.add(dailyFlashHour.getActualSale());
+			}
+			
+			dailyFlashHour.setCumulActualSale(cumulActualSales);
+		
+			TotalHour th = getTotalHourByTime(hour, actualHours);
+			dailyFlashHour.setActualHour(th != null && th.getTarget() != null? th.getTarget() : SpmConstants.BD_ZERO_VALUE);
+			th = getTotalHourByTime(hour, scheduleHours);
+			dailyFlashHour.setScheduleHour(th != null && th.getSchedule() != null? th.getSchedule() : SpmConstants.BD_ZERO_VALUE);
+			
+			totalHours.add(dailyFlashHour);
+		}
+		
+		return totalHours;
+	}	
+	
 	private DailyProjection getDailyProjectionByDate(Date date, List<DailyProjection> projections) {
 		for(DailyProjection dp: projections) {
 			if(date.equals(dp.getSalesDate())) {
@@ -535,6 +617,16 @@ public class ReportServiceBean implements ReportService {
 		}
 		return null;
 	}
+	
+	private HistoricSales getHistoricSalesByHour(Date date, List<HistoricSales> actualSales){
+		for(HistoricSales hs: actualSales){
+			if(CalendarUtils.equalsTime(date, hs.getDateTime())){
+				return hs;
+			}
+		}
+		return null;
+	}
+
 	private BigDecimal getScheduleValue(TotalHour th) {
 		if(th != null){
 			if(th.getSchedule() != null) {
@@ -630,5 +722,14 @@ public class ReportServiceBean implements ReportService {
 	public void setScheduleService(ScheduleService scheduleService) {
 		this.scheduleService = scheduleService;
 	}
+
+	public StoreDao getStoreDao() {
+		return storeDao;
+	}
+
+	public void setStoreDao(StoreDao storeDao) {
+		this.storeDao = storeDao;
+	}
+	
 
 }
