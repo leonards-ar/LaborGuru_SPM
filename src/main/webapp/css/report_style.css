@@ -50,6 +50,18 @@ td.greyTableValueWithLeftBottomBorder {
 	border-bottom: 1px solid #666666;
 }
 
+td.greyTableValueWithBorder {
+	background-color: #DEDDDB;
+	color: #333333;
+	font-family: trebuchet ms, arial, sans-serif;
+	font-size: 11px;	
+	text-align: center;
+	border-left: 1px solid #666666;
+	border-bottom: 1px solid #666666;
+	border-up: 1px solid #666666;
+	border-right: 1px solid #666666;
+}
+
 td.tableLabel {
 	color: #666666;
 	text-align: center;
@@ -108,6 +120,17 @@ td.tableValueWithLeftBottomBorder {
 	text-align: center;
 	border-left: 1px solid #666666;
 	border-bottom: 1px solid #666666;
+}
+
+td.tableValueWithBorder {
+	color: #333333;
+	font-family: trebuchet ms, arial, sans-serif;
+	font-size: 11px;	
+	text-align: center;
+	border-left: 1px solid #666666;
+	border-bottom: 1px solid #666666;
+	border-up: 1px solid #666666;
+	border-right: 1px solid #666666;	
 }
 
 td.differenceNegativeWithLeftBorder {
