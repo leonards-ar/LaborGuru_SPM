@@ -48,7 +48,7 @@ public class DailyFlashReportPrepareAction extends ScheduleReportPrepareAction i
 			setDailyFlash(getDailyFlashService().getDailyFlashByDate(now, getEmployeeStore()));
 		}
 		
-		setDailyFlashHours(getReportService().getDailyFlashReport(getEmployeeStore(), CalendarUtils.addOrSubstractHours(now, 0), new LinkedList<DailyFlashDetail>(getDailyFlash().getDetails())));
+		setDailyFlashHours(getReportService().getDailyFlashReport(getEmployeeStore(),now, getDailyFlash() != null? new LinkedList<DailyFlashDetail>(getDailyFlash().getDetails()):new LinkedList<DailyFlashDetail>()));
 		calculateTotals();
 		setPartDay(CalendarUtils.roundHalfHourUp(now));
 		return SpmActionResult.INPUT.getResult();
