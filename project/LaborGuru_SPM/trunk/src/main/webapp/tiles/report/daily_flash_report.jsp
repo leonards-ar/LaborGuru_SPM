@@ -3,6 +3,10 @@
 
 <br/>
 
+<script type="text/javascript">
+    var url = '<s:url value="/saveDailyFlashReport.action" includeParams="none"/>';
+</script>
+
 <table id="dailyFlashTable" border="0" cellspacing="0" align="center">
   <tr>
     <td class="windowTableHeader">
