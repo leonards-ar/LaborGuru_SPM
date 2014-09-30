@@ -45,6 +45,8 @@
 
 	<bean id="shiftDao" class="com.laborguru.service.schedule.dao.ShiftDaoHibernate" autowire="byType"/>						
 	
+	<bean id="dailyFlashDao" class="com.laborguru.service.report.dao.DailyFlashDaoHibernate" autowire="byType"/>
+	
 	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
 		<property name="sessionFactory">
 			<ref bean="mySessionFactory" />
@@ -82,6 +84,8 @@
 				<value>com/laborguru/model/UploadFile.hbm.xml</value>				
 				<value>com/laborguru/model/ActualHours.hbm.xml</value>
 				<value>com/laborguru/model/StoreVariableDefinition.hbm.xml</value>
+				<value>com/laborguru/model/DailyFlash.hbm.xml</value>
+				<value>com/laborguru/model/DailyFlashDetail.hbm.xml</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

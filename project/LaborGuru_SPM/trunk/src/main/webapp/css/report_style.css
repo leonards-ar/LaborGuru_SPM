@@ -4,6 +4,10 @@
 	align: center;
 }
 
+.yellow {
+    background: #FCFC06;
+}
+
 td.greyTableLabel {
 	background-color: #DEDDDB;
 	color: #666666;
@@ -48,18 +52,6 @@ td.greyTableValueWithLeftBottomBorder {
 	text-align: center;
 	border-left: 1px solid #666666;
 	border-bottom: 1px solid #666666;
-}
-
-td.greyTableValueWithBorder {
-	background-color: #DEDDDB;
-	color: #333333;
-	font-family: trebuchet ms, arial, sans-serif;
-	font-size: 11px;	
-	text-align: center;
-	border-left: 1px solid #666666;
-	border-bottom: 1px solid #666666;
-	border-up: 1px solid #666666;
-	border-right: 1px solid #666666;
 }
 
 td.tableLabel {
@@ -122,15 +114,13 @@ td.tableValueWithLeftBottomBorder {
 	border-bottom: 1px solid #666666;
 }
 
-td.tableValueWithBorder {
+td.selectableTableValueWithLeftBottomBorder {
 	color: #333333;
 	font-family: trebuchet ms, arial, sans-serif;
 	font-size: 11px;	
 	text-align: center;
 	border-left: 1px solid #666666;
 	border-bottom: 1px solid #666666;
-	border-up: 1px solid #666666;
-	border-right: 1px solid #666666;	
 }
 
 td.differenceNegativeWithLeftBorder {
@@ -164,6 +154,18 @@ td.greyCellLabel {
 
 td.greyCellValue {
   background-color: #DEDDDB;
+  color: #333333;
+  font-family: trebuchet ms, arial, sans-serif;
+  font-size: 11px;  
+  text-align: center;
+  border-left: 1px solid #666666;
+  border-bottom: 1px solid #666666;
+  border-top: 1px solid #666666;
+  border-right: 1px solid #666666;
+}
+
+td.darkGreyCellValue {
+  background-color: #7A7978;
   color: #333333;
   font-family: trebuchet ms, arial, sans-serif;
   font-size: 11px;  

@@ -630,6 +630,22 @@ input.text, input.password, textarea {
 	font-family: trebuchet ms, arial, sans-serif;
 	font-weight: bold	
 }
+
+.yellowTableHeader {
+	background-color: #666666;
+	background-image: url('../images/table-header-bg.png');
+	background-position:  center 50%;
+	background-repeat: repeat-x;
+	color: #333333;
+	font-size: 12px;
+	text-align: center;
+	font-family: trebuchet ms, arial, sans-serif;
+	font-weight: bold;	
+  	border-left: 1px solid #666666;
+  	border-bottom: 1px solid #666666;
+  	border-top: 1px solid #666666;
+  	border-right: 1px solid #666666;	
+}
 .windowTableTitle {
 	color: #333333;
 	text-align: left;

@@ -1,9 +1,11 @@
-package com.laborguru.model;
+package com.laborguru.model.report;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Date;
 
+import com.laborguru.model.DayPart;
+import com.laborguru.model.SpmObject;
 import com.laborguru.util.SpmConstants;
 
 public class DailyFlashHour extends SpmObject {
@@ -15,7 +17,6 @@ public class DailyFlashHour extends SpmObject {
 	private BigDecimal sales;
 	private BigDecimal cumulSales;
 	private BigDecimal actualSale;
-	private BigDecimal cumulActualSale;
 	private BigDecimal scheduleHour;
 	private BigDecimal actualHour;
 
@@ -62,14 +63,6 @@ public class DailyFlashHour extends SpmObject {
 		this.actualSale = actualSale;
 	}
 
-	public BigDecimal getCumulActualSale() {
-		return cumulActualSale;
-	}
-
-	public void setCumulActualSale(BigDecimal cumulActualSale) {
-		this.cumulActualSale = cumulActualSale;
-	}
-	
 	public BigDecimal getDifference() {
 		return getActualSale().subtract(getSales());
 	}
@@ -78,15 +71,6 @@ public class DailyFlashHour extends SpmObject {
     	BigDecimal diff = getDifference();
     	return (diff.compareTo(SpmConstants.BD_ZERO_VALUE) < 0 ? "(" + df.format(diff.abs()) + ")" : df.format(diff));
     }
-	
-	public BigDecimal getCumulDifference() {
-		return getCumulActualSale().subtract(getCumulSales());
-	}
-
-	public String getFormattedCumulDifference() {
-		BigDecimal diff = getCumulDifference();
-		return (diff.compareTo(SpmConstants.BD_ZERO_VALUE) < 0 ? "(" + df.format(diff.abs()) + ")" : df.format(diff));
-	}
 	
 	public BigDecimal getScheduleHour() {
 		return scheduleHour;
