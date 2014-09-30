@@ -34,12 +34,12 @@ $(function(){
         	
         	dataObj=dataObj.substring(0, dataObj.length - 1);
         	dataObj += ']}';
-        	
+
             $.ajax({
                 type : 'POST',
                 dataType: 'json',
                 contentType: 'application/json',
-                url: '/spm/report/saveDailyFlashReport.action',
+                url: url,
                 data: dataObj,
         		beforeSend: function() {
         			var sw = screen.width;
