@@ -691,5 +691,20 @@ public class CalendarUtils {
 	 */
 	public static boolean isMidnightTime(Date d) {
 		return equalsTime(d, getMidnightTime());
-	}		
+	}
+	
+	public static Date roundHalfHourUp(Date time) {
+		
+		Calendar calendarTime = CalendarUtils.getCalendar(time);
+		
+		int minutes = calendarTime.get(Calendar.MINUTE);
+		if(minutes < 30) {
+			calendarTime.set(Calendar.MINUTE, 30);
+		} else {
+			calendarTime.add(Calendar.HOUR_OF_DAY, 1);
+			calendarTime.set(Calendar.MINUTE, 0);
+		}
+		
+		return calendarTime.getTime();
+	}
 }

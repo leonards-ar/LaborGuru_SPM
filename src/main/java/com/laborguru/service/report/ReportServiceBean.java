@@ -4,13 +4,15 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.SpmUncheckedException;
-import com.laborguru.model.DailyFlashHour;
+import com.laborguru.model.DailyFlash;
+import com.laborguru.model.DailyFlashDetail;
 import com.laborguru.model.DailyProjection;
 import com.laborguru.model.HalfHourProjection;
 import com.laborguru.model.HistoricSales;
@@ -21,6 +23,7 @@ import com.laborguru.model.Store;
 import com.laborguru.model.StoreDailyHistoricSalesStaffing;
 import com.laborguru.model.StoreSchedule;
 import com.laborguru.model.StoreVariableDefinition;
+import com.laborguru.model.report.DailyFlashHour;
 import com.laborguru.model.report.FixedLaborHoursReport;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.model.report.TotalHourByPosition;
@@ -45,6 +48,7 @@ public class ReportServiceBean implements ReportService {
 	private StaffingService staffingService;
 	private ProjectionService projectionService;
 	private ScheduleService scheduleService;
+	private DailyFlashService dailyFlashService;
 	private ReportDao reportDao;
 	private StoreDao storeDao;
 
@@ -336,7 +340,7 @@ public class ReportServiceBean implements ReportService {
 		}
 	}
 	
-	public List<DailyFlashHour> getDailyFlashReport(Store store, Date date) {
+	public List<DailyFlashHour> getDailyFlashReport(Store store, Date date, List<DailyFlashDetail>details) {
 		try{
 			//Initialize Minimum staffing in case it doesn't exist.
 			getStaffingService().getDailyStaffingByDate(store, date);
@@ -346,10 +350,9 @@ public class ReportServiceBean implements ReportService {
 			Date startHour = storeOperationTime != null? storeOperationTime.getOpenHour() : null;
 			Date endHour = storeOperationTime != null? storeOperationTime.getCloseHour() : null;
 			Date nowHour = CalendarUtils.removeDateFromTime(date);
-			List<HistoricSales> actualSales = reportDao.getActualSales(store, startHour, nowHour);
+			List<HistoricSales> actualSales = new LinkedList<HistoricSales>();//reportDao.getActualSales(store, startHour, nowHour);
 			
 			List<TotalHour> schedule = reportDao.getHalfHourlySchedule(store, date, startHour, endHour);
-			List<TotalHour> actualHours = reportDao.getHalfHourlyMinimumStaffing(store, date);
 			
 			List<HalfHourProjection> halfHourProjections = new ArrayList<HalfHourProjection>();
 			
@@ -357,7 +360,7 @@ public class ReportServiceBean implements ReportService {
 				halfHourProjections = projections.getHalfHourProjections();
 			}
 			
-			return getMergedDailyFlashHours(store, startHour, endHour, nowHour, halfHourProjections, actualSales, schedule, actualHours);
+			return getMergedDailyFlashHours(store, startHour, endHour, nowHour, halfHourProjections, actualSales, schedule, details);
 			
 		}catch(SQLException e){
 			log.error("An SQLError has occurred", e);
@@ -395,6 +398,15 @@ public class ReportServiceBean implements ReportService {
 		for(TotalHour th: list) {
 			if(CalendarUtils.equalsTime(hour, th.getDay())){
 				return th;
+			}
+		}
+		return null;
+	}
+	
+	private DailyFlashDetail getDailyFlashDetailByTime(Date hour, List<DailyFlashDetail> list){
+		for(DailyFlashDetail detail: list) {
+			if(CalendarUtils.equalsTime(hour, detail.getHour())) {
+				return detail;
 			}
 		}
 		return null;
@@ -541,7 +553,7 @@ public class ReportServiceBean implements ReportService {
 		return totalHours;
 	}
 	
-	private List<DailyFlashHour> getMergedDailyFlashHours(Store store, Date startHour, Date endHour, Date nowHour, List<HalfHourProjection> halfHourProjections, List<HistoricSales> actualSales, List<TotalHour> scheduleHours, List<TotalHour> actualHours){
+	private List<DailyFlashHour> getMergedDailyFlashHours(Store store, Date startHour, Date endHour, Date nowHour, List<HalfHourProjection> halfHourProjections, List<HistoricSales> actualSales, List<TotalHour> scheduleHours, List<DailyFlashDetail> details){
 		List <DailyFlashHour> totalHours = new ArrayList<DailyFlashHour>();
 		
 		//if start hour is greater or equals than end hour, it means that 
@@ -553,7 +565,6 @@ public class ReportServiceBean implements ReportService {
 		}
 		
 		BigDecimal cumulSales = SpmConstants.BD_ZERO_VALUE;
-		BigDecimal cumulActualSales = SpmConstants.BD_ZERO_VALUE;
 		
 		for(Date hour = startHour; hour.compareTo(endHour) <= 0; hour = CalendarUtils.addOrSubstractMinutes(hour, 30)) {
 			
@@ -569,21 +580,16 @@ public class ReportServiceBean implements ReportService {
 			cumulSales = cumulSales.add(dailyFlashHour.getSales());
 			dailyFlashHour.setCumulSales(cumulSales);
 			
-			HistoricSales hs = getHistoricSalesByHour(hour, actualSales);
-		
-			if(hour.compareTo(nowHour) <=0){
-				dailyFlashHour.setActualSale(hs != null ? hs.getMainValue() : SpmConstants.BD_ZERO_VALUE);
-				cumulActualSales = cumulActualSales.add(dailyFlashHour.getActualSale());
-			}
-			
-			dailyFlashHour.setCumulActualSale(cumulActualSales);
-		
-			TotalHour th = getTotalHourByTime(hour, actualHours);
-			dailyFlashHour.setActualHour(th != null && th.getTarget() != null? th.getTarget() : SpmConstants.BD_ZERO_VALUE);
-			th = getTotalHourByTime(hour, scheduleHours);
+			DailyFlashDetail df = getDailyFlashDetailByTime(hour, details);
+			dailyFlashHour.setActualHour(df != null && df.getActualHour() != null? new BigDecimal(df.getActualHour()) : SpmConstants.BD_ZERO_VALUE);
+			dailyFlashHour.setActualSale(df != null && df.getActualSale() != null? new BigDecimal(df.getActualSale()) : SpmConstants.BD_ZERO_VALUE);
+
+			TotalHour th = getTotalHourByTime(hour, scheduleHours);
 			dailyFlashHour.setScheduleHour(th != null && th.getSchedule() != null? th.getSchedule() : SpmConstants.BD_ZERO_VALUE);
 			
 			totalHours.add(dailyFlashHour);
+			
+			
 		}
 		
 		return totalHours;
@@ -721,6 +727,15 @@ public class ReportServiceBean implements ReportService {
 	 */
 	public void setScheduleService(ScheduleService scheduleService) {
 		this.scheduleService = scheduleService;
+	}
+
+	
+	public DailyFlashService getDailyFlashService() {
+		return dailyFlashService;
+	}
+
+	public void setDailyFlashService(DailyFlashService dailyFlashService) {
+		this.dailyFlashService = dailyFlashService;
 	}
 
 	public StoreDao getStoreDao() {

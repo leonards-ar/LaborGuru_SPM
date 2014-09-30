@@ -3,26 +3,34 @@ package com.laborguru.action.report;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.laborguru.action.SpmActionResult;
-import com.laborguru.model.DailyFlashHour;
+import com.laborguru.model.DailyFlash;
+import com.laborguru.model.DailyFlashDetail;
+import com.laborguru.model.Store;
+import com.laborguru.model.report.DailyFlashHour;
+import com.laborguru.service.report.DailyFlashService;
 import com.laborguru.util.CalendarUtils;
 import com.laborguru.util.SpmConstants;
 import com.opensymphony.xwork2.Preparable;
 
 public class DailyFlashReportPrepareAction extends ScheduleReportPrepareAction implements Preparable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7417726746002576268L;
+	
+	private DailyFlashService dailyFlashService;
+	private DailyFlash dailyFlash;
+	
 	private List<DailyFlashHour> dailyFlashHours;
+	private Date partDay;
 	private BigDecimal totalSales;
 	private BigDecimal totalActualSales;
 	private BigDecimal totalActualLabor;
 	private BigDecimal partialActualLabor;
 	private BigDecimal totalScheduleHour;
+	private BigDecimal partialScheduleHour;
 	private BigDecimal totalDifference;
 	private DailyFlashHour lastDailyFlashHour;
 	
@@ -36,9 +44,13 @@ public class DailyFlashReportPrepareAction extends ScheduleReportPrepareAction i
 
 	public String showFirstReport() {
 		Date now = new Date();
+		if(getDailyFlash() == null) {
+			setDailyFlash(getDailyFlashService().getDailyFlashByDate(now, getEmployeeStore()));
+		}
 		
-		setDailyFlashHours(getReportService().getDailyFlashReport(getEmployeeStore(), CalendarUtils.addOrSubstractHours(now, 0)));
+		setDailyFlashHours(getReportService().getDailyFlashReport(getEmployeeStore(), CalendarUtils.addOrSubstractHours(now, 0), new LinkedList<DailyFlashDetail>(getDailyFlash().getDetails())));
 		calculateTotals();
+		setPartDay(CalendarUtils.roundHalfHourUp(now));
 		return SpmActionResult.INPUT.getResult();
 	}
 	
@@ -49,16 +61,18 @@ public class DailyFlashReportPrepareAction extends ScheduleReportPrepareAction i
 		setPartialActualLabor(SpmConstants.BD_ZERO_VALUE);
 		setTotalDifference(SpmConstants.BD_ZERO_VALUE);
 		setTotalScheduleHour(SpmConstants.BD_ZERO_VALUE);
+		setPartialScheduleHour(SpmConstants.BD_ZERO_VALUE);
 		setLastDailyFlashHour(null);
 		
 		List<DailyFlashHour> flashHours = getDailyFlashHours();
 		for(int i=0; i < flashHours.size(); i++){
 			DailyFlashHour fs =  flashHours.get(i); 
+			setPartialScheduleHour(getPartialHalfScheduleHour().add(fs.getScheduleHour()));
 			setTotalSales(getTotalSales().add(fs.getSales()));
 			if(fs.getActualSale() != null) {
 				setTotalActualSales(getTotalActualSales().add(fs.getActualSale()));
-				setTotalScheduleHour(getTotalScheduleHour().add(fs.getScheduleHour()));
 				setPartialActualLabor(getPartialHalfActualLabor().add(fs.getActualHour()));
+				setPartialScheduleHour(getPartialHalfScheduleHour().add(fs.getScheduleHour()));
 				setTotalDifference(getTotalDifference().add(fs.getDifference()));
 			}else {
 				
@@ -66,7 +80,7 @@ public class DailyFlashReportPrepareAction extends ScheduleReportPrepareAction i
 					setLastDailyFlashHour( i == 0 ? flashHours.get(i) : flashHours.get(i-1));
 				}
 			}
-			setTotalActualLabor(getTotalHalfActualLabor().add(fs.getActualHour()));
+			
 			setTotalScheduleHour(getTotalHalfScheduleHour().add(fs.getScheduleHour()));
 		}
 	}
@@ -80,6 +94,14 @@ public class DailyFlashReportPrepareAction extends ScheduleReportPrepareAction i
 
 	public void setDailyFlashHours(List<DailyFlashHour> dailyFlashHours) {
 		this.dailyFlashHours = dailyFlashHours;
+	}
+
+	public Date getPartDay() {
+		return partDay;
+	}
+
+	public void setPartDay(Date partDay) {
+		this.partDay = partDay;
 	}
 
 	public BigDecimal getTotalSales() {
@@ -123,6 +145,15 @@ public class DailyFlashReportPrepareAction extends ScheduleReportPrepareAction i
 		this.totalActualLabor = totalActualLabor;
 	}
 	
+	public String getPartialDifferenceHours(){
+		BigDecimal diff = getPartialActualLabor().subtract(getPartialScheduleHour());
+		return diff.compareTo(SpmConstants.BD_ZERO_VALUE) < 0 ? "(" + (new DecimalFormat("#0")).format(diff.abs()) + ")" : (new DecimalFormat("#0")).format(diff);
+	}
+	
+	public BigDecimal getRestTotalScheduleHour(){
+		return getTotalScheduleHour().subtract(getPartialScheduleHour());
+	}
+	
 	public BigDecimal getPartialHalfActualLabor() {
 		return partialActualLabor;
 	}
@@ -133,6 +164,18 @@ public class DailyFlashReportPrepareAction extends ScheduleReportPrepareAction i
 
 	public void setPartialActualLabor(BigDecimal partialActualLabor) {
 		this.partialActualLabor = partialActualLabor;
+	}
+
+	public BigDecimal getPartialHalfScheduleHour() {
+		return partialScheduleHour;
+	}
+	
+	public BigDecimal getPartialScheduleHour() {
+		return partialScheduleHour.divide(new BigDecimal(2),0,0);
+	}
+
+	public void setPartialScheduleHour(BigDecimal partialScheduleHour) {
+		this.partialScheduleHour = partialScheduleHour;
 	}
 
 	public BigDecimal getTotalDifference() {
@@ -156,18 +199,28 @@ public class DailyFlashReportPrepareAction extends ScheduleReportPrepareAction i
 		this.lastDailyFlashHour = lastDailyFlashHour;
 	}
 	
-	public BigDecimal getForecast(){
-		if(getLastDailyFlashHour().getCumulDifference().compareTo(SpmConstants.BD_ZERO_VALUE) != 0){
-			return getLastDailyFlashHour().getCumulDifference().divide(getLastDailyFlashHour().getCumulSales()).multiply(new BigDecimal(100));
-		}
-		return SpmConstants.BD_ZERO_VALUE;
+	public boolean isEquals(Date date) {
+		return CalendarUtils.equalsTime(date, partDay);
 	}
 	
-	public BigDecimal getPercentOfDayLeft(){
-		if(getTotalDifference().compareTo(SpmConstants.BD_ZERO_VALUE) != 0){
-			return new BigDecimal("1").subtract(getLastDailyFlashHour().getCumulDifference().divide(getTotalSales(),0).abs()).multiply(new BigDecimal(100));
-		}
-		return SpmConstants.BD_ZERO_VALUE;
+	public Store getStore(){
+		return getEmployeeStore();
+	}
+
+	public DailyFlash getDailyFlash() {
+		return dailyFlash;
+	}
+
+	public void setDailyFlash(DailyFlash dailyFlash) {
+		this.dailyFlash = dailyFlash;
+	}
+
+	public DailyFlashService getDailyFlashService() {
+		return dailyFlashService;
+	}
+
+	public void setDailyFlashService(DailyFlashService dailyFlashService) {
+		this.dailyFlashService = dailyFlashService;
 	}
 
 }
