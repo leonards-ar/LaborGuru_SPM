@@ -479,7 +479,7 @@
 	
 	<definition name="showDailyFlashHours" extends="baseLayoutWithMenu">
 		<put-attribute name="htmlExtHeader" value="/tiles/report/dailyFlashReportHtmlExtHeader.jsp" />
-		<put-attribute name="body" value="/tiles/report/daily_flash_report.jsp" />
+		<put-attribute name="body" value="/tiles/report/daily_flash_report_table.jsp" />
 	</definition>	
   
     <definition name="showCustomerReport" extends="baseLayoutWithMenu">

@@ -3,9 +3,7 @@
 
 <br/>
 
-<script type="text/javascript">
-    var url = '<s:url value="/saveDailyFlashReport.action" includeParams="none"/>';
-</script>
+
 
 <table id="dailyFlashTable" border="0" cellspacing="0" align="center">
   <tr>
@@ -64,11 +62,11 @@
 		  </s:iterator>
 			  <td class="tableValueWithLeftBottomBorder">Close</td>
 			  <td class="greyTableValueWithLeftBottomBorder">&nbsp;</td>
-			  <td id="projectedSales0" class="greyTableValueWithLeftBottomBorder">$-</td>
-			  <td id="projectedSalesCumul0" class="greyTableValueWithLeftBottomBorder">$-</td>
-			  <td id="actualSales0" class="tableValueWithLeftBottomBorder"><input type="text" id="actualSale0" data-format="0,0" value="" size="10" theme="simple" /></td>
-			  <td id="actualHours0" class="tableValueWithLeftBottomBorder"><input type="text" id="A<s:property value="dailyFlashHours.size() + 1"/> data-format="0" value="<s:property value="dailyFlash.closeHours"/>" size="10" theme="simple" /></td>
-			  <td id="actualSalesCumul0" class="greyTableValueWithLeftBottomBorder">$-</td>
+			  <td id="closeProjectedSales" class="greyTableValueWithLeftBottomBorder">$-</td>
+			  <td id="closeSaleCumul0" class="greyTableValueWithLeftBottomBorder">$-</td>
+			  <td id="closeSales" class="tableValueWithLeftBottomBorder"><input type="text" id="actualSale0" data-format="0,0" value="" size="10" theme="simple" /></td>
+			  <td id="closeHour" class="tableValueWithLeftBottomBorder"><input type="text" id="A<s:property value="dailyFlashHours.size() + 1"/>" data-format="0" value="<s:property value="dailyFlash.closeHours"/>" size="10" theme="simple" /></td>
+			  <td id="closeActualSalesCumul" class="greyTableValueWithLeftBottomBorder">$-</td>
  		  	  <td class="greyTableValueWithLeftBottomBorder">&nbsp;</td>
 			  <td class="greyTableValueWithLeftBottomBorder">&nbsp;</td>
 		  
@@ -145,16 +143,12 @@
 					<td class="greyCellValue"><s:text name="report.total.hours"><s:param value="restTotalScheduleHour"/></s:text></td>
 					<td class="darkGreyCellValue">&nbsp;</td>
 				</tr>
+			    </table>
 			  </td>
 		    </tr>
 		  </table>
 	    </td>	
 	  </tr>
     </table>
-  </td>
-</tr>
-<tr>
-	<td align="right" colspan="2"><input id="saveFlashReport" type="submit" value="<s:text name="save.button"/>" class="button" /></td>
-</tr>
-</table>
+
 
