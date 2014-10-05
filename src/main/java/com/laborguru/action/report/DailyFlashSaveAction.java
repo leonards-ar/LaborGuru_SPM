@@ -1,6 +1,5 @@
 package com.laborguru.action.report;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +19,7 @@ public class DailyFlashSaveAction extends SpmAction{
 	private transient StoreService storeService;
 	
 	private transient String preOpenHour;
+	private transient String closeHour;
 	private transient List<DailyFlashDetail> details;
 	private transient String storeId;
 	
@@ -31,6 +31,14 @@ public class DailyFlashSaveAction extends SpmAction{
 	
 	public String getPreOpenHour() {
 		return preOpenHour;
+	}
+	
+	public String getCloseHour() {
+		return closeHour;
+	}
+
+	public void setCloseHour(String closeHour) {
+		this.closeHour = closeHour;
 	}
 
 	public List<DailyFlashDetail> getDetails() {
@@ -83,13 +91,13 @@ public class DailyFlashSaveAction extends SpmAction{
 			DailyFlash dailyFlash = getDailyFlashService().getDailyFlashByDate(today, store);
 			if(dailyFlash == null){
 				dailyFlash = new DailyFlash();
-				if(getPreOpenHour() != null) dailyFlash.setOpenHours(Double.parseDouble(getPreOpenHour()));
-				dailyFlash.setCloseHours(null);
+				if(!"".equals(getPreOpenHour())) dailyFlash.setOpenHours(Double.parseDouble(getPreOpenHour()));
+				if(!"".equals(getCloseHour())) dailyFlash.setCloseHours(Double.parseDouble(getCloseHour()));
 				dailyFlash.setStore(store);
 				dailyFlash.setDate(today);
 			} else {
-				if(getPreOpenHour() != null) dailyFlash.setOpenHours(Double.parseDouble(getPreOpenHour()));
-				dailyFlash.setCloseHours(null);
+				if(!"".equals(getPreOpenHour())) dailyFlash.setOpenHours(Double.parseDouble(getPreOpenHour()));
+				if(!"".equals(getCloseHour())) dailyFlash.setCloseHours(Double.parseDouble(getCloseHour()));
 			}
 
 			for(DailyFlashDetail dfDetail: getDetails()){
@@ -100,7 +108,7 @@ public class DailyFlashSaveAction extends SpmAction{
 			
 			getDailyFlashService().save(dailyFlash);
 		
-			setResponseMessage(Action.SUCCESS + " - " + preOpenHour);
+			setResponseMessage(getText("report.dailyFlashReport.save.success"));
 			return Action.SUCCESS;
 		}catch(SpmCheckedException e){
 			setResponseMessage(e.getMessage());

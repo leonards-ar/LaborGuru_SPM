@@ -15,9 +15,9 @@ public class DailyFlashHour extends SpmObject {
 	private Date day;
 	private DayPart dayPart;
 	private BigDecimal sales;
-	private BigDecimal cumulSales;
 	private BigDecimal actualSale;
 	private BigDecimal scheduleHour;
+	private BigDecimal targetHour;
 	private BigDecimal actualHour;
 
 	private static final DecimalFormat df = new DecimalFormat("#,##0");
@@ -47,14 +47,6 @@ public class DailyFlashHour extends SpmObject {
 		this.sales = sales;
 	}
 
-	public BigDecimal getCumulSales() {
-		return cumulSales;
-	}
-
-	public void setCumulSales(BigDecimal cumulSales) {
-		this.cumulSales = cumulSales;
-	}
-
 	public BigDecimal getActualSale() {
 		return actualSale;
 	}
@@ -63,21 +55,20 @@ public class DailyFlashHour extends SpmObject {
 		this.actualSale = actualSale;
 	}
 
-	public BigDecimal getDifference() {
-		return getActualSale().subtract(getSales());
-	}
-	
-    public String getFormattedDifference() {
-    	BigDecimal diff = getDifference();
-    	return (diff.compareTo(SpmConstants.BD_ZERO_VALUE) < 0 ? "(" + df.format(diff.abs()) + ")" : df.format(diff));
-    }
-	
 	public BigDecimal getScheduleHour() {
 		return scheduleHour;
 	}
 
 	public void setScheduleHour(BigDecimal scheduleHour) {
 		this.scheduleHour = scheduleHour;
+	}
+
+	public BigDecimal getTargetHour() {
+		return targetHour;
+	}
+
+	public void setTargetHour(BigDecimal targetHour) {
+		this.targetHour = targetHour;
 	}
 
 	public BigDecimal getActualHour() {

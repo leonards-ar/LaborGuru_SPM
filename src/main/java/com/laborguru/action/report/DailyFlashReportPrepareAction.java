@@ -41,17 +41,26 @@ public class DailyFlashReportPrepareAction extends ScheduleReportPrepareAction i
 	public void prepareShowFirstReport() {
 		
 	}
-
+	
 	public String showFirstReport() {
+		showProjectedSalesReport();
+		showCateringReport();
+		return SpmActionResult.INPUT.getResult();
+	}
+
+	public void showProjectedSalesReport() {
 		Date now = new Date();
 		if(getDailyFlash() == null) {
 			setDailyFlash(getDailyFlashService().getDailyFlashByDate(now, getEmployeeStore()));
 		}
 		
 		setDailyFlashHours(getReportService().getDailyFlashReport(getEmployeeStore(),now, getDailyFlash() != null? new LinkedList<DailyFlashDetail>(getDailyFlash().getDetails()):new LinkedList<DailyFlashDetail>()));
-		calculateTotals();
 		setPartDay(CalendarUtils.roundHalfHourUp(now));
-		return SpmActionResult.INPUT.getResult();
+		return;
+	}
+	
+	public void showCateringReport() {
+		return;
 	}
 	
 	private void calculateTotals(){
@@ -73,7 +82,7 @@ public class DailyFlashReportPrepareAction extends ScheduleReportPrepareAction i
 				setTotalActualSales(getTotalActualSales().add(fs.getActualSale()));
 				setPartialActualLabor(getPartialHalfActualLabor().add(fs.getActualHour()));
 				setPartialScheduleHour(getPartialHalfScheduleHour().add(fs.getScheduleHour()));
-				setTotalDifference(getTotalDifference().add(fs.getDifference()));
+				//setTotalDifference(getTotalDifference().add(fs.getDifference()));
 			}else {
 				
 				if(getLastDailyFlashHour() == null){

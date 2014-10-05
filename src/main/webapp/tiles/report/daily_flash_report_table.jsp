@@ -1,0 +1,297 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
+
+<br/>
+<script type="text/javascript">
+    var url = '<s:url value="/report/saveDailyFlashReport.action" includeParams="none"/>';
+    
+</script>
+<!-- 
+
+There is a plugin restriction to use the SUM function, I need to use excel names.
+That's why each field has a letter as a name.
+This is a reminder
+
+A - Actual Hours
+B - Actual Sales
+C - Cumulative Actual Sales 
+D - Sales Difference
+E - Schedule Hours
+F - Target Hours
+G - Partial Cumulative Projected Sales (this is used by Forecast)
+H - Cumul Schedule Hours
+I - Cumul Target Hours
+
+ -->
+ 
+<div id="result" style="position:absolute; top:200px; z-index:10; display:none" align="center">
+  <table width="200px" class="waitTable" border="0" cellpadding="2" cellspacing="0">
+    <tr>
+      <td align="center" valign="middle">
+        <table width="100%" align="center">
+			    <tr>
+			      <td align="center">&nbsp;</td>
+			    </tr>
+          <tr>
+            <td id="message" align="center" valign="middle" class="waitMessage">&nbsp;</td>
+          </tr>
+			    <tr>
+			      <td align="center" valign="middle" class="waitMessage">&nbsp;</td>
+			    </tr> 
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<table id="dailyFlashTable" border="0" cellspacing="0" align="center">
+  <tr>
+    <td>
+    	<table id="ProjectionTable" border="0" cellspacing="0" align="center">
+  <tr>
+    <td class="windowTableHeader">
+      <s:text name="report.dailyFlashReport.title" />
+    </td>
+   </tr>
+    <tr>
+      <td>
+        <input type='hidden' id='storeId' value='<s:property value="store.id"/>'/>
+        <table id="scheduleReportTable" cellspacing="0">
+          <tr>
+            <td class="yellowTableHeader"><s:text name="report.dailyFlashReport.daypart.label" /></td>
+            <td class="yellowTableHeader"><s:text name="report.dailyFlashReport.time.label" /></td>
+            <td class="yellowTableHeader"><s:text name="report.dailyFlashReport.projectedSales.label" /></td>
+            <td class="yellowTableHeader"><s:text name="report.dailyFlashReport.projectedSales.cum.label" /></td>
+            <td class="yellowTableHeader"><s:text name="report.dailyFlashReport.actualSales.label" /></td>
+            <td class="yellowTableHeader"><s:text name="report.dailyFlashReport.actualhour.label" /></td>
+			      <td class="yellowTableHeader"><s:text name="report.dailyFlashReport.actualSale.cum.label" /></td>
+			      <td class="yellowTableHeader"><s:text name="report.dailyFlashReport.difference.label" /></td>
+			      <td class="yellowTableHeader"><s:text name="report.dailyFlashReport.difference.cum.label" /></td>
+			      <td class="yellowTableHeader"><s:text name="report.dailyFlashReport.scheduledHours.label" /></td>
+			      <td class="yellowTableHeader"><s:text name="report.dailyFlashReport.cumulScheduledHours.label" /></td>
+			      <td class="yellowTableHeader"><s:text name="report.dailyFlashReport.targetHours.label" /></td>
+			      <td class="yellowTableHeader"><s:text name="report.dailyFlashReport.cumulTargetHours.label" /></td>
+			      <td class="yellowTableHeader">New Projection</td>
+			      <td class="yellowTableHeader">Partial</td>
+			      
+			      </tr>
+			      <tr>
+			        <td class="tableValueWithLeftBottomBorder">Pre-Open</td>
+			        <td class="greyTableValueWithLeftBottomBorder">&nbsp;</td>
+			        <td id="projectedSales0" class="greyTableValueWithLeftBottomBorder">$-</td>
+			        <td id="projectedSalesCumul0" class="greyTableValueWithLeftBottomBorder">$-</td>
+			        <td id="actualSales0" class="tableValueWithLeftBottomBorder"><input type="text" id="B0" data-format="0,0" value="" size="10" theme="simple" /></td>
+			        <td id="actualHours0" class="tableValueWithLeftBottomBorder"><input type="text" id="A0" data-format="0" value="<s:property value="dailyFlash.openHours"/>" size="10" theme="simple" /></td>
+			        <td id="C0" class="greyTableValueWithLeftBottomBorder">$-</td>
+			        <td class="greyTableValueWithLeftBottomBorder">&nbsp;</td>
+			        <td class="greyTableValueWithLeftBottomBorder">&nbsp;</td>
+			        <td class="tableValueWithLeftBottomBorder">&nbsp;</td>
+			        <td class="tableValueWithLeftBottomBorder">&nbsp;</td>
+			        <td class="tableValueWithLeftBottomBorder">&nbsp;</td>
+              <td class="tableValueWithLeftBottomBorder">&nbsp;</td>
+              <td class="tableValueWithLeftBottomBorder">&nbsp;</td>			
+              <td class="tableValueWithLeftBottomBorder">&nbsp;</td>
+
+            </tr>
+
+			      <s:iterator id="dailyFlashHour" value="dailyFlashHours" status="itTotalHours">
+ 	          <tr id="row<s:property value='#itTotalHours.count'/>" row="<s:property value='#itTotalHours.count' />">
+			        <td class="selectableTableValueWithLeftBottomBorder"><s:property value="dayPart.name"/></td>
+			        <td class="greyTableValueWithLeftBottomBorder"><s:text name="report.dailyFlashReport.hours.format"><s:param value="day"/></s:text></td>
+			        <td id="projectedSales<s:property value='#itTotalHours.count'/>" class="greyTableValueWithLeftBottomBorder">$<s:text name="currency"><s:param value="sales"/></s:text></td>
+			        <td id="projectedSalesCumul<s:property value='#itTotalHours.count'/>" class="greyTableValueWithLeftBottomBorder" data-format="$0,0" data-formula="( $projectedSales<s:property value='#itTotalHours.count'/> + $projectedSalesCumul<s:property value='#itTotalHours.count - 1'/>) "/></td>
+			        <td id="actualSales<s:property value='#itTotalHours.count'/>" class="tableValueWithLeftBottomBorder"><input type="text" id="B<s:property value='#itTotalHours.count'/>" data-format="0[.]0" value="<s:property value="actualSale"/>" size="10" theme="simple" /></td>
+			        <td id="actualHours<s:property value='#itTotalHours.count'/>" class="tableValueWithLeftBottomBorder"><input type="text" id="A<s:property value='#itTotalHours.count'/>" data-format="0" value="<s:property value="actualHour"/>" size="10" theme="simple" /></td>
+			        <td id="C<s:property value='#itTotalHours.count'/>" class="greyTableValueWithLeftBottomBorder" data-format="$0,0" data-formula="IF($B<s:property value='#itTotalHours.count'/> > 0,($B<s:property value='#itTotalHours.count'/> + $C<s:property value='#itTotalHours.count - 1'/>),0)"></td>
+			        <td id="D<s:property value='#itTotalHours.count'/>" class="greyTableValueWithLeftBottomBorder" data-format="$(0,0)" data-formula="IF($B<s:property value='#itTotalHours.count'/> > 0,($B<s:property value='#itTotalHours.count'/> - $projectedSales<s:property value='#itTotalHours.count'/>),0)"></td>
+			        <td id="cumulDiff<s:property value='#itTotalHours.count'/>" class="greyTableValueWithLeftBottomBorder" data-format="$(0,0)" data-formula="IF($B<s:property value='#itTotalHours.count'/> > 0,($D<s:property value='#itTotalHours.count'/> + $cumulDiff<s:property value='#itTotalHours.count - 1'/>),0)"></td>
+              <td id="E<s:property value='#itTotalHours.count'/>" class="tableValueWithLeftBottomBorder"><s:property value="scheduleHour"/></td>
+              <td id="H<s:property value='#itTotalHours.count'/>" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="IF($B<s:property value='#itTotalHours.count'/> > 0,$E<s:property value='#itTotalHours.count'/>,0)"></td>
+              <td id="F<s:property value='#itTotalHours.count'/>" class="tableValueWithLeftBottomBorder"><s:property value="targetHour"/></td>
+              <td id="I<s:property value='#itTotalHours.count'/>" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="IF($B<s:property value='#itTotalHours.count'/> > 0,$F<s:property value='#itTotalHours.count'/>,0)"></td>
+              <td id="newProjection<s:property value='#itTotalHours.count'/>" class="tableValueWithLeftBottomBorder">&nbsp;</td>
+              <td id="G<s:property value='#itTotalHours.count'/>" class="tableValueWithLeftBottomBorder" data-format="$0,0" data-formula="IF($B<s:property value='#itTotalHours.count'/> > 0,$projectedSales<s:property value='#itTotalHours.count'/>,0)"></td>
+			      </tr>
+			      </s:iterator>
+			        <td class="tableValueWithLeftBottomBorder">Close</td>
+			        <td class="greyTableValueWithLeftBottomBorder">&nbsp;</td>
+			        <td id="closeProjectedSales" class="greyTableValueWithLeftBottomBorder">$-</td>
+			        <td id="closeSaleCumul0" class="greyTableValueWithLeftBottomBorder">$-</td>
+			        <td id="closeSales" class="tableValueWithLeftBottomBorder"></td>
+			        <td id="closeHour" class="tableValueWithLeftBottomBorder"><input type="text" id="A<s:property value='dailyFlashHours.size() + 1'/>" data-format="0" value="<s:property value='dailyFlash.closeHours'/>" size="10" theme="simple" /></td>
+			        <td id="closeActualSalesCumul" class="greyTableValueWithLeftBottomBorder">$-</td>
+			        <td id="closeDiff" class="greyTableValueWithLeftBottomBorder">&nbsp;</td>
+			        <td id="closeCumulDiff" class="greyTableValueWithLeftBottomBorder">&nbsp;</td>
+              <td id="closeSchedule<s:property value='#itTotalHours.count'/>" class="tableValueWithLeftBottomBorder"><s:property value="scheduleHour"/></td>
+              <td id="closeCumulSchedule" class="tableValueWithLeftBottomBorder">&nbsp;</td>
+              <td id="closeTarget"class="tableValueWithLeftBottomBorder">&nbsp;</td></td>
+              <td id="closeCumulTarget" class="tableValueWithLeftBottomBorder">&nbsp;</td></td>
+              <td id="closeNewProjection" class="tableValueWithLeftBottomBorder">&nbsp;</td>
+              <td class="tableValueWithLeftBottomBorder">&nbsp;</td>			        
+			      </tr>
+			      <tr>
+			        <td class="tableValueWithLeftBottomBorder">&nbsp;</td>
+			        <td class="greyTableValueWithLeftBottomBorder"><s:text name="report.dailyFlashReport.total.label"/></td>
+			        <td id="totalSales" class="greyTableValueWithLeftBottomBorder" data-format="$0,0" data-formula="$projectedSalesCumul<s:property value='dailyFlashHours.size()'/>"></td>
+			        <td id="totalCumulSales" class="greyTableValueWithLeftBottomBorder" data-format="$0,0" data-formula="$projectedSalesCumul<s:property value='dailyFlashHours.size()'/>"></td>
+			        <td id="totalActualSales" class="greyTableValueWithLeftBottomBorder" data-format="$0,0" data-formula="SUM($B1,$B<s:property value='dailyFlashHours.size()'/>)"></td>
+			        <td id="totalPartialHours" class="greyTableValueWithLeftBottomBorder" data-format="0" data-formula="SUM($A0,$A<s:property value='dailyFlashHours.size() + 1'/>)/2"></td>
+			        <td id="totalActualSalesCumul" class="greyTableValueWithLeftBottomBorder" data-format="$0,0" data-formula="SUM($C1,$C<s:property value='dailyFlashHours.size()'/>)"></td>
+			        <td id="totalDiff" class="greyTableValueWithLeftBottomBorder" data-format="$(0,0)" data-formula="SUM($D1,$D<s:property value='dailyFlashHours.size()'/>)"></td>
+			        <td id="totalCumulDiff" class="greyTableValueWithLeftBottomBorder" data-format="$(0,0)" data-formula="$totalDiff"></td>
+              <td id="totalSchedule" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="SUM($E0,$E<s:property value='dailyFlashHours.size()'/>)/2"></td>
+              <td id="totalCumulSchedule" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="SUM($H1,$H<s:property value='dailyFlashHours.size()'/>)/2"></td>
+              <td id="totalTarget" class="tableValueWithLeftBottomBorder"data-format="0" data-formula="SUM($F0,$F<s:property value='dailyFlashHours.size()'/>)/2"></td>
+              <td id="totalCumulTarget" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="SUM($I1,$I<s:property value='dailyFlashHours.size()'/>)/2"></td>
+              <td id="totalNewProjection" class="tableValueWithLeftBottomBorder">&nbsp;</td>
+              <td id="totalPartialProjectedSales" class="tableValueWithLeftBottomBorder" data-format="$0,0" data-formula="SUM($G1,$G<s:property value='dailyFlashHours.size()'/>)"></td>   
+			      </tr>
+			    </table>
+			    </td>
+			  </tr>
+			  <tr>
+			    <td>&nbsp;</td>
+			  </tr>
+			  <tr>
+			    <td>
+			    <table width="100%">
+			      <tr>
+			        <td align="left">
+			        <table class="windowReportTable" cellspacing="0" border="1">
+			          <tr>
+			            <td class="cellLabel"><s:text name="report.dailyFlashReport.forecastChange.label"/></td>
+			            <td id="forecast" class="greyCellValue" data-format="0%" data-formula="($totalDiff/$totalPartialProjectedSales)"></td>
+			          </tr>
+			          <tr>
+			            <td class="cellLabel"><s:text name="report.dailyFlashReport.percentOfDayLeft.label"/></td>
+			            <td id="percentOfDay" class="greyCellValue" data-format="0%" data-formula="1 - ($totalPartialProjectedSales/$totalSales)"></td>
+			          </tr>
+			        </table>
+			      </td>
+			      <td align="right">
+			        <table class="windowReportTable" cellspacing="0">
+			        <tr>
+			          <td>&nbsp;</td>
+			          <td class="greyCellLabel" colspan="2"><s:text name="report.dailyFlashReport.soFar.label" /></td>
+			          <td class="greyCellLabel" colspan="2"><s:text name="report.dailyflashReport.restOfDay.label" /></td>
+			        </tr>
+			        <tr>
+			          <td>&nbsp;</td>
+			          <td class="greyCellLabel"><s:text name="report.dailyFlashReport.hours.label"/></td>
+			          <td class="greyCellLabel"><s:text name="report.dailyFlashReport.difference.label"/></td>
+			          <td class="greyCellLabel"><s:text name="report.dailyFlashReport.hours.label"/></td>
+			          <td class="greyCellLabel"><s:text name="report.dailyFlashReport.difference.label"/></td>
+			        </tr>
+			        <tr>
+			          <td class="cellLabel"><s:text name="report.dailyFlashReport.actualHours.label"/></td>
+                <td id="actualHours" class="greyCellValue" data-format="0" data-formula="$totalPartialHours" ></td>
+			          <td class="darkGreyCellValue">&nbsp;</td>
+			          <td class="darkGreyCellValue">&nbsp;</td>
+			          <td class="darkGreyCellValue">&nbsp;</td>
+			        </tr>
+			        <tr>
+			          <td class="cellLabel"><s:text name="report.dailyFlashReport.scheduledHours.label"/></td>
+                <td id="partialScheduleHours" class="greyCellValue" data-format="0" data-formula="$totalCumulSchedule"></td>
+			          <td id="diffPartialHours" class="greyCellValue" data-format="(0)" data-formula="( $actualHours - $partialScheduleHours )"></td>
+			          <td id="soFarScheduleHours" class="greyCellValue" data-format="(0)" data-formula="( $totalSchedule - $totalCumulSchedule )"></td>
+			          <td class="darkGreyCellValue">&nbsp;</td>
+			         </tr>
+              <tr>
+                <td class="cellLabel"><s:text name="report.dailyFlashReport.targetHours.label"/></td>
+                <td id="partialTargetHours" class="greyCellValue" data-format="0" data-formula="$totalCumulTarget"></td>
+                <td id="diffTargetHours" class="greyCellValue" data-format="(0)" data-formula="( $actualHours - $partialTargetHours )"></td>
+                <td id="soFarTargetHours" class="greyCellValue" data-format="(0)" data-formula="( $totalTarget - $partialTargetHours )"></td>
+                <td class="darkGreyCellValue">&nbsp;</td>
+               </tr>
+              <tr>
+                <td class="cellLabel"><s:text name="report.dailyFlashReport.idealHours.label"/></td>
+                <td id="partialIdealHours" class="greyCellValue" data-format="0" data-formula="$totalCumulSchedule"></td>
+                <td id="diffIdealHours" class="greyCellValue" data-format="(0)" data-formula="( $actualHours - $partialScheduleHours )"></td>
+                <td id="soFarIdealHours" class="greyCellValue" data-format="(0)" data-formula="( $totalSchedule - $totalCumulSchedule )"></td>
+                <td class="darkGreyCellValue">&nbsp;</td>
+               </tr>
+			        </table>
+			      </td>
+			      </tr>
+			      <tr>
+			        <td>
+               <table class="windowReportTable" cellspacing="0" align="left">
+                  <tr>
+                    <td colspan="5">
+                      <s:text name="report.dailyFlashReport.catering.label"/>
+                    </td>
+                  </tr>       
+                  <tr>
+                    <td class="greyCellLabel"><s:text name="report.dailyFlashReport.status.label"/></td>
+                    <td class="greyCellLabel"><s:text name="report.dailyFlashReport.projectedSales.label"/></td>
+                    <td class="greyCellLabel"><s:text name="report.dailyFlashReport.actualSales.label"/></td>
+                    <td class="greyCellLabel"><s:text name="report.dailyFlashReport.actualSale.cum.label"/></td>
+                    <td class="greyCellLabel"><s:text name="report.dailyFlashReport.percent.label"/></td>
+                  </tr>
+                  <tr>
+                    <td class="greyCellValue"><s:text name="report.dailyFlashReport.delivered.label"/></td>
+                    <td id="deliveredProjSales" class="greyCellValue" >$ 550</td><!-- TODO: Ver de donde sacar el valor -->
+                    <td class="tableValueWithLeftBottomBorder"><input type="text" id="deliveredActualSales" data-format="$0,0" value="<s:property value="dailyFlash.deliveredActualSales"/>" size="10" theme="simple" /></td>
+                    <td id="deliveredActualSalesCumulative" class="greyTableValueWithLeftBottomBorder" data-format="(0,0)" data-formula="$deliveredActualSales - $deliveredProjSales"/>
+                    <td id="deliveredPercent" class="greyTableValueWithLeftBottomBorder" data-format="0%" data-formula="$deliveredActualSales/$deliveredProjSales"/>
+                  </tr>
+                  <tr>
+                    <td class="greyCellValue"><s:text name="report.dailyFlashReport.planned.label"/></td>
+                    <td id="plannedProjSales" class="greyCellValue" >$ 550</td><!-- TODO: Ver de donde sacar el valor -->
+                    <td class="tableValueWithLeftBottomBorder"><input type="text" id="plannedActualSales" data-format="$0,0" value="<s:property value="dailyFlash.deliveredActualSales"/>" size="10" theme="simple" /></td>
+                    <td id="plannedActualSalesCumulative" class="greyTableValueWithLeftBottomBorder" data-format="(0,0)" data-formula="$plannedActualSales + $deliveredActualSalesCumulative"/>
+                    <td id="plannedPercent" class="greyTableValueWithLeftBottomBorder" data-format="0%" data-formula="$plannedActualSales/$deliveredProjSales"/>
+                  </tr>
+                </table>
+              </td>
+              <td align="right">
+                <table class="windowReportTable" cellspacing="0" align="right">
+                  <tr>
+                    <td colspan="2"><s:text name="report.dailyFlashReport.catering.hours.label"/></td>
+                  </tr>
+                  <tr>
+                    <td class="cellValue"><s:text name="report.dailyFlashReport.projected.label"/></td>
+                    <td class="greyCellValue">2</td> <!-- TODO Ver de donde sacar la información -->
+                  </tr>
+                  <tr>
+                    <td class="cellValue"><s:text name="report.dailyFlashReport.delivered.label"/></td>
+                    <td class="greyCellValue">15</td> <!-- TODO: Ver de donde sacar la información -->
+                  </tr>
+                  <tr>
+                    <td class="cellValue"><s:text name="report.dailyFlashReport.planned.label"/></td>
+                    <td class="greyCellValue">3</td>
+                  </tr>
+                </table>
+						 </td>
+					 </tr>
+					 <tr>
+					   <td colspan="2">&nbsp;</td>
+					 </tr>
+					 <tr>
+					   <td>
+              <table class="windowReportTable" cellspacing="0" border="1">
+                <tr>
+                  <td class="greyCellLabel"><s:text name="report.dailyFlashReport.laborHours.label"/></td>
+                  <td class="greyCellLabel"><s:text name="report.dailyFlashReport.restaurant.label"/></td>
+                  <td class="greyCellLabel"><s:text name="report.dailyFlashReport.catering.label"/></td>
+                  <td class="greyCellLabel"><s:text name="report.dailyFlashReport.total.label"/></td>
+                 </tr>
+                 <tr>
+                   <td class="greyCellLabel"><s:text name="report.dailyFlashReport.adjustment.label"/></td>
+                   <td>-5</td> <!-- TODO: Ver como hacer para obtener el valor -->
+                   <td>+3</td> <!-- TODO: Ver como hacer para obtener el valor -->
+                   <td>-2</td> <!-- TODO: Ver como hacer para obtener el valor -->
+                 </tr>
+               </table>  
+		         </td>
+		         <td align="right" valign="middle"><input id="saveFlashReport" type="submit" value="<s:text name="save.button"/>" class="button" /></td>
+		       </tr>	      
+			    </table>
+			    </td> 
+			   </tr>
+		    </table>
+       </td>
+      </tr>
+ </table>
+   
+

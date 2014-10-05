@@ -349,18 +349,17 @@ public class ReportServiceBean implements ReportService {
 			OperationTime storeOperationTime = store.getOperationTime(CalendarUtils.getDayOfWeek(date));
 			Date startHour = storeOperationTime != null? storeOperationTime.getOpenHour() : null;
 			Date endHour = storeOperationTime != null? storeOperationTime.getCloseHour() : null;
-			Date nowHour = CalendarUtils.removeDateFromTime(date);
-			List<HistoricSales> actualSales = new LinkedList<HistoricSales>();//reportDao.getActualSales(store, startHour, nowHour);
-			
+
 			List<TotalHour> schedule = reportDao.getHalfHourlySchedule(store, date, startHour, endHour);
-			
+			List<TotalHour> target = reportDao.getHalfHourlyMinimumStaffing(store, date);
+
 			List<HalfHourProjection> halfHourProjections = new ArrayList<HalfHourProjection>();
 			
 			if(projections != null) {
 				halfHourProjections = projections.getHalfHourProjections();
 			}
 			
-			return getMergedDailyFlashHours(store, startHour, endHour, nowHour, halfHourProjections, actualSales, schedule, details);
+			return getMergedDailyFlashHours(store, startHour, endHour, halfHourProjections, schedule, target, details);
 			
 		}catch(SQLException e){
 			log.error("An SQLError has occurred", e);
@@ -553,7 +552,7 @@ public class ReportServiceBean implements ReportService {
 		return totalHours;
 	}
 	
-	private List<DailyFlashHour> getMergedDailyFlashHours(Store store, Date startHour, Date endHour, Date nowHour, List<HalfHourProjection> halfHourProjections, List<HistoricSales> actualSales, List<TotalHour> scheduleHours, List<DailyFlashDetail> details){
+	private List<DailyFlashHour> getMergedDailyFlashHours(Store store, Date startHour, Date endHour, List<HalfHourProjection> halfHourProjections, List<TotalHour> scheduleHours, List<TotalHour> targetHours,List<DailyFlashDetail> details){
 		List <DailyFlashHour> totalHours = new ArrayList<DailyFlashHour>();
 		
 		//if start hour is greater or equals than end hour, it means that 
@@ -563,8 +562,6 @@ public class ReportServiceBean implements ReportService {
 		if(startHour.compareTo(endHour) >= 0) {
 			endHour = CalendarUtils.addOrSubstractDays(endHour, 1);
 		}
-		
-		BigDecimal cumulSales = SpmConstants.BD_ZERO_VALUE;
 		
 		for(Date hour = startHour; hour.compareTo(endHour) <= 0; hour = CalendarUtils.addOrSubstractMinutes(hour, 30)) {
 			
@@ -577,15 +574,13 @@ public class ReportServiceBean implements ReportService {
 			
 			dailyFlashHour.setSales((hp != null) ? hp.getValue() : SpmConstants.BD_ZERO_VALUE);
 			
-			cumulSales = cumulSales.add(dailyFlashHour.getSales());
-			dailyFlashHour.setCumulSales(cumulSales);
 			
 			DailyFlashDetail df = getDailyFlashDetailByTime(hour, details);
 			dailyFlashHour.setActualHour(df != null && df.getActualHour() != null? new BigDecimal(df.getActualHour()) : SpmConstants.BD_ZERO_VALUE);
 			dailyFlashHour.setActualSale(df != null && df.getActualSale() != null? new BigDecimal(df.getActualSale()) : SpmConstants.BD_ZERO_VALUE);
 
-			TotalHour th = getTotalHourByTime(hour, scheduleHours);
-			dailyFlashHour.setScheduleHour(th != null && th.getSchedule() != null? th.getSchedule() : SpmConstants.BD_ZERO_VALUE);
+			dailyFlashHour.setScheduleHour(getScheduleValue(getTotalHourByTime(hour, scheduleHours)));
+			dailyFlashHour.setTargetHour(getTargetValue(getTotalHourByTime(hour, targetHours)));
 			
 			totalHours.add(dailyFlashHour);
 			
