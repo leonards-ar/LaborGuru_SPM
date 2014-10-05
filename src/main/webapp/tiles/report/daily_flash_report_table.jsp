@@ -21,6 +21,7 @@ F - Target Hours
 G - Partial Cumulative Projected Sales (this is used by Forecast)
 H - Cumul Schedule Hours
 I - Cumul Target Hours
+J - New Projections
 
  -->
  
@@ -109,7 +110,7 @@ I - Cumul Target Hours
               <td id="H<s:property value='#itTotalHours.count'/>" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="IF($B<s:property value='#itTotalHours.count'/> > 0,$E<s:property value='#itTotalHours.count'/>,0)"></td>
               <td id="F<s:property value='#itTotalHours.count'/>" class="tableValueWithLeftBottomBorder"><s:property value="targetHour"/></td>
               <td id="I<s:property value='#itTotalHours.count'/>" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="IF($B<s:property value='#itTotalHours.count'/> > 0,$F<s:property value='#itTotalHours.count'/>,0)"></td>
-              <td id="newProjection<s:property value='#itTotalHours.count'/>" class="tableValueWithLeftBottomBorder">&nbsp;</td>
+              <td id="J<s:property value='#itTotalHours.count'/>" class="tableValueWithLeftBottomBorder" data-format="$0,0" data-formula="IF($B<s:property value='#itTotalHours.count'/> > 0,$projectedSales<s:property value='#itTotalHours.count'/>,$projectedSales<s:property value='#itTotalHours.count'/> * (1 + $forecast))"></td>
               <td id="G<s:property value='#itTotalHours.count'/>" class="tableValueWithLeftBottomBorder" data-format="$0,0" data-formula="IF($B<s:property value='#itTotalHours.count'/> > 0,$projectedSales<s:property value='#itTotalHours.count'/>,0)"></td>
 			      </tr>
 			      </s:iterator>
@@ -143,7 +144,7 @@ I - Cumul Target Hours
               <td id="totalCumulSchedule" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="SUM($H1,$H<s:property value='dailyFlashHours.size()'/>)/2"></td>
               <td id="totalTarget" class="tableValueWithLeftBottomBorder"data-format="0" data-formula="SUM($F0,$F<s:property value='dailyFlashHours.size()'/>)/2"></td>
               <td id="totalCumulTarget" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="SUM($I1,$I<s:property value='dailyFlashHours.size()'/>)/2"></td>
-              <td id="totalNewProjection" class="tableValueWithLeftBottomBorder">&nbsp;</td>
+              <td id="totalNewProjection" class="tableValueWithLeftBottomBorder" data-format="0,0" data-formula="SUM($J1,$J<s:property value='dailyFlashHours.size()'/>)"></td>
               <td id="totalPartialProjectedSales" class="tableValueWithLeftBottomBorder" data-format="$0,0" data-formula="SUM($G1,$G<s:property value='dailyFlashHours.size()'/>)"></td>   
 			      </tr>
 			    </table>
