@@ -26,7 +26,7 @@ public class DailyFlashSales extends DailySalesValue {
 	private static final long serialVersionUID = 1L;
 	private static final int NUMBER_OF_HALF_HOURS = 48;
 
-	private List<HalfHourHistoricSales> halfHourHistoricSales = new ArrayList<HalfHourHistoricSales>(NUMBER_OF_HALF_HOURS);
+	private List<HalfHourFlashSales> halfHourFlashSales = new ArrayList<HalfHourFlashSales>(NUMBER_OF_HALF_HOURS);
 	
 	@Override
 	public void loadDailyValues() {
@@ -35,11 +35,11 @@ public class DailyFlashSales extends DailySalesValue {
 		BigDecimal value3 = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
 		BigDecimal value4 = new BigDecimal(SpmConstants.INIT_VALUE_ZERO);
 		
-		for (HalfHourHistoricSales aHalfHourHistoricSales: getHalfHourHistoricSales()) {
-			value1 = value1.add(aHalfHourHistoricSales.getValue() != null ? aHalfHourHistoricSales.getValue() : SpmConstants.BD_ZERO_VALUE);
-			value2 = value2.add(aHalfHourHistoricSales.getSecondValue() != null ? aHalfHourHistoricSales.getSecondValue() : SpmConstants.BD_ZERO_VALUE);
-			value3 = value3.add(aHalfHourHistoricSales.getThirdValue() != null ? aHalfHourHistoricSales.getThirdValue() : SpmConstants.BD_ZERO_VALUE);
-			value4 = value4.add(aHalfHourHistoricSales.getFourthValue() != null ? aHalfHourHistoricSales.getFourthValue() : SpmConstants.BD_ZERO_VALUE);
+		for (HalfHourFlashSales aHalfHourFlashSales: getHalfHourFlashSales()) {
+			value1 = value1.add(aHalfHourFlashSales.getValue() != null ? aHalfHourFlashSales.getValue() : SpmConstants.BD_ZERO_VALUE);
+			value2 = value2.add(aHalfHourFlashSales.getSecondValue() != null ? aHalfHourFlashSales.getSecondValue() : SpmConstants.BD_ZERO_VALUE);
+			value3 = value3.add(aHalfHourFlashSales.getThirdValue() != null ? aHalfHourFlashSales.getThirdValue() : SpmConstants.BD_ZERO_VALUE);
+			value4 = value4.add(aHalfHourFlashSales.getFourthValue() != null ? aHalfHourFlashSales.getFourthValue() : SpmConstants.BD_ZERO_VALUE);
 		}
 
 		setDailySalesValue(value1);
@@ -69,7 +69,7 @@ public class DailyFlashSales extends DailySalesValue {
 		final DailyFlashSales other = (DailyFlashSales) obj;
 		
 		return new EqualsBuilder()
-		.append(getSalesDate(), other.getSalesDate())
+		.append(getSalesDate(), other.getHalfHourFlashSales())
 		.isEquals();		
 	}
 
@@ -98,55 +98,55 @@ public class DailyFlashSales extends DailySalesValue {
 	}
 
 	/**
-	 * @return the halfHourHistoricSales
+	 * @return the halfHourFlashSales
 	 */
-	public List<HalfHourHistoricSales> getHalfHourHistoricSales() {
-		return halfHourHistoricSales;
+	public List<HalfHourFlashSales> getHalfHourFlashSales() {
+		return halfHourFlashSales;
 	}
 
 	/**
-	 * @param halfHourHistoricSales the halfHourHistoricSales to set
+	 * @param halfHourFlashSales the halfHourFlashSales to set
 	 */
 	@SuppressWarnings("unused")
-	private void setHalfHourHistoricSales(List<HalfHourHistoricSales> halfHourHistoricSales) {
-		this.halfHourHistoricSales = halfHourHistoricSales;
+	private void setHalfHourFlashSales(List<HalfHourFlashSales> halfHourFlashSales) {
+		this.halfHourFlashSales = halfHourFlashSales;
 	}
 	
 	
 	/**
-	 * Adds a HalfHourHistoricSales. Handles the bi-directional
+	 * Adds a HalfHourFlashSales. Handles the bi-directional
 	 * relation.
-	 * @param halfHourHistoricSales The HalfHourHistoricSales to add
+	 * @param halfHourFlashSales The HalfHourFlashSales to add
 	 */
-	public void addHalfHourHistoricSales(HalfHourHistoricSales halfHourHistoricSales){
+	public void addHalfHourFlashSales(HalfHourFlashSales halfHourFlashSales){
 		
-		if (halfHourHistoricSales == null){
-			throw new IllegalArgumentException("Null halfHourHistoricSales passed in as parameter");
+		if (halfHourFlashSales == null){
+			throw new IllegalArgumentException("Null halfHourFlashSales passed in as parameter");
 		}
 		
-		if (halfHourHistoricSales.getDailyHistoricSales() != null){
-			halfHourHistoricSales.getDailyHistoricSales().getHalfHourHistoricSales().remove(halfHourHistoricSales);
+		if (halfHourFlashSales.getDailyHistoricSales() != null){
+			//halfHourFlashSales.getDailyHistoricSales().getHalfHourFlashSales().remove(halfHourFlashSales);
 		}
 		
-		//halfHourHistoricSales.setDailyHistoricSales(this);
-		getHalfHourHistoricSales().add(halfHourHistoricSales);
+		//halfHourFlashSales.setDailyHistoricSales(this);
+		getHalfHourFlashSales().add(halfHourFlashSales);
 	}
 	
 	/**
-	 * Removes HalfHourHistoricSales from the historic sales list. Handles the bi-directional
+	 * Removes HalfHourFlashSales from the historic sales list. Handles the bi-directional
 	 * relation.
-	 * @param halfHourHistoricSales The halfHourHistoricSales to remove
+	 * @param halfHourFlashSales The halfHourFlashSales to remove
 	 */
-	public void removeHalfHourHistoricSales(HalfHourHistoricSales halfHourHistoricSales){
+	public void removeHalfHourFlashSales(HalfHourFlashSales halfHourFlashSales){
 		
-		if (halfHourHistoricSales == null){
-			throw new IllegalArgumentException("Null halfHourHistoricSales passed in as parameter");
+		if (halfHourFlashSales == null){
+			throw new IllegalArgumentException("Null halfHourFlashSales passed in as parameter");
 		}
 				
-		getHalfHourHistoricSales().remove(halfHourHistoricSales);
+		getHalfHourFlashSales().remove(halfHourFlashSales);
 		
-		if (halfHourHistoricSales.getDailyHistoricSales() != null){
-			halfHourHistoricSales.setDailyHistoricSales(null);
+		if (halfHourFlashSales.getDailyHistoricSales() != null){
+			halfHourFlashSales.setDailyHistoricSales(null);
 		}
 	}
 	
@@ -162,14 +162,14 @@ public class DailyFlashSales extends DailySalesValue {
 		dailyHistoricSales.setSalesDate(date);
 		dailyHistoricSales.setStore(store);
 		
-		HalfHourHistoricSales aHalfHourHistoricSales;
+		HalfHourFlashSales aHalfHourFlashSales;
 		DateTime nextTime = new DateTime().withDate(1970, 1, 1).withTime(0,30,0,0);
 		
 		for(int i = 0; i < SpmConstants.HALF_HOURS_IN_A_DAY; i++) {
-			aHalfHourHistoricSales = new HalfHourHistoricSales();
-			aHalfHourHistoricSales.setTime(nextTime.toDate());
-			aHalfHourHistoricSales.setValue(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
-			dailyHistoricSales.addHalfHourHistoricSales(aHalfHourHistoricSales);
+			aHalfHourFlashSales = new HalfHourFlashSales();
+			aHalfHourFlashSales.setTime(nextTime.toDate());
+			aHalfHourFlashSales.setValue(new BigDecimal(SpmConstants.INIT_VALUE_ZERO));
+			dailyHistoricSales.addHalfHourFlashSales(aHalfHourFlashSales);
 			
 			nextTime = nextTime.plusMinutes(SpmConstants.HALF_HOUR);
 		}
@@ -184,6 +184,6 @@ public class DailyFlashSales extends DailySalesValue {
 	 */
 	@Override
 	public List<? extends HalfHourSalesValue> getHalfHourSalesValues() {
-		return getHalfHourHistoricSales();
+		return getHalfHourFlashSales();
 	}
 }
