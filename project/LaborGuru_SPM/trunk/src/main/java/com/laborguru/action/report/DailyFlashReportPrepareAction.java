@@ -11,6 +11,7 @@ import com.laborguru.model.DailyFlash;
 import com.laborguru.model.DailyFlashDetail;
 import com.laborguru.model.Store;
 import com.laborguru.model.report.DailyFlashHour;
+import com.laborguru.model.report.FixedLaborHoursReport;
 import com.laborguru.service.report.DailyFlashService;
 import com.laborguru.util.CalendarUtils;
 import com.laborguru.util.SpmConstants;
@@ -33,6 +34,7 @@ public class DailyFlashReportPrepareAction extends ScheduleReportPrepareAction i
 	private BigDecimal partialScheduleHour;
 	private BigDecimal totalDifference;
 	private DailyFlashHour lastDailyFlashHour;
+	private FixedLaborHoursReport fixedLaborHoursReport;
 	
 	public void prepareShowReport(){
 		
@@ -43,6 +45,7 @@ public class DailyFlashReportPrepareAction extends ScheduleReportPrepareAction i
 	}
 	
 	public String showFirstReport() {
+		
 		showProjectedSalesReport();
 		showCateringReport();
 		return SpmActionResult.INPUT.getResult();
@@ -51,11 +54,11 @@ public class DailyFlashReportPrepareAction extends ScheduleReportPrepareAction i
 	public void showProjectedSalesReport() {
 		Date now = new Date();
 		if(getDailyFlash() == null) {
-			setDailyFlash(getDailyFlashService().getDailyFlashByDate(now, getEmployeeStore()));
+			setDailyFlash(getDailyFlashService().getDailyFlashByDate(getEmployeeStore(), now));
 		}
 		
-		setDailyFlashHours(getReportService().getDailyFlashReport(getEmployeeStore(),now, getDailyFlash() != null? new LinkedList<DailyFlashDetail>(getDailyFlash().getDetails()):new LinkedList<DailyFlashDetail>()));
-		setPartDay(CalendarUtils.roundHalfHourUp(now));
+		setDailyFlashHours(getReportService().getDailyFlashReport(getEmployeeStore(), now, getDailyFlash() != null? new LinkedList<DailyFlashDetail>(getDailyFlash().getDetails()):new LinkedList<DailyFlashDetail>()));
+		setFixedLaborHoursReport(getReportService().getFixedLaborHoursReport(getEmployeeStore(), now));
 		return;
 	}
 	
@@ -230,6 +233,30 @@ public class DailyFlashReportPrepareAction extends ScheduleReportPrepareAction i
 
 	public void setDailyFlashService(DailyFlashService dailyFlashService) {
 		this.dailyFlashService = dailyFlashService;
+	}
+
+	public FixedLaborHoursReport getFixedLaborHoursReport() {
+		return fixedLaborHoursReport;
+	}
+
+	public void setFixedLaborHoursReport(FixedLaborHoursReport fixedLaborHoursReport) {
+		this.fixedLaborHoursReport = fixedLaborHoursReport;
+	}
+	
+	public Double getScheduleOpeningHours() {
+		return getFixedLaborHoursReport().getSchedule().getOpenHours();
+	}
+	
+	public Double getScheduleFlexibleHours() {
+		return getFixedLaborHoursReport().getSchedule().getFlexHours();
+	}
+	
+	public Double getProjectedOpeningHours() {
+		return getFixedLaborHoursReport().getTarget().getOpenHours();
+	}
+	
+	public Double getProjectedFlexibleHours() {
+		return getFixedLaborHoursReport().getTarget().getFlexHours();
 	}
 
 }

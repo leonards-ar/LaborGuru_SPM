@@ -8,6 +8,9 @@ package com.laborguru.service.staffing;
 import java.util.Date;
 import java.util.Map;
 
+import com.laborguru.model.DailySalesValue;
+import com.laborguru.model.DailyStaffing;
+import com.laborguru.model.Position;
 import com.laborguru.model.Store;
 import com.laborguru.model.StoreDailyHistoricSalesStaffing;
 import com.laborguru.model.StoreDailyStaffing;
@@ -29,6 +32,15 @@ public interface StaffingService extends Service {
 	 * @return
 	 */
 	StoreDailyStaffing getDailyStaffingByDate(Store store, Date date);
+	
+	/**
+	 * 
+	 * @param store
+	 * @param date
+	 * @param dailySalesValue
+	 * @return
+	 */
+	Map<Position, DailyStaffing> getDailyStaffingByDailySalesValue(Store store, Date date, DailySalesValue dailySalesValue);
 	
 	/**
 	 * 

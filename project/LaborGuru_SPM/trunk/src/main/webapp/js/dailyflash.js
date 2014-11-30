@@ -6,12 +6,12 @@ $(function(){
 	
 	$('#dailyFlashTable').calx();
 	
-	$('#scheduleReportTable').find('td:nth-child(10),th:nth-child(10)').hide();
-	$('#scheduleReportTable').find('td:nth-child(11),th:nth-child(11)').hide();
-	$('#scheduleReportTable').find('td:nth-child(12),th:nth-child(12)').hide();
-	$('#scheduleReportTable').find('td:nth-child(13),th:nth-child(13)').hide();
-	$('#scheduleReportTable').find('td:nth-child(14),th:nth-child(14)').hide();
-	$('#scheduleReportTable').find('td:nth-child(15),th:nth-child(14)').hide();	
+//	$('#scheduleReportTable').find('td:nth-child(10),th:nth-child(10)').hide();
+//	$('#scheduleReportTable').find('td:nth-child(11),th:nth-child(11)').hide();
+//	$('#scheduleReportTable').find('td:nth-child(12),th:nth-child(12)').hide();
+//	$('#scheduleReportTable').find('td:nth-child(13),th:nth-child(13)').hide();
+//	$('#scheduleReportTable').find('td:nth-child(14),th:nth-child(14)').hide();
+//	$('#scheduleReportTable').find('td:nth-child(15),th:nth-child(14)').hide();	
 	
     $('#saveFlashReport').on({
         click: function(){
@@ -21,7 +21,7 @@ $(function(){
             dataObj +='"details" : [ ';
         	$("tr[id^='row']").each(function(i,row){
         		dataObj += '{"strHour": "' + $(row).find("td:eq(1)").text() + '",';
-        		dataObj += '"strActualSale": "' + $(row).find("input[id^='actualSale']").val() + '",';
+        		dataObj += '"strActualSale": "' + $(row).find("input[id^='B']").val() + '",';
         		dataObj += ' "strActualHour": "' + $(row).find("input[id^='A']").val() + '"},';
         	});
         	
@@ -80,6 +80,50 @@ $(function(){
     		$(this).val('');
     	}
     });
+    
+    $("#calculateIdeal").on({
+    	click: function() {
+    		var dataObj = '{"storeId":"' + $("#storeId").val() + '",';
+    		dataObj += '"sales": [';
+    		$("tr[id^='row']").each(function(i,row){
+        		dataObj += '{"strTime": "' + $(row).find("td:eq(1)").text() + '",';
+        		dataObj += '"strSale": "' + $(row).find("td:eq(13)").text() + '"},';
+    		});
+    		
+    		dataObj=dataObj.substring(0, dataObj.length - 1);
+    		dataObj += "]}";
+    		
+    		var sw = screen.width;
+    		alert(dataObj);
+    		
+            $.ajax({
+                type : 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                url: calulateUrl,
+                data: dataObj,
+                success: function(data) {
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+
+                	$('#result').find('#message').text(xhr.status + " - " + thrownError);
+                	$('#result').css("left", Math.round((sw/2) - 100));
+                	$('#result').fadeIn("slow").delay(10000).fadeOut("slow");
+                  }
+            });
+            return false;
+    		
+    	},
+        mouseover: function() {
+            $(this).addClass("ui-state-hover");
+            $(this).css("cursor","pointer");
+        	
+        },
+        mouseout: function() {
+            $(this).removeClass("ui-state-hover");
+
+        }    	
+    })
     
    
     /*

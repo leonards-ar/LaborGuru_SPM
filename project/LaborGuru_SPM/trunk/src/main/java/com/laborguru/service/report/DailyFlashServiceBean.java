@@ -24,7 +24,7 @@ public class DailyFlashServiceBean implements DailyFlashService {
 		return getDailyFlashDao().getDailyFlashById(dailyFlash);
 	}
 
-	public DailyFlash getDailyFlashByDate(Date date, Store store) {
+	public DailyFlash getDailyFlashByDate(Store store, Date date) {
 		return getDailyFlashDao().getDailyFlashByDate(date, store);
 	}
 

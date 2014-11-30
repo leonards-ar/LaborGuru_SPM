@@ -4,14 +4,12 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import com.laborguru.exception.ErrorEnum;
 import com.laborguru.exception.SpmUncheckedException;
-import com.laborguru.model.DailyFlash;
 import com.laborguru.model.DailyFlashDetail;
 import com.laborguru.model.DailyProjection;
 import com.laborguru.model.HalfHourProjection;
