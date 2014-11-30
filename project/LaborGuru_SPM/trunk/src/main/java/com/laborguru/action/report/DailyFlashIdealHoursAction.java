@@ -47,7 +47,7 @@ public class DailyFlashIdealHoursAction extends SpmAction {
 		
 		StoreDailyFlashStaffing dailyFlashStaffing = staffingService.getDailyFlashSalesStaffingByDate(store,today, dailySalesValue);
 		
-		int numeroQueNecesitas = dailyFlashStaffing.getHalfHourStaffing(halfHour);
+		//int numeroQueNecesitas = dailyFlashStaffing.getHalfHourStaffing(halfHour);
 		
 		return Action.SUCCESS;
 		

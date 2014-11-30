@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.laborguru.model.DailyFlashSales;
+import com.laborguru.model.DailyFlashStaffing;
 import com.laborguru.model.DailyHistoricSales;
 import com.laborguru.model.DailyHistoricSalesStaffing;
 import com.laborguru.model.DailyProjectedStaffing;
@@ -120,36 +122,32 @@ public class StaffingServiceBean implements StaffingService {
 	//This method calculates dailyStaffing giving a dailySalesValue. (It's being used in DailyFlashReport to calculate ideal hours)
 	public StoreDailyFlashStaffing getDailyFlashSalesStaffingByDate(Store store, Date date, DailySalesValue dailySalesValue) {
 		List<DailyStaffing> managerDailyStaffings = new ArrayList<DailyStaffing>();
-		Map<Position, DailyStaffing> staffingMap = new HashMap<Position, DailyStaffing>();
-		
 		double nonManagerTargetAddition = 0.0;
 		
 		store = getStoreDao().getStoreById(store);
 		
+		StoreDailyFlashStaffing storeDailyStaffing = new StoreDailyFlashStaffing(store);
+		storeDailyStaffing.setDate(date);
+		
 		List<Map<String, List<HalfHourStaffingPositionData>>> staffingData = initializeHalfHourStaffingData(store, date, dailySalesValue);
 		
-		
+		//:TODO: Improve performance? Or complicate coding?
 		for(Position position : store.getPositions()) {
 			DailyStaffing dailyStaffing = calculateDailyStaffing(position, date, dailySalesValue, staffingData);
-
 			if(dailyStaffing != null) {
+				storeDailyStaffing.addDailyStaffing((DailyFlashStaffing) dailyStaffing);
+				
 				if(isManagerDailyStaffing(dailyStaffing)) {
 					managerDailyStaffings.add(dailyStaffing);
 				} else {
 					nonManagerTargetAddition += NumberUtils.getDoubleValue(dailyStaffing.getTotalDailyTarget());
 				}
 			}
-			
-			if(dailyStaffing != null) {
-				staffingMap.put(position, dailyStaffing);
-			}
 		}
-
-
+		
 		applyOtherFactorsToManagerPositions(managerDailyStaffings, store, nonManagerTargetAddition);
 		
-		return null;
-		
+		return storeDailyStaffing;
 	}	
 	
 	/**
@@ -224,6 +222,8 @@ public class StaffingServiceBean implements StaffingService {
 		//:TODO: Check if another class arrives??? Should not happen :)
 		if(dailySalesValue instanceof DailyProjection) {
 			return new DailyProjectedStaffing();
+		} else if (dailySalesValue instanceof DailyFlashSales) {
+			return new DailyFlashStaffing();
 		} else {
 			return new DailyHistoricSalesStaffing();
 		}

@@ -24,7 +24,7 @@ public class StoreDailyFlashStaffing extends SpmObject {
 	 */
 	private static final long serialVersionUID = -5438231250357406297L;
 	
-	private Map<Position, DailyProjectedStaffing> storeDailyStaffing = new HashMap<Position, DailyProjectedStaffing>();
+	private Map<Position, DailyFlashStaffing> storeDailyStaffing = new HashMap<Position, DailyFlashStaffing>();
 	private Store store;
 	private Date date;
 	
@@ -40,7 +40,7 @@ public class StoreDailyFlashStaffing extends SpmObject {
 	 * 
 	 * @param dailyStaffing
 	 */
-	public void addDailyStaffing(DailyProjectedStaffing dailyStaffing) {
+	public void addDailyStaffing(DailyFlashStaffing dailyStaffing) {
 		if(dailyStaffing != null && dailyStaffing.getPosition() != null) {
 			this.storeDailyStaffing.put(dailyStaffing.getPosition(), dailyStaffing);
 		}
@@ -50,7 +50,7 @@ public class StoreDailyFlashStaffing extends SpmObject {
 	 * 
 	 * @return
 	 */
-	public Collection<DailyProjectedStaffing> getStoreDailyStaffing() {
+	public Collection<DailyFlashStaffing> getStoreDailyStaffing() {
 		return this.storeDailyStaffing.values();
 	}
 	
@@ -62,7 +62,7 @@ public class StoreDailyFlashStaffing extends SpmObject {
 	public int getHalfHourStaffing(Date time) {
 		int total = 0;
 		int halfHourIndex = -1;
-		for(DailyProjectedStaffing dailyStaffing : getStoreDailyStaffing()) {
+		for(DailyFlashStaffing dailyStaffing : getStoreDailyStaffing()) {
 			if(halfHourIndex < 0) {
 				halfHourIndex = dailyStaffing.getHalfHourIndex(time);
 			}
@@ -94,7 +94,7 @@ public class StoreDailyFlashStaffing extends SpmObject {
 	 * @return
 	 */
 	public int getHalfHourStaffing(Position position, Date time) {
-		DailyProjectedStaffing dailyStaffing = getDailyStaffingFor(position);
+		DailyFlashStaffing dailyStaffing = getDailyStaffingFor(position);
 		if(dailyStaffing != null) {
 			int halfHourIndex = dailyStaffing.getHalfHourIndex(time);
 			return dailyStaffing.getHalfHourStaffing().get(halfHourIndex).getCalculatedStaff().intValue();
@@ -108,7 +108,7 @@ public class StoreDailyFlashStaffing extends SpmObject {
 	 * @param position
 	 * @return
 	 */
-	public DailyProjectedStaffing getDailyStaffingFor(Position position) {
+	public DailyFlashStaffing getDailyStaffingFor(Position position) {
 		if(position != null && position.getId() != null) {
 			for(Position key : this.storeDailyStaffing.keySet()) {
 				if(position.getId().equals(key.getId())) {
@@ -182,7 +182,7 @@ public class StoreDailyFlashStaffing extends SpmObject {
 	public Double getTotalOpening() {
 		double total = 0.0;
 		Double positionTotal;
-		for(DailyProjectedStaffing dailyStaffing : getStoreDailyStaffing()) {
+		for(DailyFlashStaffing dailyStaffing : getStoreDailyStaffing()) {
 			positionTotal = dailyStaffing.getTotalOpening();
 			total += positionTotal != null ? positionTotal.doubleValue() : 0.0;
 		}
@@ -196,7 +196,7 @@ public class StoreDailyFlashStaffing extends SpmObject {
 	public Double getTotalClosing() {
 		double total = 0.0;
 		Double positionTotal;
-		for(DailyProjectedStaffing dailyStaffing : getStoreDailyStaffing()) {
+		for(DailyFlashStaffing dailyStaffing : getStoreDailyStaffing()) {
 			positionTotal = dailyStaffing.getFixedClosing();
 			total += positionTotal != null ? positionTotal.doubleValue() : 0.0;
 		}
@@ -210,7 +210,7 @@ public class StoreDailyFlashStaffing extends SpmObject {
 	public Double getTotalFlexible() {
 		double total = 0.0;
 		Double positionTotal;
-		for(DailyProjectedStaffing dailyStaffing : getStoreDailyStaffing()) {
+		for(DailyFlashStaffing dailyStaffing : getStoreDailyStaffing()) {
 			positionTotal = dailyStaffing.getTotalFlexible();
 			total += positionTotal != null ? positionTotal.doubleValue() : 0.0;
 		}
@@ -224,7 +224,7 @@ public class StoreDailyFlashStaffing extends SpmObject {
 	public Double getTotalPostRush() {
 		double total = 0.0;
 		Double positionTotal;
-		for(DailyProjectedStaffing dailyStaffing : getStoreDailyStaffing()) {
+		for(DailyFlashStaffing dailyStaffing : getStoreDailyStaffing()) {
 			positionTotal = dailyStaffing.getFixedPostRush();
 			total += positionTotal != null ? positionTotal.doubleValue() : 0.0;
 		}
@@ -238,7 +238,7 @@ public class StoreDailyFlashStaffing extends SpmObject {
 	public Double getTotalDailyTarget() {
 		double total = 0.0;
 		Double positionTotal;
-		for(DailyProjectedStaffing dailyStaffing : getStoreDailyStaffing()) {
+		for(DailyFlashStaffing dailyStaffing : getStoreDailyStaffing()) {
 			positionTotal = dailyStaffing.getTotalDailyTarget();
 			total += positionTotal != null ? positionTotal.doubleValue() : 0.0;
 		}
@@ -254,7 +254,7 @@ public class StoreDailyFlashStaffing extends SpmObject {
 		int total = 0;
 		
 		Integer minimumStaffing;
-		for(DailyProjectedStaffing dailyStaffing : getStoreDailyStaffing()) {
+		for(DailyFlashStaffing dailyStaffing : getStoreDailyStaffing()) {
 			minimumStaffing = dailyStaffing.getHalfHourStaffing(time);
 			total += minimumStaffing != null ? minimumStaffing.intValue() : 0;
 		}
