@@ -88,7 +88,7 @@ public class DailyFlashSaveAction extends SpmAction{
 			
 			Store store = storeService.getStoreById(searchStore);
 			Date today = new Date();
-			DailyFlash dailyFlash = getDailyFlashService().getDailyFlashByDate(today, store);
+			DailyFlash dailyFlash = getDailyFlashService().getDailyFlashByDate(store,today);
 			if(dailyFlash == null){
 				dailyFlash = new DailyFlash();
 				if(!"".equals(getPreOpenHour())) dailyFlash.setOpenHours(Double.parseDouble(getPreOpenHour()));

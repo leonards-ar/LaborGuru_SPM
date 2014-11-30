@@ -67,7 +67,7 @@ public class DailyFlashDetail extends SpmObject {
 	}
 	
 	public void setStrActualSale(String actualSale) {
-		this.actualSale = Double.parseDouble(actualSale);
+		this.actualSale = Double.parseDouble("-".equals(actualSale)? "0.0" : actualSale);
 	}
 
 	public Double getActualHour() {
@@ -79,7 +79,7 @@ public class DailyFlashDetail extends SpmObject {
 	}
 	
 	public void setStrActualHour(String actualHour) {
-		this.actualHour = Double.parseDouble(actualHour);
+		this.actualHour = Double.parseDouble("-".equals(actualHour) ? "0.0" : actualHour);
 	}
 	
 	public DailyFlash getDailyFlash() {

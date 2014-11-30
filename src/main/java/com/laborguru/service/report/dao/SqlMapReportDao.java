@@ -220,7 +220,7 @@ public class SqlMapReportDao extends SqlMapClientDaoSupport implements ReportDao
 	
 	public FixedLaborHours getTargetFixedLaborHours(Store store, Date date) throws SQLException {
 		if(log.isDebugEnabled()) {
-			log.debug("getScheduleFixedLaborHours: before select params: store_id: " + store.getId() + " date: " + date);
+			log.debug("getTargetFixedLaborHours: before select params: store_id: " + store.getId() + " date: " + date);
 		}
 		
 		return (FixedLaborHours)getSqlMapClient().queryForObject("getTargetFixedLaborHours", ReportDaoHelper.mapTargetFixedLaborHours(store, date));

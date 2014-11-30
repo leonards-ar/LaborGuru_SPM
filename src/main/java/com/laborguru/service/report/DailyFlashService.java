@@ -22,7 +22,7 @@ public interface DailyFlashService extends Service{
 	 * @param Store store
 	 * @return
 	 */
-	DailyFlash getDailyFlashByDate(Date date, Store store);
+	DailyFlash getDailyFlashByDate(Store store, Date date);
 	
 	/**
 	 * Saves or updates a dailyFlash

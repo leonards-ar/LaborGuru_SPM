@@ -22,6 +22,7 @@ import com.laborguru.model.DailyStaffing;
 import com.laborguru.model.DayOfWeekData;
 import com.laborguru.model.DayPart;
 import com.laborguru.model.DayPartData;
+import com.laborguru.model.HalfHourHistoricSales;
 import com.laborguru.model.HalfHourHistoricSalesStaffing;
 import com.laborguru.model.HalfHourProjectedStaffing;
 import com.laborguru.model.HalfHourProjection;
@@ -115,6 +116,41 @@ public class StaffingServiceBean implements StaffingService {
 		
 		return storeDailyStaffing;
 	}
+	
+	//This method calculates dailyStaffing giving a dailySalesValue. (It's being used in DailyFlashReport to calculate ideal hours)
+	public Map<Position, DailyStaffing> getDailyStaffingByDailySalesValue(Store store, Date date, DailySalesValue dailySalesValue) {
+		List<DailyStaffing> managerDailyStaffings = new ArrayList<DailyStaffing>();
+		Map<Position, DailyStaffing> staffingMap = new HashMap<Position, DailyStaffing>();
+		
+		double nonManagerTargetAddition = 0.0;
+		
+		store = getStoreDao().getStoreById(store);
+		
+		List<Map<String, List<HalfHourStaffingPositionData>>> staffingData = initializeHalfHourStaffingData(store, date, dailySalesValue);
+		
+		
+		for(Position position : store.getPositions()) {
+			DailyStaffing dailyStaffing = calculateDailyStaffing(position, date, dailySalesValue, staffingData);
+
+			if(dailyStaffing != null) {
+				if(isManagerDailyStaffing(dailyStaffing)) {
+					managerDailyStaffings.add(dailyStaffing);
+				} else {
+					nonManagerTargetAddition += NumberUtils.getDoubleValue(dailyStaffing.getTotalDailyTarget());
+				}
+			}
+			
+			if(dailyStaffing != null) {
+				staffingMap.put(position, dailyStaffing);
+			}
+		}
+
+
+		applyOtherFactorsToManagerPositions(managerDailyStaffings, store, nonManagerTargetAddition);
+		
+		return staffingMap;
+		
+	}	
 	
 	/**
 	 * 
