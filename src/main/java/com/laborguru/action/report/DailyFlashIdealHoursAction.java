@@ -10,6 +10,7 @@ import com.laborguru.model.DailyHistoricSales;
 import com.laborguru.model.DailyStaffing;
 import com.laborguru.model.Position;
 import com.laborguru.model.Store;
+import com.laborguru.model.StoreDailyFlashStaffing;
 import com.laborguru.model.report.HalfHourIdealSales;
 import com.laborguru.service.staffing.StaffingService;
 import com.laborguru.service.store.StoreService;
@@ -44,7 +45,7 @@ public class DailyFlashIdealHoursAction extends SpmAction {
 		dailySalesValue.setSalesDate(today);
 		dailySalesValue.setStore(store);
 		
-		Map<Position, DailyStaffing> newProjections = staffingService.getDailyStaffingByDailySalesValue(store,today, dailySalesValue);
+		StoreDailyFlashStaffing dailyFlashStaffing = staffingService.getDailyFlashSalesStaffingByDate(store,today, dailySalesValue);
 		
 		
 		return Action.SUCCESS;

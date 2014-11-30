@@ -22,7 +22,6 @@ import com.laborguru.model.DailyStaffing;
 import com.laborguru.model.DayOfWeekData;
 import com.laborguru.model.DayPart;
 import com.laborguru.model.DayPartData;
-import com.laborguru.model.HalfHourHistoricSales;
 import com.laborguru.model.HalfHourHistoricSalesStaffing;
 import com.laborguru.model.HalfHourProjectedStaffing;
 import com.laborguru.model.HalfHourProjection;
@@ -30,6 +29,7 @@ import com.laborguru.model.HalfHourSalesValue;
 import com.laborguru.model.HalfHourStaffing;
 import com.laborguru.model.Position;
 import com.laborguru.model.Store;
+import com.laborguru.model.StoreDailyFlashStaffing;
 import com.laborguru.model.StoreDailyHistoricSalesStaffing;
 import com.laborguru.model.StoreDailyStaffing;
 import com.laborguru.service.historicsales.dao.HistoricSalesDao;
@@ -118,7 +118,7 @@ public class StaffingServiceBean implements StaffingService {
 	}
 	
 	//This method calculates dailyStaffing giving a dailySalesValue. (It's being used in DailyFlashReport to calculate ideal hours)
-	public Map<Position, DailyStaffing> getDailyStaffingByDailySalesValue(Store store, Date date, DailySalesValue dailySalesValue) {
+	public StoreDailyFlashStaffing getDailyFlashSalesStaffingByDate(Store store, Date date, DailySalesValue dailySalesValue) {
 		List<DailyStaffing> managerDailyStaffings = new ArrayList<DailyStaffing>();
 		Map<Position, DailyStaffing> staffingMap = new HashMap<Position, DailyStaffing>();
 		
@@ -148,7 +148,7 @@ public class StaffingServiceBean implements StaffingService {
 
 		applyOtherFactorsToManagerPositions(managerDailyStaffings, store, nonManagerTargetAddition);
 		
-		return staffingMap;
+		return null;
 		
 	}	
 	
