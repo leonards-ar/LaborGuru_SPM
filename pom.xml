@@ -251,6 +251,8 @@
 			<groupId>com.googlecode</groupId>
 			<artifactId>jsonplugin</artifactId>
 			<version>0.30</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/libs/jsonplugin-0.30.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.mindpool</groupId>
