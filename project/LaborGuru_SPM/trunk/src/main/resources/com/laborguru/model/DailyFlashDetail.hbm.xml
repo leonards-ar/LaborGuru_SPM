@@ -11,6 +11,7 @@
 		<property name="hour" column="hour" type="timestamp" />
 		<property name="actualSale" column="actual_sale" type="double" />
 		<property name="actualHour" column="actual_hour" type="double" />
+		<property name="idealHour" column="ideal_hour" type="double" />
 		
 		<many-to-one name="dailyFlash" class="DailyFlash" column="daily_flash_id" not-null="true" foreign-key="fk_daily_flash_details" />
 		

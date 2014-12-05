@@ -578,10 +578,15 @@ public class ReportServiceBean implements ReportService {
 			dailyFlashHour.setActualSale(df != null && df.getActualSale() != null? new BigDecimal(df.getActualSale()) : SpmConstants.BD_ZERO_VALUE);
 
 			dailyFlashHour.setScheduleHour(getScheduleValue(getTotalHourByTime(hour, scheduleHours)));
-			dailyFlashHour.setTargetHour(getTargetValue(getTotalHourByTime(hour, targetHours)));
 			
+			BigDecimal targetHour = getTargetValue(getTotalHourByTime(hour, targetHours));
+			//If it's the first time, then new Projection is the same as the Schedule Projection
+			//So the IdealHour will be the same as the targetHour.
+			
+			dailyFlashHour.setTargetHour(targetHour);
+			dailyFlashHour.setIdealHour(df != null && df.getIdealHour() != null? new BigDecimal(df.getIdealHour()) : targetHour);
+
 			totalHours.add(dailyFlashHour);
-			
 			
 		}
 		

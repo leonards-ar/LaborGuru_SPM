@@ -88,6 +88,7 @@ public class DailyFlash extends SpmObject {
 		} else {
 			dfd.setActualHour(dailyFlashDetail.getActualHour());
 			dfd.setActualSale(dailyFlashDetail.getActualSale());
+			dfd.setIdealHour(dailyFlashDetail.getIdealHour());
 		}
 	}	
 	@Override

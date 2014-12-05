@@ -2,13 +2,10 @@ package com.laborguru.action.report;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import com.laborguru.action.SpmAction;
 import com.laborguru.model.DailyFlashSales;
-import com.laborguru.model.DailyHistoricSales;
 import com.laborguru.model.DailyStaffing;
-import com.laborguru.model.Position;
 import com.laborguru.model.Store;
 import com.laborguru.model.StoreDailyFlashStaffing;
 import com.laborguru.model.report.HalfHourIdealSales;
@@ -24,10 +21,12 @@ public class DailyFlashIdealHoursAction extends SpmAction {
 	private StaffingService staffingService;
 	
 	
-	private transient List<HalfHourIdealSales> sales;
+	private transient List<HalfHourIdealSales> inputSales;
 	private transient String storeId;
 	
 	private DailyStaffing dailyStaffing;
+	
+	private String responseMessage;
 	
 	public String execute() {
 		
@@ -39,35 +38,31 @@ public class DailyFlashIdealHoursAction extends SpmAction {
 		DailyFlashSales dailySalesValue = new DailyFlashSales();
 		
 		for(HalfHourIdealSales idealSales: getSales()) {
-			dailySalesValue.addHalfHourFlashSales(idealSales.getHalfHourHistoricSales());
+			dailySalesValue.addHalfHourFlashSales(idealSales.getHalfHourFlashSales());
 		}
-		
+
 		dailySalesValue.setSalesDate(today);
 		dailySalesValue.setStore(store);
 		
 		StoreDailyFlashStaffing dailyFlashStaffing = staffingService.getDailyFlashSalesStaffingByDate(store,today, dailySalesValue);
 		
-		//int numeroQueNecesitas = dailyFlashStaffing.getHalfHourStaffing(halfHour);
+		String idealHours = "";
+		for(int i=0; i < getSales().size();i++){
+			idealHours+= (i==0?"":",")  + dailyFlashStaffing.getHalfHourStaffing(getSales().get(i).getTime());
+		}
+		
+		setResponseMessage(idealHours);
 		
 		return Action.SUCCESS;
 		
 	}
 	
-	private DailyStaffing calculateTotals(Map<Position, DailyStaffing> projections) {
-		
-		//DailyStaffing dailyStaffing = new DailyStaffing();
-		for(DailyStaffing dsf: projections.values()){
-			
-		}
-		return null;
-	}
-
 	public List<HalfHourIdealSales> getSales() {
-		return sales;
+		return inputSales;
 	}
 
 	public void setSales(List<HalfHourIdealSales> sales) {
-		this.sales = sales;
+		this.inputSales = sales;
 	}
 
 	public String getStoreId() {
@@ -101,5 +96,12 @@ public class DailyFlashIdealHoursAction extends SpmAction {
 	public void setStaffingService(StaffingService staffingService) {
 		this.staffingService = staffingService;
 	}
+	
+	public String getResponseMessage() {
+		return responseMessage;
+	}
+	public void setResponseMessage(String responseMessage) {
+		this.responseMessage = responseMessage;
+	}	
 	
 }

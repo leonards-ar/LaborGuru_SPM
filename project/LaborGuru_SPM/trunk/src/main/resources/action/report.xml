@@ -67,7 +67,7 @@
 	  	    
 	</package>
 	
-	<package name="saveDailyFlashReport_ajax" namespace="/report" extends="json-default">
+	<package name="dailyFlashReport_ajax" namespace="/report" extends="json-default">
 	  		
 	  <action name="saveDailyFlashReport" class="com.laborguru.action.report.DailyFlashSaveAction">
 	    <interceptor-ref name="json">
