@@ -38,7 +38,7 @@ public class HalfHourFlashStaffing extends HalfHourStaffing {
 	 * @param dailyStaffing the dailyStaffing to set
 	 */
 	public void setDailyStaffing(DailyStaffing dailyStaffing) {
-		if(!(dailyStaffing instanceof DailyHistoricSalesStaffing)) {
+		if(!(dailyStaffing instanceof DailyFlashStaffing)) {
 			throw new IllegalArgumentException("dailyStaffing passed in as parameter is not an instance of DailyHistoricSalesStaffing");
 		}		
 		this.dailyStaffing = (DailyFlashStaffing) dailyStaffing;

@@ -12,6 +12,7 @@ create table tbl_daily_flash_detail (
 	hour datetime,
 	actual_sale double precision,
 	actual_hour double precision,
+	ideal_hour double precision,
 	daily_flash_id integer not null,
 	primary key (daily_flash_detail_id)
 );

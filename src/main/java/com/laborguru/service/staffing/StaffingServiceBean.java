@@ -24,6 +24,8 @@ import com.laborguru.model.DailyStaffing;
 import com.laborguru.model.DayOfWeekData;
 import com.laborguru.model.DayPart;
 import com.laborguru.model.DayPartData;
+import com.laborguru.model.HalfHourFlashSales;
+import com.laborguru.model.HalfHourFlashStaffing;
 import com.laborguru.model.HalfHourHistoricSalesStaffing;
 import com.laborguru.model.HalfHourProjectedStaffing;
 import com.laborguru.model.HalfHourProjection;
@@ -238,9 +240,13 @@ public class StaffingServiceBean implements StaffingService {
 		//:TODO: Check if another class arrives??? Should not happen :)
 		if(halfHourSalesValue instanceof HalfHourProjection) {
 			return new HalfHourProjectedStaffing();
-		} else {
-			return new HalfHourHistoricSalesStaffing();
+		} 
+		if(halfHourSalesValue instanceof HalfHourFlashSales) {
+			return new HalfHourFlashStaffing();
 		}
+		
+		return new HalfHourHistoricSalesStaffing();
+		
 	}
 	
 	/**

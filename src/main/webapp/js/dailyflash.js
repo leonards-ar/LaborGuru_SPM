@@ -21,8 +21,10 @@ $(function(){
             dataObj +='"details" : [ ';
         	$("tr[id^='row']").each(function(i,row){
         		dataObj += '{"strHour": "' + $(row).find("td:eq(1)").text() + '",';
+        		dataObj += ' "strIdealHour": "' + $(row).find("td:eq(15)").text() + '",';
         		dataObj += '"strActualSale": "' + $(row).find("input[id^='B']").val() + '",';
         		dataObj += ' "strActualHour": "' + $(row).find("input[id^='A']").val() + '"},';
+        		
         	});
         	
         	
@@ -81,69 +83,46 @@ $(function(){
     	}
     });
     
-    $("#calculateIdeal").on({
-    	click: function() {
-    		var dataObj = '{"storeId":"' + $("#storeId").val() + '",';
-    		dataObj += '"sales": [';
-    		$("tr[id^='row']").each(function(i,row){
-        		dataObj += '{"strTime": "' + $(row).find("td:eq(1)").text() + '",';
-        		dataObj += '"strSale": "' + $(row).find("td:eq(13)").text() + '"},';
-    		});
-    		
-    		dataObj=dataObj.substring(0, dataObj.length - 1);
-    		dataObj += "]}";
-    		
-    		var sw = screen.width;
-    		alert(dataObj);
-    		
-            $.ajax({
-                type : 'POST',
-                dataType: 'json',
-                contentType: 'application/json',
-                url: calulateUrl,
-                data: dataObj,
-                success: function(data) {
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-
-                	$('#result').find('#message').text(xhr.status + " - " + thrownError);
-                	$('#result').css("left", Math.round((sw/2) - 100));
-                	$('#result').fadeIn("slow").delay(10000).fadeOut("slow");
-                  }
-            });
-            return false;
-    		
+    $("tr[id^='row']").find("input[id^='B']").on({
+    	change: function(){
+	    		
+	    		if($(this).val() > 0){
+		    		
+		    		var dataObj = '{"storeId":"' + $("#storeId").val() + '",';
+		    		dataObj += '"sales": [';
+		    		$("tr[id^='row']").each(function(i,row){
+		        		dataObj += '{"strTime": "' + $(row).find("td:eq(1)").text() + '",';
+		        		dataObj += '"strSale": "' + $(row).find("td:eq(13)").text() + '"},';
+		    		});
+		    		
+		    		dataObj=dataObj.substring(0, dataObj.length - 1);
+		    		dataObj += "]}";
+		    		
+		            $.ajax({
+		                type : 'POST',
+		                dataType: 'json',
+		                contentType: 'application/json',
+		                url: calulateUrl,
+		                data: dataObj,
+		                success: function(data) {
+		                	refreshIdealHours(data);
+		                	
+		                },
+		            });
+	    		
+    		}
     	},
-        mouseover: function() {
-            $(this).addClass("ui-state-hover");
-            $(this).css("cursor","pointer");
-        	
-        },
-        mouseout: function() {
-            $(this).removeClass("ui-state-hover");
-
-        }    	
-    })
-    
-   
-    /*
-    $('#receipt_table tbody tr').live('click',function() {
-        var id = this.id;
-        var index = jQuery.inArray(id, aReceiptSelected);
-        
-        var monto = parseFloat($(this).find('td:eq(8)').text().replace(".","").replace(",","."));
-        
-        if ( index == -1 ) {
-            aReceiptSelected.push( id );
-            receiptBalance+= isNaN(monto)? 0 : monto;
-        } else {
-            aReceiptSelected.splice( index, 1 );
-            receiptBalance-= isNaN(monto)? 0 : monto;
-        }
-        
-        $("#receiptBalance").html('<b>Balance:' + String(receiptBalance.toFixed(2)) + '</b>');        
-        $(this).toggleClass('row_selected');
     });
-*/
     
+    function refreshIdealHours(data){
+    	
+    	var hours = data.split(",");
+    	alert(hours);
+    	
+    	
+    	$("tr[id^='row']").each(function(i,row){
+    		$(row).find("td:eq(15)").text(hours[i]);
+    	});
+    }
+       
 });

@@ -43,10 +43,10 @@ public class HalfHourIdealSales {
 	}
 	
 	public void setStrSale(String sale) {
-		halfHourFlashSale.setValue("-$".equals(sale)? SpmConstants.BD_ZERO_VALUE : new BigDecimal(sale.replace("$", "")));
+		halfHourFlashSale.setValue("-$".equals(sale)? SpmConstants.BD_ZERO_VALUE : new BigDecimal(sale.replace("$", "").replace(",","")));
 	}
 	
-	public HalfHourFlashSales getHalfHourHistoricSales() {
+	public HalfHourFlashSales getHalfHourFlashSales() {
 		return this.halfHourFlashSale;
 	}
 	

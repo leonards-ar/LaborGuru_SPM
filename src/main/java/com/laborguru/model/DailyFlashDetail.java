@@ -1,6 +1,5 @@
 package com.laborguru.model;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -25,17 +24,20 @@ public class DailyFlashDetail extends SpmObject {
 	private Date hour;
 	private Double actualSale;
 	private Double actualHour;
+	private Double idealHour;
 	private DailyFlash dailyFlash;
 	
 	public DailyFlashDetail(){
 		
 	}
 	
-	public DailyFlashDetail(String hour, String actualSale, String actualHour){
+	public DailyFlashDetail(String hour, String actualSale, String actualHour, String idealHour){
 		
 		this.hour = CalendarUtils.displayTimeToDate(hour);
 		this.actualSale = Double.parseDouble(actualSale);
 		this.actualHour = Double.parseDouble(actualHour);
+		this.idealHour = Double.parseDouble(idealHour);
+		
 	}
 	
 	public Long getId() {
@@ -82,6 +84,18 @@ public class DailyFlashDetail extends SpmObject {
 		this.actualHour = Double.parseDouble("-".equals(actualHour) ? "0.0" : actualHour);
 	}
 	
+	public Double getIdealHour() {
+		return idealHour;
+	}
+
+	public void setIdealHour(Double idealHour) {
+		this.idealHour = idealHour;
+	}
+	
+	public void setStrIdealHour(String idealHour) {
+		this.idealHour = Double.parseDouble("-".equals(idealHour) ? "0.0" : idealHour);
+	}
+
 	public DailyFlash getDailyFlash() {
 		return dailyFlash;
 	}
@@ -97,6 +111,7 @@ public class DailyFlashDetail extends SpmObject {
 	   	.append("hour",getHour())
 	   	.append("actualSale",getActualSale())
 	   	.append("actualHour",getActualHour())
+	   	.append("idealHour",getIdealHour())
 	   	.toString();
 	}
 
@@ -128,7 +143,7 @@ public class DailyFlashDetail extends SpmObject {
 	}
 	
 	public boolean isEmpty(){
-		return SpmConstants.DOUBLE_ZERO_VALUE.equals(actualSale) && SpmConstants.DOUBLE_ZERO_VALUE.equals(actualHour);
+		return SpmConstants.DOUBLE_ZERO_VALUE.equals(actualSale) && SpmConstants.DOUBLE_ZERO_VALUE.equals(actualHour) && SpmConstants.DOUBLE_ZERO_VALUE.equals(idealHour);
 	}
 
 }

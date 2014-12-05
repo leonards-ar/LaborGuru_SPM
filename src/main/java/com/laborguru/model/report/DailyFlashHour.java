@@ -19,6 +19,7 @@ public class DailyFlashHour extends SpmObject {
 	private BigDecimal scheduleHour;
 	private BigDecimal targetHour;
 	private BigDecimal actualHour;
+	private BigDecimal idealHour;
 
 	private static final DecimalFormat df = new DecimalFormat("#,##0");
 	
@@ -77,6 +78,14 @@ public class DailyFlashHour extends SpmObject {
 
 	public void setActualHour(BigDecimal actualHour) {
 		this.actualHour = actualHour;
+	}
+
+	public BigDecimal getIdealHour() {
+		return idealHour;
+	}
+
+	public void setIdealHour(BigDecimal idealHour) {
+		this.idealHour = idealHour;
 	}
 
 	@Override
