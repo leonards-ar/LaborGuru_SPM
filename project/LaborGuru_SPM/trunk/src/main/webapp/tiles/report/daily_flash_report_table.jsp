@@ -5,7 +5,8 @@
 <script type="text/javascript">
     var url = '<s:url value="/report/saveDailyFlashReport.action" includeParams="none"/>';
     var calulateUrl='<s:url value="/report/calculateIdealDailyFlashReport.action" includeParams="none"/>';
-    
+    var projectedOpenningHours='<s:property value="projectedOpeningHours"/>';
+    var projectedFlexHours='<s:property value="projectedFlexibleHours"/>';
 </script>
 <!-- 
 
@@ -220,7 +221,7 @@ L - Cumul Ideal Hours
                </tr>
               <tr>
                 <td class="cellLabel"><s:text name="report.dailyFlashReport.idealHours.label"/></td>
-                <td id="partialIdealHours" class="greyCellValue" data-format="0" data-formula="$totalCumulIdealHours"></td>
+                <td id="partialIdealHours" class="greyCellValue" data-format="0" data-formula='$totalCumulIdealHours + <s:property value="projectedOpeningHours"/> + (1 - $percentOfDay)*<s:property value="projectedFlexibleHours"/>'></td>
                 <td id="diffIdealHours" class="greyCellValue" data-format="(0)" data-formula="( $actualHours - $partialIdealHours )"></td>
                 <td id="soFarIdealHours" class="greyCellValue" data-format="(0)" data-formula="( $totalIdealHours - $partialIdealHours )"></td>
                 <td id="soFarIdealHoursDiff" class="greyCellValue" data-format="(0)" data-formula="$soFarIdealHours - $soFarScheduleHours "></td>
@@ -301,9 +302,6 @@ L - Cumul Ideal Hours
 		         </td>
 		         <td align="right" valign="middle"><input id="saveFlashReport" type="submit" value="<s:text name="save.button"/>" class="button" /></td>
 		       </tr>	      
-		       <tr>
-		        <td align="right" valign="middle"><input id="calculateIdeal" type="submit" value="<s:text name="search.button"/>" class="button" /></td>
-		       </tr>
 			    </table>
 			    </td> 
 			   </tr>
