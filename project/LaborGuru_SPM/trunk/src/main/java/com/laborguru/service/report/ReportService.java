@@ -7,7 +7,7 @@ import com.laborguru.model.DailyFlashDetail;
 import com.laborguru.model.Position;
 import com.laborguru.model.PositionGroup;
 import com.laborguru.model.Store;
-import com.laborguru.model.report.DailyFlashHour;
+import com.laborguru.model.report.DailyFlashObject;
 import com.laborguru.model.report.FixedLaborHoursReport;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.model.report.TotalHourByPosition;
@@ -145,6 +145,6 @@ public interface ReportService extends Service {
 	 * @param date
 	 * @return
 	 */
-	List<DailyFlashHour> getDailyFlashReport(Store store, Date date, List<DailyFlashDetail> details);
+	DailyFlashObject getDailyFlashReport(Store store, Date date, List<DailyFlashDetail> details);
 		
 }

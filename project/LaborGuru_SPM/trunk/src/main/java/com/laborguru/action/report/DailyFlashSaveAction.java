@@ -1,5 +1,6 @@
 package com.laborguru.action.report;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +23,8 @@ public class DailyFlashSaveAction extends SpmAction{
 	private transient String closeHour;
 	private transient List<DailyFlashDetail> details;
 	private transient String storeId;
+	private transient String delivered;
+	private transient String planned;
 	
 	private String responseMessage;
 	
@@ -44,7 +47,6 @@ public class DailyFlashSaveAction extends SpmAction{
 	public List<DailyFlashDetail> getDetails() {
 		return details;
 	}
-
 
 	public void setDetails(List<DailyFlashDetail> details) {
 		this.details = details;
@@ -80,6 +82,22 @@ public class DailyFlashSaveAction extends SpmAction{
 	public void setStoreId(String storeId) {
 		this.storeId = storeId;
 	}
+	
+	public String getDelivered() {
+		return delivered;
+	}
+
+	public void setDelivered(String delivered) {
+		this.delivered = delivered.replace(",","").replace(".", "").replace("$", "");
+	}
+
+	public String getPlanned() {
+		return planned;
+	}
+
+	public void setPlanned(String planned) {
+		this.planned = planned.replace(",","").replace(".", "").replace("$", "");
+	}
 
 	public String execute(){
 		try {
@@ -91,15 +109,16 @@ public class DailyFlashSaveAction extends SpmAction{
 			DailyFlash dailyFlash = getDailyFlashService().getDailyFlashByDate(store,today);
 			if(dailyFlash == null){
 				dailyFlash = new DailyFlash();
-				if(!"".equals(getPreOpenHour())) dailyFlash.setOpenHours(Double.parseDouble(getPreOpenHour()));
-				if(!"".equals(getCloseHour())) dailyFlash.setCloseHours(Double.parseDouble(getCloseHour()));
+
 				dailyFlash.setStore(store);
 				dailyFlash.setDate(today);
-			} else {
-				if(!"".equals(getPreOpenHour())) dailyFlash.setOpenHours(Double.parseDouble(getPreOpenHour()));
-				if(!"".equals(getCloseHour())) dailyFlash.setCloseHours(Double.parseDouble(getCloseHour()));
-			}
-
+			} 				
+			
+			if(!"".equals(getPreOpenHour())) dailyFlash.setOpenHours(Double.parseDouble(getPreOpenHour()));
+			if(!"".equals(getCloseHour())) dailyFlash.setCloseHours(Double.parseDouble(getCloseHour()));
+			if(!"".equals(getDelivered())) dailyFlash.setDelivered(Double.parseDouble(getDelivered()));
+			if(!"".equals(getPlanned())) dailyFlash.setPlanned(Double.parseDouble(getPlanned()));
+			
 			for(DailyFlashDetail dfDetail: getDetails()){
 				if(!dfDetail.isEmpty()){
 					dailyFlash.addDailyFlashDetail(dfDetail);

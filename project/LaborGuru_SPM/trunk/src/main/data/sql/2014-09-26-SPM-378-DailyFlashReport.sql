@@ -3,6 +3,8 @@ create table tbl_daily_flash (
 	date date,
 	open_hours integer,
 	close_hours integer,
+	delivered_sales double precision,
+	planned_sales souble precision,
 	store_id integer not null,
 	primary key (daily_flash_id)
 );

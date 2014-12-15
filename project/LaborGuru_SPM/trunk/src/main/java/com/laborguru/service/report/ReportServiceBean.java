@@ -22,6 +22,7 @@ import com.laborguru.model.StoreDailyHistoricSalesStaffing;
 import com.laborguru.model.StoreSchedule;
 import com.laborguru.model.StoreVariableDefinition;
 import com.laborguru.model.report.DailyFlashHour;
+import com.laborguru.model.report.DailyFlashObject;
 import com.laborguru.model.report.FixedLaborHoursReport;
 import com.laborguru.model.report.TotalHour;
 import com.laborguru.model.report.TotalHourByPosition;
@@ -338,7 +339,7 @@ public class ReportServiceBean implements ReportService {
 		}
 	}
 	
-	public List<DailyFlashHour> getDailyFlashReport(Store store, Date date, List<DailyFlashDetail>details) {
+	public DailyFlashObject getDailyFlashReport(Store store, Date date, List<DailyFlashDetail>details) {
 		try{
 			//Initialize Minimum staffing in case it doesn't exist.
 			getStaffingService().getDailyStaffingByDate(store, date);
@@ -355,9 +356,13 @@ public class ReportServiceBean implements ReportService {
 			
 			if(projections != null) {
 				halfHourProjections = projections.getHalfHourProjections();
+				
 			}
-			
-			return getMergedDailyFlashHours(store, startHour, endHour, halfHourProjections, schedule, target, details);
+			DailyFlashObject dfo = getMergedDailyFlashHours(store, startHour, endHour, halfHourProjections, schedule, target, details);
+			dfo.setVariable2(projections.getDailyProjectionVariable2());
+			dfo.setVariable3(projections.getDailyProjectionVariable3());
+			dfo.setVariable4(projections.getDailyProjectionVariable4());
+			return dfo;
 			
 		}catch(SQLException e){
 			log.error("An SQLError has occurred", e);
@@ -550,7 +555,8 @@ public class ReportServiceBean implements ReportService {
 		return totalHours;
 	}
 	
-	private List<DailyFlashHour> getMergedDailyFlashHours(Store store, Date startHour, Date endHour, List<HalfHourProjection> halfHourProjections, List<TotalHour> scheduleHours, List<TotalHour> targetHours,List<DailyFlashDetail> details){
+	private DailyFlashObject getMergedDailyFlashHours(Store store, Date startHour, Date endHour, List<HalfHourProjection> halfHourProjections, List<TotalHour> scheduleHours, List<TotalHour> targetHours,List<DailyFlashDetail> details){
+		DailyFlashObject dfo = new DailyFlashObject();
 		List <DailyFlashHour> totalHours = new ArrayList<DailyFlashHour>();
 		
 		//if start hour is greater or equals than end hour, it means that 
@@ -589,8 +595,8 @@ public class ReportServiceBean implements ReportService {
 			totalHours.add(dailyFlashHour);
 			
 		}
-		
-		return totalHours;
+		dfo.setDailyFlashHours(totalHours);
+		return dfo;
 	}	
 	
 	private DailyProjection getDailyProjectionByDate(Date date, List<DailyProjection> projections) {
