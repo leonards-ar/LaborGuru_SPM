@@ -11,6 +11,8 @@
 		<property name="date" column="date" type="date" />
 		<property name="openHours" column="open_hours" type="double" />
 		<property name="closeHours" column="close_hours" type="double" />
+		<property name="delivered" column="delivered_sales" type="double" />
+    <property name="planned" column="planned_sales" type="double" />		
 		
 		<many-to-one name="store" class="Store" column="store_id" not-null="true" foreign-key="fk_daily_flash_store" />
 		

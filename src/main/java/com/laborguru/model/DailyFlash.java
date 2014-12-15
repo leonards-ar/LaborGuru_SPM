@@ -1,5 +1,6 @@
 package com.laborguru.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -25,6 +26,8 @@ public class DailyFlash extends SpmObject {
 	private Date date;
 	private Double openHours;
 	private Double closeHours;
+	private Double delivered;
+	private Double planned;
 	private Set<DailyFlashDetail> details = new HashSet<DailyFlashDetail>();
 	
 	
@@ -64,8 +67,21 @@ public class DailyFlash extends SpmObject {
 	}
 	public void setDetails(Set<DailyFlashDetail> details) {
 		this.details = details;
+	}	
+	
+	public Double getDelivered() {
+		return delivered;
+	}
+	public void setDelivered(Double delivered) {
+		this.delivered = delivered;
 	}
 	
+	public Double getPlanned() {
+		return planned;
+	}
+	public void setPlanned(Double planned) {
+		this.planned = planned;
+	}
 	/**
 	 * Adds an detail to this daily report. Handles the bi-directional
 	 * relation.
@@ -99,6 +115,8 @@ public class DailyFlash extends SpmObject {
 	   	.append("store",getStore())
 	   	.append("openHours",getOpenHours())
 	   	.append("closeHours",getCloseHours())
+	   	.append("delivered",getDelivered())
+	   	.append("planned",getPlanned())
 	   	.append("Flash Details",getDetails())
 	   	.toString();
 	}

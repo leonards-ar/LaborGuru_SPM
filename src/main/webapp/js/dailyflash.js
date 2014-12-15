@@ -17,6 +17,8 @@ $(function(){
         click: function(){
         	var dataObj = '{"preOpenHour":"' + $("#A0").val() + '",';
         	dataObj += '"closeHour":"'+ $("#closeHour").find("input").val() + '",';
+        	dataObj += '"delivered":"' + $("#deliveredActualSales").val() + '",';
+        	dataObj += '"planned":"' + $("#plannedActualSales").val() + '",';
         	dataObj += '"storeId":"' + $("#storeId").val() + '",';
             dataObj +='"details" : [ ';
         	$("tr[id^='row']").each(function(i,row){
@@ -126,18 +128,24 @@ $(function(){
     			totalCumulIdealHours+=parseInt(hours[i]);
     		}
     	});
-    	$('#totalIdealHours').text(totalIdealHours/2);
-    	$('#totalCumulIdealHours').text(totalCumulIdealHours/2);
+    	var preIdealHour = parseFloat($('#K0').text());
+    	var preCumulIdealHour = parseFloat($('#L0').text());
+    	totalIdealHours = totalIdealHours/2 + preIdealHour;
+    	totalCumulIdealHours = totalCumulIdealHours/2 + preCumulIdealHour;
+    	$('#totalIdealHours').text(numeral(totalIdealHours).format('0'));
+    	$('#totalCumulIdealHours').text(numeral(totalCumulIdealHours).format('0'));
     	var percentOfDay = parseFloat($('#percentOfDay').text().replace("%",""))/100;
-    	var partialIdealHours = (totalCumulIdealHours/2) + parseFloat(projectedOpenningHours) + (1 - percentOfDay)*parseFloat(projectedFlexHours);
+    	var partialIdealHours = (totalCumulIdealHours) + parseFloat(projectedOpenningHours) + (1 - percentOfDay)*parseFloat(projectedFlexHours);
     	var diffIdealHours = parseInt($('#actualHours').text()) - partialIdealHours;
-    	var soFarIdealHours = totalIdealHours/2 - partialIdealHours;
+    	var soFarIdealHours = totalIdealHours - partialIdealHours;
     	var soFarIdealHoursDiff = soFarIdealHours - parseInt($('#soFarScheduleHours').text());
     	$('#partialIdealHours').text(numeral(partialIdealHours).format('0'));
     	$('#diffIdealHours').text(numeral(diffIdealHours).format('(0)'));
     	$('#soFarIdealHours').text(numeral(soFarIdealHours).format('(0)'));
     	$('#soFarIdealHoursDiff').text(numeral(soFarIdealHoursDiff).format('(0)'));
-    	
+    	$('#M0').text(numeral(soFarIdealHoursDiff).format('(0)'));
+    	var totalAdj = soFarIdealHoursDiff + parseFloat($('#M1').text());
+    	$('#totalAdj').text(numeral(totalAdj).format('(0)'));
     }
        
 });

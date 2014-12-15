@@ -6,7 +6,6 @@ import java.util.Date;
 
 import com.laborguru.model.DayPart;
 import com.laborguru.model.SpmObject;
-import com.laborguru.util.SpmConstants;
 
 public class DailyFlashHour extends SpmObject {
 
@@ -46,7 +45,7 @@ public class DailyFlashHour extends SpmObject {
 
 	public void setSales(BigDecimal sales) {
 		this.sales = sales;
-	}
+	}	
 
 	public BigDecimal getActualSale() {
 		return actualSale;
