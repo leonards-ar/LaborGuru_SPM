@@ -23,7 +23,7 @@ $(function(){
             dataObj +='"details" : [ ';
         	$("tr[id^='row']").each(function(i,row){
         		dataObj += '{"strHour": "' + $(row).find("td:eq(1)").text() + '",';
-        		dataObj += ' "strIdealHour": "' + $(row).find("td:eq(15)").text() + '",';
+        		dataObj += ' "strIdealHour": "' + $(row).find("input[id^='K']").val() + '",';
         		dataObj += '"strActualSale": "' + $(row).find("input[id^='B']").val() + '",';
         		dataObj += ' "strActualHour": "' + $(row).find("input[id^='A']").val() + '"},';
         		
@@ -79,9 +79,17 @@ $(function(){
     	
     });
     
-    $("input[type='text']").on({
+    $("input[id^='A'],input[id^='B']").on({
     	focus: function(){
     		$(this).val('');
+    	}
+    });
+    
+    $("tr[id^='row']").find("input[id^='A']").on({
+    	change: function(){
+    		var row = $(this).parent().parent();
+    		var value=$(row).find("td:eq(15)").text();
+    		$(row).find("td:eq(16)").find("input").val(value).trigger('change');
     	}
     });
     
@@ -121,31 +129,8 @@ $(function(){
     	var totalIdealHours=0;
     	var totalCumulIdealHours=0;
     	$("tr[id^='row']").each(function(i,row){
-    		$(row).find("td:eq(15)").text(hours[i]);
-    		totalIdealHours+=parseInt(hours[i]);
-    		if($(row).find("td:eq(16)").text() !='-'){
-    			$(row).find("td:eq(16)").text(hours[i]);
-    			totalCumulIdealHours+=parseInt(hours[i]);
-    		}
+    		$(row).find("td:eq(15)").find("input").val(hours[i]).trigger('change');
     	});
-    	var preIdealHour = parseFloat($('#K0').text());
-    	var preCumulIdealHour = parseFloat($('#L0').text());
-    	totalIdealHours = totalIdealHours/2 + preIdealHour;
-    	totalCumulIdealHours = totalCumulIdealHours/2 + preCumulIdealHour;
-    	$('#totalIdealHours').text(numeral(totalIdealHours).format('0'));
-    	$('#totalCumulIdealHours').text(numeral(totalCumulIdealHours).format('0'));
-    	var percentOfDay = parseFloat($('#percentOfDay').text().replace("%",""))/100;
-    	var partialIdealHours = (totalCumulIdealHours) + parseFloat(projectedOpenningHours) + (1 - percentOfDay)*parseFloat(projectedFlexHours);
-    	var diffIdealHours = parseInt($('#actualHours').text()) - partialIdealHours;
-    	var soFarIdealHours = totalIdealHours - partialIdealHours;
-    	var soFarIdealHoursDiff = soFarIdealHours - parseInt($('#soFarScheduleHours').text());
-    	$('#partialIdealHours').text(numeral(partialIdealHours).format('0'));
-    	$('#diffIdealHours').text(numeral(diffIdealHours).format('(0)'));
-    	$('#soFarIdealHours').text(numeral(soFarIdealHours).format('(0)'));
-    	$('#soFarIdealHoursDiff').text(numeral(soFarIdealHoursDiff).format('(0)'));
-    	$('#M0').text(numeral(soFarIdealHoursDiff).format('(0)'));
-    	var totalAdj = soFarIdealHoursDiff + parseFloat($('#M1').text());
-    	$('#totalAdj').text(numeral(totalAdj).format('(0)'));
     }
        
 });
