@@ -121,8 +121,8 @@ M - Adjustes calculus
               <td id="I<s:property value='#itTotalHours.count'/>" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="IF($B<s:property value='#itTotalHours.count'/> > 0,$F<s:property value='#itTotalHours.count'/>,0)"></td>
               <td id="J<s:property value='#itTotalHours.count'/>" class="tableValueWithLeftBottomBorder" data-format="$0,0" data-formula="IF($B<s:property value='#itTotalHours.count'/> > 0,$B<s:property value='#itTotalHours.count'/>,$projectedSales<s:property value='#itTotalHours.count'/> * (1 + $forecast))"></td>
               <td id="G<s:property value='#itTotalHours.count'/>" class="tableValueWithLeftBottomBorder" data-format="$0,0" data-formula="IF($B<s:property value='#itTotalHours.count'/> > 0,$projectedSales<s:property value='#itTotalHours.count'/>,0)"></td>
-              <td id="K<s:property value='#itTotalHours.count'/>" class="tableValueWithLeftBottomBorder" data-format="0"><s:property value="idealHour"/></td>
-              <td id="L<s:property value='#itTotalHours.count'/>" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="IF($B<s:property value='#itTotalHours.count'/> > 0,$K<s:property value='#itTotalHours.count'/>,0)"></td>
+              <td><input type="text" id="K<s:property value='#itTotalHours.count'/>" class="tableValueWithLeftBottomBorder" data-format="0" value="<s:property value="idealHour"/>" readonly="true"/></td>
+              <td><input type="text" id="L<s:property value='#itTotalHours.count'/>" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="IF($B<s:property value='#itTotalHours.count'/> > 0,$K<s:property value='#itTotalHours.count'/>,0)" readonly="true"/></td>
               
 			      </tr>
 			      </s:iterator>
