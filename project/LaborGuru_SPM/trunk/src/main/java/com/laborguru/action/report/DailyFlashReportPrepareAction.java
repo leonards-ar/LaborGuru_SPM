@@ -258,6 +258,14 @@ public class DailyFlashReportPrepareAction extends ScheduleReportPrepareAction i
 		return getFixedLaborHoursReport().getTarget().getFlexHours();
 	}
 	
+	public Double getScheduleCloseHours() {
+		return getFixedLaborHoursReport().getSchedule().getCloseHours();
+	}
+	
+	public Double getProjectedCloseHours() {
+		return getFixedLaborHoursReport().getTarget().getCloseHours();
+	}
+	
 	public Double getSecondVariableHours() {
 		return secondVariableHours;
 	}
