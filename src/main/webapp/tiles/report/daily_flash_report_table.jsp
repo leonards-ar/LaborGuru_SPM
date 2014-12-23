@@ -217,14 +217,14 @@ M - Adjustes calculus
                 <td class="cellLabel"><s:text name="report.dailyFlashReport.targetHours.label"/></td>
                 <td id="partialTargetHours" class="greyCellValue" data-format="0" data-formula='$totalCumulTarget + (1 - $percentOfDay)*<s:property value="projectedFlexibleHours"/>'></td>
                 <td id="diffTargetHours" class="greyCellValue" data-format="(0)" data-formula="( $actualHours - $partialTargetHours )"></td>
-                <td id="soFarTargetHours" class="greyCellValue" data-format="(0)" data-formula="( $totalTarget + (1 - $percentOfDay)*<s:property value="projectedFlexibleHours"/> - $partialTargetHours )"></td>
+                <td id="soFarTargetHours" class="greyCellValue" data-format="(0)" data-formula="( $totalTarget + <s:property value="projectedFlexibleHours"/> - $partialTargetHours )"></td>
                 <td id="soFarTargetDiff" class="greyCellValue" data-format="(0)" data-formula="$soFarTargetHours - $soFarScheduleHours"></td>
                </tr>
               <tr>
                 <td class="cellLabel"><s:text name="report.dailyFlashReport.idealHours.label"/></td>
-                <td id="partialIdealHours" class="greyCellValue" data-format="0" data-formula='$totalCumulIdealHours + (1 - $percentOfDay)*(<s:property value="projectedFlexibleHours"/> * (1 - $forecast))'></td>
+                <td id="partialIdealHours" class="greyCellValue" data-format="0" data-formula='$totalCumulIdealHours + (1 - $percentOfDay)*(<s:property value="projectedFlexibleHours"/> * (1 + $forecast))'></td>
                 <td id="diffIdealHours" class="greyCellValue" data-format="(0)" data-formula="( $actualHours - $partialIdealHours )"></td>
-                <td id="soFarIdealHours" class="greyCellValue" data-format="(0)" data-formula="( $totalIdealHours + (1 - $percentOfDay)*(<s:property value="projectedFlexibleHours"/> * (1 - $forecast)) - $partialIdealHours )"></td>
+                <td id="soFarIdealHours" class="greyCellValue" data-format="(0)" data-formula="( $totalIdealHours + <s:property value="projectedFlexibleHours"/> * (1 + $forecast) - $partialIdealHours )"></td>
                 <td id="soFarIdealHoursDiff" class="greyCellValue" data-format="(0)" data-formula="$soFarIdealHours - $soFarScheduleHours "></td>
                </tr>
 			        </table>

@@ -359,9 +359,12 @@ public class ReportServiceBean implements ReportService {
 				
 			}
 			DailyFlashObject dfo = getMergedDailyFlashHours(store, startHour, endHour, halfHourProjections, schedule, target, details);
-			dfo.setVariable2(projections.getDailyProjectionVariable2());
-			dfo.setVariable3(projections.getDailyProjectionVariable3());
-			dfo.setVariable4(projections.getDailyProjectionVariable4());
+			
+			if(projections != null){
+				dfo.setVariable2(projections.getDailyProjectionVariable2());
+				dfo.setVariable3(projections.getDailyProjectionVariable3());
+				dfo.setVariable4(projections.getDailyProjectionVariable4());
+			}
 			return dfo;
 			
 		}catch(SQLException e){
