@@ -136,13 +136,13 @@ M - Adjustes calculus
 			        <td id="closeDiff" class="greyTableValueWithLeftBottomBorder">&nbsp;</td>
 			        <td id="closeCumulDiff" class="greyTableValueWithLeftBottomBorder">&nbsp;</td>
               <td id="closeSchedule" class="tableValueWithLeftBottomBorder" data-format="0"><s:property value="scheduleCloseHours"/></td>
-              <td id="closeCumulSchedule" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="IF(A<s:property value='dailyFlashHours.size() + 1'/> > 0, <s:property value="scheduleCloseHours"/>,0)"></td>
+              <td id="closeCumulSchedule" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="IF($A<s:property value='dailyFlashHours.size() + 1'/> > 0, <s:property value="scheduleCloseHours"/>,0)"></td>
               <td id="closeTarget"class="tableValueWithLeftBottomBorder" data-format="0"><s:property value="projectedCloseHours"/></td>
-              <td id="closeCumulTarget" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="IF(A<s:property value='dailyFlashHours.size() + 1'/> > 0, <s:property value="projectedCloseHours"/>,0)"></td>
+              <td id="closeCumulTarget" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="IF($A<s:property value='dailyFlashHours.size() + 1'/> > 0, <s:property value="projectedCloseHours"/>,0)"></td>
               <td id="closeNewProjection" class="tableValueWithLeftBottomBorder">&nbsp;</td>
               <td id="closePartial" class="tableValueWithLeftBottomBorder">&nbsp;</td>
               <td id="closeIdealHours" class="tableValueWithLeftBottomBorder" data-format="0"><s:property value="projectedCloseHours"/></td>
-              <td id="closeCumulIdealHours" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="IF(A<s:property value='dailyFlashHours.size() + 1'/> > 0, <s:property value="projectedCloseHours"/>,0)"></td>
+              <td id="closeCumulIdealHours" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="IF($A<s:property value='dailyFlashHours.size() + 1'/> > 0, <s:property value="projectedCloseHours"/>,0)"></td>
 			      </tr>
 			      <tr>
 			        <td class="tableValueWithLeftBottomBorder">&nbsp;</td>
@@ -230,6 +230,7 @@ M - Adjustes calculus
 			        </table>
 			      </td>
 			      </tr>
+			      <s:if test="%{isSecondaryVariablesConfigured(1)}">
 			      <tr>
 			        <td>
                <table class="windowReportTable" cellspacing="0" align="left">
@@ -302,7 +303,13 @@ M - Adjustes calculus
                </table>  
 		         </td>
 		         <td align="right" valign="middle"><input id="saveFlashReport" type="submit" value="<s:text name="save.button"/>" class="button" /></td>
-		       </tr>	      
+		       </tr>
+		       </s:if>
+		       <s:else>
+		        <tr>
+		          <td align="right" colspan="2" valign="middle"><input id="saveFlashReport" type="submit" value="<s:text name="save.button"/>" class="button" /></td>
+		        </tr>
+		       </s:else>	      
 			    </table>
 			    </td> 
 			   </tr>
