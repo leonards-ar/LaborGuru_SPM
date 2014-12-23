@@ -135,14 +135,14 @@ M - Adjustes calculus
 			        <td id="closeActualSalesCumul" class="greyTableValueWithLeftBottomBorder">$-</td>
 			        <td id="closeDiff" class="greyTableValueWithLeftBottomBorder">&nbsp;</td>
 			        <td id="closeCumulDiff" class="greyTableValueWithLeftBottomBorder">&nbsp;</td>
-              <td id="closeSchedule<s:property value='#itTotalHours.count'/>" class="tableValueWithLeftBottomBorder"><s:property value="scheduleHour"/></td>
-              <td id="closeCumulSchedule" class="tableValueWithLeftBottomBorder">&nbsp;</td>
-              <td id="closeTarget"class="tableValueWithLeftBottomBorder">&nbsp;</td></td>
-              <td id="closeCumulTarget" class="tableValueWithLeftBottomBorder">&nbsp;</td></td>
+              <td id="closeSchedule" class="tableValueWithLeftBottomBorder" data-format="0"><s:property value="scheduleCloseHours"/></td>
+              <td id="closeCumulSchedule" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="IF(A<s:property value='dailyFlashHours.size() + 1'/> > 0, <s:property value="scheduleCloseHours"/>,0)"></td>
+              <td id="closeTarget"class="tableValueWithLeftBottomBorder" data-format="0"><s:property value="projectedCloseHours"/></td>
+              <td id="closeCumulTarget" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="IF(A<s:property value='dailyFlashHours.size() + 1'/> > 0, <s:property value="projectedCloseHours"/>,0)"></td>
               <td id="closeNewProjection" class="tableValueWithLeftBottomBorder">&nbsp;</td>
               <td id="closePartial" class="tableValueWithLeftBottomBorder">&nbsp;</td>
-              <td id="closeIdealHours" class="tableValueWithLeftBottomBorder">&nbsp;</td>
-              <td id="closeCumulIdealHours" class="tableValueWithLeftBottomBorder">&nbsp;</td>
+              <td id="closeIdealHours" class="tableValueWithLeftBottomBorder" data-format="0"><s:property value="projectedCloseHours"/></td>
+              <td id="closeCumulIdealHours" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="IF(A<s:property value='dailyFlashHours.size() + 1'/> > 0, <s:property value="projectedCloseHours"/>,0)"></td>
 			      </tr>
 			      <tr>
 			        <td class="tableValueWithLeftBottomBorder">&nbsp;</td>
@@ -154,14 +154,14 @@ M - Adjustes calculus
 			        <td id="totalActualSalesCumul" class="greyTableValueWithLeftBottomBorder" data-format="$0,0" data-formula="SUM($C1,$C<s:property value='dailyFlashHours.size()'/>)"></td>
 			        <td id="totalDiff" class="greyTableValueWithLeftBottomBorder" data-format="$(0,0)" data-formula="SUM($D1,$D<s:property value='dailyFlashHours.size()'/>)"></td>
 			        <td id="totalCumulDiff" class="greyTableValueWithLeftBottomBorder" data-format="$(0,0)" data-formula="$totalDiff"></td>
-              <td id="totalSchedule" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="SUM($E1,$E<s:property value='dailyFlashHours.size()'/>)/2 + $E0"></td>
-              <td id="totalCumulSchedule" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="SUM($H1,$H<s:property value='dailyFlashHours.size()'/>)/2 + $H0"></td>
-              <td id="totalTarget" class="tableValueWithLeftBottomBorder"data-format="0" data-formula="SUM($F1,$F<s:property value='dailyFlashHours.size()'/>)/2 + $F0"></td>
-              <td id="totalCumulTarget" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="SUM($I1,$I<s:property value='dailyFlashHours.size()'/>)/2 + $I0"></td>
+              <td id="totalSchedule" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="SUM($E1,$E<s:property value='dailyFlashHours.size()'/>)/2 + $E0 + $closeSchedule"></td>
+              <td id="totalCumulSchedule" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="SUM($H1,$H<s:property value='dailyFlashHours.size()'/>)/2 + $H0 + $closeCumulSchedule"></td>
+              <td id="totalTarget" class="tableValueWithLeftBottomBorder"data-format="0" data-formula="SUM($F1,$F<s:property value='dailyFlashHours.size()'/>)/2 + $F0 + $closeTarget"></td>
+              <td id="totalCumulTarget" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="SUM($I1,$I<s:property value='dailyFlashHours.size()'/>)/2 + $I0 + $closeCumulTarget"></td>
               <td id="totalNewProjection" class="tableValueWithLeftBottomBorder" data-format="0,0" data-formula="SUM($J1,$J<s:property value='dailyFlashHours.size()'/>)"></td>
               <td id="totalPartialProjectedSales" class="tableValueWithLeftBottomBorder" data-format="$0,0" data-formula="SUM($G1,$G<s:property value='dailyFlashHours.size()'/>)"></td>   
-              <td id="totalIdealHours" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="SUM($K1,$K<s:property value='dailyFlashHours.size()'/>)/2 + $K0"></td>
-              <td id="totalCumulIdealHours" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="SUM($L1,$L<s:property value='dailyFlashHours.size()'/>)/2 + $L0"></td>
+              <td id="totalIdealHours" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="SUM($K1,$K<s:property value='dailyFlashHours.size()'/>)/2 + $K0 + $closeIdealHours"></td>
+              <td id="totalCumulIdealHours" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="SUM($L1,$L<s:property value='dailyFlashHours.size()'/>)/2 + $L0 + $closeCumulIdealHours"></td>
 			      </tr>
 			    </table>
 			    </td>
@@ -215,16 +215,16 @@ M - Adjustes calculus
 			         </tr>
               <tr>
                 <td class="cellLabel"><s:text name="report.dailyFlashReport.targetHours.label"/></td>
-                <td id="partialTargetHours" class="greyCellValue" data-format="0" data-formula='$totalCumulTarget + <s:property value="projectedOpeningHours"/> + (1 - $percentOfDay)*<s:property value="projectedFlexibleHours"/> '></td>
+                <td id="partialTargetHours" class="greyCellValue" data-format="0" data-formula='$totalCumulTarget + (1 - $percentOfDay)*<s:property value="projectedFlexibleHours"/>'></td>
                 <td id="diffTargetHours" class="greyCellValue" data-format="(0)" data-formula="( $actualHours - $partialTargetHours )"></td>
-                <td id="soFarTargetHours" class="greyCellValue" data-format="(0)" data-formula="( $totalTarget - $partialTargetHours )"></td>
+                <td id="soFarTargetHours" class="greyCellValue" data-format="(0)" data-formula="( $totalTarget + (1 - $percentOfDay)*<s:property value="projectedFlexibleHours"/> - $partialTargetHours )"></td>
                 <td id="soFarTargetDiff" class="greyCellValue" data-format="(0)" data-formula="$soFarTargetHours - $soFarScheduleHours"></td>
                </tr>
               <tr>
                 <td class="cellLabel"><s:text name="report.dailyFlashReport.idealHours.label"/></td>
-                <td id="partialIdealHours" class="greyCellValue" data-format="0" data-formula='$totalCumulIdealHours + <s:property value="projectedOpeningHours"/> + (1 - $percentOfDay)*<s:property value="projectedFlexibleHours"/>'></td>
+                <td id="partialIdealHours" class="greyCellValue" data-format="0" data-formula='$totalCumulIdealHours + (1 - $percentOfDay)*(<s:property value="projectedFlexibleHours"/> * (1 - $forecast))'></td>
                 <td id="diffIdealHours" class="greyCellValue" data-format="(0)" data-formula="( $actualHours - $partialIdealHours )"></td>
-                <td id="soFarIdealHours" class="greyCellValue" data-format="(0)" data-formula="( $totalIdealHours - $partialIdealHours )"></td>
+                <td id="soFarIdealHours" class="greyCellValue" data-format="(0)" data-formula="( $totalIdealHours + (1 - $percentOfDay)*(<s:property value="projectedFlexibleHours"/> * (1 - $forecast)) - $partialIdealHours )"></td>
                 <td id="soFarIdealHoursDiff" class="greyCellValue" data-format="(0)" data-formula="$soFarIdealHours - $soFarScheduleHours "></td>
                </tr>
 			        </table>
