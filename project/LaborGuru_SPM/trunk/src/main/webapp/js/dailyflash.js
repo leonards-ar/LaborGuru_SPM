@@ -6,12 +6,15 @@ $(function(){
 	
 	$('#dailyFlashTable').calx();
 	
-//	$('#scheduleReportTable').find('td:nth-child(10),th:nth-child(10)').hide();
-//	$('#scheduleReportTable').find('td:nth-child(11),th:nth-child(11)').hide();
-//	$('#scheduleReportTable').find('td:nth-child(12),th:nth-child(12)').hide();
-//	$('#scheduleReportTable').find('td:nth-child(13),th:nth-child(13)').hide();
-//	$('#scheduleReportTable').find('td:nth-child(14),th:nth-child(14)').hide();
-//	$('#scheduleReportTable').find('td:nth-child(15),th:nth-child(14)').hide();	
+	
+	$('#scheduleReportTable').find('td:nth-child(10),th:nth-child(10)').hide();
+	$('#scheduleReportTable').find('td:nth-child(11),th:nth-child(11)').hide();
+	$('#scheduleReportTable').find('td:nth-child(12),th:nth-child(12)').hide();
+	$('#scheduleReportTable').find('td:nth-child(13),th:nth-child(13)').hide();
+	$('#scheduleReportTable').find('td:nth-child(14),th:nth-child(14)').hide();
+	$('#scheduleReportTable').find('td:nth-child(15),th:nth-child(15)').hide();	
+	$('#scheduleReportTable').find('td:nth-child(16),th:nth-child(16)').hide();
+	$('#scheduleReportTable').find('td:nth-child(17),th:nth-child(17)').hide();
 	
     $('#saveFlashReport').on({
         click: function(){
