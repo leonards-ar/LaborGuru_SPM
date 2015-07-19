@@ -765,6 +765,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	private void setShiftsForPosition(List<ScheduleRow> source, EmployeeSchedule employeeSchedule, List<Position> positions) {
 		int shiftPosition = 0;
 		List<Shift> rowShifts;
+		employeeSchedule.reindexShifts();
 		List<Shift> currentShifts = employeeSchedule.getShifts();
 		int currentShiftsSize = currentShifts.size();
 		
@@ -867,6 +868,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	private void setShiftsAllPositions(List<ScheduleRow> source, EmployeeSchedule employeeSchedule) {
 		int shiftPosition = 0;
 		List<Shift> rowShifts;
+		employeeSchedule.reindexShifts(); // Remove shifts that are null
 		int currentShiftsSize = employeeSchedule.getShifts().size();
 		
 		for(ScheduleRow row : source) {

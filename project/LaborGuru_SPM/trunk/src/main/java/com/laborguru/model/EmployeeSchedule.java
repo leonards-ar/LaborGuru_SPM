@@ -109,7 +109,7 @@ public class EmployeeSchedule extends SpmObject {
 	 */
 	public void reindexShifts() {
 		List<Shift> reindexed = new ArrayList<Shift>(getShifts().size());
-
+		boolean updateList = false;
 		int index = 0;
 		
 		for(Shift aShift : getShifts()) {
@@ -117,10 +117,15 @@ public class EmployeeSchedule extends SpmObject {
 				aShift.setShiftIndex(new Integer(index));
 				reindexed.add(aShift);
 				++index;
+			} else {
+				updateList = true;
 			}
 		}
 		
-		setShifts(reindexed);
+		if (updateList) {
+			getShifts().clear();
+			getShifts().addAll(reindexed);
+		}
 	}
 	
 	/**
