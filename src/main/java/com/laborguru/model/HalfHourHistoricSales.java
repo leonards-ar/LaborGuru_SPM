@@ -104,7 +104,7 @@ public class HalfHourHistoricSales extends HalfHourSalesValue implements Compara
 	 * @return the value
 	 */
 	public BigDecimal getValue() {
-		return value;
+		return value != null ? value : SpmConstants.BD_ZERO_VALUE;
 	}
 
 	/**
@@ -174,7 +174,7 @@ public class HalfHourHistoricSales extends HalfHourSalesValue implements Compara
 	 * @return the secondValue
 	 */
 	public BigDecimal getSecondValue() {
-		return secondValue;
+		return secondValue != null ? secondValue : SpmConstants.BD_ZERO_VALUE;
 	}
 
 	/**
@@ -188,7 +188,7 @@ public class HalfHourHistoricSales extends HalfHourSalesValue implements Compara
 	 * @return the thirdValue
 	 */
 	public BigDecimal getThirdValue() {
-		return thirdValue;
+		return thirdValue != null ? thirdValue : SpmConstants.BD_ZERO_VALUE;
 	}
 
 	/**
@@ -202,7 +202,7 @@ public class HalfHourHistoricSales extends HalfHourSalesValue implements Compara
 	 * @return the fourthValue
 	 */
 	public BigDecimal getFourthValue() {
-		return fourthValue;
+		return fourthValue != null ? fourthValue : SpmConstants.BD_ZERO_VALUE;
 	}
 
 	/**
