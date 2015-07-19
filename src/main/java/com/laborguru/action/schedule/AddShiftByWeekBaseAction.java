@@ -6,6 +6,7 @@
 package com.laborguru.action.schedule;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -689,6 +690,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	private void setShiftsAllPositions(List<WeeklyScheduleRow> source, EmployeeSchedule employeeSchedule, int dayIndex, List<Shift> shiftsForNextDay) {
 		int shiftPosition = 0;
 		Shift rowShift;
+		employeeSchedule.reindexShifts();
 		List<Shift> currentShifts = employeeSchedule.getShifts();
 		int currentShiftsSize = currentShifts.size();
 		List<Shift> shiftsToKeep = retrieveShiftsToKeep(source, employeeSchedule, dayIndex);
@@ -737,6 +739,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	private void setShiftsForPositions(List<WeeklyScheduleRow> source, EmployeeSchedule employeeSchedule, List<Position> positions, int dayIndex, List<Shift> shiftsForNextDay) {
 		int shiftPosition = 0;
 		Shift rowShift;
+		employeeSchedule.reindexShifts();
 		List<Shift> currentShifts = employeeSchedule.getShifts();
 		int currentShiftsSize = currentShifts.size();
 		List<Shift> shiftsToKeep = retrieveShiftsToKeep(source, employeeSchedule, dayIndex);
@@ -943,17 +946,25 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 * @return
 	 */
 	public String save() {
+		Map<Integer, RuntimeException> errors = new HashMap<Integer, RuntimeException>();
+		
 		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
 		
 		// Build schedule for correct days
 		setSchedule();
 
 		int size = getStoreSchedules().size();
-		StoreSchedule storeSchedule;
+		StoreSchedule storeSchedule = null;
 		
 		// Inverse so that contiguous shifts are saved first!
 		if(isFirstDayNextWeekStoreSchedule()) {
-			getScheduleService().save(getFirstDayNextWeekStoreSchedule());
+			try {
+				storeSchedule = getFirstDayNextWeekStoreSchedule();
+				getScheduleService().save(storeSchedule);
+			} catch(RuntimeException ex) {
+				log.error("Failed to save first day of next week for store schedule " + storeSchedule, ex);
+				errors.put(new Integer(size), ex);
+			}
 		}
 		
 		for(int dayIndex = size - 1; dayIndex >= 0; dayIndex--) {
@@ -963,8 +974,13 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 				if(log.isDebugEnabled()) {
 					log.debug("About to save schedule " + storeSchedule);
 				}
-				
-				getScheduleService().save(storeSchedule);
+
+				try {
+					getScheduleService().save(storeSchedule);
+				} catch(RuntimeException ex) {
+					log.error("Failed to save day " + storeSchedule.getDay() + " for store schedule " + storeSchedule, ex);
+					errors.put(new Integer(dayIndex), ex);
+				}				
 				
 				if(log.isDebugEnabled()) {
 					log.debug("Saved schedule for date " + storeSchedule.getDay());
@@ -976,7 +992,25 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		setScheduleData();
 		resetWeekData();
 		
-		addActionMessage(getText("schedule.addshift.save_success"));
+		if (errors.size() == 0) {
+			addActionMessage(getText("schedule.addshift.save_success"));
+		} else {
+			List<Object> params = new ArrayList<Object>();
+			SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+			StringBuilder sb = new StringBuilder();
+			boolean isFirst = true;
+			for (Map.Entry<Integer, RuntimeException> error : errors.entrySet()) {
+				Date d = getDay(error.getKey() < size ? error.getKey() : size - 1);
+				if (!isFirst) {
+					sb.append(", ");
+				}
+				sb.append(df.format(d));
+				isFirst = false;
+			}
+			params.add(sb.toString());
+			
+			addActionError(getText("error.schedule.addshift.save_error", params));
+		}
 		
 		return SpmActionResult.EDIT.getResult();
 	}
