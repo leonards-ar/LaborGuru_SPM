@@ -151,7 +151,7 @@ M - Adjustes calculus
 			        <td id="totalCumulSales" class="greyTableValueWithLeftBottomBorder" data-format="$0,0" data-formula="$projectedSalesCumul<s:property value='dailyFlashHours.size()'/>"></td>
 			        <td id="totalActualSales" class="greyTableValueWithLeftBottomBorder" data-format="$0,0" data-formula="SUM($B1,$B<s:property value='dailyFlashHours.size()'/>)"></td>
 			        <td id="totalPartialHours" class="greyTableValueWithLeftBottomBorder" data-format="0" data-formula="SUM($A1,$A<s:property value='dailyFlashHours.size() + 1'/>)/2 + $A0"></td>
-			        <td id="totalActualSalesCumul" class="greyTableValueWithLeftBottomBorder" data-format="$0,0" data-formula="SUM($C1,$C<s:property value='dailyFlashHours.size()'/>)"></td>
+			        <td id="totalActualSalesCumul" class="greyTableValueWithLeftBottomBorder" data-format="$0,0" data-formula="SUM($B1,$B<s:property value='dailyFlashHours.size()'/>)"></td>
 			        <td id="totalDiff" class="greyTableValueWithLeftBottomBorder" data-format="$(0,0)" data-formula="SUM($D1,$D<s:property value='dailyFlashHours.size()'/>)"></td>
 			        <td id="totalCumulDiff" class="greyTableValueWithLeftBottomBorder" data-format="$(0,0)" data-formula="$totalDiff"></td>
               <td id="totalSchedule" class="tableValueWithLeftBottomBorder" data-format="0" data-formula="SUM($E1,$E<s:property value='dailyFlashHours.size()'/>)/2 + $E0 + $closeSchedule"></td>
@@ -176,12 +176,12 @@ M - Adjustes calculus
 			        <td align="left">
 			        <table class="windowReportTable" cellspacing="0" border="1">
 			          <tr>
-			            <td class="cellLabel"><s:text name="report.dailyFlashReport.forecastChange.label"/></td>
-			            <td id="forecast" class="greyCellValue" data-format="0%" data-formula="($totalDiff/$totalPartialProjectedSales)"></td>
+			            <td class="cellFlashLabel"><s:text name="report.dailyFlashReport.forecastChange.label"/></td>
+			            <td id="forecast" class="greyFlashCellValue" data-format="0%" data-formula="($totalDiff/$totalPartialProjectedSales)"></td>
 			          </tr>
 			          <tr>
-			            <td class="cellLabel"><s:text name="report.dailyFlashReport.percentOfDayLeft.label"/></td>
-			            <td id="percentOfDay" class="greyCellValue" data-format="0%" data-formula="1 - ($totalPartialProjectedSales/$totalSales)"></td>
+			            <td class="cellFlashLabel"><s:text name="report.dailyFlashReport.percentOfDayLeft.label"/></td>
+			            <td id="percentOfDay" class="greyFlashCellValue" data-format="0%" data-formula="1 - ($totalPartialProjectedSales/$totalSales)"></td>
 			          </tr>
 			        </table>
 			      </td>
@@ -189,43 +189,43 @@ M - Adjustes calculus
 			        <table class="windowReportTable" cellspacing="0">
 			        <tr>
 			          <td>&nbsp;</td>
-			          <td class="greyCellLabel" colspan="2"><s:text name="report.dailyFlashReport.soFar.label" /></td>
-			          <td class="greyCellLabel" colspan="2"><s:text name="report.dailyflashReport.restOfDay.label" /></td>
+			          <td class="greyFlashCellLabel" colspan="2"><s:text name="report.dailyFlashReport.soFar.label" /></td>
+			          <td class="greyFlashCellLabel" colspan="2"><s:text name="report.dailyflashReport.restOfDay.label" /></td>
 			        </tr>
 			        <tr>
 			          <td>&nbsp;</td>
-			          <td class="greyCellLabel"><s:text name="report.dailyFlashReport.hours.label"/></td>
-			          <td class="greyCellLabel"><s:text name="report.dailyFlashReport.difference.label"/></td>
-			          <td class="greyCellLabel"><s:text name="report.dailyFlashReport.hours.label"/></td>
-			          <td class="greyCellLabel"><s:text name="report.dailyFlashReport.difference.label"/></td>
+			          <td class="greyFlashCellLabel"><s:text name="report.dailyFlashReport.hours.label"/></td>
+			          <td class="greyFlashCellLabel"><s:text name="report.dailyFlashReport.difference.label"/></td>
+			          <td class="greyFlashCellLabel"><s:text name="report.dailyFlashReport.hours.label"/></td>
+			          <td class="greyFlashCellLabel"><s:text name="report.dailyFlashReport.difference.label"/></td>
 			        </tr>
 			        <tr>
-			          <td class="cellLabel"><s:text name="report.dailyFlashReport.actualHours.label"/></td>
-                <td id="actualHours" class="greyCellValue" data-format="0" data-formula="$totalPartialHours" ></td>
+			          <td class="cellFlashLabel"><s:text name="report.dailyFlashReport.actualHours.label"/></td>
+                <td id="actualHours" class="greyFlashCellValue" data-format="0" data-formula="$totalPartialHours" ></td>
 			          <td class="darkGreyCellValue">&nbsp;</td>
 			          <td class="darkGreyCellValue">&nbsp;</td>
 			          <td class="darkGreyCellValue">&nbsp;</td>
 			        </tr>
 			        <tr>
-			          <td class="cellLabel"><s:text name="report.dailyFlashReport.scheduledHours.label"/></td>
-                <td id="partialScheduleHours" class="greyCellValue" data-format="0" data-formula="$totalCumulSchedule"></td>
-			          <td id="diffPartialHours" class="greyCellValue" data-format="(0)" data-formula="( $actualHours - $partialScheduleHours )"></td>
-			          <td id="soFarScheduleHours" class="greyCellValue" data-format="(0)" data-formula="( $totalSchedule - $totalCumulSchedule )"></td>
+			          <td class="cellFlashLabel"><s:text name="report.dailyFlashReport.scheduledHours.label"/></td>
+                <td id="partialScheduleHours" class="greyFlashCellValue" data-format="0" data-formula="$totalCumulSchedule"></td>
+			          <td id="diffPartialHours" class="greyFlashCellValue" data-format="(0)" data-formula="( $actualHours - $partialScheduleHours )"></td>
+			          <td id="soFarScheduleHours" class="greyFlashCellValue" data-format="(0)" data-formula="( $totalSchedule - $totalCumulSchedule )"></td>
 			          <td class="darkGreyCellValue">&nbsp;</td>
 			         </tr>
               <tr>
-                <td class="cellLabel"><s:text name="report.dailyFlashReport.targetHours.label"/></td>
-                <td id="partialTargetHours" class="greyCellValue" data-format="0" data-formula='$totalCumulTarget + (1 - $percentOfDay)*<s:property value="projectedFlexibleHours"/>'></td>
-                <td id="diffTargetHours" class="greyCellValue" data-format="(0)" data-formula="( $actualHours - $partialTargetHours )"></td>
-                <td id="soFarTargetHours" class="greyCellValue" data-format="(0)" data-formula="( $totalTarget + <s:property value="projectedFlexibleHours"/> - $partialTargetHours )"></td>
-                <td id="soFarTargetDiff" class="greyCellValue" data-format="(0)" data-formula="$soFarTargetHours - $soFarScheduleHours"></td>
+                <td class="cellFlashLabel"><s:text name="report.dailyFlashReport.targetHours.label"/></td>
+                <td id="partialTargetHours" class="greyFlashCellValue" data-format="0" data-formula='$totalCumulTarget + (1 - $percentOfDay)*<s:property value="projectedFlexibleHours"/>'></td>
+                <td id="diffTargetHours" class="greyFlashCellValue" data-format="(0)" data-formula="( $actualHours - $partialTargetHours )"></td>
+                <td id="soFarTargetHours" class="greyFlashCellValue" data-format="(0)" data-formula="( $totalTarget + <s:property value="projectedFlexibleHours"/> - $partialTargetHours )"></td>
+                <td id="soFarTargetDiff" class="greyFlashCellValue" data-format="(0)" data-formula="$soFarTargetHours - $soFarScheduleHours"></td>
                </tr>
               <tr>
-                <td class="cellLabel"><s:text name="report.dailyFlashReport.idealHours.label"/></td>
-                <td id="partialIdealHours" class="greyCellValue" data-format="0" data-formula='$totalCumulIdealHours + (1 - $percentOfDay)*(<s:property value="projectedFlexibleHours"/> * (1 + $forecast))'></td>
-                <td id="diffIdealHours" class="greyCellValue" data-format="(0)" data-formula="( $actualHours - $partialIdealHours )"></td>
-                <td id="soFarIdealHours" class="greyCellValue" data-format="(0)" data-formula="( $totalIdealHours + <s:property value="projectedFlexibleHours"/> * (1 + $forecast) - $partialIdealHours )"></td>
-                <td id="soFarIdealHoursDiff" class="greyCellValue" data-format="(0)" data-formula="$soFarIdealHours - $soFarScheduleHours "></td>
+                <td class="cellFlashLabel"><s:text name="report.dailyFlashReport.idealHours.label"/></td>
+                <td id="partialIdealHours" class="greyFlashCellValue" data-format="0" data-formula='$totalCumulIdealHours + (1 - $percentOfDay)*(<s:property value="projectedFlexibleHours"/> * (1 + $forecast))'></td>
+                <td id="diffIdealHours" class="greyFlashCellValue" data-format="(0)" data-formula="( $actualHours - $partialIdealHours )"></td>
+                <td id="soFarIdealHours" class="greyFlashCellValue" data-format="(0)" data-formula="( $totalIdealHours + <s:property value="projectedFlexibleHours"/> * (1 + $forecast) - $partialIdealHours )"></td>
+                <td id="soFarIdealHoursDiff" class="greyFlashCellValue" data-format="(0)" data-formula="$soFarIdealHours - $soFarScheduleHours "></td>
                </tr>
 			        </table>
 			      </td>
@@ -240,15 +240,15 @@ M - Adjustes calculus
                     </td>
                   </tr>       
                   <tr>
-                    <td class="greyCellLabel"><s:text name="report.dailyFlashReport.status.label"/></td>
-                    <td class="greyCellLabel"><s:text name="report.dailyFlashReport.projectedSales.label"/></td>
-                    <td class="greyCellLabel"><s:text name="report.dailyFlashReport.actualSales.label"/></td>
-                    <td class="greyCellLabel"><s:text name="report.dailyFlashReport.actualSale.cum.label"/></td>
-                    <td class="greyCellLabel"><s:text name="report.dailyFlashReport.percent.label"/></td>
+                    <td class="greyFlashCellLabel"><s:text name="report.dailyFlashReport.status.label"/></td>
+                    <td class="greyFlashCellLabel"><s:text name="report.dailyFlashReport.projectedSales.label"/></td>
+                    <td class="greyFlashCellLabel"><s:text name="report.dailyFlashReport.actualSales.label"/></td>
+                    <td class="greyFlashCellLabel"><s:text name="report.dailyFlashReport.actualSale.cum.label"/></td>
+                    <td class="greyFlashCellLabel"><s:text name="report.dailyFlashReport.percent.label"/></td>
                   </tr>
                   <tr>
-                    <td class="greyCellValue"><s:text name="report.dailyFlashReport.delivered.label"/></td>
-                    <td id="deliveredProjSales" class="greyCellValue" ><s:property value="dailyFlashObject.variable2"/></td>
+                    <td class="greyFlashCellValue"><s:text name="report.dailyFlashReport.delivered.label"/></td>
+                    <td id="deliveredProjSales" class="greyFlashCellValue" ><s:property value="dailyFlashObject.variable2"/></td>
                     <td class="tableValueWithLeftBottomBorder"><input type="text" id="deliveredActualSales" data-format="$0,0" value="<s:property value="dailyFlash.delivered"/>" size="10" theme="simple" /></td>
                     <td id="deliveredActualSalesCumulative" class="greyTableValueWithLeftBottomBorder" data-format="(0,0)" data-formula="$deliveredActualSales - $deliveredProjSales"/>
                     <td id="deliveredPercent" class="greyTableValueWithLeftBottomBorder" data-format="0%" data-formula="IF($deliveredProjSales > 0,$deliveredActualSales/$deliveredProjSales,1)"/>
@@ -268,16 +268,16 @@ M - Adjustes calculus
                     <td colspan="2"><s:text name="report.dailyFlashReport.catering.hours.label"/></td>
                   </tr>
                   <tr>
-                    <td class="cellValue"><s:text name="report.dailyFlashReport.projected.label"/></td>
-                    <td id="schedule_catering" class="greyCellValue" data-format="0" data-formula='$deliveredProjSales * <s:property value="secondVariableHours"/>'></td> <!-- TODO Ver de donde sacar la información -->
+                    <td class="cellFlashValue"><s:text name="report.dailyFlashReport.projected.label"/></td>
+                    <td id="schedule_catering" class="greyFlashCellValue" data-format="0" data-formula='$deliveredProjSales * <s:property value="secondVariableHours"/>'></td> <!-- TODO Ver de donde sacar la información -->
                   </tr>
                   <tr>
-                    <td class="cellValue"><s:text name="report.dailyFlashReport.delivered.label"/></td>
-                    <td id="delivered_catering" class="greyCellValue" data-format='0' data-formula='$deliveredActualSales * <s:property value="secondVariableHours"/>'></td>
+                    <td class="cellFlashValue"><s:text name="report.dailyFlashReport.delivered.label"/></td>
+                    <td id="delivered_catering" class="greyFlashCellValue" data-format='0' data-formula='$deliveredActualSales * <s:property value="secondVariableHours"/>'></td>
                   </tr>
                   <tr>
-                    <td class="cellValue"><s:text name="report.dailyFlashReport.planned.label"/></td>
-                    <td id="planned_catering" class="greyCellValue" data-format='0' data-formula='$plannedActualSales * <s:property value="secondVariableHours"/>'></td>
+                    <td class="cellFlashValue"><s:text name="report.dailyFlashReport.planned.label"/></td>
+                    <td id="planned_catering" class="greyFlashCellValue" data-format='0' data-formula='$plannedActualSales * <s:property value="secondVariableHours"/>'></td>
                   </tr>
                 </table>
 						 </td>
@@ -289,13 +289,13 @@ M - Adjustes calculus
 					   <td>
               <table class="windowReportTable" cellspacing="0" border="1">
                 <tr>
-                  <td class="greyCellLabel"><s:text name="report.dailyFlashReport.laborHours.label"/></td>
-                  <td class="greyCellLabel"><s:text name="report.dailyFlashReport.restaurant.label"/></td>
-                  <td class="greyCellLabel"><s:text name="report.dailyFlashReport.catering.label"/></td>
-                  <td class="greyCellLabel"><s:text name="report.dailyFlashReport.total.label"/></td>
+                  <td class="greyFlashCellLabel"><s:text name="report.dailyFlashReport.laborHours.label"/></td>
+                  <td class="greyFlashCellLabel"><s:text name="report.dailyFlashReport.restaurant.label"/></td>
+                  <td class="greyFlashCellLabel"><s:text name="report.dailyFlashReport.catering.label"/></td>
+                  <td class="greyFlashCellLabel"><s:text name="report.dailyFlashReport.total.label"/></td>
                  </tr>
                  <tr>
-                   <td class="greyCellLabel"><s:text name="report.dailyFlashReport.adjustment.label"/></td>
+                   <td class="greyFlashCellLabel"><s:text name="report.dailyFlashReport.adjustment.label"/></td>
                    <td id="M0" data-format="0" data-formula="$soFarIdealHoursDiff"></td> 
                    <td id="M1" data-format="0" data-formula="$planned_catering"></td> 
                    <td id="totalAdj" data-format="0" data-formula="$M0+$M1"></td> 

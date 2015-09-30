@@ -116,8 +116,10 @@ public class DailyFlashSaveAction extends SpmAction{
 			
 			if(!"".equals(getPreOpenHour())) dailyFlash.setOpenHours(Double.parseDouble(getPreOpenHour()));
 			if(!"".equals(getCloseHour())) dailyFlash.setCloseHours(Double.parseDouble(getCloseHour()));
-			if(!"".equals(getDelivered())) dailyFlash.setDelivered(Double.parseDouble(getDelivered()));
-			if(!"".equals(getPlanned())) dailyFlash.setPlanned(Double.parseDouble(getPlanned()));
+			if(store.isVariableDefinitionConfigured(1)){
+			    if(!"".equals(getDelivered())) dailyFlash.setDelivered(Double.parseDouble(getDelivered()));
+			    if(!"".equals(getPlanned())) dailyFlash.setPlanned(Double.parseDouble(getPlanned()));
+			}
 			
 			for(DailyFlashDetail dfDetail: getDetails()){
 				if(!dfDetail.isEmpty()){
