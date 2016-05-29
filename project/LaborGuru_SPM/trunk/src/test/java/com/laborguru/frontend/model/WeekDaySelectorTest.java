@@ -2,6 +2,7 @@ package com.laborguru.frontend.model;
 
 import static org.junit.Assert.assertEquals;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.junit.Test;
@@ -18,12 +19,13 @@ import com.laborguru.util.SpmConstants;
  *
  */
 public class WeekDaySelectorTest {
+	private SimpleDateFormat dateFormat = new SimpleDateFormat(SpmConstants.DATE_FORMAT);
 
 	@Test
 	public void getFirstDayOfWeekBeforeInitDay(){
 		WeekDaySelector weekDaySelector = new WeekDaySelector(DayOfWeek.WEDNESDAY);
-		Date tuesday = CalendarUtils.stringToDate("07/10/2008", SpmConstants.DATE_FORMAT.toPattern());
-		Date wednesday = CalendarUtils.stringToDate("01/10/2008", SpmConstants.DATE_FORMAT.toPattern());
+		Date tuesday = CalendarUtils.stringToDate("07/10/2008", dateFormat.toPattern());
+		Date wednesday = CalendarUtils.stringToDate("01/10/2008", dateFormat.toPattern());
 		
 		Date testRet = weekDaySelector.getFirstDayOfWeek(tuesday);
 		
@@ -33,8 +35,8 @@ public class WeekDaySelectorTest {
 	@Test
 	public void getFirstDayOfWeekHappyPathSameInitDay(){
 		WeekDaySelector weekDaySelector = new WeekDaySelector(DayOfWeek.WEDNESDAY);
-		Date wednesday = CalendarUtils.stringToDate("01/10/2008", SpmConstants.DATE_FORMAT.toPattern());
-		Date wednesdayResponse = CalendarUtils.stringToDate("01/10/2008", SpmConstants.DATE_FORMAT.toPattern());
+		Date wednesday = CalendarUtils.stringToDate("01/10/2008", dateFormat.toPattern());
+		Date wednesdayResponse = CalendarUtils.stringToDate("01/10/2008", dateFormat.toPattern());
 		
 		Date testRet = weekDaySelector.getFirstDayOfWeek(wednesday);
 		
@@ -44,8 +46,8 @@ public class WeekDaySelectorTest {
 	@Test
 	public void getFirstDayOfWeekHappyPathAfterInitDay(){
 		WeekDaySelector weekDaySelector = new WeekDaySelector(DayOfWeek.WEDNESDAY);
-		Date sunday = CalendarUtils.stringToDate("12/10/2008", SpmConstants.DATE_FORMAT.toPattern());
-		Date wednesdayResponse = CalendarUtils.stringToDate("08/10/2008", SpmConstants.DATE_FORMAT.toPattern());
+		Date sunday = CalendarUtils.stringToDate("12/10/2008", dateFormat.toPattern());
+		Date wednesdayResponse = CalendarUtils.stringToDate("08/10/2008", dateFormat.toPattern());
 		
 		Date testRet = weekDaySelector.getFirstDayOfWeek(sunday);
 		

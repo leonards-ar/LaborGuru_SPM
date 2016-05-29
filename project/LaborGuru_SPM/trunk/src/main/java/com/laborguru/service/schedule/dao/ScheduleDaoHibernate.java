@@ -56,8 +56,8 @@ public class ScheduleDaoHibernate extends HibernateDaoSupport implements Schedul
 			log.debug("Found [" + (schedules != null ? schedules.size() : "null") + "] schedules for day [" + date + "] and store [" + store + "]");
 		}
 		
-		if(schedules.size() > 0) {
-			log.warn("Found [" + (schedules != null ? schedules.size() : "null") + "] schedules for day [" + date + "] and store [" + store + "]");
+		if(schedules.size() > 1) {
+			log.warn("Found [" + (schedules != null ? schedules.size() : "null") + "] schedules for day [" + date + "] and store [" + store + "]. Returning first one!");
 		}
 		
 		return schedules != null && schedules.size() > 0 ? schedules.get(0) : null;

@@ -8,6 +8,7 @@ package com.laborguru.frontend.model;
 import java.io.Serializable;
 import java.util.List;
 
+import com.laborguru.model.UserStatus;
 import com.laborguru.util.SpmConstants;
 
 /**
@@ -29,6 +30,7 @@ public class ScheduleRow implements Serializable, Comparable<ScheduleRow> {
 	private Integer employeeId;
 	private Integer originalEmployeeId;
 	private String employeeName;
+	private UserStatus employeeStatus;
 	private String inHour;
 	private String outHour;
 	private String totalHours;
@@ -303,4 +305,21 @@ public class ScheduleRow implements Serializable, Comparable<ScheduleRow> {
 		this.employeeWage = employeeWage;
 	}
 	
+	/**
+	 * @return the employeeStatus
+	 */
+	public UserStatus getEmployeeStatus() {
+		return employeeStatus;
+	}
+
+	/**
+	 * @param employeeStatus the employeeStatus to set
+	 */
+	public void setEmployeeStatus(UserStatus employeeStatus) {
+		this.employeeStatus = employeeStatus;
+	}
+	
+	public boolean isEmployeeDeleted() {
+		return UserStatus.DELETED.equals(employeeStatus);
+	}	
 }

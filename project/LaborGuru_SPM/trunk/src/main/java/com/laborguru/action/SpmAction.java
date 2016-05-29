@@ -1,5 +1,6 @@
 package com.laborguru.action;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -227,7 +228,8 @@ public class SpmAction extends ActionSupport implements SessionAware,RequestAwar
 	 */
 	protected String dateToDisplayTime(Date d) {
 		if(d != null) {
-			return SpmConstants.TIME_FORMAT.format(d);
+			final SimpleDateFormat timeFormat = new SimpleDateFormat(SpmConstants.TIME_FORMAT);
+			return timeFormat.format(d);
 		} else {
 			return null;
 		}

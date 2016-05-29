@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 public class SpmConstants {
@@ -12,14 +11,14 @@ public class SpmConstants {
 
 	public static final String DEBUG = "spmDebug";
 	
-	public static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
-	public static final SimpleDateFormat DISPLAY_TIME_FORMAT = new SimpleDateFormat("h:mma");
-	public static final SimpleDateFormat TIME_NUMBER_FORMAT = new SimpleDateFormat("HHmm");
-	public static final SimpleDateFormat TIME_HOUR_FORMAT = new SimpleDateFormat("HH");
-	public static final SimpleDateFormat TIME_MINUTE_FORMAT = new SimpleDateFormat("mm");
-	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
-	public static final SimpleDateFormat REMOVE_TIME_FORMAT = new SimpleDateFormat("yyyyMMdd");
-	public static final SimpleDateFormat REMOVE_DATE_FORMAT = new SimpleDateFormat("HHmmss");
+	public static final String TIME_FORMAT = "HH:mm";
+	public static final String DISPLAY_TIME_FORMAT = "h:mma";
+	public static final String TIME_NUMBER_FORMAT = "HHmm";
+	public static final String TIME_HOUR_FORMAT = "HH";
+	public static final String TIME_MINUTE_FORMAT = "mm";
+	public static final String DATE_FORMAT = "dd/MM/yyyy";
+	public static final String REMOVE_TIME_FORMAT = "yyyyMMdd";
+	public static final String REMOVE_DATE_FORMAT = "HHmmss";
 	
 	public static final String WEEKDAY_SELECTOR_DATEFORMAT= "yyyyMMdd";
 
