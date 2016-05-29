@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.laborguru.model.UserStatus;
+
 /**
  *
  * @author <a href="mcapurro@gmail.com">Mariano Capurro</a>
@@ -28,6 +30,7 @@ public class WeeklyScheduleRow implements Serializable, Comparable<WeeklySchedul
 	private Integer employeeId;
 	private Integer originalEmployeeId;
 	private String employeeName;
+	private UserStatus employeeStatus;
 	private List<WeeklyScheduleDailyEntry> weeklySchedule;
 	
 	private Integer employeeMaxHoursWeek;
@@ -306,6 +309,22 @@ public class WeeklyScheduleRow implements Serializable, Comparable<WeeklySchedul
 	public void setEmployeeWage(Double employeeWage) {
 		this.employeeWage = employeeWage;
 	}
+
+	/**
+	 * @return the employeeStatus
+	 */
+	public UserStatus getEmployeeStatus() {
+		return employeeStatus;
+	}
+
+	/**
+	 * @param employeeStatus the employeeStatus to set
+	 */
+	public void setEmployeeStatus(UserStatus employeeStatus) {
+		this.employeeStatus = employeeStatus;
+	}
 	
-	
+	public boolean isEmployeeDeleted() {
+		return UserStatus.DELETED.equals(employeeStatus);
+	}
 }

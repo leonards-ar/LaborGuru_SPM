@@ -192,6 +192,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		Position position = shift.getPosition();
 		if(employee != null && position != null) {
 			row.setEmployeeId(employee.getId());
+			row.setEmployeeStatus(employee.getUserStatus());
 			row.setEmployeeMaxDaysWeek(employee.getMaxDaysWeek());
 			row.setEmployeeMaxHoursDay(employee.getMaxHoursDay());
 			row.setEmployeeMaxHoursWeek(employee.getMaxHoursWeek());
@@ -351,7 +352,19 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		
 		return ids;
 	}
-	
+
+	private Set<Integer> getDifferentEmployeeIdsIgnoringDeleted() {
+		Set<Integer> ids = new HashSet<Integer>();
+		
+		for(WeeklyScheduleRow aRow : getWeeklyScheduleData().getScheduleData()) {
+			if(aRow.getEmployeeId() != null && !ids.contains(aRow.getEmployeeId()) && !aRow.isEmployeeDeleted()) {
+				ids.add(aRow.getEmployeeId());
+			}
+		}
+		
+		return ids;
+	}
+
 	/**
 	 * 
 	 * @param shiftsFromPreviousDay
@@ -896,6 +909,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 		WeeklyScheduleRow newRow = new WeeklyScheduleRow();
 		
 		newRow.setEmployeeId(getNewEmployeeId());
+		newRow.setEmployeeStatus(newEmployee.getUserStatus());
 		newRow.setOriginalEmployeeId(getNewEmployeeId());
 		newRow.setPositionId(getNewEmployeePositionId());
 		Position newPosition = getPosition(getNewEmployeePositionId());
@@ -1415,7 +1429,7 @@ public abstract class AddShiftByWeekBaseAction extends AddShiftBaseAction implem
 	 * @param dayIndex
 	 */
 	private void validateOverlappingShifts() {
-		 for(Integer employeeId : getDifferentEmployeeIds()) {
+		 for(Integer employeeId : getDifferentEmployeeIdsIgnoringDeleted()) {
 			 List<List<WeeklyScheduleDailyEntry>> weeklyScheduleToValidate = getEmployeeWeeklyScheduleToValidate(employeeId);
 			 for(int dayIndex = 0; dayIndex < weeklyScheduleToValidate.size(); dayIndex++) {
 				 List<WeeklyScheduleDailyEntry> dailySchedule = weeklyScheduleToValidate.get(dayIndex);

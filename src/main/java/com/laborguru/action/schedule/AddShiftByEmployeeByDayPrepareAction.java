@@ -273,6 +273,7 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 		ScheduleRow newRow = new ScheduleRow();
 		newRow.setEmployeeId(getNewEmployeeId());
 		newRow.setOriginalEmployeeId(getNewEmployeeId());
+		newRow.setEmployeeStatus(newEmployee.getUserStatus());
 		newRow.setPositionId(getNewEmployeePositionId());
 		Position newPosition = getPosition(getNewEmployeePositionId());
 		newRow.setPositionName(newPosition != null ? newPosition.getName() : null);

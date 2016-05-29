@@ -57,7 +57,11 @@ public class OperationTime extends SpmObject {
 	 * @param openHour the openHour to set
 	 */
 	public void setOpenHour(Date openHour) {
-		this.openHour = CalendarUtils.removeDateFromTime(openHour);
+		Date hour = CalendarUtils.removeDateFromTime(openHour);
+		if (hour == null) {
+			throw new IllegalArgumentException("Open hour cannot be set from value " + openHour);
+		}
+		this.openHour = hour;
 	}
 
 	/**
@@ -71,7 +75,11 @@ public class OperationTime extends SpmObject {
 	 * @param closeHour the closeHour to set
 	 */
 	public void setCloseHour(Date closeHour) {
-		this.closeHour = CalendarUtils.removeDateFromTime(closeHour);
+		Date hour = CalendarUtils.removeDateFromTime(closeHour);
+		if (hour == null) {
+			throw new IllegalArgumentException("Close hour cannot be set from value " + closeHour);
+		}
+		this.closeHour = hour;
 	}
 
 	/**
@@ -212,8 +220,12 @@ public class OperationTime extends SpmObject {
 	 * @return
 	 */
 	public boolean operationTimeEndsTomorrow() {
-		if ((getOpenHour() == null) || (getCloseHour() == null)){
-			throw new IllegalArgumentException("openHour or closeHour is null");
+		if (getOpenHour() == null) {
+			throw new IllegalArgumentException("Open hour cannot be null for operation time id " + getId());
+		}
+
+		if (getCloseHour() == null){
+			throw new IllegalArgumentException("Close hour cannot be null for operation time id " + getId());
 		}
 		
 		return CalendarUtils.equalsOrGreaterTime(getOpenHour(), getCloseHour());

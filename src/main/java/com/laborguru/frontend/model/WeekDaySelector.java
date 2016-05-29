@@ -29,7 +29,7 @@ public class WeekDaySelector implements Serializable {
 	 */
 	private static final long serialVersionUID = 7529374667043414603L;
 
-	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
+	private static final String DATE_FORMAT = "yyyyMMdd";
 
 	private static final int DEFAULT_WEEKS_TO_SHOW = 3;
 	
@@ -142,7 +142,8 @@ public class WeekDaySelector implements Serializable {
 	 */
 	public void setStringStartingWeekDay(String startingWeekDay) {
 		try {
-			setStartingWeekDay(DATE_FORMAT.parse(startingWeekDay));
+			final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+			setStartingWeekDay(dateFormat.parse(startingWeekDay));
 		} catch (Throwable e) {
 			setStartingWeekDay(getFirstDayOfWeek(CalendarUtils.todayWithoutTime()));
 		}
@@ -154,7 +155,8 @@ public class WeekDaySelector implements Serializable {
 	 */
 	public String getStringStartingWeekDay() {
 		if(getStartingWeekDay() != null) {
-			return DATE_FORMAT.format(getStartingWeekDay());
+			final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+			return dateFormat.format(getStartingWeekDay());
 		} else {
 			return null;
 		}
@@ -166,7 +168,8 @@ public class WeekDaySelector implements Serializable {
 	 */
 	public void setStringSelectedDay(String selectedDay) {
 		try {
-			setSelectedDay(DATE_FORMAT.parse(selectedDay));
+			final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+			setSelectedDay(dateFormat.parse(selectedDay));
 		} catch (Throwable e) {
 			setSelectedDay(CalendarUtils.todayWithoutTime());
 		}
@@ -178,7 +181,8 @@ public class WeekDaySelector implements Serializable {
 	 */
 	public String getStringSelectedDay() {
 		if(getSelectedDay() != null) {
-			return DATE_FORMAT.format(getSelectedDay());
+			final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+			return dateFormat.format(getSelectedDay());
 		} else {
 			return null;
 		}
@@ -233,9 +237,10 @@ public class WeekDaySelector implements Serializable {
 	private List<String> getStringFormattedList(List<Date> dates) {
 		if(dates != null) {
 			List<String> formattedDates = new ArrayList<String>(dates.size());
+			final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
 			
 			for(Date d : dates) {
-				formattedDates.add(DATE_FORMAT.format(d));
+				formattedDates.add(dateFormat.format(d));
 			}
 			
 			return formattedDates;
@@ -343,7 +348,8 @@ public class WeekDaySelector implements Serializable {
 	 */
 	public static Date getAsDate(String d) {
 		try {
-			return DATE_FORMAT.parse(d);
+			final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+			return dateFormat.parse(d);
 		} catch(Throwable ex) {
 			return CalendarUtils.todayWithoutTime();
 		}
@@ -355,7 +361,9 @@ public class WeekDaySelector implements Serializable {
 	 * @return
 	 */
 	public boolean isSelectedWeekDay(Date d) {
-		return getStringSelectedDay() != null && d != null && getStringSelectedDay().equals(DATE_FORMAT.format(d));
+		final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+		
+		return getStringSelectedDay() != null && d != null && getStringSelectedDay().equals(dateFormat.format(d));
 	}
 	
 	/**

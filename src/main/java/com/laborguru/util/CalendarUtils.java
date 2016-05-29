@@ -166,8 +166,9 @@ public class CalendarUtils {
 	public static Date removeTimeFromDate(Date d) {
 		try {
 			if(d != null) {
-				String str = SpmConstants.REMOVE_TIME_FORMAT.format(d);
-				return SpmConstants.REMOVE_TIME_FORMAT.parse(str);
+				final SimpleDateFormat removeTimeFormat = new SimpleDateFormat(SpmConstants.REMOVE_TIME_FORMAT);
+				String str = removeTimeFormat.format(d);
+				return removeTimeFormat.parse(str);
 			} else { 
 				return null;
 			}
@@ -185,10 +186,12 @@ public class CalendarUtils {
 	 */
 	public static Date removeDateFromTime(Date time) {
 		try {
-			String str = SpmConstants.REMOVE_DATE_FORMAT.format(time);
-			return SpmConstants.REMOVE_DATE_FORMAT.parse(str);
+			final SimpleDateFormat removeDateFormat = new SimpleDateFormat(SpmConstants.REMOVE_DATE_FORMAT);
+			String str = removeDateFormat.format(time);
+			return removeDateFormat.parse(str);
 		} catch(Throwable ex) {
 			// Null or invalid time
+			log.error("Cannot remove date from time " + time, ex);
 			return null;
 		}		
 	}
@@ -221,7 +224,8 @@ public class CalendarUtils {
 				} while(!m.matches() && i < INPUT_TIME_REGEXP.length);
 
 				if(m != null && m.matches()) {
-					return SpmConstants.TIME_FORMAT.parse(getTime(m.group(1), m.group(2), m.group(3)));
+					final SimpleDateFormat timeFormat = new SimpleDateFormat(SpmConstants.TIME_FORMAT);
+					return timeFormat.parse(getTime(m.group(1), m.group(2), m.group(3)));
 				} else {
 					return null;
 				}			
@@ -304,7 +308,8 @@ public class CalendarUtils {
 	 */
 	public static String dateToDisplayTime(Date time) {
 		if(time != null) {
-			String displayTime = SpmConstants.DISPLAY_TIME_FORMAT.format(time);
+			final SimpleDateFormat displayTimeFormat = new SimpleDateFormat(SpmConstants.DISPLAY_TIME_FORMAT);
+			String displayTime = displayTimeFormat.format(time);
 			return displayTime.replaceAll(":00", "").toLowerCase().replaceAll("m", "");
 			//return SpmConstants.TIME_FORMAT.format(time);
 		} else {
@@ -343,8 +348,9 @@ public class CalendarUtils {
 	 */
 	public static boolean equalsOrGreaterTime(Date time1, Date time2) {
 		try {
-			long t1 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(time1));
-			long t2 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(time2));
+			final SimpleDateFormat timeNumberFormat = new SimpleDateFormat(SpmConstants.TIME_NUMBER_FORMAT);
+			long t1 = Long.parseLong(timeNumberFormat.format(time1));
+			long t2 = Long.parseLong(timeNumberFormat.format(time2));
 			
 			return t1 >= t2;
 		} catch(Throwable ex) {
@@ -360,8 +366,9 @@ public class CalendarUtils {
 	 */
 	public static boolean equalsTime(Date time1, Date time2) {
 		try {
-			long t1 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(time1));
-			long t2 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(time2));
+			final SimpleDateFormat timeNumberFormat = new SimpleDateFormat(SpmConstants.TIME_NUMBER_FORMAT);
+			long t1 = Long.parseLong(timeNumberFormat.format(time1));
+			long t2 = Long.parseLong(timeNumberFormat.format(time2));
 			
 			return t1 == t2;
 		} catch(Throwable ex) {
@@ -378,8 +385,9 @@ public class CalendarUtils {
 	 */
 	public static boolean equalsOrSmallerTime(Date time1, Date time2) {
 		try {
-			long t1 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(time1));
-			long t2 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(time2));
+			final SimpleDateFormat timeNumberFormat = new SimpleDateFormat(SpmConstants.TIME_NUMBER_FORMAT);
+			long t1 = Long.parseLong(timeNumberFormat.format(time1));
+			long t2 = Long.parseLong(timeNumberFormat.format(time2));
 			
 			return t1 <= t2;
 		} catch(Throwable ex) {
@@ -396,9 +404,10 @@ public class CalendarUtils {
 	 */
 	public static boolean inRangeIncludingEndTime(Date time, Date startTime, Date endTime) {
 		try {
-			long t = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(time));
-			long t1 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(startTime));
-			long t2 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(endTime));
+			final SimpleDateFormat timeNumberFormat = new SimpleDateFormat(SpmConstants.TIME_NUMBER_FORMAT);
+			long t = Long.parseLong(timeNumberFormat.format(time));
+			long t1 = Long.parseLong(timeNumberFormat.format(startTime));
+			long t2 = Long.parseLong(timeNumberFormat.format(endTime));
 			
 			if(t1 <= t2) {
 				return t >= t1 && t <= t2;
@@ -421,9 +430,10 @@ public class CalendarUtils {
 	 */
 	public static boolean inRangeNotIncludingEndTime(Date time, Date startTime, Date endTime) {
 		try {
-			long t = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(time));
-			long t1 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(startTime));
-			long t2 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(endTime));
+			final SimpleDateFormat timeNumberFormat = new SimpleDateFormat(SpmConstants.TIME_NUMBER_FORMAT);
+			long t = Long.parseLong(timeNumberFormat.format(time));
+			long t1 = Long.parseLong(timeNumberFormat.format(startTime));
+			long t2 = Long.parseLong(timeNumberFormat.format(endTime));
 			
 			if(t1 <= t2) {
 				return t >= t1 && t < t2;
@@ -446,9 +456,10 @@ public class CalendarUtils {
 	 */
 	public static boolean inRangeNotIncludingStartTime(Date time, Date startTime, Date endTime) {
 		try {
-			long t = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(time));
-			long t1 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(startTime));
-			long t2 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(endTime));
+			final SimpleDateFormat timeNumberFormat = new SimpleDateFormat(SpmConstants.TIME_NUMBER_FORMAT);
+			long t = Long.parseLong(timeNumberFormat.format(time));
+			long t1 = Long.parseLong(timeNumberFormat.format(startTime));
+			long t2 = Long.parseLong(timeNumberFormat.format(endTime));
 			
 			if(t1 <= t2) {
 				return t > t1 && t <= t2;
@@ -482,8 +493,10 @@ public class CalendarUtils {
 	 */
 	public static boolean smallerTime(Date time1, Date time2) {
 		try {
-			long t1 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(time1));
-			long t2 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(time2));
+			final SimpleDateFormat timeNumberFormat = new SimpleDateFormat(SpmConstants.TIME_NUMBER_FORMAT);
+			
+			long t1 = Long.parseLong(timeNumberFormat.format(time1));
+			long t2 = Long.parseLong(timeNumberFormat.format(time2));
 			
 			return t1 < t2;
 		} catch(Throwable ex) {
@@ -499,8 +512,10 @@ public class CalendarUtils {
 	 */
 	public static boolean greaterTime(Date time1, Date time2) {
 		try {
-			long t1 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(time1));
-			long t2 = Long.parseLong(SpmConstants.TIME_NUMBER_FORMAT.format(time2));
+			final SimpleDateFormat timeNumberFormat = new SimpleDateFormat(SpmConstants.TIME_NUMBER_FORMAT);
+
+			long t1 = Long.parseLong(timeNumberFormat.format(time1));
+			long t2 = Long.parseLong(timeNumberFormat.format(time2));
 			
 			return t1 > t2;
 		} catch(Throwable ex) {
@@ -596,8 +611,11 @@ public class CalendarUtils {
 	 * @return
 	 */
 	private static int timeToMinutes(Date t) {
-		int hs = Integer.parseInt(SpmConstants.TIME_HOUR_FORMAT.format(t));
-		int mins = Integer.parseInt(SpmConstants.TIME_MINUTE_FORMAT.format(t));
+		final SimpleDateFormat timeHourFormat = new SimpleDateFormat(SpmConstants.TIME_HOUR_FORMAT);
+		final SimpleDateFormat timeMinuteFormat = new SimpleDateFormat(SpmConstants.TIME_MINUTE_FORMAT);
+
+		int hs = Integer.parseInt(timeHourFormat.format(t));
+		int mins = Integer.parseInt(timeMinuteFormat.format(t));
 		return (hs * 60) + mins;
 	}
 	

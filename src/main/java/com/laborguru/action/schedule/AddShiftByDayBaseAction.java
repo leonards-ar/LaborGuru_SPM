@@ -807,7 +807,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	 */
 	protected void validateSchedule(List<ScheduleRow> schedule) {
 		validateScheduleRows(schedule);
-		Set<Integer> employeeIds = getDifferentEmployeeIds(schedule);
+		Set<Integer> employeeIds = getDifferentEmployeeIdsIgnoringDeleted(schedule);
 
 		for(Integer employeeId : employeeIds) {
 			validateEmployeeSchedule(employeeId, schedule);
@@ -986,7 +986,20 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 		
 		return ids;
 	}
-	
+
+	private Set<Integer> getDifferentEmployeeIdsIgnoringDeleted(List<ScheduleRow> schedule) {
+		Set<Integer> ids = new HashSet<Integer>();
+		
+		if(schedule != null) {
+			for(ScheduleRow aRow : schedule) {
+				if(!ids.contains(aRow.getEmployeeId()) && !aRow.isEmployeeDeleted()) {
+					ids.add(aRow.getEmployeeId());
+				}
+			}
+		}
+		
+		return ids;
+	}
 	/**
 	 * 
 	 * @param schedule
@@ -1020,6 +1033,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 		if(!alreadyInSchedule(schedule, employeeSchedule.getEmployee(), shift) && employeeSchedule.getEmployee() != null) {
 			ScheduleRow aRow = new ScheduleRow();
 			aRow.setEmployeeId(employeeSchedule.getEmployee().getId());
+			aRow.setEmployeeStatus(employeeSchedule.getEmployee().getUserStatus());
 			aRow.setOriginalEmployeeId(employeeSchedule.getEmployee().getId());
 			aRow.setEmployeeName(employeeSchedule.getEmployee().getFullName());
 			aRow.setPositionId(shift.getPosition() != null ? shift.getPosition().getId() : null);

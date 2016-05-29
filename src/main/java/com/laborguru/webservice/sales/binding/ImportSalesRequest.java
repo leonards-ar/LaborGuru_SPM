@@ -1,6 +1,7 @@
 
 package com.laborguru.webservice.sales.binding;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -157,8 +158,8 @@ public class ImportSalesRequest {
 		for(SalesItem salesItem: salesItemList.getSalesItemLists()) {
 			HistoricSales historicSale = salesItem.getHistoricSale();
 			historicSale.setStore(store);
-				
-			Date time = SpmConstants.TIME_FORMAT.parse(salesItem.getHalfHour());
+			final SimpleDateFormat timeFormat = new SimpleDateFormat(SpmConstants.TIME_FORMAT);	
+			Date time = timeFormat.parse(salesItem.getHalfHour());
 			Date date = CalendarUtils.stringToDate(salesDate, getSalesDateFormat());
 			Calendar calendarDate = CalendarUtils.getCalendar(date);
 			if (time != null){

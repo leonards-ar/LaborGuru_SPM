@@ -232,6 +232,7 @@ public class AddShiftByEmployeeByPositionByDayPrepareAction extends AddShiftByDa
 			
 			ScheduleRow newRow = new ScheduleRow();
 			newRow.setEmployeeId(entry.getNewEmployeeId());
+			newRow.setEmployeeStatus(newEmployee.getUserStatus());
 			newRow.setOriginalEmployeeId(entry.getNewEmployeeId());
 			newRow.setPositionId(entry.getNewEmployeePositionId());
 			Position newPosition = getPosition(entry.getNewEmployeePositionId());
