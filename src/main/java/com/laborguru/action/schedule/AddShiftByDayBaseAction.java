@@ -393,9 +393,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 				}
 			}
 			setHiddenTotalScheduled(hiddenTotalScheduled);
-			
-			// Sort schedule
-			sortScheduleRows(schedule);
+
 			return schedule;
 		} else {
 			return new ArrayList<ScheduleRow>();
@@ -408,7 +406,9 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	 * @return
 	 */
 	protected List<ScheduleRow> buildScheduleFor(Position position) {
-		return buildScheduleFor(getPositionInList(position));
+		List<ScheduleRow> rows = buildScheduleFor(getPositionInList(position));
+		return sortScheduleRows(rows);
+
 	}
 	
 	
@@ -1145,8 +1145,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	}
 	
 	/**
-	 * 
-	 * @param scheduleBuckets
+	 *
 	 * @return
 	 */
 	protected List<String> initializeScheduleRow() {
@@ -1159,8 +1158,7 @@ public abstract class AddShiftByDayBaseAction extends AddShiftBaseAction {
 	}
 
 	/**
-	 * 
-	 * @param scheduleBuckets
+	 *
 	 * @return
 	 */
 	protected List<String> initializeScheduleHoursRow() {

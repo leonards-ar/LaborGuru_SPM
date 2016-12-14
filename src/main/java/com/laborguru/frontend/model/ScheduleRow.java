@@ -6,9 +6,11 @@
 package com.laborguru.frontend.model;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.List;
 
 import com.laborguru.model.UserStatus;
+import com.laborguru.util.CalendarUtils;
 import com.laborguru.util.SpmConstants;
 
 /**
@@ -18,7 +20,7 @@ import com.laborguru.util.SpmConstants;
  * @since SPM 1.0
  *
  */
-public class ScheduleRow implements Serializable, Comparable<ScheduleRow> {
+public class ScheduleRow implements Serializable, Comparable<ScheduleRow>, Comparator<ScheduleRow> {
 
 	/**
 	 * 
@@ -282,11 +284,20 @@ public class ScheduleRow implements Serializable, Comparable<ScheduleRow> {
 			return 1;
 		}
 
-		if(getEmployeeName() != null) {
-			return object.getEmployeeName() != null ? getEmployeeName().compareToIgnoreCase(object.getEmployeeName()) : 1;
-		} else {
-			return object.getEmployeeName() != null ? -1 : 0;
+//		if(getEmployeeName() != null) {
+//			return object.getEmployeeName() != null ? getEmployeeName().compareToIgnoreCase(object.getEmployeeName()) : 1;
+//		} else {
+//			return object.getEmployeeName() != null ? -1 : 0;
+//		}
+
+
+		String thisInputHour = calculateInputHour();
+		if(thisInputHour != null) {
+			String objectInputHour = object.calculateInputHour();
+			return objectInputHour != null? CalendarUtils.displayTimeToDate(thisInputHour).compareTo(CalendarUtils.displayTimeToDate(objectInputHour)) : 1;
 		}
+
+		return object.calculateInputHour() != null? 1 : 0;
 	}
 
 	/**
@@ -321,5 +332,48 @@ public class ScheduleRow implements Serializable, Comparable<ScheduleRow> {
 	
 	public boolean isEmployeeDeleted() {
 		return UserStatus.DELETED.equals(employeeStatus);
-	}	
+	}
+
+	public int compare(ScheduleRow o1, ScheduleRow o2) {
+		return 0;
+	}
+
+	private String calculateInputHour(){
+		if(this.getInHour() != null){
+			return this.getInHour();
+		}
+
+		List<String> schedule = getSchedule();
+
+		for(int i= 0; i < schedule.size(); i++ ){
+			if(schedule.get(i) != null && !"".equals(schedule.get(i)) && !"-".equals(schedule.get(i))){
+				return getHours().get(i);
+			}
+		}
+
+		return null;
+
+	}
+
+	public static Comparator<ScheduleRow> getEmployeeComparator() {
+
+		return new Comparator<ScheduleRow>() {
+
+			public int compare(ScheduleRow o1, ScheduleRow o2) {
+				if (o2 == null) {
+					return 1;
+				}
+
+				if (o1.getEmployeeName() != null) {
+					return o2.getEmployeeName() != null ? o1.getEmployeeName().compareToIgnoreCase(o2.getEmployeeName()) : 1;
+				} else {
+					return o2.getEmployeeName() != null ? -1 : 0;
+				}
+			}
+		};
+	}
+
 }
+
+
+

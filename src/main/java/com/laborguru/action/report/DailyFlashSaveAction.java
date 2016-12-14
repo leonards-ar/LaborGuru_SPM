@@ -103,7 +103,7 @@ public class DailyFlashSaveAction extends SpmAction{
 		try {
 			Store searchStore = new Store();
 			searchStore.setId(Integer.parseInt(getStoreId()));
-			
+
 			Store store = storeService.getStoreById(searchStore);
 			Date today = new Date();
 			DailyFlash dailyFlash = getDailyFlashService().getDailyFlashByDate(store,today);
@@ -112,26 +112,26 @@ public class DailyFlashSaveAction extends SpmAction{
 
 				dailyFlash.setStore(store);
 				dailyFlash.setDate(today);
-			} 				
-			
+			}
+
 			if(!"".equals(getPreOpenHour())) dailyFlash.setOpenHours(Double.parseDouble(getPreOpenHour()));
 			if(!"".equals(getCloseHour())) dailyFlash.setCloseHours(Double.parseDouble(getCloseHour()));
 			if(store.isVariableDefinitionConfigured(1)){
 			    if(!"".equals(getDelivered())) dailyFlash.setDelivered(Double.parseDouble(getDelivered()));
 			    if(!"".equals(getPlanned())) dailyFlash.setPlanned(Double.parseDouble(getPlanned()));
 			}
-			
+
 			for(DailyFlashDetail dfDetail: getDetails()){
 				if(!dfDetail.isEmpty()){
 					dailyFlash.addDailyFlashDetail(dfDetail);
 				}
 			}
-			
+
 			getDailyFlashService().save(dailyFlash);
 		
 			setResponseMessage(getText("report.dailyFlashReport.save.success"));
 			return Action.SUCCESS;
-		}catch(SpmCheckedException e){
+		}catch(Exception e){
 			setResponseMessage(e.getMessage());
 			e.printStackTrace();
 			return Action.ERROR;

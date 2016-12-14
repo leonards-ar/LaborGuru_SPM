@@ -3,8 +3,8 @@
 
 <br/>
 <script type="text/javascript">
-    var url = '<s:url value="/report/saveDailyFlashReport.action" includeParams="none"/>';
-    var calulateUrl='<s:url value="/report/calculateIdealDailyFlashReport.action" includeParams="none"/>';
+    var url = '<s:url namespace="/report" action="saveDailyFlashReport" includeParams="none"/>';
+    var calulateUrl='<s:url namespace="/report" action="calculateIdealDailyFlashReport" includeParams="none"/>';
     var projectedOpenningHours='<s:property value="projectedOpeningHours"/>';
     var projectedFlexHours='<s:property value="projectedFlexibleHours"/>';
 </script>

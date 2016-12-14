@@ -6,6 +6,7 @@
 package com.laborguru.action.schedule;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -114,5 +115,15 @@ public abstract class ScheduleBaseAction extends SpmAction {
 			Collections.sort(data);
 		}
 		return data;
-	}	
+	}
+
+	/**
+	 *
+	 */
+	protected List<ScheduleRow> sortScheduleRows(List<ScheduleRow> data, Comparator comparator) {
+		if(data != null) {
+			Collections.sort(data, comparator);
+		}
+		return data;
+	}
 }

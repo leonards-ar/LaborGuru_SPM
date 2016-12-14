@@ -37,7 +37,6 @@ $(function(){
         	dataObj += ']}';
         	
         	var sw = screen.width;
-        	
 		
             $.ajax({
                 type : 'POST',
