@@ -72,7 +72,10 @@
 		<level value="${mindpool.debug.level}"/>
 		<appender-ref ref="message_append"/>
 	</logger>
-		
+	<logger name="com.opensymphony.xwork2" additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="STDOUT"/>
+	</logger>
 	<logger name="org.acegisecurity" additivity="false">
 		<level value="ERROR"/>
 		<appender-ref ref="message_append" />

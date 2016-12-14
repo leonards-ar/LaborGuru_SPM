@@ -5,15 +5,10 @@
  */
 package com.laborguru.action.schedule;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
+import java.util.*;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-import com.ctc.wstx.util.StringUtil;
 import com.laborguru.action.SpmActionResult;
 import com.laborguru.frontend.model.ScheduleRow;
 import com.laborguru.model.Employee;
@@ -32,13 +27,16 @@ import com.opensymphony.xwork2.Preparable;
  */
 public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseAction implements Preparable {
 	private static final Logger log = Logger.getLogger(AddShiftByEmployeeByDayPrepareAction.class);
-	
+	private static final String BY_HOUR = "byHours";
+	private static final String BY_EMPLOYEE = "byEmployees";
 	private List<ScheduleRow> scheduleData;
 	private List<Integer> minimumStaffing;
 	
 	private Integer newEmployeeId;
 	private String newEmployeeName;
 	private Integer newEmployeePositionId;
+
+	private String sortCriteria = BY_HOUR;
 	
 	/**
 	 * 
@@ -188,7 +186,14 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 	 */
 	private void setScheduleData() {
 		if(scheduleData == null || scheduleData.isEmpty()) {
-			setScheduleData(buildScheduleFor(getSelectedPositions()));
+			List<ScheduleRow> schedules = buildScheduleFor(getSelectedPositions());
+
+			// Sort schedule
+			if(BY_HOUR.equals(sortCriteria)) {
+				setScheduleData(sortScheduleRows(schedules));
+			} else {
+				setScheduleData(sortScheduleRows(schedules, ScheduleRow.getEmployeeComparator()));
+			}
 		}
 		
 		if(minimumStaffing == null || minimumStaffing.isEmpty()) {
@@ -199,7 +204,7 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 	/**
 	 * 
 	 */
-	public void prepareSelectView() {
+	public void prepareSelectViewByEmployee() {
 		loadPageData();
 	}
 
@@ -207,7 +212,8 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 	 * 
 	 * @return
 	 */
-	public String selectView() {
+	public String selectViewByEmployee() {
+		setSortCriteria(BY_EMPLOYEE);
 		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
 		
 		resetScheduleData();
@@ -217,6 +223,24 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 		
 		setScheduleData();
 		
+		return SpmActionResult.EDIT.getResult();
+	}
+
+	public void prepareSelectView(){
+		loadPageData();
+	}
+
+	public String selectView(){
+		setSortCriteria(BY_HOUR);
+		initializeDayWeekSelector(getSelectedDate(), getSelectedWeekDay());
+
+		resetScheduleData();
+		resetStaffingData();
+
+		resetDayData();
+
+		setScheduleData();
+
 		return SpmActionResult.EDIT.getResult();
 	}
 	
@@ -464,6 +488,22 @@ public class AddShiftByEmployeeByDayPrepareAction extends AddShiftByDayBaseActio
 	 */
 	public void setNewEmployeeName(String newEmployeeName) {
 		this.newEmployeeName = newEmployeeName;
+	}
+
+	/**
+	 *
+	 * @return the sortCriteria (By Hours or ByEmployee)
+	 */
+	public String getSortCriteria() {
+		return sortCriteria;
+	}
+
+	/**
+	 *
+	 * @param sortCriteria the sortCriteria to set
+	 */
+	public void setSortCriteria(String sortCriteria) {
+		this.sortCriteria = sortCriteria;
 	}
 
 	/**

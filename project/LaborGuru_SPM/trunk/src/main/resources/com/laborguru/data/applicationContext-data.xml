@@ -185,6 +185,9 @@
 		<constructor-arg>
 			<map>
 				<entry key="addshiftbyemployee_selectView.action">
+					<value>schedule.addshift.view.hour</value>
+				</entry>
+				<entry key="addshiftbyemployee_selectViewByEmployee.action">
 					<value>schedule.addshift.view.weekly</value>
 				</entry>
 				<entry key="addshiftbyemployeebyposition_selectView.action">
