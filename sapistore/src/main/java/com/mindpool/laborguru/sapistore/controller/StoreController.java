@@ -39,4 +39,11 @@ public class StoreController extends BaseController {
 
     }
 
+    @RequestMapping(value="/demo", method = RequestMethod.GET)
+    public Page<StoreDto> listDemoStores(Pageable pageable) {
+        Page<Store> stores = storeService.findDemoStores(pageable);
+
+        return new PageImpl<>(mapper.mapAsList(stores.getContent(), StoreDto.class), pageable, stores.getTotalElements());
+    }
+
 }

@@ -19,7 +19,7 @@ public class PerformanceEfficiencyController {
     public List<TotalHour> getPerformanceEfficiency(@PathVariable("store_id") Integer storeId, @RequestParam("start_date") String start, @RequestParam("end_date") String end) {
 
 
-        TotalHour th = new TotalHour();
+         TotalHour th = new TotalHour();
         th.setDay(new Date());
         th.setSales(new BigDecimal(10));
         th.setSchedule(new BigDecimal(20));

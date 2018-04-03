@@ -14,4 +14,6 @@ public interface StoreService {
     Store saveOrUpdate(Store store);
 
     Store updateStore(Store store);
+
+    Page<Store> findDemoStores(Pageable pageable);
 }

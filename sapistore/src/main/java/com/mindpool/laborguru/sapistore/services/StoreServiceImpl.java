@@ -35,4 +35,8 @@ public class StoreServiceImpl implements StoreService {
 
         return saveOrUpdate(foundStore);
     }
+
+    public Page<Store> findDemoStores(Pageable pageable){
+        return storeRepository.findByDemo(true, pageable);
+    }
 }
