@@ -18,8 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class StoreController extends BaseController {
 
-    @Autowired
-    private StoreService storeService;
+
 
     @GetMapping()
     @Transactional(readOnly=true)

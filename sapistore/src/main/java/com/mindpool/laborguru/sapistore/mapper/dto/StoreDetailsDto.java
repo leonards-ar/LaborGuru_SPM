@@ -9,4 +9,6 @@ public class StoreDetailsDto {
     private AreaDto area;
     private Long id;
     private String code;
+    private boolean demo;
+    private boolean inTimeOnly;
 }
