@@ -20,4 +20,19 @@ public class StoreServiceImpl implements StoreService {
     public Store findById(Long id) {
         return storeRepository.findFirstById(id);
     }
+
+    public Store saveOrUpdate(Store store){
+        return storeRepository.save(store);
+    }
+
+    //This method update Main Store Data
+    public Store updateStore(Store store) {
+        Store foundStore = findById(store.getId());
+
+        foundStore.setName(store.getName());
+        foundStore.setCode(store.getCode());
+        foundStore.setArea(store.getArea());
+
+        return saveOrUpdate(foundStore);
+    }
 }

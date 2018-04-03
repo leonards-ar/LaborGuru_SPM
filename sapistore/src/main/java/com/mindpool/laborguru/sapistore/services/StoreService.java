@@ -10,4 +10,8 @@ public interface StoreService {
     Page<Store> getStores(Pageable pageable);
 
     Store findById(Long id);
+
+    Store saveOrUpdate(Store store);
+
+    Store updateStore(Store store);
 }

@@ -3,16 +3,13 @@ package com.mindpool.laborguru.sapistore.controller;
 import com.mindpool.laborguru.sapistore.mapper.dto.StoreDetailsDto;
 import com.mindpool.laborguru.sapistore.mapper.dto.StoreDto;
 import com.mindpool.laborguru.sapistore.model.Store;
-import com.mindpool.laborguru.sapistore.services.StoreService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/api")
@@ -29,10 +26,17 @@ public class StoreController extends BaseController {
 
     }
 
-    @GetMapping
-    @RequestMapping("/{id}")
+    @RequestMapping(value="/{id}", method = RequestMethod.GET)
     public StoreDetailsDto getStore(@PathVariable Long id){
-
         return mapper.map(storeService.findById(id), StoreDetailsDto.class);
     }
+
+    @RequestMapping(value="/{id}", method = RequestMethod.PUT)
+    public void updateStore(@PathVariable Long id, @RequestBody StoreDetailsDto storeDetailsDto, HttpServletResponse response){
+        Store store = mapper.map(storeDetailsDto, Store.class);
+        storeService.updateStore(store);
+        response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+
+    }
+
 }
