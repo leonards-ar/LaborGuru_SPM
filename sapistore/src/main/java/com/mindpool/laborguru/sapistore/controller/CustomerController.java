@@ -30,13 +30,6 @@ public class CustomerController extends BaseController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public CustomerDetailsDto getCustomer(@PathVariable Long id) {
         Customer customer = customerService.findById(id);
-        //CustomerDetailsDto cdto = mapper.map(customer, CustomerDetailsDto.class);
-//        List<RegionDto> rdto = mapper.mapAsList(customer.getRegions(), RegionDto.class);
-//        CustomerDetailsDto cdetails = new CustomerDetailsDto();
-//        cdetails.setCode(customer.getCode());
-//        cdetails.setId(customer.getId());
-//        cdetails.setName(customer.getName());
-//        cdetails.setRegions(rdto);
         return mapper.map(customer, CustomerDetailsDto.class);
     }
 

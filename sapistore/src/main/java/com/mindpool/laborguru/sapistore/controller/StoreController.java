@@ -26,6 +26,15 @@ public class StoreController extends BaseController {
 
     }
 
+    @RequestMapping(method = RequestMethod.POST)
+    public StoreDetailsDto save(@RequestBody StoreDetailsDto storeCreate, HttpServletResponse response) {
+        Store store = mapper.map(storeCreate, Store.class);
+        Long newId = storeService.saveOrUpdate(store).getId();
+
+        response.setStatus(HttpServletResponse.SC_CREATED);
+        return mapper.map(storeService.findById(newId), StoreDetailsDto.class);
+    }
+
     @RequestMapping(value="/{id}", method = RequestMethod.GET)
     public StoreDetailsDto getStore(@PathVariable Long id){
         return mapper.map(storeService.findById(id), StoreDetailsDto.class);
