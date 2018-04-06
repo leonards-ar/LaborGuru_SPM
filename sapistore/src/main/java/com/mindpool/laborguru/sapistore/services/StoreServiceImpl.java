@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 @Service
 public class StoreServiceImpl implements StoreService {
@@ -38,5 +39,10 @@ public class StoreServiceImpl implements StoreService {
 
     public Page<Store> findDemoStores(Pageable pageable){
         return storeRepository.findByDemo(true, pageable);
+    }
+
+    public void delete(Store store) {
+        Assert.notNull(store, "store must not be null");
+        storeRepository.delete(store);
     }
 }

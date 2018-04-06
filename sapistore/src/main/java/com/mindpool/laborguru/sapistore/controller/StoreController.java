@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/store")
 public class StoreController extends BaseController {
 
 
@@ -39,11 +39,20 @@ public class StoreController extends BaseController {
 
     }
 
+    @RequestMapping(value="/{id}", method = RequestMethod.DELETE)
+    public void deleteStore(@PathVariable Long id, HttpServletResponse response){
+        Store store = new Store();
+        store.setId(id);
+        storeService.delete(store);
+        response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+    }
+
     @RequestMapping(value="/demo", method = RequestMethod.GET)
     public Page<StoreDto> listDemoStores(Pageable pageable) {
         Page<Store> stores = storeService.findDemoStores(pageable);
 
         return new PageImpl<>(mapper.mapAsList(stores.getContent(), StoreDto.class), pageable, stores.getTotalElements());
     }
+
 
 }

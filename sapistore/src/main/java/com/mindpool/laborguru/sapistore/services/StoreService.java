@@ -16,4 +16,6 @@ public interface StoreService {
     Store updateStore(Store store);
 
     Page<Store> findDemoStores(Pageable pageable);
+
+    void delete(Store store);
 }
