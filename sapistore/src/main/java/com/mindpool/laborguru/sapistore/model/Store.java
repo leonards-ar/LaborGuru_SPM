@@ -4,6 +4,8 @@ package com.mindpool.laborguru.sapistore.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -37,8 +39,10 @@ public class Store {
     @Column(name="half_hour_projections_weeks_default")
     private Integer halfHourProjectionsWeeksDefault;
     @Column(name="creation_date")
+    @CreationTimestamp
     private Date creationDate;
     @Column(name="last_update_date")
+    @UpdateTimestamp
     private Date lastUpdateDate;
     @OneToMany(mappedBy = "store")
     private List<Position> positions;
