@@ -1,11 +1,13 @@
 package com.mindpool.laborguru.sapistore.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Data
+@EqualsAndHashCode(exclude = {"id", "positions"})
 @Entity
 @Table(name = "tbl_position_groups")
 public class PositionGroup {

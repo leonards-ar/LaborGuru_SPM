@@ -17,5 +17,7 @@ public interface StoreService {
 
     Page<Store> findDemoStores(Pageable pageable);
 
+    //Store savePositionGroups(Store store, List<PositionGroup> positionGroups);
+
     void delete(Store store);
 }

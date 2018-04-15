@@ -19,7 +19,8 @@ public class StoreServiceImpl implements StoreService {
     }
 
     public Store findById(Long id) {
-        return storeRepository.findFirstById(id);
+       return storeRepository.findFirstById(id);
+
     }
 
     public Store saveOrUpdate(Store store){
@@ -45,4 +46,9 @@ public class StoreServiceImpl implements StoreService {
         Assert.notNull(store, "store must not be null");
         storeRepository.delete(store);
     }
+
+//    public Store savePositionGroups(Store store, List<PositionGroup> positionGroups){
+//
+//
+//    }
 }
